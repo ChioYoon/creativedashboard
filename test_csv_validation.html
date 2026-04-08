@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>CSV 데이터 검증</title>
+  <style>
+    body { font-family: monospace; padding: 20px; background: #1e1e1e; color: #d4d4d4; }
+    .log { margin: 5px 0; padding: 5px; background: #2d2d2d; border-left: 3px solid #4ec9b0; }
+    .error { border-left-color: #f48771; }
+    .success { border-left-color: #4ec9b0; }
+  </style>
+</head>
+<body>
+  <h2>📊 PHPH.csv 데이터 검증</h2>
+  <div id="output"></div>
+
+  <script src="js/pipeline-engine.js"></script>
+  <script src="js/analysis-engine-v2.js"></script>
+  <script>
+    const output = document.getElementById('output');
+    
+    function log(msg, type = 'log') {
+      const div = document.createElement('div');
+      div.className = `log ${type}`;
+      div.textContent = msg;
+      output.appendChild(div);
+      console.log(msg);
+    }
+
+    async function testCSV() {
+      try {
+        log('📂 CSV 파일 로드 중...', 'log');
+        const response = await fetch('sample_data/PHPH.csv');
+        const text = await response.text();
+        
+        log(`✅ CSV 로드 완료 (${text.length} bytes)`, 'success');
+        
+        // CSV 파싱
+        const parsed = plParseCSV(text);
+        if (!parsed) {
+          log('❌ CSV 파싱 실패', 'error');
+          return;
+        }
+        
+        log(`✅ CSV 파싱 완료`, 'success');
+        log(`   - 헤더 수: ${parsed.headers.length}`, 'log');
+        log(`   - 행 수: ${parsed.rows.length}`, 'log');
+        
+        // 헤더 확인
+        log('\n📋 주요 헤더 확인:', 'log');
+        const keyHeaders = ['일', '유형', '파일명', '소재명', '전환', '비용', '노출수'];
+        keyHeaders.forEach((h, idx) => {
+          const found = parsed.headers.includes(h);
+          const colIndex = parsed.headers.indexOf(h);
+          log(`   ${idx + 1}. "${h}": ${found ? `✅ (${colIndex + 1}번째 컬럼)` : '❌ 없음'}`, found ? 'success' : 'error');
+        });
+        
+        // 샘플 데이터 확인
+        log('\n📝 첫 5개 행 샘플:', 'log');
+        parsed.rows.slice(0, 5).forEach((row, idx) => {
+          log(`   [${idx + 1}] 유형: ${row['유형'] || 'N/A'}, 소재명: ${row['소재명']}, 파일명: ${row['파일명']}`, 'log');
+        });
+        
+        // 컬럼 정규화
+        log('\n🔄 컬럼 정규화 실행...', 'log');
+        const normalized = plNormalizeColumns(parsed);
+        log(`✅ 정규화 완료`, 'success');
+        log(`   - 매핑된 컬럼: ${Object.keys(normalized._renameMap || {}).length}개`, 'log');
+        
+        const rows = normalized.rows;
+        
+        // BNR/VID 필터
+        const bnrVidRows = rows.filter(r => ['BNR', 'VID'].includes((r['유형'] || '').toUpperCase()));
+        log(`\n✅ BNR/VID 필터: ${rows.length}개 행 → ${bnrVidRows.length}개 행`, 'success');
+        
+        // 소재명 기준 분석
+        log('\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'log');
+        log('📊 [소재명 기준] 분석 시작', 'log');
+        log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n', 'log');
+        
+        const result1 = runStep1_Scoring(rows, { groupBy: '소재명' });
+        
+        log(`✅ 소재명 기준 완료: ${result1.creatives.length}개 소재`, 'success');
+        log(`   TOP 3:`, 'log');
+        result1.creatives.slice(0, 3).forEach((c, i) => {
+          log(`   ${i + 1}. ${c.집계기준} (${c.유형}) - Score: ${c.TotalScore}, 전환: ${c.전환}`, 'log');
+        });
+        
+        // 파일명 기준 분석
+        log('\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'log');
+        log('📊 [파일명 기준] 분석 시작', 'log');
+        log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n', 'log');
+        
+        const result2 = runStep1_Scoring(rows, { groupBy: '파일명' });
+        
+        log(`✅ 파일명 기준 완료: ${result2.creatives.length}개 소재`, 'success');
+        log(`   TOP 3:`, 'log');
+        result2.creatives.slice(0, 3).forEach((c, i) => {
+          log(`   ${i + 1}. ${c.집계기준} (${c.유형}) - Score: ${c.TotalScore}, 전환: ${c.전환}`, 'log');
+        });
+        
+        // 결과 비교
+        log('\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', 'log');
+        log('📈 분석 결과 비교', 'log');
+        log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n', 'log');
+        
+        log(`소재명 기준: ${result1.creatives.length}개 소재`, 'log');
+        log(`파일명 기준: ${result2.creatives.length}개 소재`, 'log');
+        log(`차이: ${Math.abs(result1.creatives.length - result2.creatives.length)}개`, 'log');
+        
+        log('\n✅ 모든 검증 완료!', 'success');
+        
+      } catch (error) {
+        log(`❌ 오류 발생: ${error.message}`, 'error');
+        console.error(error);
+      }
+    }
+
+    // 실행
+    testCSV();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 1 Scoring Test - Pepp Heroes</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Pretendard', -apple-system, sans-serif;
+      background: #f5f7fa;
+      padding: 30px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+    .upload-area {
+      border: 2px dashed #d0d7de;
+      border-radius: 8px;
+      padding: 40px;
+      text-align: center;
+      margin-bottom: 30px;
+      background: #f9fafb;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .upload-area:hover {
+      border-color: #0969da;
+      background: #f3f8ff;
+    }
+    .upload-area.drag-over {
+      border-color: #0969da;
+      background: #ddf4ff;
+    }
+    input[type="file"] {
+      display: none;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: #0969da;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #0550ae;
+    }
+    .btn-secondary {
+      background: #f3f4f6;
+      color: #1f2937;
+      margin-left: 10px;
+    }
+    .btn-secondary:hover {
+      background: #e5e7eb;
+    }
+    .results {
+      margin-top: 30px;
+    }
+    .stat-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .stat-label {
+      font-size: 12px;
+      opacity: 0.9;
+      margin-bottom: 5px;
+    }
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 13px;
+    }
+    th {
+      background: #f9fafb;
+      font-weight: 600;
+      color: #374151;
+    }
+    tr:hover {
+      background: #f9fafb;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge-최우수 { background: #dcfce7; color: #166534; }
+    .badge-우수 { background: #dbeafe; color: #1e40af; }
+    .badge-보통 { background: #fef3c7; color: #92400e; }
+    .badge-미흡 { background: #fee2e2; color: #991b1b; }
+    .score-bar {
+      display: inline-block;
+      width: 80px;
+      height: 6px;
+      background: #e5e7eb;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+    .score-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #10b981, #3b82f6);
+      transition: width 0.3s;
+    }
+    .console-output {
+      background: #1e293b;
+      color: #e2e8f0;
+      padding: 20px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      max-height: 400px;
+      overflow-y: auto;
+      margin-top: 20px;
+    }
+    .console-output pre {
+      margin: 0;
+      white-space: pre-wrap;
+    }
+    
+    /* 미리보기 썸네일 */
+    .preview-thumb {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid #e5e7eb;
+    }
+    .preview-thumb:hover {
+      transform: scale(1.1);
+      border-color: #0969da;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .preview-placeholder {
+      width: 60px;
+      height: 60px;
+      background: #f3f4f6;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: #9ca3af;
+    }
+    
+    /* 동영상 썸네일 */
+    .preview-video {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid #667eea;
+      position: relative;
+    }
+    .preview-video:hover {
+      transform: scale(1.1);
+      border-color: #764ba2;
+      box-shadow: 0 4px 8px rgba(103, 126, 234, 0.4);
+    }
+    .preview-video::before {
+      content: '▶';
+      font-size: 24px;
+      color: white;
+    }
+    .preview-video::after {
+      content: 'VID';
+      position: absolute;
+      bottom: 2px;
+      right: 4px;
+      font-size: 8px;
+      font-weight: 700;
+      color: white;
+      background: rgba(0,0,0,0.5);
+      padding: 1px 3px;
+      border-radius: 2px;
+    }
+    
+    /* 미리보기 모달 */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal.active {
+      display: flex;
+    }
+    .modal-content {
+      background: white;
+      border-radius: 12px;
+      max-width: 90%;
+      max-height: 90%;
+      overflow: auto;
+      position: relative;
+      padding: 30px;
+    }
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 28px;
+      font-weight: 700;
+      color: #6b7280;
+      cursor: pointer;
+      background: #f3f4f6;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .modal-close:hover {
+      background: #e5e7eb;
+      color: #1f2937;
+    }
+    .modal-image {
+      max-width: 100%;
+      max-height: 70vh;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    .modal-info {
+      margin-top: 20px;
+      padding: 20px;
+      background: #f9fafb;
+      border-radius: 8px;
+    }
+    .modal-info h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 15px;
+    }
+    .modal-info-row {
+      display: flex;
+      margin: 10px 0;
+      font-size: 14px;
+    }
+    .modal-info-label {
+      font-weight: 600;
+      color: #6b7280;
+      min-width: 120px;
+    }
+    .modal-info-value {
+      color: #1f2937;
+      flex: 1;
+    }
+    
+    /* 피로도 분석 스타일 */
+    .fatigue-up {
+      color: #22c55e;
+      font-weight: 700;
+    }
+    .fatigue-up::before {
+      content: '▲ ';
+    }
+    .fatigue-down {
+      color: #ef4444;
+      font-weight: 700;
+    }
+    .fatigue-down::before {
+      content: '▼ ';
+    }
+    .fatigue-same {
+      color: #6b7280;
+      font-weight: 700;
+    }
+    .fatigue-same::before {
+      content: '— ';
+    }
+    .fatigue-badge {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .fatigue-badge-up {
+      background: #dcfce7;
+      color: #16a34a;
+    }
+    .fatigue-badge-down {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+    .fatigue-badge-same {
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📊 Step 1: 데이터 스코어링 테스트</h1>
+    <p class="subtitle">일자별 로데이터 → 소재별 집계 → Rank 점수 → Total Score 산출</p>
+
+    <div class="upload-area" id="uploadArea">
+      <p style="font-size: 16px; color: #666; margin-bottom: 10px;">📁 CSV 파일을 드래그하거나 클릭하여 업로드</p>
+      <p style="font-size: 12px; color: #999;">필수 컬럼: 소재명, 유형, 전환, 비용, 노출수</p>
+      <input type="file" id="fileInput" accept=".csv">
+      <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">파일 선택</button>
+      <button class="btn btn-secondary" onclick="loadSampleData()">샘플 데이터 테스트</button>
+    </div>
+
+    <div id="filterArea" style="display: none; margin-bottom: 30px; padding: 20px; background: #f9fafb; border-radius: 8px; border: 1px solid #e5e7eb;">
+      <h3 style="font-size: 16px; margin-bottom: 15px; color: #374151;">⚙️ 분석 설정</h3>
+      
+      <!-- 분석 기준 선택 -->
+      <div style="margin-bottom: 15px;">
+        <label style="display: block; font-size: 12px; color: #6b7280; margin-bottom: 8px; font-weight: 600;">📋 분석 기준</label>
+        <div style="display: flex; gap: 15px;">
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <input type="radio" name="groupBy" value="소재명" checked onchange="onGroupByChange()">
+            <span style="font-size: 14px;">소재명</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <input type="radio" name="groupBy" value="파일명" onchange="onGroupByChange()">
+            <span style="font-size: 14px;">파일명</span>
+          </label>
+        </div>
+        <p style="font-size: 11px; color: #9ca3af; margin-top: 5px;">* 소재명: 광고 카피 기준 집계 / 파일명: 동일 크리에이티브 파일 기준 집계</p>
+      </div>
+
+      <div style="border-top: 1px solid #e5e7eb; padding-top: 15px; margin-top: 15px;"></div>
+
+      <!-- 캠페인 필터 -->
+      <div style="margin-bottom: 15px;">
+        <label style="display: block; font-size: 12px; color: #6b7280; margin-bottom: 8px; font-weight: 600;">📢 캠페인 필터</label>
+        <select id="campaignFilter" onchange="onCampaignChange()" style="padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; min-width: 300px; background: white;">
+          <option value="">전체 캠페인</option>
+        </select>
+        <p style="font-size: 11px; color: #9ca3af; margin-top: 5px;">* 특정 캠페인의 성과만 확인하려면 선택하세요</p>
+      </div>
+
+      <div style="border-top: 1px solid #e5e7eb; padding-top: 15px; margin-top: 15px;"></div>
+
+      <!-- 기간 필터 -->
+      <h4 style="font-size: 14px; margin-bottom: 10px; color: #374151;">📅 기간 필터</h4>
+      <div style="display: flex; gap: 15px; align-items: center; flex-wrap: wrap;">
+        <div>
+          <label style="display: block; font-size: 12px; color: #6b7280; margin-bottom: 5px;">시작일</label>
+          <input type="date" id="startDate" style="padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px;">
+        </div>
+        <div>
+          <label style="display: block; font-size: 12px; color: #6b7280; margin-bottom: 5px;">종료일</label>
+          <input type="date" id="endDate" style="padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px;">
+        </div>
+        <div style="margin-top: 20px;">
+          <button class="btn btn-primary" onclick="applyDateFilter()">분석 실행</button>
+          <button class="btn btn-secondary" onclick="resetDateFilter()">초기화</button>
+        </div>
+        <div style="margin-top: 20px; margin-left: auto;">
+          <p style="font-size: 12px; color: #6b7280;" id="dateRangeInfo">전체 데이터 기간: -</p>
+          <p style="font-size: 12px; color: #0969da; font-weight: 600; margin-top: 3px;" id="groupByInfo">집계 기준: 소재명</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="results" class="results" style="display: none;">
+      <h2 style="font-size: 20px; margin-bottom: 20px;">📈 분석 결과</h2>
+      
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="stat-label">총 소재 수</div>
+          <div class="stat-value" id="statTotal">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">최고 점수</div>
+          <div class="stat-value" id="statMax">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">평균 점수</div>
+          <div class="stat-value" id="statAvg">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">최우수 소재</div>
+          <div class="stat-value" id="statExcellent">0</div>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>미리보기</th>
+            <th>순위</th>
+            <th>소재명 / 파일명</th>
+            <th>유형</th>
+            <th>Total Score</th>
+            <th>등급</th>
+            <th>전환</th>
+            <th>CPA</th>
+            <th>IPM</th>
+            <th>전환Rank</th>
+            <th>CPARank</th>
+            <th>IPMRank</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+
+      <div class="console-output">
+        <pre id="consoleOutput"></pre>
+      </div>
+    </div>
+
+    <!-- 소재 피로도 분석 섹션 -->
+    <div id="fatigueSection" style="display: none; margin-top: 40px; padding-top: 40px; border-top: 3px solid #e5e7eb;">
+      <h2 style="font-size: 24px; font-weight: 700; color: #1a1a1a; margin-bottom: 10px;">⏰ 소재 피로도 분석</h2>
+      <p style="font-size: 14px; color: #6b7280; margin-bottom: 30px;">두 기간을 비교하여 소재의 순위 변화와 성과 감소를 확인하세요.</p>
+
+      <!-- 기간 설정 -->
+      <div style="background: #f9fafb; border-radius: 8px; padding: 20px; margin-bottom: 30px; border: 1px solid #e5e7eb;">
+        <h3 style="font-size: 16px; margin-bottom: 15px; color: #374151;">📅 비교 기간 설정</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <!-- 기준 기간 -->
+          <div style="background: white; padding: 15px; border-radius: 6px; border: 2px solid #0969da;">
+            <h4 style="font-size: 14px; color: #0969da; margin-bottom: 10px; font-weight: 600;">📌 기준 기간 (Baseline)</h4>
+            <div style="margin-bottom: 10px;">
+              <label style="display: block; font-size: 12px; color: #6b7280; margin-bottom: 5px;">시작일</label>
+              <input type="date" id="baselineStart" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
+            </div>
+            <div>
+              <label style="display: block; font-size: 12px; color: #6b7280; margin-bottom: 5px;">종료일</label>
+              <input type="date" id="baselineEnd" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
+            </div>
+          </div>
+          
+          <!-- 비교 기간 -->
+          <div style="background: white; padding: 15px; border-radius: 6px; border: 2px solid #dc2626;">
+            <h4 style="font-size: 14px; color: #dc2626; margin-bottom: 10px; font-weight: 600;">🔍 비교 기간 (Comparison)</h4>
+            <div style="margin-bottom: 10px;">
+              <label style="display: block; font-size: 12px; color: #6b7280; margin-bottom: 5px;">시작일</label>
+              <input type="date" id="comparisonStart" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
+            </div>
+            <div>
+              <label style="display: block; font-size: 12px; color: #6b7280; margin-bottom: 5px;">종료일</label>
+              <input type="date" id="comparisonEnd" style="width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px;">
+            </div>
+          </div>
+        </div>
+        
+        <div style="margin-top: 15px; text-align: center;">
+          <button class="btn btn-primary" onclick="analyzeFatigue()" style="padding: 12px 30px; font-size: 15px;">
+            📊 피로도 분석 실행
+          </button>
+        </div>
+      </div>
+
+      <!-- 피로도 분석 결과 -->
+      <div id="fatigueResults" style="display: none;">
+        <h3 style="font-size: 18px; font-weight: 600; color: #1a1a1a; margin-bottom: 20px;">📊 분석 결과</h3>
+        
+        <!-- 요약 카드 -->
+        <div class="stat-cards" style="margin-bottom: 30px;">
+          <div class="stat-card" style="background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);">
+            <div class="stat-label">상승 소재</div>
+            <div class="stat-value" id="fatigueUp">0</div>
+          </div>
+          <div class="stat-card" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+            <div class="stat-label">유지 소재</div>
+            <div class="stat-value" id="fatigueSame">0</div>
+          </div>
+          <div class="stat-card" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+            <div class="stat-label">하락 소재</div>
+            <div class="stat-value" id="fatigueDown">0</div>
+          </div>
+          <div class="stat-card" style="background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);">
+            <div class="stat-label">평균 순위 변화</div>
+            <div class="stat-value" id="fatigueAvgChange">0</div>
+          </div>
+        </div>
+
+        <!-- 일자별 순위 변동 그래프 -->
+        <div style="background: white; padding: 25px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #e5e7eb;">
+          <h4 style="font-size: 16px; font-weight: 600; color: #1a1a1a; margin-bottom: 15px;">📈 일자별 순위 변동 추이 (Top 10)</h4>
+          <canvas id="fatigueChart" style="max-height: 400px;"></canvas>
+        </div>
+
+        <!-- 상세 테이블 -->
+        <div style="background: white; padding: 25px; border-radius: 8px; border: 1px solid #e5e7eb;">
+          <h4 style="font-size: 16px; font-weight: 600; color: #1a1a1a; margin-bottom: 15px;">📋 소재별 순위 변화 상세</h4>
+          <table id="fatigueTable">
+            <thead>
+              <tr>
+                <th>미리보기</th>
+                <th>소재명</th>
+                <th>유형</th>
+                <th>기준 기간<br>순위</th>
+                <th>비교 기간<br>순위</th>
+                <th>순위 변화</th>
+                <th>기준 전환</th>
+                <th>비교 전환</th>
+                <th>전환 변화율</th>
+                <th>피로도 상태</th>
+              </tr>
+            </thead>
+            <tbody id="fatigueTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 미리보기 모달 -->
+  <div id="previewModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closePreviewModal()">&times;</span>
+      <img id="modalImage" class="modal-image" src="" alt="소재 미리보기">
+      <div class="modal-info">
+        <h3>📊 소재 상세 정보</h3>
+        <div id="modalInfoContent"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/pipeline-engine.js"></script>
+  <script src="js/analysis-engine-v2.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script>
+    let consoleLog = '';
+    const originalConsoleLog = console.log;
+    console.log = function(...args) {
+      originalConsoleLog(...args);
+      consoleLog += args.join(' ') + '\n';
+      document.getElementById('consoleOutput').textContent = consoleLog;
+    };
+
+    let rawRows = null; // 전체 원본 데이터
+    let normalizedData = null; // 정규화된 데이터
+    let currentGroupBy = '소재명'; // 현재 집계 기준
+    let currentCampaign = ''; // 현재 선택된 캠페인
+    let allCampaigns = []; // 모든 캠페인 목록
+
+    // 드래그앤드롭
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+
+    uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadArea.classList.add('drag-over');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+      uploadArea.classList.remove('drag-over');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadArea.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file && file.name.endsWith('.csv')) {
+        processFile(file);
+      }
+    });
+
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) processFile(file);
+    });
+
+    function onGroupByChange() {
+      const selected = document.querySelector('input[name="groupBy"]:checked');
+      currentGroupBy = selected ? selected.value : '소재명';
+      document.getElementById('groupByInfo').textContent = `집계 기준: ${currentGroupBy}`;
+      
+      // 데이터가 있으면 자동 재분석
+      if (rawRows) {
+        applyDateFilter();
+      }
+    }
+    
+    function onCampaignChange() {
+      const select = document.getElementById('campaignFilter');
+      currentCampaign = select.value;
+      
+      console.log(`📢 캠페인 필터 변경: ${currentCampaign || '전체'}`);
+      
+      // 데이터가 있으면 자동 재분석
+      if (rawRows) {
+        applyDateFilter();
+      }
+    }
+    
+    function extractCampaigns(rows) {
+      const campaigns = new Set();
+      rows.forEach(row => {
+        if (row['캠페인'] && row['캠페인'].trim()) {
+          campaigns.add(row['캠페인'].trim());
+        }
+      });
+      return Array.from(campaigns).sort();
+    }
+    
+    function populateCampaignFilter(campaigns) {
+      const select = document.getElementById('campaignFilter');
+      // 기존 옵션 제거 (첫 번째 "전체" 제외)
+      while (select.options.length > 1) {
+        select.remove(1);
+      }
+      
+      // 캠페인 옵션 추가
+      campaigns.forEach(campaign => {
+        const option = document.createElement('option');
+        option.value = campaign;
+        option.textContent = campaign;
+        select.appendChild(option);
+      });
+      
+      console.log(`✅ 캠페인 필터 생성: ${campaigns.length}개 캠페인`);
+    }
+
+    function processFile(file) {
+      consoleLog = '';
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const text = e.target.result;
+        const parsed = plParseCSV(text);
+        if (!parsed) {
+          alert('CSV 파싱 실패');
+          return;
+        }
+        
+        normalizedData = plNormalizeColumns(parsed);
+        rawRows = normalizedData.rows;
+        
+        // 캠페인 목록 추출 및 필터 생성
+        allCampaigns = extractCampaigns(rawRows);
+        populateCampaignFilter(allCampaigns);
+        
+        // 날짜 범위 확인 및 필터 UI 표시
+        const result = runStep1_Scoring(rawRows, { groupBy: currentGroupBy });
+        
+        if (result.dateColumn && result.fullDateRange.min && result.fullDateRange.max) {
+          document.getElementById('filterArea').style.display = 'block';
+          document.getElementById('startDate').value = result.fullDateRange.min;
+          document.getElementById('endDate').value = result.fullDateRange.max;
+          document.getElementById('startDate').min = result.fullDateRange.min;
+          document.getElementById('startDate').max = result.fullDateRange.max;
+          document.getElementById('endDate').min = result.fullDateRange.min;
+          document.getElementById('endDate').max = result.fullDateRange.max;
+          document.getElementById('dateRangeInfo').textContent = 
+            `전체 데이터 기간: ${result.fullDateRange.min} ~ ${result.fullDateRange.max}`;
+          
+          // 피로도 분석 섹션 활성화 및 날짜 자동 설정
+          document.getElementById('fatigueSection').style.display = 'block';
+          
+          // 날짜 범위를 반으로 나누어 기준/비교 기간 자동 설정
+          const minDate = new Date(result.fullDateRange.min);
+          const maxDate = new Date(result.fullDateRange.max);
+          const midDate = new Date((minDate.getTime() + maxDate.getTime()) / 2);
+          const midDateStr = formatDate(midDate);
+          
+          // 기준 기간 (전반부)
+          document.getElementById('baselineStart').value = result.fullDateRange.min;
+          document.getElementById('baselineEnd').value = midDateStr;
+          document.getElementById('baselineStart').min = result.fullDateRange.min;
+          document.getElementById('baselineStart').max = result.fullDateRange.max;
+          document.getElementById('baselineEnd').min = result.fullDateRange.min;
+          document.getElementById('baselineEnd').max = result.fullDateRange.max;
+          
+          // 비교 기간 (후반부)
+          const nextDay = new Date(midDate);
+          nextDay.setDate(nextDay.getDate() + 1);
+          const nextDayStr = formatDate(nextDay);
+          
+          document.getElementById('comparisonStart').value = nextDayStr;
+          document.getElementById('comparisonEnd').value = result.fullDateRange.max;
+          document.getElementById('comparisonStart').min = result.fullDateRange.min;
+          document.getElementById('comparisonStart').max = result.fullDateRange.max;
+          document.getElementById('comparisonEnd').min = result.fullDateRange.min;
+          document.getElementById('comparisonEnd').max = result.fullDateRange.max;
+          
+          console.log(`⏰ 피로도 분석 기간 자동 설정:`);
+          console.log(`   기준 기간: ${result.fullDateRange.min} ~ ${midDateStr}`);
+          console.log(`   비교 기간: ${nextDayStr} ~ ${result.fullDateRange.max}`);
+        }
+        
+        displayResults(result.creatives, result.filteredDateRange);
+      };
+      reader.readAsText(file);
+    }
+
+    function applyDateFilter() {
+      if (!rawRows) {
+        alert('먼저 CSV 파일을 업로드해주세요.');
+        return;
+      }
+
+      consoleLog = '';
+      const startDate = document.getElementById('startDate').value;
+      const endDate = document.getElementById('endDate').value;
+      
+      // 캠페인 필터 적용
+      let filteredRows = rawRows;
+      if (currentCampaign) {
+        filteredRows = rawRows.filter(row => row['캠페인'] === currentCampaign);
+        console.log(`📢 캠페인 필터 적용: "${currentCampaign}" → ${filteredRows.length}개 행`);
+      }
+
+      const result = runStep1_Scoring(filteredRows, {
+        startDate: startDate || null,
+        endDate: endDate || null,
+        groupBy: currentGroupBy
+      });
+
+      displayResults(result.creatives, result.filteredDateRange);
+    }
+
+    function resetDateFilter() {
+      if (!rawRows) return;
+
+      consoleLog = '';
+      
+      // 캠페인 필터 초기화
+      document.getElementById('campaignFilter').value = '';
+      currentCampaign = '';
+      
+      const result = runStep1_Scoring(rawRows, { groupBy: currentGroupBy });
+      
+      document.getElementById('startDate').value = result.fullDateRange.min;
+      document.getElementById('endDate').value = result.fullDateRange.max;
+      
+      displayResults(result.creatives, result.filteredDateRange);
+    }
+
+    function displayResults(creatives, dateRange) {
+      document.getElementById('results').style.display = 'block';
+      
+      // 통계
+      const total = creatives.length;
+      const maxScore = creatives[0]?.TotalScore || 0;
+      const avgScore = total > 0 ? (creatives.reduce((s, c) => s + c.TotalScore, 0) / total).toFixed(1) : 0;
+      const excellent = creatives.filter(c => c.등급 === '최우수').length;
+      
+      document.getElementById('statTotal').textContent = total;
+      document.getElementById('statMax').textContent = maxScore;
+      document.getElementById('statAvg').textContent = avgScore;
+      document.getElementById('statExcellent').textContent = excellent;
+      
+      // 테이블
+      const tbody = document.getElementById('tableBody');
+      tbody.innerHTML = '';
+      
+      if (creatives.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="12" style="text-align: center; color: #999; padding: 40px;">필터 조건에 해당하는 데이터가 없습니다.</td></tr>';
+        return;
+      }
+      
+      creatives.forEach(c => {
+        const row = document.createElement('tr');
+        
+        // 미리보기 이미지 URL 추출
+        const imageUrl = c.meta?.['링크'] || '';
+        const isVideo = c.유형 === 'VID';
+        const hasImage = imageUrl && imageUrl.startsWith('http');
+        
+        // 썸네일 HTML 생성
+        let thumbnailHtml;
+        if (isVideo) {
+          // 동영상: 플레이 버튼 표시
+          thumbnailHtml = `<div class="preview-video" onclick="openPreviewModal(${c.Rank - 1})"></div>`;
+        } else if (hasImage) {
+          // 이미지: 실제 이미지 표시
+          thumbnailHtml = `<img src="${imageUrl}" class="preview-thumb" onclick="openPreviewModal(${c.Rank - 1})" alt="미리보기">`;
+        } else {
+          // 없음: 플레이스홀더
+          thumbnailHtml = '<div class="preview-placeholder">📷</div>';
+        }
+        
+        row.innerHTML = `
+          <td style="text-align: center;">${thumbnailHtml}</td>
+          <td><strong>#${c.Rank}</strong></td>
+          <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis;" title="${c.소재명}">
+            <div style="font-weight: 600;">${c.집계기준}</div>
+            <div style="font-size: 11px; color: #9ca3af; margin-top: 2px;">
+              ${currentGroupBy === '파일명' ? c.소재명 : c.파일명 || '-'}
+            </div>
+          </td>
+          <td><span style="font-weight: 600; color: ${c.유형 === 'VID' ? '#8b5cf6' : '#f59e0b'};">${c.유형}</span></td>
+          <td>
+            <strong>${c.TotalScore}</strong>
+            <div class="score-bar"><div class="score-bar-fill" style="width: ${c.TotalScore}%"></div></div>
+          </td>
+          <td><span class="badge badge-${c.등급}">${c.등급}</span></td>
+          <td>${c.전환.toLocaleString()}</td>
+          <td>${c.CPA.toLocaleString()}원</td>
+          <td>${c.IPM.toFixed(2)}</td>
+          <td>${c.전환Rank.toFixed(1)}</td>
+          <td>${c.CPARank.toFixed(1)}</td>
+          <td>${c.IPMRank.toFixed(1)}</td>
+        `;
+        tbody.appendChild(row);
+      });
+      
+      // 전역 변수에 저장 (모달에서 사용)
+      window.currentCreatives = creatives;
+    }
+
+    function loadSampleData() {
+      // sample_data/PHPH.csv 자동 로드 테스트
+      fetch('sample_data/PHPH.csv')
+        .then(res => res.text())
+        .then(text => {
+          consoleLog = '';
+          console.log('🔄 sample_data/PHPH.csv 자동 로드 시작...');
+          
+          const parsed = plParseCSV(text);
+          if (!parsed) {
+            console.error('❌ CSV 파싱 실패');
+            alert('CSV 파싱 실패');
+            return;
+          }
+          
+          console.log(`✅ CSV 파싱 완료: ${parsed.headers.length}개 컬럼, ${parsed.rows.length}개 행`);
+          
+          normalizedData = plNormalizeColumns(parsed);
+          rawRows = normalizedData.rows;
+          
+          console.log('📋 정규화 완료:', {
+            원본컬럼수: parsed.headers.length,
+            정규화컬럼수: normalizedData.headers.length,
+            행수: rawRows.length
+          });
+          
+          // 캠페인 목록 추출 및 필터 생성
+          allCampaigns = extractCampaigns(rawRows);
+          populateCampaignFilter(allCampaigns);
+          
+          // 날짜 범위 확인 및 필터 UI 표시
+          const result = runStep1_Scoring(rawRows, { groupBy: currentGroupBy });
+          
+          if (result.dateColumn && result.fullDateRange.min && result.fullDateRange.max) {
+            document.getElementById('filterArea').style.display = 'block';
+            document.getElementById('startDate').value = result.fullDateRange.min;
+            document.getElementById('endDate').value = result.fullDateRange.max;
+            document.getElementById('startDate').min = result.fullDateRange.min;
+            document.getElementById('startDate').max = result.fullDateRange.max;
+            document.getElementById('endDate').min = result.fullDateRange.min;
+            document.getElementById('endDate').max = result.fullDateRange.max;
+            document.getElementById('dateRangeInfo').textContent = 
+              `전체 데이터 기간: ${result.fullDateRange.min} ~ ${result.fullDateRange.max}`;
+          }
+          
+          displayResults(result.creatives, result.filteredDateRange);
+        })
+        .catch(err => {
+          console.error('❌ CSV 로드 실패:', err);
+          alert('CSV 파일을 찾을 수 없습니다. 파일 업로드를 사용해주세요.');
+        });
+    }
+    
+    // 페이지 로드 시 자동 실행
+    window.addEventListener('DOMContentLoaded', () => {
+      console.log('🚀 Step 1 Scoring Test 페이지 로드 완료');
+      console.log('💡 "샘플 데이터 테스트" 버튼을 클릭하거나 CSV 파일을 업로드하세요.');
+    });
+    
+    // 미리보기 모달 함수
+    function openPreviewModal(index) {
+      if (!window.currentCreatives || !window.currentCreatives[index]) {
+        alert('소재 정보를 찾을 수 없습니다.');
+        return;
+      }
+      
+      const creative = window.currentCreatives[index];
+      const contentUrl = creative.meta?.['링크'] || '';
+      const isVideo = creative.유형 === 'VID';
+      
+      if (!contentUrl || !contentUrl.startsWith('http')) {
+        alert('미리보기 콘텐츠가 없습니다.');
+        return;
+      }
+      
+      // 모달 이미지/동영상 설정
+      const modalImage = document.getElementById('modalImage');
+      const modalContent = modalImage.parentElement;
+      
+      if (isVideo) {
+        // 동영상: YouTube 임베드로 변경
+        const videoId = extractYouTubeID(contentUrl);
+        if (videoId) {
+          modalImage.style.display = 'none';
+          // iframe 생성 (youtube-nocookie.com 사용으로 임베드 오류 방지)
+          const iframe = document.createElement('iframe');
+          iframe.id = 'modalVideo';
+          iframe.className = 'modal-image';
+          iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+          iframe.frameBorder = '0';
+          iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+          iframe.allowFullscreen = true;
+          iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+          modalContent.insertBefore(iframe, modalImage.nextSibling);
+        } else {
+          modalImage.style.display = 'block';
+          modalImage.src = '';
+          modalImage.alt = '동영상 미리보기 불가';
+        }
+      } else {
+        // 이미지
+        const existingIframe = document.getElementById('modalVideo');
+        if (existingIframe) existingIframe.remove();
+        modalImage.style.display = 'block';
+        modalImage.src = contentUrl;
+      }
+      
+      // 모달 정보 설정
+      const infoContent = document.getElementById('modalInfoContent');
+      infoContent.innerHTML = `
+        <div class="modal-info-row">
+          <div class="modal-info-label">순위</div>
+          <div class="modal-info-value"><strong>#${creative.Rank}</strong></div>
+        </div>
+        <div class="modal-info-row">
+          <div class="modal-info-label">소재명</div>
+          <div class="modal-info-value">${creative.소재명 || '-'}</div>
+        </div>
+        <div class="modal-info-row">
+          <div class="modal-info-label">파일명</div>
+          <div class="modal-info-value">${creative.파일명 || '-'}</div>
+        </div>
+        <div class="modal-info-row">
+          <div class="modal-info-label">유형</div>
+          <div class="modal-info-value"><strong style="color: ${creative.유형 === 'VID' ? '#8b5cf6' : '#f59e0b'};">${creative.유형}</strong> ${isVideo ? '(동영상)' : '(이미지)'}</div>
+        </div>
+        <div class="modal-info-row">
+          <div class="modal-info-label">Total Score</div>
+          <div class="modal-info-value"><strong style="font-size: 18px; color: #0969da;">${creative.TotalScore}</strong> <span style="font-size: 12px; color: #6b7280;">(${creative.등급})</span></div>
+        </div>
+        <div class="modal-info-row">
+          <div class="modal-info-label">전환</div>
+          <div class="modal-info-value"><strong>${creative.전환.toLocaleString()}</strong> (Rank: ${creative.전환Rank.toFixed(1)})</div>
+        </div>
+        <div class="modal-info-row">
+          <div class="modal-info-label">CPA</div>
+          <div class="modal-info-value"><strong>${creative.CPA.toLocaleString()}원</strong> (Rank: ${creative.CPARank.toFixed(1)})</div>
+        </div>
+        <div class="modal-info-row">
+          <div class="modal-info-label">IPM</div>
+          <div class="modal-info-value"><strong>${creative.IPM.toFixed(2)}</strong> (Rank: ${creative.IPMRank.toFixed(1)})</div>
+        </div>
+        <div class="modal-info-row">
+          <div class="modal-info-label">비용</div>
+          <div class="modal-info-value">${creative.비용.toLocaleString()}원</div>
+        </div>
+        <div class="modal-info-row">
+          <div class="modal-info-label">노출수</div>
+          <div class="modal-info-value">${creative.노출수.toLocaleString()}</div>
+        </div>
+        <div class="modal-info-row">
+          <div class="modal-info-label">클릭수</div>
+          <div class="modal-info-value">${creative.클릭수.toLocaleString()}</div>
+        </div>
+        <div class="modal-info-row">
+          <div class="modal-info-label">CTR</div>
+          <div class="modal-info-value">${creative.CTR.toFixed(2)}%</div>
+        </div>
+        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e5e7eb;">
+          <a href="${contentUrl}" target="_blank" style="color: #0969da; text-decoration: none; font-weight: 600;">
+            🔗 새 탭에서 ${isVideo ? 'YouTube에서 보기' : '원본 이미지 보기'}
+          </a>
+        </div>
+      `;
+      
+      // 모달 표시
+      document.getElementById('previewModal').classList.add('active');
+    }
+    
+    // YouTube URL에서 Video ID 추출
+    function extractYouTubeID(url) {
+      const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[7].length === 11) ? match[7] : null;
+    }
+    
+    function closePreviewModal() {
+      // iframe 제거 (동영상 정지)
+      const iframe = document.getElementById('modalVideo');
+      if (iframe) iframe.remove();
+      
+      document.getElementById('previewModal').classList.remove('active');
+    }
+    
+    // ESC 키로 모달 닫기
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closePreviewModal();
+      }
+    });
+    
+    // 모달 배경 클릭 시 닫기
+    document.getElementById('previewModal').addEventListener('click', (e) => {
+      if (e.target.id === 'previewModal') {
+        closePreviewModal();
+      }
+    });
+    
+    // ═══════════════════════════════════════════
+    // 소재 피로도 분석 함수
+    // ═══════════════════════════════════════════
+    
+    let fatigueChartInstance = null;
+    
+    function analyzeFatigue() {
+      if (!rawRows) {
+        alert('먼저 CSV 파일을 업로드해주세요.');
+        return;
+      }
+      
+      // 기간 입력값 가져오기
+      const baselineStart = document.getElementById('baselineStart').value;
+      const baselineEnd = document.getElementById('baselineEnd').value;
+      const comparisonStart = document.getElementById('comparisonStart').value;
+      const comparisonEnd = document.getElementById('comparisonEnd').value;
+      
+      if (!baselineStart || !baselineEnd || !comparisonStart || !comparisonEnd) {
+        alert('모든 기간을 입력해주세요.');
+        return;
+      }
+      
+      console.log('⏰ 피로도 분석 시작...');
+      console.log(`   기준 기간: ${baselineStart} ~ ${baselineEnd}`);
+      console.log(`   비교 기간: ${comparisonStart} ~ ${comparisonEnd}`);
+      
+      // 캠페인 필터 적용
+      let filteredRows = rawRows;
+      if (currentCampaign) {
+        filteredRows = rawRows.filter(row => row['캠페인'] === currentCampaign);
+      }
+      
+      // 기준 기간 분석
+      const baselineResult = runStep1_Scoring(filteredRows, {
+        startDate: baselineStart,
+        endDate: baselineEnd,
+        groupBy: currentGroupBy
+      });
+      
+      // 비교 기간 분석
+      const comparisonResult = runStep1_Scoring(filteredRows, {
+        startDate: comparisonStart,
+        endDate: comparisonEnd,
+        groupBy: currentGroupBy
+      });
+      
+      // 소재별 순위 비교
+      const fatigueData = comparePeriodRanks(baselineResult.creatives, comparisonResult.creatives);
+      
+      // 일자별 순위 추적
+      const dailyRanks = trackDailyRankings(filteredRows, baselineStart, comparisonEnd);
+      
+      // 결과 표시
+      displayFatigueResults(fatigueData, dailyRanks);
+    }
+    
+    function comparePeriodRanks(baselineCreatives, comparisonCreatives) {
+      // 소재명/파일명 기준으로 매핑
+      const baselineMap = new Map();
+      baselineCreatives.forEach(c => {
+        baselineMap.set(c.집계기준, c);
+      });
+      
+      const comparisonMap = new Map();
+      comparisonCreatives.forEach(c => {
+        comparisonMap.set(c.집계기준, c);
+      });
+      
+      // 공통 소재 찾기
+      const commonKeys = [...baselineMap.keys()].filter(key => comparisonMap.has(key));
+      
+      const fatigueData = commonKeys.map(key => {
+        const baseline = baselineMap.get(key);
+        const comparison = comparisonMap.get(key);
+        
+        const rankChange = baseline.Rank - comparison.Rank; // 양수: 상승, 음수: 하락
+        const convChange = comparison.전환 - baseline.전환;
+        const convChangeRate = baseline.전환 > 0 ? ((comparison.전환 - baseline.전환) / baseline.전환 * 100) : 0;
+        
+        let status = 'same';
+        if (rankChange > 0) status = 'up';
+        else if (rankChange < 0) status = 'down';
+        
+        return {
+          소재명: baseline.소재명,
+          파일명: baseline.파일명,
+          집계기준: key,
+          유형: baseline.유형,
+          baselineRank: baseline.Rank,
+          comparisonRank: comparison.Rank,
+          rankChange: rankChange,
+          baseline전환: baseline.전환,
+          comparison전환: comparison.전환,
+          전환변화: convChange,
+          전환변화율: convChangeRate,
+          status: status,
+          meta: baseline.meta
+        };
+      });
+      
+      // 순위 변화 절대값 기준 정렬
+      fatigueData.sort((a, b) => Math.abs(b.rankChange) - Math.abs(a.rankChange));
+      
+      console.log(`✅ 피로도 분석 완료: ${fatigueData.length}개 공통 소재`);
+      
+      return fatigueData;
+    }
+    
+    function trackDailyRankings(rows, startDate, endDate) {
+      const dateColumn = detectDateColumn(Object.keys(rows[0]));
+      if (!dateColumn) return {};
+      
+      // 캠페인 필터 적용
+      let filteredRows = rows;
+      if (currentCampaign) {
+        filteredRows = rows.filter(row => row['캠페인'] === currentCampaign);
+      }
+      
+      // 날짜별로 데이터 그룹화
+      const dateGroups = {};
+      filteredRows.forEach(row => {
+        const dateStr = row[dateColumn];
+        const date = parseDate(dateStr);
+        if (!date) return;
+        
+        const formatted = formatDate(date);
+        if (formatted >= startDate && formatted <= endDate) {
+          if (!dateGroups[formatted]) dateGroups[formatted] = [];
+          dateGroups[formatted].push(row);
+        }
+      });
+      
+      // 날짜별 순위 계산
+      const dailyRanks = {};
+      Object.keys(dateGroups).sort().forEach(date => {
+        const dayRows = dateGroups[date];
+        const dayResult = runStep1_Scoring(dayRows, { groupBy: currentGroupBy });
+        
+        dayResult.creatives.forEach(c => {
+          if (!dailyRanks[c.집계기준]) {
+            dailyRanks[c.집계기준] = [];
+          }
+          dailyRanks[c.집계기준].push({
+            date: date,
+            rank: c.Rank,
+            score: c.TotalScore
+          });
+        });
+      });
+      
+      console.log(`📈 일자별 순위 추적 완료: ${Object.keys(dateGroups).length}개 날짜`);
+      
+      return dailyRanks;
+    }
+    
+    function displayFatigueResults(fatigueData, dailyRanks) {
+      document.getElementById('fatigueResults').style.display = 'block';
+      
+      // 요약 통계
+      const upCount = fatigueData.filter(d => d.status === 'up').length;
+      const downCount = fatigueData.filter(d => d.status === 'down').length;
+      const sameCount = fatigueData.filter(d => d.status === 'same').length;
+      const avgChange = fatigueData.reduce((sum, d) => sum + d.rankChange, 0) / fatigueData.length;
+      
+      document.getElementById('fatigueUp').textContent = upCount;
+      document.getElementById('fatigueDown').textContent = downCount;
+      document.getElementById('fatigueSame').textContent = sameCount;
+      document.getElementById('fatigueAvgChange').textContent = avgChange >= 0 ? `+${avgChange.toFixed(1)}` : avgChange.toFixed(1);
+      
+      // 일자별 순위 그래프 (Top 10)
+      displayFatigueChart(fatigueData.slice(0, 10), dailyRanks);
+      
+      // 상세 테이블
+      displayFatigueTable(fatigueData);
+      
+      // 결과로 스크롤
+      document.getElementById('fatigueResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    
+    function displayFatigueChart(topCreatives, dailyRanks) {
+      const canvas = document.getElementById('fatigueChart');
+      const ctx = canvas.getContext('2d');
+      
+      // 기존 차트 제거
+      if (fatigueChartInstance) {
+        fatigueChartInstance.destroy();
+      }
+      
+      // 날짜 목록 (정렬된 고유값)
+      const allDates = new Set();
+      Object.values(dailyRanks).forEach(ranks => {
+        ranks.forEach(r => allDates.add(r.date));
+      });
+      const dates = Array.from(allDates).sort();
+      
+      // 데이터셋 생성
+      const datasets = topCreatives.map((creative, index) => {
+        const key = creative.집계기준;
+        const ranks = dailyRanks[key] || [];
+        
+        // 날짜별 순위 매핑
+        const data = dates.map(date => {
+          const rank = ranks.find(r => r.date === date);
+          return rank ? rank.rank : null;
+        });
+        
+        // 색상 생성
+        const colors = [
+          '#ef4444', '#f59e0b', '#eab308', '#84cc16', '#22c55e',
+          '#10b981', '#14b8a6', '#06b6d4', '#0ea5e9', '#3b82f6'
+        ];
+        const color = colors[index % colors.length];
+        
+        return {
+          label: key.substring(0, 30) + (key.length > 30 ? '...' : ''),
+          data: data,
+          borderColor: color,
+          backgroundColor: color + '20',
+          borderWidth: 2,
+          tension: 0.3,
+          pointRadius: 4,
+          pointHoverRadius: 6
+        };
+      });
+      
+      fatigueChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: dates,
+          datasets: datasets
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          interaction: {
+            mode: 'index',
+            intersect: false
+          },
+          plugins: {
+            legend: {
+              display: true,
+              position: 'bottom',
+              labels: {
+                boxWidth: 12,
+                padding: 10,
+                font: { size: 11 }
+              }
+            },
+            title: {
+              display: false
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return context.dataset.label + ': ' + context.parsed.y + '위';
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              reverse: true, // 순위는 낮을수록 좋으므로 반전
+              beginAtZero: false,
+              title: {
+                display: true,
+                text: '순위 (낮을수록 좋음)'
+              },
+              ticks: {
+                stepSize: 1
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: '날짜'
+              }
+            }
+          }
+        }
+      });
+    }
+    
+    function displayFatigueTable(fatigueData) {
+      const tbody = document.getElementById('fatigueTableBody');
+      tbody.innerHTML = '';
+      
+      fatigueData.forEach(d => {
+        const row = document.createElement('tr');
+        
+        // 미리보기 썸네일
+        const imageUrl = d.meta?.['링크'] || '';
+        const isVideo = d.유형 === 'VID';
+        const hasImage = imageUrl && imageUrl.startsWith('http');
+        
+        let thumbnailHtml;
+        if (isVideo) {
+          thumbnailHtml = `<div class="preview-video" style="width: 50px; height: 50px;"></div>`;
+        } else if (hasImage) {
+          thumbnailHtml = `<img src="${imageUrl}" class="preview-thumb" style="width: 50px; height: 50px;" alt="미리보기">`;
+        } else {
+          thumbnailHtml = '<div class="preview-placeholder" style="width: 50px; height: 50px; font-size: 16px;">📷</div>';
+        }
+        
+        // 순위 변화 표시
+        let rankChangeHtml;
+        if (d.rankChange > 0) {
+          rankChangeHtml = `<span class="fatigue-up">+${d.rankChange}</span>`;
+        } else if (d.rankChange < 0) {
+          rankChangeHtml = `<span class="fatigue-down">${d.rankChange}</span>`;
+        } else {
+          rankChangeHtml = `<span class="fatigue-same">0</span>`;
+        }
+        
+        // 전환 변화율 표시
+        const convChangeClass = d.전환변화율 >= 0 ? 'fatigue-up' : 'fatigue-down';
+        const convChangeText = d.전환변화율 >= 0 ? `+${d.전환변화율.toFixed(1)}%` : `${d.전환변화율.toFixed(1)}%`;
+        
+        // 상태 배지
+        let statusBadge;
+        if (d.status === 'up') {
+          statusBadge = '<span class="fatigue-badge fatigue-badge-up">개선</span>';
+        } else if (d.status === 'down') {
+          statusBadge = '<span class="fatigue-badge fatigue-badge-down">피로도 증가</span>';
+        } else {
+          statusBadge = '<span class="fatigue-badge fatigue-badge-same">유지</span>';
+        }
+        
+        row.innerHTML = `
+          <td style="text-align: center;">${thumbnailHtml}</td>
+          <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;" title="${d.소재명}">
+            <div style="font-weight: 600; font-size: 13px;">${d.집계기준.substring(0, 40)}${d.집계기준.length > 40 ? '...' : ''}</div>
+          </td>
+          <td><span style="font-weight: 600; color: ${d.유형 === 'VID' ? '#8b5cf6' : '#f59e0b'};">${d.유형}</span></td>
+          <td style="text-align: center;"><strong>#${d.baselineRank}</strong></td>
+          <td style="text-align: center;"><strong>#${d.comparisonRank}</strong></td>
+          <td style="text-align: center;">${rankChangeHtml}</td>
+          <td style="text-align: right;">${d.baseline전환.toLocaleString()}</td>
+          <td style="text-align: right;">${d.comparison전환.toLocaleString()}</td>
+          <td style="text-align: right;"><span class="${convChangeClass}">${convChangeText}</span></td>
+          <td style="text-align: center;">${statusBadge}</td>
+        `;
+        
+        tbody.appendChild(row);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 1 고급 분석 - Pepp Heroes</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Pretendard', -apple-system, sans-serif;
+      background: #f5f7fa;
+      padding: 30px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 1600px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+    .tabs {
+      display: flex;
+      gap: 10px;
+      border-bottom: 2px solid #e5e7eb;
+      margin-bottom: 30px;
+    }
+    .tab {
+      padding: 12px 24px;
+      border: none;
+      background: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: #6b7280;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+    }
+    .tab:hover {
+      color: #0969da;
+    }
+    .tab.active {
+      color: #0969da;
+      border-bottom-color: #0969da;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .upload-area {
+      border: 2px dashed #d0d7de;
+      border-radius: 8px;
+      padding: 40px;
+      text-align: center;
+      margin-bottom: 30px;
+      background: #f9fafb;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .upload-area:hover {
+      border-color: #0969da;
+      background: #f3f8ff;
+    }
+    .upload-area.drag-over {
+      border-color: #0969da;
+      background: #ddf4ff;
+    }
+    input[type="file"] {
+      display: none;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: #0969da;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #0550ae;
+    }
+    .btn-secondary {
+      background: #f3f4f6;
+      color: #1f2937;
+      margin-left: 10px;
+    }
+    .btn-secondary:hover {
+      background: #e5e7eb;
+    }
+    .filter-section {
+      background: #f9fafb;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      margin-bottom: 30px;
+    }
+    .filter-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #374151;
+    }
+    .filter-row {
+      display: flex;
+      gap: 15px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+    .filter-group {
+      flex: 1;
+      min-width: 200px;
+    }
+    .filter-group label {
+      display: block;
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    .filter-group input[type="date"] {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    .stat-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .stat-label {
+      font-size: 12px;
+      opacity: 0.9;
+      margin-bottom: 5px;
+    }
+    .stat-value {
+      font-size: 28px;
+      font-weight: 700;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 13px;
+    }
+    th {
+      background: #f9fafb;
+      font-weight: 600;
+      color: #374151;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    tr:hover {
+      background: #f9fafb;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge-최우수 { background: #dcfce7; color: #166534; }
+    .badge-우수 { background: #dbeafe; color: #1e40af; }
+    .badge-보통 { background: #fef3c7; color: #92400e; }
+    .badge-미흡 { background: #fee2e2; color: #991b1b; }
+    .badge-improved { background: #dcfce7; color: #166534; }
+    .badge-declined { background: #fee2e2; color: #991b1b; }
+    .badge-stable { background: #f3f4f6; color: #6b7280; }
+    .badge-new { background: #dbeafe; color: #1e40af; }
+    .badge-removed { background: #f3f4f6; color: #9ca3af; }
+    .rank-change {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .rank-change.up { color: #059669; }
+    .rank-change.down { color: #dc2626; }
+    .chart-container {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      margin-bottom: 20px;
+    }
+    .chart-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #374151;
+    }
+    .thumbnail {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .thumbnail:hover {
+      transform: scale(1.05);
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal.active {
+      display: flex;
+    }
+    .modal-content {
+      background: white;
+      border-radius: 12px;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 20px;
+    }
+    .modal-image {
+      width: 100%;
+      border-radius: 12px 12px 0 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📊 Step 1: 고급 소재 분석</h1>
+    <p class="subtitle">기간 비교, 피로도 분석, 일자별 순위 추적, 소재 미리보기</p>
+
+    <div class="upload-area" id="uploadArea">
+      <p style="font-size: 16px; color: #666; margin-bottom: 10px;">📁 CSV 파일을 드래그하거나 클릭하여 업로드</p>
+      <p style="font-size: 12px; color: #999;">필수 컬럼: 소재명, 유형, 전환, 비용, 노출수, 일자(날짜)</p>
+      <input type="file" id="fileInput" accept=".csv">
+      <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">파일 선택</button>
+    </div>
+
+    <div class="tabs" id="tabs" style="display: none;">
+      <button class="tab active" data-tab="single">단일 기간 분석</button>
+      <button class="tab" data-tab="compare">기간 비교</button>
+      <button class="tab" data-tab="trend">일자별 추이</button>
+    </div>
+
+    <!-- 탭 1: 단일 기간 분석 -->
+    <div id="tab-single" class="tab-content active">
+      <div class="filter-section" id="singleFilter" style="display: none;">
+        <div class="filter-title">📅 분석 기간 설정</div>
+        <div class="filter-row">
+          <div class="filter-group">
+            <label>시작일</label>
+            <input type="date" id="singleStart">
+          </div>
+          <div class="filter-group">
+            <label>종료일</label>
+            <input type="date" id="singleEnd">
+          </div>
+          <div>
+            <button class="btn btn-primary" onclick="runSingleAnalysis()">분석 실행</button>
+            <button class="btn btn-secondary" onclick="resetSingle()">초기화</button>
+          </div>
+        </div>
+        <p style="font-size: 12px; color: #6b7280; margin-top: 10px;" id="singleDateInfo">-</p>
+      </div>
+
+      <div id="singleResults" style="display: none;">
+        <div class="stat-cards">
+          <div class="stat-card">
+            <div class="stat-label">총 소재 수</div>
+            <div class="stat-value" id="singleTotal">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">최고 점수</div>
+            <div class="stat-value" id="singleMax">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">평균 점수</div>
+            <div class="stat-value" id="singleAvg">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">최우수 소재</div>
+            <div class="stat-value" id="singleExcellent">0</div>
+          </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>미리보기</th>
+                <th>순위</th>
+                <th>소재명</th>
+                <th>유형</th>
+                <th>Total Score</th>
+                <th>등급</th>
+                <th>전환</th>
+                <th>CPA</th>
+                <th>IPM</th>
+              </tr>
+            </thead>
+            <tbody id="singleTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 탭 2: 기간 비교 -->
+    <div id="tab-compare" class="tab-content">
+      <div class="filter-section" id="compareFilter" style="display: none;">
+        <div class="filter-title">📅 비교 기간 설정</div>
+        <div class="filter-row" style="margin-bottom: 15px;">
+          <div class="filter-group">
+            <label>기준 기간 시작일</label>
+            <input type="date" id="baseStart">
+          </div>
+          <div class="filter-group">
+            <label>기준 기간 종료일</label>
+            <input type="date" id="baseEnd">
+          </div>
+        </div>
+        <div class="filter-row">
+          <div class="filter-group">
+            <label>비교 기간 시작일</label>
+            <input type="date" id="compStart">
+          </div>
+          <div class="filter-group">
+            <label>비교 기간 종료일</label>
+            <input type="date" id="compEnd">
+          </div>
+          <div>
+            <button class="btn btn-primary" onclick="runCompareAnalysis()">비교 분석</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="compareResults" style="display: none;">
+        <div class="stat-cards">
+          <div class="stat-card">
+            <div class="stat-label">개선 소재</div>
+            <div class="stat-value" id="compImproved">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">하락 소재</div>
+            <div class="stat-value" id="compDeclined">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">유지 소재</div>
+            <div class="stat-value" id="compStable">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">신규 소재</div>
+            <div class="stat-value" id="compNew">0</div>
+          </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>미리보기</th>
+                <th>소재명</th>
+                <th>유형</th>
+                <th>상태</th>
+                <th>순위 변동</th>
+                <th>기준 순위</th>
+                <th>비교 순위</th>
+                <th>기준 점수</th>
+                <th>비교 점수</th>
+                <th>점수 변화</th>
+              </tr>
+            </thead>
+            <tbody id="compareTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 탭 3: 일자별 추이 -->
+    <div id="tab-trend" class="tab-content">
+      <div class="filter-section" style="display: none;" id="trendFilter">
+        <div class="filter-title">📈 추적 설정</div>
+        <div class="filter-row">
+          <div class="filter-group" style="flex: 2;">
+            <label>추적할 소재 (쉼표로 구분, 비워두면 전체)</label>
+            <input type="text" id="trendCreatives" placeholder="소재명1, 소재명2, ..." style="width: 100%; padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px;">
+          </div>
+          <div>
+            <button class="btn btn-primary" onclick="runTrendAnalysis()">추이 분석</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="trendResults" style="display: none;">
+        <div class="chart-container">
+          <div class="chart-title">📈 일자별 순위 변화</div>
+          <canvas id="trendChart" height="100"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 미리보기 모달 -->
+  <div class="modal" id="previewModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <img id="modalImage" class="modal-image" src="" alt="소재 미리보기">
+      <div style="padding: 20px;">
+        <h3 id="modalTitle" style="font-size: 18px; margin-bottom: 10px;"></h3>
+        <p id="modalInfo" style="color: #666; font-size: 14px;"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/pipeline-engine.js"></script>
+  <script src="js/analysis-engine-v2.js"></script>
+  <script src="test_step1_advanced.js"></script>
+</body>
+</html>

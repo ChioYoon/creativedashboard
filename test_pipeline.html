@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Pipeline Engine Test</title></head>
+<body>
+<pre id="out" style="font-size:12px;line-height:1.6;white-space:pre-wrap;"></pre>
+<script src="js/pipeline-data.js"></script>
+<script src="js/pipeline-engine.js"></script>
+<script>
+function log(...args) {
+  document.getElementById('out').textContent += args.join(' ') + '\n';
+  console.log(...args);
+}
+
+// ── 실제 UA CSV 구조 시뮬레이션 (EUC-KR 디코딩 후 데이터)
+const REAL_CSV_SAMPLE = `앱 확장 소재,앱 확장 소재 유형,캠페인,광고그룹,일,전환,통화 코드,비용,노출수,클릭수,Revenue,유형,사이즈,투입일,시기,USP,Concept,언어,파일명,소재명,링크,hooking_strategy,audio_elements_bgm,audio_elements_sfx_emphasized,audio_elements_narration,audio_elements_cv,text_analysis_extracted_copy,text_analysis_core_usp,title_specific_system,title_specific_mechanic,title_specific_faction_race,title_specific_identified_character,title_specific_theme,title_specific_special_note,gameplay,visual_technique,environment,emotion,character_object,art_style,marketer_insight
+Add a Spark to Your Day,광고 제목,HQ_HQ_PH_US-EN_GA_NU-Pre_AD_ACp_260406,P_ALL_AUTO_AUTO_ALL_NONE_260406_2,2026-04-06,12,KRW,75012,754,59,0,TXT,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Pepp Heroes,광고 제목,HQ_HQ_PH_US-EN_GA_NU-Pre_AD_ACp_260406,P_ALL_AUTO_AUTO_ALL_NONE_260406_2,2026-04-06,7,KRW,39360,744,44,0,TXT,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+"251104_BNR_A-Character-Adventure01A-DA_L_1200x628_EN.jpg;https://tpc.googlesyndication.com/simgad/7852267225455295083",가로형 이미지,HQ_HQ_PH_US-EN_GA_NU-Pre_AD_ACp_260406,P_ALL_AUTO_AUTO_ALL_NONE_260406_2,2026-04-06,22,KRW,127881,2526,152,0,BNR,가로형,2025-11-04,A,Character,Adventure01A,EN,251104_BNR_A-Character-Adventure01A-DA_L_1200x628_EN,A-Character-Adventure01A-DA,https://tpc.googlesyndication.com/simgad/7852267225455295083,"비주얼 임팩트, 캐릭터/유닛 외형",,,,,PEPP HEROES,"아트 퀄리티, 캐릭터, 수집형RPG","5인 분대 전투, 수집형 RPG",,"마그 탐험대, 고블린",카르벨(Karbel),렐릭 탐험 어드벤처,2.5D 입체 월드 강조,"전투 및 액션, 탐험 및 발견",텍스트 오버레이,자연/야외 미학,"도전과 승부욕, 수집욕/소유욕","인간형 영웅, SD/치비 캐릭터, 거대 보스","2.5D 입체 그래픽, 2D 일러스트","[마케터 의도] 와이드 뷰를 통해 거대 보스와의 대립. [타겟 심리] 소규모 히어로 부대 스케일. [개선 방향 및 확장] 보상 정보 추가 시 전환율 급증."
+"260406_VID_A-Character-Collection01A-UA_S_1080x1080_EN;https://www.youtube.com/watch?v=nGeFKwFWRpM",YouTube 동영상,HQ_HQ_PH_US-EN_GA_NU-Pre_AD_ACp_260406,P_ALL_AUTO_AUTO_ALL_NONE_260406_2,2026-04-06,1,KRW,2543,86,6,0,VID,정방형,2026-04-06,A,Character,Collection01A,EN,260406_VID_A-Character-Collection01A-UA_S_1080x1080_EN,A-Character-Collection01A-UA,https://www.youtube.com/watch?v=nGeFKwFWRpM,"질문/선택형, 캐릭터/유닛 외형",배경음,TRUE,,없음,"CHOOSE A HERO, VINESSA, BERNETA","캐릭터, 수집형RPG, 전략성",용병 모집(Gacha),DIY 픽업 시스템,마그 탐험대,"비네사, 소피아, 베르네타",히어로 수집 육성,캐릭터 선택 UI 강조,수집 및 도감,"텍스트 오버레이, 분할 화면",심플/클린 UI,수집욕/소유욕,"SD/치비 캐릭터, 인간형 영웅",2D 일러스트,"Choose your hero 직접적 카피로 능동적 참여 유도. 뽑기 결과보다 과정과 선택의 재미 강조."`;
+
+log('=== 파이프라인 엔진 테스트 ===\n');
+
+// 1. CSV 파싱 테스트
+log('1. CSV 파싱 + 컬럼 정규화');
+const parsed = plParseCSV(REAL_CSV_SAMPLE);
+log('  - 헤더 수:', parsed.headers.length);
+log('  - 행 수:', parsed.rows.length);
+log('  - 정규화 맵:', JSON.stringify(parsed._renameMap));
+log('  - 소재명 컬럼 있음?', parsed.headers.includes('소재명'));
+log('  - 유형 컬럼 있음?', parsed.headers.includes('유형'));
+
+// 2. BNR/VID 필터 테스트
+const vidBnrRows = parsed.rows.filter(r => ['BNR','VID'].includes((r['유형']||'').toUpperCase()));
+log('\n2. BNR/VID 필터');
+log('  - 전체 행:', parsed.rows.length, '/ BNR+VID:', vidBnrRows.length);
+vidBnrRows.forEach((r, i) => {
+  log(`  [${i+1}] 소재명: "${r['소재명']}" | 유형: ${r['유형']} | 전환: ${r['전환']} | 노출수: ${r['노출수']}`);
+});
+
+// 3. 컬럼 탐지 테스트
+log('\n3. 태그 컬럼 자동 탐지');
+const detected = plDetectTagColumns(parsed.headers, parsed.rows);
+log('  - 태그 컬럼:', detected.tagCols.join(', '));
+log('  - 인사이트 컬럼:', detected.insightCols.join(', '));
+
+// 4. 검증 테스트
+log('\n4. 데이터 검증');
+const validation = plValidateData(parsed);
+log('  - 필수 컬럼 결과:', validation.colResult.score);
+log('  - 누락 컬럼:', validation.colResult.missingRequired.join(', ') || '없음');
+log('  - 데이터 품질:', validation.dataResult.score);
+log('  - BNR+VID 수:', validation.dataResult.vidBnr);
+log('  - 이슈:', validation.dataResult.issues.map(i => i.msg).join(' | ') || '없음');
+
+// 5. Score 산출 테스트
+log('\n5. Score 산출');
+const params = { wConv: 40, wCpa: 35, wIpm: 25 };
+const scored = plCalcScores(vidBnrRows, params, parsed.headers);
+scored.forEach(c => {
+  log(`  ${c.name} | 유형:${c.type} | 전환:${c.conversions} | Score:${c.score} | 등급:${c.grade} | 태그:${c.tags.slice(0,3).join(', ')}`);
+});
+
+log('\n=== 테스트 완료 ===');
+</script>
+</body>
+</html>

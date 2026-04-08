@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>전환수 기반 점수 계산 테스트</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .test-section {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .test-section h2 {
+      margin-top: 0;
+      color: #667eea;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #667eea;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f9fafb;
+    }
+    .pass {
+      color: #10b981;
+      font-weight: bold;
+    }
+    .fail {
+      color: #ef4444;
+      font-weight: bold;
+    }
+    .formula {
+      background: #f0f4ff;
+      padding: 15px;
+      border-left: 4px solid #667eea;
+      margin: 20px 0;
+      font-family: 'Courier New', monospace;
+    }
+    .highlight {
+      background: yellow;
+      padding: 2px 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 전환수 기반 점수 계산 테스트</h1>
+  
+  <div class="test-section">
+    <h2>📝 테스트 개요</h2>
+    <p><strong>목적</strong>: step1_integrated.html의 전환수 기반 점수 계산 로직 검증</p>
+    <p><strong>변경 사항</strong>: 전환율 점수 → 전환수 점수로 변경 (v1.4)</p>
+    
+    <div class="formula">
+      <strong>기존 공식 (v1.3):</strong><br>
+      전환율 점수 = (해당 소재 전환율 / 최대 전환율) × 100<br><br>
+      
+      <strong>신규 공식 (v1.4):</strong><br>
+      <span class="highlight">전환수 점수 = (해당 소재 전환수 / 전체 소재 전환수 합계) × 100</span>
+    </div>
+  </div>
+  
+  <div class="test-section">
+    <h2>🔬 샘플 데이터 테스트</h2>
+    <div id="sampleTest"></div>
+  </div>
+  
+  <div class="test-section">
+    <h2>📊 점수 계산 검증</h2>
+    <div id="calculationTest"></div>
+  </div>
+  
+  <div class="test-section">
+    <h2>✅ 테스트 결과 요약</h2>
+    <div id="summary"></div>
+  </div>
+
+  <script>
+    // 샘플 소재 데이터
+    const sampleCreatives = [
+      { key: '소재A', 전환: 500, 비용: 2500000, 노출수: 100000 },
+      { key: '소재B', 전환: 300, 비용: 1200000, 노출수: 80000 },
+      { key: '소재C', 전환: 150, 비용: 900000, 노출수: 60000 },
+      { key: '소재D', 전환: 50, 비용: 500000, 노출수: 40000 }
+    ];
+
+    // CPA 및 IPM 계산
+    sampleCreatives.forEach(c => {
+      c.CPA = c.비용 / c.전환;
+      c.IPM = (c.전환 / c.노출수) * 1000;
+      c.전환율 = (c.전환 / c.노출수) * 100;
+    });
+
+    // 전환수 기반 점수 계산 함수 (v1.4)
+    function calculateConversionScores(creatives) {
+      const totalConversions = creatives.reduce((sum, c) => sum + c.전환, 0);
+      const maxCPA = Math.max(...creatives.map(c => c.CPA));
+      const maxIPM = Math.max(...creatives.map(c => c.IPM));
+      
+      return creatives.map(c => {
+        c.전환수점수 = totalConversions > 0 ? (c.전환 / totalConversions) * 100 : 0;
+        c.CPA점수 = maxCPA > 0 ? (1 - (c.CPA / maxCPA)) * 100 : 0;
+        c.IPM점수 = maxIPM > 0 ? (c.IPM / maxIPM) * 100 : 0;
+        
+        // 가중치: 전환수 40%, CPA 35%, IPM 25%
+        c.TotalScore = (
+          c.전환수점수 * 0.40 +
+          c.CPA점수 * 0.35 +
+          c.IPM점수 * 0.25
+        );
+        
+        return c;
+      });
+    }
+
+    // 전환율 기반 점수 계산 함수 (v1.3 - 비교용)
+    function calculateConversionRateScores(creatives) {
+      const maxConvRate = Math.max(...creatives.map(c => c.전환율));
+      const maxCPA = Math.max(...creatives.map(c => c.CPA));
+      const maxIPM = Math.max(...creatives.map(c => c.IPM));
+      
+      return creatives.map(c => {
+        c.전환율점수 = maxConvRate > 0 ? (c.전환율 / maxConvRate) * 100 : 0;
+        c.CPA점수_old = maxCPA > 0 ? (1 - (c.CPA / maxCPA)) * 100 : 0;
+        c.IPM점수_old = maxIPM > 0 ? (c.IPM / maxIPM) * 100 : 0;
+        
+        c.TotalScore_old = (
+          c.전환율점수 * 0.40 +
+          c.CPA점수_old * 0.35 +
+          c.IPM점수_old * 0.25
+        );
+        
+        return c;
+      });
+    }
+
+    // 테스트 실행
+    const results_new = calculateConversionScores(JSON.parse(JSON.stringify(sampleCreatives)));
+    const results_old = calculateConversionRateScores(JSON.parse(JSON.stringify(sampleCreatives)));
+
+    // 샘플 데이터 표시
+    let sampleHtml = '<table><thead><tr><th>소재</th><th>전환수</th><th>비용</th><th>노출수</th><th>CPA</th><th>IPM</th><th>전환율 (%)</th></tr></thead><tbody>';
+    sampleCreatives.forEach(c => {
+      sampleHtml += `<tr>
+        <td><strong>${c.key}</strong></td>
+        <td>${c.전환.toLocaleString()}</td>
+        <td>₩${c.비용.toLocaleString()}</td>
+        <td>${c.노출수.toLocaleString()}</td>
+        <td>₩${Math.round(c.CPA).toLocaleString()}</td>
+        <td>${c.IPM.toFixed(2)}</td>
+        <td>${c.전환율.toFixed(2)}%</td>
+      </tr>`;
+    });
+    sampleHtml += '</tbody></table>';
+    document.getElementById('sampleTest').innerHTML = sampleHtml;
+
+    // 점수 비교 표시
+    const totalConv = sampleCreatives.reduce((s, c) => s + c.전환, 0);
+    let calcHtml = '<p><strong>전체 전환수 합계:</strong> ' + totalConv.toLocaleString() + '</p>';
+    calcHtml += '<table><thead><tr><th>소재</th><th>전환수 점수<br>(v1.4 NEW)</th><th>전환율 점수<br>(v1.3 OLD)</th><th>차이</th><th>Total Score<br>(v1.4)</th><th>Total Score<br>(v1.3)</th><th>순위 변경</th></tr></thead><tbody>';
+    
+    results_new.forEach((c_new, i) => {
+      const c_old = results_old[i];
+      const scoreDiff = c_new.전환수점수 - c_old.전환율점수;
+      const totalDiff = c_new.TotalScore - c_old.TotalScore_old;
+      
+      // 순위 계산
+      const rank_new = results_new.map(r => r.TotalScore).sort((a,b) => b-a).indexOf(c_new.TotalScore) + 1;
+      const rank_old = results_old.map(r => r.TotalScore_old).sort((a,b) => b-a).indexOf(c_old.TotalScore_old) + 1;
+      const rankChange = rank_old - rank_new;
+      
+      calcHtml += `<tr>
+        <td><strong>${c_new.key}</strong></td>
+        <td style="background: #d1fae5;">${c_new.전환수점수.toFixed(2)}</td>
+        <td style="background: #fee2e2;">${c_old.전환율점수.toFixed(2)}</td>
+        <td style="color: ${scoreDiff > 0 ? 'green' : 'red'};">${scoreDiff > 0 ? '+' : ''}${scoreDiff.toFixed(2)}</td>
+        <td style="background: #d1fae5; font-weight: bold;">${c_new.TotalScore.toFixed(2)}</td>
+        <td style="background: #fee2e2;">${c_old.TotalScore_old.toFixed(2)}</td>
+        <td style="font-weight: bold;">#${rank_old} → #${rank_new} ${rankChange > 0 ? '▲' : rankChange < 0 ? '▼' : '━'}</td>
+      </tr>`;
+    });
+    calcHtml += '</tbody></table>';
+    document.getElementById('calculationTest').innerHTML = calcHtml;
+
+    // 테스트 결과 요약
+    let tests = [];
+    
+    // Test 1: 전환수 점수 합계는 100이어야 함
+    const sumConvScore = results_new.reduce((s, c) => s + c.전환수점수, 0);
+    tests.push({
+      name: '전환수 점수 합계 = 100',
+      pass: Math.abs(sumConvScore - 100) < 0.01,
+      detail: `실제 합계: ${sumConvScore.toFixed(2)}`
+    });
+    
+    // Test 2: 전환수가 가장 많은 소재가 가장 높은 전환수 점수를 가져야 함
+    const maxConvCreative = results_new.reduce((max, c) => c.전환 > max.전환 ? c : max);
+    const maxConvScoreCreative = results_new.reduce((max, c) => c.전환수점수 > max.전환수점수 ? c : max);
+    tests.push({
+      name: '최다 전환수 소재 = 최고 전환수 점수',
+      pass: maxConvCreative.key === maxConvScoreCreative.key,
+      detail: `${maxConvCreative.key} (전환 ${maxConvCreative.전환}) = ${maxConvScoreCreative.key} (점수 ${maxConvScoreCreative.전환수점수.toFixed(2)})`
+    });
+    
+    // Test 3: 전환수 점수는 전환수 비율과 일치해야 함
+    const 소재A = results_new.find(c => c.key === '소재A');
+    const expectedScore = (소재A.전환 / totalConv) * 100;
+    tests.push({
+      name: '전환수 점수 = (전환수 / 전체 합계) × 100',
+      pass: Math.abs(소재A.전환수점수 - expectedScore) < 0.01,
+      detail: `소재A: ${소재A.전환수점수.toFixed(2)} = ${expectedScore.toFixed(2)}`
+    });
+    
+    // Test 4: CPA와 IPM 점수는 여전히 정규화되어야 함
+    const maxIPM = Math.max(...results_new.map(c => c.IPM));
+    const maxIPMCreative = results_new.find(c => c.IPM === maxIPM);
+    tests.push({
+      name: 'IPM 점수 정규화 (최대 = 100)',
+      pass: Math.abs(maxIPMCreative.IPM점수 - 100) < 0.01,
+      detail: `${maxIPMCreative.key}: ${maxIPMCreative.IPM점수.toFixed(2)}`
+    });
+    
+    // Test 5: Total Score는 가중 평균이어야 함
+    const testCreative = results_new[0];
+    const expectedTotal = (
+      testCreative.전환수점수 * 0.40 +
+      testCreative.CPA점수 * 0.35 +
+      testCreative.IPM점수 * 0.25
+    );
+    tests.push({
+      name: 'Total Score 가중 평균',
+      pass: Math.abs(testCreative.TotalScore - expectedTotal) < 0.01,
+      detail: `${testCreative.key}: ${testCreative.TotalScore.toFixed(2)} = ${expectedTotal.toFixed(2)}`
+    });
+    
+    // 요약 표시
+    let summaryHtml = '<table><thead><tr><th>#</th><th>테스트 항목</th><th>결과</th><th>상세</th></tr></thead><tbody>';
+    tests.forEach((test, i) => {
+      summaryHtml += `<tr>
+        <td>${i+1}</td>
+        <td>${test.name}</td>
+        <td class="${test.pass ? 'pass' : 'fail'}">${test.pass ? '✅ PASS' : '❌ FAIL'}</td>
+        <td>${test.detail}</td>
+      </tr>`;
+    });
+    summaryHtml += '</tbody></table>';
+    
+    const passCount = tests.filter(t => t.pass).length;
+    summaryHtml += `<p style="margin-top: 20px; font-size: 18px; font-weight: bold;">총 ${tests.length}개 테스트 중 <span class="${passCount === tests.length ? 'pass' : 'fail'}">${passCount}개 통과</span></p>`;
+    
+    document.getElementById('summary').innerHTML = summaryHtml;
+    
+    // 콘솔 로그
+    console.log('🧪 전환수 기반 점수 계산 테스트 완료');
+    console.log('📊 v1.4 (전환수):', results_new);
+    console.log('📊 v1.3 (전환율):', results_old);
+    console.log(`✅ ${passCount}/${tests.length} 테스트 통과`);
+  </script>
+</body>
+</html>

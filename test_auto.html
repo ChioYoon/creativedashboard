@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>자동 테스트 - PHPH.csv</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      padding: 20px;
+      background: #1e293b;
+      color: #e2e8f0;
+    }
+    .log { margin: 5px 0; padding: 8px; background: #334155; border-radius: 4px; }
+    .success { border-left: 4px solid #22c55e; }
+    .error { border-left: 4px solid #ef4444; }
+    .info { border-left: 4px solid #3b82f6; }
+  </style>
+</head>
+<body>
+  <h1>🔬 PHPH.csv 자동 테스트</h1>
+  <div id="output"></div>
+
+  <script src="js/pipeline-engine.js"></script>
+  <script src="js/analysis-engine-v2.js"></script>
+  <script>
+    const output = document.getElementById('output');
+    
+    function log(msg, type = 'info') {
+      const div = document.createElement('div');
+      div.className = `log ${type}`;
+      div.textContent = msg;
+      output.appendChild(div);
+      console.log(msg);
+    }
+    
+    async function runAutoTest() {
+      log('🚀 자동 테스트 시작...', 'info');
+      
+      try {
+        // 1. CSV 로드
+        log('📂 sample_data/PHPH.csv 로드 중...', 'info');
+        const res = await fetch('sample_data/PHPH.csv');
+        const text = await res.text();
+        log(`✅ CSV 파일 로드 완료 (${(text.length / 1024).toFixed(1)} KB)`, 'success');
+        
+        // 2. CSV 파싱
+        log('📊 CSV 파싱 중...', 'info');
+        const parsed = plParseCSV(text);
+        log(`✅ 파싱 완료: ${parsed.headers.length}개 컬럼, ${parsed.rows.length}개 행`, 'success');
+        
+        // 3. 컬럼 정규화
+        log('🔧 컬럼 정규화 중...', 'info');
+        const normalized = plNormalizeColumns(parsed);
+        log(`✅ 정규화 완료: ${normalized.rows.length}개 행`, 'success');
+        
+        // 4. BNR/VID 필터링
+        const bnrVidRows = normalized.rows.filter(r => 
+          ['BNR', 'VID'].includes((r['유형'] || '').toUpperCase())
+        );
+        log(`✅ BNR/VID 필터링: ${normalized.rows.length}개 → ${bnrVidRows.length}개 행`, 'success');
+        
+        // 5. 샘플 행 확인
+        if (bnrVidRows.length > 0) {
+          const sample = bnrVidRows[0];
+          log('', 'info');
+          log('📋 샘플 행 (첫 번째 BNR/VID):', 'info');
+          log(`  유형: ${sample['유형']}`, 'info');
+          log(`  소재명: ${(sample['소재명'] || '없음').substring(0, 50)}`, 'info');
+          log(`  파일명: ${(sample['파일명'] || '없음').substring(0, 50)}`, 'info');
+          log(`  전환: ${sample['전환']}`, 'info');
+          log(`  비용: ${sample['비용']}`, 'info');
+          log(`  노출수: ${sample['노출수']}`, 'info');
+        }
+        
+        // 6. 소재명 기준 분석
+        log('', 'info');
+        log('🔍 테스트 1: 소재명 기준 분석', 'info');
+        const result1 = runStep1_Scoring(normalized.rows, { groupBy: '소재명' });
+        log(`✅ 분석 완료: ${result1.creatives.length}개 소재`, 'success');
+        if (result1.creatives.length > 0) {
+          const top = result1.creatives[0];
+          log(`  Top 1: ${top.소재명.substring(0, 40)}... (${top.TotalScore}점, ${top.전환}전환)`, 'success');
+        }
+        
+        // 7. 파일명 기준 분석
+        log('', 'info');
+        log('🔍 테스트 2: 파일명 기준 분석', 'info');
+        const result2 = runStep1_Scoring(normalized.rows, { groupBy: '파일명' });
+        log(`✅ 분석 완료: ${result2.creatives.length}개 소재`, 'success');
+        if (result2.creatives.length > 0) {
+          const top = result2.creatives[0];
+          log(`  Top 1: ${top.파일명.substring(0, 40)}... (${top.TotalScore}점, ${top.전환}전환)`, 'success');
+        }
+        
+        // 8. 비교
+        log('', 'info');
+        log('📊 결과 비교:', 'info');
+        log(`  소재명 기준: ${result1.creatives.length}개 소재`, 'info');
+        log(`  파일명 기준: ${result2.creatives.length}개 소재`, 'info');
+        log(`  차이: ${Math.abs(result1.creatives.length - result2.creatives.length)}개`, 'info');
+        
+        if (result1.creatives.length !== result2.creatives.length) {
+          log('✅ 두 기준이 서로 다른 결과를 생성합니다. 정상 작동!', 'success');
+        } else {
+          log('⚠️  두 기준의 결과가 동일합니다. 확인 필요.', 'error');
+        }
+        
+        // 9. 미리보기 URL 확인
+        log('', 'info');
+        log('🖼️  미리보기 기능 검증:', 'info');
+        const creativesWithImage = result1.creatives.filter(c => 
+          c.meta?.['링크'] && c.meta['링크'].startsWith('http')
+        );
+        log(`  이미지 URL 있는 소재: ${creativesWithImage.length}/${result1.creatives.length}개`, 'info');
+        if (creativesWithImage.length > 0) {
+          const sample = creativesWithImage[0];
+          log(`  샘플 URL: ${sample.meta['링크'].substring(0, 60)}...`, 'info');
+          log('✅ 미리보기 기능 사용 가능', 'success');
+        } else {
+          log('⚠️  이미지 URL이 없습니다', 'error');
+        }
+        
+        log('', 'info');
+        log('🎉 모든 테스트 완료!', 'success');
+        
+      } catch (err) {
+        log(`❌ 오류 발생: ${err.message}`, 'error');
+        console.error(err);
+      }
+    }
+    
+    // 자동 실행
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(runAutoTest, 1000);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>동점자 처리 테스트 (v1.5.1)</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 1400px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .test-section {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .test-section h2 {
+      margin-top: 0;
+      color: #667eea;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #667eea;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #f9fafb;
+    }
+    .pass {
+      color: #10b981;
+      font-weight: bold;
+    }
+    .fail {
+      color: #ef4444;
+      font-weight: bold;
+    }
+    .tie {
+      background: #fef3c7;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 동점자 처리 테스트 (v1.5.1)</h1>
+  
+  <div class="test-section">
+    <h2>📝 테스트 목적</h2>
+    <p><strong>문제</strong>: ROAS가 동일한 소재들이 다른 점수를 받는 문제</p>
+    <p><strong>해결</strong>: 동점자에게 동일한 Rank 부여</p>
+    
+    <div style="background: #f0f9ff; padding: 15px; margin: 15px 0; border-radius: 8px;">
+      <strong>예시:</strong><br>
+      <strong>기존 (잘못됨):</strong><br>
+      - 소재A: ROAS 2.0 → Rank 1 → 점수 100<br>
+      - 소재B: ROAS 2.0 → Rank 2 → 점수 75 ❌ (동일한데 다른 점수)<br>
+      - 소재C: ROAS 1.5 → Rank 3 → 점수 50<br><br>
+      
+      <strong>개선 (올바름):</strong><br>
+      - 소재A: ROAS 2.0 → Rank 1 → 점수 100<br>
+      - 소재B: ROAS 2.0 → Rank 1 → 점수 100 ✅ (동일 Rank)<br>
+      - 소재C: ROAS 1.5 → Rank 3 → 점수 50<br>
+    </div>
+  </div>
+  
+  <div class="test-section">
+    <h2>🔬 샘플 데이터 (동점자 포함)</h2>
+    <div id="sampleTest"></div>
+  </div>
+  
+  <div class="test-section">
+    <h2>📊 동점자 처리 결과</h2>
+    <div id="calculationTest"></div>
+  </div>
+  
+  <div class="test-section">
+    <h2>✅ 테스트 결과</h2>
+    <div id="summary"></div>
+  </div>
+
+  <script>
+    // 샘플 소재 데이터 (동점자 포함)
+    const sampleCreatives = [
+      { key: '소재A', 전환: 500, 비용: 2500000, 노출수: 100000, 매출: 5000000 },  // ROAS 2.0
+      { key: '소재B', 전환: 300, 비용: 1500000, 노출수: 80000, 매출: 3000000 },   // ROAS 2.0 (동점)
+      { key: '소재C', 전환: 150, 비용: 900000, 노출수: 60000, 매출: 1800000 },    // ROAS 2.0 (동점)
+      { key: '소재D', 전환: 50, 비용: 500000, 노출수: 40000, 매출: 750000 },      // ROAS 1.5
+      { key: '소재E', 전환: 100, 비용: 800000, 노출수: 50000, 매출: 800000 }      // ROAS 1.0
+    ];
+
+    // 기본 지표 계산
+    sampleCreatives.forEach(c => {
+      c.CPA = c.비용 / c.전환;
+      c.IPM = (c.전환 / c.노출수) * 1000;
+      c.ROAS = c.매출 / c.비용;
+    });
+
+    // 동점자를 고려한 Rank 부여 함수
+    function assignRankWithTies(sortedArray, valueGetter) {
+      let currentRank = 1;
+      let previousValue = null;
+      
+      sortedArray.forEach((item, index) => {
+        const currentValue = valueGetter(item);
+        
+        if (previousValue !== null && Math.abs(currentValue - previousValue) < 0.0001) {
+          // 동점: 이전과 같은 Rank 부여
+          // currentRank는 유지
+        } else {
+          // 새로운 값: Rank 업데이트
+          currentRank = index + 1;
+        }
+        
+        item.assignedRank = currentRank;
+        previousValue = currentValue;
+      });
+    }
+
+    // Rank 기반 점수 계산 함수 (동점자 처리)
+    function calculateRankBasedScores(creatives) {
+      const n = creatives.length;
+      
+      // Step 1: 각 지표별 Rank 부여 (동점자 처리)
+      const convSorted = [...creatives].sort((a, b) => b.전환 - a.전환);
+      assignRankWithTies(convSorted, c => c.전환);
+      convSorted.forEach(c => c.전환Rank = c.assignedRank);
+      
+      const cpaSorted = [...creatives].sort((a, b) => a.CPA - b.CPA);
+      assignRankWithTies(cpaSorted, c => c.CPA);
+      cpaSorted.forEach(c => c.CPARank = c.assignedRank);
+      
+      const ipmSorted = [...creatives].sort((a, b) => b.IPM - a.IPM);
+      assignRankWithTies(ipmSorted, c => c.IPM);
+      ipmSorted.forEach(c => c.IPMRank = c.assignedRank);
+      
+      const roasSorted = [...creatives].sort((a, b) => b.ROAS - a.ROAS);
+      assignRankWithTies(roasSorted, c => c.ROAS);
+      roasSorted.forEach(c => c.ROASRank = c.assignedRank);
+      
+      // Step 2: Rank를 점수로 변환
+      return creatives.map(c => {
+        c.전환수점수 = ((n - c.전환Rank + 1) / n) * 100;
+        c.CPA점수 = ((n - c.CPARank + 1) / n) * 100;
+        c.IPM점수 = ((n - c.IPMRank + 1) / n) * 100;
+        c.ROAS점수 = ((n - c.ROASRank + 1) / n) * 100;
+        
+        c.TotalScore = (
+          c.전환수점수 * 0.25 +
+          c.CPA점수 * 0.25 +
+          c.IPM점수 * 0.25 +
+          c.ROAS점수 * 0.25
+        );
+        
+        return c;
+      });
+    }
+
+    // 테스트 실행
+    const results = calculateRankBasedScores(JSON.parse(JSON.stringify(sampleCreatives)));
+    results.sort((a, b) => b.TotalScore - a.TotalScore);
+
+    // 샘플 데이터 표시
+    let sampleHtml = '<table><thead><tr><th>소재</th><th>전환수</th><th>비용</th><th>매출</th><th>ROAS</th><th>비고</th></tr></thead><tbody>';
+    sampleCreatives.forEach((c, i) => {
+      const isTie = i > 0 && Math.abs(c.ROAS - sampleCreatives[i-1].ROAS) < 0.01;
+      sampleHtml += `<tr ${isTie ? 'class="tie"' : ''}>
+        <td><strong>${c.key}</strong></td>
+        <td>${c.전환.toLocaleString()}</td>
+        <td>₩${c.비용.toLocaleString()}</td>
+        <td>₩${c.매출.toLocaleString()}</td>
+        <td style="font-weight: bold; color: ${c.ROAS > 1 ? 'green' : 'red'};">${c.ROAS.toFixed(2)}</td>
+        <td>${isTie ? '🟡 동점' : ''}</td>
+      </tr>`;
+    });
+    sampleHtml += '</tbody></table>';
+    document.getElementById('sampleTest').innerHTML = sampleHtml;
+
+    // Rank 및 점수 표시
+    let calcHtml = '<p><strong>ROAS 기준 정렬:</strong></p>';
+    calcHtml += '<table><thead><tr><th>소재</th><th>ROAS 값</th><th>ROAS Rank</th><th>ROAS 점수</th><th>동점 여부</th></tr></thead><tbody>';
+    
+    const roasSorted = [...results].sort((a, b) => b.ROAS - a.ROAS);
+    roasSorted.forEach((c, i) => {
+      const isTie = i > 0 && Math.abs(c.ROAS - roasSorted[i-1].ROAS) < 0.01;
+      const sameTieAsNext = i < roasSorted.length - 1 && Math.abs(c.ROAS - roasSorted[i+1].ROAS) < 0.01;
+      const isTieGroup = isTie || sameTieAsNext;
+      
+      calcHtml += `<tr ${isTieGroup ? 'class="tie"' : ''}>
+        <td><strong>${c.key}</strong></td>
+        <td>${c.ROAS.toFixed(2)}</td>
+        <td><strong>#${c.ROASRank}</strong></td>
+        <td style="font-size: 16px; font-weight: bold; color: #667eea;">${c.ROAS점수.toFixed(1)}</td>
+        <td>${isTieGroup ? '✅ 동점자' : ''}</td>
+      </tr>`;
+    });
+    calcHtml += '</tbody></table>';
+    
+    calcHtml += '<p style="margin-top: 20px;"><strong>전체 점수 및 Rank:</strong></p>';
+    calcHtml += '<table><thead><tr><th>소재</th><th>ROAS</th><th>ROAS Rank</th><th>전환 Rank</th><th>CPA Rank</th><th>IPM Rank</th><th>Total Score</th></tr></thead><tbody>';
+    
+    results.forEach(c => {
+      calcHtml += `<tr>
+        <td><strong>${c.key}</strong></td>
+        <td>${c.ROAS.toFixed(2)}</td>
+        <td>#${c.ROASRank}</td>
+        <td>#${c.전환Rank}</td>
+        <td>#${c.CPARank}</td>
+        <td>#${c.IPMRank}</td>
+        <td style="font-weight: bold; color: #667eea;">${c.TotalScore.toFixed(1)}</td>
+      </tr>`;
+    });
+    calcHtml += '</tbody></table>';
+    
+    document.getElementById('calculationTest').innerHTML = calcHtml;
+
+    // 테스트 결과
+    let tests = [];
+    
+    // Test 1: ROAS 2.0인 소재들이 모두 동일한 Rank를 가지는지
+    const roasTwoCreatives = results.filter(c => Math.abs(c.ROAS - 2.0) < 0.01);
+    const roasTwoRanks = [...new Set(roasTwoCreatives.map(c => c.ROASRank))];
+    tests.push({
+      name: 'ROAS 2.0 동점자 동일 Rank',
+      pass: roasTwoRanks.length === 1,
+      detail: `ROAS 2.0 소재 ${roasTwoCreatives.length}개, Rank: ${roasTwoRanks.join(', ')}`
+    });
+    
+    // Test 2: ROAS 2.0인 소재들이 모두 동일한 점수를 가지는지
+    const roasTwoScores = [...new Set(roasTwoCreatives.map(c => c.ROAS점수.toFixed(1)))];
+    tests.push({
+      name: 'ROAS 2.0 동점자 동일 점수',
+      pass: roasTwoScores.length === 1,
+      detail: `ROAS 2.0 소재 점수: ${roasTwoScores.join(', ')}`
+    });
+    
+    // Test 3: 소재A, B, C가 모두 Rank 1을 가지는지
+    const abcRanks = ['소재A', '소재B', '소재C'].map(key => results.find(c => c.key === key).ROASRank);
+    tests.push({
+      name: '소재A, B, C 모두 ROAS Rank 1',
+      pass: abcRanks.every(r => r === 1),
+      detail: `A: #${abcRanks[0]}, B: #${abcRanks[1]}, C: #${abcRanks[2]}`
+    });
+    
+    // Test 4: 소재D가 Rank 4를 가지는지 (3개가 동점 1위이므로 다음은 4위)
+    const dRank = results.find(c => c.key === '소재D').ROASRank;
+    tests.push({
+      name: '소재D ROAS Rank 4 (3명 동점 후 다음)',
+      pass: dRank === 4,
+      detail: `소재D Rank: #${dRank}`
+    });
+    
+    // Test 5: 점수 계산 공식 검증
+    const testCreative = results.find(c => c.key === '소재A');
+    const expectedScore = ((5 - testCreative.ROASRank + 1) / 5) * 100;
+    tests.push({
+      name: 'ROAS 점수 계산 공식',
+      pass: Math.abs(testCreative.ROAS점수 - expectedScore) < 0.01,
+      detail: `소재A: ${testCreative.ROAS점수.toFixed(1)} = ${expectedScore.toFixed(1)}`
+    });
+    
+    // 요약 표시
+    let summaryHtml = '<table><thead><tr><th>#</th><th>테스트 항목</th><th>결과</th><th>상세</th></tr></thead><tbody>';
+    tests.forEach((test, i) => {
+      summaryHtml += `<tr>
+        <td>${i+1}</td>
+        <td>${test.name}</td>
+        <td class="${test.pass ? 'pass' : 'fail'}">${test.pass ? '✅ PASS' : '❌ FAIL'}</td>
+        <td>${test.detail}</td>
+      </tr>`;
+    });
+    summaryHtml += '</tbody></table>';
+    
+    const passCount = tests.filter(t => t.pass).length;
+    summaryHtml += `<p style="margin-top: 20px; font-size: 18px; font-weight: bold;">총 ${tests.length}개 테스트 중 <span class="${passCount === tests.length ? 'pass' : 'fail'}">${passCount}개 통과</span></p>`;
+    
+    // 개선 효과 설명
+    summaryHtml += `
+      <div style="margin-top: 30px; padding: 20px; background: #f0f9ff; border-radius: 8px;">
+        <h3 style="margin-top: 0;">🎯 동점자 처리의 중요성</h3>
+        <ul style="line-height: 1.8;">
+          <li><strong>공정성</strong>: 동일한 성과는 동일한 점수를 받아야 합니다.</li>
+          <li><strong>의사결정</strong>: 실제로 동일한 ROAS를 가진 소재들을 공정하게 비교할 수 있습니다.</li>
+          <li><strong>정확성</strong>: 미세한 소수점 차이를 무시하고 실질적으로 동일한 값을 동점으로 처리합니다.</li>
+          <li><strong>순위 건너뛰기</strong>: 동점자 이후 순위는 건너뛰어집니다 (예: 1, 1, 1, 4, 5)</li>
+        </ul>
+      </div>
+    `;
+    
+    document.getElementById('summary').innerHTML = summaryHtml;
+    
+    // 콘솔 로그
+    console.log('🧪 동점자 처리 테스트 완료');
+    console.log('📊 ROAS 2.0 소재들:', roasTwoCreatives);
+    console.log(`✅ ${passCount}/${tests.length} 테스트 통과`);
+  </script>
+</body>
+</html>

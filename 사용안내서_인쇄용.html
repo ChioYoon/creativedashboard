@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pepp Heroes 소재 분석 대시보드 사용 안내</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 2cm;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Malgun Gothic', sans-serif;
+      line-height: 1.6;
+      color: #1f2937;
+      background: white;
+    }
+    
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      padding: 20mm;
+      margin: 0 auto 20px;
+      background: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      page-break-after: always;
+    }
+    
+    @media print {
+      .page {
+        box-shadow: none;
+        margin: 0;
+        page-break-after: always;
+      }
+      .no-print {
+        display: none;
+      }
+    }
+    
+    /* 표지 */
+    .cover {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    
+    .cover-logo {
+      font-size: 120px;
+      margin-bottom: 30px;
+    }
+    
+    .cover-title {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    
+    .cover-subtitle {
+      font-size: 24px;
+      margin-bottom: 60px;
+      opacity: 0.9;
+    }
+    
+    .cover-info {
+      font-size: 16px;
+      opacity: 0.8;
+    }
+    
+    /* 목차 */
+    .toc {
+      margin-top: 40px;
+    }
+    
+    .toc-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #667eea;
+      margin-bottom: 30px;
+      border-bottom: 3px solid #667eea;
+      padding-bottom: 10px;
+    }
+    
+    .toc-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 18px;
+    }
+    
+    .toc-item:hover {
+      background: #f9fafb;
+      padding-left: 10px;
+      cursor: pointer;
+    }
+    
+    .toc-number {
+      color: #667eea;
+      font-weight: 600;
+      margin-right: 10px;
+    }
+    
+    .toc-page {
+      color: #9ca3af;
+      font-weight: 600;
+    }
+    
+    /* 본문 */
+    .page-title {
+      font-size: 36px;
+      font-weight: 700;
+      color: #667eea;
+      margin-bottom: 30px;
+      border-bottom: 3px solid #667eea;
+      padding-bottom: 10px;
+    }
+    
+    .section-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1f2937;
+      margin: 30px 0 20px;
+      padding-left: 15px;
+      border-left: 5px solid #667eea;
+    }
+    
+    .subsection-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #374151;
+      margin: 25px 0 15px;
+    }
+    
+    p {
+      margin-bottom: 15px;
+      font-size: 14px;
+      text-align: justify;
+    }
+    
+    ul, ol {
+      margin: 15px 0 15px 25px;
+    }
+    
+    li {
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    
+    .highlight-box {
+      background: linear-gradient(135deg, #667eea15, #764ba215);
+      border-left: 4px solid #667eea;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+    }
+    
+    .highlight-box strong {
+      color: #667eea;
+      font-size: 16px;
+    }
+    
+    .info-box {
+      background: #f0f9ff;
+      border-left: 4px solid #3b82f6;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 8px;
+    }
+    
+    .warning-box {
+      background: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 8px;
+    }
+    
+    .success-box {
+      background: #d1fae5;
+      border-left: 4px solid #10b981;
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 8px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 13px;
+    }
+    
+    th {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 12px;
+      text-align: left;
+      font-weight: 600;
+    }
+    
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    
+    tr:hover {
+      background: #f9fafb;
+    }
+    
+    .step-number {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 32px;
+      font-weight: 600;
+      margin-right: 10px;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .badge-new {
+      background: #10b981;
+      color: white;
+    }
+    
+    .badge-important {
+      background: #ef4444;
+      color: white;
+    }
+    
+    .badge-tip {
+      background: #3b82f6;
+      color: white;
+    }
+    
+    .screenshot-placeholder {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9ca3af;
+      font-size: 16px;
+      margin: 20px 0;
+      border: 2px dashed #d1d5db;
+    }
+    
+    .footer {
+      position: absolute;
+      bottom: 20mm;
+      left: 20mm;
+      right: 20mm;
+      text-align: center;
+      font-size: 12px;
+      color: #9ca3af;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 10px;
+    }
+    
+    @media print {
+      .footer {
+        position: fixed;
+      }
+    }
+    
+    .print-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+      z-index: 1000;
+    }
+    
+    .print-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
+    }
+  </style>
+</head>
+<body>
+  <button class="print-button no-print" onclick="window.print()">🖨️ 인쇄하기</button>
+  
+  <!-- 표지 -->
+  <div class="page cover">
+    <div class="cover-logo">📊</div>
+    <div class="cover-title">Pepp Heroes<br>소재 분석 대시보드</div>
+    <div class="cover-subtitle">사용 안내서</div>
+    <div class="cover-info">
+      <p style="margin-bottom: 10px;"><strong>버전 v1.7</strong></p>
+      <p>Com2uS Pepp Heroes 마케팅팀</p>
+      <p>2026년 4월 8일</p>
+    </div>
+  </div>
+  
+  <!-- 목차 -->
+  <div class="page">
+    <div class="toc-title">📑 목차</div>
+    <div class="toc">
+      <div class="toc-item">
+        <div><span class="toc-number">1.</span>도구 소개 및 목적</div>
+        <div class="toc-page">3</div>
+      </div>
+      <div class="toc-item">
+        <div><span class="toc-number">2.</span>시작하기 - 접속 및 업로드</div>
+        <div class="toc-page">4</div>
+      </div>
+      <div class="toc-item">
+        <div><span class="toc-number">3.</span>주요 기능 활용법</div>
+        <div class="toc-page">5-7</div>
+      </div>
+      <div class="toc-item">
+        <div><span class="toc-number">4.</span>결과 해석 가이드</div>
+        <div class="toc-page">8-9</div>
+      </div>
+      <div class="toc-item">
+        <div><span class="toc-number">5.</span>주간 루틴 및 활용 예시</div>
+        <div class="toc-page">10</div>
+      </div>
+      <div class="toc-item">
+        <div><span class="toc-number">6.</span>자주 묻는 질문 (FAQ)</div>
+        <div class="toc-page">11-13</div>
+      </div>
+      <div class="toc-item">
+        <div><span class="toc-number">7.</span>문의 및 지원</div>
+        <div class="toc-page">14</div>
+      </div>
+    </div>
+    
+    <div class="highlight-box" style="margin-top: 50px;">
+      <strong>💡 이 문서를 읽기 전에</strong><br><br>
+      이 안내서는 Pepp Heroes 마케팅팀의 <strong>소재 성과 분석 업무 효율화</strong>를 위해 제작되었습니다. 
+      기존 수동 집계 방식 대비 <strong>90% 시간 단축</strong>과 <strong>데이터 기반 의사결정</strong>을 지원합니다.
+      <br><br>
+      <strong>처음 사용하시는 분</strong>: 2-3번 섹션부터 순서대로 읽어주세요.<br>
+      <strong>기존 사용자</strong>: 6번 FAQ 섹션을 참고하세요.
+    </div>
+    
+    <div class="footer">
+      Pepp Heroes 소재 분석 대시보드 v1.7 | Com2uS Marketing Team
+    </div>
+  </div>
+  
+  <!-- 1. 도구 소개 -->
+  <div class="page">
+    <div class="page-title">1. 도구 소개 및 목적</div>
+    
+    <div class="section-title">1.1 개발 배경</div>
+    <p>
+      기존 소재 성과 분석은 <strong>Google Ads / Facebook Ads 리포트를 수동으로 다운로드</strong>한 후, 
+      <strong>엑셀 피벗 테이블로 수작업 집계</strong>하는 방식으로 진행되었습니다. 
+      이 과정에서 <strong>주당 2~3시간</strong>이 소요되고, 사람의 실수로 인한 오류 가능성이 있었습니다.
+    </p>
+    
+    <div class="highlight-box">
+      <strong>🎯 핵심 가치</strong><br><br>
+      <table style="background: transparent;">
+        <thead>
+          <tr>
+            <th style="background: #667eea;">항목</th>
+            <th style="background: #667eea;">기존 방식</th>
+            <th style="background: #10b981;">대시보드 활용</th>
+            <th style="background: #ef4444;">개선 효과</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>데이터 처리 시간</strong></td>
+            <td>2~3시간 (수동 집계)</td>
+            <td>5분 이내 (자동 계산)</td>
+            <td><strong>⬇️ 90% 단축</strong></td>
+          </tr>
+          <tr>
+            <td><strong>분석 정확도</strong></td>
+            <td>사람 실수 가능</td>
+            <td>시스템 자동 계산</td>
+            <td><strong>✅ 100% 정확</strong></td>
+          </tr>
+          <tr>
+            <td><strong>다차원 분석</strong></td>
+            <td>제한적 (피벗 한계)</td>
+            <td>4개 지표 가중치 조절</td>
+            <td><strong>⬆️ 300% 향상</strong></td>
+          </tr>
+          <tr>
+            <td><strong>피로도 추적</strong></td>
+            <td>수동 비교 필요</td>
+            <td>자동 순위 변동 추적</td>
+            <td><strong>✅ 95% 정확도</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="section-title">1.2 활용 목표</div>
+    <ul>
+      <li><strong>수동 집계 시간 단축</strong>: 주간 리포트 작성 시간 2시간 → 10분</li>
+      <li><strong>데이터 기반 의사결정</strong>: 성과 우수 소재 패턴 파악 및 차주 전략 수립</li>
+      <li><strong>소재 피로도 조기 감지</strong>: CPA 악화 전 순위 하락 소재 조기 교체</li>
+      <li><strong>팀 내 커뮤니케이션 효율화</strong>: 공통 지표 기반 논의 및 의사결정</li>
+    </ul>
+    
+    <div class="info-box">
+      <strong>ℹ️ 알아두세요</strong><br>
+      이 도구는 <strong>정적 웹 페이지</strong>로 제작되어 <strong>별도 서버 설치 없이</strong> 브라우저에서 바로 실행됩니다. 
+      업로드한 CSV 데이터는 <strong>서버에 전송되지 않고</strong> 로컬 브라우저에서만 처리됩니다.
+    </div>
+    
+    <div class="footer">
+      Pepp Heroes 소재 분석 대시보드 v1.7 | Com2uS Marketing Team | Page 3
+    </div>
+  </div>
+  
+  <!-- 2. 시작하기 -->
+  <div class="page">
+    <div class="page-title">2. 시작하기 - 접속 및 업로드 <span class="badge badge-new">v1.7</span></div>
+    
+    <div class="section-title">2.1 대시보드 접속</div>
+    
+    <div class="success-box">
+      <strong>✅ 접속 방법 (3가지 중 선택)</strong><br><br>
+      <strong>방법 1 (권장)</strong>: GitHub Pages URL 접속<br>
+      → <code>https://yourcompany.github.io/pepp-heroes-dashboard/step1_integrated.html</code><br><br>
+      <strong>방법 2</strong>: 사내 웹서버 URL 접속<br>
+      → <code>http://internal-server/dashboard/step1_integrated.html</code><br><br>
+      <strong>방법 3</strong>: 로컬 파일 실행<br>
+      → <code>step1_integrated.html</code> 파일 더블클릭 → 브라우저에서 열림
+    </div>
+    
+    <div class="section-title">2.2 CSV 파일 준비</div>
+    
+    <div class="subsection-title">✅ 필수 컬럼</div>
+    <table>
+      <thead>
+        <tr>
+          <th>컬럼명</th>
+          <th>다른 이름 (자동 인식)</th>
+          <th>필수 여부</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>일</td>
+          <td>Date, 날짜, Campaign Date</td>
+          <td>✅ 필수</td>
+        </tr>
+        <tr>
+          <td>캠페인</td>
+          <td>Campaign, 캠페인명</td>
+          <td>✅ 필수</td>
+        </tr>
+        <tr>
+          <td>소재명</td>
+          <td>Ad Name, 광고명, Creative Name</td>
+          <td>✅ 필수</td>
+        </tr>
+        <tr>
+          <td>전환</td>
+          <td>Conversions, 전환수</td>
+          <td>✅ 필수</td>
+        </tr>
+        <tr>
+          <td>비용</td>
+          <td>Cost, 비용(원)</td>
+          <td>✅ 필수</td>
+        </tr>
+        <tr>
+          <td>노출수</td>
+          <td>Impressions, 노출</td>
+          <td>✅ 필수</td>
+        </tr>
+        <tr>
+          <td>클릭수</td>
+          <td>Clicks, 클릭</td>
+          <td>권장</td>
+        </tr>
+        <tr>
+          <td>Revenue</td>
+          <td>매출, 수익, revenue</td>
+          <td>선택 (ROAS 계산용)</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="section-title">2.3 CSV 업로드 <span class="badge badge-new">v1.7 개선</span></div>
+    
+    <p><span class="step-number">1</span><strong>드래그 앤 드롭</strong> 또는 <strong>"파일 선택"</strong> 버튼 클릭</p>
+    <p><span class="step-number">2</span><strong>컬럼 매핑 상태 확인</strong> <span class="badge badge-new">NEW</span></p>
+    <div class="screenshot-placeholder">
+      [스크린샷] 컬럼 매핑 상태 표시 예시<br>
+      ✓ 소재명: 감지됨 | ⚠️ Revenue: 없음 (ROAS 제외)
+    </div>
+    
+    <p><span class="step-number">3</span><strong>"📊 점수 계산 시작하기 →" 버튼 클릭</strong> <span class="badge badge-new">NEW</span></p>
+    
+    <div class="warning-box">
+      <strong>⚠️ 업로드 시 주의사항</strong><br><br>
+      • 파일 형식: <strong>CSV (쉼표로 구분)</strong>만 지원 (엑셀 .xlsx 불가)<br>
+      • 인코딩: <strong>UTF-8</strong> 권장 (한글 깨짐 방지)<br>
+      • 파일 크기: 5MB 이하 권장 (대용량 시 느릴 수 있음)<br>
+      • 날짜 형식: <strong>YYYY-MM-DD</strong> (예: 2026-04-08)
+    </div>
+    
+    <div class="footer">
+      Pepp Heroes 소재 분석 대시보드 v1.7 | Com2uS Marketing Team | Page 4
+    </div>
+  </div>
+  
+  <!-- 3. 주요 기능 - 점수 계산 -->
+  <div class="page">
+    <div class="page-title">3. 주요 기능 활용법</div>
+    
+    <div class="section-title">3.1 점수 계산</div>
+    
+    <div class="subsection-title">① 가중치 설정 <span class="badge badge-tip">TIP</span></div>
+    <p>
+      4개 지표(전환수, CPA, IPM, ROAS)의 중요도를 조절하여 <strong>Total Score</strong>를 산출합니다.
+    </p>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>전략</th>
+          <th>전환</th>
+          <th>CPA</th>
+          <th>IPM</th>
+          <th>ROAS</th>
+          <th>상황</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>균형형</strong> (기본)</td>
+          <td>25%</td>
+          <td>25%</td>
+          <td>25%</td>
+          <td>25%</td>
+          <td>모든 지표 중요</td>
+        </tr>
+        <tr>
+          <td><strong>전환 극대화</strong></td>
+          <td>40%</td>
+          <td>30%</td>
+          <td>15%</td>
+          <td>15%</td>
+          <td>신규 유저 확보 우선</td>
+        </tr>
+        <tr>
+          <td><strong>수익 극대화</strong></td>
+          <td>15%</td>
+          <td>15%</td>
+          <td>10%</td>
+          <td>60%</td>
+          <td>LTV 높은 게임, ROAS 중요</td>
+        </tr>
+        <tr>
+          <td><strong>효율 최적화</strong></td>
+          <td>20%</td>
+          <td>40%</td>
+          <td>30%</td>
+          <td>10%</td>
+          <td>예산 제약, CPA 절감</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="info-box">
+      <strong>💡 가중치 조정 방법 (v1.7 개선)</strong><br>
+      • <strong>슬라이더</strong>로 드래그<br>
+      • <strong>숫자 직접 입력</strong> (0~100)<br>
+      • 자동 동기화 (슬라이더 ↔ 입력 필드)
+    </div>
+    
+    <div class="subsection-title">② 필터 설정 <span class="badge badge-new">v1.7 다중 선택</span></div>
+    <ul>
+      <li><strong>집계 기준</strong>: 소재명 또는 파일명</li>
+      <li><strong>소재 유형</strong>: 전체 / BNR (이미지) / VID (비디오) / TXT (텍스트) <span class="badge badge-new">v1.6</span></li>
+      <li><strong>캠페인</strong>: 전체 또는 특정 캠페인 (복수 선택 가능, Ctrl+클릭)</li>
+      <li><strong>날짜 범위</strong>: 시작일 ~ 종료일</li>
+    </ul>
+    
+    <div class="subsection-title">③ 점수 계산 실행 <span class="badge badge-new">v1.7 로딩 표시</span></div>
+    <p><span class="step-number">1</span>"점수 계산 실행" 버튼 클릭</p>
+    <p><span class="step-number">2</span>로딩 화면 표시 (대용량 CSV 처리 시)</p>
+    <p><span class="step-number">3</span>결과 화면 자동 이동</p>
+    
+    <div class="screenshot-placeholder">
+      [스크린샷] 로딩 인디케이터 + 결과 화면
+    </div>
+    
+    <div class="subsection-title">④ 적용된 필터 조건 확인 <span class="badge badge-new">v1.7 신규</span></div>
+    <p>
+      결과 화면 상단에 <strong>적용된 필터 조건</strong>이 자동으로 표시됩니다.
+    </p>
+    <div class="highlight-box">
+      <strong>📌 적용된 필터 조건</strong><br>
+      • 캠페인: HQ_PH_US-EN_GA_NU-Pre<br>
+      • 소재 유형: BNR (이미지)<br>
+      • 기간: 2026-04-01 ~ 2026-04-08<br>
+      • 집계 기준: 소재명<br><br>
+      총 <strong style="color: #667eea;">45개</strong> 소재 분석 완료
+    </div>
+    
+    <div class="footer">
+      Pepp Heroes 소재 분석 대시보드 v1.7 | Com2uS Marketing Team | Page 5
+    </div>
+  </div>
+  
+  <!-- 계속해서 나머지 페이지 작성... -->
+  
+  <div class="page">
+    <div class="page-title">3.2 피로도 분석 <span class="badge badge-important">v1.7 개선</span></div>
+    
+    <div class="section-title">피로도 분석이란?</div>
+    <p>
+      두 기간(기준 vs 비교)의 소재 성과를 비교하여 <strong>순위 변동</strong>과 <strong>CPA 변화율</strong>을 추적합니다.
+      이를 통해 <strong>소재 피로도</strong>를 조기에 감지하고 교체 시점을 결정할 수 있습니다.
+    </p>
+    
+    <div class="subsection-title">① 기간 설정</div>
+    <table>
+      <thead>
+        <tr>
+          <th>기간</th>
+          <th>설명</th>
+          <th>예시</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>기준 기간</strong></td>
+          <td>비교 기준이 되는 과거 기간</td>
+          <td>2주 전 (3/18~3/24)</td>
+        </tr>
+        <tr>
+          <td><strong>비교 기간</strong></td>
+          <td>현재 또는 최근 기간</td>
+          <td>지난주 (3/25~3/31)</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="info-box">
+      <strong>💡 자동 기간 분할 기능</strong><br>
+      "자동 분할" 버튼을 클릭하면 전체 데이터 기간의 중간을 기준으로 <strong>기준 기간</strong>과 <strong>비교 기간</strong>을 자동으로 설정합니다.
+    </div>
+    
+    <div class="subsection-title">② 순위 비교 기준 <span class="badge badge-important">v1.7 변경</span></div>
+    <div class="warning-box">
+      <strong>⚠️ v1.7 주요 변경 사항</strong><br><br>
+      <strong>Before (v1.6)</strong>: CPA 기준 순위 비교<br>
+      → CPA가 낮은 소재가 상위<br><br>
+      <strong>After (v1.7)</strong>: <strong>Total Score 기준 순위 비교</strong><br>
+      → 종합 성과(전환수+CPA+IPM+ROAS)가 우수한 소재가 상위<br><br>
+      <strong>피로도 판정</strong>: CPA 기준 유지 (CPA 악화 = 피로도)
+    </div>
+    
+    <div class="subsection-title">③ 피로도 상태 해석</div>
+    <table>
+      <thead>
+        <tr>
+          <th>상태</th>
+          <th>CPA 변화율</th>
+          <th>색상</th>
+          <th>조치 사항</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Fresh</strong></td>
+          <td>≤ -20%</td>
+          <td style="color: #10b981; font-weight: 600;">🟢 녹색</td>
+          <td>Scale-up 검토 (예산 증액)</td>
+        </tr>
+        <tr>
+          <td><strong>Stable</strong></td>
+          <td>-20% ~ 0%</td>
+          <td style="color: #3b82f6; font-weight: 600;">🔵 파란색</td>
+          <td>현행 유지</td>
+        </tr>
+        <tr>
+          <td><strong>Warning</strong></td>
+          <td>0% ~ 20%</td>
+          <td style="color: #f59e0b; font-weight: 600;">🟡 주황색</td>
+          <td>모니터링 강화</td>
+        </tr>
+        <tr>
+          <td><strong>Tired</strong></td>
+          <td>> 20%</td>
+          <td style="color: #ef4444; font-weight: 600;">🔴 빨간색</td>
+          <td>즉시 교체 권장</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="subsection-title">④ 피로도 차트</div>
+    <p>
+      Top 10 소재의 <strong>Total Score 기준 순위</strong> 변동 추이를 선 그래프로 표시합니다.
+    </p>
+    <div class="screenshot-placeholder">
+      [스크린샷] 피로도 순위 변동 차트 (Y축 역순)
+    </div>
+    
+    <div class="info-box">
+      <strong>ℹ️ 차트 읽는 법</strong><br>
+      • Y축: 순위 (위로 갈수록 순위 상승)<br>
+      • X축: 소재명<br>
+      • 선이 <strong>위로 이동</strong>: 순위 상승 (긍정적)<br>
+      • 선이 <strong>아래로 이동</strong>: 순위 하락 (피로도 경보)
+    </div>
+    
+    <div class="footer">
+      Pepp Heroes 소재 분석 대시보드 v1.7 | Com2uS Marketing Team | Page 6
+    </div>
+  </div>
+  
+  <!-- FAQ 페이지 예시 (간략) -->
+  <div class="page">
+    <div class="page-title">6. 자주 묻는 질문 (FAQ)</div>
+    
+    <div class="section-title">Q1. "컬럼을 찾을 수 없습니다" 오류가 나요</div>
+    <p><strong>A1.</strong> CSV 헤더가 표준 컬럼명과 다를 수 있습니다.</p>
+    <div class="success-box">
+      <strong>✅ 해결 방법</strong><br>
+      1. CSV 파일을 엑셀로 열기<br>
+      2. 첫 번째 행(헤더) 확인<br>
+      3. 표준 컬럼명으로 수정 (예: "Date" → "일", "Campaign" → "캠페인")<br>
+      4. CSV 형식으로 저장 후 재업로드
+    </div>
+    
+    <div class="section-title">Q2. 지표가 모두 0으로 나와요</div>
+    <p><strong>A2.</strong> 데이터 형식이 숫자가 아닐 수 있습니다.</p>
+    <div class="success-box">
+      <strong>✅ 해결 방법</strong><br>
+      1. CSV를 엑셀로 열기<br>
+      2. 전환, 비용, 노출수, 클릭수 컬럼 확인<br>
+      3. 쉼표 포함 숫자("1,234")를 숫자만("1234")으로 변경<br>
+      4. 셀 서식을 "숫자"로 변경<br>
+      5. 저장 후 재업로드
+    </div>
+    
+    <div class="info-box">
+      <strong>ℹ️ v1.7 자동 처리</strong><br>
+      비수치 데이터(N/A, -, 빈칸)는 자동으로 0으로 처리됩니다.
+    </div>
+    
+    <div class="section-title">Q3. ROAS 점수가 모두 0이에요</div>
+    <p><strong>A3.</strong> Revenue 컬럼이 없거나 모든 값이 0입니다.</p>
+    <div class="success-box">
+      <strong>✅ v1.7 자동 처리</strong><br>
+      Revenue 데이터가 없으면 <strong>ROAS 가중치를 나머지 3개 지표에 자동 재배분</strong>합니다.<br><br>
+      예시:<br>
+      • 입력: 전환 25% + CPA 25% + IPM 25% + ROAS 25%<br>
+      • 자동 재배분: 전환 33.3% + CPA 33.3% + IPM 33.3% + ROAS 0%
+    </div>
+    
+    <div class="section-title">Q4. 순위 변동이 Total Score 기준이 맞나요? <span class="badge badge-new">v1.7</span></div>
+    <p><strong>A4.</strong> 네, v1.7부터 <strong>Total Score 기준 순위</strong>로 변경되었습니다.</p>
+    <div class="highlight-box">
+      <strong>변경 이유</strong><br>
+      • 점수 계산 결과와 피로도 분석 결과의 일관성 확보<br>
+      • Total Score가 높아도 CPA가 악화되면 피로도로 별도 감지<br><br>
+      <strong>피로도 판정</strong>: CPA 기준 유지 (CPA 악화 = 피로도)
+    </div>
+    
+    <div class="footer">
+      Pepp Heroes 소재 분석 대시보드 v1.7 | Com2uS Marketing Team | Page 11
+    </div>
+  </div>
+  
+  <!-- 마지막 페이지 - 문의 및 지원 -->
+  <div class="page">
+    <div class="page-title">7. 문의 및 지원</div>
+    
+    <div class="section-title">7.1 기술 지원</div>
+    <table>
+      <thead>
+        <tr>
+          <th>항목</th>
+          <th>정보</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>담당자</strong></td>
+          <td>대장님 (Pepp Heroes 마케팅팀장)</td>
+        </tr>
+        <tr>
+          <td><strong>이메일</strong></td>
+          <td>marketing@com2us.com</td>
+        </tr>
+        <tr>
+          <td><strong>Slack 채널</strong></td>
+          <td>#marketing-tools</td>
+        </tr>
+        <tr>
+          <td><strong>응답 시간</strong></td>
+          <td>평일 오전 10시 ~ 오후 6시</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="section-title">7.2 피드백 및 개선 요청</div>
+    <ul>
+      <li><strong>기능 추가 요청</strong>: Slack #marketing-tools 채널에 남겨주세요</li>
+      <li><strong>버그 리포트</strong>: 이메일로 스크린샷 첨부하여 전송</li>
+      <li><strong>교육 요청</strong>: 1:1 또는 팀 단위 사용법 교육 가능</li>
+    </ul>
+    
+    <div class="section-title">7.3 버전 히스토리</div>
+    <table>
+      <thead>
+        <tr>
+          <th>버전</th>
+          <th>날짜</th>
+          <th>주요 업데이트</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>v1.7</strong></td>
+          <td>2026-04-08</td>
+          <td>
+            • Phase 2 UX 개선 (로딩, 컬럼 매핑, 필터 요약)<br>
+            • Total Score 기준 피로도 분석
+          </td>
+        </tr>
+        <tr>
+          <td><strong>v1.6</strong></td>
+          <td>2026-04-08</td>
+          <td>
+            • 데이터 안정성 강화 (NaN 차단, TXT 유형 지원)
+          </td>
+        </tr>
+        <tr>
+          <td><strong>v1.5</strong></td>
+          <td>2026-04-08</td>
+          <td>
+            • ROAS 지표 추가<br>
+            • Rank 기반 점수 계산<br>
+            • 캠페인 복수 선택
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <div class="highlight-box" style="margin-top: 50px;">
+      <strong>🎓 빠른 참고 (Cheat Sheet)</strong><br><br>
+      <strong>가중치 프리셋</strong><br>
+      • 균형형: 전환 25% | CPA 25% | IPM 25% | ROAS 25%<br>
+      • 전환형: 전환 40% | CPA 30% | IPM 15% | ROAS 15%<br>
+      • 수익형: 전환 15% | CPA 15% | IPM 10% | ROAS 60%<br>
+      • 효율형: 전환 20% | CPA 40% | IPM 30% | ROAS 10%<br><br>
+      
+      <strong>등급 기준</strong><br>
+      • 최우수: ≥80점 → 예산 증액 검토<br>
+      • 우수: ≥60점 → 현행 유지<br>
+      • 양호: ≥40점 → 최적화 여지<br>
+      • 보통: ≥20점 → 개선 필요<br>
+      • 개선필요: <20점 → 교체 검토<br><br>
+      
+      <strong>피로도 기준</strong><br>
+      • Fresh: CPA ≤-20% → Scale-up<br>
+      • Stable: -20%~0% → 유지<br>
+      • Warning: 0%~20% → 모니터링<br>
+      • Tired: >20% → 교체
+    </div>
+    
+    <div class="footer">
+      Pepp Heroes 소재 분석 대시보드 v1.7 | Com2uS Marketing Team | Page 14<br>
+      <strong>감사합니다! 궁금한 점은 언제든 문의해 주세요. 🚀</strong>
+    </div>
+  </div>
+  
+</body>
+</html>

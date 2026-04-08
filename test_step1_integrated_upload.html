@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Step 1 통합 페이지 업로드 테스트</title>
+  <style>
+    body {
+      font-family: monospace;
+      padding: 20px;
+      background: #1a1a1a;
+      color: #0f0;
+    }
+    .test-section {
+      margin: 20px 0;
+      padding: 15px;
+      background: #2a2a2a;
+      border: 1px solid #0f0;
+      border-radius: 8px;
+    }
+    .pass { color: #0f0; }
+    .fail { color: #f00; }
+    pre {
+      background: #000;
+      padding: 10px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧪 Step 1 통합 페이지 업로드 테스트</h1>
+  
+  <div class="test-section">
+    <h2>테스트 진행 상황</h2>
+    <div id="testLog"></div>
+  </div>
+  
+  <div class="test-section">
+    <h2>업로드 결과</h2>
+    <pre id="uploadResult">대기 중...</pre>
+  </div>
+
+  <script src="js/pipeline-engine.js"></script>
+  <script src="js/analysis-engine-v2.js"></script>
+  <script>
+    const log = document.getElementById('testLog');
+    const result = document.getElementById('uploadResult');
+    let testCount = 0;
+    let passCount = 0;
+    
+    function addLog(message, status = 'info') {
+      testCount++;
+      const color = status === 'pass' ? '#0f0' : status === 'fail' ? '#f00' : '#fff';
+      log.innerHTML += `<div style="color: ${color};">[${testCount}] ${message}</div>`;
+      if (status === 'pass') passCount++;
+    }
+    
+    // 테스트 시작
+    addLog('🚀 테스트 시작', 'info');
+    
+    // 1. pipeline-engine.js 함수 확인
+    addLog('pipeline-engine.js 로드 확인...', 'info');
+    if (typeof plParseCSV === 'function') {
+      addLog('✅ plParseCSV 함수 로드 성공', 'pass');
+    } else {
+      addLog('❌ plParseCSV 함수 로드 실패', 'fail');
+    }
+    
+    if (typeof plNormalizeColumns === 'function') {
+      addLog('✅ plNormalizeColumns 함수 로드 성공', 'pass');
+    } else {
+      addLog('❌ plNormalizeColumns 함수 로드 실패', 'fail');
+    }
+    
+    // 2. analysis-engine-v2.js 함수 확인
+    addLog('analysis-engine-v2.js 로드 확인...', 'info');
+    if (typeof detectDateColumn === 'function') {
+      addLog('✅ detectDateColumn 함수 로드 성공', 'pass');
+    } else {
+      addLog('❌ detectDateColumn 함수 로드 실패', 'fail');
+    }
+    
+    if (typeof parseDate === 'function') {
+      addLog('✅ parseDate 함수 로드 성공', 'pass');
+    } else {
+      addLog('❌ parseDate 함수 로드 실패', 'fail');
+    }
+    
+    if (typeof formatDate === 'function') {
+      addLog('✅ formatDate 함수 로드 성공', 'pass');
+    } else {
+      addLog('❌ formatDate 함수 로드 실패', 'fail');
+    }
+    
+    if (typeof filterByDateRange === 'function') {
+      addLog('✅ filterByDateRange 함수 로드 성공', 'pass');
+    } else {
+      addLog('❌ filterByDateRange 함수 로드 실패', 'fail');
+    }
+    
+    // 3. CSV 파일 로드 시뮬레이션
+    addLog('CSV 파일 로드 테스트...', 'info');
+    
+    fetch('sample_data/PHPH.csv')
+      .then(response => {
+        if (!response.ok) throw new Error('CSV 파일 로드 실패');
+        addLog('✅ CSV 파일 로드 성공', 'pass');
+        return response.text();
+      })
+      .then(text => {
+        addLog(`📦 CSV 파일 크기: ${(text.length / 1024).toFixed(1)} KB`, 'info');
+        
+        // 4. CSV 파싱
+        addLog('CSV 파싱 테스트...', 'info');
+        const parsed = plParseCSV(text);
+        addLog(`✅ CSV 파싱 완료: ${parsed.columns.length}개 컬럼, ${parsed.rows.length}개 행`, 'pass');
+        
+        // 5. 컬럼 정규화
+        addLog('컬럼 정규화 테스트...', 'info');
+        const normalized = plNormalizeColumns(parsed);
+        addLog(`✅ 컬럼 정규화 완료`, 'pass');
+        
+        // 6. 날짜 컬럼 감지
+        addLog('날짜 컬럼 감지 테스트...', 'info');
+        const dateColumn = detectDateColumn(normalized.columns);
+        if (dateColumn) {
+          addLog(`✅ 날짜 컬럼 감지: "${dateColumn}"`, 'pass');
+          
+          // 7. 날짜 파싱
+          const dates = normalized.rows
+            .map(row => row[dateColumn])
+            .filter(d => d)
+            .map(d => parseDate(d))
+            .filter(d => d)
+            .sort((a, b) => a - b);
+          
+          if (dates.length > 0) {
+            const minDate = formatDate(dates[0]);
+            const maxDate = formatDate(dates[dates.length - 1]);
+            addLog(`✅ 날짜 범위: ${minDate} ~ ${maxDate}`, 'pass');
+            
+            // 8. 캠페인 추출
+            const campaigns = new Set();
+            normalized.rows.forEach(row => {
+              if (row['캠페인']) campaigns.add(row['캠페인']);
+            });
+            addLog(`✅ 캠페인 추출: ${campaigns.size}개`, 'pass');
+            
+            // 결과 요약
+            result.textContent = JSON.stringify({
+              columns: normalized.columns.length,
+              rows: normalized.rows.length,
+              dateColumn: dateColumn,
+              dateRange: { min: minDate, max: maxDate },
+              campaigns: Array.from(campaigns),
+              sampleRow: normalized.rows[0]
+            }, null, 2);
+            
+            addLog(`\n🎉 모든 테스트 완료: ${passCount}/${testCount} 성공`, 'pass');
+          } else {
+            addLog('❌ 날짜 파싱 실패', 'fail');
+          }
+        } else {
+          addLog('❌ 날짜 컬럼을 찾을 수 없습니다', 'fail');
+        }
+      })
+      .catch(error => {
+        addLog(`❌ 오류 발생: ${error.message}`, 'fail');
+        result.textContent = error.stack;
+      });
+  </script>
+</body>
+</html>

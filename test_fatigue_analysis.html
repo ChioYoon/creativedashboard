@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>피로도 분석 자동 테스트</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      color: #2d3748;
+      text-align: center;
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .test-section {
+      background: #f7fafc;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 20px;
+    }
+
+    .test-section h2 {
+      color: #2d3748;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+    }
+
+    .test-result {
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 10px 0;
+      border-left: 4px solid #667eea;
+    }
+
+    .test-result.success {
+      border-left-color: #38a169;
+    }
+
+    .test-result.error {
+      border-left-color: #e53e3e;
+    }
+
+    .test-result h3 {
+      color: #2d3748;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+
+    .test-result p {
+      color: #4a5568;
+      margin: 5px 0;
+      font-size: 0.95rem;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-right: 10px;
+    }
+
+    .status.success {
+      background: #c6f6d5;
+      color: #22543d;
+    }
+
+    .status.error {
+      background: #fed7d7;
+      color: #742a2a;
+    }
+
+    .status.info {
+      background: #bee3f8;
+      color: #2c5282;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 10px 5px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    pre {
+      background: #2d3748;
+      color: #e2e8f0;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .console-log {
+      background: #2d3748;
+      color: #68d391;
+      padding: 20px;
+      border-radius: 8px;
+      max-height: 400px;
+      overflow-y: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      white-space: pre-wrap;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧪 피로도 분석 자동 테스트</h1>
+
+    <div style="text-align: center; margin-bottom: 30px;">
+      <button class="btn" onclick="runAllTests()">전체 테스트 실행</button>
+    </div>
+
+    <div class="test-section">
+      <h2>📊 테스트 결과</h2>
+      <div id="testResults"></div>
+    </div>
+
+    <div class="test-section">
+      <h2>💬 콘솔 로그</h2>
+      <div class="console-log" id="consoleLog">테스트를 실행하세요...</div>
+    </div>
+  </div>
+
+  <script src="js/pipeline-engine.js"></script>
+  <script src="js/analysis-engine-v2.js"></script>
+  <script>
+    // 콘솔 로그 캡처
+    const originalLog = console.log;
+    const logOutput = document.getElementById('consoleLog');
+
+    console.log = function(...args) {
+      originalLog.apply(console, args);
+      const message = args.map(arg => 
+        typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
+      ).join(' ');
+      logOutput.textContent += message + '\n';
+    };
+
+    const resultsContainer = document.getElementById('testResults');
+    let testCount = 0;
+    let passCount = 0;
+    let failCount = 0;
+
+    function addTestResult(title, status, details) {
+      testCount++;
+      if (status === 'success') passCount++;
+      else if (status === 'error') failCount++;
+
+      const resultDiv = document.createElement('div');
+      resultDiv.className = `test-result ${status}`;
+      
+      resultDiv.innerHTML = `
+        <h3>
+          <span class="status ${status}">${status === 'success' ? '✅ PASS' : status === 'error' ? '❌ FAIL' : 'ℹ️ INFO'}</span>
+          ${title}
+        </h3>
+        ${details.map(d => `<p>${d}</p>`).join('')}
+      `;
+      
+      resultsContainer.appendChild(resultDiv);
+    }
+
+    async function runAllTests() {
+      // 초기화
+      resultsContainer.innerHTML = '';
+      logOutput.textContent = '테스트 시작...\n\n';
+      testCount = 0;
+      passCount = 0;
+      failCount = 0;
+
+      console.log('=== 소재 피로도 분석 자동 테스트 시작 ===\n');
+
+      try {
+        // Test 1: CSV 파일 로드
+        console.log('Test 1: CSV 파일 로드');
+        const response = await fetch('sample_data/PHPH.csv');
+        
+        if (!response.ok) {
+          throw new Error('CSV 파일 로드 실패');
+        }
+        
+        const csvText = await response.text();
+        const fileSize = (csvText.length / 1024).toFixed(1);
+        
+        addTestResult('Test 1: CSV 파일 로드', 'success', [
+          `파일 크기: ${fileSize} KB`,
+          '파일 읽기 성공'
+        ]);
+        
+        console.log(`✅ CSV 파일 로드 성공 (${fileSize} KB)\n`);
+
+        // Test 2: CSV 파싱
+        console.log('Test 2: CSV 파싱');
+        const parsed = plParseCSV(csvText);
+        
+        if (!parsed || !parsed.headers || !parsed.rows) {
+          throw new Error('CSV 파싱 실패');
+        }
+        
+        addTestResult('Test 2: CSV 파싱', 'success', [
+          `컬럼 수: ${parsed.headers.length}개`,
+          `행 수: ${parsed.rows.length}개`
+        ]);
+        
+        console.log(`✅ CSV 파싱 완료: ${parsed.headers.length}개 컬럼, ${parsed.rows.length}개 행\n`);
+
+        // Test 3: 컬럼 정규화
+        console.log('Test 3: 컬럼 정규화');
+        const normalized = plNormalizeColumns(parsed);
+        
+        addTestResult('Test 3: 컬럼 정규화', 'success', [
+          `정규화된 컬럼 수: ${normalized.headers.length}개`,
+          `정규화된 행 수: ${normalized.rows.length}개`
+        ]);
+        
+        console.log(`✅ 컬럼 정규화 완료\n`);
+
+        // Test 4: 날짜 범위 추출
+        console.log('Test 4: 날짜 범위 추출');
+        const dateColumn = detectDateColumn(normalized.headers);
+        
+        if (!dateColumn) {
+          throw new Error('날짜 컬럼을 찾을 수 없습니다');
+        }
+        
+        const dates = [];
+        normalized.rows.forEach(row => {
+          const dateStr = row[dateColumn];
+          if (dateStr) {
+            const date = parseDate(dateStr);
+            if (date) dates.push(date);
+          }
+        });
+        
+        dates.sort((a, b) => a - b);
+        const minDate = formatDate(dates[0]);
+        const maxDate = formatDate(dates[dates.length - 1]);
+        
+        addTestResult('Test 4: 날짜 범위 추출', 'success', [
+          `날짜 컬럼: ${dateColumn}`,
+          `최소 날짜: ${minDate}`,
+          `최대 날짜: ${maxDate}`,
+          `유효 날짜 행 수: ${dates.length}개`
+        ]);
+        
+        console.log(`✅ 날짜 범위: ${minDate} ~ ${maxDate}\n`);
+
+        // Test 5: BNR/VID 필터링
+        console.log('Test 5: BNR/VID 필터링');
+        const filteredRows = normalized.rows.filter(row => {
+          const type = row['유형'];
+          return type === 'BNR' || type === 'VID';
+        });
+        
+        const bnrCount = filteredRows.filter(r => r['유형'] === 'BNR').length;
+        const vidCount = filteredRows.filter(r => r['유형'] === 'VID').length;
+        
+        addTestResult('Test 5: BNR/VID 필터링', 'success', [
+          `전체 행: ${normalized.rows.length}개`,
+          `BNR/VID 행: ${filteredRows.length}개`,
+          `BNR: ${bnrCount}개, VID: ${vidCount}개`
+        ]);
+        
+        console.log(`✅ BNR/VID 필터링 완료: ${filteredRows.length}개 행\n`);
+
+        // Test 6: 기간별 데이터 분리
+        console.log('Test 6: 기간별 데이터 분리');
+        const midIndex = Math.floor(dates.length / 2);
+        const midDate = formatDate(dates[midIndex]);
+        
+        const baselineData = filterByDateRange(filteredRows, dateColumn, minDate, midDate);
+        const comparisonData = filterByDateRange(filteredRows, dateColumn, midDate, maxDate);
+        
+        addTestResult('Test 6: 기간별 데이터 분리', 'success', [
+          `기준 기간 (${minDate} ~ ${midDate}): ${baselineData.length}개 행`,
+          `비교 기간 (${midDate} ~ ${maxDate}): ${comparisonData.length}개 행`
+        ]);
+        
+        console.log(`✅ 기간별 데이터 분리 완료\n`);
+
+        // Test 7: 소재명 기준 집계
+        console.log('Test 7: 소재명 기준 집계');
+        const baselineAgg_name = aggregateCreativeData(baselineData, '소재명');
+        const comparisonAgg_name = aggregateCreativeData(comparisonData, '소재명');
+        
+        addTestResult('Test 7: 소재명 기준 집계', 'success', [
+          `기준 기간 소재: ${baselineAgg_name.length}개`,
+          `비교 기간 소재: ${comparisonAgg_name.length}개`
+        ]);
+        
+        console.log(`✅ 소재명 기준 집계 완료\n`);
+
+        // Test 8: 파일명 기준 집계
+        console.log('Test 8: 파일명 기준 집계');
+        const baselineAgg_file = aggregateCreativeData(baselineData, '파일명');
+        const comparisonAgg_file = aggregateCreativeData(comparisonData, '파일명');
+        
+        addTestResult('Test 8: 파일명 기준 집계', 'success', [
+          `기준 기간 소재: ${baselineAgg_file.length}개`,
+          `비교 기간 소재: ${comparisonAgg_file.length}개`
+        ]);
+        
+        console.log(`✅ 파일명 기준 집계 완료\n`);
+
+        // Test 9: 순위 매기기
+        console.log('Test 9: 순위 매기기');
+        baselineAgg_file.sort((a, b) => (b.전환 || 0) - (a.전환 || 0));
+        comparisonAgg_file.sort((a, b) => (b.전환 || 0) - (a.전환 || 0));
+        
+        baselineAgg_file.forEach((item, idx) => {
+          item.rank = idx + 1;
+        });
+        
+        comparisonAgg_file.forEach((item, idx) => {
+          item.rank = idx + 1;
+        });
+        
+        const top3Baseline = baselineAgg_file.slice(0, 3).map(item => 
+          `${item.rank}위: ${item['파일명']} (전환 ${item.전환})`
+        );
+        
+        const top3Comparison = comparisonAgg_file.slice(0, 3).map(item => 
+          `${item.rank}위: ${item['파일명']} (전환 ${item.전환})`
+        );
+        
+        addTestResult('Test 9: 순위 매기기', 'success', [
+          '기준 기간 TOP 3:',
+          ...top3Baseline,
+          '비교 기간 TOP 3:',
+          ...top3Comparison
+        ]);
+        
+        console.log(`✅ 순위 매기기 완료\n`);
+
+        // Test 10: 순위 변화 계산
+        console.log('Test 10: 순위 변화 계산');
+        const baselineMap = new Map();
+        baselineAgg_file.forEach(item => {
+          baselineMap.set(item['파일명'], item);
+        });
+        
+        let upCount = 0;
+        let downCount = 0;
+        let stableCount = 0;
+        let newCount = 0;
+        
+        comparisonAgg_file.forEach(compItem => {
+          const key = compItem['파일명'];
+          const baseItem = baselineMap.get(key);
+          
+          if (!baseItem) {
+            newCount++;
+          } else {
+            const rankChange = baseItem.rank - compItem.rank;
+            if (rankChange > 0) upCount++;
+            else if (rankChange < 0) downCount++;
+            else stableCount++;
+          }
+        });
+        
+        addTestResult('Test 10: 순위 변화 계산', 'success', [
+          `순위 상승: ${upCount}개`,
+          `순위 하락: ${downCount}개`,
+          `순위 유지: ${stableCount}개`,
+          `신규 소재: ${newCount}개`
+        ]);
+        
+        console.log(`✅ 순위 변화 계산 완료\n`);
+
+        // Test 11: 피로도 상태 판정
+        console.log('Test 11: 피로도 상태 판정');
+        let freshCount = 0;
+        let stableFatigueCount = 0;
+        let warningCount = 0;
+        let tiredCount = 0;
+        
+        comparisonAgg_file.forEach(compItem => {
+          const key = compItem['파일명'];
+          const baseItem = baselineMap.get(key);
+          
+          if (!baseItem) {
+            freshCount++;
+            return;
+          }
+          
+          const rankChange = baseItem.rank - compItem.rank;
+          const baseConversion = baseItem.전환 || 0;
+          const compConversion = compItem.전환 || 0;
+          
+          let conversionChangeRate = 0;
+          if (baseConversion > 0) {
+            conversionChangeRate = ((compConversion - baseConversion) / baseConversion) * 100;
+          }
+          
+          // 피로도 판정
+          if (rankChange >= 5 && conversionChangeRate >= 20) {
+            freshCount++;
+          } else if (rankChange >= 0 && conversionChangeRate >= 0) {
+            stableFatigueCount++;
+          } else if (rankChange < 0 && conversionChangeRate >= -20) {
+            warningCount++;
+          } else {
+            tiredCount++;
+          }
+        });
+        
+        addTestResult('Test 11: 피로도 상태 판정', 'success', [
+          `🟢 신선 (Fresh): ${freshCount}개`,
+          `🔵 안정 (Stable): ${stableFatigueCount}개`,
+          `🟡 주의 (Warning): ${warningCount}개`,
+          `🔴 피로 (Tired): ${tiredCount}개`
+        ]);
+        
+        console.log(`✅ 피로도 상태 판정 완료\n`);
+
+        // Test 12: 이미지 링크 확인
+        console.log('Test 12: 이미지 링크 확인');
+        let imageCount = 0;
+        let videoCount = 0;
+        
+        comparisonAgg_file.forEach(item => {
+          const link = item.meta['링크'];
+          if (link && link.startsWith('http')) {
+            if (item.유형 === 'VID') {
+              videoCount++;
+            } else {
+              imageCount++;
+            }
+          }
+        });
+        
+        addTestResult('Test 12: 이미지 링크 확인', 'success', [
+          `이미지 링크: ${imageCount}개`,
+          `동영상 링크: ${videoCount}개`,
+          `전체 소재 중 링크 보유율: ${((imageCount + videoCount) / comparisonAgg_file.length * 100).toFixed(1)}%`
+        ]);
+        
+        console.log(`✅ 이미지 링크 확인 완료\n`);
+
+        // 최종 요약
+        console.log('\n=== 테스트 완료 ===');
+        console.log(`총 테스트: ${testCount}개`);
+        console.log(`통과: ${passCount}개`);
+        console.log(`실패: ${failCount}개`);
+        
+        const summaryDiv = document.createElement('div');
+        summaryDiv.className = 'test-result info';
+        summaryDiv.innerHTML = `
+          <h3>
+            <span class="status info">📊 테스트 요약</span>
+          </h3>
+          <p><strong>총 테스트:</strong> ${testCount}개</p>
+          <p><strong>통과:</strong> ${passCount}개</p>
+          <p><strong>실패:</strong> ${failCount}개</p>
+          <p><strong>성공률:</strong> ${(passCount / testCount * 100).toFixed(1)}%</p>
+        `;
+        resultsContainer.appendChild(summaryDiv);
+
+      } catch (error) {
+        console.error('❌ 테스트 실패:', error);
+        addTestResult('테스트 실패', 'error', [
+          `오류 메시지: ${error.message}`
+        ]);
+      }
+    }
+
+    // 페이지 로드 시 자동 실행
+    window.addEventListener('load', () => {
+      console.log('피로도 분석 자동 테스트 페이지 로드 완료\n');
+      setTimeout(runAllTests, 500);
+    });
+  </script>
+</body>
+</html>

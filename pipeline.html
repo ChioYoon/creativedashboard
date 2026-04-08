@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pepp Heroes – 소재 분석 파이프라인 시스템</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="css/pipeline.css" />
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="pl-header">
+  <div class="pl-header-inner">
+    <div class="pl-header-left">
+      <div class="logo-badge">PH</div>
+      <div>
+        <h1 class="site-title">Pepp Heroes</h1>
+        <p class="site-subtitle">소재 분석 파이프라인 시스템</p>
+      </div>
+    </div>
+    <div class="pl-header-right">
+      <span class="round-badge" id="currentRoundBadge">현재 차수: 로딩 중…</span>
+      <a href="index.html" class="btn-nav"><i class="fas fa-chart-bar"></i> 성과 대시보드</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== STAGE PROGRESS BAR ===== -->
+<div class="stage-bar">
+  <div class="stage-bar-inner">
+    <div class="stage-step active" data-stage="1">
+      <div class="stage-dot"><i class="fas fa-upload"></i></div>
+      <span>1. 데이터 업로드</span>
+    </div>
+    <div class="stage-connector"></div>
+    <div class="stage-step" data-stage="2">
+      <div class="stage-dot"><i class="fas fa-check-double"></i></div>
+      <span>2. 데이터 검증</span>
+    </div>
+    <div class="stage-connector"></div>
+    <div class="stage-step" data-stage="3">
+      <div class="stage-dot"><i class="fas fa-brain"></i></div>
+      <span>3. 군집화 분석</span>
+    </div>
+    <div class="stage-connector"></div>
+    <div class="stage-step" data-stage="4">
+      <div class="stage-dot"><i class="fas fa-flag-checkered"></i></div>
+      <span>4. 인사이트 확정</span>
+    </div>
+  </div>
+</div>
+
+<main class="pl-main">
+
+  <!-- ==============================
+       STAGE 1: 데이터 업로드
+       ============================== -->
+  <section class="pl-stage active" id="stage-1">
+    <div class="stage-header">
+      <div class="stage-num">STEP 01</div>
+      <h2>로데이터 업로드</h2>
+      <p>마케팅 실무자가 소재별 태그 + 퍼포먼스 데이터가 포함된 CSV를 업로드합니다.</p>
+    </div>
+
+    <div class="two-col">
+      <!-- 업로드 카드 -->
+      <div class="pl-card">
+        <div class="pl-card-title"><i class="fas fa-file-csv"></i> CSV 파일 업로드</div>
+        <div class="upload-meta-row">
+          <div class="meta-field">
+            <label>차수명 <span class="req">*</span></label>
+            <input type="text" id="roundName" placeholder="예: 2026년 4월 1차" />
+          </div>
+          <div class="meta-field">
+            <label>업로드 담당자</label>
+            <input type="text" id="uploaderName" placeholder="예: 홍길동" />
+          </div>
+          <div class="meta-field full">
+            <label>메모 (이번 차수 특이사항)</label>
+            <textarea id="uploadMemo" rows="2" placeholder="예: 신규 Character-Collection 소재 5종 추가, 4월 프리런칭 캠페인 반영"></textarea>
+          </div>
+        </div>
+
+        <div class="drop-zone" id="dropZone1">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <p>CSV 파일을 드래그하거나 클릭하여 선택</p>
+          <span class="drop-hint">최대 50MB · UTF-8 / EUC-KR 자동 감지</span>
+          <input type="file" id="csvFileInput" accept=".csv" style="display:none" />
+        </div>
+
+        <div class="col-guide">
+          <div class="col-guide-title"><i class="fas fa-info-circle"></i> 필수 컬럼 안내</div>
+          <div class="col-tags">
+            <span class="col-tag req">소재명</span>
+            <span class="col-tag req">유형 (BNR/VID)</span>
+            <span class="col-tag req">전환</span>
+            <span class="col-tag req">비용</span>
+            <span class="col-tag req">노출수</span>
+            <span class="col-tag opt">클릭수</span>
+            <span class="col-tag opt">hooking_strategy</span>
+            <span class="col-tag opt">emotion</span>
+            <span class="col-tag opt">visual_technique</span>
+            <span class="col-tag opt">gameplay</span>
+            <span class="col-tag opt">environment</span>
+            <span class="col-tag opt">character_object</span>
+            <span class="col-tag opt">art_style</span>
+            <span class="col-tag opt">title_specific_*</span>
+            <span class="col-tag mi">marketer_insight</span>
+            <span class="col-tag opt">링크</span>
+          </div>
+          <div class="col-legend">
+            <span><span class="col-tag req" style="font-size:10px;">필수</span> = 분석 필수 항목</span>
+            <span><span class="col-tag opt" style="font-size:10px;">선택</span> = 태그 자동 추출</span>
+            <span><span class="col-tag mi" style="font-size:10px;">MI</span> = 키워드 자동 추출 → [MI] 태그</span>
+          </div>
+          <div class="col-auto-note"><i class="fas fa-magic"></i> 태그 컬럼은 헤더 이름 관계없이 <strong>자동 전수 탐지</strong>됩니다. 퍼포먼스 수치·URL·날짜 컬럼은 자동 제외됩니다.</div>
+          <div class="col-auto-note" style="margin-top:8px;background:#eff6ff;border-left-color:#3b82f6;">
+            <i class="fas fa-exchange-alt" style="color:#3b82f6;"></i>
+            <strong>UA 로데이터 자동 호환:</strong> <code>파일명</code>→<code>소재명</code>, <code>유형 (BNR/VID)</code>→<code>유형</code> 등 컬럼명 자동 정규화 적용
+          </div>
+        </div>
+      </div>
+
+      <!-- 업로드 가이드 -->
+      <div class="pl-card guide-card">
+        <div class="pl-card-title"><i class="fas fa-book-open"></i> 업로드 전 체크리스트</div>
+        <div class="checklist" id="uploadChecklist">
+          <label class="check-item"><input type="checkbox" /> <span><strong>파일명 컬럼</strong>이 각 BNR/VID 소재의 고유 식별자인지 확인 (예: <code>A-Character-Adventure01A-DA</code>)</span></label>
+          <label class="check-item"><input type="checkbox" /> <span><strong>유형</strong> 컬럼이 BNR/VID/TXT로 정확히 기재되어 있는지 확인 (자동 정규화 지원)</span></label>
+          <label class="check-item"><input type="checkbox" /> <span>전환·비용·노출수에 숫자 이외의 값(대시, 공백 등)이 없는지 확인</span></label>
+          <label class="check-item"><input type="checkbox" /> <span>태그 컬럼(hooking_strategy, emotion, gameplay 등)이 BNR/VID 행에 채워져 있는지 확인</span></label>
+          <label class="check-item"><input type="checkbox" /> <span>집행 기간이 동일한 소재들만 포함 (기간 혼재 시 점수 왜곡 가능)</span></label>
+          <label class="check-item"><input type="checkbox" /> <span>이전 차수와 동일 소재가 포함되어 있다면 재집행 여부 메모에 기재</span></label>
+        </div>
+
+        <div class="info-box mt16">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <strong>TXT 행 자동 제외:</strong> 유형이 'TXT'인 행은 파일명·태그 정보가 불완전하여 군집화에서 자동 제외됩니다. BNR/VID만 분석 대상입니다.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 파일 파싱 결과 미리보기 -->
+    <div class="pl-card mt20" id="parsePreviewCard" style="display:none;">
+      <div class="pl-card-title"><i class="fas fa-table"></i> 파일 파싱 결과 미리보기</div>
+      <div id="parseStats" class="parse-stats-row"></div>
+      <div class="table-scroll">
+        <table class="mini-table" id="parsePreviewTable"></table>
+      </div>
+    </div>
+
+    <div class="stage-actions">
+      <button class="btn-ghost" id="btnLoadSample"><i class="fas fa-flask"></i> 샘플 데이터로 테스트</button>
+      <button class="btn-primary" id="btnToStage2" disabled><i class="fas fa-arrow-right"></i> 데이터 검증으로 이동</button>
+    </div>
+  </section>
+
+  <!-- ==============================
+       STAGE 2: 데이터 검증
+       ============================== -->
+  <section class="pl-stage" id="stage-2">
+    <div class="stage-header">
+      <div class="stage-num">STEP 02</div>
+      <h2>데이터 품질 검증</h2>
+      <p>분석 정확도를 위해 컬럼 누락·이상치·태그 품질을 자동으로 검사합니다.</p>
+    </div>
+
+    <div class="three-col">
+      <div class="pl-card" id="validColCard">
+        <div class="pl-card-title"><i class="fas fa-columns"></i> 컬럼 검증</div>
+        <div id="colValidResult"></div>
+      </div>
+      <div class="pl-card" id="validDataCard">
+        <div class="pl-card-title"><i class="fas fa-database"></i> 데이터 품질</div>
+        <div id="dataValidResult"></div>
+      </div>
+      <div class="pl-card" id="validTagCard">
+        <div class="pl-card-title"><i class="fas fa-tags"></i> 태그 품질</div>
+        <div id="tagValidResult"></div>
+      </div>
+    </div>
+
+    <div class="pl-card mt20" id="validSummaryCard">
+      <div class="pl-card-title"><i class="fas fa-clipboard-check"></i> 검증 요약 & 이상 데이터 목록</div>
+      <div id="validSummary"></div>
+    </div>
+
+    <div class="stage-actions">
+      <button class="btn-ghost" id="btnBackTo1"><i class="fas fa-arrow-left"></i> 업로드로 돌아가기</button>
+      <button class="btn-primary" id="btnToStage3"><i class="fas fa-arrow-right"></i> 군집화 분석으로 이동</button>
+    </div>
+  </section>
+
+  <!-- ==============================
+       STAGE 3: 군집화 분석
+       ============================== -->
+  <section class="pl-stage" id="stage-3">
+    <div class="stage-header">
+      <div class="stage-num">STEP 03</div>
+      <h2>자동 군집화 분석</h2>
+      <p>태그 동시출현 빈도와 성과 지표를 결합하여 소재 군집을 자동 생성합니다. 이전 차수 군집 구조를 기준으로 변동을 감지합니다.</p>
+    </div>
+
+    <!-- 분석 파라미터 설정 -->
+    <div class="pl-card">
+      <div class="pl-card-title"><i class="fas fa-sliders-h"></i> 분석 파라미터 설정</div>
+      <div class="param-grid">
+        <div class="param-item">
+          <label>전환 가중치 <span class="param-val" id="wConvVal">40%</span></label>
+          <input type="range" id="wConv" min="10" max="70" value="40" class="param-range" />
+          <span class="param-hint">높을수록 전환 수 중심 분석</span>
+        </div>
+        <div class="param-item">
+          <label>CPA 가중치 <span class="param-val" id="wCpaVal">35%</span></label>
+          <input type="range" id="wCpa" min="10" max="70" value="35" class="param-range" />
+          <span class="param-hint">낮은 CPA가 유리 (역가중)</span>
+        </div>
+        <div class="param-item">
+          <label>IPM 가중치 <span class="param-val" id="wIpmVal">25%</span></label>
+          <input type="range" id="wIpm" min="10" max="70" value="25" class="param-range" />
+          <span class="param-hint">노출 대비 전환 효율</span>
+        </div>
+        <div class="param-item">
+          <label>군집 최소 소재 수 <span class="param-val" id="minClusterVal">3</span></label>
+          <input type="range" id="minCluster" min="2" max="8" value="3" class="param-range" />
+          <span class="param-hint">이 수 미만은 기타군 처리</span>
+        </div>
+        <div class="param-item">
+          <label>코어 태그 지지율 기준 <span class="param-val" id="minSupportVal">30%</span></label>
+          <input type="range" id="minSupport" min="10" max="60" value="30" class="param-range" />
+          <span class="param-hint">전체 소재 대비 등장 빈도</span>
+        </div>
+        <div class="param-item">
+          <label>군집 동시출현 기준 <span class="param-val" id="coOccurVal">2개</span></label>
+          <input type="range" id="coOccur" min="1" max="5" value="2" class="param-range" />
+          <span class="param-hint">같은 군집 묶음 최소 태그 수</span>
+        </div>
+      </div>
+
+      <!-- ── 최소 군집 수 보장 옵션 -->
+      <div class="min-clusters-row">
+        <div class="min-clusters-toggle">
+          <label class="toggle-switch">
+            <input type="checkbox" id="useMinClusters" />
+            <span class="toggle-slider"></span>
+          </label>
+          <div class="min-clusters-label">
+            <span class="mcl-title"><i class="fas fa-object-group"></i> 최소 군집 수 보장</span>
+            <span class="mcl-desc">활성화 시, 지정한 수 이상의 군집이 생성될 때까지 파라미터를 자동으로 완화합니다.</span>
+          </div>
+        </div>
+        <div class="min-clusters-control" id="minClustersControl" style="display:none;">
+          <div class="mcl-stepper-wrap">
+            <button class="mcl-btn" id="btnMinClusMinus" aria-label="감소">
+              <i class="fas fa-minus"></i>
+            </button>
+            <div class="mcl-value-wrap">
+              <input type="number" id="minClustersInput" value="3" min="2" max="10"
+                     class="mcl-number-input" aria-label="최소 군집 수" />
+              <span class="mcl-unit">개 이상</span>
+            </div>
+            <button class="mcl-btn" id="btnMinClusPlus" aria-label="증가">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+          <div class="mcl-range-wrap">
+            <input type="range" id="minClustersSlider" min="2" max="10" value="3"
+                   class="param-range" aria-label="최소 군집 수 슬라이더" />
+            <div class="mcl-range-labels">
+              <span>2</span><span>4</span><span>6</span><span>8</span><span>10</span>
+            </div>
+          </div>
+          <div class="mcl-info-box" id="minClustersInfo">
+            <i class="fas fa-info-circle"></i>
+            <span>군집 수가 <strong id="minClustersDisplay">3</strong>개 미만이면 아래 전략을 순서대로 적용해 재시도합니다. (최대 <strong>5회</strong>)</span>
+          </div>
+          <div class="mcl-strategy-grid">
+            <div class="mcl-strategy-item">
+              <span class="mcl-step">1·3회</span>
+              <div class="mcl-strategy-desc">
+                <strong><i class="fas fa-arrows-alt-h"></i> 분리 임계값 상향</strong>
+                <span>태그 병합 기준을 높여 군집이 덜 합쳐지게 합니다</span>
+              </div>
+            </div>
+            <div class="mcl-strategy-item">
+              <span class="mcl-step">2·4회</span>
+              <div class="mcl-strategy-desc">
+                <strong><i class="fas fa-filter"></i> 노이즈 필터 강화</strong>
+                <span>공통 태그를 더 많이 제거해 차별 태그만 남깁니다</span>
+              </div>
+            </div>
+            <div class="mcl-strategy-item">
+              <span class="mcl-step">5회</span>
+              <div class="mcl-strategy-desc">
+                <strong><i class="fas fa-compress-arrows-alt"></i> 최소 소재 수 완화</strong>
+                <span>소규모 군집도 독립 군집으로 인정합니다</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="weight-warning" id="weightWarning" style="display:none;">
+        <i class="fas fa-exclamation-triangle"></i> 가중치 합계가 100%를 초과합니다. 자동으로 정규화됩니다.
+      </div>
+    </div>
+
+    <!-- 파라미터 영향 가이드 -->
+    <div class="pl-card mt20 param-guide-card">
+      <div class="pl-card-title"><i class="fas fa-lightbulb"></i> 군집 수 조절 가이드</div>
+      <div class="param-guide-grid">
+        <div class="param-guide-item increase">
+          <div class="guide-label"><i class="fas fa-plus-circle"></i> 군집 수를 늘리려면</div>
+          <ul>
+            <li><strong>코어 태그 지지율</strong>을 <em>높이세요</em> → 노이즈 상한이 낮아져 공통 태그 제거 ↑</li>
+            <li><strong>군집 최소 소재 수</strong>를 <em>낮추세요</em> → 소규모 군집도 독립 인정</li>
+            <li><strong>최소 군집 수 보장</strong> 옵션을 활성화하세요 → 자동 파라미터 조정</li>
+          </ul>
+        </div>
+        <div class="param-guide-item decrease">
+          <div class="guide-label"><i class="fas fa-minus-circle"></i> 군집 수를 줄이려면</div>
+          <ul>
+            <li><strong>코어 태그 지지율</strong>을 <em>낮추세요</em> → 더 많은 태그가 공통 처리</li>
+            <li><strong>군집 최소 소재 수</strong>를 <em>높이세요</em> → 소규모 군집이 기타로 이동</li>
+            <li><strong>동시출현 기준</strong>을 <em>낮추세요</em> → 태그가 더 많이 하나로 묶임</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 분석 실행 -->
+    <div class="pl-card mt20" id="clusterRunCard">
+      <div class="pl-card-title"><i class="fas fa-play-circle"></i> 군집화 실행</div>
+      <div class="run-area">
+        <div class="run-info" id="runInfo">
+          <i class="fas fa-info-circle"></i>
+          파라미터를 설정한 뒤 아래 버튼을 눌러 군집화 분석을 실행하세요.
+        </div>
+        <button class="btn-run" id="btnRunClustering">
+          <i class="fas fa-brain"></i> 군집화 분석 실행
+        </button>
+      </div>
+      <div class="progress-bar-wrap" id="clusterProgress" style="display:none;">
+        <div class="progress-bar-track">
+          <div class="progress-bar-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-label" id="progressLabel">분석 중…</div>
+      </div>
+    </div>
+
+    <!-- 군집화 결과 -->
+    <div id="clusterResultArea" style="display:none;">
+      <div class="result-section-title"><i class="fas fa-layer-group"></i> 군집화 결과</div>
+      <div class="cluster-result-grid" id="clusterResultGrid"></div>
+
+      <div class="pl-card mt20">
+        <div class="pl-card-title"><i class="fas fa-chart-bar"></i> 군집별 성과 비교</div>
+        <div style="height:320px; position:relative;">
+          <canvas id="clusterCompareChart"></canvas>
+        </div>
+      </div>
+
+      <div class="pl-card mt20">
+        <div class="pl-card-title"><i class="fas fa-sort-amount-down"></i> 소재별 Score & 군집 배정 결과</div>
+        <div class="table-scroll">
+          <table class="mini-table" id="scoreMappingTable"></table>
+        </div>
+      </div>
+    </div>
+
+    <div class="stage-actions">
+      <button class="btn-ghost" id="btnBackTo2"><i class="fas fa-arrow-left"></i> 검증으로 돌아가기</button>
+      <button class="btn-primary" id="btnToStage4" disabled><i class="fas fa-arrow-right"></i> 인사이트 확정으로 이동</button>
+    </div>
+  </section>
+
+  <!-- ==============================
+       STAGE 4: 인사이트 확정
+       ============================== -->
+  <section class="pl-stage" id="stage-4">
+    <div class="stage-header">
+      <div class="stage-num">STEP 04</div>
+      <h2>인사이트 확정 &amp; 저장</h2>
+      <p>이번 차수의 분석 결과를 최종 확정하고 히스토리에 저장합니다. 확정된 인사이트는 다음 차수 분석에 자동으로 반영됩니다.</p>
+    </div>
+
+    <!-- 최종 요약 -->
+    <div class="pl-card">
+      <div class="pl-card-title"><i class="fas fa-file-alt"></i> 이번 차수 최종 분석 요약</div>
+      <div id="finalSummaryContent"></div>
+    </div>
+
+    <!-- 승리 공식 / 중단 패턴 -->
+    <div class="two-col mt20">
+      <div class="pl-card">
+        <div class="pl-card-title win-title"><i class="fas fa-rocket"></i> 확정된 승리 공식</div>
+        <div id="winningFormula"></div>
+        <div class="formula-input-wrap">
+          <textarea id="winningFormulaInput" rows="3" placeholder="예: 질문형 오프닝 → 캐릭터 수집 욕구 → 즉시 보상 제시 → 경쾌한 마무리"></textarea>
+          <button class="btn-sm" id="btnSaveFormula"><i class="fas fa-save"></i> 저장</button>
+        </div>
+      </div>
+      <div class="pl-card">
+        <div class="pl-card-title exit-title"><i class="fas fa-ban"></i> 중단/축소 패턴</div>
+        <div id="exitPattern"></div>
+        <div class="formula-input-wrap">
+          <textarea id="exitPatternInput" rows="3" placeholder="예: 정방형 배너 단독, 탐험/힐링 무드 단독, 8인 전투 스케일 단독"></textarea>
+          <button class="btn-sm" id="btnSaveExit"><i class="fas fa-save"></i> 저장</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 차수 히스토리 -->
+    <div class="pl-card mt20">
+      <div class="pl-card-title"><i class="fas fa-clock-rotate-left"></i> 전체 차수 히스토리</div>
+      <div id="roundHistoryList"></div>
+    </div>
+
+    <div id="saveSuccessBanner" style="display:none;margin-bottom:12px;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:12px 18px;display:none;align-items:center;gap:10px;font-size:13px;color:#166534;">
+      <i class="fas fa-check-circle" style="color:#22c55e;font-size:16px;flex-shrink:0;"></i>
+      <span>차수가 저장되었습니다. 아래 버튼을 눌러 대시보드에서 결과를 확인하세요. 모든 소재·군집·태그 영향도가 자동으로 반영됩니다.</span>
+    </div>
+
+    <div class="stage-actions final-actions">
+      <button class="btn-ghost" id="btnBackTo3"><i class="fas fa-arrow-left"></i> 군집화로 돌아가기</button>
+      <button class="btn-success" id="btnSaveRound">
+        <i class="fas fa-save"></i> 이번 차수 분석 결과 저장
+      </button>
+      <a href="index.html" class="btn-dashboard">
+        <i class="fas fa-chart-bar"></i> 성과 대시보드로 이동
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="pl-footer">
+  <div class="pl-footer-inner">
+    <span>Pepp Heroes Creative Analysis Pipeline · Com2uS Global Marketing</span>
+    <span id="footerRound"></span>
+  </div>
+</footer>
+
+<script src="js/pipeline-data.js"></script>
+<script src="js/pipeline-engine.js"></script>
+<script src="js/pipeline-ui.js"></script>
+</body>
+</html>

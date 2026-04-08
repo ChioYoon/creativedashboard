@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>간단 업로드 테스트</title>
+  <style>
+    body { padding: 20px; font-family: monospace; }
+    .upload-area {
+      border: 3px dashed #ccc;
+      padding: 40px;
+      text-align: center;
+      cursor: pointer;
+      margin: 20px 0;
+      background: #f9f9f9;
+    }
+    .upload-area:hover { background: #e0e0ff; }
+    #log { background: #000; color: #0f0; padding: 15px; font-family: monospace; }
+  </style>
+</head>
+<body>
+  <h1>🧪 간단 CSV 업로드 테스트</h1>
+  
+  <div class="upload-area" id="uploadArea">
+    📁 CSV 파일을 여기에 드래그하거나 클릭하세요
+  </div>
+  <input type="file" id="fileInput" accept=".csv" style="display: none;">
+  
+  <h2>로그:</h2>
+  <pre id="log"></pre>
+
+  <script src="js/pipeline-engine.js"></script>
+  <script src="js/analysis-engine-v2.js"></script>
+  <script>
+    const logEl = document.getElementById('log');
+    function log(msg) {
+      logEl.textContent += msg + '\n';
+      console.log(msg);
+    }
+    
+    log('✅ 페이지 로드 완료');
+    log(`plParseCSV: ${typeof plParseCSV}`);
+    log(`plNormalizeColumns: ${typeof plNormalizeColumns}`);
+    log(`detectDateColumn: ${typeof detectDateColumn}`);
+    
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    
+    uploadArea.addEventListener('click', () => {
+      log('📂 파일 선택 창 열기');
+      fileInput.click();
+    });
+    
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        log(`📦 파일 선택: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`);
+        
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          try {
+            const text = evt.target.result;
+            log(`📄 파일 읽기 완료: ${text.length}자`);
+            
+            log('🔄 CSV 파싱 중...');
+            const parsed = plParseCSV(text);
+            log(`✅ 파싱 완료: ${parsed.columns.length}개 컬럼, ${parsed.rows.length}개 행`);
+            
+            log('🔄 컬럼 정규화 중...');
+            const normalized = plNormalizeColumns(parsed);
+            log(`✅ 정규화 완료`);
+            
+            log('🔍 날짜 컬럼 감지 중...');
+            const dateCol = detectDateColumn(normalized.columns);
+            log(`✅ 날짜 컬럼: ${dateCol || '없음'}`);
+            
+            log('\n🎉 모든 작업 완료!');
+            log('\n샘플 데이터:');
+            log(JSON.stringify(normalized.rows[0], null, 2));
+            
+          } catch (error) {
+            log(`❌ 오류: ${error.message}`);
+            log(error.stack);
+          }
+        };
+        
+        reader.onerror = () => {
+          log('❌ 파일 읽기 실패');
+        };
+        
+        reader.readAsText(file);
+      }
+    });
+    
+    // 드래그 앤 드롭
+    uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+    });
+    
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        log(`📦 드롭 파일: ${file.name}`);
+        fileInput.files = e.dataTransfer.files;
+        fileInput.dispatchEvent(new Event('change'));
+      }
+    });
+  </script>
+</body>
+</html>
