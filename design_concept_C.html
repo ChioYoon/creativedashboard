@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>디자인 컨셉 C: 클린 & 데이터 중심</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #F8F9FA;
+      color: #2C3E50;
+      line-height: 1.6;
+    }
+    
+    /* 헤더 */
+    .header {
+      background: white;
+      border-bottom: 1px solid #E9ECEF;
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+    
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .logo-square {
+      width: 40px;
+      height: 40px;
+      background: #E84855;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .logo-text h1 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1A1A1A;
+    }
+    
+    .logo-text span {
+      font-size: 11px;
+      color: #6B7280;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    
+    .header-nav {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+    }
+    
+    .header-nav a {
+      color: #6B7280;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    
+    .header-nav a:hover {
+      color: #E84855;
+    }
+    
+    .version-tag {
+      background: #F0F0F0;
+      color: #6B7280;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    
+    /* 컨테이너 */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+    
+    /* 메인 섹션 */
+    .main-section {
+      padding: 80px 0;
+      text-align: center;
+    }
+    
+    .main-section .label {
+      display: inline-block;
+      background: #FEF3F4;
+      color: #E84855;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      letter-spacing: 0.5px;
+    }
+    
+    .main-section h2 {
+      font-size: 48px;
+      font-weight: 800;
+      color: #1A1A1A;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+    
+    .main-section .subtitle {
+      font-size: 20px;
+      color: #6B7280;
+      margin-bottom: 40px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .action-button {
+      display: inline-block;
+      background: #E84855;
+      color: white;
+      padding: 16px 40px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 14px rgba(232, 72, 85, 0.3);
+    }
+    
+    .action-button:hover {
+      background: #D63745;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(232, 72, 85, 0.4);
+    }
+    
+    /* 기능 그리드 */
+    .feature-section {
+      padding: 60px 0;
+      background: white;
+    }
+    
+    .section-title {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 800;
+      color: #1A1A1A;
+      margin-bottom: 48px;
+    }
+    
+    .feature-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    
+    .feature-box {
+      background: #F8F9FA;
+      border: 1px solid #E9ECEF;
+      border-radius: 12px;
+      padding: 32px;
+      transition: all 0.3s ease;
+    }
+    
+    .feature-box:hover {
+      border-color: #E84855;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+      transform: translateY(-2px);
+    }
+    
+    .feature-number {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background: #E84855;
+      color: white;
+      border-radius: 8px;
+      text-align: center;
+      line-height: 40px;
+      font-weight: 800;
+      font-size: 18px;
+      margin-bottom: 16px;
+    }
+    
+    .feature-box h3 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1A1A1A;
+      margin-bottom: 12px;
+    }
+    
+    .feature-box p {
+      font-size: 15px;
+      color: #6B7280;
+      line-height: 1.7;
+    }
+    
+    /* 데이터 카드 */
+    .data-section {
+      padding: 60px 0;
+      background: #F8F9FA;
+    }
+    
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    
+    .data-card {
+      background: white;
+      border: 1px solid #E9ECEF;
+      border-radius: 12px;
+      padding: 28px;
+      text-align: center;
+    }
+    
+    .data-card .number {
+      font-size: 40px;
+      font-weight: 900;
+      color: #E84855;
+      margin-bottom: 8px;
+      display: block;
+    }
+    
+    .data-card .label {
+      font-size: 14px;
+      color: #6B7280;
+      font-weight: 600;
+    }
+    
+    /* 정보 박스 */
+    .info-section {
+      padding: 60px 0;
+      background: white;
+    }
+    
+    .info-box {
+      background: linear-gradient(135deg, #E84855 0%, #FF6B6B 100%);
+      border-radius: 16px;
+      padding: 48px;
+      color: white;
+      text-align: center;
+    }
+    
+    .info-box h3 {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    
+    .info-box p {
+      font-size: 16px;
+      opacity: 0.95;
+      margin-bottom: 32px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .info-box .links {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+    
+    .info-box .link-button {
+      background: white;
+      color: #E84855;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    
+    .info-box .link-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+    }
+    
+    /* 푸터 */
+    .footer {
+      background: #1A1A1A;
+      color: white;
+      padding: 48px 0 24px;
+    }
+    
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px;
+      margin-bottom: 32px;
+    }
+    
+    .footer-col h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .footer-col p, .footer-col li {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.8;
+      margin-bottom: 8px;
+    }
+    
+    .footer-col ul {
+      list-style: none;
+    }
+    
+    .footer-col a {
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    
+    .footer-col a:hover {
+      color: #FF6B6B;
+    }
+    
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 32px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    
+    /* 반응형 */
+    @media (max-width: 768px) {
+      .feature-list {
+        grid-template-columns: 1fr;
+      }
+      .data-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .main-section h2 {
+        font-size: 36px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-content">
+      <div class="logo-area">
+        <div class="logo-square">C</div>
+        <div class="logo-text">
+          <h1>소재 분석 대시보드</h1>
+          <span>COM2US R MARKETING</span>
+        </div>
+      </div>
+      <div class="header-nav">
+        <a href="#features">기능</a>
+        <a href="#stats">통계</a>
+        <a href="#guide">가이드</a>
+        <span class="version-tag">V1.8</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 메인 섹션 -->
+  <div class="container">
+    <div class="main-section">
+      <div class="label">DATA-DRIVEN DECISION</div>
+      <h2>정확한 데이터로<br>성공하는 크리에이티브</h2>
+      <p class="subtitle">CSV 파일 하나로 소재 성과를 5분 안에 분석하고, 데이터 기반 의사결정을 시작하세요</p>
+      <a href="step1_integrated.html" class="action-button">분석 시작하기 →</a>
+    </div>
+  </div>
+  
+  <!-- 기능 섹션 -->
+  <div class="feature-section" id="features">
+    <div class="container">
+      <h2 class="section-title">핵심 기능</h2>
+      <div class="feature-list">
+        <div class="feature-box">
+          <div class="feature-number">01</div>
+          <h3>빠른 분석</h3>
+          <p>CSV 업로드 후 5분 이내 결과 확인. 수동 집계 시간 90% 단축.</p>
+        </div>
+        
+        <div class="feature-box">
+          <div class="feature-number">02</div>
+          <h3>4대 핵심 지표</h3>
+          <p>전환수, CPA, IPM, ROAS를 가중치 조절하여 종합 점수 산출.</p>
+        </div>
+        
+        <div class="feature-box">
+          <div class="feature-number">03</div>
+          <h3>피로도 분석</h3>
+          <p>기간 비교를 통한 소재 수명 추적 및 교체 시점 자동 감지.</p>
+        </div>
+        
+        <div class="feature-box">
+          <div class="feature-number">04</div>
+          <h3>맞춤형 필터</h3>
+          <p>캠페인, 소재 유형, 날짜별 세그먼트 분석 지원.</p>
+        </div>
+        
+        <div class="feature-box">
+          <div class="feature-number">05</div>
+          <h3>검색 기능</h3>
+          <p>실시간 캠페인 검색으로 원하는 데이터 즉시 필터링.</p>
+        </div>
+        
+        <div class="feature-box">
+          <div class="feature-number">06</div>
+          <h3>상세 가이드</h3>
+          <p>FAQ 13개 포함, 실전 활용 예시와 문제 해결 방법 제공.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 데이터 섹션 -->
+  <div class="data-section" id="stats">
+    <div class="container">
+      <h2 class="section-title">검증된 성능</h2>
+      <div class="data-grid">
+        <div class="data-card">
+          <span class="number">90%</span>
+          <div class="label">시간 절감</div>
+        </div>
+        <div class="data-card">
+          <span class="number">4개</span>
+          <div class="label">핵심 KPI</div>
+        </div>
+        <div class="data-card">
+          <span class="number">95%</span>
+          <div class="label">정확도</div>
+        </div>
+        <div class="data-card">
+          <span class="number">5분</span>
+          <div class="label">분석 시간</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 정보 박스 -->
+  <div class="info-section" id="guide">
+    <div class="container">
+      <div class="info-box">
+        <h3>지금 바로 시작하세요</h3>
+        <p>별도의 설치나 설정 없이 브라우저에서 바로 사용할 수 있습니다. 자세한 사용법은 가이드 문서를 참고하세요.</p>
+        <div class="links">
+          <a href="step1_integrated.html" class="link-button">대시보드 열기</a>
+          <a href="USER_GUIDE_소재성과분석대시보드.md" class="link-button">사용 가이드</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 푸터 -->
+  <div class="footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>About</h4>
+        <p>Com2uS R마케팅팀을 위한 소재 성과 분석 대시보드입니다. 모든 타이틀에서 자유롭게 사용하실 수 있습니다.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Links</h4>
+        <ul>
+          <li><a href="step1_integrated.html">대시보드</a></li>
+          <li><a href="USER_GUIDE_소재성과분석대시보드.md">사용 가이드</a></li>
+          <li><a href="README.md">개발 문서</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:marketing@com2us.com">marketing@com2us.com</a></li>
+          <li><a href="#">Slack: #r-marketing</a></li>
+          <li><a href="#">팀장님 DM</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Com2uS Corporation. All rights reserved. | Version 1.8 | Last Updated: 2026-04-08</p>
+    </div>
+  </div>
+</body>
+</html>

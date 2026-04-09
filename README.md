@@ -12,8 +12,8 @@ Com2uS R마케팅팀 담당 모바일 게임들의 광고 소재(BNR/VID) 분석
 | URL | 설명 | 상태 |
 |-----|------|------|
 | `pipeline.html` | 분석 파이프라인 시스템 (데이터 업로드 → 군집화 → 인사이트 확정) | ✅ 완성 |
-| `index.html` | 성과 분석 대시보드 (시각화 + 소재 비교) | ✅ 완성 |
-| **`step1_integrated.html`** | **✨ Step 1 통합 페이지: 4개 지표 Rank 기반 점수 계산 + 피로도 분석 (v1.7)** | **✅ 완성 (NEW!)** |
+| `index.html` | **✨ 홈페이지 (v1.8 디자인 업데이트)**: 컴투스 브랜드 톤 적용, 프로페셔널 & 미니멀 디자인 | ✅ 완성 |
+| **`step1_integrated.html`** | **✨ Step 1 통합 페이지 (v1.8)**: 4개 지표 Rank 기반 점수 계산 + 피로도 분석 + 검색 가능한 필터 | **✅ 완성 (NEW!)** |
 | `test_step1_scoring.html` | Step 1 스코어링 테스트 (레거시) | 🔸 참고용 |
 | `fatigue_analysis.html` | 피로도 분석 단독 페이지 (레거시) | 🔸 참고용 |
 | `test_conversion_score.html` | 전환수 기반 점수 계산 검증 페이지 (v1.4) | 🧪 테스트용 |
