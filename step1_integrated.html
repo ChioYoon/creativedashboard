@@ -30,33 +30,86 @@
     }
     
     /* 상단 고정 네비게이션 */
+    /* ── 글로벌 네비게이션 ── */
     .top-nav {
-      position: sticky;
-      top: 0;
+      position: sticky; top: 0; z-index: 1000;
       background: linear-gradient(135deg, #E84855 0%, #FF6B6B 100%);
-      padding: 15px 30px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      z-index: 1000;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      padding: 0 28px;
+      display: flex; align-items: center;
+      height: 52px;
+      box-shadow: 0 3px 12px rgba(232,72,85,.30);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 15px; font-weight: 700; color: white;
+      white-space: nowrap; margin-right: 4px; flex-shrink: 0;
+    }
+    .nav-logo-icon { font-size: 18px; }
+    .nav-sep {
+      width: 1px; height: 24px; background: rgba(255,255,255,.28);
+      margin: 0 10px; flex-shrink: 0;
+    }
+    /* 페이지 내 스크롤 그룹 */
+    .nav-group {
+      display: flex; align-items: center; gap: 4px; flex: 1;
+    }
+    .nav-group-label {
+      font-size: 10px; font-weight: 700; letter-spacing: .04em;
+      color: rgba(255,255,255,.55); text-transform: uppercase;
+      padding: 2px 8px; border-radius: 4px;
+      background: rgba(255,255,255,.10);
+      white-space: nowrap; margin-right: 2px;
     }
     .nav-btn {
-      padding: 8px 16px;
-      background: rgba(255, 255, 255, 0.2);
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      white-space: nowrap;
+      padding: 6px 13px;
+      background: transparent;
+      color: rgba(255,255,255,.85);
+      border: 1px solid transparent;
+      border-radius: 7px;
+      font-size: 13px; font-weight: 500;
+      cursor: pointer; transition: all .18s;
+      white-space: nowrap; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 5px;
     }
     .nav-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      background: rgba(255,255,255,.18);
+      border-color: rgba(255,255,255,.25);
+      color: white;
+    }
+    /* 현재 페이지 */
+    .nav-btn.active {
+      background: rgba(255,255,255,.22);
+      border-color: rgba(255,255,255,.40);
+      color: white; font-weight: 700;
+    }
+    /* 페이지 이동 버튼 (우측 고정) */
+    .nav-page-btns {
+      display: flex; align-items: center; gap: 6px;
+      margin-left: auto; flex-shrink: 0;
+    }
+    .nav-page-btn {
+      padding: 6px 14px;
+      background: rgba(255,255,255,.16);
+      color: white;
+      border: 1px solid rgba(255,255,255,.30);
+      border-radius: 7px;
+      font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all .18s;
+      white-space: nowrap; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .nav-page-btn:hover {
+      background: rgba(255,255,255,.28);
+      border-color: rgba(255,255,255,.50);
+      transform: translateY(-1px);
+    }
+    .nav-page-btn.highlight {
+      background: rgba(255,255,255,.28);
+      border-color: rgba(255,255,255,.55);
+      font-weight: 700;
+    }
+    .nav-page-btn.highlight:hover {
+      background: rgba(255,255,255,.40);
     }
     
     /* 헤더 */
@@ -623,20 +676,37 @@
 </head>
 <body>
   <div class="container">
-    <!-- 상단 네비게이션 -->
+    <!-- 글로벌 네비게이션 -->
     <nav class="top-nav">
-      <button class="nav-btn" onclick="scrollToSection('upload')">📤 업로드</button>
-      <button class="nav-btn" onclick="scrollToSection('scoring')">📊 점수 계산</button>
-      <button class="nav-btn" onclick="scrollToSection('results')">📋 분석 결과</button>
-      <button class="nav-btn" onclick="scrollToSection('fatigue')">🔍 피로도 분석</button>
-      <button class="nav-btn" onclick="scrollToSection('statistics')">📈 통계</button>
-      <button class="nav-btn" onclick="scrollToSection('chart')">📉 차트</button>
+      <!-- 로고 -->
+      <a href="index.html" class="nav-logo" style="text-decoration:none;">
+        <span class="nav-logo-icon">📊</span>
+        <span>소재 분석</span>
+      </a>
+      <div class="nav-sep"></div>
+
+      <!-- Step 1 내 섹션 이동 -->
+      <div class="nav-group">
+        <span class="nav-group-label">Step 1</span>
+        <button class="nav-btn active" onclick="scrollToSection('upload')">업로드</button>
+        <button class="nav-btn" onclick="scrollToSection('scoring')">계산 기준</button>
+        <button class="nav-btn" onclick="scrollToSection('results')">분석 결과</button>
+        <button class="nav-btn" onclick="scrollToSection('fatigue')">피로도</button>
+        <button class="nav-btn" onclick="scrollToSection('chart')">차트</button>
+      </div>
+
+      <!-- 페이지 이동 (우측) -->
+      <div class="nav-page-btns">
+        <a class="nav-page-btn highlight" href="step2_column_selector.html">
+          Step 2 군집화 <span style="opacity:.7;">→</span>
+        </a>
+      </div>
     </nav>
     
     <!-- 헤더 -->
     <div class="header">
-      <h1>🎮 Step 1: 소재 분석 & 점수 계산 (v1.5)</h1>
-      <p>CSV 업로드 → 4개 지표 Rank 기반 점수 계산 (전환수 + CPA + IPM + ROAS) → 피로도 분석까지 한 번에</p>
+      <h1>소재 성과 분석</h1>
+      <p>CSV 업로드 → 주요 지표 기반 성과 분석 → 피로도 분석까지 한 번에</p>
     </div>
     
     <!-- Section 1: 업로드 -->
@@ -656,7 +726,7 @@
     
     <!-- Section 2: 점수 계산 설정 -->
     <section id="scoring" class="section">
-      <h2 class="section-title">📊 점수 계산 설정</h2>
+      <h2 class="section-title">📊 계산 기준 설정</h2>
       
       <div class="settings-grid">
         <!-- 전환수 가중치 -->

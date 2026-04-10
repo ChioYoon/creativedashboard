@@ -11,14 +11,13 @@ Com2uS R마케팅팀 담당 모바일 게임들의 광고 소재(BNR/VID) 분석
 ## 진입점 (Entry Points)
 | URL | 설명 | 상태 |
 |-----|------|------|
-| `pipeline.html` | 분석 파이프라인 시스템 (데이터 업로드 → 군집화 → 인사이트 확정) | ✅ 완성 |
-| `index.html` | **✨ 홈페이지 (v1.8 디자인 업데이트)**: 컴투스 브랜드 톤 적용, 프로페셔널 & 미니멀 디자인 | ✅ 완성 |
-| **`step1_integrated.html`** | **✨ Step 1 통합 페이지 (v1.8)**: 4개 지표 Rank 기반 점수 계산 + 피로도 분석 + 검색 가능한 필터 | **✅ 완성 (NEW!)** |
-| `test_step1_scoring.html` | Step 1 스코어링 테스트 (레거시) | 🔸 참고용 |
+| `index.html` | **홈페이지 (v2.0)**: 컴투스 브랜드 디자인, 워크플로우 안내, Step 1/2 진입 | ✅ 완성 |
+| `step1_integrated.html` | **Step 1 소재 분석**: 4개 지표 Rank 기반 점수 계산 + 피로도 분석 + 필터 | ✅ 완성 |
+| **`step2_column_selector.html`** | **Step 2-① 컬럼 설정**: CSV 업로드 → 태그 컬럼 선택 & 가중치 → 군집화 모드 설정 | ✅ 완성 |
+| **`step2_clustering.html`** | **Step 2-② 군집화 실행**: 하이브리드 군집화 v4.0 + 결과 시각화 + 인사이트 | ✅ 완성 (NEW!) |
+| `pipeline.html` | 기존 분석 파이프라인 (레거시, 4단계 통합) | 🔸 참고용 |
 | `fatigue_analysis.html` | 피로도 분석 단독 페이지 (레거시) | 🔸 참고용 |
-| `test_conversion_score.html` | 전환수 기반 점수 계산 검증 페이지 (v1.4) | 🧪 테스트용 |
-| `test_step1_v15.html` | v1.5 Rank 기반 + ROAS 점수 검증 페이지 | 🧪 테스트용 |
-| `test_step1_csv_upload.html` | CSV 업로드 자동 테스트 페이지 | 🧪 테스트용 |
+| `test_step1_scoring.html` | Step 1 스코어링 테스트 (레거시) | 🧪 테스트용 |
 
 ---
 

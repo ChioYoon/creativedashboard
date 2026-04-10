@@ -1,0 +1,2141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 2: 군집화 컬럼 설정 - Com2uS R팀</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <style>
+    /* ═══════════════════════════════════════════
+       기본 리셋 & 변수
+    ═══════════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --red:       #E84855;
+      --red-light: #FF6B6B;
+      --red-pale:  #FFF0F1;
+      --red-mid:   #FFCED1;
+      --gray-bg:   #F7F8FA;
+      --gray-line: #E8EBF0;
+      --gray-text: #8A94A6;
+      --dark:      #1A202C;
+      --mid:       #4A5568;
+      --white:     #FFFFFF;
+      --green:     #38A169;
+      --orange:    #DD6B20;
+      --blue:      #3182CE;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,.06);
+      --shadow-md: 0 8px 24px rgba(0,0,0,.10);
+      --shadow-lg: 0 20px 60px rgba(0,0,0,.15);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --transition: all .2s ease;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+      background: linear-gradient(135deg, var(--red) 0%, var(--red-light) 100%);
+      min-height: 100vh;
+      padding: 20px;
+      color: var(--dark);
+    }
+
+    /* ═══════════════════════════════════════════
+       레이아웃 컨테이너
+    ═══════════════════════════════════════════ */
+    .page-wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      overflow: hidden;
+    }
+
+    /* ═══════════════════════════════════════════
+       상단 네비게이션
+    ═══════════════════════════════════════════ */
+    /* ─── 글로벌 네비게이션 ─── */
+    .top-nav {
+      position: sticky; top: 0; z-index: 200;
+      background: linear-gradient(135deg, var(--red) 0%, var(--red-light) 100%);
+      padding: 0 28px;
+      display: flex; align-items: center;
+      height: 52px;
+      box-shadow: 0 3px 12px rgba(232,72,85,.30);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 15px; font-weight: 700; color: white;
+      white-space: nowrap; flex-shrink: 0;
+      text-decoration: none;
+    }
+    .nav-logo i { font-size: 17px; }
+    .nav-sep {
+      width: 1px; height: 24px;
+      background: rgba(255,255,255,.30);
+      margin: 0 14px; flex-shrink: 0;
+    }
+    .nav-group {
+      display: flex; align-items: center; gap: 3px; flex: 1;
+    }
+    .nav-group-label {
+      font-size: 10px; font-weight: 700; letter-spacing: .06em;
+      color: rgba(255,255,255,.60); text-transform: uppercase;
+      padding: 2px 8px; border-radius: 4px;
+      background: rgba(0,0,0,.12);
+      white-space: nowrap; margin-right: 4px; flex-shrink: 0;
+    }
+    .nav-btn {
+      padding: 6px 13px;
+      background: transparent;
+      color: rgba(255,255,255,.80);
+      border: 1px solid transparent;
+      border-radius: 7px;
+      font-size: 13px; font-weight: 500;
+      cursor: pointer; transition: var(--transition);
+      white-space: nowrap; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .nav-btn:hover {
+      background: rgba(255,255,255,.18);
+      border-color: rgba(255,255,255,.28);
+      color: white;
+    }
+    .nav-btn.active {
+      background: rgba(255,255,255,.22);
+      border-color: rgba(255,255,255,.45);
+      color: white; font-weight: 700;
+    }
+    .nav-page-btns {
+      display: flex; align-items: center; gap: 6px;
+      margin-left: auto; flex-shrink: 0; padding-left: 12px;
+    }
+    .nav-page-btn {
+      padding: 6px 13px;
+      background: rgba(255,255,255,.15); color: white;
+      border: 1px solid rgba(255,255,255,.32);
+      border-radius: 7px;
+      font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: var(--transition);
+      white-space: nowrap; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 5px;
+    }
+    .nav-page-btn:hover {
+      background: rgba(255,255,255,.26);
+      border-color: rgba(255,255,255,.50);
+      transform: translateY(-1px);
+    }
+    .nav-page-btn.highlight {
+      background: rgba(255,255,255,.26);
+      border-color: rgba(255,255,255,.55);
+      font-weight: 700;
+    }
+    .nav-page-btn.highlight:hover { background: rgba(255,255,255,.38); }
+
+    /* ═══════════════════════════════════════════
+       헤더
+    ═══════════════════════════════════════════ */
+    .page-header {
+      background: linear-gradient(135deg, var(--red) 0%, var(--red-light) 100%);
+      color: white;
+      padding: 44px 40px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-header::after {
+      content: '';
+      position: absolute;
+      right: -40px; bottom: -40px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.08);
+    }
+    .page-header::before {
+      content: '';
+      position: absolute;
+      right: 80px; bottom: 10px;
+      width: 130px; height: 130px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.05);
+    }
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,.2);
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .page-header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+    .page-header p  { font-size: 15px; opacity: .88; line-height: 1.6; max-width: 580px; }
+    .header-steps {
+      display: flex;
+      gap: 8px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+    }
+    .hstep {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,.15);
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .hstep.current { background: rgba(255,255,255,.92); color: var(--red); }
+    .hstep-num {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700;
+    }
+    .hstep.current .hstep-num { background: var(--red); color: white; }
+
+    /* ═══════════════════════════════════════════
+       메인 레이아웃 (2컬럼)
+    ═══════════════════════════════════════════ */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 0;
+      min-height: 600px;
+    }
+    .left-panel  { padding: 32px 36px; border-right: 1px solid var(--gray-line); }
+    .right-panel { padding: 28px 28px; background: var(--gray-bg); }
+
+    /* ═══════════════════════════════════════════
+       섹션 타이틀
+    ═══════════════════════════════════════════ */
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 6px;
+    }
+    .section-title i {
+      width: 32px; height: 32px;
+      background: var(--red-pale);
+      color: var(--red);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .section-desc {
+      font-size: 13px;
+      color: var(--gray-text);
+      margin-bottom: 20px;
+      padding-left: 42px;
+      line-height: 1.6;
+    }
+    .section-divider {
+      height: 1px;
+      background: var(--gray-line);
+      margin: 28px 0;
+    }
+
+    /* ═══════════════════════════════════════════
+       업로드 영역
+    ═══════════════════════════════════════════ */
+    .upload-zone {
+      border: 2px dashed var(--gray-line);
+      border-radius: var(--radius-md);
+      padding: 36px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      background: var(--gray-bg);
+      position: relative;
+    }
+    .upload-zone:hover, .upload-zone.drag-over {
+      border-color: var(--red);
+      background: var(--red-pale);
+    }
+    .upload-zone.uploaded {
+      border-color: var(--green);
+      border-style: solid;
+      background: #F0FFF4;
+    }
+    .upload-icon {
+      width: 52px; height: 52px;
+      background: white;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px;
+      box-shadow: var(--shadow-sm);
+      font-size: 22px;
+      color: var(--red);
+      transition: var(--transition);
+    }
+    .upload-zone.uploaded .upload-icon { color: var(--green); }
+    .upload-zone h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+    .upload-zone p  { font-size: 13px; color: var(--gray-text); }
+    .upload-zone input[type="file"] {
+      position: absolute; inset: 0;
+      opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+    .upload-info-bar {
+      display: none;
+      margin-top: 14px;
+      background: white;
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 13px;
+      gap: 8px;
+      align-items: center;
+      border: 1px solid #C6F6D5;
+    }
+    .upload-info-bar.show { display: flex; }
+    .upload-info-bar i { color: var(--green); }
+    .upload-info-bar strong { color: var(--dark); }
+    .upload-info-bar span  { color: var(--gray-text); margin-left: auto; }
+
+    /* ═══════════════════════════════════════════
+       컬럼 분류 배지
+    ═══════════════════════════════════════════ */
+    .col-type-strip {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .col-type-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 11px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .col-type-badge.tag    { background: #EBF8FF; color: #2B6CB0; border: 1px solid #BEE3F8; }
+    .col-type-badge.perf   { background: #F0FFF4; color: #276749; border: 1px solid #C6F6D5; }
+    .col-type-badge.meta   { background: #FFFAF0; color: #744210; border: 1px solid #FEEBC8; }
+    .col-type-badge.insight{ background: #FFF5F5; color: #9B2335; border: 1px solid #FED7D7; }
+
+    /* ═══════════════════════════════════════════
+       카테고리 그룹
+    ═══════════════════════════════════════════ */
+    .cat-group {
+      border: 1px solid var(--gray-line);
+      border-radius: var(--radius-md);
+      margin-bottom: 14px;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    .cat-group:hover { box-shadow: var(--shadow-sm); }
+
+    .cat-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 16px;
+      background: var(--white);
+      cursor: pointer;
+      user-select: none;
+      border-bottom: 1px solid transparent;
+      transition: var(--transition);
+    }
+    .cat-group.open .cat-header {
+      border-bottom-color: var(--gray-line);
+      background: var(--gray-bg);
+    }
+    .cat-icon {
+      width: 28px; height: 28px;
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+    .cat-header h4 { font-size: 13px; font-weight: 700; flex: 1; }
+    .cat-count {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: var(--gray-line);
+      color: var(--gray-text);
+    }
+    .cat-count.has-selected { background: var(--red-mid); color: var(--red); }
+    .cat-chevron {
+      font-size: 11px;
+      color: var(--gray-text);
+      transition: transform .2s;
+    }
+    .cat-group.open .cat-chevron { transform: rotate(180deg); }
+
+    .cat-body {
+      display: none;
+      padding: 12px 14px;
+      background: var(--white);
+    }
+    .cat-group.open .cat-body { display: block; }
+
+    /* ═══════════════════════════════════════════
+       컬럼 아이템 행
+    ═══════════════════════════════════════════ */
+    .col-item {
+      display: grid;
+      grid-template-columns: 22px 1fr auto;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 8px;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .col-item:hover { background: var(--gray-bg); }
+    .col-item.disabled { opacity: .45; pointer-events: none; }
+    .col-item.locked  { cursor: default; }
+
+    /* 커스텀 체크박스 */
+    .col-cb-wrap { position: relative; width: 18px; height: 18px; }
+    .col-cb-wrap input[type="checkbox"] {
+      position: absolute; opacity: 0; width: 0; height: 0;
+    }
+    .col-cb-box {
+      width: 18px; height: 18px;
+      border: 2px solid var(--gray-line);
+      border-radius: 4px;
+      background: white;
+      display: flex; align-items: center; justify-content: center;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .col-cb-wrap input:checked + .col-cb-box {
+      background: var(--red);
+      border-color: var(--red);
+    }
+    .col-cb-wrap input:checked + .col-cb-box::after {
+      content: '';
+      width: 10px; height: 6px;
+      border-left: 2px solid white;
+      border-bottom: 2px solid white;
+      transform: rotate(-45deg) translateY(-1px);
+      display: block;
+    }
+    .col-cb-wrap.locked .col-cb-box {
+      background: var(--red);
+      border-color: var(--red);
+      cursor: default;
+    }
+    .col-cb-wrap.locked .col-cb-box::after {
+      content: '';
+      width: 10px; height: 6px;
+      border-left: 2px solid white;
+      border-bottom: 2px solid white;
+      transform: rotate(-45deg) translateY(-1px);
+      display: block;
+    }
+
+    /* 컬럼 정보 */
+    .col-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .col-name {
+      font-size: 13px; font-weight: 600; color: var(--dark);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .col-name .lock-icon { color: var(--red); font-size: 10px; margin-left: 4px; }
+    .primary-badge {
+      display: inline-flex; align-items: center;
+      font-size: 10px; font-weight: 700;
+      padding: 1px 7px; border-radius: 20px;
+      background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+      color: #5A3A00;
+      margin-left: 5px;
+      letter-spacing: .3px;
+      box-shadow: 0 1px 4px rgba(255,165,0,.35);
+      vertical-align: middle;
+    }
+    .concept-badge {
+      display: inline-flex; align-items: center;
+      font-size: 10px; font-weight: 600;
+      padding: 1px 7px; border-radius: 20px;
+      background: #EDF2F7; color: #4A5568;
+      margin-left: 5px; border: 1px solid #CBD5E0;
+      vertical-align: middle;
+    }
+    .col-sample {
+      font-size: 11px; color: var(--gray-text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .col-tags-preview {
+      display: flex; gap: 3px; flex-wrap: nowrap; overflow: hidden;
+    }
+    .mini-tag {
+      font-size: 10px; padding: 1px 6px;
+      border-radius: 8px;
+      background: var(--gray-bg);
+      color: var(--mid);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .mini-tag.mi { background: #FFF5F5; color: var(--red); }
+
+    /* 가중치 슬라이더 영역 */
+    .col-weight-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 3px;
+      width: 120px;
+      flex-shrink: 0;
+    }
+    .weight-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      width: 100%;
+    }
+    .weight-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 78px; height: 4px;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    .weight-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: var(--red);
+      cursor: pointer;
+      box-shadow: 0 0 0 2px rgba(232,72,85,.25);
+    }
+    .weight-val {
+      font-size: 11px; font-weight: 700;
+      color: var(--red);
+      width: 32px; text-align: right;
+    }
+    .weight-label {
+      font-size: 10px;
+      color: var(--gray-text);
+      display: flex; align-items: center; gap: 3px;
+    }
+    .weight-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+    }
+
+    /* ═══════════════════════════════════════════
+       군집화 모드 선택
+    ═══════════════════════════════════════════ */
+    .mode-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .mode-card {
+      border: 2px solid var(--gray-line);
+      border-radius: var(--radius-md);
+      padding: 16px 14px;
+      cursor: pointer;
+      transition: var(--transition);
+      background: white;
+      text-align: center;
+    }
+    .mode-card:hover { border-color: var(--red-mid); box-shadow: var(--shadow-sm); }
+    .mode-card.selected {
+      border-color: var(--red);
+      background: var(--red-pale);
+      box-shadow: 0 0 0 3px rgba(232,72,85,.12);
+    }
+    .mode-icon {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+    .mode-name {
+      font-size: 13px; font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--dark);
+    }
+    .mode-desc {
+      font-size: 11px;
+      color: var(--gray-text);
+      line-height: 1.5;
+    }
+    .mode-ratio {
+      margin-top: 8px;
+      display: flex;
+      height: 5px;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .mode-ratio-tag  { background: var(--blue); }
+    .mode-ratio-perf { background: var(--red);  }
+
+    /* 성과 가중치 슬라이더 (대형) */
+    .perf-weight-block {
+      display: none;
+      margin-top: 16px;
+      padding: 16px;
+      background: var(--red-pale);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--red-mid);
+    }
+    .perf-weight-block.show { display: block; }
+    .pw-label {
+      font-size: 13px; font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .pw-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pw-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      flex: 1; height: 8px;
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+    }
+    .pw-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--red);
+      cursor: pointer;
+      border: 3px solid white;
+      box-shadow: 0 2px 6px rgba(232,72,85,.4);
+    }
+    .pw-val-box {
+      display: flex;
+      gap: 12px;
+    }
+    .pw-val-item {
+      text-align: center;
+    }
+    .pw-val-num {
+      font-size: 22px; font-weight: 800;
+      line-height: 1;
+    }
+    .pw-val-num.tag-color  { color: var(--blue);  }
+    .pw-val-num.perf-color { color: var(--red);   }
+    .pw-val-lbl { font-size: 11px; color: var(--gray-text); margin-top: 2px; }
+
+    /* ═══════════════════════════════════════════
+       우측 패널 - 요약 & 미리보기
+    ═══════════════════════════════════════════ */
+    .summary-card {
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+    .summary-card h3 {
+      font-size: 13px; font-weight: 700;
+      color: var(--mid);
+      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 7px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+    .summary-card h3 i { color: var(--red); }
+
+    /* 선택 현황 통계 */
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--gray-bg);
+      font-size: 13px;
+    }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-label { color: var(--mid); }
+    .stat-val   { font-weight: 700; color: var(--dark); }
+    .stat-val.red    { color: var(--red);   }
+    .stat-val.green  { color: var(--green); }
+    .stat-val.orange { color: var(--orange);}
+
+    /* 선택된 컬럼 태그 목록 */
+    .selected-col-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 4px;
+    }
+    .selected-col-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 10px;
+      background: var(--red-pale);
+      color: var(--red);
+      border: 1px solid var(--red-mid);
+    }
+    .selected-col-chip .chip-w { color: var(--gray-text); font-weight: 400; }
+    .selected-col-chip.primary {
+      background: linear-gradient(135deg, #FFFBEA 0%, #FFF3CC 100%);
+      color: #7A4F00;
+      border-color: #FFD700;
+    }
+
+    /* 태그 미리보기 */
+    .preview-tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      max-height: 180px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .preview-tag-cloud::-webkit-scrollbar { width: 4px; }
+    .preview-tag-cloud::-webkit-scrollbar-thumb { background: var(--gray-line); border-radius: 2px; }
+    .ptag {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 10px;
+      background: var(--gray-bg);
+      color: var(--mid);
+      border: 1px solid var(--gray-line);
+    }
+    .ptag.high   { background: #FFF5F5; color: var(--red);   border-color: var(--red-mid); }
+    .ptag.mid    { background: #EBF8FF; color: #2B6CB0;      border-color: #BEE3F8; }
+    .ptag.mi     { background: #F8F4FF; color: #6B46C1;      border-color: #D6BCFA; }
+    .ptag.freq   { font-size: 9px; color: var(--gray-text);  }
+
+    /* 예상 군집 수 */
+    .cluster-estimate {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      background: var(--gray-bg);
+      border-radius: var(--radius-sm);
+      margin-top: 4px;
+    }
+    .ce-num {
+      font-size: 36px; font-weight: 800;
+      color: var(--red);
+      line-height: 1;
+    }
+    .ce-info { flex: 1; }
+    .ce-label { font-size: 12px; color: var(--gray-text); }
+    .ce-range { font-size: 13px; font-weight: 600; color: var(--dark); margin-top: 2px; }
+    .ce-bar {
+      height: 4px;
+      background: var(--gray-line);
+      border-radius: 2px;
+      margin-top: 6px;
+      overflow: hidden;
+    }
+    .ce-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--red), var(--red-light));
+      border-radius: 2px;
+      transition: width .4s ease;
+    }
+
+    /* ═══════════════════════════════════════════
+       하단 액션 바
+    ═══════════════════════════════════════════ */
+    .action-bar {
+      padding: 20px 36px;
+      background: var(--white);
+      border-top: 1px solid var(--gray-line);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .action-info {
+      flex: 1;
+      font-size: 13px;
+      color: var(--gray-text);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .action-info i { color: var(--red); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .btn-outline {
+      background: white;
+      color: var(--mid);
+      border: 1.5px solid var(--gray-line);
+    }
+    .btn-outline:hover { border-color: var(--red); color: var(--red); }
+    .btn-secondary {
+      background: var(--gray-bg);
+      color: var(--mid);
+      border: 1.5px solid var(--gray-line);
+    }
+    .btn-secondary:hover { background: var(--gray-line); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--red), var(--red-light));
+      color: white;
+      box-shadow: 0 4px 12px rgba(232,72,85,.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(232,72,85,.45); }
+    .btn-primary:disabled {
+      opacity: .5; cursor: not-allowed; transform: none;
+      box-shadow: 0 2px 6px rgba(232,72,85,.2);
+    }
+    .btn-save {
+      background: white;
+      color: var(--blue);
+      border: 1.5px solid #BEE3F8;
+    }
+    .btn-save:hover { background: #EBF8FF; }
+
+    /* ═══════════════════════════════════════════
+       토스트 알림
+    ═══════════════════════════════════════════ */
+    .toast-wrap {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      display: flex; flex-direction: column;
+      gap: 8px; z-index: 9999;
+    }
+    .toast {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--dark); color: white;
+      padding: 12px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      box-shadow: var(--shadow-md);
+      animation: toastIn .25s ease;
+      max-width: 320px;
+    }
+    .toast.success { background: #276749; }
+    .toast.error   { background: #9B2335; }
+    .toast.info    { background: #2B6CB0; }
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══════════════════════════════════════════
+       빈 상태
+    ═══════════════════════════════════════════ */
+    .empty-state {
+      text-align: center;
+      padding: 32px 16px;
+      color: var(--gray-text);
+    }
+    .empty-state i { font-size: 32px; margin-bottom: 10px; display: block; }
+    .empty-state p { font-size: 13px; line-height: 1.6; }
+
+    /* ═══════════════════════════════════════════
+       반응형
+    ═══════════════════════════════════════════ */
+    @media (max-width: 960px) {
+      .main-layout { grid-template-columns: 1fr; }
+      .right-panel { border-top: 1px solid var(--gray-line); }
+      .mode-grid   { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      body { padding: 10px; }
+      .left-panel, .right-panel { padding: 20px 16px; }
+      .page-header { padding: 28px 20px; }
+      .page-header h1 { font-size: 22px; }
+      .action-bar { padding: 16px 20px; }
+    }
+
+    /* ═══════════════════════════════════════════
+       슬라이더 공통 스타일 (Firefox)
+    ═══════════════════════════════════════════ */
+    input[type="range"]::-moz-range-thumb {
+      width: 13px; height: 13px;
+      border-radius: 50%;
+      background: var(--red);
+      cursor: pointer;
+      border: none;
+    }
+    .pw-slider::-moz-range-thumb {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--red);
+      border: 3px solid white;
+    }
+
+    /* 카테고리 색상 팔레트 */
+    .c-strategy  { background: #EBF8FF; color: #2B6CB0; }
+    .c-game      { background: #F0FFF4; color: #276749; }
+    .c-visual    { background: #FFFAF0; color: #744210; }
+    .c-emotion   { background: #FFF5F5; color: #9B2335; }
+    .c-audio     { background: #FAF5FF; color: #553C9A; }
+    .c-insight   { background: #FFF5F5; color: var(--red); }
+
+    /* 미리보기 없음 애니메이션 */
+    .fade-in { animation: fadeIn .3s ease; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════ 상단 네비게이션 ════ -->
+<div class="page-wrap">
+  <nav class="top-nav">
+    <!-- 로고 -->
+    <a href="index.html" class="nav-logo">
+      <i class="fas fa-chart-bar"></i>
+      <span>소재 분석</span>
+    </a>
+    <div class="nav-sep"></div>
+
+    <!-- Step 2 내 섹션 이동 -->
+    <div class="nav-group">
+      <span class="nav-group-label">Step 2</span>
+      <button class="nav-btn active" onclick="document.getElementById('uploadZone').scrollIntoView({behavior:'smooth'})">
+        <i class="fas fa-upload"></i> CSV 업로드
+      </button>
+      <button class="nav-btn" onclick="document.getElementById('categoryContainer').scrollIntoView({behavior:'smooth'})">
+        <i class="fas fa-sliders-h"></i> 컬럼 설정
+      </button>
+      <button class="nav-btn" onclick="document.getElementById('summaryPanel').scrollIntoView({behavior:'smooth'})">
+        <i class="fas fa-check-square"></i> 선택 확인
+      </button>
+    </div>
+
+    <!-- 페이지 이동 (우측) -->
+    <div class="nav-page-btns">
+      <a class="nav-page-btn" href="step1_integrated.html">
+        <i class="fas fa-arrow-left"></i> Step 1
+      </a>
+      <a class="nav-page-btn highlight" href="step2_clustering.html">
+        군집화 실행 <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ════ 헤더 ════ -->
+  <div class="page-header">
+    <div class="header-badge"><i class="fas fa-object-group"></i> Step 2: 군집화 분석</div>
+    <h1>군집화 컬럼 설정</h1>
+    <p>CSV를 업로드하면 컬럼이 자동 분류됩니다. 군집화에 사용할 컬럼을 선택하고 중요도(가중치)를 조정하세요.</p>
+    <div class="header-steps">
+      <div class="hstep"><div class="hstep-num">1</div> CSV 업로드</div>
+      <div class="hstep current"><div class="hstep-num">2</div> 컬럼 선택 &amp; 가중치</div>
+      <div class="hstep"><div class="hstep-num">3</div> 군집화 모드</div>
+      <div class="hstep"><div class="hstep-num">4</div> 군집화 실행</div>
+      <div class="hstep"><div class="hstep-num">5</div> 결과 &amp; 인사이트</div>
+    </div>
+  </div>
+
+  <!-- ════ 메인 2컬럼 레이아웃 ════ -->
+  <div class="main-layout">
+
+    <!-- ── 좌측: 설정 패널 ── -->
+    <div class="left-panel">
+
+      <!-- ① CSV 업로드 -->
+      <div class="section-title"><i class="fas fa-upload"></i> CSV 업로드</div>
+      <div class="section-desc">소재 분석 데이터가 담긴 CSV 파일을 업로드하세요. 컬럼이 자동으로 분류됩니다.</div>
+
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="csvFile" accept=".csv">
+        <div class="upload-icon"><i class="fas fa-file-csv"></i></div>
+        <h3>CSV 파일을 드래그하거나 클릭해 선택</h3>
+        <p>UTF-8 인코딩 · 5MB 이하 권장</p>
+      </div>
+      <div class="upload-info-bar" id="uploadInfoBar">
+        <i class="fas fa-check-circle"></i>
+        <strong id="uploadFileName"></strong>
+        <span id="uploadFileMeta"></span>
+      </div>
+
+      <!-- 컬럼 분류 현황 배지 -->
+      <div class="col-type-strip" id="colTypeStrip" style="display:none; margin-top:14px;">
+        <span class="col-type-badge insight"><i class="fas fa-lightbulb"></i> 마케터 인사이트 <span id="badgeInsight">0</span>개</span>
+        <span class="col-type-badge tag">   <i class="fas fa-tags"></i>        태그 컬럼       <span id="badgeTag">0</span>개</span>
+        <span class="col-type-badge perf">  <i class="fas fa-chart-bar"></i>   성과 지표       <span id="badgePerf">0</span>개</span>
+        <span class="col-type-badge meta">  <i class="fas fa-info-circle"></i>  메타 정보       <span id="badgeMeta">0</span>개</span>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- ② 컬럼 선택 & 가중치 -->
+      <div class="section-title"><i class="fas fa-sliders-h"></i> 컬럼 선택 &amp; 가중치 설정</div>
+      <div class="section-desc">
+        군집화에 사용할 태그 컬럼을 선택하고 중요도를 조정하세요.
+        가중치가 높을수록 해당 컬럼의 값이 군집 형성에 더 큰 영향을 미칩니다.
+      </div>
+
+      <!-- 전체 컨트롤 바 -->
+      <div style="display:flex; gap:8px; margin-bottom:14px; align-items:center; flex-wrap:wrap;">
+        <button class="btn btn-outline" style="padding:7px 13px; font-size:12px;" onclick="selectAllCols(true)">
+          <i class="fas fa-check-square"></i> 전체 선택
+        </button>
+        <button class="btn btn-outline" style="padding:7px 13px; font-size:12px;" onclick="selectAllCols(false)">
+          <i class="far fa-square"></i> 전체 해제
+        </button>
+        <button class="btn btn-outline" style="padding:7px 13px; font-size:12px;" onclick="resetWeights()">
+          <i class="fas fa-undo"></i> 가중치 초기화
+        </button>
+        <div style="margin-left:auto; font-size:12px; color:var(--gray-text);">
+          <i class="fas fa-info-circle"></i> 선택: <strong id="selectedColCount" style="color:var(--red);">0</strong>개
+        </div>
+      </div>
+
+      <!-- 카테고리 그룹 컨테이너 -->
+      <div id="categoryContainer">
+        <div class="empty-state">
+          <i class="fas fa-file-upload" style="color:var(--gray-line);"></i>
+          <p>CSV 파일을 업로드하면<br>컬럼이 자동 분류되어 표시됩니다.</p>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- ③ 군집화 모드 선택 -->
+      <div class="section-title"><i class="fas fa-th-large"></i> 군집화 모드</div>
+      <div class="section-desc">소재를 어떤 기준으로 묶을지 선택하세요. 모드에 따라 태그와 성과의 영향도가 달라집니다.</div>
+
+      <div class="mode-grid">
+        <div class="mode-card selected" data-mode="tag" onclick="selectMode('tag', this)">
+          <div class="mode-icon">🏷️</div>
+          <div class="mode-name">태그 우선</div>
+          <div class="mode-desc">크리에이티브 전략·컨셉 기준. 어떤 패턴이 잘 되는가.</div>
+          <div class="mode-ratio">
+            <div class="mode-ratio-tag"  style="width:70%"></div>
+            <div class="mode-ratio-perf" style="width:30%"></div>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:6px;font-size:10px;justify-content:center;">
+            <span style="color:var(--blue);">■ 태그 70%</span>
+            <span style="color:var(--red);">■ 성과 30%</span>
+          </div>
+        </div>
+        <div class="mode-card" data-mode="perf" onclick="selectMode('perf', this)">
+          <div class="mode-icon">📊</div>
+          <div class="mode-name">성과 우선</div>
+          <div class="mode-desc">성과 수준 기준. 얼마나 잘 되는가로 그룹화.</div>
+          <div class="mode-ratio">
+            <div class="mode-ratio-tag"  style="width:30%"></div>
+            <div class="mode-ratio-perf" style="width:70%"></div>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:6px;font-size:10px;justify-content:center;">
+            <span style="color:var(--blue);">■ 태그 30%</span>
+            <span style="color:var(--red);">■ 성과 70%</span>
+          </div>
+        </div>
+        <div class="mode-card" data-mode="custom" onclick="selectMode('custom', this)">
+          <div class="mode-icon">⚙️</div>
+          <div class="mode-name">비율 직접 설정</div>
+          <div class="mode-desc">태그와 성과 반영 비율을 슬라이더로 직접 조정.</div>
+          <div class="mode-ratio" id="customModeBar">
+            <div class="mode-ratio-tag"  style="width:50%"></div>
+            <div class="mode-ratio-perf" style="width:50%"></div>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:6px;font-size:10px;justify-content:center;" id="customModeLabel">
+            <span style="color:var(--blue);">■ 태그 50%</span>
+            <span style="color:var(--red);">■ 성과 50%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 커스텀 비율 슬라이더 -->
+      <div class="perf-weight-block" id="perfWeightBlock">
+        <div class="pw-label"><i class="fas fa-balance-scale" style="color:var(--red);"></i> 태그 vs 성과 비율 조정</div>
+        <div class="pw-val-box" style="justify-content:center;gap:24px;margin-bottom:14px;">
+          <div class="pw-val-item">
+            <div class="pw-val-num tag-color" id="tagRatioNum">50</div>
+            <div class="pw-val-lbl">🏷️ 태그 비율(%)</div>
+          </div>
+          <div style="font-size:22px;color:var(--gray-line);align-self:center;">:</div>
+          <div class="pw-val-item">
+            <div class="pw-val-num perf-color" id="perfRatioNum">50</div>
+            <div class="pw-val-lbl">📊 성과 비율(%)</div>
+          </div>
+        </div>
+        <div class="pw-bar-wrap">
+          <span style="font-size:11px;color:var(--blue);white-space:nowrap;">태그 100%</span>
+          <input type="range" class="pw-slider" id="perfWeightSlider"
+                 min="0" max="100" step="10" value="50"
+                 oninput="updatePerfWeight(this.value)"
+                 style="background: linear-gradient(90deg, var(--blue) 50%, var(--red) 50%);">
+          <span style="font-size:11px;color:var(--red);white-space:nowrap;">성과 100%</span>
+        </div>
+        <div style="margin-top:10px;font-size:12px;color:var(--gray-text);text-align:center;" id="modeHintText">
+          태그와 성과를 균등하게 반영합니다. 일반 분석에 적합합니다.
+        </div>
+      </div>
+
+      <!-- 추가 파라미터 -->
+      <div style="margin-top:20px; padding:16px; background:var(--gray-bg); border-radius:var(--radius-md);">
+        <div style="font-size:13px;font-weight:700;color:var(--mid);margin-bottom:12px;">
+          <i class="fas fa-cogs" style="color:var(--red);margin-right:6px;"></i>군집화 파라미터
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label style="font-size:12px;color:var(--gray-text);display:block;margin-bottom:4px;">
+              최소 군집 크기 <span style="color:var(--red);">*</span>
+            </label>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <input type="number" id="minClusterSize" value="3" min="2" max="20"
+                style="width:60px;padding:6px 8px;border:1.5px solid var(--gray-line);border-radius:6px;font-size:13px;font-weight:600;text-align:center;">
+              <span style="font-size:12px;color:var(--gray-text);">개 소재</span>
+            </div>
+          </div>
+          <div>
+            <label style="font-size:12px;color:var(--gray-text);display:block;margin-bottom:4px;">
+              최소 지지율
+            </label>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <input type="number" id="minSupport" value="30" min="10" max="80" step="5"
+                style="width:60px;padding:6px 8px;border:1.5px solid var(--gray-line);border-radius:6px;font-size:13px;font-weight:600;text-align:center;">
+              <span style="font-size:12px;color:var(--gray-text);">%</span>
+            </div>
+          </div>
+          <div>
+            <label style="font-size:12px;color:var(--gray-text);display:block;margin-bottom:4px;">
+              목표 최소 군집 수
+            </label>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <input type="number" id="minClusters" value="3" min="2" max="15"
+                style="width:60px;padding:6px 8px;border:1.5px solid var(--gray-line);border-radius:6px;font-size:13px;font-weight:600;text-align:center;">
+              <span style="font-size:12px;color:var(--gray-text);">개</span>
+            </div>
+          </div>
+          <div>
+            <label style="font-size:12px;color:var(--gray-text);display:block;margin-bottom:4px;">
+              목표 최대 군집 수
+            </label>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <input type="number" id="maxClusters" value="10" min="3" max="20"
+                style="width:60px;padding:6px 8px;border:1.5px solid var(--gray-line);border-radius:6px;font-size:13px;font-weight:600;text-align:center;">
+              <span style="font-size:12px;color:var(--gray-text);">개</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /left-panel -->
+
+    <!-- ── 우측: 요약 패널 ── -->
+    <div class="right-panel">
+
+      <!-- 선택 현황 -->
+      <div class="summary-card">
+        <h3><i class="fas fa-list-check"></i> 선택 현황</h3>
+        <div class="stat-row">
+          <span class="stat-label">선택된 태그 컬럼</span>
+          <span class="stat-val red" id="summarySelCount">0개</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">전체 태그 컬럼</span>
+          <span class="stat-val" id="summaryTotalCount">—</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">마케터 인사이트</span>
+          <span class="stat-val green" id="summaryInsight">—</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">군집화 모드</span>
+          <span class="stat-val" id="summaryMode">태그 우선 (70:30)</span>
+        </div>
+        <div style="margin-top:12px;">
+          <div style="font-size:11px;color:var(--gray-text);margin-bottom:6px;">선택된 컬럼</div>
+          <div class="selected-col-list" id="selectedColChips">
+            <span style="font-size:12px;color:var(--gray-line);">아직 선택된 컬럼이 없습니다</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 태그 미리보기 -->
+      <div class="summary-card">
+        <h3><i class="fas fa-eye"></i> 태그 미리보기</h3>
+        <div style="font-size:12px;color:var(--gray-text);margin-bottom:10px;">
+          선택된 컬럼에서 추출된 고유 태그 (가중치별 색상)
+        </div>
+        <div class="preview-tag-cloud" id="tagPreviewCloud">
+          <div class="empty-state" style="padding:16px 8px;">
+            <i class="fas fa-tags" style="font-size:24px;color:var(--gray-line);"></i>
+            <p style="margin-top:8px;">CSV 업로드 후 표시됩니다</p>
+          </div>
+        </div>
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:10px;color:var(--red);">■ 고가중치(≥70%)</span>
+          <span style="font-size:10px;color:#2B6CB0;">■ 중가중치(40~69%)</span>
+          <span style="font-size:10px;color:var(--mid);">■ 저가중치(10~39%)</span>
+          <span style="font-size:10px;color:#6B46C1;">■ [MI] 인사이트</span>
+        </div>
+      </div>
+
+      <!-- 예상 군집 수 -->
+      <div class="summary-card">
+        <h3><i class="fas fa-layer-group"></i> 예상 군집 수</h3>
+        <div class="cluster-estimate">
+          <div class="ce-num" id="estClusterNum">—</div>
+          <div class="ce-info">
+            <div class="ce-label">예상 군집 범위</div>
+            <div class="ce-range" id="estClusterRange">CSV를 업로드하세요</div>
+            <div class="ce-bar"><div class="ce-bar-fill" id="estClusterBar" style="width:0%"></div></div>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:12px;color:var(--gray-text);line-height:1.6;" id="estClusterHint">
+          선택한 컬럼 수와 고유 태그 수를 기반으로 예상됩니다.
+        </div>
+      </div>
+
+      <!-- 저장/불러오기 -->
+      <div class="summary-card">
+        <h3><i class="fas fa-bookmark"></i> 설정 관리</h3>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <button class="btn btn-save" style="width:100%;justify-content:center;" onclick="saveConfig()">
+            <i class="fas fa-save"></i> 현재 설정 저장
+          </button>
+          <button class="btn btn-secondary" style="width:100%;justify-content:center;" onclick="loadConfig()">
+            <i class="fas fa-folder-open"></i> 저장된 설정 불러오기
+          </button>
+          <button class="btn btn-outline" style="width:100%;justify-content:center;" onclick="resetAll()">
+            <i class="fas fa-undo"></i> 전체 초기화
+          </button>
+        </div>
+        <div style="margin-top:10px;font-size:11px;color:var(--gray-text);text-align:center;" id="lastSavedInfo">
+          저장된 설정 없음
+        </div>
+      </div>
+
+    </div><!-- /right-panel -->
+  </div>
+
+  <!-- ════ 하단 액션 바 ════ -->
+  <div class="action-bar">
+    <div class="action-info">
+      <i class="fas fa-info-circle"></i>
+      <span id="actionInfoText">CSV 파일을 업로드한 후 컬럼을 선택하세요.</span>
+    </div>
+    <button class="btn btn-secondary" onclick="window.location.href='step1_integrated.html'">
+      <i class="fas fa-arrow-left"></i> Step 1으로
+    </button>
+    <button class="btn btn-primary" id="btnProceed" disabled onclick="proceedToClustering()">
+      <i class="fas fa-arrow-right"></i> 군집화 실행하기
+    </button>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<!-- ════ 토스트 컨테이너 ════ -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- ════ JavaScript ════ -->
+<script src="js/pipeline-engine.js"></script>
+<script>
+/* ═══════════════════════════════════════════════
+   전역 상태
+═══════════════════════════════════════════════ */
+let csvData     = null;   // { headers, rows }
+let columnDefs  = [];     // 분류된 컬럼 정보 배열
+let tagSamples  = {};     // { colName: [val1, val2, ...] }
+let currentMode = 'tag';  // 'tag' | 'perf' | 'custom'
+let perfWeight  = 30;     // 성과 비율(%) – tag 모드 기본값
+
+/* ═══════════════════════════════════════════════
+   컬럼 카테고리 정의
+═══════════════════════════════════════════════ */
+const CATEGORY_MAP = [
+  {
+    id: 'strategy', label: '전략 / 컨셉', icon: 'fas fa-chess', colorClass: 'c-strategy',
+    desc: 'USP, 컨셉, 후킹 전략 등 광고 전략 관련 태그',
+    patterns: [/^usp$/i, /^concept$/i, /hooking/i, /strategy/i, /^message$/i]
+  },
+  {
+    id: 'game', label: '게임 시스템 / 메카닉', icon: 'fas fa-gamepad', colorClass: 'c-game',
+    desc: '게임 시스템, 메카닉, 진영, 테마 등 타이틀 특화 태그',
+    patterns: [/^title_specific/i, /^gameplay$/i, /mechanic/i, /system/i, /faction/i]
+  },
+  {
+    id: 'visual', label: '시각 / 스타일', icon: 'fas fa-palette', colorClass: 'c-visual',
+    desc: '영상 기법, 아트 스타일, 배경 환경 등',
+    patterns: [/visual/i, /art_style/i, /environment/i, /^style$/i, /^scene$/i, /^format$/i]
+  },
+  {
+    id: 'emotion', label: '감성 / 캐릭터', icon: 'fas fa-heart', colorClass: 'c-emotion',
+    desc: '감정 코드, 캐릭터, 오브젝트 등',
+    patterns: [/^emotion$/i, /character/i, /^object$/i, /^mood$/i, /^feeling$/i]
+  },
+  {
+    id: 'audio', label: '오디오 / 텍스트', icon: 'fas fa-music', colorClass: 'c-audio',
+    desc: 'BGM, SFX, 나레이션, 텍스트 분석 등',
+    patterns: [/^audio/i, /^text_analysis/i, /bgm/i, /sfx/i, /narration/i, /voice/i]
+  },
+  {
+    id: 'etc', label: '기타 태그', icon: 'fas fa-tag', colorClass: 'c-strategy',
+    desc: '위 카테고리에 속하지 않는 태그 컬럼',
+    patterns: []
+  }
+];
+
+/* ★ 주요 태그 – CSV 로드 시 기본 선택되는 컬럼 목록
+   ※ Concept은 식별 용도이므로 PRIMARY 제외 → 선택 가능하되 기본 미선택 */
+const PRIMARY_COLS = new Set([
+  'USP', 'hooking_strategy', 'gameplay',
+  'visual_technique', 'art_style', 'environment',
+  'character_object', 'emotion', 'text_analysis_core_usp'
+]);
+
+/* 기본 가중치 맵 */
+const DEFAULT_WEIGHTS = {
+  usp: 80, concept: 20, hooking_strategy: 50, hooking: 50,
+  title_specific_mechanic: 40, title_specific_system: 40,
+  title_specific_theme: 40, title_specific_faction_race: 30,
+  title_specific_identified_character: 20,
+  gameplay: 50, visual_technique: 40, art_style: 40,
+  environment: 40, emotion: 40, character_object: 40,
+  text_analysis_core_usp: 50,
+  audio_elements_bgm: 20, audio_elements_sfx_emphasized: 20,
+  audio_elements_narration: 30, audio_elements_cv: 30,
+  marketer_insight: 100
+};
+
+/* 퍼포먼스/메타 컬럼 집합 (pipeline-engine.js의 NON_TAG_COLS 참조) */
+const PERF_COLS = new Set([
+  '소재명','유형','전환','비용','노출수','클릭수','Revenue',
+  'name','type','conversion','cost','impression','click','ctr','ipm','cpa',
+  '링크','link','url','image_url','video_url','썸네일',
+  '앱 확장 소재','앱 확장 소재 유형',
+  'id','no','index','순번','date','날짜','기간','period','일','일자','투입일',
+  'campaign','캠페인','ad_set','adset','광고세트','광고그룹',
+  '사이즈','size','format','포맷','사이즈명',
+  '언어','language','lang','지역','region','국가','country','시기',
+  '통화 코드','통화코드','통화','currency','revenue','매출',
+  '파일명','filename','file_name','remark','비고','note',
+  '유형 (BNR/VID)','text_analysis_extracted_copy','title_specific_special_note'
+]);
+
+const INSIGHT_PATTERNS = [
+  /marketer[\s_-]?insight/i, /마케터[\s_]?인사이트/,
+  /insight[\s_]?memo/i, /담당자[\s_]?인사이트/
+];
+
+/* ═══════════════════════════════════════════════
+   업로드 처리
+═══════════════════════════════════════════════ */
+const uploadZone = document.getElementById('uploadZone');
+const csvFileInput = document.getElementById('csvFile');
+
+uploadZone.addEventListener('dragover',  e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) handleFile(file);
+});
+csvFileInput.addEventListener('change', e => {
+  if (e.target.files[0]) handleFile(e.target.files[0]);
+});
+
+function handleFile(file) {
+  if (!file.name.toLowerCase().endsWith('.csv')) {
+    showToast('CSV 파일만 업로드 가능합니다.', 'error'); return;
+  }
+  if (file.size > 10 * 1024 * 1024) {
+    showToast('파일이 너무 큽니다 (10MB 이하 권장).', 'error'); return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const parsed = plParseCSV(e.target.result);
+      if (!parsed || !parsed.rows.length) throw new Error('데이터 없음');
+      csvData = parsed;
+
+      // UI 업데이트
+      uploadZone.classList.add('uploaded');
+      uploadZone.querySelector('.upload-icon i').className = 'fas fa-check-circle';
+      uploadZone.querySelector('h3').textContent = '업로드 완료!';
+
+      const infoBar = document.getElementById('uploadInfoBar');
+      infoBar.classList.add('show');
+      document.getElementById('uploadFileName').textContent = file.name;
+      document.getElementById('uploadFileMeta').textContent =
+        `${csvData.rows.length}행 · ${csvData.headers.length}개 컬럼 · ${(file.size/1024).toFixed(1)}KB`;
+
+      // 컬럼 분류 및 UI 렌더
+      classifyAndRender(csvData);
+      showToast(`✅ ${file.name} 업로드 완료 (${csvData.rows.length}개 소재)`, 'success');
+    } catch (err) {
+      showToast('CSV 파싱 오류: ' + err.message, 'error');
+    }
+  };
+  reader.readAsText(file, 'UTF-8');
+}
+
+/* ═══════════════════════════════════════════════
+   컬럼 분류 & 렌더링
+═══════════════════════════════════════════════ */
+function classifyAndRender(data) {
+  columnDefs = [];
+  tagSamples = {};
+
+  const headers = data.headers;
+
+  // 각 컬럼 분류
+  headers.forEach(col => {
+    const colLower = col.toLowerCase().trim();
+
+    // ① 마케터 인사이트
+    if (INSIGHT_PATTERNS.some(p => p.test(col))) {
+      columnDefs.push({ col, type: 'insight', category: 'insight',
+                        selected: true, locked: true, weight: 100 });
+      return;
+    }
+
+    // ② 퍼포먼스/메타 컬럼
+    if (PERF_COLS.has(col) || PERF_COLS.has(colLower)) {
+      // 성과 지표 vs 메타 구분
+      const isPerfMetric = ['전환','비용','노출수','클릭수','Revenue','ctr','ipm','cpa',
+                             'conversion','cost','impression','click','revenue'].includes(colLower);
+      columnDefs.push({ col, type: isPerfMetric ? 'perf' : 'meta',
+                        category: null, selected: false, locked: false, weight: 0 });
+      return;
+    }
+
+    // ③ 태그 컬럼 – 고유 값 샘플 추출
+    const vals = data.rows
+      .map(r => (r[col] || '').trim())
+      .filter(v => v && v !== '-' && v.length < 50);  // 너무 긴 텍스트 제외
+
+    if (vals.length < 2) {
+      // 값이 거의 없으면 메타 처리
+      columnDefs.push({ col, type: 'meta', category: null, selected: false, locked: false, weight: 0 });
+      return;
+    }
+
+    const uniqueVals = [...new Set(vals)];
+    // 고유값이 너무 많으면 (긴 텍스트 컬럼) → 메타
+    if (uniqueVals.length > Math.min(data.rows.length * 0.8, 50)) {
+      columnDefs.push({ col, type: 'meta', category: null, selected: false, locked: false, weight: 0 });
+      return;
+    }
+
+    tagSamples[col] = uniqueVals.slice(0, 8);
+
+    // 카테고리 분류
+    const cat = detectCategory(col);
+    const defaultWeight = getDefaultWeight(col);
+    // ★ PRIMARY_COLS에 포함되면 기본 선택 / Concept은 태그 컬럼이지만 기본 미선택
+    const isPrimary    = PRIMARY_COLS.has(col);
+    const isConceptCol = (col === 'Concept' || colLower === 'concept');
+    // Concept은 기본 미선택 (선택 시 분석 가능)
+    const defaultSelected = !isConceptCol && (isPrimary || defaultWeight >= 50);
+
+    columnDefs.push({
+      col, type: 'tag', category: cat,
+      selected: defaultSelected,
+      primary: isPrimary,
+      isConceptCol,              // 식별용 컬럼 플래그 (기본 미선택 안내)
+      locked: false,
+      weight: defaultWeight,
+      samples: uniqueVals.slice(0, 6),
+      uniqueCount: uniqueVals.length
+    });
+  });
+
+  // 배지 카운트
+  document.getElementById('colTypeStrip').style.display = 'flex';
+  document.getElementById('badgeInsight').textContent = columnDefs.filter(c => c.type === 'insight').length;
+  document.getElementById('badgeTag').textContent     = columnDefs.filter(c => c.type === 'tag').length;
+  document.getElementById('badgePerf').textContent    = columnDefs.filter(c => c.type === 'perf').length;
+  document.getElementById('badgeMeta').textContent    = columnDefs.filter(c => c.type === 'meta').length;
+
+  renderCategories();
+  updateSummary();
+  updateTagPreview();
+  updateEstimate();
+  updateActionBar();
+}
+
+function detectCategory(col) {
+  for (const cat of CATEGORY_MAP) {
+    if (cat.patterns.some(p => p.test(col))) return cat.id;
+  }
+  return 'etc';
+}
+
+function getDefaultWeight(col) {
+  const colLower = col.toLowerCase();
+  for (const [key, val] of Object.entries(DEFAULT_WEIGHTS)) {
+    if (colLower === key || colLower.includes(key)) return val;
+  }
+  // PRIMARY_COLS 소속이면 40 보장
+  if (PRIMARY_COLS.has(col)) return 40;
+  return 20; // 비주요 태그 기본값
+}
+
+/* 주요 태그 여부 확인 */
+function isPrimaryCol(col) {
+  return PRIMARY_COLS.has(col);
+}
+
+/* ═══════════════════════════════════════════════
+   카테고리별 UI 렌더링
+═══════════════════════════════════════════════ */
+function renderCategories() {
+  const container = document.getElementById('categoryContainer');
+  container.innerHTML = '';
+
+  // 인사이트 먼저
+  const insightCols = columnDefs.filter(c => c.type === 'insight');
+  if (insightCols.length) {
+    container.appendChild(buildCategoryGroup({
+      id: 'insight', label: '🔐 마케터 인사이트', icon: 'fas fa-lightbulb',
+      colorClass: 'c-insight',
+      desc: '마케터가 작성한 인사이트. 항상 포함되며 가중치 최고 고정.'
+    }, insightCols, true));
+  }
+
+  // 태그 카테고리
+  CATEGORY_MAP.forEach(cat => {
+    const cols = columnDefs.filter(c => c.type === 'tag' && c.category === cat.id);
+    if (!cols.length) return;
+    container.appendChild(buildCategoryGroup(cat, cols, false));
+  });
+
+  // 성과/메타는 접힌 상태로 (참고용)
+  const nonTagCols = columnDefs.filter(c => c.type === 'perf' || c.type === 'meta');
+  if (nonTagCols.length) {
+    container.appendChild(buildNonTagGroup(nonTagCols));
+  }
+}
+
+function buildCategoryGroup(cat, cols, isInsight) {
+  const selCount = cols.filter(c => c.selected).length;
+
+  const group = document.createElement('div');
+  group.className = 'cat-group open';
+  group.dataset.catId = cat.id;
+
+  group.innerHTML = `
+    <div class="cat-header" onclick="toggleCatGroup(this.parentElement)">
+      <div class="cat-icon ${cat.colorClass}"><i class="${cat.icon}"></i></div>
+      <h4>${cat.label}</h4>
+      <span class="cat-count ${selCount > 0 ? 'has-selected' : ''}" id="catCount_${cat.id}">
+        ${selCount}/${cols.length}
+      </span>
+      <i class="fas fa-chevron-down cat-chevron"></i>
+    </div>
+    <div class="cat-body" id="catBody_${cat.id}">
+      ${cat.desc ? `<p style="font-size:12px;color:var(--gray-text);margin-bottom:10px;">${cat.desc}</p>` : ''}
+      <div id="catItems_${cat.id}"></div>
+    </div>
+  `;
+
+  // 아이템 렌더
+  const itemsWrap = group.querySelector(`#catItems_${cat.id}`);
+  cols.forEach(colDef => {
+    itemsWrap.appendChild(buildColItem(colDef, isInsight));
+  });
+
+  return group;
+}
+
+function buildColItem(colDef, isInsight) {
+  const div = document.createElement('div');
+  div.className = `col-item${colDef.locked ? ' locked' : ''}`;
+  div.dataset.col = colDef.col;
+
+  const wColor = colDef.weight >= 70 ? 'var(--red)'
+               : colDef.weight >= 40 ? 'var(--blue)'
+               : 'var(--gray-text)';
+
+  // 태그 미리보기
+  const samplesHtml = colDef.type === 'insight'
+    ? `<span class="mini-tag mi">[MI] 자동 추출</span>`
+    : (colDef.samples || []).map(s =>
+        `<span class="mini-tag">${escHtml(s)}</span>`
+      ).join('') + (colDef.uniqueCount > 6
+        ? `<span class="mini-tag" style="color:var(--gray-text);">+${colDef.uniqueCount - 6}</span>` : '');
+
+  div.innerHTML = `
+    <div class="col-cb-wrap ${colDef.locked ? 'locked' : ''}">
+      <input type="checkbox"
+             id="cb_${escHtml(colDef.col)}"
+             ${colDef.selected ? 'checked' : ''}
+             ${colDef.locked   ? 'disabled' : ''}
+             onchange="onColToggle('${escHtml(colDef.col)}', this.checked)">
+      <div class="col-cb-box"></div>
+    </div>
+    <div class="col-info">
+      <div class="col-name">
+        ${escHtml(colDef.col)}
+        ${colDef.locked ? '<i class="fas fa-lock lock-icon"></i>' : ''}
+        ${colDef.primary ? '<span class="primary-badge">★ 주요</span>' : ''}
+        ${colDef.isConceptCol ? '<span class="concept-badge">식별용 · 선택 옵션</span>' : ''}
+      </div>
+      <div class="col-sample">
+        <div class="col-tags-preview">${samplesHtml}</div>
+      </div>
+    </div>
+    <div class="col-weight-wrap ${!colDef.selected && !colDef.locked ? 'disabled' : ''}" id="ww_${escHtml(colDef.col)}">
+      <div class="weight-row">
+        <input type="range" class="weight-slider"
+               min="10" max="100" step="10"
+               value="${colDef.weight}"
+               ${colDef.locked ? 'disabled style="opacity:.6;"' : ''}
+               oninput="onWeightChange('${escHtml(colDef.col)}', this.value)"
+               style="background:${buildSliderBg(colDef.weight)};">
+        <span class="weight-val" id="wv_${escHtml(colDef.col)}" style="color:${wColor};">${colDef.weight}%</span>
+      </div>
+      <div class="weight-label">
+        <div class="weight-dot" style="background:${wColor};"></div>
+        ${colDef.weight >= 70 ? '고중요도' : colDef.weight >= 40 ? '중중요도' : '저중요도'}
+      </div>
+    </div>
+  `;
+
+  // 체크박스 래퍼 클릭 시 체크 토글 (locked 제외)
+  if (!colDef.locked) {
+    div.addEventListener('click', e => {
+      if (e.target.closest('.col-weight-wrap') || e.target.closest('input[type="range"]')) return;
+      const cb = div.querySelector('input[type="checkbox"]');
+      cb.checked = !cb.checked;
+      onColToggle(colDef.col, cb.checked);
+    });
+  }
+
+  return div;
+}
+
+function buildNonTagGroup(cols) {
+  const group = document.createElement('div');
+  group.className = 'cat-group';  // 기본 닫힘
+  group.innerHTML = `
+    <div class="cat-header" onclick="toggleCatGroup(this.parentElement)" style="opacity:.7;">
+      <div class="cat-icon" style="background:var(--gray-bg);color:var(--gray-text);">
+        <i class="fas fa-lock"></i></div>
+      <h4>성과 지표 / 메타 컬럼 (군집화 제외)</h4>
+      <span class="cat-count">${cols.length}</span>
+      <i class="fas fa-chevron-down cat-chevron"></i>
+    </div>
+    <div class="cat-body">
+      <p style="font-size:12px;color:var(--gray-text);margin-bottom:10px;">
+        아래 컬럼은 군집화 태그로 사용되지 않습니다. 성과 계산 및 식별 목적으로만 사용됩니다.
+      </p>
+      <div style="display:flex;flex-wrap:wrap;gap:5px;">
+        ${cols.map(c => `
+          <span style="font-size:11px;padding:3px 8px;border-radius:8px;
+                       background:var(--gray-bg);color:var(--gray-text);border:1px solid var(--gray-line);"
+                title="${c._reason || ''}">
+            ${escHtml(c.col)}
+            ${c._reason ? `<span style="font-size:9px;color:var(--orange);margin-left:3px;">(식별용)</span>` : ''}
+          </span>`).join('')}
+      </div>
+    </div>
+  `;
+  return group;
+}
+
+/* ═══════════════════════════════════════════════
+   이벤트 핸들러
+═══════════════════════════════════════════════ */
+function toggleCatGroup(group) {
+  group.classList.toggle('open');
+}
+
+function onColToggle(col, checked) {
+  const def = columnDefs.find(c => c.col === col);
+  if (!def || def.locked) return;
+  def.selected = checked;
+
+  // 슬라이더 그레이아웃
+  const ww = document.getElementById('ww_' + col);
+  if (ww) ww.classList.toggle('disabled', !checked);
+
+  // 카테고리 카운트 업데이트
+  updateCatCount(def.category || def.type);
+  updateSummary();
+  updateTagPreview();
+  updateEstimate();
+  updateActionBar();
+}
+
+function onWeightChange(col, val) {
+  const def = columnDefs.find(c => c.col === col);
+  if (!def) return;
+  def.weight = +val;
+
+  const valEl = document.getElementById('wv_' + col);
+  if (valEl) {
+    const wColor = +val >= 70 ? 'var(--red)' : +val >= 40 ? 'var(--blue)' : 'var(--gray-text)';
+    valEl.style.color = wColor;
+    valEl.textContent = val + '%';
+  }
+
+  // 슬라이더 배경 업데이트
+  const slider = document.querySelector(`input[oninput*="onWeightChange('${col}'"]`);
+  if (slider) slider.style.background = buildSliderBg(+val);
+
+  updateTagPreview();
+  updateEstimate();
+}
+
+function selectAllCols(select) {
+  columnDefs.filter(c => c.type === 'tag' && !c.locked).forEach(def => {
+    def.selected = select;
+    const cb = document.getElementById('cb_' + def.col);
+    if (cb) cb.checked = select;
+    const ww = document.getElementById('ww_' + def.col);
+    if (ww) ww.classList.toggle('disabled', !select);
+  });
+  CATEGORY_MAP.forEach(cat => updateCatCount(cat.id));
+  updateSummary();
+  updateTagPreview();
+  updateEstimate();
+  updateActionBar();
+}
+
+function resetWeights() {
+  columnDefs.filter(c => c.type === 'tag' && !c.locked).forEach(def => {
+    def.weight = getDefaultWeight(def.col);
+    const slider = document.querySelector(`input[oninput*="onWeightChange('${def.col}'"]`);
+    if (slider) {
+      slider.value = def.weight;
+      slider.style.background = buildSliderBg(def.weight);
+    }
+    const valEl = document.getElementById('wv_' + def.col);
+    if (valEl) {
+      const wColor = def.weight >= 70 ? 'var(--red)' : def.weight >= 40 ? 'var(--blue)' : 'var(--gray-text)';
+      valEl.style.color = wColor;
+      valEl.textContent = def.weight + '%';
+    }
+  });
+  updateTagPreview();
+  updateEstimate();
+  showToast('가중치를 기본값으로 초기화했습니다.', 'info');
+}
+
+function updateCatCount(catId) {
+  const catCols = columnDefs.filter(c => (c.category === catId || c.type === catId));
+  const selCount = catCols.filter(c => c.selected).length;
+  const el = document.getElementById('catCount_' + catId);
+  if (!el) return;
+  el.textContent = `${selCount}/${catCols.length}`;
+  el.classList.toggle('has-selected', selCount > 0);
+}
+
+/* ═══════════════════════════════════════════════
+   모드 선택
+═══════════════════════════════════════════════ */
+function selectMode(mode, el) {
+  document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  currentMode = mode;
+
+  if (mode === 'tag')    { perfWeight = 30; }
+  if (mode === 'perf')   { perfWeight = 70; }
+  // custom: 슬라이더 값 유지
+
+  const block = document.getElementById('perfWeightBlock');
+  block.classList.toggle('show', mode === 'custom');
+
+  updateSummaryMode();
+}
+
+function updatePerfWeight(val) {
+  perfWeight = +val;
+  const tagRatio  = 100 - perfWeight;
+  document.getElementById('tagRatioNum').textContent  = tagRatio;
+  document.getElementById('perfRatioNum').textContent = perfWeight;
+
+  // 슬라이더 그라디언트 업데이트
+  const slider = document.getElementById('perfWeightSlider');
+  slider.style.background =
+    `linear-gradient(90deg, var(--blue) ${tagRatio}%, var(--red) ${tagRatio}%)`;
+
+  // 커스텀 모드 카드 비율 바 업데이트
+  document.querySelector('#customModeBar .mode-ratio-tag').style.width  = tagRatio + '%';
+  document.querySelector('#customModeBar .mode-ratio-perf').style.width = perfWeight + '%';
+  document.getElementById('customModeLabel').innerHTML =
+    `<span style="color:var(--blue);">■ 태그 ${tagRatio}%</span>` +
+    `<span style="color:var(--red);">■ 성과 ${perfWeight}%</span>`;
+
+  // 힌트 텍스트
+  const hints = {
+    0:   '순수 태그 기반 군집화. 크리에이티브 전략 분류에 최적입니다.',
+    10:  '태그 중심, 성과를 약간 반영합니다.',
+    20:  '태그 중심, 성과를 소폭 반영합니다.',
+    30:  '태그 우선 모드 (기본). 전략 분류 + 성과 보정.',
+    40:  '태그와 성과를 균형있게 반영합니다.',
+    50:  '태그와 성과를 균등하게 반영합니다. 일반 분석에 적합합니다.',
+    60:  '성과를 좀 더 반영합니다.',
+    70:  '성과 우선 모드. 성과 수준별 그룹화에 적합합니다.',
+    80:  '성과 중심, 태그는 보조 역할.',
+    90:  '거의 성과 기반 군집화.',
+    100: '순수 성과 기반. 점수 구간별 그룹화.'
+  };
+  document.getElementById('modeHintText').textContent = hints[perfWeight] || '';
+
+  updateSummaryMode();
+}
+
+function updateSummaryMode() {
+  const modeNames = { tag: '태그 우선', perf: '성과 우선', custom: '직접 설정' };
+  const tagRatio  = currentMode === 'tag' ? 70 : currentMode === 'perf' ? 30 : (100 - perfWeight);
+  const perfRatio = 100 - tagRatio;
+  document.getElementById('summaryMode').textContent =
+    `${modeNames[currentMode]} (태그${tagRatio}:성과${perfRatio})`;
+}
+
+/* ═══════════════════════════════════════════════
+   우측 패널 업데이트
+═══════════════════════════════════════════════ */
+function updateSummary() {
+  const tagCols     = columnDefs.filter(c => c.type === 'tag');
+  const insightCols = columnDefs.filter(c => c.type === 'insight');
+  const selTagCols  = columnDefs.filter(c => c.selected && c.type === 'tag');
+  const selAll      = [...selTagCols, ...insightCols];
+
+  document.getElementById('summarySelCount').textContent   = selAll.length + '개';
+  document.getElementById('summaryTotalCount').textContent = (tagCols.length + insightCols.length) + '개';
+  document.getElementById('summaryInsight').textContent    =
+    insightCols.length ? `✅ ${insightCols.length}개 포함` : '없음';
+  document.getElementById('selectedColCount').textContent  = selAll.length;
+
+  // 선택된 컬럼 칩
+  const chipsEl = document.getElementById('selectedColChips');
+  if (!selAll.length) {
+    chipsEl.innerHTML = '<span style="font-size:12px;color:var(--gray-line);">아직 선택된 컬럼이 없습니다</span>';
+    return;
+  }
+  chipsEl.innerHTML = selAll.map(def =>
+    `<span class="selected-col-chip${def.primary ? ' primary' : ''}">
+      ${def.locked ? '<i class="fas fa-lock" style="font-size:9px;"></i>' : ''}
+      ${def.primary ? '<i class="fas fa-star" style="font-size:9px;color:#FFA500;"></i>' : ''}
+      ${escHtml(def.col)}
+      ${def.locked ? '' : `<span class="chip-w">${def.weight}%</span>`}
+    </span>`
+  ).join('');
+}
+
+function updateTagPreview() {
+  const cloud = document.getElementById('tagPreviewCloud');
+  const selCols = columnDefs.filter(c => c.selected && c.type === 'tag');
+  const insightCols = columnDefs.filter(c => c.type === 'insight' && c.selected);
+
+  if (!csvData || (!selCols.length && !insightCols.length)) {
+    cloud.innerHTML = `<div class="empty-state" style="padding:16px 8px;">
+      <i class="fas fa-tags" style="font-size:24px;color:var(--gray-line);"></i>
+      <p style="margin-top:8px;">컬럼을 선택하면 태그가 표시됩니다</p>
+    </div>`;
+    return;
+  }
+
+  // 태그 빈도 계산
+  const tagFreq = {};
+  const tagWeight = {};
+
+  csvData.rows.forEach(row => {
+    selCols.forEach(def => {
+      const val = (row[def.col] || '').trim();
+      if (!val || val === '-') return;
+      const vals = val.split(/[,\/]/).map(v => v.trim()).filter(v => v && v.length < 30);
+      vals.forEach(v => {
+        tagFreq[v]   = (tagFreq[v]  || 0) + 1;
+        tagWeight[v] = Math.max(tagWeight[v] || 0, def.weight);
+      });
+    });
+  });
+
+  const sorted = Object.entries(tagFreq)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 50);
+
+  if (!sorted.length) {
+    cloud.innerHTML = '<p style="font-size:12px;color:var(--gray-text);">태그 데이터가 없습니다.</p>';
+    return;
+  }
+
+  cloud.innerHTML = sorted.map(([tag, cnt]) => {
+    const w = tagWeight[tag] || 40;
+    const cls = w >= 70 ? 'high' : w >= 40 ? 'mid' : '';
+    return `<span class="ptag ${cls} fade-in">
+      ${escHtml(tag)}<span class="freq">${cnt}</span>
+    </span>`;
+  }).join('') +
+  (insightCols.length ? `<span class="ptag mi"><i class="fas fa-lightbulb" style="font-size:9px;"></i> [MI] 자동추출</span>` : '');
+}
+
+function updateEstimate() {
+  const selCols = columnDefs.filter(c => c.selected);
+  if (!csvData || !selCols.length) {
+    document.getElementById('estClusterNum').textContent  = '—';
+    document.getElementById('estClusterRange').textContent = 'CSV를 업로드하세요';
+    document.getElementById('estClusterBar').style.width  = '0%';
+    return;
+  }
+
+  // 고유 태그 수 계산
+  const uniqueTags = new Set();
+  const tagCols = selCols.filter(c => c.type === 'tag');
+  csvData.rows.forEach(row => {
+    tagCols.forEach(def => {
+      const val = (row[def.col] || '').trim();
+      if (!val || val === '-') return;
+      val.split(/[,\/]/).forEach(v => { if (v.trim()) uniqueTags.add(v.trim()); });
+    });
+  });
+
+  const n = csvData.rows.length;
+  const tagCount  = uniqueTags.size;
+  const colCount  = tagCols.length;
+
+  // 예상 군집 수 계산 (휴리스틱)
+  const minCl = Math.max(2, Math.floor(Math.sqrt(tagCount / 3)));
+  const maxCl = Math.min(15, Math.ceil(tagCount / 2));
+  const estimate = Math.round((minCl + maxCl) / 2);
+
+  document.getElementById('estClusterNum').textContent   = estimate;
+  document.getElementById('estClusterRange').textContent =
+    `${minCl}~${maxCl}개 (${n}개 소재, 태그 ${tagCount}종)`;
+  document.getElementById('estClusterBar').style.width   =
+    `${Math.min(100, (estimate / 15) * 100)}%`;
+  document.getElementById('estClusterHint').textContent  =
+    `선택된 컬럼 ${colCount}개에서 ${tagCount}개 고유 태그 발견. ` +
+    (tagCount < 5 ? '태그가 너무 적습니다. 더 많은 컬럼을 선택하세요.' :
+     tagCount > 80 ? '태그가 많습니다. 가중치를 낮춰 노이즈를 줄이세요.' :
+     '정상 범위입니다. 군집화를 실행하세요.');
+}
+
+function updateActionBar() {
+  const selCols = columnDefs.filter(c => c.selected);
+  const btnProceed = document.getElementById('btnProceed');
+  const infoText   = document.getElementById('actionInfoText');
+
+  if (!csvData) {
+    btnProceed.disabled = true;
+    infoText.textContent = 'CSV 파일을 업로드한 후 컬럼을 선택하세요.';
+  } else if (!selCols.length) {
+    btnProceed.disabled = true;
+    infoText.textContent = '⚠️ 군집화에 사용할 컬럼을 1개 이상 선택하세요.';
+  } else {
+    btnProceed.disabled = false;
+    infoText.innerHTML =
+      `<i class="fas fa-check-circle" style="color:var(--green);"></i>` +
+      ` ${selCols.length}개 컬럼 선택됨. 군집화를 실행할 준비가 되었습니다.`;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   설정 저장 / 불러오기
+═══════════════════════════════════════════════ */
+function saveConfig() {
+  if (!csvData) { showToast('CSV를 먼저 업로드하세요.', 'error'); return; }
+
+  const config = {
+    savedAt: new Date().toISOString(),
+    mode: currentMode,
+    perfWeight,
+    minClusterSize: +document.getElementById('minClusterSize').value,
+    minSupport:     +document.getElementById('minSupport').value,
+    minClusters:    +document.getElementById('minClusters').value,
+    maxClusters:    +document.getElementById('maxClusters').value,
+    columns: columnDefs.filter(c => c.type === 'tag').map(c => ({
+      col: c.col, selected: c.selected, weight: c.weight
+    }))
+  };
+
+  localStorage.setItem('r_team_cluster_config', JSON.stringify(config));
+  const dt = new Date().toLocaleString('ko-KR');
+  document.getElementById('lastSavedInfo').textContent = `마지막 저장: ${dt}`;
+  showToast('설정이 저장되었습니다.', 'success');
+}
+
+function loadConfig() {
+  const raw = localStorage.getItem('r_team_cluster_config');
+  if (!raw) { showToast('저장된 설정이 없습니다.', 'error'); return; }
+
+  try {
+    const config = JSON.parse(raw);
+    if (!csvData) { showToast('CSV를 먼저 업로드한 후 불러오기를 사용하세요.', 'error'); return; }
+
+    // 컬럼 설정 복원
+    config.columns.forEach(saved => {
+      const def = columnDefs.find(c => c.col === saved.col);
+      if (!def) return;
+      def.selected = saved.selected;
+      def.weight   = saved.weight;
+
+      const cb = document.getElementById('cb_' + saved.col);
+      if (cb) cb.checked = saved.selected;
+      const slider = document.querySelector(`input[oninput*="onWeightChange('${saved.col}'"]`);
+      if (slider) { slider.value = saved.weight; slider.style.background = buildSliderBg(saved.weight); }
+      const valEl = document.getElementById('wv_' + saved.col);
+      if (valEl) valEl.textContent = saved.weight + '%';
+      const ww = document.getElementById('ww_' + saved.col);
+      if (ww) ww.classList.toggle('disabled', !saved.selected);
+    });
+
+    // 모드 복원
+    if (config.mode) {
+      const modeCard = document.querySelector(`.mode-card[data-mode="${config.mode}"]`);
+      if (modeCard) selectMode(config.mode, modeCard);
+    }
+    if (config.perfWeight !== undefined) {
+      perfWeight = config.perfWeight;
+      const pwSlider = document.getElementById('perfWeightSlider');
+      if (pwSlider) { pwSlider.value = perfWeight; updatePerfWeight(perfWeight); }
+    }
+
+    // 파라미터 복원
+    if (config.minClusterSize) document.getElementById('minClusterSize').value = config.minClusterSize;
+    if (config.minSupport)     document.getElementById('minSupport').value     = config.minSupport;
+    if (config.minClusters)    document.getElementById('minClusters').value    = config.minClusters;
+    if (config.maxClusters)    document.getElementById('maxClusters').value    = config.maxClusters;
+
+    CATEGORY_MAP.forEach(cat => updateCatCount(cat.id));
+    updateCatCount('insight');
+    updateSummary();
+    updateTagPreview();
+    updateEstimate();
+    updateActionBar();
+
+    const dt = new Date(config.savedAt).toLocaleString('ko-KR');
+    document.getElementById('lastSavedInfo').textContent = `저장 시각: ${dt}`;
+    showToast('설정을 불러왔습니다.', 'success');
+  } catch (e) {
+    showToast('설정 불러오기 오류: ' + e.message, 'error');
+  }
+}
+
+function resetAll() {
+  if (!csvData) { showToast('CSV를 먼저 업로드하세요.', 'error'); return; }
+  columnDefs.filter(c => c.type === 'tag' && !c.locked).forEach(def => {
+    const w = getDefaultWeight(def.col);
+    def.selected = !def.isConceptCol && (def.primary || w >= 50);
+    def.weight   = w;
+    const cb = document.getElementById('cb_' + def.col);
+    if (cb) cb.checked = def.selected;
+    const slider = document.querySelector(`input[oninput*="onWeightChange('${def.col}'"]`);
+    if (slider) { slider.value = def.weight; slider.style.background = buildSliderBg(def.weight); }
+    const valEl = document.getElementById('wv_' + def.col);
+    if (valEl) valEl.textContent = def.weight + '%';
+    const ww = document.getElementById('ww_' + def.col);
+    if (ww) ww.classList.toggle('disabled', !def.selected);
+  });
+  currentMode = 'tag';
+  perfWeight  = 30;
+  document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
+  document.querySelector('.mode-card[data-mode="tag"]').classList.add('selected');
+  document.getElementById('perfWeightBlock').classList.remove('show');
+
+  CATEGORY_MAP.forEach(cat => updateCatCount(cat.id));
+  updateCatCount('insight');
+  updateSummary();
+  updateTagPreview();
+  updateEstimate();
+  updateActionBar();
+  updateSummaryMode();
+  showToast('설정이 초기화되었습니다.', 'info');
+}
+
+/* ═══════════════════════════════════════════════
+   군집화 실행으로 이동
+═══════════════════════════════════════════════ */
+function proceedToClustering() {
+  if (!csvData) return;
+
+  const selCols = columnDefs.filter(c => c.selected);
+  if (!selCols.length) { showToast('컬럼을 선택하세요.', 'error'); return; }
+
+  // 설정을 sessionStorage에 저장
+  const config = {
+    csvData,
+    columnConfig: selCols.map(c => ({ col: c.col, weight: c.weight, type: c.type, locked: c.locked })),
+    mode: currentMode,
+    perfWeight: currentMode === 'tag' ? 30 : currentMode === 'perf' ? 70 : perfWeight,
+    params: {
+      minCluster: +document.getElementById('minClusterSize').value,
+      minSupport: +document.getElementById('minSupport').value,
+      minClusters: +document.getElementById('minClusters').value,
+      maxClusters: +document.getElementById('maxClusters').value,
+    }
+  };
+
+  try {
+    sessionStorage.setItem('r_team_cluster_session', JSON.stringify(config));
+    showToast('설정 저장 완료. 군집화 페이지로 이동합니다...', 'success');
+    setTimeout(() => { window.location.href = 'step2_clustering.html'; }, 900);
+  } catch (e) {
+    // sessionStorage 용량 초과 시 csvData 제외
+    const lightConfig = { ...config, csvData: null };
+    sessionStorage.setItem('r_team_cluster_session', JSON.stringify(lightConfig));
+    showToast('설정 저장 완료 (대용량 데이터 제외). 이동합니다...', 'info');
+    setTimeout(() => { window.location.href = 'step2_clustering.html'; }, 900);
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   유틸리티
+═══════════════════════════════════════════════ */
+function buildSliderBg(val) {
+  const pct = ((val - 10) / 90) * 100;
+  return `linear-gradient(90deg, var(--red) ${pct}%, var(--gray-line) ${pct}%)`;
+}
+
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function showToast(msg, type = '') {
+  const wrap  = document.getElementById('toastWrap');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle' };
+  toast.innerHTML = `<i class="fas ${icons[type] || 'fa-bell'}"></i> ${msg}`;
+  wrap.appendChild(toast);
+  setTimeout(() => toast.remove(), 3200);
+}
+
+/* ═══════════════════════════════════════════════
+   초기화 - 저장된 설정 날짜 표시
+═══════════════════════════════════════════════ */
+(function init() {
+  const raw = localStorage.getItem('r_team_cluster_config');
+  if (raw) {
+    try {
+      const conf = JSON.parse(raw);
+      const dt = new Date(conf.savedAt).toLocaleString('ko-KR');
+      document.getElementById('lastSavedInfo').textContent = `저장된 설정 있음 (${dt})`;
+    } catch (e) {}
+  }
+  updateSummaryMode();
+})();
+</script>
+</body>
+</html>

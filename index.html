@@ -238,7 +238,11 @@
           <p>Com2uS R Marketing Team</p>
         </div>
       </div>
-      <div class="version-badge">v1.8</div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <a href="step1_integrated.html" style="color:rgba(255,255,255,.85);font-size:13px;font-weight:600;text-decoration:none;padding:6px 12px;background:rgba(255,255,255,.18);border-radius:8px;border:1px solid rgba(255,255,255,.28);">Step 1 소재 분석</a>
+        <a href="step2_column_selector.html" style="color:white;font-size:13px;font-weight:600;text-decoration:none;padding:6px 12px;background:rgba(255,255,255,.32);border-radius:8px;border:1px solid rgba(255,255,255,.5);">Step 2 군집화</a>
+        <div class="version-badge">v2.0</div>
+      </div>
     </div>
   </div>
   
@@ -248,7 +252,32 @@
     <div class="hero">
       <h2>데이터 기반 크리에이티브 의사결정</h2>
       <p>CSV 업로드만으로 5분 이내 소재 성과를 자동 분석하고 최적의 전략을 수립하세요</p>
-      <a href="step1_integrated.html" class="cta-button">대시보드 시작하기 →</a>
+      <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+        <a href="step1_integrated.html" class="cta-button">Step 1 소재 분석</a>
+        <a href="step2_column_selector.html" class="cta-button" style="background:linear-gradient(135deg,#2B6CB0,#4299E1);box-shadow:0 8px 24px rgba(43,108,176,.3);">Step 2 군집화 분석</a>
+      </div>
+    </div>
+
+    <!-- Step 흐름 안내 -->
+    <div style="background:white;border-radius:16px;padding:36px;border:1px solid #F0F0F0;margin-bottom:60px;">
+      <h3 style="font-size:20px;font-weight:700;text-align:center;margin-bottom:28px;color:#1A1A1A;">📋 분석 워크플로우</h3>
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;">
+        <div style="text-align:center;padding:24px 20px;background:#FFF5F5;border-radius:12px;border:2px solid #FFCED1;">
+          <div style="font-size:32px;margin-bottom:10px;">📤</div>
+          <div style="font-weight:700;font-size:14px;color:#E84855;margin-bottom:4px;">Step 1</div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:8px;">소재 성과 분석</div>
+          <div style="font-size:12px;color:#6B7280;line-height:1.7;">CSV 업로드 → 전환수·CPA·IPM·ROAS<br>Rank 기반 종합 점수 → 피로도 분석</div>
+          <a href="step1_integrated.html" style="display:inline-block;margin-top:16px;padding:8px 20px;background:#E84855;color:white;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">시작하기 →</a>
+        </div>
+        <div style="font-size:28px;color:#D0D5DD;flex-shrink:0;">→</div>
+        <div style="text-align:center;padding:24px 20px;background:#EBF8FF;border-radius:12px;border:2px solid #BEE3F8;">
+          <div style="font-size:32px;margin-bottom:10px;">🧩</div>
+          <div style="font-weight:700;font-size:14px;color:#2B6CB0;margin-bottom:4px;">Step 2</div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:8px;">태그 기반 군집화 분석</div>
+          <div style="font-size:12px;color:#6B7280;line-height:1.7;">컬럼 선택 & 가중치 설정 → 하이브리드 군집화<br>→ 승리 패턴·중단 패턴 자동 인사이트 생성</div>
+          <a href="step2_column_selector.html" style="display:inline-block;margin-top:16px;padding:8px 20px;background:#2B6CB0;color:white;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;">설정하기 →</a>
+        </div>
+      </div>
     </div>
     
     <!-- 기능 카드 -->
@@ -283,10 +312,10 @@
         <p>실시간 캠페인 검색으로 원하는 데이터 즉시 필터링.</p>
       </div>
       
-      <div class="card">
-        <div class="card-icon">📚</div>
-        <h3>상세 가이드</h3>
-        <p>FAQ 13개 포함, 실전 활용 예시와 문제 해결 방법 제공.</p>
+      <div class="card" onclick="location.href='step2_column_selector.html'" style="cursor:pointer;">
+        <div class="card-icon">🧩</div>
+        <h3>군집화 분석 <span style="font-size:12px;background:#E84855;color:white;padding:2px 7px;border-radius:8px;vertical-align:middle;">NEW</span></h3>
+        <p>태그 기반 소재 자동 군집화. 승리 공식·중단 패턴 자동 추출.</p>
       </div>
     </div>
     
@@ -314,7 +343,7 @@
   <!-- 푸터 -->
   <div class="footer">
     <div class="footer-content">
-      <p><strong>버전 v1.8</strong> | 2026-04-08 업데이트</p>
+      <p><strong>버전 v2.0</strong> | 2026-04-10 업데이트 (Step 2 군집화 컬럼 설정 추가)</p>
       <p>Com2uS R 마케팅팀 (전 타이틀 공통 사용) | <a href="mailto:marketing@com2us.com">문의하기</a></p>
       <p style="margin-top: 20px; font-size: 12px;">© 2026 Com2uS. All rights reserved.</p>
     </div>
