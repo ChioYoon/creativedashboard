@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>PHPH_v5 AI 인사이트 테스트 v2</title>
+<script src="js/gemini-api.js"></script>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; background: #f8fafc; padding: 24px; max-width: 900px; margin: 0 auto; color: #1e293b; }
+  h2 { color: #1e293b; }
+  pre { background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; white-space: pre-wrap; font-size: 12px; max-height: 400px; overflow-y: auto; }
+  .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin: 16px 0; }
+  .label { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 6px; }
+  .insight { font-size: 13.5px; line-height: 1.8; padding: 14px 16px; background: #ecfdf5; border-left: 4px solid #10b981; border-radius: 8px; margin-top: 8px; }
+  .insight strong { color: #111827; font-weight: 700; background: rgba(16,185,129,.12); padding: 0 3px; border-radius: 3px; }
+  .insight .gai-bullet { display: flex; align-items: flex-start; gap: 4px; margin: 6px 0; padding: 5px 10px; background: rgba(0,0,0,.03); border-radius: 6px; line-height: 1.7; }
+  .warn { color: #92400e; background: #fef3c7; padding: 10px 14px; border-radius: 8px; font-size: 13px; margin-top: 8px; }
+  .err { color: #dc2626; background: #fef2f2; padding: 12px; border-radius: 8px; }
+  .stat { display: inline-block; background: #f1f5f9; padding: 4px 10px; border-radius: 6px; font-size: 12px; margin: 3px; }
+  button { background: #E8003D; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 14px; margin-right: 8px; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0; }
+</style>
+</head>
+<body>
+<h2>🧪 PHPH_v5 · Gemini AI 인사이트 테스트 v2</h2>
+
+<!-- ── 탭 네비게이션 ───────────────────────── -->
+<div style="display:flex;gap:4px;margin-bottom:16px;border-bottom:2px solid #e2e8f0;padding-bottom:0;">
+  <button id="tab-scoring" onclick="switchTab('scoring')"
+    style="background:#E8003D;border-radius:8px 8px 0 0;border-bottom:none;padding:8px 18px;font-size:13px;">
+    📊 소재 성과 분석
+  </button>
+  <button id="tab-fatigue" onclick="switchTab('fatigue')"
+    style="background:#94a3b8;border-radius:8px 8px 0 0;border-bottom:none;padding:8px 18px;font-size:13px;">
+    📉 피로도 분석
+  </button>
+</div>
+
+<!-- ── 소재 성과 분석 패널 ──────────────────── -->
+<div id="panel-scoring">
+  <div class="row">
+    <button onclick="runInsight('free')">🆓 무료 플랜 테스트</button>
+    <button onclick="runInsight('paid')" style="background:#7c3aed;">💎 유료 플랜 테스트</button>
+  </div>
+  <div id="result"></div>
+</div>
+
+<!-- ── 피로도 분석 패널 ────────────────────── -->
+<div id="panel-fatigue" style="display:none;">
+  <div class="row">
+    <button onclick="runFatigueInsight('free')">🆓 무료 피로도 분석</button>
+    <button onclick="runFatigueInsight('paid')" style="background:#7c3aed;">💎 유료 피로도 분석</button>
+  </div>
+  <div id="fatigue-result"></div>
+</div>
+
+<script>
+// ─── PHPH_v5 BNR/VID 소재 (수동 추출, TXT 제외) ───────────────────────────
+// 소재명: 파일명에서 확장자·URL 제거, 의미 있는 중간 부분만 사용
+const MATS = [
+  // BNR
+  { key: 'Adv01A-가로형', 소재명: 'BNR_Adv01A_L', type:'BNR', 전환:22, 비용:128000, 노출수:2525, 클릭수:152,
+    meta:{ hooking:'비주얼 임팩트', usp:'아트 퀄리티/캐릭터/수집RPG', mechanic:'5인 분대 전투', theme:'렐릭 탐험', emotion:'도전욕/수집욕', visual:'텍스트 오버레이' }},
+  { key: 'Life01A-가로형', 소재명: 'BNR_Life01A_L', type:'BNR', 전환:1, 비용:3451, 노출수:92, 클릭수:5,
+    meta:{ hooking:'캐릭터/비주얼', usp:'아트 퀄리티/전략성', mechanic:'8인 실시간 전투', theme:'렐릭 탐험/히어로 육성', emotion:'힐링/수집욕', visual:'텍스트 오버레이' }},
+  { key: 'Keyart02A-가로형', 소재명: 'BNR_Keyart02A_L', type:'BNR', 전환:1, 비용:4865, 노출수:62, 클릭수:8,
+    meta:{ hooking:'캐릭터/비주얼', usp:'아트 퀄리티/캐릭터', mechanic:'8인 실시간 전투', emotion:'수집욕/참여', visual:'텍스트 오버레이' }},
+  { key: 'Life01A-정방형', 소재명: 'BNR_Life01A_S', type:'BNR', 전환:1, 비용:1376, 노출수:13, 클릭수:2,
+    meta:{ hooking:'캐릭터/비주얼', usp:'아트 퀄리티/캐릭터', emotion:'힐링/수집욕', visual:'텍스트 오버레이' }},
+  { key: 'Keyart01A-가로형', 소재명: 'BNR_Keyart01A_L', type:'BNR', 전환:0, 비용:2271, 노출수:62, 클릭수:3,
+    meta:{ hooking:'캐릭터/비주얼', usp:'아트 퀄리티/수집RPG', mechanic:'수집형 RPG/분대 조합', emotion:'수집욕', visual:'텍스트 오버레이' }},
+  { key: 'Mob-Adv01A-가로형', 소재명: 'BNR_MobAdv01A_L', type:'BNR', 전환:0, 비용:2023, 노출수:69, 클릭수:6,
+    meta:{ hooking:'캐릭터/비주얼', usp:'아트 퀄리티/캐릭터', mechanic:'8인 전투/직업 클래스', emotion:'참여/수집욕', visual:'텍스트 오버레이' }},
+  { key: 'Adv01A-정방형', 소재명: 'BNR_Adv01A_S', type:'BNR', 전환:0, 비용:1976, 노출수:12, 클릭수:2,
+    meta:{ hooking:'비주얼 임팩트', emotion:'참여/수집욕', visual:'텍스트 오버레이' }},
+  { key: 'Mob-Adv01A-정방형', 소재명: 'BNR_MobAdv01A_S', type:'BNR', 전환:0, 비용:2055, 노출수:25, 클릭수:3,
+    meta:{ hooking:'캐릭터/비주얼', emotion:'참여/수집욕', visual:'텍스트 오버레이' }},
+  { key: 'Adv02A-가로형', 소재명: 'BNR_Adv02A_L', type:'BNR', 전환:0, 비용:1422, 노출수:72, 클릭수:2,
+    meta:{ hooking:'캐릭터/비주얼', mechanic:'렐릭 퀘스트', emotion:'수집욕/참여', visual:'텍스트 오버레이' }},
+  { key: 'Collect01A-정방형', 소재명: 'BNR_Collect01A_S', type:'BNR', 전환:0, 비용:321, 노출수:19, 클릭수:2,
+    meta:{ hooking:'캐릭터/비주얼', mechanic:'용병 모집(Gacha)', emotion:'수집욕', visual:'텍스트 오버레이' }},
+  // VID
+  { key: 'VID-Collection01A-V', 소재명: 'VID_Collect01A_V', type:'VID', 전환:4, 비용:3250, 노출수:87, 클릭수:0,
+    meta:{ hooking:'질문/선택형', mechanic:'DIY 픽업 시스템', emotion:'수집욕/성취감', visual:'텍스트 오버레이/분할' }},
+  { key: 'VID-Collection01B-L', 소재명: 'VID_Collect01B_L', type:'VID', 전환:3, 비용:4775, 노출수:73, 클릭수:3,
+    meta:{ hooking:'질문/선택형', mechanic:'DIY 픽업 시스템', emotion:'수집욕/성취감', visual:'텍스트 오버레이' }},
+  { key: 'VID-Combat01B-V', 소재명: 'VID_Combat01B_V', type:'VID', 전환:3, 비용:3911, 노출수:74, 클릭수:8,
+    meta:{ hooking:'비주얼 임팩트', mechanic:'8인 실시간 전투', emotion:'도전욕/수집욕', visual:'텍스트 오버레이/클로즈업' }},
+  { key: 'VID-Reward02A-S', 소재명: 'VID_Reward02A_S', type:'VID', 전환:1, 비용:4712, 노출수:87, 클릭수:5,
+    meta:{ hooking:'실패/분노 유도/보상', mechanic:'우호도 시스템', emotion:'도전욕/성취감', visual:'손가락 지시선' }},
+  { key: 'VID-Reward03A-S', 소재명: 'VID_Reward03A_S', type:'VID', 전환:1, 비용:4296, 노출수:92, 클릭수:3,
+    meta:{ hooking:'압도적 보상/분노 유도', mechanic:'$100 보상 강조', emotion:'성취감/수집욕', visual:'손가락 지시선' }},
+  { key: 'VID-Collection01B-S', 소재명: 'VID_Collect01B_S', type:'VID', 전환:1, 비용:2940, 노출수:63, 클릭수:2,
+    meta:{ hooking:'질문/선택형', mechanic:'DIY 픽업 시스템', emotion:'수집욕', visual:'텍스트 오버레이/분할' }},
+  { key: 'VID-Combat01A-L', 소재명: 'VID_Combat01A_L', type:'VID', 전환:1, 비용:3149, 노출수:76, 클릭수:2,
+    meta:{ hooking:'비주얼 임팩트', mechanic:'스킬 컷신 연출', emotion:'도전욕/수집욕', visual:'텍스트 오버레이/클로즈업' }},
+  { key: 'VID-Combat01A-S', 소재명: 'VID_Combat01A_S', type:'VID', 전환:1, 비용:2159, 노출수:68, 클릭수:2,
+    meta:{ hooking:'비주얼 임팩트', mechanic:'스킬 컷신 연출', emotion:'도전욕/수집욕', visual:'텍스트 오버레이/클로즈업' }},
+  { key: 'VID-Reward03A-V', 소재명: 'VID_Reward03A_V', type:'VID', 전환:1, 비용:3515, 노출수:79, 클릭수:1,
+    meta:{ hooking:'압도적 보상/분노 유도', mechanic:'$100 보상 강조', emotion:'성취감/수집욕', visual:'손가락 지시선' }},
+  { key: 'VID-Collection01A-L', 소재명: 'VID_Collect01A_L', type:'VID', 전환:0, 비용:1730, 노출수:96, 클릭수:0,
+    meta:{ hooking:'질문/선택형', mechanic:'DIY 픽업 시스템', emotion:'수집욕/성취감', visual:'텍스트 오버레이' }},
+];
+
+function calcScores(mats) {
+  const n = mats.length;
+  const sortedConv = [...mats].sort((a,b) => b.전환-a.전환);
+  const sortedIPM  = [...mats].sort((a,b) => (b.전환/(b.노출수||1)*1000) - (a.전환/(a.노출수||1)*1000));
+  const withCPA    = mats.filter(m => m.전환>0).sort((a,b) => (a.비용/a.전환)-(b.비용/b.전환));
+  return mats.map(m => {
+    const rC = sortedConv.indexOf(m);
+    const rI = sortedIPM.indexOf(m);
+    const rP = m.전환>0 ? withCPA.indexOf(m) : withCPA.length;
+    const sC = ((n-rC)/n)*100, sI = ((n-rI)/n)*100, sP = ((n-rP)/n)*100;
+    const CPA  = m.전환>0 ? Math.round(m.비용/m.전환) : 0;
+    const IPM  = m.노출수>0 ? +(m.전환/m.노출수*1000).toFixed(3) : 0;
+    return { ...m, TotalScore: sC*0.35+sP*0.35+sI*0.30, CPA, IPM, ROAS: 0 };
+  });
+}
+
+async function runInsight(plan) {
+  const resultEl = document.getElementById('result');
+  resultEl.innerHTML = '<div class="card"><p>⏳ Gemini API 분석 중...</p></div>';
+
+  GeminiKeyManager.setPlan(plan);
+  const isPaid = (plan === 'paid');
+
+  const scored  = calcScores(MATS);
+  const sorted  = [...scored].sort((a,b) => b.TotalScore-a.TotalScore);
+  const topN    = isPaid ? 5 : 3;
+  const highPerf = sorted.slice(0, topN);
+  const lowPerf  = sorted.slice(-topN).reverse();
+
+  // 태그 컬럼 선별 (짧고 유효한 컬럼만)
+  const tagCols = ['hooking','mechanic','emotion','visual'];
+
+  const prompts  = GeminiPrompts.scoringInsight(highPerf, lowPerf, { tagCols, isPaid });
+  const OUT_TOKENS = GeminiKeyManager.getMaxTokens();
+
+  console.log('[테스트] splitMode:', prompts.splitMode, '| OUT_TOKENS:', OUT_TOKENS);
+  console.log('[테스트] prompt1 길이:', prompts.prompt1.length, '자');
+  console.log('[테스트] prompt1:\n', prompts.prompt1);
+
+  let slots = {};
+
+  try {
+    if (prompts.splitMode === 'paid_2call') {
+      const r1 = await callGeminiAPI(prompts.prompt1, { maxTokens: OUT_TOKENS });
+      console.log('[1차응답]', r1);
+      Object.assign(slots, parseScoringSlots(r1)||{});
+      await new Promise(r=>setTimeout(r,1800));
+      const r2 = await callGeminiAPI(prompts.prompt2, { maxTokens: OUT_TOKENS });
+      console.log('[2차응답]', r2);
+      Object.assign(slots, parseScoringSlots(r2)||{});
+    } else {
+      const r1 = await callGeminiAPI(prompts.prompt1, { maxTokens: OUT_TOKENS });
+      console.log('[무료응답]', r1);
+      Object.assign(slots, parseScoringSlots(r1)||{});
+    }
+
+    renderResult(slots, isPaid, highPerf, lowPerf, resultEl);
+
+  } catch(err) {
+    resultEl.innerHTML = `<div class="err">❌ ${err.message}</div>`;
+  }
+}
+
+function renderResult(slots, isPaid, highPerf, lowPerf, el) {
+  const planBadge = isPaid
+    ? '<span style="background:#f5f3ff;color:#7c3aed;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;">💎 유료 Pro</span>'
+    : '<span style="background:#fffbeb;color:#d97706;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;">🆓 무료</span>';
+
+  const SLOT_DEFS = [
+    { key:'winTags',    icon:'🏷️', title:'승리 패턴 태그',   color:'#10b981', bg:'#ecfdf5' },
+    { key:'formatGap',  icon:'📊', title:'포맷별 성과 격차', color:'#3b82f6', bg:'#eff6ff' },
+    { key:'lossReason', icon:'⚠️', title:'효율 하락 원인',   color:'#f59e0b', bg:'#fffbeb' },
+    { key:'actionItems',icon:'⚡', title:'즉시 실행 액션',   color:'#8b5cf6', bg:'#f5f3ff' },
+    { key:'scaleUp',    icon:'🚀', title:'스케일업 후보',    color:'#E8003D', bg:'#fff1f2' },
+    { key:'stopNow',    icon:'🛑', title:'중단 권고',        color:'#6b7280', bg:'#f9fafb' },
+  ];
+
+  // _slotText와 동일한 마크다운 → HTML 변환
+  const renderSlotVal = (v) => {
+    if (!v) return '';
+    let out = v;
+    out = out.replace(/\\n/g, '\n');
+    out = out.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    out = out.replace(/\*\*([^*\n]+?)\*\*/g, '<strong>$1</strong>');
+    const lines = out.split('\n');
+    return lines.map((line, i) => {
+      const t = line.trim();
+      if (!t) return i === 0 ? '' : '<br>';
+      if (/^[•\-▸▪◆]/.test(t)) return `<div class="gai-bullet">${t}</div>`;
+      return (i > 0 ? '<br>' : '') + t;
+    }).join('');
+  };
+
+  let slotHtml = '';
+  SLOT_DEFS.forEach(d => {
+    const v = slots[d.key];
+    if (!v) return;
+    slotHtml += `
+      <div style="border-left:4px solid ${d.color};background:${d.bg};padding:14px 16px;border-radius:8px;margin-bottom:12px;">
+        <div style="font-size:12px;font-weight:700;color:${d.color};margin-bottom:8px;">${d.icon} ${d.title}</div>
+        <div class="insight" style="background:transparent;border:none;padding:0;margin:0;font-size:13px;line-height:1.8;">${renderSlotVal(v)}</div>
+      </div>`;
+  });
+
+  const topList = highPerf.map((m,i)=>
+    `<span class="stat">#${i+1} ${m.소재명||m.key} (점:${m.TotalScore.toFixed(0)} 전환:${m.전환} IPM:${m.IPM.toFixed(2)})</span>`
+  ).join('');
+  const lowList = lowPerf.map((m,i)=>
+    `<span class="stat">#↓${i+1} ${m.소재명||m.key} (점:${m.TotalScore.toFixed(0)} 전환:${m.전환})</span>`
+  ).join('');
+
+  el.innerHTML = `
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+        <span style="font-size:20px;">✨</span>
+        <span style="font-size:16px;font-weight:700;">Gemini AI 인사이트 — PHPH_v5</span>
+        ${planBadge}
+      </div>
+      <div class="label">📈 분석 대상 소재</div>
+      <div style="margin-bottom:4px;"><b>고효율:</b> ${topList}</div>
+      <div style="margin-bottom:16px;"><b>저효율:</b> ${lowList}</div>
+      ${slotHtml || '<div class="warn">⚠️ 슬롯 파싱 실패 — 아래 원본 응답 확인</div>'}
+      ${!isPaid ? buildUpgradeNudge() : ''}
+    </div>`;
+}
+
+function buildUpgradeNudge() {
+  return `
+    <div style="margin-top:16px;border:1.5px dashed #d1d5db;border-radius:10px;padding:14px;background:#fafafa;">
+      <div style="font-size:13px;font-weight:700;color:#374151;margin-bottom:6px;">💎 유료 Pro로 업그레이드하면 추가 제공</div>
+      ${['📊 포맷별 성과 격차','⚠️ 효율 하락 원인','⚡ 즉시 실행 액션','🚀 스케일업 후보','🛑 중단 권고'].map(l=>
+        `<div style="font-size:12px;color:#9ca3af;text-decoration:line-through;padding:3px 0;">🔒 ${l}</div>`).join('')}
+    </div>`;
+}
+
+// 기본 자동 실행: URL hash에 따라 탭 자동 선택
+window.addEventListener('DOMContentLoaded', () => {
+  if (location.hash === '#fatigue') {
+    switchTab('fatigue');
+    setTimeout(() => runFatigueInsight('free'), 500);
+  } else {
+    setTimeout(() => runInsight('free'), 500);
+  }
+});
+
+// ══════════════════════════════════════════════════════════════
+//  탭 전환
+// ══════════════════════════════════════════════════════════════
+function switchTab(tab) {
+  const isScoring = (tab === 'scoring');
+  document.getElementById('panel-scoring').style.display = isScoring ? '' : 'none';
+  document.getElementById('panel-fatigue').style.display = isScoring ? 'none' : '';
+  document.getElementById('tab-scoring').style.background = isScoring ? '#E8003D' : '#94a3b8';
+  document.getElementById('tab-fatigue').style.background = isScoring ? '#94a3b8' : '#E8003D';
+}
+
+// ══════════════════════════════════════════════════════════════
+//  피로도 분석 테스트 데이터 (사용자 예시 기반)
+//  ─ 기준기간 → 비교기간 순위 변동 + CPA 변화 시뮬레이션
+//  ─ 급등: CPA 대폭 하락(효율 개선), 급락: CPA 대폭 상승(피로)
+// ══════════════════════════════════════════════════════════════
+const FATIGUE_MOVERS = [
+  // ▲ 급등 (rankChange > 0, CPA 하락 = fresh)
+  {
+    key: 'A-Character-Keyart01A-DA',
+    type: 'BNR',
+    rankChange: 8,         // 순위 8계단 상승
+    baseCPA: 6638, compCPA: 762, cpaChangeRate: -88.5,
+    baseConv: 3,   compConv: 21,
+    baseScore: 38.2, compScore: 91.4,
+    fatigueStatus: 'fresh',
+    meta: { hooking: '키아트/캐릭터', emotion: '수집욕/감동', mechanic: '히어로 육성', theme: '자연/야외 미학' }
+  },
+  {
+    key: 'A-Character-Adventure02A-DA',
+    type: 'BNR',
+    rankChange: 6,
+    baseCPA: 2975, compCPA: 465, cpaChangeRate: -84.4,
+    baseConv: 5,   compConv: 31,
+    baseScore: 52.1, compScore: 87.6,
+    fatigueStatus: 'fresh',
+    meta: { hooking: '모험/탐험', emotion: '도전욕/성취감', mechanic: '렐릭 탐험', theme: '자연/야외 미학' }
+  },
+  {
+    key: 'A-Character-100usd01A-DA',
+    type: 'VID',
+    rankChange: 4,
+    baseCPA: 3541, compCPA: 1660, cpaChangeRate: -53.1,
+    baseConv: 8,   compConv: 17,
+    baseScore: 61.3, compScore: 79.8,
+    fatigueStatus: 'stable',
+    meta: { hooking: '보상/할인', emotion: '성취감/수집욕', mechanic: '$100 보상 강조', theme: '보상 획득' }
+  },
+  // ▼ 급락 (rankChange < 0, CPA 상승 = tired/warning)
+  {
+    key: 'A-Charater-Collection01A-UA',
+    type: 'VID',
+    rankChange: -7,
+    baseCPA: 850, compCPA: 1812, cpaChangeRate: 113.2,
+    baseConv: 28,  compConv: 11,
+    baseScore: 88.4, compScore: 41.2,
+    fatigueStatus: 'tired',
+    meta: { hooking: '질문/선택형', emotion: '수집욕', mechanic: 'DIY 픽업', theme: '가챠/수집' }
+  },
+  {
+    key: 'A-Character-Collection01B-UA',
+    type: 'VID',
+    rankChange: -5,
+    baseCPA: 920, compCPA: 1207, cpaChangeRate: 31.2,
+    baseConv: 19,  compConv: 9,
+    baseScore: 79.1, compScore: 52.3,
+    fatigueStatus: 'tired',
+    meta: { hooking: '질문/선택형', emotion: '수집욕', mechanic: 'DIY 픽업', theme: '가챠/수집' }
+  },
+  {
+    key: 'A-Character-Combat01B-UA',
+    type: 'BNR',
+    rankChange: -3,
+    baseCPA: 1340, compCPA: 1495, cpaChangeRate: 11.6,
+    baseConv: 14,  compConv: 10,
+    baseScore: 71.6, compScore: 58.4,
+    fatigueStatus: 'warning',
+    meta: { hooking: '비주얼 임팩트', emotion: '도전욕', mechanic: '8인 실시간 전투', theme: '전투/액션' }
+  },
+];
+
+// ══════════════════════════════════════════════════════════════
+//  피로도 인사이트 실행
+// ══════════════════════════════════════════════════════════════
+async function runFatigueInsight(plan) {
+  const resultEl = document.getElementById('fatigue-result');
+  resultEl.innerHTML = '<div class="card"><p>⏳ Gemini API 피로도 분석 중...</p></div>';
+
+  GeminiKeyManager.setPlan(plan);
+  const isPaid = (plan === 'paid');
+
+  const periods = {
+    basePeriod:  '2026-03-01~03-31',
+    compPeriod:  '2026-04-01~04-13',
+  };
+
+  const prompts = GeminiPrompts.fatigueInsight(FATIGUE_MOVERS, periods, { isPaid });
+  const OUT_TOKENS = GeminiKeyManager.getFatigueTokens();
+
+  console.log('[피로도테스트] splitMode:', prompts.splitMode, '| OUT_TOKENS:', OUT_TOKENS);
+  console.log('[피로도테스트] prompt1 길이:', prompts.prompt1.length, '자');
+  console.log('[피로도테스트] prompt1:\n', prompts.prompt1);
+
+  let slots = {};
+
+  try {
+    if (prompts.splitMode === 'paid_2call') {
+      const r1 = await callGeminiAPI(prompts.prompt1, { maxTokens: OUT_TOKENS });
+      console.log('[피로도 1차응답]', r1.slice(0, 300));
+      Object.assign(slots, parseFatigueSlots(r1) || {});
+      await new Promise(r => setTimeout(r, 1800));
+      const r2 = await callGeminiAPI(prompts.prompt2, { maxTokens: OUT_TOKENS });
+      console.log('[피로도 2차응답]', r2.slice(0, 300));
+      Object.assign(slots, parseFatigueSlots(r2) || {});
+    } else {
+      const r1 = await callGeminiAPI(prompts.prompt1, { maxTokens: OUT_TOKENS });
+      console.log('[피로도 무료응답]', r1.slice(0, 400));
+      Object.assign(slots, parseFatigueSlots(r1) || {});
+    }
+
+    renderFatigueResult(slots, isPaid, resultEl);
+
+  } catch (err) {
+    resultEl.innerHTML = `<div class="err">❌ ${err.message}</div>`;
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+//  피로도 결과 렌더러
+// ══════════════════════════════════════════════════════════════
+function renderFatigueResult(slots, isPaid, el) {
+  const planBadge = isPaid
+    ? '<span style="background:#f5f3ff;color:#7c3aed;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;">💎 유료 Pro</span>'
+    : '<span style="background:#fffbeb;color:#d97706;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;">🆓 무료</span>';
+
+  const SLOT_DEFS = [
+    { key: 'riseReason',  icon: '📈', title: '급등 소재 원인',    color: '#10b981', bg: '#ecfdf5' },
+    { key: 'fatigueDiag', icon: '📉', title: '피로도 진단',       color: '#ef4444', bg: '#fef2f2' },
+    { key: 'swapTiming',  icon: '⏱️', title: '교체 타이밍 기준',  color: '#f59e0b', bg: '#fffbeb' },
+    { key: 'opsAction',   icon: '🔄', title: '운영 액션',         color: '#8b5cf6', bg: '#f5f3ff' },
+  ];
+
+  // _slotText와 동일한 마크다운 → HTML 변환
+  const renderSlotVal = (v) => {
+    if (!v) return '';
+    let out = v;
+    out = out.replace(/\\n/g, '\n');
+    out = out.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    out = out.replace(/\*\*([^*\n]+?)\*\*/g, '<strong>$1</strong>');
+    const lines = out.split('\n');
+    return lines.map((line, i) => {
+      const t = line.trim();
+      if (!t) return i === 0 ? '' : '<br>';
+      if (/^[•\-▸▪◆★]/.test(t)) return `<div class="gai-bullet">${t}</div>`;
+      return (i > 0 ? '<br>' : '') + t;
+    }).join('');
+  };
+
+  let slotHtml = '';
+  SLOT_DEFS.forEach(d => {
+    const v = slots[d.key];
+    if (!v) return;
+    slotHtml += `
+      <div style="border-left:4px solid ${d.color};background:${d.bg};padding:14px 16px;border-radius:8px;margin-bottom:12px;">
+        <div style="font-size:12px;font-weight:700;color:${d.color};margin-bottom:8px;">${d.icon} ${d.title}</div>
+        <div class="insight" style="background:transparent;border:none;padding:0;margin:0;font-size:13px;line-height:1.85;">${renderSlotVal(v)}</div>
+      </div>`;
+  });
+
+  // 분석 데이터 요약 표
+  const moverRows = FATIGUE_MOVERS.map(m => {
+    const dir = m.rankChange > 0 ? `<span style="color:#10b981;">▲${m.rankChange}</span>` : `<span style="color:#ef4444;">▼${Math.abs(m.rankChange)}</span>`;
+    const cpaColor = m.cpaChangeRate > 20 ? '#ef4444' : m.cpaChangeRate > 0 ? '#f59e0b' : '#10b981';
+    const cpaSign  = m.cpaChangeRate > 0 ? '+' : '';
+    const fatIcon  = m.fatigueStatus === 'tired' ? '🔴' : m.fatigueStatus === 'warning' ? '🟡' : '🟢';
+    return `<tr style="border-bottom:1px solid #f1f5f9;">
+      <td style="padding:5px 8px;font-size:12px;font-weight:600;">${dir}</td>
+      <td style="padding:5px 8px;font-size:11px;color:#374151;">${m.key}</td>
+      <td style="padding:5px 8px;font-size:11px;text-align:center;">${fatIcon} ${m.fatigueStatus}</td>
+      <td style="padding:5px 8px;font-size:11px;text-align:right;color:${cpaColor};font-weight:700;">${cpaSign}${m.cpaChangeRate.toFixed(1)}%</td>
+      <td style="padding:5px 8px;font-size:11px;text-align:right;">${m.baseCPA.toLocaleString()}→${m.compCPA.toLocaleString()}</td>
+    </tr>`;
+  }).join('');
+
+  el.innerHTML = `
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+        <span style="font-size:20px;">📉</span>
+        <span style="font-size:16px;font-weight:700;">피로도 AI 인사이트 — PHPH_v5</span>
+        ${planBadge}
+      </div>
+
+      <!-- 분석 데이터 요약 -->
+      <div class="label">📋 분석 대상 소재 (순위 변동 기준)</div>
+      <div style="overflow-x:auto;margin-bottom:16px;">
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <thead>
+            <tr style="background:#f8fafc;">
+              <th style="padding:6px 8px;text-align:left;color:#64748b;font-weight:700;">순위변동</th>
+              <th style="padding:6px 8px;text-align:left;color:#64748b;font-weight:700;">소재명</th>
+              <th style="padding:6px 8px;text-align:center;color:#64748b;font-weight:700;">피로도</th>
+              <th style="padding:6px 8px;text-align:right;color:#64748b;font-weight:700;">CPA변화율</th>
+              <th style="padding:6px 8px;text-align:right;color:#64748b;font-weight:700;">CPA(기준→비교)</th>
+            </tr>
+          </thead>
+          <tbody>${moverRows}</tbody>
+        </table>
+      </div>
+
+      <!-- AI 인사이트 슬롯 -->
+      ${slotHtml || '<div class="warn">⚠️ 슬롯 파싱 실패 — 콘솔 원본 응답 확인</div>'}
+      ${!isPaid ? buildFatigueUpgradeNudge() : ''}
+    </div>`;
+}
+
+function buildFatigueUpgradeNudge() {
+  return `
+    <div style="margin-top:16px;border:1.5px dashed #d1d5db;border-radius:10px;padding:14px;background:#fafafa;">
+      <div style="font-size:13px;font-weight:700;color:#374151;margin-bottom:6px;">💎 유료 Pro로 업그레이드하면 추가 제공</div>
+      ${['📉 피로도 진단 (소재별 CPA 트렌드 상세)', '⏱️ 교체 타이밍 기준 (즉시/모니터링 분리)', '🔄 운영 액션 (ON·OFF·신소재 방향)'].map(l =>
+        `<div style="font-size:12px;color:#9ca3af;text-decoration:line-through;padding:3px 0;">🔒 ${l}</div>`).join('')}
+    </div>`;
+}
+</script>
+</body>
+</html>

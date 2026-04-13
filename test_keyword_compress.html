@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>키워드 압축 검증</title>
+<script src="js/gemini-api.js"></script>
+</head>
+<body>
+<pre id="out"></pre>
+<script>
+const log = (...args) => {
+  document.getElementById('out').textContent += args.join(' ') + '\n';
+  console.log(...args);
+};
+
+// ── 실제 PHPH_v4.csv marketer_insight 샘플 ──────────────────
+const samples = [
+  {
+    col: 'marketer_insight',
+    raw: "[전략적 의도] 와이드 뷰를 통해 거대 보스와의 대립 구도를 선명하게 노출, 레이드 콘텐츠 암시. [타겟 심리] '작지만 강력한' 히어로들의 부대 단위 전투가 주는 스케일감에 매력을 느낌. [성과 예측 및 확장] 페이스북/인스타그램 뉴스피드 최적화로 대중적 유입 기대. 보상 정보($100 가치) 추가 시 전환율 급증 예상.",
+    expected: 25
+  },
+  {
+    col: 'marketer_insight',
+    raw: "[전략적 의도 - 메인 캐릭터 샤일린의 비주얼을 전면에 내세워 고퀄리티 수집형 RPG임을 인지시키고 사전예약을 유도함] - [타겟 심리 - 양산형 RPG의 낮은 퀄리티에 지친 유저들에게 2.5D의 신선한 미학적 만족감을 제공] - [성과 예측 및 확장 - 높은 캐릭터 매력도로 인해 RPG 고관여 유저층에서 높은 CTR이 예상되며, 향후 캐릭터별 시너지 강조 소재로 확장 가능]",
+    expected: 25
+  },
+  {
+    col: 'text_analysis_extracted_copy',
+    raw: "CHOOSE A HERO, VINESSA, BERNETA, SOPHIA",
+    expected: 20
+  },
+  {
+    col: 'hooking_strategy',
+    raw: "비주얼 임팩트, 캐릭터/유닛 외형",
+    expected: 20
+  },
+  {
+    col: 'text_analysis_core_usp',
+    raw: "아트 퀄리티, 캐릭터, 수집형RPG",
+    expected: 20
+  },
+  {
+    col: 'emotion',   // 단문 컬럼
+    raw: "도전과 승부욕, 수집욕/소유욕",
+    expected: 15
+  },
+  {
+    col: 'art_style',
+    raw: "2.5D 입체 그래픽, 2D 일러스트",
+    expected: 15
+  }
+];
+
+// compressColValue를 직접 테스트하기 위해 인라인 구현
+const INSIGHT_COLS = new Set(['marketer_insight','insight']);
+const COPY_COLS = new Set(['text_analysis_extracted_copy','hooking_strategy','text_analysis_core_usp','추출카피','카피']);
+
+const compressColValue = (col, val) => {
+  const v = String(val || '').trim();
+  if (!v) return '';
+  if (INSIGHT_COLS.has(col)) return extractInsightKeywords(v);
+  if (COPY_COLS.has(col))    return compressTagText(v, 20);
+  if (v.length > 200) return extractInsightKeywords(v);
+  if (v.length > 60)  return compressTagText(v, 20);
+  return v.slice(0, 15);
+};
+
+log('═══════════════════════════════════════════');
+log('  marketer_insight 키워드 압축 검증');
+log('═══════════════════════════════════════════\n');
+
+let pass = 0, fail = 0;
+samples.forEach((s, i) => {
+  const result = compressColValue(s.col, s.raw);
+  const ok = result.length <= s.expected && result.length > 0;
+  if (ok) pass++; else fail++;
+  log(`[${ok ? '✅' : '❌'}] #${i+1} col=${s.col}`);
+  log(`  원문(${s.raw.length}자): ${s.raw.slice(0,60)}...`);
+  log(`  결과(${result.length}자): "${result}"`);
+  log(`  기준: ≤${s.expected}자 ${ok ? '통과' : '⚠ 초과'}\n`);
+});
+
+log(`\n결과: ${pass}/${samples.length} 통과`);
+
+// ── 실제 fmtMat 시뮬레이션 ──────────────────────────────
+log('\n═══════════════════════════════════════════');
+log('  fmtMat 시뮬레이션 (소재 1줄 CSV)');
+log('═══════════════════════════════════════════\n');
+
+const mockMaterial = {
+  key: 'A-Character-Adventure01A-DA',
+  유형: 'BNR',
+  TotalScore: 82.5,
+  전환: 22,
+  CPA: 5812,
+  IPM: 8.24,
+  ROAS: 2.10,
+  meta: {
+    hooking_strategy: "비주얼 임팩트, 캐릭터/유닛 외형",
+    emotion: "도전과 승부욕, 수집욕/소유욕",
+    art_style: "2.5D 입체 그래픽, 2D 일러스트",
+    marketer_insight: "[전략적 의도] 와이드 뷰를 통해 거대 보스와의 대립 구도를 선명하게 노출, 레이드 콘텐츠 암시. [타겟 심리] '작지만 강력한' 히어로들의 부대 단위 전투가 주는 스케일감에 매력을 느낌. [성과 예측 및 확장] 페이스북/인스타그램 뉴스피드 최적화로 대중적 유입 기대."
+  }
+};
+
+const tagCols = ['hooking_strategy', 'emotion', 'art_style', 'marketer_insight'];
+const name  = mockMaterial.key.slice(0, 25);
+const tags  = tagCols
+  .map(col => compressColValue(col, mockMaterial.meta?.[col]) || null)
+  .filter(Boolean)
+  .slice(0, 4)
+  .join('/');
+
+const line = `1|BNR|${name}|${mockMaterial.TotalScore}점|전${mockMaterial.전환}|CPA${mockMaterial.CPA}|IPM${mockMaterial.IPM}|ROAS${mockMaterial.ROAS}${tags ? '|'+tags : ''}`;
+log(`소재 1줄 CSV (${line.length}자):`);
+log(line);
+log(`\n※ 기존 방식이라면 marketer_insight 원문 400자가 그대로 포함됨`);
+log(`※ 현재는 "${compressColValue('marketer_insight', mockMaterial.meta.marketer_insight)}"로 압축`);
+</script>
+</body>
+</html>

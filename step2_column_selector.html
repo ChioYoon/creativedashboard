@@ -1378,12 +1378,21 @@ function handleFile(file) {
       const infoBar = document.getElementById('uploadInfoBar');
       infoBar.classList.add('show');
       document.getElementById('uploadFileName').textContent = file.name;
-      document.getElementById('uploadFileMeta').textContent =
-        `${csvData.rows.length}행 · ${csvData.headers.length}개 컬럼 · ${(file.size/1024).toFixed(1)}KB`;
+
+      // TXT 제외 후 BNR/VID 수 계산
+      const bnrVidCount = csvData.rows.filter(row => {
+        const t = (row['유형'] || row['앱 확장 소재 유형'] || '').toUpperCase().trim();
+        return t === 'BNR' || t === 'VID';
+      }).length;
+      const txtCount = csvData.rows.length - bnrVidCount;
+      const metaStr = txtCount > 0
+        ? `전체 ${csvData.rows.length}행 (BNR/VID ${bnrVidCount}개 · TXT ${txtCount}개 제외) · ${csvData.headers.length}개 컬럼 · ${(file.size/1024).toFixed(1)}KB`
+        : `${csvData.rows.length}행 · ${csvData.headers.length}개 컬럼 · ${(file.size/1024).toFixed(1)}KB`;
+      document.getElementById('uploadFileMeta').textContent = metaStr;
 
       // 컬럼 분류 및 UI 렌더
       classifyAndRender(csvData);
-      showToast(`✅ ${file.name} 업로드 완료 (${csvData.rows.length}개 소재)`, 'success');
+      showToast(`✅ ${file.name} 업로드 완료 (BNR/VID ${bnrVidCount}개${txtCount > 0 ? ` · TXT ${txtCount}개 자동 제외` : ''})`, 'success');
     } catch (err) {
       showToast('CSV 파싱 오류: ' + err.message, 'error');
     }

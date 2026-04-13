@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head><meta charset="UTF-8">
+<script src="js/gemini-api.js"></script>
+</head>
+<body>
+<script>
+window.addEventListener('DOMContentLoaded', async function() {
+  const hp = [
+    { key: 'A-Character-BNR01', 유형:'BNR', TotalScore:95.2, 전환:2729, CPA:381, IPM:8.24, ROAS:2.1, meta:{'크리에이티브방향':'Character'} },
+    { key: 'B-Story-VID02', 유형:'VID', TotalScore:82.1, 전환:1850, CPA:520, IPM:99.88, ROAS:1.8, meta:{'크리에이티브방향':'Story'} },
+  ];
+  const lp = [
+    { key: 'Z-Text-TXT01', 유형:'TXT', TotalScore:12.3, 전환:45, CPA:2729, IPM:0.21, ROAS:0.3, meta:{} },
+  ];
+
+  const { prompt1, prompt2 } = GeminiPrompts.scoringInsight(hp, lp, { tagCols:['크리에이티브방향'] });
+  console.log('P1_LEN:', prompt1.length, 'P2_LEN:', prompt2.length);
+
+  try {
+    console.log('=== 1차 호출 (winTags/formatGap/lossReason) ===');
+    const raw1 = await callGeminiAPI(prompt1, { maxTokens: 500 });
+    console.log('RAW1_LEN:', raw1.length, '\nRAW1:', raw1);
+    const s1 = parseScoringSlots(raw1) || {};
+    console.log('S1_KEYS:', Object.keys(s1).join(','));
+
+    await new Promise(r => setTimeout(r, 2000));
+
+    console.log('\n=== 2차 호출 (actionItems/scaleUp/stopNow) ===');
+    const raw2 = await callGeminiAPI(prompt2, { maxTokens: 500 });
+    console.log('RAW2_LEN:', raw2.length, '\nRAW2:', raw2);
+    const s2 = parseScoringSlots(raw2) || {};
+    console.log('S2_KEYS:', Object.keys(s2).join(','));
+
+    const merged = { ...s1, ...s2 };
+    const KEYS = ['winTags','formatGap','lossReason','actionItems','scaleUp','stopNow'];
+    let ok = 0;
+    KEYS.forEach(k => {
+      const v = merged[k];
+      if (v) ok++;
+      console.log((v?'✅':'❌') + ' ' + k + ':', v ? String(v).slice(0,60) : 'EMPTY');
+    });
+    console.log('최종 완성률:', ok + '/' + KEYS.length, '(' + Math.round(ok/KEYS.length*100) + '%)');
+  } catch(e) { console.log('ERR:', e.message); }
+});
+</script>
+</body>
+</html>

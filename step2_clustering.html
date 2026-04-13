@@ -525,7 +525,109 @@
       display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
     }
     .mi-empty { color:var(--gray-line); font-size:11px; }
+
+    /* ═══════════ AI 코멘트 셀 ═══════════ */
+    .ai-comment-cell {
+      max-width:170px; font-size:11px; color:var(--purple);
+      font-weight:600; line-height:1.4;
+      overflow:hidden; text-overflow:ellipsis;
+      display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+    }
+    .ai-comment-loading { color:var(--gray-text); font-size:10px; font-style:italic; }
+    .ai-comment-empty   { color:var(--gray-line); font-size:10px; }
+
+    /* ═══════════ AI 허브 섹션 ═══════════ */
+    .ai-hub-section {
+      background:#fff; border-radius:var(--radius-lg);
+      border:2px solid #C4B5FD; margin-bottom:24px;
+      box-shadow:0 4px 20px rgba(124,58,237,.10);
+      overflow:hidden;
+    }
+    .ai-hub-head {
+      background:linear-gradient(135deg,#7C3AED 0%,#A78BFA 100%);
+      padding:18px 24px; display:flex; align-items:center; gap:14px;
+    }
+    .ai-hub-head h3 { color:#fff; font-size:16px; font-weight:800; margin:0; }
+    .ai-hub-badge {
+      margin-left:auto; font-size:11px; background:rgba(255,255,255,.22);
+      border:1px solid rgba(255,255,255,.35); color:#fff;
+      padding:3px 11px; border-radius:10px; font-weight:700;
+    }
+
+    /* 블록 버튼 그룹 */
+    .ai-block-btns {
+      display:flex; gap:10px; flex-wrap:wrap;
+      padding:18px 24px; border-bottom:1px solid var(--gray-line);
+      background:var(--purple-pale);
+    }
+    .ai-block-btn {
+      display:inline-flex; align-items:center; gap:7px;
+      padding:9px 18px; border-radius:9px; border:none;
+      font-size:13px; font-weight:700; cursor:pointer;
+      transition:all .18s ease; white-space:nowrap;
+    }
+    .ai-block-btn:disabled { opacity:.5; cursor:not-allowed; }
+    .ai-block-btn.btn-gold {
+      background:linear-gradient(135deg,#D97706,#F59E0B);
+      color:#fff; box-shadow:0 3px 10px rgba(217,119,6,.35);
+    }
+    .ai-block-btn.btn-gold:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 5px 16px rgba(217,119,6,.45); }
+    .ai-block-btn.btn-blue {
+      background:linear-gradient(135deg,#2563EB,#60A5FA);
+      color:#fff; box-shadow:0 3px 10px rgba(37,99,235,.35);
+    }
+    .ai-block-btn.btn-blue:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 5px 16px rgba(37,99,235,.45); }
+    .ai-block-btn.btn-green {
+      background:linear-gradient(135deg,#16A34A,#4ADE80);
+      color:#fff; box-shadow:0 3px 10px rgba(22,163,74,.35);
+    }
+    .ai-block-btn.btn-green:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 5px 16px rgba(22,163,74,.45); }
+    .ai-block-btn.btn-purple {
+      background:linear-gradient(135deg,#7C3AED,#A78BFA);
+      color:#fff; box-shadow:0 3px 10px rgba(124,58,237,.35);
+    }
+    .ai-block-btn.btn-purple:hover:not(:disabled) { transform:translateY(-1px); box-shadow:0 5px 16px rgba(124,58,237,.45); }
+
+    /* 결과 탭 */
+    .ai-tab-bar {
+      display:flex; border-bottom:1px solid var(--gray-line);
+      padding:0 24px; background:#fff;
+    }
+    .ai-tab {
+      padding:11px 18px; font-size:13px; font-weight:600; cursor:pointer;
+      border-bottom:3px solid transparent; color:var(--mid);
+      transition:all .18s; white-space:nowrap;
+    }
+    .ai-tab.active { border-bottom-color:var(--purple); color:var(--purple); }
+    .ai-tab:hover:not(.active) { color:var(--dark); background:var(--gray-bg); }
+    .ai-tab-panel { display:none; padding:22px 24px; }
+    .ai-tab-panel.active { display:block; }
+
+    /* 상태 표시 */
+    .ai-status-bar {
+      padding:10px 24px; font-size:12px; color:var(--gray-text);
+      background:var(--gray-bg); border-top:1px solid var(--gray-line);
+      display:flex; align-items:center; gap:8px;
+    }
+    .ai-status-dot {
+      width:8px; height:8px; border-radius:50%; flex-shrink:0;
+    }
+    .ai-status-dot.idle    { background:var(--gray-line); }
+    .ai-status-dot.loading { background:var(--orange); animation:pulse-dot .8s infinite; }
+    .ai-status-dot.done    { background:var(--green); }
+    .ai-status-dot.error   { background:var(--red); }
+    @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    /* 키 상태 뱃지 */
+    .ai-key-badge {
+      margin-left:auto; font-size:11px; font-weight:700;
+      padding:2px 10px; border-radius:8px;
+    }
+    .ai-key-badge.set   { background:var(--green-pale); color:var(--green); }
+    .ai-key-badge.unset { background:var(--orange-pale); color:var(--orange); }
   </style>
+  <link rel="stylesheet" href="css/gemini-ui.css">
+  <script src="js/gemini-api.js"></script>
 </head>
 <body>
 
@@ -606,14 +708,20 @@
 
     <!-- 페이지 이동 (우측) -->
     <div class="nav-page-btns">
+      <button class="nav-page-btn" onclick="openGeminiModal()" id="navAiSetBtn"
+              style="background:rgba(167,139,250,.25);border-color:rgba(167,139,250,.5);">
+        <i class="fas fa-robot"></i> ✨ AI 설정
+      </button>
       <a class="nav-page-btn" href="step2_column_selector.html">
-        <i class="fas fa-arrow-left"></i> 컨럼 설정
+        <i class="fas fa-arrow-left"></i> 컬럼 설정
       </a>
       <a class="nav-page-btn" href="step1_integrated.html">
         <i class="fas fa-arrow-left"></i> Step 1
       </a>
     </div>
   </nav>
+  <!-- Gemini 모달 컨테이너 -->
+  <div id="geminiModalContainer"></div>
 
   <!-- ════ 프로그레스 ════ -->
   <div class="progress-bar">
@@ -743,19 +851,72 @@
       <div class="section">
         <div class="section-head">
           <div class="section-icon" style="background:var(--orange);">
-            <i class="fas fa-tags"></i>
+            <i class="fas fa-fire"></i>
           </div>
-          <h3>태그 영향도 분석</h3>
-          <span style="margin-left:auto;font-size:12px;color:var(--gray-text);">
-            각 태그가 군집 점수에 미치는 평균 영향
+          <h3>태그-성과 히트맵</h3>
+          <span style="margin-left:auto;font-size:11px;background:rgba(249,115,22,.1);
+                       color:#ea580c;padding:3px 10px;border-radius:10px;font-weight:700;">
+            🚀 확장 추천 포함
           </span>
         </div>
         <div class="section-body">
+          <p style="font-size:12px;color:var(--gray-text);margin-bottom:14px;">
+            각 태그가 포함된 소재의 평균 성과 점수 · 색상은 상대적 성과 수준을 나타냅니다 · 🚀는 신규 소재 확장 추천 태그
+          </p>
           <div class="tag-impact-list" id="tagImpactList"></div>
         </div>
       </div>
 
-      <!-- 자동 인사이트 -->
+      <!-- ✨ Gemini AI 인사이트 허브 -->
+      <div class="ai-hub-section" id="aiHubSection">
+        <div class="ai-hub-head">
+          <i class="fas fa-robot" style="font-size:20px;color:rgba(255,255,255,.9);"></i>
+          <h3>✨ Gemini AI 군집 인사이트</h3>
+          <span class="ai-hub-badge">Gemini 2.5 Flash</span>
+        </div>
+
+        <!-- 블록 버튼 -->
+        <div class="ai-block-btns">
+          <button class="ai-block-btn btn-gold gai-trigger-btn" id="aiBlockA"
+                  onclick="runClusteringAI('A')" disabled>
+            <i class="fas fa-trophy"></i> 승리 공식 분석
+          </button>
+          <button class="ai-block-btn btn-blue gai-trigger-btn" id="aiBlockB"
+                  onclick="runClusteringAI('B')" disabled>
+            <i class="fas fa-microscope"></i> 군집별 심층 분석
+          </button>
+          <button class="ai-block-btn btn-green gai-trigger-btn" id="aiBlockC"
+                  onclick="runClusteringAI('C')" disabled>
+            <i class="fas fa-comment-dots"></i> 소재별 AI 코멘트
+          </button>
+          <button class="ai-block-btn btn-purple gai-trigger-btn" id="aiBlockAll"
+                  onclick="runClusteringAI('all')" disabled
+                  style="margin-left:auto;">
+            <i class="fas fa-magic"></i> 전체 실행
+          </button>
+        </div>
+
+        <!-- 결과 탭 바 -->
+        <div class="ai-tab-bar" id="aiTabBar" style="display:none;">
+          <div class="ai-tab active" id="tab-A" onclick="switchAiTab('A')">🏆 승리 공식</div>
+          <div class="ai-tab" id="tab-B" onclick="switchAiTab('B')">🔬 심층 분석</div>
+          <div class="ai-tab" id="tab-C" onclick="switchAiTab('C')">📋 소재 코멘트</div>
+        </div>
+
+        <!-- 결과 패널 -->
+        <div class="ai-tab-panel active" id="panel-A"></div>
+        <div class="ai-tab-panel" id="panel-B"></div>
+        <div class="ai-tab-panel" id="panel-C"></div>
+
+        <!-- 상태 바 -->
+        <div class="ai-status-bar" id="aiStatusBar">
+          <div class="ai-status-dot idle" id="aiStatusDot"></div>
+          <span id="aiStatusText">군집화 실행 후 AI 분석 버튼을 클릭하세요</span>
+          <span class="ai-key-badge unset" id="aiKeyBadge">🔑 API 키 확인 중...</span>
+        </div>
+      </div>
+
+      <!-- 자동 인사이트 (Rule-based, 유지) -->
       <div class="section">
         <div class="section-head">
           <div class="section-icon" style="background:var(--green);">
@@ -764,7 +925,7 @@
           <h3>자동 인사이트 도출</h3>
           <span style="margin-left:auto;font-size:11px;background:var(--green-pale);
                        color:var(--green);padding:3px 10px;border-radius:10px;font-weight:700;">
-            AI 패턴 분석
+            규칙 기반 패턴 분석
           </span>
         </div>
         <div class="section-body">
@@ -883,10 +1044,17 @@ function loadSession() {
       throw new Error('CSV 데이터 없음');
     }
 
+    // TXT 제외 후 실제 분석 대상 수 계산
+    const bnrVidCount = csvData.rows.filter(row => {
+      const t = (row['유형'] || row['앱 확장 소재 유형'] || '').toUpperCase().trim();
+      return t === 'BNR' || t === 'VID';
+    }).length;
+    const txtCount = csvData.rows.length - bnrVidCount;
+
     renderConfigSummary();
     document.getElementById('noDataMsg').style.display = 'none';
     document.getElementById('runBtn').disabled = false;
-    showToast(`✅ 설정 불러오기 완료 (${csvData.rows.length}개 소재)`, 'success');
+    showToast(`✅ 설정 불러오기 완료 (BNR/VID ${bnrVidCount}개${txtCount > 0 ? ` · TXT ${txtCount}개 제외` : ''})`, 'success');
 
   } catch (e) {
     document.getElementById('noDataMsg').style.display = 'block';
@@ -908,12 +1076,19 @@ function renderConfigSummary() {
 
   const modeLabel = { tag:'태그 우선 (70:30)', perf:'성과 우선 (30:70)', custom:'사용자 정의' };
 
+  // TXT 제외 후 BNR/VID 수 계산
+  const bnrVidCount = csvData.rows.filter(row => {
+    const t = (row['유형'] || row['앱 확장 소재 유형'] || '').toUpperCase().trim();
+    return t === 'BNR' || t === 'VID';
+  }).length;
+  const txtCount = csvData.rows.length - bnrVidCount;
+
   // 요약 카드
   document.getElementById('configSummary').innerHTML = `
     <div class="cs-card accent">
-      <div class="cs-label">소재 수</div>
-      <div class="cs-value">${csvData.rows.length.toLocaleString()}</div>
-      <div class="cs-sub">CSV 업로드 데이터</div>
+      <div class="cs-label">분석 소재 수</div>
+      <div class="cs-value">${bnrVidCount.toLocaleString()}</div>
+      <div class="cs-sub">BNR/VID${txtCount > 0 ? ` (TXT ${txtCount}개 제외)` : ''}</div>
     </div>
     <div class="cs-card">
       <div class="cs-label">선택 컬럼</div>
@@ -965,8 +1140,13 @@ function updateHeaderMeta(cfg) {
     el.innerHTML = `<span class="meta-pill"><i class="fas fa-exclamation-triangle"></i> 데이터 없음</span>`;
     return;
   }
+  // TXT 제외 후 BNR/VID 수
+  const bnrVidCount = csvData ? csvData.rows.filter(row => {
+    const t = (row['유형'] || row['앱 확장 소재 유형'] || '').toUpperCase().trim();
+    return t === 'BNR' || t === 'VID';
+  }).length : 0;
   el.innerHTML = `
-    <span class="meta-pill"><i class="fas fa-database"></i> ${csvData.rows.length}개 소재</span>
+    <span class="meta-pill"><i class="fas fa-database"></i> ${bnrVidCount}개 소재 (BNR/VID)</span>
     <span class="meta-pill"><i class="fas fa-columns"></i> ${(cfg.columnConfig||[]).length}개 컬럼</span>
     <span class="meta-pill"><i class="fas fa-sliders-h"></i> ${
       cfg.mode==='tag'?'태그 우선':cfg.mode==='perf'?'성과 우선':'커스텀'
@@ -1036,21 +1216,27 @@ function aggregateByMaterial(rows) {
 /**
  * Step1과 동일한 Rank 기반 정규화 스코어링
  * convWeight + cpaWeight + ipmWeight + roasWeight = 1.0
+ *
+ * ★ ROAS=0 고도화:
+ *   Revenue가 전혀 없을 때 → 전환 45% / CPA 25% / IPM 30% 고정 재분배
+ * ★ 노출수 신뢰도 계수:
+ *   노출수 1,000 미만 소재는 점수를 신뢰도 계수만큼 보정
  */
+function calcConfidenceFactor(impressions) {
+  const cf = Math.min(1.0, (impressions || 0) / 1000);
+  return Math.max(0.3, cf);   // 최소 30% 신뢰도 보장
+}
+
 function calcRankScores(aggregated, weights) {
   const n = aggregated.length;
   if (n === 0) return [];
 
   let { conv: convW, cpa: cpaW, ipm: ipmW, roas: roasW } = weights;
 
-  // Revenue 없으면 ROAS 가중치를 나머지에 재배분
+  // ★ Revenue 없으면 검증된 비율로 고정 재분배 (전환45/CPA25/IPM30)
   const hasRevenue = aggregated.some(c => c.매출 > 0);
   if (!hasRevenue && roasW > 0) {
-    const other = convW + cpaW + ipmW;
-    if (other > 0) {
-      const ratio = (convW + cpaW + ipmW + roasW) / other;
-      convW *= ratio; cpaW *= ratio; ipmW *= ratio; roasW = 0;
-    }
+    convW = 0.45; cpaW = 0.25; ipmW = 0.30; roasW = 0;
   }
 
   // 동점 처리 포함 Rank 부여
@@ -1084,14 +1270,16 @@ function calcRankScores(aggregated, weights) {
     c.IPM점수   = rankScore(c._ipmRank   || n);
     c.ROAS점수  = rankScore(c._roasRank  || n);
 
-    c.TotalScore = (
+    const rawScore = (
       c.전환수점수 * convW +
       c.CPA점수   * cpaW  +
       c.IPM점수   * ipmW  +
       c.ROAS점수  * roasW
     );
-    // 0~100 클램핑
-    c.TotalScore = Math.max(0, Math.min(100, c.TotalScore));
+    // ★ 노출수 신뢰도 계수 적용 (소량 노출 소재 점수 보정)
+    const cf = calcConfidenceFactor(c.노출수 || 0);
+    c.TotalScore = Math.max(0, Math.min(100, rawScore * cf));
+    c._confidenceFactor = cf;
   });
 
   return aggregated.sort((a, b) => b.TotalScore - a.TotalScore);
@@ -1101,36 +1289,54 @@ function calcRankScores(aggregated, weights) {
    ★★★ 하이브리드 군집화 엔진 v4.0 ★★★
 ══════════════════════════════════════════════════════════════ */
 
-/* ── Phase 1: IQR 기반 노이즈 필터 ── */
+/* ──────────────────────────────────────────────────────────────
+   ★ 태그 정규화 사전: 동의어·표기 불일치 통합
+   ────────────────────────────────────────────────────────────── */
+const TAG_SYNONYMS = {
+  '감성적 몰입':'감성몰입', '감성 몰입':'감성몰입', '감성적몰입':'감성몰입',
+  '시각적 임팩트':'시각적_임팩트', '시각적임팩트':'시각적_임팩트',
+  '캐릭터 어필':'캐릭터_어필', '캐릭터어필':'캐릭터_어필',
+  '호기심 유발':'호기심유발', '호기심_유발':'호기심유발',
+  '스토리 텔링':'스토리텔링', '스토리_텔링':'스토리텔링',
+  'rpg':'RPG', 'Rpg':'RPG',
+  'adventure':'Adventure', 'ADVENTURE':'Adventure',
+};
+
+function normalizeTag(raw) {
+  const trimmed = raw.trim();
+  return TAG_SYNONYMS[trimmed] || trimmed;
+}
+
+/* ── Phase 1: IQR 기반 노이즈 필터 (소규모 적응형) ── */
 function iqrNoiseFilter(tagFreqs, rows) {
   const freqs = Object.values(tagFreqs);
   if (!freqs.length) return new Set();
+
+  const n = rows.length;
+
+  // ★ 소규모 적응형 파라미터
+  //   n≤30: 최소 출현 1회, 상한 비율 비활성화, IQR fence ×3.0
+  //   n>30: 기존 설정 유지
+  const minFreq    = n <= 30 ? 1 : 2;
+  const upperRatio = n <= 30 ? 1.0 : 0.80;  // 1.0 = 상한 비율 필터 비활성화
+  const iqrMult    = n <= 30 ? 3.0 : 1.5;   // 소규모일 때 IQR fence 완화
 
   freqs.sort((a, b) => a - b);
   const q1 = freqs[Math.floor(freqs.length * 0.25)];
   const q3 = freqs[Math.floor(freqs.length * 0.75)];
   const iqr = q3 - q1;
-  const upperFence = q3 + iqr * 1.5;
-  const n = rows.length;
-
-  // ★ 소재 수가 적을 때 너무 엄격한 필터 방지
-  // - 소재 10개 이하: 1회 이상이면 허용 (희귀 태그 제거 완화)
-  // - 소재 20개 이하: 2회 이상 유지
-  // - 상한 필터도 소재 수 적으면 완화 (90% → 100%)
-  const minFreq = n <= 10 ? 1 : 2;
-  const upperRatio = n <= 15 ? 1.0 : 0.80;
+  const upperFence = q3 + iqr * iqrMult;
 
   const noiseSet = new Set();
   for (const [tag, cnt] of Object.entries(tagFreqs)) {
-    if (cnt > upperFence || cnt < minFreq || cnt > n * upperRatio) {
+    if (cnt < minFreq || (upperRatio < 1.0 && cnt > n * upperRatio) || cnt > upperFence) {
       noiseSet.add(tag);
     }
   }
 
-  // ★ 필터 후 태그가 너무 적으면(10개 미만) 노이즈 필터 완전 비활성화
+  // ★ 필터 후 유효 태그가 10개 미만이면 노이즈 필터 완전 비활성화
   const remaining = Object.keys(tagFreqs).filter(t => !noiseSet.has(t)).length;
   if (remaining < 10) {
-    // 최소 1회 이상 등장한 태그만 남김 (상한 필터 없음)
     noiseSet.clear();
     for (const [tag, cnt] of Object.entries(tagFreqs)) {
       if (cnt < 1) noiseSet.add(tag);
@@ -1249,8 +1455,8 @@ function assignMaterialsToClusters(scoredMats, tagGroups, tagCols, weightMap, in
     tagCols.forEach(col => {
       const val = (srcRow[col.col] || '').trim();
       if (!val || val === '-') return;
-      // 콤마·슬래시·세미콜론 등으로 분리하여 각각 독립 태그로 처리
-      val.split(/[,\/|；;]/).map(v => v.trim()).filter(v => v && v.length < 60).forEach(v => {
+      // 콤마·슬래시·세미콜론 등으로 분리 + ★ 태그 정규화 적용
+      val.split(/[,\/|；;]/).map(v => normalizeTag(v)).filter(v => v && v.length < 60).forEach(v => {
         matTags[v] = (matTags[v] || 0) + (col.weight / 100);
       });
     });
@@ -1405,10 +1611,20 @@ async function runClustering() {
     const perfWeight = cfg.perfWeight || 30;
 
     // ━━━ Phase 0: 소재명 기준 집계 ━━━
+    // TXT 유형 제외: Step1 소재 성과 분석과 동일하게 BNR/VID만 분석 대상
+    const bnrVidRows = csvData.rows.filter(row => {
+      const t = (row['유형'] || row['앱 확장 소재 유형'] || '').toUpperCase().trim();
+      return t === 'BNR' || t === 'VID';
+    });
+    const txtCount = csvData.rows.length - bnrVidRows.length;
+    if (txtCount > 0) {
+      console.log(`[군집화] TXT 제외: 전체 ${csvData.rows.length}개 → BNR/VID ${bnrVidRows.length}개 (TXT ${txtCount}개 제외)`);
+    }
+
     // 일자별 raw rows → 소재명 단위로 전환/비용/노출/클릭/매출 합산
-    updateLoadingMsg('일자별 데이터를 소재명 기준으로 합산 중...');
-    const aggregated = aggregateByMaterial(csvData.rows);
-    const rawRowCount = csvData.rows.length;
+    updateLoadingMsg(`일자별 데이터를 소재명 기준으로 합산 중... (BNR/VID ${bnrVidRows.length}개${txtCount > 0 ? `, TXT ${txtCount}개 제외` : ''})`);
+    const aggregated = aggregateByMaterial(bnrVidRows);
+    const rawRowCount = bnrVidRows.length;
     const matCount    = aggregated.length;
 
     // ━━━ Rank 기반 스코어링 (Step1 동일) ━━━
@@ -1431,13 +1647,34 @@ async function runClustering() {
     const weightMap = {};
     const coMatrix  = {};
 
+    // ★ 포맷 자동 태그화: 파일명 패턴으로 사이즈/포맷 태그 부여
+    function detectFormatTag(mat) {
+      const src = (mat.파일명 || mat._key || mat.소재명 || '').toLowerCase()
+                + (mat._firstRow?.['앱 확장 소재'] || '').toLowerCase();
+      if (/_v_|1200x1500/i.test(src)) return 'format:vertical';
+      if (/_s_|1200x1200/i.test(src)) return 'format:square';
+      if (/_l_|1200x628/i.test(src))  return 'format:landscape';
+      if (/vid|\.mp4/i.test(src))     return 'format:video';
+      return null;
+    }
+
     scoredMaterials.forEach(mat => {
       const srcRow = mat._firstRow;
       const rowTags = [];
+
+      // ★ 포맷 태그 자동 추가
+      const fmtTag = detectFormatTag(mat);
+      if (fmtTag) {
+        tagFreqs[fmtTag]  = (tagFreqs[fmtTag]  || 0) + 1;
+        weightMap[fmtTag] = weightMap[fmtTag] || 50;
+        rowTags.push(fmtTag);
+      }
+
       tagCols.forEach(col => {
         const val = (srcRow[col.col] || '').trim();
         if (!val || val === '-') return;
-        val.split(/[,\/|；]/).map(v=>v.trim()).filter(v=>v&&v.length<60).forEach(v => {
+        // ★ 태그 정규화(동의어 통합) 후 분리
+        val.split(/[,\/|；;]/).map(v => normalizeTag(v)).filter(v => v && v.length < 60).forEach(v => {
           tagFreqs[v]  = (tagFreqs[v]  || 0) + 1;
           weightMap[v] = Math.max(weightMap[v] || 0, col.weight || 40);
           rowTags.push(v);
@@ -1460,7 +1697,13 @@ async function runClustering() {
     updateLoadingMsg('태그 공출현 분석 및 군집 형성 중...');
 
     const n = scoredMaterials.length;
-    const coThreshold = n <= 10 ? 0.25 : n <= 30 ? 0.20 : 0.15;
+    // ★ co-occurrence 임계값: 고유 태그 수 기반 자동 결정
+    //   태그가 적을수록 관대하게(넓게 연결) → 군집 형성 용이
+    const uniqueTagCount = Object.keys(tagFreqs).length;
+    const coThreshold = uniqueTagCount <= 10 ? 0.10
+                      : uniqueTagCount <= 20 ? 0.15
+                      : uniqueTagCount <= 40 ? 0.20
+                      : 0.25;
     // ★ 최소 군집 수: 파라미터 설정값 사용 (기본 2개)
     const minClusters = Math.max(2, parseInt(params.minClusters) || 2);
     const tagGroups = buildTagClusters(tagFreqs, coMatrix, noiseSet, weightMap, coThreshold, minClusters);
@@ -1541,6 +1784,9 @@ function renderResults(data) {
   renderTagImpact(data);
   renderInsights(clusters, data);
   renderMappingTable(clusters);
+
+  // ✨ Gemini AI 허브 초기화 (군집화 완료 후)
+  initAiHub();
 
   // 스크롤
   document.getElementById('resultArea').scrollIntoView({ behavior:'smooth', block:'start' });
@@ -1719,23 +1965,37 @@ function renderCharts(clusters) {
 function renderTagImpact(data) {
   const { clusters, weightMap } = data;
 
-  // 태그별 평균 점수 계산
+  // ★ 태그별 평균 점수·최고·최저 점수 계산 (전체 tags 기반 → 더 풍부한 정보)
   const tagScoreMap = {};
   const tagCountMap = {};
+  const tagMaxMap   = {};
+  const tagMinMap   = {};
 
   clusters.forEach(cl => {
     cl.materials.forEach(m => {
-      m.topTags.forEach(t => {
-        tagScoreMap[t] = (tagScoreMap[t]||0) + m.score;
-        tagCountMap[t] = (tagCountMap[t]||0) + 1;
+      // topTags 뿐 아니라 전체 tags 활용
+      const tagsToUse = m.tags && m.tags.length ? m.tags : m.topTags;
+      tagsToUse.forEach(t => {
+        tagScoreMap[t] = (tagScoreMap[t] || 0) + m.score;
+        tagCountMap[t] = (tagCountMap[t] || 0) + 1;
+        tagMaxMap[t]   = Math.max(tagMaxMap[t] || 0, m.score);
+        tagMinMap[t]   = Math.min(tagMinMap[t] !== undefined ? tagMinMap[t] : 999, m.score);
       });
     });
   });
 
+  // ★ cnt >= 1로 완화 (소규모 데이터 대응)
   const tagAvgs = Object.entries(tagScoreMap)
-    .map(([t, s]) => ({ tag:t, avg: s/tagCountMap[t], cnt: tagCountMap[t], w: weightMap[t]||20 }))
-    .filter(e => e.cnt >= 2)
-    .sort((a,b) => b.avg - a.avg)
+    .map(([t, s]) => ({
+      tag: t,
+      avg: s / tagCountMap[t],
+      cnt: tagCountMap[t],
+      max: tagMaxMap[t] || 0,
+      min: tagMinMap[t] || 0,
+      w:   weightMap[t] || 20
+    }))
+    .filter(e => e.cnt >= 1)
+    .sort((a, b) => b.avg - a.avg)
     .slice(0, 20);
 
   if (!tagAvgs.length) {
@@ -1744,22 +2004,63 @@ function renderTagImpact(data) {
     return;
   }
 
-  const maxAvg = Math.max(...tagAvgs.map(e=>e.avg));
+  const maxAvg = Math.max(...tagAvgs.map(e => e.avg));
+  const minAvg = Math.min(...tagAvgs.map(e => e.avg));
+  const overallAvg = clusters.flatMap(c => c.materials)
+    .reduce((s, m, _, arr) => s + m.score / arr.length, 0);
 
-  document.getElementById('tagImpactList').innerHTML = tagAvgs.map((e, i) => {
-    const barColor = e.w >= 70 ? 'var(--red)' : e.w >= 40 ? 'var(--blue)' : 'var(--gray-text)';
-    const pct = (e.avg / maxAvg * 100).toFixed(1);
-    return `
-      <div class="ti-row fade-in" style="animation-delay:${i*0.04}s;">
-        <div class="ti-name" title="${escHtml(e.tag)}">${escHtml(e.tag)}</div>
-        <div class="ti-bar-wrap">
-          <div class="ti-bar" style="width:${pct}%;background:${barColor};"></div>
-        </div>
-        <div class="ti-val" style="color:${barColor};">${e.avg.toFixed(1)}</div>
-        <div class="ti-col">(${e.cnt}개 소재)</div>
+  // ★ 히트맵 색상: 평균 대비 고성과면 초록, 저성과면 빨간 계열
+  function heatColor(avg) {
+    const ratio = (avg - minAvg) / (maxAvg - minAvg + 0.001);
+    if (ratio >= 0.75) return { bar:'#10b981', text:'#059669', bg:'rgba(16,185,129,.08)' };
+    if (ratio >= 0.50) return { bar:'#3b82f6', text:'#1d4ed8', bg:'rgba(59,130,246,.08)' };
+    if (ratio >= 0.25) return { bar:'#f59e0b', text:'#d97706', bg:'rgba(245,158,11,.08)' };
+    return { bar:'#ef4444', text:'#dc2626', bg:'rgba(239,68,68,.08)' };
+  }
+
+  // ★ 확장 추천 여부: 평균 이상 + 2개 이상 소재
+  function isExpandable(e) { return e.avg >= overallAvg && e.cnt >= 1; }
+
+  document.getElementById('tagImpactList').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px;">
+      <div style="font-size:11px;color:var(--gray-text);display:flex;align-items:center;gap:6px;">
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;"></span>고성과 태그 (상위 25%)
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#3b82f6;margin-left:6px;"></span>중상
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#f59e0b;margin-left:6px;"></span>중하
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ef4444;margin-left:6px;"></span>저성과
       </div>
-    `;
-  }).join('');
+      <div style="font-size:11px;color:var(--gray-text);text-align:right;">
+        전체 평균 기준선: <strong style="color:var(--dark);">${overallAvg.toFixed(1)}점</strong>
+      </div>
+    </div>
+    ${tagAvgs.map((e, i) => {
+      const c   = heatColor(e.avg);
+      const pct = (e.avg / maxAvg * 100).toFixed(1);
+      const expandable = isExpandable(e);
+      const isFormat = e.tag.startsWith('format:');
+      const tagLabel = isFormat
+        ? `<span style="font-size:10px;background:rgba(139,92,246,.1);color:#6d28d9;padding:1px 6px;border-radius:10px;margin-right:4px;">포맷</span>${escHtml(e.tag.replace('format:',''))}`
+        : escHtml(e.tag);
+      return `
+        <div class="ti-row fade-in" style="animation-delay:${i*0.03}s;padding:6px 10px;
+             border-radius:8px;background:${c.bg};margin-bottom:2px;">
+          <div class="ti-name" style="width:180px;" title="${escHtml(e.tag)}">${tagLabel}</div>
+          <div class="ti-bar-wrap" style="flex:1;height:12px;background:rgba(0,0,0,.06);border-radius:6px;overflow:hidden;">
+            <div class="ti-bar" style="width:${pct}%;background:${c.bar};height:100%;border-radius:6px;transition:width .5s ease;"></div>
+          </div>
+          <div class="ti-val" style="width:44px;text-align:right;font-size:12px;font-weight:700;color:${c.text};">${e.avg.toFixed(1)}</div>
+          <div style="width:60px;font-size:10px;color:var(--gray-text);text-align:center;">${e.cnt}개 소재</div>
+          <div style="width:24px;text-align:center;font-size:12px;" title="${expandable ? '확장 추천' : ''}">${expandable ? '🚀' : ''}</div>
+        </div>
+      `;
+    }).join('')}
+    <div style="margin-top:12px;padding:10px 14px;background:rgba(16,185,129,.06);
+         border:1px solid rgba(16,185,129,.2);border-radius:8px;font-size:12px;color:#047857;">
+      🚀 <strong>확장 추천 태그</strong>(전체 평균 이상): ${tagAvgs.filter(isExpandable).map(e=>
+        `<span style="background:rgba(16,185,129,.12);padding:2px 7px;border-radius:10px;margin:2px;">${escHtml(e.tag)}</span>`
+      ).join('') || '해당 없음'}
+    </div>
+  `;
 }
 
 /* ── 자동 인사이트 ── */
@@ -1900,8 +2201,9 @@ function buildMappingTable(rows) {
     { key:'ROAS',        label:'ROAS',      sortable:true  },
     { key:'dayCount',    label:'집계일수',  sortable:true  },
     { key:'clusterName', label:'군집',      sortable:true  },
-    { key:'topTags',     label:'주요 태그', sortable:false },
-    { key:'marketerInsight', label:'마케터 인사이트', sortable:false }
+    { key:'topTags',     label:'주요 태그',    sortable:false },
+    { key:'marketerInsight', label:'마케터 인사이트', sortable:false },
+    { key:'_aiComment',  label:'✨ AI 코멘트', sortable:false },
   ];
 
   document.getElementById('mappingHead').innerHTML = `<tr>${cols.map(c => `
@@ -1961,10 +2263,16 @@ function buildMappingTable(rows) {
           ? `<div class="mi-cell" title="${escHtml(miText)}">${escHtml(miText)}</div>`
           : `<span class="mi-empty">-</span>`}
       </td>
+      <td class="ai-comment-td" data-mat-name="${escHtml(row.name)}">
+        <span class="ai-comment-empty">-</span>
+      </td>
     </tr>`;
   }).join('');
 
   document.getElementById('tableInfo').textContent = `${sorted.length}개 소재 표시 중 (전체 ${allRows.length}개)`;
+
+  // ★ 정렬·필터 재렌더링 후 AI 코멘트 캐시 재주입
+  if (typeof _reapplyAiComments === 'function') _reapplyAiComments();
 
   // 현재 정렬/필터된 행을 미리보기 참조용으로 캐싱
   window._previewRows = sorted;
@@ -2156,6 +2464,289 @@ function showToast(msg, type='') {
   toast.innerHTML = `<i class="fas ${icons[type]||'fa-bell'}"></i> ${msg}`;
   wrap.appendChild(toast);
   setTimeout(() => { toast.style.opacity='0'; setTimeout(()=>toast.remove(),400); }, 3500);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ✨ Gemini AI 군집 인사이트 — 컨트롤러 & 렌더러
+══════════════════════════════════════════════════════════════ */
+
+// 각 블록 결과 캐시 (군집화 재실행 전까지 유지)
+const _aiCache = { A: null, B: null, C: null };
+
+/**
+ * AI 허브 초기화 — 군집화 완료 후 renderResults()에서 호출
+ */
+function initAiHub() {
+  // 모달 삽입
+  const container = document.getElementById('geminiModalContainer');
+  if (container && typeof buildGeminiKeyModal === 'function') {
+    container.innerHTML = buildGeminiKeyModal();
+  }
+
+  // 캐시 초기화 (재실행 시 이전 결과 소거)
+  _aiCache.A = null; _aiCache.B = null; _aiCache.C = null;
+  Object.keys(_aiCommentMap).forEach(k => delete _aiCommentMap[k]);
+
+  // 탭 바 숨기기, 패널 초기화
+  document.getElementById('aiTabBar').style.display = 'none';
+  ['A','B','C'].forEach(id => {
+    const p = document.getElementById('panel-' + id);
+    if (p) { p.innerHTML = ''; p.classList.remove('active'); }
+    const t = document.getElementById('tab-' + id);
+    if (t) t.classList.remove('active');
+  });
+  document.getElementById('panel-A').classList.add('active');
+  document.getElementById('tab-A').classList.add('active');
+
+  // 버튼 활성화
+  ['aiBlockA','aiBlockB','aiBlockC','aiBlockAll'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.disabled = false;
+  });
+
+  // 키 상태 업데이트
+  updateClusteringAiKeyBadge();
+  if (typeof updateGeminiButtonStates === 'function') updateGeminiButtonStates();
+
+  setAiStatus('idle', '군집화 완료! AI 분석 버튼을 클릭하세요');
+}
+
+/** 키 뱃지 업데이트 */
+function updateClusteringAiKeyBadge() {
+  if (typeof GeminiKeyManager === 'undefined') return;
+  const badge = document.getElementById('aiKeyBadge');
+  if (!badge) return;
+  const has = GeminiKeyManager.isSet();
+  badge.textContent = has ? '✅ API 키 설정됨' : '🔑 API 키 미설정';
+  badge.className   = 'ai-key-badge ' + (has ? 'set' : 'unset');
+}
+
+/** 상태 바 업데이트 */
+function setAiStatus(state, text) {
+  const dot  = document.getElementById('aiStatusDot');
+  const span = document.getElementById('aiStatusText');
+  if (dot)  { dot.className = 'ai-status-dot ' + state; }
+  if (span) { span.textContent = text; }
+}
+
+/** 탭 전환 */
+function switchAiTab(id) {
+  ['A','B','C'].forEach(k => {
+    document.getElementById('tab-' + k)?.classList.toggle('active', k === id);
+    document.getElementById('panel-' + k)?.classList.toggle('active', k === id);
+  });
+}
+
+/**
+ * 메인 컨트롤러 — 블록 A / B / C / all 실행
+ */
+async function runClusteringAI(block) {
+  if (!clusterResults) {
+    showToast('먼저 군집화를 실행하세요.', 'error'); return;
+  }
+  if (typeof GeminiKeyManager === 'undefined') {
+    showToast('Gemini API 모듈이 로드되지 않았습니다.', 'error'); return;
+  }
+  if (!GeminiKeyManager.isSet()) {
+    openGeminiModal(); return;
+  }
+
+  const { clusters, tagFreqs, weightMap } = clusterResults;
+  const allMats = clusters.flatMap(c => c.materials);
+  const overallAvg = allMats.length
+    ? allMats.reduce((s, m) => s + m.score, 0) / allMats.length : 0;
+
+  // 태그 성과 집계 (히트맵과 동일 로직)
+  const tagScoreMap = {};
+  const tagCntMap   = {};
+  allMats.forEach(m => {
+    (m.topTags || []).forEach(tag => {
+      if (!tagScoreMap[tag]) { tagScoreMap[tag] = 0; tagCntMap[tag] = 0; }
+      tagScoreMap[tag] += m.score;
+      tagCntMap[tag]   += 1;
+    });
+  });
+  const tagAvgs = Object.entries(tagScoreMap)
+    .filter(([, s]) => tagCntMap[s] >= 1)
+    .map(([tag, sum]) => ({ tag, avg: sum / tagCntMap[tag], cnt: tagCntMap[tag] }))
+    .sort((a, b) => b.avg - a.avg);
+  const topTags = tagAvgs.slice(0, 12);
+  const lowTags = tagAvgs.slice(-6).reverse();
+
+  const meta = {
+    gameName:       (sessionConfig?.gameName) || '게임',
+    totalMaterials: allMats.length,
+  };
+
+  const blocksToRun = block === 'all' ? ['A', 'B', 'C'] : [block];
+
+  for (let i = 0; i < blocksToRun.length; i++) {
+    const b = blocksToRun[i];
+
+    // 블록 간 딜레이 (Rate Limit 방지)
+    if (i > 0) {
+      setAiStatus('loading', `블록 ${b} 준비 중... (${GEMINI_CONFIG.BLOCK_INTERVAL / 1000}초 대기)`);
+      await new Promise(r => setTimeout(r, GEMINI_CONFIG.BLOCK_INTERVAL));
+    }
+
+    await _runSingleBlock(b, clusters, topTags, lowTags, meta, overallAvg, allMats);
+  }
+
+  // 전체 실행 완료 시
+  if (block === 'all') {
+    setAiStatus('done', '✅ 전체 AI 분석 완료');
+    showToast('✅ Gemini AI 군집 분석이 완료되었습니다.', 'success');
+  }
+}
+
+/** 단일 블록 실행 */
+async function _runSingleBlock(b, clusters, topTags, lowTags, meta, overallAvg, allMats) {
+  // 탭 바 표시 & 해당 탭으로 전환
+  document.getElementById('aiTabBar').style.display = 'flex';
+  switchAiTab(b);
+
+  const panelEl = document.getElementById('panel-' + b);
+
+  // 로딩 표시
+  if (typeof buildGeminiBox === 'function') {
+    panelEl.innerHTML = buildGeminiBox('', 'loading');
+  } else {
+    panelEl.innerHTML = '<p style="padding:20px;color:#6b7280;">분석 중...</p>';
+  }
+
+  const labelMap = { A: '승리 공식 분석', B: '군집별 심층 분석', C: '소재별 AI 코멘트' };
+  setAiStatus('loading', `블록 ${b} — ${labelMap[b]} 중...`);
+
+  try {
+    let prompt, result;
+
+    if (b === 'A') {
+      prompt = GeminiPrompts.clusteringWinningLogic(clusters, topTags, lowTags, meta);
+      result = await callGeminiAPI(prompt, {
+        maxTokens:   GEMINI_CONFIG.CLUSTER_TOKENS,
+        temperature: GEMINI_CONFIG.TEMPERATURE,
+        topP:        GEMINI_CONFIG.TOP_P,
+      });
+      _aiCache.A = result;
+      panelEl.innerHTML = buildGeminiBox(
+        geminiMarkdownToHtml(result), 'done'
+      );
+      setAiStatus('done', '✅ 승리 공식 분석 완료');
+
+    } else if (b === 'B') {
+      // 상위 군집 (최대 4개, 기타 군집 제외)
+      const topClusters = [...clusters]
+        .filter(c => c.id !== -1)
+        .sort((a, b) => b.avgScore - a.avgScore)
+        .slice(0, 4);
+      prompt = GeminiPrompts.clusteringDeepDive(topClusters, overallAvg);
+      result = await callGeminiAPI(prompt, {
+        maxTokens:   GEMINI_CONFIG.CLUSTER_TOKENS,
+        temperature: GEMINI_CONFIG.TEMPERATURE,
+        topP:        GEMINI_CONFIG.TOP_P,
+      });
+      _aiCache.B = result;
+      panelEl.innerHTML = buildGeminiBox(
+        geminiMarkdownToHtml(result), 'done'
+      );
+      setAiStatus('done', '✅ 군집별 심층 분석 완료');
+
+    } else if (b === 'C') {
+      // 고·저효율 각 10개
+      const sortedMats = [...allMats].sort((a, x) => x.score - a.score);
+      const top10  = sortedMats.slice(0, 10).map(m => ({
+        ...m, clusterName: clusters.find(c => c.materials.includes(m))?.name || '-'
+      }));
+      const low10  = sortedMats.slice(-10).reverse().map(m => ({
+        ...m, clusterName: clusters.find(c => c.materials.includes(m))?.name || '-'
+      }));
+      const targets = [...top10, ...low10];
+
+      prompt = GeminiPrompts.clusteringMaterialComment(targets);
+      result = await callGeminiAPI(prompt, {
+        maxTokens:   1200,
+        temperature: GEMINI_CONFIG.TEMPERATURE,
+        topP:        GEMINI_CONFIG.TOP_P,
+      });
+      _aiCache.C = result;
+
+      // JSON 파싱 & 테이블 주입 시도
+      const injected = injectMaterialComments(result, targets);
+
+      // 패널에도 요약 표시
+      const summaryHtml = injected
+        ? `<p class="gai-para" style="color:#059669;font-weight:600;">✅ ${targets.length}개 소재의 AI 코멘트가 아래 매핑 테이블에 주입되었습니다.</p>
+           <ul class="gai-list">${targets.slice(0,5).map(m=>`<li><strong>${escHtml(m.name)}</strong></li>`).join('')}${targets.length>5?'<li>…외 '+(targets.length-5)+'개</li>':''}</ul>`
+        : `<div class="gai-para">${escHtml(result)}</div>`;
+
+      panelEl.innerHTML = buildGeminiBox(summaryHtml, 'done');
+      setAiStatus('done', `✅ 소재별 AI 코멘트 완료 (${targets.length}개)`);
+    }
+
+  } catch (err) {
+    const msg = err.message || String(err);
+    if (typeof buildGeminiBox === 'function') {
+      panelEl.innerHTML = buildGeminiBox('', 'error', msg);
+    } else {
+      panelEl.innerHTML = `<p style="color:#dc2626;padding:20px;">오류: ${msg}</p>`;
+    }
+    setAiStatus('error', `❌ 블록 ${b} 오류 — ${msg}`);
+    showToast(`AI 분석 오류: ${msg}`, 'error');
+  }
+}
+
+/**
+ * 정렬/필터 재렌더링 후 기존 AI 코멘트 캐시를 테이블에 재주입
+ * (코멘트 맵은 _aiCommentMap에 유지)
+ */
+const _aiCommentMap = {}; // { matName: comment }
+
+function _reapplyAiComments() {
+  if (!Object.keys(_aiCommentMap).length) return;
+  document.querySelectorAll('.ai-comment-td').forEach(td => {
+    const name = td.dataset.matName;
+    if (name && _aiCommentMap[name]) {
+      td.innerHTML = `<div class="ai-comment-cell" title="${escHtml(_aiCommentMap[name])}">${escHtml(_aiCommentMap[name])}</div>`;
+    }
+  });
+}
+
+/**
+ * 소재별 AI 코멘트를 매핑 테이블에 주입
+ * @param {string} rawText - Gemini 응답 (JSON 배열 기대)
+ * @param {Array}  targets - 요청한 소재 배열 [{name, ...}]
+ * @returns {boolean} 성공 여부
+ */
+function injectMaterialComments(rawText, targets) {
+  try {
+    // JSON 배열 추출 (응답에 부가 텍스트 섞여도 파싱)
+    const jsonMatch = rawText.match(/\[[\s\S]*\]/);
+    if (!jsonMatch) throw new Error('JSON 배열 없음');
+    const comments = JSON.parse(jsonMatch[0]);
+
+    // idx 기반으로 소재명 → 코멘트 전역 맵 저장 (정렬/필터 재렌더 시 유지)
+    comments.forEach(item => {
+      const mat = targets[item.idx - 1];
+      if (mat) _aiCommentMap[mat.name] = item.comment || '';
+    });
+
+    // 테이블 셀 업데이트
+    const cells = document.querySelectorAll('.ai-comment-td');
+    let injectedCount = 0;
+    cells.forEach(td => {
+      const name = td.dataset.matName;
+      if (name && _aiCommentMap[name] !== undefined) {
+        td.innerHTML = `<div class="ai-comment-cell" title="${escHtml(_aiCommentMap[name])}">${escHtml(_aiCommentMap[name])}</div>`;
+        injectedCount++;
+      }
+    });
+
+    return injectedCount > 0;
+  } catch (e) {
+    // 파싱 실패 시 전체 텍스트를 첫 번째 셀에만 표시
+    console.warn('AI 코멘트 JSON 파싱 실패:', e.message);
+    return false;
+  }
 }
 </script>
 </body>

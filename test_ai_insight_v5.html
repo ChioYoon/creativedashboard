@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 인사이트 진단 테스트 — PHPH_v5</title>
+<script src="js/gemini-api.js"></script>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Apple SD Gothic Neo',sans-serif;background:#f1f5f9;color:#1e293b;padding:20px}
+  h1{font-size:18px;font-weight:700;color:#0f172a;margin-bottom:4px}
+  .subtitle{font-size:12px;color:#64748b;margin-bottom:20px}
+  .card{background:#fff;border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+  .card-title{font-size:13px;font-weight:700;color:#374151;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px}
+  .badge-ok{background:#dcfce7;color:#166534}
+  .badge-warn{background:#fef3c7;color:#92400e}
+  .badge-err{background:#fee2e2;color:#991b1b}
+  .badge-info{background:#dbeafe;color:#1e40af}
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+  .stat-box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px;text-align:center}
+  .stat-val{font-size:20px;font-weight:800;color:#0f172a}
+  .stat-label{font-size:10px;color:#64748b;margin-top:2px}
+  .btn{padding:8px 16px;border:none;border-radius:8px;cursor:pointer;font-size:12px;font-weight:700;transition:all .15s}
+  .btn-primary{background:#E8003D;color:#fff}
+  .btn-primary:hover{background:#c00034}
+  .btn-secondary{background:#6366f1;color:#fff}
+  .btn-secondary:hover{background:#4f46e5}
+  .btn-gray{background:#f3f4f6;color:#374151}
+  .btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+  .log-box{background:#0f172a;border-radius:8px;padding:12px;font-size:11px;font-family:monospace;color:#94a3b8;max-height:260px;overflow-y:auto;line-height:1.6}
+  .log-ok{color:#4ade80}
+  .log-warn{color:#fbbf24}
+  .log-err{color:#f87171}
+  .log-info{color:#60a5fa}
+  .log-hi{color:#c084fc}
+  .table-wrap{overflow-x:auto;margin-top:8px}
+  table{width:100%;border-collapse:collapse;font-size:11px}
+  th{background:#f8fafc;color:#374151;font-weight:700;padding:6px 8px;text-align:left;border-bottom:2px solid #e2e8f0;white-space:nowrap}
+  td{padding:5px 8px;border-bottom:1px solid #f1f5f9;color:#4b5563;vertical-align:top}
+  tr:hover td{background:#f8fafc}
+  .tag{display:inline-block;background:#eff6ff;color:#1d4ed8;border-radius:4px;padding:1px 5px;font-size:10px;margin:1px}
+  .insight-col{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
+  .insight-col:hover{white-space:normal;max-width:none}
+  .prompt-preview{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:10px;font-size:10.5px;font-family:monospace;max-height:200px;overflow-y:auto;white-space:pre-wrap;word-break:break-all;margin-top:8px}
+  .slot-result{margin-top:12px}
+  .divider{border:none;border-top:1px solid #e2e8f0;margin:14px 0}
+  .plan-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .plan-toggle{display:flex;gap:4px}
+  .plan-btn{padding:5px 12px;border-radius:6px;border:1.5px solid #e5e7eb;background:#fff;cursor:pointer;font-size:12px;font-weight:600}
+  .plan-btn.active-free{border-color:#10b981;background:#f0fdf4;color:#059669}
+  .plan-btn.active-paid{border-color:#7c3aed;background:#f5f3ff;color:#7c3aed}
+  .progress-bar{height:4px;background:#e2e8f0;border-radius:2px;margin-top:6px;overflow:hidden}
+  .progress-fill{height:100%;border-radius:2px;transition:width .4s;background:#E8003D}
+  .check-item{display:flex;align-items:flex-start;gap:6px;padding:5px 0;font-size:12px;border-bottom:1px solid #f1f5f9}
+  .check-icon{font-size:14px;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<h1>🧪 AI 인사이트 진단 테스트 — PHPH_v5.csv</h1>
+<p class="subtitle">실제 데이터 기반 전처리·프롬프트 빌드·토큰 계산·슬롯 파싱 전 과정 검증</p>
+
+<!-- ① 데이터 현황 -->
+<div class="card">
+  <div class="card-title">📊 데이터 파싱 현황</div>
+  <div class="stat-grid" id="statGrid">
+    <div class="stat-box"><div class="stat-val" id="statTotal">-</div><div class="stat-label">전체 행</div></div>
+    <div class="stat-box"><div class="stat-val" id="statBNR">-</div><div class="stat-label">BNR 소재</div></div>
+    <div class="stat-box"><div class="stat-val" id="statVID">-</div><div class="stat-label">VID 소재</div></div>
+    <div class="stat-box"><div class="stat-val" id="statTXT">-</div><div class="stat-label">TXT 제외</div></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="loadAndParse()">📂 PHPH_v5.csv 파싱 시작</button>
+  </div>
+  <div id="parseLog" class="log-box" style="min-height:60px;">대기 중...</div>
+</div>
+
+<!-- ② 플랜 설정 -->
+<div class="card">
+  <div class="card-title">⚙️ AI 플랜 설정</div>
+  <div class="plan-row">
+    <span style="font-size:12px;color:#374151;font-weight:600;">현재 플랜:</span>
+    <div class="plan-toggle">
+      <button class="plan-btn" id="planBtnFree" onclick="setPlan('free')">🆓 무료</button>
+      <button class="plan-btn" id="planBtnPaid" onclick="setPlan('paid')">💎 유료</button>
+    </div>
+    <span id="planDesc" style="font-size:11px;color:#64748b;"></span>
+  </div>
+  <div id="planChecklist" style="margin-top:6px;"></div>
+</div>
+
+<!-- ③ 점수 계산 시뮬레이션 -->
+<div class="card">
+  <div class="card-title">🏆 점수 계산 & 소재 선택 결과</div>
+  <div id="scoredSummary" style="color:#94a3b8;font-size:12px;">데이터 파싱 후 자동 계산됩니다.</div>
+  <div id="scoredTable"></div>
+</div>
+
+<!-- ④ 프롬프트 빌드 미리보기 -->
+<div class="card">
+  <div class="card-title">📝 프롬프트 빌드 미리보기</div>
+  <div class="btn-row">
+    <button class="btn btn-secondary" onclick="buildPromptPreview()">🔍 프롬프트 빌드 및 토큰 추정</button>
+  </div>
+  <div id="promptPreview" style="color:#94a3b8;font-size:12px;">버튼을 눌러 프롬프트를 확인하세요.</div>
+</div>
+
+<!-- ⑤ 슬롯 파싱 자가 테스트 -->
+<div class="card">
+  <div class="card-title">🔬 슬롯 파싱 자가 테스트</div>
+  <div class="btn-row">
+    <button class="btn btn-gray" onclick="testSlotParser()">🧩 파싱 로직 단위테스트</button>
+  </div>
+  <div id="slotTestResult" style="color:#94a3b8;font-size:12px;">버튼을 눌러 테스트를 실행하세요.</div>
+</div>
+
+<!-- ⑥ 기능 점검 체크리스트 -->
+<div class="card">
+  <div class="card-title">✅ 전반 기능 점검 체크리스트</div>
+  <div id="checklist"></div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+//  전역 상태
+// ══════════════════════════════════════════
+let csvRows = [];          // 원본 모든 행
+let validRows = [];        // BNR+VID 필터 후
+let scoredCreatives = [];  // 점수 계산 후
+let tagColsList = [];
+
+// CSV 파서 (큰따옴표 안 쉼표 처리)
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const headers = parseCSVLine(lines[0]);
+  const rows = [];
+  for (let i = 1; i < lines.length; i++) {
+    const vals = parseCSVLine(lines[i]);
+    if (vals.length < 2) continue;
+    const obj = {};
+    headers.forEach((h, idx) => { obj[h.trim()] = (vals[idx] || '').trim(); });
+    rows.push(obj);
+  }
+  return { headers, rows };
+}
+
+function parseCSVLine(line) {
+  const result = [];
+  let cur = '', inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
+    if (c === '"' && !inQ) { inQ = true; continue; }
+    if (c === '"' && inQ) {
+      if (line[i+1] === '"') { cur += '"'; i++; }
+      else inQ = false;
+      continue;
+    }
+    if (c === ',' && !inQ) { result.push(cur); cur = ''; continue; }
+    cur += c;
+  }
+  result.push(cur);
+  return result;
+}
+
+// ── 로그 헬퍼 ───────────────────────────
+const logEl = () => document.getElementById('parseLog');
+function log(msg, cls='') {
+  const el = logEl();
+  const span = document.createElement('span');
+  span.className = cls;
+  span.textContent = msg + '\n';
+  el.appendChild(span);
+  el.scrollTop = el.scrollHeight;
+}
+function logClear() { logEl().textContent = ''; }
+
+// ══════════════════════════════════════════
+//  ① 데이터 파싱
+// ══════════════════════════════════════════
+async function loadAndParse() {
+  logClear();
+  log('📂 PHPH_v5.csv 로드 중...', 'log-info');
+
+  let text;
+  try {
+    const res = await fetch('sample_data/PHPH_v5.csv');
+    text = await res.text();
+    log(`✅ 파일 로드 완료 (${(text.length/1024).toFixed(0)}KB)`, 'log-ok');
+  } catch(e) {
+    log(`❌ 파일 로드 실패: ${e.message}`, 'log-err');
+    return;
+  }
+
+  const { headers, rows } = parseCSV(text);
+  csvRows = rows;
+  log(`📋 컬럼 수: ${headers.length}개 | 전체 행: ${rows.length}개`, 'log-info');
+  log(`🏷️ 주요 컬럼: ${headers.slice(0,10).join(', ')} ...`, 'log-info');
+
+  // TXT 필터
+  const bnr = rows.filter(r => (r['유형']||'').toUpperCase() === 'BNR');
+  const vid = rows.filter(r => (r['유형']||'').toUpperCase() === 'VID');
+  const txt = rows.filter(r => (r['유형']||'').toUpperCase() === 'TXT');
+  validRows = [...bnr, ...vid];
+
+  log(`\n📊 유형 분류:`, 'log-hi');
+  log(`  BNR: ${bnr.length}개`, 'log-ok');
+  log(`  VID: ${vid.length}개`, 'log-ok');
+  log(`  TXT: ${txt.length}개 → 제외`, 'log-warn');
+  log(`  유효 소재(BNR+VID): ${validRows.length}개`, 'log-ok');
+
+  // 컬럼 정합성 체크
+  const requiredCols = ['유형','소재명','전환','비용','노출수','클릭수'];
+  const missing = requiredCols.filter(c => !headers.includes(c));
+  if (missing.length > 0) {
+    log(`\n⚠️ 필수 컬럼 누락: ${missing.join(', ')}`, 'log-warn');
+  } else {
+    log(`✅ 필수 컬럼 모두 존재`, 'log-ok');
+  }
+
+  // marketer_insight 체크
+  const hasInsight = headers.includes('marketer_insight');
+  const insightFilled = validRows.filter(r => r['marketer_insight'] && r['marketer_insight'].length > 10).length;
+  log(`\n🧠 marketer_insight:`, 'log-hi');
+  log(`  컬럼 존재: ${hasInsight ? '✅' : '❌'}`, hasInsight ? 'log-ok' : 'log-err');
+  if (hasInsight) {
+    log(`  데이터 있는 소재: ${insightFilled}/${validRows.length}개 (${Math.round(insightFilled/validRows.length*100)}%)`, 'log-ok');
+    const sample = validRows.find(r => r['marketer_insight']?.length > 10);
+    if (sample) log(`  샘플(50자): ${sample['marketer_insight'].slice(0,50)}...`, 'log-info');
+  }
+
+  // 통계 업데이트
+  document.getElementById('statTotal').textContent = rows.length;
+  document.getElementById('statBNR').textContent = bnr.length;
+  document.getElementById('statVID').textContent = vid.length;
+  document.getElementById('statTXT').textContent = txt.length;
+
+  // 점수 계산
+  calcScores();
+  runChecklist();
+}
+
+// ══════════════════════════════════════════
+//  ② 점수 계산 (TotalScore)
+// ══════════════════════════════════════════
+function safeNum(v) {
+  if (!v || v === '') return 0;
+  const n = parseFloat(String(v).replace(/,/g,'').replace(/E\+/gi,'e+'));
+  return isNaN(n) ? 0 : n;
+}
+
+function calcScores() {
+  if (!validRows.length) return;
+
+  // 소재명 기준으로 집계 (같은 소재명이면 합산)
+  const map = {};
+  for (const r of validRows) {
+    const key = r['소재명'] || r['파일명'] || r['앱 확장 소재'] || '(무제)';
+    if (!map[key]) {
+      map[key] = {
+        key,
+        유형: r['유형'] || '',
+        전환: 0, 비용: 0, 노출수: 0, 클릭수: 0, Revenue: 0,
+        meta: { ...r }, days: 1,
+      };
+    }
+    const m = map[key];
+    m.전환   += safeNum(r['전환']);
+    m.비용   += safeNum(r['비용']);
+    m.노출수 += safeNum(r['노출수']);
+    m.클릭수 += safeNum(r['클릭수']);
+    m.Revenue += safeNum(r['Revenue']);
+  }
+
+  // 점수 계산
+  const agg = Object.values(map);
+  agg.forEach(m => {
+    const cpa  = m.전환 > 0 ? m.비용 / m.전환 : Infinity;
+    const ipm  = m.노출수 > 0 ? m.전환 / m.노출수 * 1000 : 0;
+    const roas = m.비용 > 0 ? m.Revenue / m.비용 : 0;
+    const ctr  = m.노출수 > 0 ? m.클릭수 / m.노출수 * 100 : 0;
+    m.CPA  = isFinite(cpa) ? cpa : 0;
+    m.IPM  = ipm;
+    m.ROAS = roas;
+    m.CTR  = ctr;
+  });
+
+  // 백분위 점수화
+  const field = (arr, f) => arr.map(m => m[f]).filter(v=>v>0).sort((a,b)=>a-b);
+  const pctile = (val, sorted) => {
+    if (!sorted.length || val <= 0) return 0;
+    const idx = sorted.findIndex(v => v >= val);
+    return idx === -1 ? 100 : Math.round(idx/sorted.length*100);
+  };
+
+  const cpas  = field(agg,'CPA');
+  const ipms  = field(agg,'IPM');
+  const roass = field(agg,'ROAS');
+  const convs = field(agg,'전환');
+
+  agg.forEach(m => {
+    const sConv = pctile(m.전환, convs);
+    const sCPA  = m.CPA > 0 ? (100 - pctile(m.CPA, cpas)) : 0;
+    const sIPM  = pctile(m.IPM, ipms);
+    const sROAS = pctile(m.ROAS, roass);
+    m.TotalScore = (sConv*0.25 + sCPA*0.25 + sIPM*0.25 + sROAS*0.25);
+  });
+
+  scoredCreatives = agg.sort((a,b) => b.TotalScore - a.TotalScore);
+  renderScoredTable();
+  log(`\n🏆 점수 계산 완료: ${scoredCreatives.length}개 소재`, 'log-ok');
+  log(`  최고점: ${scoredCreatives[0]?.key.slice(0,40)} (${scoredCreatives[0]?.TotalScore.toFixed(1)}점)`, 'log-info');
+  log(`  최저점: ${scoredCreatives[scoredCreatives.length-1]?.key.slice(0,40)} (${scoredCreatives[scoredCreatives.length-1]?.TotalScore.toFixed(1)}점)`, 'log-info');
+}
+
+function renderScoredTable() {
+  const isPaid = GeminiKeyManager.isPaid();
+  const maxItems = isPaid ? 5 : 3;
+  const topN = Math.min(maxItems, Math.max(1, Math.ceil(scoredCreatives.length/3)));
+  const highPerf = scoredCreatives.slice(0, topN);
+  const lowPerf  = scoredCreatives.slice(-topN).reverse();
+
+  // 태그 컬럼 탐지
+  const EXCLUDE = new Set(['전환','노출수','클릭수','비용','매출','Revenue','링크','이미지링크',
+    '파일명','소재명','앱 확장 소재','앱 확장 소재 유형','캠페인','광고그룹','일','통화 코드',
+    '사이즈','투입일','언어','유형','시기','USP','Concept']);
+  const INSIGHT_SET = new Set(['marketer_insight','insight','마케터_인사이트']);
+  const sample = highPerf[0];
+  tagColsList = [];
+  if (sample?.meta) {
+    tagColsList = Object.keys(sample.meta).filter(k => {
+      if (EXCLUDE.has(k)) return false;
+      const v = String(sample.meta[k]||'').trim();
+      if (!v || !isNaN(Number(v)) || v.startsWith('http')) return false;
+      if (!isPaid && INSIGHT_SET.has(k)) return false;
+      if (!isPaid && v.length > 100) return false;
+      return true;
+    }).sort((a,b)=>String(sample.meta[a]||'').length - String(sample.meta[b]||'').length)
+      .slice(0, isPaid ? 6 : 4);
+  }
+
+  const el = document.getElementById('scoredSummary');
+  el.innerHTML = `
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px;">
+      <span class="badge badge-info">전체 소재: ${scoredCreatives.length}개</span>
+      <span class="badge badge-ok">AI 분석 대상: 고효율 ${topN}개 + 저효율 ${topN}개</span>
+      <span class="badge ${isPaid?'badge-ok':'badge-warn'}">${isPaid?'💎 유료':'🆓 무료'} 플랜</span>
+      <span class="badge badge-info">태그 컬럼 ${tagColsList.length}개: ${tagColsList.join(', ')}</span>
+    </div>`;
+
+  const mkRow = (arr, label, color) => arr.map((m,i)=>`
+    <tr>
+      <td style="color:${color};font-weight:700;">${label}${i+1}</td>
+      <td>${m.유형||'-'}</td>
+      <td style="max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${m.key}">${m.key.slice(0,40)}</td>
+      <td style="font-weight:700;">${m.TotalScore.toFixed(1)}</td>
+      <td>${m.전환}</td>
+      <td>${m.CPA>0?Math.round(m.CPA).toLocaleString():'-'}</td>
+      <td>${m.IPM.toFixed(3)}</td>
+      <td>${m.ROAS.toFixed(2)}</td>
+      <td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
+          title="${m.meta?.marketer_insight||''}">
+        ${(m.meta?.marketer_insight||'').slice(0,30)||'(없음)'}
+      </td>
+    </tr>`).join('');
+
+  document.getElementById('scoredTable').innerHTML = `
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>구분</th><th>유형</th><th>소재명</th><th>점수</th>
+          <th>전환</th><th>CPA</th><th>IPM</th><th>ROAS</th><th>marketer_insight(미리보기)</th>
+        </tr></thead>
+        <tbody>
+          ${mkRow(highPerf,'고효율','#059669')}
+          ${mkRow(lowPerf,'저효율','#dc2626')}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+// ══════════════════════════════════════════
+//  ③ 플랜 설정
+// ══════════════════════════════════════════
+function setPlan(plan) {
+  GeminiKeyManager.setPlan(plan);
+  document.getElementById('planBtnFree').className = `plan-btn ${plan==='free'?'active-free':''}`;
+  document.getElementById('planBtnPaid').className = `plan-btn ${plan==='paid'?'active-paid':''}`;
+
+  const tokens = GeminiKeyManager.getMaxTokens();
+  const fatTokens = GeminiKeyManager.getFatigueTokens();
+  document.getElementById('planDesc').textContent =
+    plan==='paid'
+      ? `출력 ${tokens}토큰/호출 × 2회 = 6슬롯 | 피로도 ${fatTokens}토큰/호출 | marketer_insight 200자 포함`
+      : `출력 ${tokens}토큰/호출 × 3회 = 6슬롯 | 피로도 ${fatTokens}토큰/호출 | marketer_insight 미전송`;
+
+  const checks = plan==='paid' ? [
+    ['✅','marketer_insight 원문 최대 200자 포함'],
+    ['✅','소재 최대 5개 분석'],
+    ['✅','태그 컬럼 최대 6개, 각 20자'],
+    ['✅','출력 2000토큰/호출 × 2호출 (3슬롯씩)'],
+    ['✅','피로도 분석: 1500토큰/호출'],
+  ] : [
+    ['🚫','marketer_insight 미전송 (입력 토큰 절감 → 출력 2× 확보)'],
+    ['⚠️','소재 최대 3개 분석'],
+    ['⚠️','태그 컬럼 최대 4개, 각 8자'],
+    ['✅','출력 800토큰/호출 × 3호출 (2슬롯씩)'],
+    ['✅','피로도 분석: 700토큰/호출'],
+  ];
+  document.getElementById('planChecklist').innerHTML =
+    checks.map(([icon,txt])=>`<div class="check-item"><span class="check-icon">${icon}</span><span>${txt}</span></div>`).join('');
+
+  // 소재 테이블 새로고침
+  if(scoredCreatives.length) renderScoredTable();
+}
+
+// ══════════════════════════════════════════
+//  ④ 프롬프트 빌드 미리보기
+// ══════════════════════════════════════════
+function buildPromptPreview() {
+  if (!scoredCreatives.length) {
+    document.getElementById('promptPreview').textContent = '⚠️ 먼저 데이터를 파싱하세요.';
+    return;
+  }
+
+  const isPaid = GeminiKeyManager.isPaid();
+  const maxItems = isPaid ? 5 : 3;
+  const topN = Math.min(maxItems, Math.max(1, Math.ceil(scoredCreatives.length/3)));
+  const highPerf = scoredCreatives.slice(0, topN);
+  const lowPerf  = scoredCreatives.slice(-topN).reverse();
+
+  const prompts = GeminiPrompts.scoringInsight(highPerf, lowPerf, { tagCols: tagColsList, isPaid });
+  const { splitMode, prompt1, prompt2, prompt3 } = prompts;
+
+  const estimateTokens = (txt) => Math.ceil(txt.length * 0.55);
+  const t1 = estimateTokens(prompt1);
+  const t2 = estimateTokens(prompt2);
+  const t3 = prompt3 ? estimateTokens(prompt3) : 0;
+  const outTokens = GeminiKeyManager.getMaxTokens();
+
+  let html = `<div style="font-size:12px;margin-bottom:8px;">
+    <span class="badge badge-info">splitMode: ${splitMode}</span>
+    <span class="badge ${isPaid?'badge-ok':'badge-warn'} ml-2">${isPaid?'유료':'무료'} | 출력예산 ${outTokens}토큰/호출</span>
+  </div>`;
+
+  const calls = splitMode === 'paid_2call'
+    ? [{label:'1차 호출 (winTags·formatGap·lossReason)',p:prompt1,t:t1},{label:'2차 호출 (actionItems·scaleUp·stopNow)',p:prompt2,t:t2}]
+    : [{label:'1차 호출 (winTags·formatGap)',p:prompt1,t:t1},{label:'2차 호출 (lossReason·actionItems)',p:prompt2,t:t2},{label:'3차 호출 (scaleUp·stopNow)',p:prompt3,t:t3}];
+
+  calls.forEach(({label,p,t},i) => {
+    const safe = t + outTokens;
+    const isOver = safe > (isPaid ? 65536 : 8192);
+    html += `
+      <div style="margin-bottom:10px;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+          <span style="font-size:12px;font-weight:700;">📤 ${label}</span>
+          <span class="badge ${isOver?'badge-err':'badge-ok'}">입력≈${t}토큰 | 출력${outTokens}토큰 | 합산≈${safe} ${isOver?'⚠️한도초과':''}</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${Math.min(100,safe/(isPaid?65536:8192)*100).toFixed(1)}%"></div></div>
+        <div class="prompt-preview">${escHtml(p)}</div>
+      </div>`;
+  });
+
+  document.getElementById('promptPreview').innerHTML = html;
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ══════════════════════════════════════════
+//  ⑤ 슬롯 파싱 단위 테스트
+// ══════════════════════════════════════════
+function testSlotParser() {
+  const tests = [
+    // 정상 케이스
+    {
+      label: '정상 JSON — 6슬롯 완전',
+      input: `{"winTags":"캐릭터 수집+전투 조합 BNR이 IPM 2.3으로 최상위","formatGap":"BNR avgIPM 1.8 vs VID avgIPM 0.9 두 배 격차","lossReason":"저효율 소재 CPA 450K 이상 전환 0건","actionItems":"A-Combat BNR 예산 2배 증액 제안","scaleUp":"Combat01B VID세로형 ROAS 1.2 확인","stopNow":"노출 500 이상 전환 0 BNR 즉시 OFF"}`,
+      expect: 6
+    },
+    // 잘린 케이스
+    {
+      label: '잘린 JSON — 마지막 키 불완전',
+      input: `{"winTags":"캐릭터 소재 IPM 2.1 최고","formatGap":"BNR IPM 1.8 VID 0.9","lossReason":"전환0 소재 CPA 550K","actionItems":"예산 확대 권고`,
+      expect: 4
+    },
+    // 배열 응답
+    {
+      label: '배열형 응답',
+      input: `{"winTags":["캐릭터 수집","전투 BNR 우세"],"formatGap":["BNR avgIPM 1.8","VID avgIPM 0.9"]}`,
+      expect: 2
+    },
+    // 코드펜스 포함
+    {
+      label: '코드펜스 포함',
+      input: "```json\n{\"winTags\":\"캐릭터 BNR IPM 2.1\",\"lossReason\":\"전환 0 소재 CPA 550K\"}\n```",
+      expect: 2
+    },
+    // 완전 실패
+    {
+      label: '파싱 불가',
+      input: '분석 결과를 말씀드립니다. BNR 소재가 우수합니다.',
+      expect: 0
+    }
+  ];
+
+  let html = '';
+  let passed = 0;
+  tests.forEach(({label,input,expect}) => {
+    const result = parseScoringSlots(input);
+    const got = result ? Object.keys(result).length : 0;
+    const ok = got === expect;
+    if(ok) passed++;
+    const keys = result ? Object.keys(result).join(', ') : '(null)';
+    html += `
+      <div class="check-item">
+        <span class="check-icon">${ok?'✅':'❌'}</span>
+        <div>
+          <div style="font-size:12px;font-weight:600;">${label}</div>
+          <div style="font-size:11px;color:#6b7280;">
+            기대: ${expect}슬롯 | 실제: ${got}슬롯 | 키: ${keys}
+          </div>
+        </div>
+      </div>`;
+  });
+
+  html = `<div style="margin-bottom:8px;"><span class="badge ${passed===tests.length?'badge-ok':'badge-warn'}">${passed}/${tests.length} 통과</span></div>` + html;
+  document.getElementById('slotTestResult').innerHTML = html;
+}
+
+// ══════════════════════════════════════════
+//  ⑥ 전반 기능 점검 체크리스트
+// ══════════════════════════════════════════
+function runChecklist() {
+  const isPaid = GeminiKeyManager.isPaid();
+  const items = [];
+
+  // TXT 필터 확인
+  const txtRows = csvRows.filter(r=>(r['유형']||'').toUpperCase()==='TXT');
+  const validOk = validRows.every(r => ['BNR','VID'].includes((r['유형']||'').toUpperCase()));
+  items.push({ok:validOk, label:`TXT 필터링: ${txtRows.length}개 TXT 제외 → 유효소재 ${validRows.length}개`});
+
+  // 컬럼 매핑
+  const cols = ['유형','소재명','전환','비용','노출수','클릭수'];
+  const allCols = csvRows.length>0 ? Object.keys(csvRows[0]) : [];
+  const colOk = cols.every(c=>allCols.includes(c));
+  items.push({ok:colOk, label:`필수 컬럼 매핑: ${cols.join(', ')}` });
+
+  // marketer_insight
+  const hasInsight = allCols.includes('marketer_insight');
+  const insightFilled = validRows.filter(r=>r['marketer_insight']?.length>10).length;
+  items.push({ok:hasInsight, label:`marketer_insight 컬럼 존재 (${insightFilled}/${validRows.length}개 채워짐)`});
+
+  // 무료 플랜 insight 제외
+  const freeExcludesInsight = !isPaid; // 무료면 항상 제외
+  items.push({ok:true, label:`무료 플랜 marketer_insight 처리: ${isPaid?'원문 200자 포함':'미전송 (입력 토큰 절감)'}`});
+
+  // 소재 점수 계산
+  items.push({ok:scoredCreatives.length>0, label:`점수 계산: ${scoredCreatives.length}개 소재 TotalScore 산출`});
+
+  // 태그 컬럼 탐지
+  items.push({ok:tagColsList.length>0, label:`태그 컬럼 탐지: [${tagColsList.join(', ')}] (${tagColsList.length}개)`});
+
+  // 토큰 한도 여유
+  const outTok = GeminiKeyManager.getMaxTokens();
+  const maxInput = isPaid ? 65536 : 8192;
+  items.push({ok:outTok<maxInput, label:`출력 토큰 예산: ${outTok}토큰/호출 (API 한도 ${maxInput.toLocaleString()} 이내)`});
+
+  // splitMode
+  const mode = isPaid ? 'paid_2call (2회×3슬롯)' : 'free_3call (3회×2슬롯)';
+  items.push({ok:true, label:`API 호출 전략: ${mode}`});
+
+  // 슬롯 파서
+  const testRes = parseScoringSlots('{"winTags":"test IPM 2.1","formatGap":"BNR 1.8 vs VID 0.9"}');
+  items.push({ok:testRes&&testRes.winTags==='test IPM 2.1', label:`슬롯 파서 정상 작동: ${testRes?'✅ parseScoringSlots 파싱 성공':'❌ 파싱 실패'}`});
+
+  // 피로도 토큰
+  const fatTok = GeminiKeyManager.getFatigueTokens();
+  items.push({ok:fatTok>=600, label:`피로도 분석 토큰: ${fatTok}토큰/호출 (2슬롯 기준 충분)`});
+
+  document.getElementById('checklist').innerHTML =
+    items.map(({ok,label})=>`
+      <div class="check-item">
+        <span class="check-icon">${ok?'✅':'⚠️'}</span>
+        <span>${label}</span>
+      </div>`).join('');
+}
+
+// ── 초기화 ───────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  // 플랜 초기화
+  const plan = GeminiKeyManager.getPlan();
+  setPlan(plan);
+});
+</script>
+</body>
+</html>

@@ -7,6 +7,9 @@
   
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+  <!-- Gemini AI 공통 모듈 -->
+  <link rel="stylesheet" href="css/gemini-ui.css">
+  <script src="js/gemini-api.js"></script>
   
   <style>
     * {
@@ -697,6 +700,9 @@
 
       <!-- 페이지 이동 (우측) -->
       <div class="nav-page-btns">
+        <button class="gai-nav-key-btn" onclick="openGeminiModal()" title="Gemini AI 분석 설정">
+          ✨ AI 설정
+        </button>
         <a class="nav-page-btn highlight" href="step2_column_selector.html">
           Step 2 군집화 <span style="opacity:.7;">→</span>
         </a>
@@ -786,7 +792,7 @@
           </div>
         </div>
         
-        <!-- 소재 유형 필터 (체크박스) -->
+        <!-- 소재 유형 필터 (체크박스) — TXT는 분석 제외, BNR/VID만 표시 -->
         <div class="setting-group">
           <label class="setting-label">소재 유형</label>
           <div class="checkbox-group" style="max-height: 150px;">
@@ -798,10 +804,7 @@
               <input type="checkbox" id="type_VID" value="VID" checked onchange="updateTypeFilter()">
               <label for="type_VID">VID (비디오)</label>
             </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="type_TXT" value="TXT" onchange="updateTypeFilter()">
-              <label for="type_TXT">TXT (텍스트)</label>
-            </div>
+            <!-- TXT는 분석 대상이 아니므로 표시하지 않음 -->
           </div>
           <div class="selected-count" id="typeSelectedCount">2개 선택됨</div>
         </div>
@@ -860,7 +863,17 @@
         </div>
       </div>
       
-      <div class="table-container">
+      <!-- ✨ Gemini AI 인사이트 (소재 성과 분석) -->
+      <div class="gai-section-action">
+        <button class="gai-trigger-btn" onclick="runScoringAIInsight()">
+          <span class="gai-btn-icon">✨</span> AI 인사이트 생성
+        </button>
+        <span style="font-size:12px;color:#6b7280;">고효율 vs 저효율 소재 특성 비교 · 확장 제안</span>
+        <span class="gai-key-status" style="font-size:11.5px;font-weight:600;margin-left:auto;"></span>
+      </div>
+      <div id="scoringAIBox"></div>
+
+      <div class="table-container" style="margin-top: 20px;">
         <table>
           <thead>
             <tr>
@@ -888,6 +901,7 @@
           </tbody>
         </table>
       </div>
+
     </section>
     
     <!-- Section 4: 피로도 분석 -->
@@ -910,52 +924,64 @@
           </div>
         </div>
         
-        <!-- 소재 유형 필터 (피로도용) -->
+        <!-- 소재 유형 필터 (피로도용 - 체크박스) — TXT는 분석 제외, BNR/VID만 표시 -->
         <div class="setting-group">
           <label class="setting-label">소재 유형</label>
-          <select id="fatigueTypeFilter" class="setting-input">
-            <option value="">전체 (BNR + VID + TXT)</option>
-            <option value="BNR">BNR (이미지)</option>
-            <option value="VID">VID (비디오)</option>
-            <option value="TXT">TXT (텍스트)</option>
-          </select>
+          <div class="checkbox-group" style="max-height: 150px;">
+            <div class="checkbox-item">
+              <input type="checkbox" id="fatigue_type_BNR" value="BNR" checked onchange="updateFatigueTypeFilter()">
+              <label for="fatigue_type_BNR">BNR (이미지)</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="fatigue_type_VID" value="VID" checked onchange="updateFatigueTypeFilter()">
+              <label for="fatigue_type_VID">VID (비디오)</label>
+            </div>
+            <!-- TXT는 분석 대상이 아니므로 표시하지 않음 -->
+          </div>
+          <div class="selected-count" id="fatigueTypeSelectedCount">2개 선택됨</div>
         </div>
         
-        <!-- 캠페인 필터 (피로도용, 다중 선택) -->
+        <!-- 캠페인 필터 (피로도용 - 검색 가능한 체크박스) -->
         <div class="setting-group">
           <label class="setting-label">캠페인 필터</label>
-          <select id="fatigueCampaignFilter" class="setting-input" multiple size="4">
-            <option value="" selected>전체 캠페인</option>
-          </select>
-          <small style="color: #6b7280; font-size: 11px; margin-top: 5px; display: block;">Ctrl/Cmd + 클릭으로 복수 선택</small>
+          <input type="text" id="fatigueCampaignSearchInput" class="search-input" placeholder="캠페인 검색..." oninput="filterFatigueCampaignList()">
+          <div class="checkbox-group" id="fatigueCampaignCheckboxGroup">
+            <div class="checkbox-item">
+              <input type="checkbox" id="fatigue_campaign_all" value="" checked onchange="toggleAllFatigueCampaigns(this)">
+              <label for="fatigue_campaign_all"><strong>전체 선택</strong></label>
+            </div>
+          </div>
+          <div class="selected-count" id="fatigueCampaignSelectedCount">전체 캠페인 선택됨</div>
         </div>
       </div>
       
       <div class="settings-grid">
-        <!-- 기준 기간 -->
+        <!-- 기준 기간 (범위 지정) -->
         <div class="setting-group">
-          <label class="setting-label">기준 기간 시작</label>
-          <input type="date" id="baselineStart" class="setting-input">
-        </div>
-        <div class="setting-group">
-          <label class="setting-label">기준 기간 종료</label>
-          <input type="date" id="baselineEnd" class="setting-input">
+          <label class="setting-label">📅 기준 기간</label>
+          <div class="date-range-container">
+            <input type="date" id="baselineStart" class="setting-input">
+            <span class="date-separator">~</span>
+            <input type="date" id="baselineEnd" class="setting-input">
+          </div>
+          <small style="color: #6b7280; font-size: 11px; margin-top: 5px; display: block;">과거 기준 기간 (시작 ~ 종료)</small>
         </div>
         
-        <!-- 비교 기간 -->
+        <!-- 비교 기간 (범위 지정) -->
         <div class="setting-group">
-          <label class="setting-label">비교 기간 시작</label>
-          <input type="date" id="comparisonStart" class="setting-input">
-        </div>
-        <div class="setting-group">
-          <label class="setting-label">비교 기간 종료</label>
-          <input type="date" id="comparisonEnd" class="setting-input">
+          <label class="setting-label">📅 비교 기간</label>
+          <div class="date-range-container">
+            <input type="date" id="comparisonStart" class="setting-input">
+            <span class="date-separator">~</span>
+            <input type="date" id="comparisonEnd" class="setting-input">
+          </div>
+          <small style="color: #6b7280; font-size: 11px; margin-top: 5px; display: block;">최근 비교 기간 (시작 ~ 종료)</small>
         </div>
       </div>
       
       <div style="display: flex; gap: 15px; margin-top: 30px;">
         <button class="btn" onclick="runFatigueAnalysis()">🔍 피로도 분석 실행</button>
-        <button class="btn btn-secondary" onclick="resetFatigue()">🔄 기간 초기화</button>
+        <button class="btn btn-secondary" onclick="resetFatigue()">🔄 설정 초기화</button>
       </div>
     </section>
     
@@ -982,7 +1008,17 @@
         </div>
       </div>
       
-      <div class="table-container" style="margin-top: 30px;">
+      <!-- ✨ Gemini AI 인사이트 (피로도 분석) -->
+      <div class="gai-section-action" style="margin-top:16px;">
+        <button class="gai-trigger-btn" onclick="runFatigueAIInsight()">
+          <span class="gai-btn-icon">✨</span> 순위 변동 원인 AI 분석
+        </button>
+        <span style="font-size:12px;color:#6b7280;">상승/하락 소재 원인 추론 · 운용 권고</span>
+        <span class="gai-key-status" style="font-size:11.5px;font-weight:600;margin-left:auto;"></span>
+      </div>
+      <div id="fatigueAIBox"></div>
+
+      <div class="table-container" style="margin-top: 20px;">
         <table>
           <thead>
             <tr>
@@ -1007,6 +1043,7 @@
           </tbody>
         </table>
       </div>
+
     </section>
     
     <!-- Section 6: 순위 변동 차트 -->
@@ -1018,6 +1055,9 @@
     </section>
   </div>
   
+  <!-- ✨ Gemini API 키 설정 모달 (동적 삽입) -->
+  <div id="geminiModalContainer"></div>
+
   <!-- 미리보기 모달 -->
   <div id="previewModal" class="modal">
     <div class="modal-content">
@@ -1384,16 +1424,33 @@
         container.appendChild(item);
       });
       
-      // 피로도 분석용 캠페인 필터 (기존 select 유지)
-      const fatigueSelect = document.getElementById('fatigueCampaignFilter');
-      if (fatigueSelect) {
-        fatigueSelect.innerHTML = '<option value="">전체 캠페인</option>';
-        campaigns.forEach(campaign => {
-          const option = document.createElement('option');
-          option.value = campaign;
-          option.textContent = campaign;
-          fatigueSelect.appendChild(option);
+      // 피로도 분석용 캠페인 필터 (체크박스)
+      const fatigueContainer = document.getElementById('fatigueCampaignCheckboxGroup');
+      if (fatigueContainer) {
+        const fatigueExistingAll = fatigueContainer.querySelector('#fatigue_campaign_all');
+        fatigueContainer.innerHTML = '';
+        if (fatigueExistingAll) {
+          fatigueContainer.appendChild(fatigueExistingAll.parentElement);
+        } else {
+          const allItem = document.createElement('div');
+          allItem.className = 'checkbox-item';
+          allItem.innerHTML = `
+            <input type="checkbox" id="fatigue_campaign_all" value="" checked onchange="toggleAllFatigueCampaigns(this)">
+            <label for="fatigue_campaign_all"><strong>전체 선택</strong></label>
+          `;
+          fatigueContainer.appendChild(allItem);
+        }
+        campaigns.forEach((campaign, index) => {
+          const item = document.createElement('div');
+          item.className = 'checkbox-item';
+          item.dataset.campaign = campaign.toLowerCase();
+          item.innerHTML = `
+            <input type="checkbox" id="fatigue_campaign_${index}" value="${campaign}" checked onchange="updateFatigueCampaignFilter()">
+            <label for="fatigue_campaign_${index}">${campaign}</label>
+          `;
+          fatigueContainer.appendChild(item);
         });
+        updateFatigueCampaignFilter();
       }
       
       updateCampaignFilter(); // 초기 선택 상태 업데이트
@@ -1412,7 +1469,7 @@
       const types = [];
       if (document.getElementById('type_BNR').checked) types.push('BNR');
       if (document.getElementById('type_VID').checked) types.push('VID');
-      if (document.getElementById('type_TXT').checked) types.push('TXT');
+      // TXT는 분석 대상이 아니므로 제외
       
       currentType = types; // 배열로 저장
       
@@ -1477,6 +1534,58 @@
       });
     }
     
+    // ─── 피로도 분석용 필터 함수들 ───────────────────────────────────
+
+    // 피로도 소재 유형 필터 업데이트
+    function updateFatigueTypeFilter() {
+      const types = [];
+      if (document.getElementById('fatigue_type_BNR').checked) types.push('BNR');
+      if (document.getElementById('fatigue_type_VID').checked) types.push('VID');
+      // TXT는 분석 대상이 아니므로 제외
+      const count = types.length;
+      document.getElementById('fatigueTypeSelectedCount').textContent =
+        count > 0 ? `${count}개 선택됨` : '선택 없음';
+    }
+
+    // 피로도 캠페인 필터 업데이트
+    function updateFatigueCampaignFilter() {
+      const container = document.getElementById('fatigueCampaignCheckboxGroup');
+      if (!container) return;
+      const checkboxes = container.querySelectorAll('input[type="checkbox"]:not(#fatigue_campaign_all)');
+      const checked = Array.from(checkboxes).filter(cb => cb.checked);
+      const allCheckbox = document.getElementById('fatigue_campaign_all');
+      if (allCheckbox) {
+        allCheckbox.checked = (checked.length === checkboxes.length);
+      }
+      const countText = checked.length === 0 ? '선택 없음' :
+                        checked.length === checkboxes.length ? '전체 캠페인 선택됨' :
+                        `${checked.length}개 캠페인 선택됨`;
+      document.getElementById('fatigueCampaignSelectedCount').textContent = countText;
+    }
+
+    // 피로도 전체 캠페인 선택/해제
+    function toggleAllFatigueCampaigns(checkbox) {
+      const container = document.getElementById('fatigueCampaignCheckboxGroup');
+      if (!container) return;
+      const checkboxes = container.querySelectorAll('input[type="checkbox"]:not(#fatigue_campaign_all)');
+      checkboxes.forEach(cb => { cb.checked = checkbox.checked; });
+      updateFatigueCampaignFilter();
+    }
+
+    // 피로도 캠페인 검색 필터
+    function filterFatigueCampaignList() {
+      const searchText = document.getElementById('fatigueCampaignSearchInput').value.toLowerCase();
+      const container = document.getElementById('fatigueCampaignCheckboxGroup');
+      if (!container) return;
+      const items = container.querySelectorAll('.checkbox-item:not(:first-child)');
+      items.forEach(item => {
+        const campaignName = item.dataset.campaign || '';
+        item.style.display = campaignName.includes(searchText) ? 'flex' : 'none';
+      });
+    }
+
+    // ─────────────────────────────────────────────────────────────────
+
     // 점수 계산
     function calculateScores() {
       if (rawData.length === 0) {
@@ -1558,6 +1667,7 @@
           const roasWeight = parseInt(document.getElementById('roasWeight').value) / 100;
           
           scoredCreatives = calculateCreativeScores(aggregated, convWeight, cpaWeight, ipmWeight, roasWeight);
+          window._scoredCreatives = scoredCreatives; // ★ AI 인사이트 함수 스코프 접근 보장
           console.log(`✅ 점수 계산 완료: ${scoredCreatives.length}개 소재`);
           
           // 4. 결과 표시 (v1.7: 필터 조건 요약 포함)
@@ -1876,18 +1986,25 @@
       
       // 피로도 분석용 필터 가져오기
       const fatigueGroupBy = document.querySelector('input[name="fatigueGroupBy"]:checked')?.value || '소재명';
-      const fatigueSelect = document.getElementById('fatigueCampaignFilter');
-      const selectedOptions = Array.from(fatigueSelect.selectedOptions);
-      const selectedValues = selectedOptions.map(opt => opt.value).filter(v => v !== '');
-      
+
+      // 캠페인 필터 (체크박스)
+      const fatigueCampContainer = document.getElementById('fatigueCampaignCheckboxGroup');
+      const fatigueCampCheckboxes = fatigueCampContainer
+        ? fatigueCampContainer.querySelectorAll('input[type="checkbox"]:not(#fatigue_campaign_all)')
+        : [];
+      const checkedFatigueCamps = Array.from(fatigueCampCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
       let fatigueCampaign = '';
-      if (selectedValues.length > 0) {
-        fatigueCampaign = selectedValues; // 배열로 저장
+      if (checkedFatigueCamps.length > 0 && checkedFatigueCamps.length < fatigueCampCheckboxes.length) {
+        fatigueCampaign = checkedFatigueCamps;
       }
+
+      // 소재 유형 필터 (체크박스)
+      const fatigueTypes = [];
+      if (document.getElementById('fatigue_type_BNR')?.checked) fatigueTypes.push('BNR');
+      if (document.getElementById('fatigue_type_VID')?.checked) fatigueTypes.push('VID');
+      if (document.getElementById('fatigue_type_TXT')?.checked) fatigueTypes.push('TXT');
       
-      const fatigueType = document.getElementById('fatigueTypeFilter').value;
-      
-      console.log(`📊 피로도 분석 기준: ${fatigueGroupBy}, 캠페인: ${Array.isArray(fatigueCampaign) ? fatigueCampaign.join(', ') : '전체'}, 유형: ${fatigueType || '전체'}`);
+      console.log(`📊 피로도 분석 기준: ${fatigueGroupBy}, 캠페인: ${Array.isArray(fatigueCampaign) ? fatigueCampaign.join(', ') : '전체'}, 유형: ${fatigueTypes.length > 0 ? fatigueTypes.join(', ') : '전체'}`);
       
       // 1. 필터 적용
       let filteredRows = rawData;
@@ -1903,12 +2020,11 @@
         }
       }
       
-      // 소재 유형 필터
-      if (fatigueType) {
-        filteredRows = filteredRows.filter(row => row['유형'] === fatigueType);
-        console.log(`🎨 소재 유형 필터: ${fatigueType} → ${filteredRows.length}개 행`);
+      // 소재 유형 필터 (체크박스 배열)
+      if (fatigueTypes.length > 0 && fatigueTypes.length < 3) {
+        filteredRows = filteredRows.filter(row => fatigueTypes.includes(row['유형']));
+        console.log(`🎨 소재 유형 필터: ${fatigueTypes.join(', ')} → ${filteredRows.length}개 행`);
       } else {
-        // 유형 필터가 없을 때는 모든 유형 허용 (v1.6: TXT 지원)
         console.log(`🎨 유형 필터: 전체 → ${filteredRows.length}개 행`);
       }
       
@@ -1996,8 +2112,10 @@
             cpaChange: cpaChange,
             cpaChangeRate: cpaChangeRate,
             fatigueStatus: fatigueStatus,
-            baselineTotalScore: baseItem.TotalScore,    // v1.7 추가
-            comparisonTotalScore: compItem.TotalScore   // v1.7 추가
+            baselineTotalScore: baseItem.TotalScore,
+            comparisonTotalScore: compItem.TotalScore,
+            baselineConversion: baseItem['전환'] || 0,    // AI 인사이트용 전환수
+            comparisonConversion: compItem['전환'] || 0,
           });
         } else {
           // 신규 소재
@@ -2057,7 +2175,11 @@
     }
     
     // 피로도 결과 표시
+    // ★ 피로도 결과 전역 저장 (Gemini AI 분석에서 참조)
+    let _lastFatigueData = null;
+
     function displayFatigueResults(results) {
+      _lastFatigueData = results;   // Gemini 분석용 캐싱
       document.getElementById('statistics').style.display = 'block';
       
       // 통계
@@ -2077,6 +2199,7 @@
       
       results.forEach(r => {
         const tr = document.createElement('tr');
+        tr.dataset.key = r.key || '';  // AI 분석에서 DOM 파싱용
         
         // 미리보기: 이미지 URL 추출
         const imageUrl = r.meta?.['링크'] || r.이미지링크 || '';
@@ -2237,7 +2360,27 @@
     
     // 피로도 초기화
     function resetFatigue() {
-      if (confirm('피로도 분석 기간을 초기화하시겠습니까?')) {
+      if (confirm('피로도 분석 설정을 초기화하시겠습니까?')) {
+        // 소재 유형 필터 초기화 (BNR, VID 체크)
+        const fatigueBNR = document.getElementById('fatigue_type_BNR');
+        const fatigueVID = document.getElementById('fatigue_type_VID');
+        const fatigueTXT = document.getElementById('fatigue_type_TXT');
+        if (fatigueBNR) fatigueBNR.checked = true;
+        if (fatigueVID) fatigueVID.checked = true;
+        if (fatigueTXT) fatigueTXT.checked = false;
+        updateFatigueTypeFilter();
+
+        // 캠페인 필터 초기화 (전체 선택)
+        const fatigueCampContainer = document.getElementById('fatigueCampaignCheckboxGroup');
+        if (fatigueCampContainer) {
+          const checkboxes = fatigueCampContainer.querySelectorAll('input[type="checkbox"]');
+          checkboxes.forEach(cb => { cb.checked = true; });
+          updateFatigueCampaignFilter();
+        }
+        // 캠페인 검색 초기화
+        const fatigueSearch = document.getElementById('fatigueCampaignSearchInput');
+        if (fatigueSearch) { fatigueSearch.value = ''; filterFatigueCampaignList(); }
+
         // 날짜 범위 재설정
         const dateColumn = detectDateColumn(normalizedData.columns);
         if (dateColumn && rawData.length > 0) {
@@ -2263,10 +2406,9 @@
             
             document.getElementById('comparisonStart').value = nextDayStr;
             document.getElementById('comparisonEnd').value = maxDate;
-            
-            console.log('🔄 피로도 분석 기간 초기화 완료');
           }
         }
+        console.log('🔄 피로도 분석 설정 초기화 완료');
       }
     }
     
@@ -2512,6 +2654,317 @@
       }
       return null;
     }
+
+    /* ═══════════════════════════════════════════════════════════
+       ✨ Gemini AI 인사이트 연동
+       ─────────────────────────────────────────────────────────
+       scoredCreatives  : 소재 성과 분석 결과 (전역)
+       fatigueResults   : 피로도 분석 결과 (전역, displayFatigueResults에서 저장)
+    ═══════════════════════════════════════════════════════════ */
+
+    // 페이지 초기화 시 Gemini 모달 & 버튼 상태 설정
+    (function initGeminiUI() {
+      // 모달 삽입
+      document.getElementById('geminiModalContainer').innerHTML = buildGeminiKeyModal();
+      // 버튼 상태 갱신
+      updateGeminiButtonStates();
+    })();
+
+    /* ── 소재 성과 분석 AI 인사이트 (사전 정의형 6-슬롯) ── */
+    /**
+     * 무료 플랜 업그레이드 유도 카드
+     * @param {'scoring'|'fatigue'} type
+     */
+    function _buildUpgradeNudge(type) {
+      const scoring = type === 'scoring';
+      // 잠긴 슬롯 목록: 무료는 각각 1슬롯만 제공, 나머지는 잠금
+      const locked = scoring
+        ? ['📊 포맷별 성과 격차 (BNR vs VID)', '⚠️ 효율 하락 원인', '⚡ 즉시 실행 액션', '🚀 스케일업 후보', '🛑 중단 권고']
+        : ['📉 피로도 진단', '⏱️ 교체 타이밍 기준', '🔄 운영 액션'];
+      const lockedItems = locked.map(l =>
+        `<div style="display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid #f1f5f9;">
+          <span style="font-size:13px;">🔒</span>
+          <span style="font-size:12px;color:#9ca3af;text-decoration:line-through;">${l}</span>
+        </div>`
+      ).join('');
+
+      // 무료/유료 비교 요약 라인
+      const freeLine  = scoring
+        ? '🆓 무료: 1회 호출 · <strong>승리 패턴 태그</strong> 1슬롯'
+        : '🆓 무료: 1회 호출 · <strong>급등 소재 원인</strong> 1슬롯';
+      const paidLine  = scoring
+        ? '💎 유료: 2회 호출 · <strong>6슬롯 전체</strong> + marketer_insight 원문 포함'
+        : '💎 유료: 2회 호출 · <strong>4슬롯 전체</strong> + 교체 타이밍·운영 액션 포함';
+
+      return `
+        <div style="margin-top:14px;border:1.5px dashed #d1d5db;border-radius:10px;padding:14px;background:#fafafa;">
+          <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
+            <span style="font-size:16px;">💎</span>
+            <span style="font-size:13px;font-weight:700;color:#374151;">유료 Pro 전용 인사이트</span>
+            <span style="font-size:10px;font-weight:700;color:#7c3aed;background:#f5f3ff;padding:2px 7px;border-radius:20px;">잠금</span>
+          </div>
+          ${lockedItems}
+          <div style="margin-top:10px;font-size:11.5px;color:#6b7280;line-height:1.8;">
+            <div style="color:#d97706;">${freeLine}</div>
+            <div style="color:#7c3aed;">${paidLine}</div>
+          </div>
+          <button onclick="openGeminiModal()"
+            style="margin-top:10px;width:100%;padding:8px;background:linear-gradient(135deg,#7c3aed,#5b21b6);
+                   color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">
+            ✨ 유료 Pro로 업그레이드
+          </button>
+        </div>`;
+    }
+
+    async function runScoringAIInsight() {
+      const box = document.getElementById('scoringAIBox');
+      if (!box) return;
+
+      // API 키 없으면 모달로 유도
+      if (!GeminiKeyManager.isSet()) {
+        openGeminiModal();
+        return;
+      }
+
+      // ★ scoredCreatives 전역 변수 접근 — window 객체로 폴백 보장
+      const data = (typeof scoredCreatives !== 'undefined' && scoredCreatives.length > 0)
+        ? scoredCreatives
+        : (window._scoredCreatives || []);
+
+      if (!data || data.length === 0) {
+        box.innerHTML = buildGeminiBox('', 'error', '소재 분석 결과가 없습니다. 점수 계산을 먼저 실행하세요.');
+        return;
+      }
+
+      // 결과 섹션 보이기 (숨김 상태에서 버튼 클릭 시 대비)
+      const resultsSection = document.getElementById('results');
+      if (resultsSection) resultsSection.style.display = 'block';
+
+      // 로딩 표시
+      box.innerHTML = buildGeminiBox('', 'loading');
+      box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      try {
+        const isPaid  = GeminiKeyManager.isPaid();
+
+        // ─── 소재 수 결정 ────────────────────────────────────────────
+        // 무료: 경량화가 핵심 → 최대 3개
+        // 유료: 원문 데이터 포함 → 최대 5개
+        const sorted   = [...data].sort((a, b) => (b.TotalScore || 0) - (a.TotalScore || 0));
+        const maxItems = isPaid ? 5 : 3;
+        const topN     = Math.min(maxItems, Math.max(1, Math.ceil(sorted.length / 3)));
+        const highPerf = sorted.slice(0, topN);
+        const lowPerf  = sorted.slice(-topN).reverse();
+
+        // ─── 태그 컬럼 자동 탐지 (개선: 여러 소재에서 공통 유효 컬럼 선별) ─────
+        // INSIGHT_COLS: 플랜에 따라 gemini-api.js scoringInsight에서 처리
+        //   무료: 완전 제외(0 토큰) / 유료: 원문 200자 포함
+        const EXCLUDE_KEYS = new Set([
+          '전환','노출수','클릭수','비용','매출','Revenue','링크','이미지링크',
+          '파일명','소재명','앱 확장 소재','앱 확장 소재 유형','캠페인','광고그룹',
+          '일','통화 코드','사이즈','투입일','언어','유형',
+          'audio_elements_bgm','audio_elements_narration','audio_elements_cv',  // 오디오 메타 제외
+        ]);
+        const INSIGHT_COLS_SET = new Set(['marketer_insight','insight','마케터_인사이트','마케터인사이트']);
+
+        // 유효 소재 샘플: highPerf + lowPerf 전체에서 컬럼별 유효값 개수 집계
+        const allSample = [...highPerf, ...lowPerf].filter(m => m.meta);
+        let tagCols = [];
+        if (allSample.length > 0) {
+          // 모든 컬럼 후보 수집
+          const colCandidates = new Set();
+          allSample.forEach(m => Object.keys(m.meta||{}).forEach(k => colCandidates.add(k)));
+
+          // 컬럼별 유효 비율 계산 후 선별
+          const colScores = {};
+          colCandidates.forEach(k => {
+            if (EXCLUDE_KEYS.has(k)) return;
+            // 무료: INSIGHT_COLS 완전 제외
+            if (!isPaid && INSIGHT_COLS_SET.has(k)) return;
+            const vals = allSample.map(m => String(m.meta?.[k] || '').trim());
+            const validVals = vals.filter(v => v && isNaN(Number(v)) && !v.startsWith('http'));
+            if (validVals.length === 0) return;
+            // 무료: 100자 초과 평균 컬럼 제외
+            const avgLen = validVals.reduce((s,v) => s+v.length, 0) / validVals.length;
+            if (!isPaid && avgLen > 100) return;
+            // 점수: 유효 비율 높고 평균 길이 짧을수록 좋음
+            colScores[k] = (validVals.length / allSample.length) * 100 - avgLen * 0.1;
+          });
+
+          tagCols = Object.entries(colScores)
+            .sort((a,b) => b[1]-a[1])       // 점수 높은 순
+            .slice(0, isPaid ? 7 : 5)        // 후보 풀 (최종 슬라이스는 gemini-api.js에서)
+            .map(([k]) => k);
+        }
+
+        console.log(`[AI인사이트] 플랜: ${isPaid ? '💎 유료' : '🆓 무료'} | 소재: ${topN}개 | 태그컬럼(${tagCols.length}개): [${tagCols.join(',')}]`);
+
+        // ─── 프롬프트 생성 ───────────────────────────────────────────
+        // scoringInsight splitMode:
+        //   isPaid=true  → { prompt1, prompt2,  splitMode:'paid_2call' }  6슬롯
+        //   isPaid=false → { prompt1,            splitMode:'free_1call' }  winTags 1슬롯
+        const prompts = GeminiPrompts.scoringInsight(highPerf, lowPerf, { tagCols, isPaid });
+        const { splitMode } = prompts;
+
+        // ─── 출력 토큰 예산 ─────────────────────────────────────────
+        // 무료: 1회 호출 × 1슬롯, 600토큰
+        // 유료: 2회 호출 × 3슬롯, 2000토큰
+        const OUT_TOKENS = GeminiKeyManager.getMaxTokens();
+        console.log(`[AI인사이트] splitMode: ${splitMode} | 출력예산: ${OUT_TOKENS}토큰/호출`);
+
+        // ─── API 호출 ────────────────────────────────────────────────
+        let slots = {};
+        const WAIT = 1600;
+
+        if (splitMode === 'paid_2call') {
+          // 유료: 2회 호출 (3슬롯씩)
+          const raw1 = await callGeminiAPI(prompts.prompt1, { maxTokens: OUT_TOKENS });
+          console.log(`[AI인사이트] 1차 응답(${raw1?.length}자):`, raw1?.slice(0, 200));
+          Object.assign(slots, parseScoringSlots(raw1) || {});
+
+          await new Promise(r => setTimeout(r, WAIT));
+          const raw2 = await callGeminiAPI(prompts.prompt2, { maxTokens: OUT_TOKENS });
+          console.log(`[AI인사이트] 2차 응답(${raw2?.length}자):`, raw2?.slice(0, 200));
+          Object.assign(slots, parseScoringSlots(raw2) || {});
+
+        } else {
+          // 무료(free_1call): 1회 호출, winTags 1슬롯
+          const raw1 = await callGeminiAPI(prompts.prompt1, { maxTokens: OUT_TOKENS });
+          console.log(`[AI인사이트] 무료 단일응답(${raw1?.length}자):`, raw1?.slice(0, 300));
+          Object.assign(slots, parseScoringSlots(raw1) || {});
+        }
+
+        const slotCount = Object.keys(slots).length;
+        console.log(`[AI인사이트] 최종 슬롯 ${slotCount}개:`, Object.keys(slots));
+
+        if (slotCount > 0) {
+          // 무료: winTags 1슬롯 + 업그레이드 유도 카드 추가
+          const cardsHtml = buildScoringSlotCards(slots);
+          const upgradeHtml = !isPaid ? _buildUpgradeNudge('scoring') : '';
+          box.innerHTML = buildGeminiBox(cardsHtml + upgradeHtml, 'done', '', 'scoring');
+        } else {
+          console.warn('⚠️ 슬롯 파싱 전체 실패');
+          box.innerHTML = buildGeminiBox(
+            `<div style="padding:10px;">
+              <p style="color:#92400e;font-size:13px;font-weight:600;margin-bottom:8px;">
+                ⚠️ JSON 슬롯 파싱에 실패했습니다
+              </p>
+              <p style="color:#6b7280;font-size:12px;margin-bottom:10px;">
+                Gemini가 JSON 형식이 아닌 자연어로 응답했을 가능성이 있습니다.<br>
+                ${isPaid
+                  ? '잠시 후 다시 시도하세요.'
+                  : '무료 플랜은 분당 15회 한도 — 1분 후 🔄 재분석을 눌러주세요.'}
+              </p>
+              <button class="gai-retry-btn" onclick="runScoringAIInsight()" style="margin-right:8px;">🔄 재분석</button>
+            </div>`,
+            'done'
+          );
+        }
+
+      } catch (err) {
+        box.innerHTML = buildGeminiBox('', 'error', err.message);
+      }
+    }
+
+    /* ── 피로도 분석 AI 인사이트 ── */
+    // _lastFatigueData는 displayFatigueResults 함수 선언부에서 이미 설정됨
+
+    async function runFatigueAIInsight() {
+      const box = document.getElementById('fatigueAIBox');
+
+      if (!GeminiKeyManager.isSet()) {
+        openGeminiModal();
+        return;
+      }
+
+      // 직접 캐싱된 데이터 사용
+      if (!_lastFatigueData || _lastFatigueData.length === 0) {
+        box.innerHTML = buildGeminiBox('', 'error', '피로도 분석을 먼저 실행하세요.');
+        return;
+      }
+
+      box.innerHTML = buildGeminiBox('', 'loading');
+
+      try {
+        // _lastFatigueData에서 movers 구성 (태그 meta 포함)
+        const movers = _lastFatigueData
+          .filter(r => r.rankChange !== 0 && r.rankStatus !== 'new' && r.rankStatus !== 'disappeared')
+          .map(r => ({
+            key:           r.key || '',
+            유형:           r.유형 || '-',
+            rankChange:    r.rankChange || 0,
+            fatigueStatus: r.fatigueStatus || '-',
+            baseCPA:       r.baselineCPA  || 0,
+            compCPA:       r.comparisonCPA || 0,
+            cpaChangeRate: r.cpaChangeRate || 0,
+            baseConv:      r.baselineConversion  || 0,
+            compConv:      r.comparisonConversion || 0,
+            baseScore:     r.baselineTotalScore  || 0,
+            compScore:     r.comparisonTotalScore || 0,
+            meta:          r.meta || {},          // ★ 태그 정보 포함
+          }))
+          .sort((a, b) => Math.abs(b.rankChange) - Math.abs(a.rankChange))
+          .slice(0, isPaidF ? 10 : 6);            // 무료 6개, 유료 10개
+
+        // 기간 정보
+        const periods = {
+          basePeriod: `${document.getElementById('baselineStart')?.value || ''} ~ ${document.getElementById('baselineEnd')?.value || ''}`,
+          compPeriod: `${document.getElementById('comparisonStart')?.value || ''} ~ ${document.getElementById('comparisonEnd')?.value || ''}`,
+        };
+
+        // fatigueInsight splitMode:
+        //   isPaid=true  → { prompt1, prompt2, splitMode:'paid_2call' }  4슬롯
+        //   isPaid=false → { prompt1,           splitMode:'free_1call' }  riseReason 1슬롯
+        const isPaidF = GeminiKeyManager.isPaid();
+        const fatiguePrompts = GeminiPrompts.fatigueInsight(movers, periods, { isPaid: isPaidF });
+        const MAX_FT = GeminiKeyManager.getFatigueTokens();
+        console.log(`[피로도AI] 플랜: ${isPaidF ? '💎 유료' : '🆓 무료'} | splitMode: ${fatiguePrompts.splitMode} | 출력예산 ${MAX_FT}토큰`);
+
+        let slots = {};
+
+        if (fatiguePrompts.splitMode === 'paid_2call') {
+          // 유료: 2회 호출 (2슬롯씩) — 4슬롯 전체
+          const fraw1 = await callGeminiAPI(fatiguePrompts.prompt1, { maxTokens: MAX_FT });
+          console.log(`[피로도AI] 1차(${fraw1?.length}자):`, fraw1?.slice(0, 200));
+          Object.assign(slots, parseFatigueSlots(fraw1) || {});
+
+          await new Promise(r => setTimeout(r, 1600));
+          const fraw2 = await callGeminiAPI(fatiguePrompts.prompt2, { maxTokens: MAX_FT });
+          console.log(`[피로도AI] 2차(${fraw2?.length}자):`, fraw2?.slice(0, 200));
+          Object.assign(slots, parseFatigueSlots(fraw2) || {});
+
+        } else {
+          // 무료(free_1call): 1회 호출, riseReason 1슬롯
+          const fraw1 = await callGeminiAPI(fatiguePrompts.prompt1, { maxTokens: MAX_FT });
+          console.log(`[피로도AI] 무료 단일응답(${fraw1?.length}자):`, fraw1?.slice(0, 300));
+          Object.assign(slots, parseFatigueSlots(fraw1) || {});
+        }
+
+        const slotCount = Object.keys(slots).length;
+        console.log(`[피로도AI] 최종 슬롯 ${slotCount}개:`, Object.keys(slots));
+
+        if (slotCount > 0) {
+          const cardsHtml = buildFatigueSlotCards(slots);
+          const upgradeHtml = !isPaidF ? _buildUpgradeNudge('fatigue') : '';
+          box.innerHTML = buildGeminiBox(cardsHtml + upgradeHtml, 'done', '', 'fatigue');
+        } else {
+          console.warn('⚠️ 피로도 슬롯 파싱 실패 fallback');
+          const fallbackRaw = fatiguePrompts.splitMode === 'paid_2call'
+            ? '[응답 없음]' : '[응답 없음]';
+          box.innerHTML = buildGeminiBox(
+            `<div style="margin-bottom:8px;padding:6px 10px;background:#fef3c7;border-radius:6px;font-size:11px;color:#92400e;">
+              ⚠️ JSON 슬롯 파싱 실패 — 🔄 재분석을 눌러주세요.
+            </div>
+            <div style="margin-top:10px;"><button class="gai-retry-btn" onclick="runFatigueAIInsight()">🔄 재분석</button></div>`,
+            'done'
+          );
+        }
+
+      } catch (err) {
+        box.innerHTML = buildGeminiBox('', 'error', err.message);
+      }
+    }
+
   </script>
 </body>
 </html>
