@@ -3,915 +3,1039 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pepp Heroes 소재 분석 대시보드 사용 안내</title>
+  <title>Com2uS R팀 소재 분석 시스템 사용 안내서 v4.0</title>
   <style>
-    @page {
-      size: A4;
-      margin: 2cm;
-    }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
+    @page { size: A4; margin: 18mm 20mm; }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      font-family: 'Malgun Gothic', sans-serif;
-      line-height: 1.6;
+      font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+      line-height: 1.65;
       color: #1f2937;
-      background: white;
+      background: #f0f2f5;
     }
-    
+
+    /* ── 페이지 컨테이너 ─────────────────────────── */
     .page {
       width: 210mm;
       min-height: 297mm;
-      padding: 20mm;
-      margin: 0 auto 20px;
+      padding: 18mm 20mm;
+      margin: 0 auto 24px;
       background: white;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      page-break-after: always;
+      box-shadow: 0 4px 16px rgba(0,0,0,.12);
+      position: relative;
+      overflow: hidden;
     }
-    
+
     @media print {
-      .page {
-        box-shadow: none;
-        margin: 0;
-        page-break-after: always;
-      }
-      .no-print {
-        display: none;
-      }
+      body { background: white; }
+      .page { box-shadow: none; margin: 0; page-break-after: always; }
+      .no-print { display: none !important; }
     }
-    
-    /* 표지 */
+
+    /* ── 표지 ────────────────────────────────────── */
     .cover {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(145deg, #E8003D 0%, #b5012f 50%, #7c0020 100%);
       color: white;
+      padding: 30mm 20mm;
     }
-    
-    .cover-logo {
-      font-size: 120px;
-      margin-bottom: 30px;
-    }
-    
-    .cover-title {
-      font-size: 48px;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-    
-    .cover-subtitle {
-      font-size: 24px;
-      margin-bottom: 60px;
-      opacity: 0.9;
-    }
-    
-    .cover-info {
-      font-size: 16px;
-      opacity: 0.8;
-    }
-    
-    /* 목차 */
-    .toc {
-      margin-top: 40px;
-    }
-    
-    .toc-title {
-      font-size: 32px;
-      font-weight: 700;
-      color: #667eea;
-      margin-bottom: 30px;
-      border-bottom: 3px solid #667eea;
-      padding-bottom: 10px;
-    }
-    
-    .toc-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 12px 0;
-      border-bottom: 1px solid #e5e7eb;
-      font-size: 18px;
-    }
-    
-    .toc-item:hover {
-      background: #f9fafb;
-      padding-left: 10px;
-      cursor: pointer;
-    }
-    
-    .toc-number {
-      color: #667eea;
-      font-weight: 600;
-      margin-right: 10px;
-    }
-    
-    .toc-page {
-      color: #9ca3af;
-      font-weight: 600;
-    }
-    
-    /* 본문 */
-    .page-title {
-      font-size: 36px;
-      font-weight: 700;
-      color: #667eea;
-      margin-bottom: 30px;
-      border-bottom: 3px solid #667eea;
-      padding-bottom: 10px;
-    }
-    
-    .section-title {
-      font-size: 24px;
-      font-weight: 700;
-      color: #1f2937;
-      margin: 30px 0 20px;
-      padding-left: 15px;
-      border-left: 5px solid #667eea;
-    }
-    
-    .subsection-title {
-      font-size: 20px;
-      font-weight: 600;
-      color: #374151;
-      margin: 25px 0 15px;
-    }
-    
-    p {
-      margin-bottom: 15px;
-      font-size: 14px;
-      text-align: justify;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-    }
-    
-    ul, ol {
-      margin: 15px 0 15px 25px;
-    }
-    
-    li {
-      margin-bottom: 10px;
-      font-size: 14px;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-    }
-    
-    .highlight-box {
-      background: linear-gradient(135deg, #667eea15, #764ba215);
-      border-left: 4px solid #667eea;
-      padding: 20px;
-      margin: 20px 0;
-      border-radius: 8px;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-    }
-    
-    .highlight-box strong {
-      color: #667eea;
-      font-size: 16px;
-    }
-    
-    .info-box {
-      background: #f0f9ff;
-      border-left: 4px solid #3b82f6;
-      padding: 15px;
-      margin: 20px 0;
-      border-radius: 8px;
-    }
-    
-    .warning-box {
-      background: #fef3c7;
-      border-left: 4px solid #f59e0b;
-      padding: 15px;
-      margin: 20px 0;
-      border-radius: 8px;
-    }
-    
-    .success-box {
-      background: #d1fae5;
-      border-left: 4px solid #10b981;
-      padding: 15px;
-      margin: 20px 0;
-      border-radius: 8px;
-    }
-    
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
-      font-size: 13px;
-      table-layout: fixed;
-    }
-    
-    th {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 12px;
-      text-align: left;
-      font-weight: 600;
-      word-wrap: break-word;
-    }
-    
-    td {
-      padding: 10px 12px;
-      border-bottom: 1px solid #e5e7eb;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-      vertical-align: top;
-    }
-    
-    tr:hover {
-      background: #f9fafb;
-    }
-    
-    .step-number {
-      display: inline-block;
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border-radius: 50%;
-      text-align: center;
-      line-height: 32px;
-      font-weight: 600;
-      margin-right: 10px;
-    }
-    
-    .badge {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-    
-    .badge-new {
-      background: #10b981;
-      color: white;
-    }
-    
-    .badge-important {
-      background: #ef4444;
-      color: white;
-    }
-    
-    .badge-tip {
-      background: #3b82f6;
-      color: white;
-    }
-    
-    .screenshot-placeholder {
-      width: 100%;
-      height: 200px;
-      background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #9ca3af;
-      font-size: 16px;
-      margin: 20px 0;
-      border: 2px dashed #d1d5db;
-    }
-    
-    .footer {
+    .cover-accent {
       position: absolute;
-      bottom: 20mm;
-      left: 20mm;
-      right: 20mm;
-      text-align: center;
-      font-size: 12px;
-      color: #9ca3af;
-      border-top: 1px solid #e5e7eb;
-      padding-top: 10px;
+      top: 0; right: 0;
+      width: 160px; height: 160px;
+      background: rgba(255,255,255,.06);
+      border-radius: 0 0 0 100%;
     }
-    
-    @media print {
-      .footer {
-        position: fixed;
-      }
+    .cover-accent2 {
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 200px; height: 200px;
+      background: rgba(255,255,255,.05);
+      border-radius: 0 100% 0 0;
     }
-    
-    .print-button {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 12px 24px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-      z-index: 1000;
+    .cover-logo { font-size: 80px; margin-bottom: 24px; }
+    .cover-tag {
+      font-size: 12px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; opacity: .7;
+      background: rgba(255,255,255,.15);
+      padding: 5px 16px; border-radius: 20px; margin-bottom: 20px;
     }
-    
-    .print-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
+    .cover-title {
+      font-size: 40px; font-weight: 900; line-height: 1.25;
+      margin-bottom: 14px; letter-spacing: -0.5px;
     }
+    .cover-subtitle {
+      font-size: 20px; opacity: .85; margin-bottom: 50px; font-weight: 300;
+    }
+    .cover-divider {
+      width: 60px; height: 3px; background: rgba(255,255,255,.5);
+      margin: 0 auto 40px; border-radius: 2px;
+    }
+    .cover-meta {
+      display: flex; gap: 32px; justify-content: center;
+      font-size: 13px; opacity: .8;
+    }
+    .cover-meta-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .cover-meta-label { font-size: 10px; opacity: .6; letter-spacing: 1px; text-transform: uppercase; }
+    .cover-meta-value { font-size: 15px; font-weight: 700; }
+
+    /* ── 목차 ────────────────────────────────────── */
+    .toc-title {
+      font-size: 28px; font-weight: 800; color: #E8003D;
+      margin-bottom: 28px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid #E8003D;
+    }
+    .toc-section { margin-bottom: 6px; }
+    .toc-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 9px 12px; border-radius: 8px;
+      font-size: 14px; transition: background .15s;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .toc-item.main { font-weight: 700; font-size: 15px; background: #fef2f2; color: #b91c1c; border: none; margin-bottom: 2px; }
+    .toc-item.sub { padding-left: 28px; color: #374151; font-size: 13px; }
+    .toc-num { color: #E8003D; font-weight: 700; margin-right: 8px; min-width: 24px; }
+    .toc-pg { color: #9ca3af; font-size: 12px; font-weight: 600; white-space: nowrap; margin-left: 8px; }
+
+    /* ── 본문 공통 ────────────────────────────────── */
+    .page-title {
+      font-size: 28px; font-weight: 800; color: #E8003D;
+      margin-bottom: 24px; padding-bottom: 10px;
+      border-bottom: 3px solid #E8003D;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-title {
+      font-size: 18px; font-weight: 700; color: #1f2937;
+      margin: 26px 0 14px;
+      padding: 8px 14px;
+      border-left: 5px solid #E8003D;
+      background: #fef2f2;
+      border-radius: 0 6px 6px 0;
+    }
+    .subsection-title {
+      font-size: 15px; font-weight: 700; color: #374151;
+      margin: 18px 0 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    p { margin-bottom: 12px; font-size: 13.5px; text-align: justify; word-wrap: break-word; }
+    ul, ol { margin: 10px 0 10px 22px; }
+    li { margin-bottom: 7px; font-size: 13.5px; word-wrap: break-word; line-height: 1.6; }
+    code { font-family: 'Consolas', monospace; font-size: 12px; background: #f3f4f6; padding: 1px 5px; border-radius: 4px; }
+
+    /* ── 박스 ─────────────────────────────────────── */
+    .box {
+      padding: 14px 16px; margin: 14px 0; border-radius: 8px;
+      font-size: 13px; line-height: 1.7; word-wrap: break-word;
+    }
+    .box-red    { background: #fef2f2; border-left: 4px solid #E8003D; }
+    .box-blue   { background: #eff6ff; border-left: 4px solid #3b82f6; }
+    .box-green  { background: #f0fdf4; border-left: 4px solid #10b981; }
+    .box-yellow { background: #fefce8; border-left: 4px solid #f59e0b; }
+    .box-purple { background: #faf5ff; border-left: 4px solid #7c3aed; }
+    .box-gray   { background: #f9fafb; border-left: 4px solid #6b7280; }
+    .box strong { display: block; margin-bottom: 6px; font-size: 13.5px; }
+
+    /* ── 표 ───────────────────────────────────────── */
+    table {
+      width: 100%; border-collapse: collapse; margin: 14px 0;
+      font-size: 12.5px; table-layout: fixed;
+    }
+    th {
+      background: #E8003D; color: white; padding: 9px 11px;
+      text-align: left; font-weight: 700; word-wrap: break-word;
+    }
+    td { padding: 8px 11px; border-bottom: 1px solid #f0f0f0; word-wrap: break-word; vertical-align: top; }
+    tr:nth-child(even) td { background: #fafafa; }
+
+    /* ── 배지 ─────────────────────────────────────── */
+    .badge {
+      display: inline-block; padding: 2px 9px; border-radius: 12px;
+      font-size: 10.5px; font-weight: 700; vertical-align: middle;
+    }
+    .badge-red    { background: #E8003D; color: white; }
+    .badge-green  { background: #10b981; color: white; }
+    .badge-blue   { background: #3b82f6; color: white; }
+    .badge-purple { background: #7c3aed; color: white; }
+    .badge-gray   { background: #6b7280; color: white; }
+    .badge-gold   { background: #f59e0b; color: white; }
+
+    /* ── 스텝 넘버 ────────────────────────────────── */
+    .step-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px; background: #E8003D; color: white;
+      border-radius: 50%; font-weight: 700; font-size: 13px;
+      margin-right: 8px; flex-shrink: 0;
+    }
+    .step-row { display: flex; align-items: flex-start; margin-bottom: 10px; font-size: 13.5px; }
+    .step-row .step-body { flex: 1; padding-top: 3px; }
+
+    /* ── 워크플로우 다이어그램 ────────────────────── */
+    .workflow {
+      display: flex; align-items: center; gap: 0;
+      margin: 16px 0; flex-wrap: nowrap; overflow-x: auto;
+    }
+    .wf-step {
+      flex: 1; min-width: 0;
+      background: linear-gradient(135deg, #E8003D, #b5012f);
+      color: white; border-radius: 8px;
+      padding: 10px 8px; text-align: center;
+      font-size: 11.5px; font-weight: 700; line-height: 1.4;
+    }
+    .wf-step .wf-icon { font-size: 18px; display: block; margin-bottom: 4px; }
+    .wf-arrow {
+      color: #E8003D; font-size: 20px; font-weight: 700;
+      padding: 0 4px; flex-shrink: 0;
+    }
+    .wf-step.step2 { background: linear-gradient(135deg, #7c3aed, #5b21b6); }
+    .wf-step.step3 { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+
+    /* ── AI 인사이트 슬롯 미리보기 ──────────────── */
+    .ai-slot-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0;
+    }
+    .ai-slot {
+      border-radius: 8px; padding: 10px 12px; font-size: 12px;
+    }
+    .ai-slot .slot-title { font-weight: 700; margin-bottom: 4px; font-size: 12.5px; }
+    .ai-slot .slot-body { color: #374151; line-height: 1.6; }
+
+    /* ── 피로도 상태 배지 ─────────────────────────── */
+    .fatigue-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 12px 0;
+    }
+    .fatigue-card {
+      border-radius: 8px; padding: 10px; text-align: center; font-size: 12px;
+    }
+    .fatigue-card .fc-icon { font-size: 22px; display: block; margin-bottom: 4px; }
+    .fatigue-card .fc-name { font-weight: 700; margin-bottom: 3px; font-size: 13px; }
+    .fatigue-card .fc-cpa { font-size: 11px; color: #6b7280; margin-bottom: 4px; }
+    .fatigue-card .fc-action { font-size: 11px; font-weight: 600; }
+
+    /* ── 등급 뱃지 ───────────────────────────────── */
+    .grade-table td:first-child { font-weight: 700; }
+
+    /* ── 플랜 비교표 ─────────────────────────────── */
+    .plan-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
+    .plan-card {
+      border-radius: 10px; padding: 14px; font-size: 12px;
+    }
+    .plan-card .plan-name { font-size: 15px; font-weight: 800; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+    .plan-card li { margin-bottom: 5px; }
+
+    /* ── 푸터 ─────────────────────────────────────── */
+    .footer {
+      position: absolute; bottom: 12mm; left: 20mm; right: 20mm;
+      text-align: center; font-size: 10.5px; color: #9ca3af;
+      border-top: 1px solid #e5e7eb; padding-top: 7px;
+    }
+    @media print { .footer { position: fixed; } }
+
+    /* ── 인쇄 버튼 ────────────────────────────────── */
+    .print-btn {
+      position: fixed; top: 20px; right: 20px; z-index: 9999;
+      padding: 10px 22px;
+      background: linear-gradient(135deg, #E8003D, #b5012f);
+      color: white; border: none; border-radius: 8px;
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      box-shadow: 0 4px 14px rgba(232,0,61,.35);
+    }
+    .print-btn:hover { transform: translateY(-2px); }
+
+    /* ── 체크시트 ─────────────────────────────────── */
+    .cheat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+    .cheat-card { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px 14px; font-size: 12px; }
+    .cheat-card .cheat-title { font-weight: 700; color: #E8003D; margin-bottom: 8px; font-size: 13px; }
+    .cheat-card li { margin-bottom: 4px; font-size: 12px; }
+
+    /* ── FAQ ─────────────────────────────────────── */
+    .faq-item { margin-bottom: 18px; }
+    .faq-q { font-weight: 700; font-size: 14px; color: #1f2937; margin-bottom: 6px; }
+    .faq-q::before { content: 'Q. '; color: #E8003D; }
+    .faq-a { font-size: 13.5px; color: #374151; padding-left: 16px; }
   </style>
 </head>
 <body>
-  <button class="print-button no-print" onclick="window.print()">🖨️ 인쇄하기</button>
-  
-  <!-- 표지 -->
+  <button class="print-btn no-print" onclick="window.print()">🖨️ 인쇄하기</button>
+
+  <!-- ════════════════════════════════════════════════════════
+       표지
+  ════════════════════════════════════════════════════════ -->
   <div class="page cover">
+    <div class="cover-accent"></div>
+    <div class="cover-accent2"></div>
     <div class="cover-logo">📊</div>
-    <div class="cover-title">Com2uS R팀<br>소재 분석 대시보드</div>
-    <div class="cover-subtitle">사용 안내서</div>
-    <div class="cover-info">
-      <p style="margin-bottom: 10px;"><strong>버전 v1.7</strong></p>
-      <p>Com2uS R 마케팅팀 (전 타이틀 공통 사용)</p>
-      <p>2026년 4월 8일</p>
+    <div class="cover-tag">Com2uS R Marketing Team</div>
+    <div class="cover-title">소재 분석 시스템<br>사용 안내서</div>
+    <div class="cover-subtitle">Step 1 성과 분석 · Step 2 군집화 분석 · Gemini AI 인사이트</div>
+    <div class="cover-divider"></div>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Version</span>
+        <span class="cover-meta-value">v4.0 (시스템 v7)</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Updated</span>
+        <span class="cover-meta-value">2026. 04. 13</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Team</span>
+        <span class="cover-meta-value">R마케팅팀 전체</span>
+      </div>
     </div>
   </div>
-  
-  <!-- 목차 -->
+
+  <!-- ════════════════════════════════════════════════════════
+       목차
+  ════════════════════════════════════════════════════════ -->
   <div class="page">
     <div class="toc-title">📑 목차</div>
-    <div class="toc">
-      <div class="toc-item">
-        <div><span class="toc-number">1.</span>도구 소개 및 목적</div>
-        <div class="toc-page">3</div>
-      </div>
-      <div class="toc-item">
-        <div><span class="toc-number">2.</span>시작하기 - 접속 및 업로드</div>
-        <div class="toc-page">4</div>
-      </div>
-      <div class="toc-item">
-        <div><span class="toc-number">3.</span>주요 기능 활용법</div>
-        <div class="toc-page">5-7</div>
-      </div>
-      <div class="toc-item">
-        <div><span class="toc-number">4.</span>결과 해석 가이드</div>
-        <div class="toc-page">8-9</div>
-      </div>
-      <div class="toc-item">
-        <div><span class="toc-number">5.</span>주간 루틴 및 활용 예시</div>
-        <div class="toc-page">10</div>
-      </div>
-      <div class="toc-item">
-        <div><span class="toc-number">6.</span>자주 묻는 질문 (FAQ)</div>
-        <div class="toc-page">11-13</div>
-      </div>
-      <div class="toc-item">
-        <div><span class="toc-number">7.</span>문의 및 지원</div>
-        <div class="toc-page">14</div>
-      </div>
+    <div class="toc-section">
+      <div class="toc-item main"><div><span class="toc-num">1.</span>시스템 개요 및 워크플로우</div><div class="toc-pg">3</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">1.1</span>도구 구성 및 접속 방법</div><div class="toc-pg">3</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">1.2</span>전체 분석 워크플로우</div><div class="toc-pg">3</div></div>
     </div>
-    
-    <div class="highlight-box" style="margin-top: 50px;">
-      <strong>💡 이 문서를 읽기 전에</strong><br><br>
-      이 안내서는 Com2uS R마케팅팀의 <strong>소재 성과 분석 업무 효율화</strong>를 위해 제작되었습니다. 
-      기존 수동 집계 방식 대비 <strong>90% 시간 단축</strong>과 <strong>데이터 기반 의사결정</strong>을 지원합니다.
-      <br><br>
-      <strong>처음 사용하시는 분</strong>: 2-3번 섹션부터 순서대로 읽어주세요.<br>
-      <strong>기존 사용자</strong>: 6번 FAQ 섹션을 참고하세요.
+    <div class="toc-section">
+      <div class="toc-item main"><div><span class="toc-num">2.</span>CSV 데이터 준비</div><div class="toc-pg">4</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">2.1</span>필수 컬럼 및 자동 인식 컬럼</div><div class="toc-pg">4</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">2.2</span>태그 컬럼 (Step 2 군집화용)</div><div class="toc-pg">4</div></div>
     </div>
-    
-    <div class="footer">
-      Com2uS R팀 소재 분석 대시보드 v1.7 | Com2uS Marketing Team
+    <div class="toc-section">
+      <div class="toc-item main"><div><span class="toc-num">3.</span>Step 1 — 소재 성과 분석</div><div class="toc-pg">5</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">3.1</span>점수 계산 (4개 지표 가중치)</div><div class="toc-pg">5</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">3.2</span>등급 기준 및 결과 해석</div><div class="toc-pg">5</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">3.3</span>피로도 분석 (기간 비교)</div><div class="toc-pg">6</div></div>
     </div>
+    <div class="toc-section">
+      <div class="toc-item main"><div><span class="toc-num">4.</span>Step 2 — 군집화 분석</div><div class="toc-pg">7</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">4.1</span>Step 2-① 컬럼 설정 (step2_column_selector)</div><div class="toc-pg">7</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">4.2</span>Step 2-② 군집화 실행 (step2_clustering)</div><div class="toc-pg">7</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">4.3</span>군집 등급 및 결과 해석</div><div class="toc-pg">8</div></div>
+    </div>
+    <div class="toc-section">
+      <div class="toc-item main"><div><span class="toc-num">5.</span>Gemini AI 인사이트</div><div class="toc-pg">9</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">5.1</span>API 키 설정 및 플랜 선택</div><div class="toc-pg">9</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">5.2</span>소재 성과 AI 인사이트</div><div class="toc-pg">9</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">5.3</span>피로도 AI 인사이트</div><div class="toc-pg">10</div></div>
+    </div>
+    <div class="toc-section">
+      <div class="toc-item main"><div><span class="toc-num">6.</span>자주 묻는 질문 (FAQ)</div><div class="toc-pg">11</div></div>
+    </div>
+    <div class="toc-section">
+      <div class="toc-item main"><div><span class="toc-num">7.</span>빠른 참조 (Cheat Sheet) · 버전 이력</div><div class="toc-pg">12</div></div>
+    </div>
+
+    <div class="box box-red" style="margin-top: 30px;">
+      <strong>💡 안내서 활용 가이드</strong>
+      이 안내서는 R마케팅팀의 <strong>소재 분석 업무 전체</strong>를 다룹니다.<br>
+      · <strong>처음 사용자</strong> → 1 → 2 → 3 → 4 순서로 읽어주세요.<br>
+      · <strong>Step 2 / AI 인사이트 신규 사용자</strong> → 4, 5번 섹션을 참고하세요.<br>
+      · <strong>빠른 참조</strong> → 마지막 Cheat Sheet(12p)를 책상에 붙여두세요.
+    </div>
+
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v4.0 | Com2uS R Marketing Team</div>
   </div>
-  
-  <!-- 1. 도구 소개 -->
+
+  <!-- ════════════════════════════════════════════════════════
+       1. 시스템 개요
+  ════════════════════════════════════════════════════════ -->
   <div class="page">
-    <div class="page-title">1. 도구 소개 및 목적</div>
-    
-    <div class="section-title">1.1 개발 배경</div>
-    <p>
-      기존 소재 성과 분석은 <strong>Google Ads / Facebook Ads 리포트를 수동으로 다운로드</strong>한 후, 
-      <strong>엑셀 피벗 테이블로 수작업 집계</strong>하는 방식으로 진행되었습니다. 
-      이 과정에서 <strong>주당 2~3시간</strong>이 소요되고, 사람의 실수로 인한 오류 가능성이 있었습니다.
-    </p>
-    
-    <div class="highlight-box">
-      <strong>🎯 핵심 가치</strong><br><br>
-      <table style="background: transparent;">
-        <thead>
-          <tr>
-            <th style="background: #667eea;">항목</th>
-            <th style="background: #667eea;">기존 방식</th>
-            <th style="background: #10b981;">대시보드 활용</th>
-            <th style="background: #ef4444;">개선 효과</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>데이터 처리 시간</strong></td>
-            <td>2~3시간 (수동 집계)</td>
-            <td>5분 이내 (자동 계산)</td>
-            <td><strong>⬇️ 90% 단축</strong></td>
-          </tr>
-          <tr>
-            <td><strong>분석 정확도</strong></td>
-            <td>사람 실수 가능</td>
-            <td>시스템 자동 계산</td>
-            <td><strong>✅ 100% 정확</strong></td>
-          </tr>
-          <tr>
-            <td><strong>다차원 분석</strong></td>
-            <td>제한적 (피벗 한계)</td>
-            <td>4개 지표 가중치 조절</td>
-            <td><strong>⬆️ 300% 향상</strong></td>
-          </tr>
-          <tr>
-            <td><strong>피로도 추적</strong></td>
-            <td>수동 비교 필요</td>
-            <td>자동 순위 변동 추적</td>
-            <td><strong>✅ 95% 정확도</strong></td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="page-title">📌 1. 시스템 개요 및 워크플로우</div>
+
+    <div class="section-title">1.1 도구 구성 및 접속 방법</div>
+
+    <div class="box box-green" style="margin-bottom:16px;">
+      <strong>🌐 접속 URL (GitHub Pages — 설치 없이 바로 사용)</strong>
+      <div style="margin-top:10px;background:rgba(255,255,255,.7);border-radius:6px;padding:10px 14px;">
+        <div style="font-size:11px;color:#6b7280;font-weight:700;letter-spacing:1px;margin-bottom:4px;">홈 대시보드 (시작 페이지)</div>
+        <div style="font-size:14px;font-weight:800;color:#059669;letter-spacing:.3px;word-break:break-all;">
+          🔗 https://chioyoon.github.io/creativedashboard/
+        </div>
+      </div>
+      <div style="margin-top:8px;font-size:12.5px;color:#374151;">
+        · 별도 설치 불필요 — 크롬·엣지 브라우저에서 URL 입력 후 바로 사용<br>
+        · <strong>북마크 등록 권장</strong> (팀원 공유 시 위 URL 하나로 공유)<br>
+        · 모든 데이터는 <strong>브라우저 내에서만 처리</strong>되며 서버로 전송되지 않습니다
+      </div>
     </div>
-    
-    <div class="section-title">1.2 활용 목표</div>
+
+    <table>
+      <thead><tr><th style="width:42%">접속 URL</th><th>역할</th><th style="width:14%">상태</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code style="font-size:11px;word-break:break-all;">…/creativedashboard/</code></td>
+          <td>홈 대시보드 — 워크플로우 안내, Step1/2 진입 버튼</td>
+          <td><span class="badge badge-green">✅ 운영</span></td>
+        </tr>
+        <tr>
+          <td><code style="font-size:11px;word-break:break-all;">…/step1_integrated.html</code></td>
+          <td><strong>Step 1</strong> — CSV 업로드 → 점수 계산 → 피로도 분석 → AI 인사이트</td>
+          <td><span class="badge badge-green">✅ 운영</span></td>
+        </tr>
+        <tr>
+          <td><code style="font-size:11px;word-break:break-all;">…/step2_column_selector.html</code></td>
+          <td><strong>Step 2-①</strong> — 태그 컬럼 선택, 가중치 설정, 군집화 모드 결정</td>
+          <td><span class="badge badge-green">✅ 운영</span></td>
+        </tr>
+        <tr>
+          <td><code style="font-size:11px;word-break:break-all;">…/step2_clustering.html</code></td>
+          <td><strong>Step 2-②</strong> — 하이브리드 군집화 실행, 결과 시각화, AI 인사이트</td>
+          <td><span class="badge badge-green">✅ 운영</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size:11.5px;color:#6b7280;margin-top:-8px;">※ <code>…</code> = <code>https://chioyoon.github.io/creativedashboard</code> (공통 베이스 URL)</p>
+
+    <div class="section-title">1.2 전체 분석 워크플로우</div>
+
+    <div class="workflow">
+      <div class="wf-step">
+        <span class="wf-icon">📂</span>
+        CSV 업로드<br><span style="font-weight:300;font-size:10px;">BNR/VID 자동분리</span>
+      </div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step">
+        <span class="wf-icon">📊</span>
+        Step 1<br><span style="font-weight:300;font-size:10px;">점수계산·피로도</span>
+      </div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step">
+        <span class="wf-icon">✨</span>
+        AI 인사이트<br><span style="font-weight:300;font-size:10px;">Gemini 분석</span>
+      </div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step step2">
+        <span class="wf-icon">🏷️</span>
+        Step 2-①<br><span style="font-weight:300;font-size:10px;">컬럼·가중치 설정</span>
+      </div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step step2">
+        <span class="wf-icon">🔬</span>
+        Step 2-②<br><span style="font-weight:300;font-size:10px;">군집화·시각화</span>
+      </div>
+      <div class="wf-arrow">→</div>
+      <div class="wf-step step3">
+        <span class="wf-icon">🚀</span>
+        전략 수립<br><span style="font-weight:300;font-size:10px;">ScaleUp·Exit</span>
+      </div>
+    </div>
+
+    <table>
+      <thead><tr><th>항목</th><th>기존 방식</th><th>시스템 활용</th><th>개선 효과</th></tr></thead>
+      <tbody>
+        <tr><td><strong>처리 시간</strong></td><td>2~3시간 수동 집계</td><td>5분 이내 자동 계산</td><td><strong>⬇️ 90% 단축</strong></td></tr>
+        <tr><td><strong>분석 깊이</strong></td><td>지표 단순 비교</td><td>4지표 가중치 + 태그 군집</td><td><strong>⬆️ 다차원 분석</strong></td></tr>
+        <tr><td><strong>피로도 추적</strong></td><td>수동 주간 비교</td><td>자동 CPA 변화율 추적</td><td><strong>✅ 조기 감지</strong></td></tr>
+        <tr><td><strong>크리에이티브 인사이트</strong></td><td>담당자 주관적 판단</td><td>태그 기반 AI 원인 분석</td><td><strong>✨ 데이터 기반</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v4.0 | Page 3</div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       2. CSV 준비
+  ════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <div class="page-title">📂 2. CSV 데이터 준비</div>
+
+    <div class="section-title">2.1 필수 컬럼 및 자동 인식 컬럼</div>
+    <p>아래 컬럼명을 포함한 CSV 파일을 준비합니다. <strong>다른 이름도 자동 인식</strong>되므로 원본 CSV를 그대로 사용해도 됩니다.</p>
+
+    <table>
+      <thead><tr><th style="width:18%">표준 컬럼명</th><th style="width:38%">자동 인식되는 다른 이름</th><th style="width:14%">필수</th><th>설명</th></tr></thead>
+      <tbody>
+        <tr><td><strong>소재명</strong></td><td>Ad Name, 광고명, Creative Name, 파일명</td><td><span class="badge badge-red">필수</span></td><td>소재 식별자</td></tr>
+        <tr><td><strong>유형</strong></td><td>앱 확장 소재 유형, Type, 소재유형</td><td><span class="badge badge-red">필수</span></td><td>BNR / VID (TXT 자동 제외)</td></tr>
+        <tr><td><strong>전환</strong></td><td>Conversions, 전환수, conv</td><td><span class="badge badge-red">필수</span></td><td>설치/구매 전환수</td></tr>
+        <tr><td><strong>비용</strong></td><td>Cost, 비용(원), spend</td><td><span class="badge badge-red">필수</span></td><td>광고 집행 비용</td></tr>
+        <tr><td><strong>노출수</strong></td><td>Impressions, 노출, impr</td><td><span class="badge badge-red">필수</span></td><td>광고 노출 횟수</td></tr>
+        <tr><td><strong>일</strong></td><td>Date, 날짜, Campaign Date</td><td><span class="badge badge-blue">권장</span></td><td>날짜 필터·피로도 기간 설정용</td></tr>
+        <tr><td><strong>캠페인</strong></td><td>Campaign, 캠페인명</td><td><span class="badge badge-blue">권장</span></td><td>캠페인별 필터링용</td></tr>
+        <tr><td><strong>클릭수</strong></td><td>Clicks, 클릭</td><td><span class="badge badge-gray">선택</span></td><td>CTR 계산용</td></tr>
+        <tr><td><strong>Revenue</strong></td><td>매출, 수익, revenue</td><td><span class="badge badge-gray">선택</span></td><td>ROAS 계산용 (없으면 자동 제외)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="box box-yellow">
+      <strong>⚠️ 업로드 주의사항</strong>
+      · 파일 형식: <strong>CSV (쉼표 구분)</strong>만 지원 — .xlsx 불가<br>
+      · 인코딩: <strong>UTF-8</strong> 권장 (한글 깨짐 방지)<br>
+      · TXT 유형 소재는 <strong>자동 제외</strong>됩니다 (BNR/VID만 분석)<br>
+      · 비수치 데이터(N/A, -, 빈칸)는 <strong>자동으로 0 처리</strong>됩니다
+    </div>
+
+    <div class="section-title">2.2 태그 컬럼 (Step 2 군집화 전용)</div>
+    <p>Step 2 군집화 분석을 사용하려면 소재별 <strong>크리에이티브 태그 컬럼</strong>이 CSV에 포함되어야 합니다.</p>
+
+    <table>
+      <thead><tr><th>태그 컬럼 예시</th><th>내용</th><th>예시 값</th></tr></thead>
+      <tbody>
+        <tr><td><strong>hooking</strong></td><td>후킹 방식</td><td>질문/선택형, 비주얼 임팩트, 보상 강조</td></tr>
+        <tr><td><strong>emotion</strong></td><td>감성 소구</td><td>수집욕, 도전욕, 성취감, 힐링</td></tr>
+        <tr><td><strong>mechanic</strong></td><td>게임 메커닉</td><td>DIY 픽업, 8인 실시간 전투, Gacha</td></tr>
+        <tr><td><strong>theme</strong></td><td>크리에이티브 테마</td><td>자연/야외 미학, 렐릭 탐험, 보상 획득</td></tr>
+        <tr><td><strong>visual</strong></td><td>시각 연출</td><td>텍스트 오버레이, 클로즈업, 분할 화면</td></tr>
+        <tr><td><strong>marketer_insight</strong></td><td>마케터 인사이트 (AI용)</td><td>[전략적 의도] ... [타겟 심리] ...</td></tr>
+      </tbody>
+    </table>
+
+    <div class="box box-green">
+      <strong>✅ marketer_insight 컬럼 자동 처리</strong>
+      <code>marketer_insight</code> 컬럼이 있으면 시스템이 자동 감지합니다.<br>
+      · <strong>무료 AI 플랜</strong>: 토큰 절감을 위해 미전송 (핵심 태그로 대체)<br>
+      · <strong>유료 AI 플랜</strong>: 원문 최대 200자 Gemini에 전달 → 깊은 인사이트
+    </div>
+
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v4.0 | Page 4</div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       3. Step 1 — 소재 성과 분석
+  ════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <div class="page-title">📊 3. Step 1 — 소재 성과 분석</div>
+
+    <div class="section-title">3.1 점수 계산 (4개 지표 가중치)</div>
+    <p><strong>Total Score</strong>는 4개 지표를 Rank 기반으로 계산한 후 가중치를 적용하여 산출합니다.</p>
+
+    <table>
+      <thead><tr><th>지표</th><th>기본 가중치</th><th>계산 방법</th><th>의미</th></tr></thead>
+      <tbody>
+        <tr><td><strong>전환수</strong></td><td>25%</td><td>Rank 기반 — 전환 많을수록 높은 점수</td><td>실제 성과 (설치/구매)</td></tr>
+        <tr><td><strong>CPA</strong></td><td>25%</td><td>Rank 기반 — CPA 낮을수록 높은 점수</td><td>비용 효율성</td></tr>
+        <tr><td><strong>IPM</strong></td><td>25%</td><td>Rank 기반 — IPM 높을수록 높은 점수</td><td>노출 대비 전환력</td></tr>
+        <tr><td><strong>ROAS</strong></td><td>25%</td><td>Rank 기반 — ROAS 높을수록 높은 점수</td><td>투자 수익률 (Revenue 없으면 자동 제외)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="box box-blue">
+      <strong>💡 가중치 프리셋 가이드</strong>
+      슬라이더로 직접 조정하거나 아래 추천 프리셋을 참고하세요.<br><br>
+      · <strong>균형형 (기본)</strong>: 전환 25% | CPA 25% | IPM 25% | ROAS 25% — 일반적인 분석<br>
+      · <strong>전환 극대화</strong>: 전환 40% | CPA 30% | IPM 15% | ROAS 15% — UA 캠페인 중점<br>
+      · <strong>효율 최적화</strong>: 전환 20% | CPA 40% | IPM 30% | ROAS 10% — 예산 제약 시<br>
+      · <strong>수익 극대화</strong>: 전환 15% | CPA 15% | IPM 10% | ROAS 60% — LTV 높은 게임
+    </div>
+
+    <div class="subsection-title">📋 필터 옵션</div>
     <ul>
-      <li><strong>수동 집계 시간 단축</strong>: 주간 리포트 작성 시간 2시간 → 10분</li>
-      <li><strong>데이터 기반 의사결정</strong>: 성과 우수 소재 패턴 파악 및 차주 전략 수립</li>
-      <li><strong>소재 피로도 조기 감지</strong>: CPA 악화 전 순위 하락 소재 조기 교체</li>
-      <li><strong>팀 내 커뮤니케이션 효율화</strong>: 공통 지표 기반 논의 및 의사결정</li>
+      <li><strong>소재 유형</strong>: BNR (이미지) / VID (동영상) — TXT는 분석에서 자동 제외</li>
+      <li><strong>캠페인</strong>: 단일 선택 또는 전체 (캠페인 드롭다운)</li>
+      <li><strong>날짜 범위</strong>: 시작일 ~ 종료일 직접 입력</li>
+      <li><strong>집계 기준</strong>: 소재명 기준 또는 파일명 기준 선택</li>
     </ul>
-    
-    <div class="info-box">
-      <strong>ℹ️ 알아두세요</strong><br>
-      이 도구는 <strong>정적 웹 페이지</strong>로 제작되어 <strong>별도 서버 설치 없이</strong> 브라우저에서 바로 실행됩니다. 
-      업로드한 CSV 데이터는 <strong>서버에 전송되지 않고</strong> 로컬 브라우저에서만 처리됩니다.
-    </div>
-    
-    <div class="footer">
-      Com2uS R팀 소재 분석 대시보드 v1.7 | Com2uS Marketing Team | Page 3
-    </div>
-  </div>
-  
-  <!-- 2. 시작하기 -->
-  <div class="page">
-    <div class="page-title">2. 시작하기 - 접속 및 업로드 <span class="badge badge-new">v1.7</span></div>
-    
-    <div class="section-title">2.1 대시보드 접속</div>
-    
-    <div class="success-box">
-      <strong>✅ 접속 방법 (3가지 중 선택)</strong><br><br>
-      <strong>방법 1 (권장)</strong>: GitHub Pages URL 접속<br>
-      → <code>https://yourcompany.github.io/pepp-heroes-dashboard/step1_integrated.html</code><br><br>
-      <strong>방법 2</strong>: 사내 웹서버 URL 접속<br>
-      → <code>http://internal-server/dashboard/step1_integrated.html</code><br><br>
-      <strong>방법 3</strong>: 로컬 파일 실행<br>
-      → <code>step1_integrated.html</code> 파일 더블클릭 → 브라우저에서 열림
-    </div>
-    
-    <div class="section-title">2.2 CSV 파일 준비</div>
-    
-    <div class="subsection-title">✅ 필수 컬럼</div>
-    <table>
-      <thead>
-        <tr>
-          <th>컬럼명</th>
-          <th>다른 이름 (자동 인식)</th>
-          <th>필수 여부</th>
-        </tr>
-      </thead>
+
+    <div class="section-title">3.2 등급 기준 및 결과 해석</div>
+
+    <table class="grade-table">
+      <thead><tr><th>등급</th><th>점수 범위</th><th>색상</th><th>권장 액션</th></tr></thead>
       <tbody>
-        <tr>
-          <td>일</td>
-          <td>Date, 날짜, Campaign Date</td>
-          <td>✅ 필수</td>
-        </tr>
-        <tr>
-          <td>캠페인</td>
-          <td>Campaign, 캠페인명</td>
-          <td>✅ 필수</td>
-        </tr>
-        <tr>
-          <td>소재명</td>
-          <td>Ad Name, 광고명, Creative Name</td>
-          <td>✅ 필수</td>
-        </tr>
-        <tr>
-          <td>전환</td>
-          <td>Conversions, 전환수</td>
-          <td>✅ 필수</td>
-        </tr>
-        <tr>
-          <td>비용</td>
-          <td>Cost, 비용(원)</td>
-          <td>✅ 필수</td>
-        </tr>
-        <tr>
-          <td>노출수</td>
-          <td>Impressions, 노출</td>
-          <td>✅ 필수</td>
-        </tr>
-        <tr>
-          <td>클릭수</td>
-          <td>Clicks, 클릭</td>
-          <td>권장</td>
-        </tr>
-        <tr>
-          <td>Revenue</td>
-          <td>매출, 수익, revenue</td>
-          <td>선택 (ROAS 계산용)</td>
-        </tr>
+        <tr><td>🏆 최우수</td><td>≥ 80점</td><td style="color:#059669;font-weight:700;">진한 녹색</td><td>예산 즉시 증액 (Scale-up)</td></tr>
+        <tr><td>🌟 우수</td><td>60~79점</td><td style="color:#10b981;font-weight:700;">녹색</td><td>현행 운영 유지, 신규 오디언스 테스트</td></tr>
+        <tr><td>✅ 양호</td><td>40~59점</td><td style="color:#3b82f6;font-weight:700;">파란색</td><td>크리에이티브 요소 일부 최적화</td></tr>
+        <tr><td>⚠️ 보통</td><td>20~39점</td><td style="color:#f59e0b;font-weight:700;">주황색</td><td>타겟·입찰 재검토 후 개선</td></tr>
+        <tr><td>🔴 개선 필요</td><td>< 20점</td><td style="color:#ef4444;font-weight:700;">빨간색</td><td>즉시 교체 또는 소재 리프레시</td></tr>
       </tbody>
     </table>
-    
-    <div class="section-title">2.3 CSV 업로드 <span class="badge badge-new">v1.7 개선</span></div>
-    
-    <p><span class="step-number">1</span><strong>드래그 앤 드롭</strong> 또는 <strong>"파일 선택"</strong> 버튼 클릭</p>
-    <p><span class="step-number">2</span><strong>컬럼 매핑 상태 확인</strong> <span class="badge badge-new">NEW</span></p>
-    <div class="screenshot-placeholder">
-      [스크린샷] 컬럼 매핑 상태 표시 예시<br>
-      ✓ 소재명: 감지됨 | ⚠️ Revenue: 없음 (ROAS 제외)
+
+    <div class="box box-red">
+      <strong>✨ AI 인사이트 — 소재 성과 분석 버튼</strong>
+      점수 계산 결과 화면 상단의 <strong>"✨ AI 인사이트 생성"</strong> 버튼을 누르면<br>
+      고효율/저효율 소재의 <strong>공통 태그 분석 + 포맷 비교 + 즉시 권고</strong>를 자동 생성합니다.<br>
+      (Gemini API 키 설정 필요 → 5번 섹션 참고)
     </div>
-    
-    <p><span class="step-number">3</span><strong>"📊 점수 계산 시작하기 →" 버튼 클릭</strong> <span class="badge badge-new">NEW</span></p>
-    
-    <div class="warning-box">
-      <strong>⚠️ 업로드 시 주의사항</strong><br><br>
-      • 파일 형식: <strong>CSV (쉼표로 구분)</strong>만 지원 (엑셀 .xlsx 불가)<br>
-      • 인코딩: <strong>UTF-8</strong> 권장 (한글 깨짐 방지)<br>
-      • 파일 크기: 5MB 이하 권장 (대용량 시 느릴 수 있음)<br>
-      • 날짜 형식: <strong>YYYY-MM-DD</strong> (예: 2026-04-08)
-    </div>
-    
-    <div class="footer">
-      Com2uS R팀 소재 분석 대시보드 v1.7 | Com2uS Marketing Team | Page 4
-    </div>
+
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v4.0 | Page 5</div>
   </div>
-  
-  <!-- 3. 주요 기능 - 점수 계산 -->
+
+  <!-- ════════════════════════════════════════════════════════
+       3.3 피로도 분석
+  ════════════════════════════════════════════════════════ -->
   <div class="page">
-    <div class="page-title">3. 주요 기능 활용법</div>
-    
-    <div class="section-title">3.1 점수 계산</div>
-    
-    <div class="subsection-title">① 가중치 설정 <span class="badge badge-tip">TIP</span></div>
-    <p>
-      4개 지표(전환수, CPA, IPM, ROAS)의 중요도를 조절하여 <strong>Total Score</strong>를 산출합니다.
-    </p>
-    
+    <div class="page-title">🔍 3.3 피로도 분석 (기간 비교)</div>
+
+    <p>두 기간의 소재 성과를 비교하여 <strong>순위 변동</strong>과 <strong>CPA 변화율</strong>을 추적합니다. 피로도를 조기 감지하여 교체 시점을 정확히 결정할 수 있습니다.</p>
+
+    <div class="section-title">기간 설정</div>
+    <div class="step-row"><span class="step-num">1</span><div class="step-body"><strong>기준 기간</strong> 설정 — 비교의 기준이 되는 과거 기간 입력 (예: 3/01~3/31)</div></div>
+    <div class="step-row"><span class="step-num">2</span><div class="step-body"><strong>비교 기간</strong> 설정 — 현재 또는 최근 기간 입력 (예: 4/01~4/13)</div></div>
+    <div class="step-row"><span class="step-num">3</span><div class="step-body"><strong>"자동 분할"</strong> 버튼 — 전체 데이터 기간을 자동으로 절반씩 나눠 설정</div></div>
+    <div class="step-row"><span class="step-num">4</span><div class="step-body"><strong>"🔍 피로도 분석 실행"</strong> 버튼 클릭 → 결과 자동 표시</div></div>
+
+    <div class="section-title">피로도 상태 기준</div>
+    <div class="fatigue-grid">
+      <div class="fatigue-card" style="background:#f0fdf4;border:2px solid #10b981;">
+        <span class="fc-icon">🟢</span>
+        <div class="fc-name" style="color:#059669;">Fresh</div>
+        <div class="fc-cpa">CPA ≤ −20%</div>
+        <div class="fc-action" style="color:#059669;">→ 예산 증액 (Scale-up)</div>
+      </div>
+      <div class="fatigue-card" style="background:#eff6ff;border:2px solid #3b82f6;">
+        <span class="fc-icon">🔵</span>
+        <div class="fc-name" style="color:#2563eb;">Stable</div>
+        <div class="fc-cpa">−20% ~ 0%</div>
+        <div class="fc-action" style="color:#2563eb;">→ 현행 유지 (Maintain)</div>
+      </div>
+      <div class="fatigue-card" style="background:#fefce8;border:2px solid #f59e0b;">
+        <span class="fc-icon">🟡</span>
+        <div class="fc-name" style="color:#d97706;">Warning</div>
+        <div class="fc-cpa">0% ~ +20%</div>
+        <div class="fc-action" style="color:#d97706;">→ 모니터링 강화 (Watch)</div>
+      </div>
+      <div class="fatigue-card" style="background:#fef2f2;border:2px solid #ef4444;">
+        <span class="fc-icon">🔴</span>
+        <div class="fc-name" style="color:#dc2626;">Tired</div>
+        <div class="fc-cpa">CPA > +20%</div>
+        <div class="fc-action" style="color:#dc2626;">→ 즉시 교체 (Replace)</div>
+      </div>
+    </div>
+
+    <div class="section-title">결과 화면 구성</div>
     <table>
-      <thead>
-        <tr>
-          <th>전략</th>
-          <th>전환</th>
-          <th>CPA</th>
-          <th>IPM</th>
-          <th>ROAS</th>
-          <th>상황</th>
-        </tr>
-      </thead>
+      <thead><tr><th>영역</th><th>내용</th></tr></thead>
       <tbody>
-        <tr>
-          <td><strong>균형형</strong> (기본)</td>
-          <td>25%</td>
-          <td>25%</td>
-          <td>25%</td>
-          <td>25%</td>
-          <td>모든 지표 중요</td>
-        </tr>
-        <tr>
-          <td><strong>전환 극대화</strong></td>
-          <td>40%</td>
-          <td>30%</td>
-          <td>15%</td>
-          <td>15%</td>
-          <td>신규 유저 확보 우선</td>
-        </tr>
-        <tr>
-          <td><strong>수익 극대화</strong></td>
-          <td>15%</td>
-          <td>15%</td>
-          <td>10%</td>
-          <td>60%</td>
-          <td>LTV 높은 게임, ROAS 중요</td>
-        </tr>
-        <tr>
-          <td><strong>효율 최적화</strong></td>
-          <td>20%</td>
-          <td>40%</td>
-          <td>30%</td>
-          <td>10%</td>
-          <td>예산 제약, CPA 절감</td>
-        </tr>
+        <tr><td><strong>통계 요약 카드</strong></td><td>Fresh·Stable·Warning·Tired 소재 수, 전체 CPA 변화율 평균</td></tr>
+        <tr><td><strong>순위 변동 테이블</strong></td><td>기준기간 순위 → 비교기간 순위 변동 (▲상승 / ▼하락), CPA 변화율, 피로도 뱃지</td></tr>
+        <tr><td><strong>순위 변동 차트</strong></td><td>Top 10 소재의 기준 vs 비교 순위 시각화 (Y축 역순 — 위로 갈수록 순위 상승)</td></tr>
       </tbody>
     </table>
-    
-    <div class="info-box">
-      <strong>💡 가중치 조정 방법 (v1.7 개선)</strong><br>
-      • <strong>슬라이더</strong>로 드래그<br>
-      • <strong>숫자 직접 입력</strong> (0~100)<br>
-      • 자동 동기화 (슬라이더 ↔ 입력 필드)
+
+    <div class="box box-red">
+      <strong>✨ AI 인사이트 — 순위 변동 원인 AI 분석 버튼</strong>
+      피로도 분석 결과 화면의 <strong>"✨ 순위 변동 원인 AI 분석"</strong> 버튼을 누르면<br>
+      · 급등 소재의 <strong>태그 기반 원인 분석</strong> (CPA·전환수 수치 인용)<br>
+      · 하락 소재의 <strong>CPA 증가 트렌드 진단</strong> (피로 집중 소재 명시)<br>
+      · <strong>교체 우선순위</strong> (CPA 증가율 순) + <strong>운영 액션</strong> 자동 생성
     </div>
-    
-    <div class="subsection-title">② 필터 설정 <span class="badge badge-new">v1.7 다중 선택</span></div>
-    <ul>
-      <li><strong>집계 기준</strong>: 소재명 또는 파일명</li>
-      <li><strong>소재 유형</strong>: 전체 / BNR (이미지) / VID (비디오) / TXT (텍스트) <span class="badge badge-new">v1.6</span></li>
-      <li><strong>캠페인</strong>: 전체 또는 특정 캠페인 (복수 선택 가능, Ctrl+클릭)</li>
-      <li><strong>날짜 범위</strong>: 시작일 ~ 종료일</li>
-    </ul>
-    
-    <div class="subsection-title">③ 점수 계산 실행 <span class="badge badge-new">v1.7 로딩 표시</span></div>
-    <p><span class="step-number">1</span>"점수 계산 실행" 버튼 클릭</p>
-    <p><span class="step-number">2</span>로딩 화면 표시 (대용량 CSV 처리 시)</p>
-    <p><span class="step-number">3</span>결과 화면 자동 이동</p>
-    
-    <div class="screenshot-placeholder">
-      [스크린샷] 로딩 인디케이터 + 결과 화면
+
+    <div class="box box-yellow">
+      <strong>⚠️ 피로도 분석 핵심 규칙</strong>
+      · <strong>순위 기준</strong>: Total Score 기준 순위 비교 (점수 계산과 일관성)<br>
+      · <strong>피로도 판정 기준</strong>: CPA 변화율 (CPA 악화 = 피로도)<br>
+      · <strong>TXT 소재</strong>: 피로도 분석에서도 완전 제외 (BNR/VID만 분석)
     </div>
-    
-    <div class="subsection-title">④ 적용된 필터 조건 확인 <span class="badge badge-new">v1.7 신규</span></div>
-    <p>
-      결과 화면 상단에 <strong>적용된 필터 조건</strong>이 자동으로 표시됩니다.
-    </p>
-    <div class="highlight-box">
-      <strong>📌 적용된 필터 조건</strong><br>
-      • 캠페인: HQ_PH_US-EN_GA_NU-Pre<br>
-      • 소재 유형: BNR (이미지)<br>
-      • 기간: 2026-04-01 ~ 2026-04-08<br>
-      • 집계 기준: 소재명<br><br>
-      총 <strong style="color: #667eea;">45개</strong> 소재 분석 완료
-    </div>
-    
-    <div class="footer">
-      Com2uS R팀 소재 분석 대시보드 v1.7 | Com2uS Marketing Team | Page 5
-    </div>
+
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v4.0 | Page 6</div>
   </div>
-  
-  <!-- 계속해서 나머지 페이지 작성... -->
-  
+
+  <!-- ════════════════════════════════════════════════════════
+       4. Step 2 — 군집화 분석
+  ════════════════════════════════════════════════════════ -->
   <div class="page">
-    <div class="page-title">3.2 피로도 분석 <span class="badge badge-important">v1.7 개선</span></div>
-    
-    <div class="section-title">피로도 분석이란?</div>
-    <p>
-      두 기간(기준 vs 비교)의 소재 성과를 비교하여 <strong>순위 변동</strong>과 <strong>CPA 변화율</strong>을 추적합니다.
-      이를 통해 <strong>소재 피로도</strong>를 조기에 감지하고 교체 시점을 결정할 수 있습니다.
-    </p>
-    
-    <div class="subsection-title">① 기간 설정</div>
+    <div class="page-title">🔬 4. Step 2 — 군집화 분석</div>
+
+    <div class="section-title">4.1 Step 2-① 컬럼 설정 (<code>step2_column_selector.html</code>)</div>
+    <p>Step 1에서 사용한 CSV를 그대로 업로드하고, 군집화에 사용할 태그 컬럼과 설정을 지정합니다.</p>
+
+    <div class="step-row"><span class="step-num">1</span><div class="step-body"><strong>CSV 업로드</strong> — Step 1과 동일한 CSV 파일 드래그 앤 드롭</div></div>
+    <div class="step-row"><span class="step-num">2</span><div class="step-body"><strong>태그 컬럼 선택</strong> — 자동 감지된 컬럼 목록에서 군집화에 사용할 태그 컬럼 체크</div></div>
+    <div class="step-row"><span class="step-num">3</span><div class="step-body"><strong>컬럼 가중치 설정</strong> — [MI] marketer_insight 태그는 기본 1.5배 가중치 자동 적용</div></div>
+    <div class="step-row"><span class="step-num">4</span><div class="step-body"><strong>군집화 설정</strong> — 코어 태그 지지율 기준 (기본 30%), 최소 동시출현 횟수 설정</div></div>
+    <div class="step-row"><span class="step-num">5</span><div class="step-body"><strong>"군집화 시작 →"</strong> 버튼 클릭 → step2_clustering.html로 자동 이동</div></div>
+
+    <div class="section-title">4.2 Step 2-② 군집화 실행 (<code>step2_clustering.html</code>)</div>
+    <p>태그 동시출현 기반 <strong>하이브리드 군집화 v4.0</strong>이 실행됩니다. Union-Find 알고리즘으로 유사 태그 조합을 가진 소재를 자동 분류합니다.</p>
+
     <table>
-      <thead>
-        <tr>
-          <th>기간</th>
-          <th>설명</th>
-          <th>예시</th>
-        </tr>
-      </thead>
+      <thead><tr><th>결과 영역</th><th>제공 정보</th></tr></thead>
       <tbody>
-        <tr>
-          <td><strong>기준 기간</strong></td>
-          <td>비교 기준이 되는 과거 기간</td>
-          <td>2주 전 (3/18~3/24)</td>
-        </tr>
-        <tr>
-          <td><strong>비교 기간</strong></td>
-          <td>현재 또는 최근 기간</td>
-          <td>지난주 (3/25~3/31)</td>
-        </tr>
+        <tr><td><strong>군집 개요 카드</strong></td><td>군집별 이름·등급·평균 점수·소재 수·핵심 태그 TOP6</td></tr>
+        <tr><td><strong>태그-성과 히트맵</strong></td><td>태그별 평균 Total Score — 어떤 태그가 고성과를 만드는지 시각화</td></tr>
+        <tr><td><strong>군집별 성과 비교 차트</strong></td><td>군집 평균 점수 막대 차트 (BNR/VID 분리)</td></tr>
+        <tr><td><strong>소재-군집 매핑 테이블</strong></td><td>각 소재가 어느 군집에 속하는지 + 군집 내 점수 순위</td></tr>
+        <tr><td><strong>이전 차수 비교</strong></td><td>이전 차수 군집과 유사성 비교 → 기존 군집명 유지 또는 NEW 배지</td></tr>
+        <tr><td><strong>Gemini AI 인사이트</strong></td><td>승리 공식(Scale-up) · Pivot 전략 · Exit 전략 + 군집 심층 맥락 분석</td></tr>
       </tbody>
     </table>
-    
-    <div class="info-box">
-      <strong>💡 자동 기간 분할 기능</strong><br>
-      "자동 분할" 버튼을 클릭하면 전체 데이터 기간의 중간을 기준으로 <strong>기준 기간</strong>과 <strong>비교 기간</strong>을 자동으로 설정합니다.
+
+    <div class="box box-purple">
+      <strong>✨ marketer_insight [MI] 태그 우대 처리</strong>
+      · 군집화 시 [MI] 태그는 <strong>1.5배 가중치</strong> 자동 적용<br>
+      · 노이즈 필터링 면제 → 마케터 의도가 반영된 태그가 군집 핵심으로 우선 선정<br>
+      · Step 2-① 컬럼 설정에서 가중치 수동 조정도 가능
     </div>
-    
-    <div class="subsection-title">② 순위 비교 기준 <span class="badge badge-important">v1.7 변경</span></div>
-    <div class="warning-box">
-      <strong>⚠️ v1.7 주요 변경 사항</strong><br><br>
-      <strong>Before (v1.6)</strong>: CPA 기준 순위 비교<br>
-      → CPA가 낮은 소재가 상위<br><br>
-      <strong>After (v1.7)</strong>: <strong>Total Score 기준 순위 비교</strong><br>
-      → 종합 성과(전환수+CPA+IPM+ROAS)가 우수한 소재가 상위<br><br>
-      <strong>피로도 판정</strong>: CPA 기준 유지 (CPA 악화 = 피로도)
-    </div>
-    
-    <div class="subsection-title">③ 피로도 상태 해석</div>
+
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v4.0 | Page 7</div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       4.3 군집 등급 해석
+  ════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <div class="page-title">🏷️ 4.3 군집 등급 및 결과 해석</div>
+
+    <div class="section-title">군집 등급 기준</div>
     <table>
-      <thead>
-        <tr>
-          <th>상태</th>
-          <th>CPA 변화율</th>
-          <th>색상</th>
-          <th>조치 사항</th>
-        </tr>
-      </thead>
+      <thead><tr><th>등급</th><th>군집 평균 점수 기준</th><th>의미</th><th>권장 전략</th></tr></thead>
       <tbody>
-        <tr>
-          <td><strong>Fresh</strong></td>
-          <td>≤ -20%</td>
-          <td style="color: #10b981; font-weight: 600;">🟢 녹색</td>
-          <td>Scale-up 검토 (예산 증액)</td>
-        </tr>
-        <tr>
-          <td><strong>Stable</strong></td>
-          <td>-20% ~ 0%</td>
-          <td style="color: #3b82f6; font-weight: 600;">🔵 파란색</td>
-          <td>현행 유지</td>
-        </tr>
-        <tr>
-          <td><strong>Warning</strong></td>
-          <td>0% ~ 20%</td>
-          <td style="color: #f59e0b; font-weight: 600;">🟡 주황색</td>
-          <td>모니터링 강화</td>
-        </tr>
-        <tr>
-          <td><strong>Tired</strong></td>
-          <td>> 20%</td>
-          <td style="color: #ef4444; font-weight: 600;">🔴 빨간색</td>
-          <td>즉시 교체 권장</td>
-        </tr>
+        <tr><td><span class="badge badge-red">S 최우수</span></td><td>≥ 75점</td><td>압도적 고성과 태그 조합</td><td>🚀 Scale-up — 예산 집중 투입</td></tr>
+        <tr><td><span class="badge badge-gold">A 우수</span></td><td>60~74점</td><td>안정적 고성과</td><td>✅ 유지하며 유사 소재 추가 제작</td></tr>
+        <tr><td><span class="badge badge-blue">B 양호</span></td><td>45~59점</td><td>평균 이상</td><td>🔄 Pivot — 부족한 태그 보강</td></tr>
+        <tr><td><span class="badge badge-gray">C 보통</span></td><td>30~44점</td><td>평균 수준</td><td>⚠️ 최적화 후 재평가</td></tr>
+        <tr><td><span class="badge badge-gray">D 개선 필요</span></td><td>&lt; 30점</td><td>저성과 태그 조합</td><td>⛔ Exit — 제작 중단 검토</td></tr>
       </tbody>
     </table>
-    
-    <div class="subsection-title">④ 피로도 차트</div>
-    <p>
-      Top 10 소재의 <strong>Total Score 기준 순위</strong> 변동 추이를 선 그래프로 표시합니다.
-    </p>
-    <div class="screenshot-placeholder">
-      [스크린샷] 피로도 순위 변동 차트 (Y축 역순)
-    </div>
-    
-    <div class="info-box">
-      <strong>ℹ️ 차트 읽는 법</strong><br>
-      • Y축: 순위 (위로 갈수록 순위 상승)<br>
-      • X축: 소재명<br>
-      • 선이 <strong>위로 이동</strong>: 순위 상승 (긍정적)<br>
-      • 선이 <strong>아래로 이동</strong>: 순위 하락 (피로도 경보)
-    </div>
-    
-    <div class="footer">
-      Com2uS R팀 소재 분석 대시보드 v1.7 | Com2uS Marketing Team | Page 6
-    </div>
-  </div>
-  
-  <!-- FAQ 페이지 예시 (간략) -->
-  <div class="page">
-    <div class="page-title">6. 자주 묻는 질문 (FAQ)</div>
-    
-    <div class="section-title">Q1. "컬럼을 찾을 수 없습니다" 오류가 나요</div>
-    <p><strong>A1.</strong> CSV 헤더가 표준 컬럼명과 다를 수 있습니다.</p>
-    <div class="success-box">
-      <strong>✅ 해결 방법</strong><br>
-      1. CSV 파일을 엑셀로 열기<br>
-      2. 첫 번째 행(헤더) 확인<br>
-      3. 표준 컬럼명으로 수정 (예: "Date" → "일", "Campaign" → "캠페인")<br>
-      4. CSV 형식으로 저장 후 재업로드
-    </div>
-    
-    <div class="section-title">Q2. 지표가 모두 0으로 나와요</div>
-    <p><strong>A2.</strong> 데이터 형식이 숫자가 아닐 수 있습니다.</p>
-    <div class="success-box">
-      <strong>✅ 해결 방법</strong><br>
-      1. CSV를 엑셀로 열기<br>
-      2. 전환, 비용, 노출수, 클릭수 컬럼 확인<br>
-      3. 쉼표 포함 숫자("1,234")를 숫자만("1234")으로 변경<br>
-      4. 셀 서식을 "숫자"로 변경<br>
-      5. 저장 후 재업로드
-    </div>
-    
-    <div class="info-box">
-      <strong>ℹ️ v1.7 자동 처리</strong><br>
-      비수치 데이터(N/A, -, 빈칸)는 자동으로 0으로 처리됩니다.
-    </div>
-    
-    <div class="section-title">Q3. ROAS 점수가 모두 0이에요</div>
-    <p><strong>A3.</strong> Revenue 컬럼이 없거나 모든 값이 0입니다.</p>
-    <div class="success-box">
-      <strong>✅ v1.7 자동 처리</strong><br>
-      Revenue 데이터가 없으면 <strong>ROAS 가중치를 나머지 3개 지표에 자동 재배분</strong>합니다.<br><br>
-      예시:<br>
-      • 입력: 전환 25% + CPA 25% + IPM 25% + ROAS 25%<br>
-      • 자동 재배분: 전환 33.3% + CPA 33.3% + IPM 33.3% + ROAS 0%
-    </div>
-    
-    <div class="section-title">Q4. 순위 변동이 Total Score 기준이 맞나요? <span class="badge badge-new">v1.7</span></div>
-    <p><strong>A4.</strong> 네, v1.7부터 <strong>Total Score 기준 순위</strong>로 변경되었습니다.</p>
-    <div class="highlight-box">
-      <strong>변경 이유</strong><br>
-      • 점수 계산 결과와 피로도 분석 결과의 일관성 확보<br>
-      • Total Score가 높아도 CPA가 악화되면 피로도로 별도 감지<br><br>
-      <strong>피로도 판정</strong>: CPA 기준 유지 (CPA 악화 = 피로도)
-    </div>
-    
-    <div class="footer">
-      Com2uS R팀 소재 분석 대시보드 v1.7 | Com2uS Marketing Team | Page 11
-    </div>
-  </div>
-  
-  <!-- 마지막 페이지 - 문의 및 지원 -->
-  <div class="page">
-    <div class="page-title">7. 문의 및 지원</div>
-    
-    <div class="section-title">7.1 기술 지원</div>
+
+    <div class="section-title">태그-성과 히트맵 해석</div>
+    <p>히트맵은 <strong>각 태그가 붙은 소재의 평균 Total Score</strong>를 색상으로 표시합니다.</p>
     <table>
-      <thead>
-        <tr>
-          <th>항목</th>
-          <th>정보</th>
-        </tr>
-      </thead>
+      <thead><tr><th>색상</th><th>의미</th><th>활용법</th></tr></thead>
       <tbody>
-        <tr>
-          <td><strong>담당자</strong></td>
-          <td>대장님 (Pepp Heroes 마케팅팀장)</td>
-        </tr>
-        <tr>
-          <td><strong>이메일</strong></td>
-          <td>marketing@com2us.com</td>
-        </tr>
-        <tr>
-          <td><strong>Slack 채널</strong></td>
-          <td>#marketing-tools</td>
-        </tr>
-        <tr>
-          <td><strong>응답 시간</strong></td>
-          <td>평일 오전 10시 ~ 오후 6시</td>
-        </tr>
+        <tr><td style="color:#059669;font-weight:700;">🟢 진한 녹색</td><td>해당 태그 → 고성과 (평균 이상)</td><td>신규 소재 제작 시 <strong>반드시 포함</strong></td></tr>
+        <tr><td style="color:#f59e0b;font-weight:700;">🟡 노란색</td><td>해당 태그 → 중간 성과</td><td>다른 강점 태그와 조합 시 효과</td></tr>
+        <tr><td style="color:#ef4444;font-weight:700;">🔴 빨간색</td><td>해당 태그 → 저성과</td><td>신규 소재에서 <strong>제외 권장</strong></td></tr>
       </tbody>
     </table>
-    
-    <div class="section-title">7.2 피드백 및 개선 요청</div>
-    <ul>
-      <li><strong>기능 추가 요청</strong>: Slack #marketing-tools 채널에 남겨주세요</li>
-      <li><strong>버그 리포트</strong>: 이메일로 스크린샷 첨부하여 전송</li>
-      <li><strong>교육 요청</strong>: 1:1 또는 팀 단위 사용법 교육 가능</li>
-    </ul>
-    
-    <div class="section-title">7.3 버전 히스토리</div>
+
+    <div class="section-title">Step 2 AI 인사이트 — 3블록 구성</div>
+    <div class="ai-slot-grid">
+      <div class="ai-slot" style="background:#fef2f2;border-left:4px solid #E8003D;">
+        <div class="slot-title" style="color:#E8003D;">🚀 Scale-up 전략</div>
+        <div class="slot-body">유지·확장해야 할 태그 조합과 이유 (불릿 2~3개, 태그명·점수 인용)</div>
+      </div>
+      <div class="ai-slot" style="background:#faf5ff;border-left:4px solid #7c3aed;">
+        <div class="slot-title" style="color:#7c3aed;">🔄 Pivot 전략</div>
+        <div class="slot-body">보강하거나 새로 시도해야 할 크리에이티브 방향 (제작 가이드 포함)</div>
+      </div>
+      <div class="ai-slot" style="background:#f9fafb;border-left:4px solid #6b7280;">
+        <div class="slot-title" style="color:#6b7280;">⛔ Exit 전략</div>
+        <div class="slot-body">성과가 낮아 중단해야 할 패턴 (근거 수치 포함)</div>
+      </div>
+      <div class="ai-slot" style="background:#eff6ff;border-left:4px solid #3b82f6;">
+        <div class="slot-title" style="color:#3b82f6;">🔬 군집 심층 분석</div>
+        <div class="slot-body">군집별 마케팅 맥락 해석 + 성패 소재 결정적 차이 분석</div>
+      </div>
+    </div>
+
+    <div class="box box-blue">
+      <strong>ℹ️ 차수 히스토리 저장</strong>
+      군집화 완료 후 <strong>"이번 차수 저장"</strong> 버튼을 클릭하면 localStorage에 저장됩니다.<br>
+      다음 차수 분석 시 이전 군집과 자동 비교하여 신규 군집(NEW 배지)·기존 군집 연속성을 표시합니다.
+    </div>
+
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v4.0 | Page 8</div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       5. Gemini AI 인사이트
+  ════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <div class="page-title">✨ 5. Gemini AI 인사이트</div>
+
+    <div class="section-title">5.1 API 키 설정 및 플랜 선택</div>
+
+    <div class="step-row"><span class="step-num">1</span><div class="step-body">네비게이션 상단 <strong>"✨ AI 설정"</strong> 버튼 클릭</div></div>
+    <div class="step-row"><span class="step-num">2</span><div class="step-body"><a href="https://aistudio.google.com/apikey" style="color:#E8003D;">Google AI Studio</a>에서 발급한 <strong>API 키 입력</strong></div></div>
+    <div class="step-row"><span class="step-num">3</span><div class="step-body"><strong>플랜 선택</strong> (무료 / 유료) 후 <strong>"저장 &amp; 테스트"</strong> 버튼 클릭</div></div>
+
+    <div class="plan-compare">
+      <div class="plan-card" style="background:#fffbeb;border:2px solid #f59e0b;">
+        <div class="plan-name" style="color:#d97706;">🆓 무료 플랜</div>
+        <ul>
+          <li>분당 15회 요청 한도</li>
+          <li>소재 최대 <strong>3개</strong> 분석</li>
+          <li><strong>1회 호출 · 1슬롯</strong></li>
+          <li>marketer_insight <strong>미전송</strong> (토큰 절감)</li>
+          <li>소재 성과: winTags 1슬롯</li>
+          <li>피로도: riseReason 1슬롯</li>
+          <li>출력 토큰: ~1,500/회</li>
+        </ul>
+      </div>
+      <div class="plan-card" style="background:#faf5ff;border:2px solid #7c3aed;">
+        <div class="plan-name" style="color:#7c3aed;">💎 유료 Pro 플랜</div>
+        <ul>
+          <li>분당 1,000회 요청 한도</li>
+          <li>소재 최대 <strong>5개</strong> 분석</li>
+          <li><strong>2회 호출 · 전체 슬롯</strong></li>
+          <li>marketer_insight <strong>원문 200자</strong> 전달</li>
+          <li>소재 성과: 6슬롯 전체</li>
+          <li>피로도: 4슬롯 전체</li>
+          <li>출력 토큰: ~2,500/회</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title">5.2 소재 성과 AI 인사이트 (winTags)</div>
+    <p>점수 계산 결과 화면의 <strong>"✨ AI 인사이트 생성"</strong> 버튼으로 실행합니다.</p>
+
+    <div class="ai-slot-grid">
+      <div class="ai-slot" style="background:#ecfdf5;border-left:4px solid #10b981;">
+        <div class="slot-title" style="color:#10b981;">🏷️ 승리 패턴 태그 <span class="badge badge-green">무료·유료</span></div>
+        <div class="slot-body">고효율 소재 공통 태그 기반 성과 원인 분석<br>· BNR vs VID 포맷 비교 (avgIPM/avgCPA)<br>· 저효율 소재 태그 차이점<br>· 즉시 권고 소재 명시</div>
+      </div>
+      <div class="ai-slot" style="background:#eff6ff;border-left:4px solid #3b82f6;">
+        <div class="slot-title" style="color:#3b82f6;">📊 포맷별 성과 격차 <span class="badge badge-purple">유료</span></div>
+        <div class="slot-body">BNR/VID 포맷별 avgIPM·avgCPA 비교<br>포맷 선택 권고</div>
+      </div>
+      <div class="ai-slot" style="background:#fffbeb;border-left:4px solid #f59e0b;">
+        <div class="slot-title" style="color:#f59e0b;">⚠️ 효율 하락 원인 <span class="badge badge-purple">유료</span></div>
+        <div class="slot-body">저효율 소재 공통 태그·패턴 분석<br>고효율 대비 부족한 요소 명시</div>
+      </div>
+      <div class="ai-slot" style="background:#f5f3ff;border-left:4px solid #7c3aed;">
+        <div class="slot-title" style="color:#7c3aed;">⚡ 즉시 실행 액션 <span class="badge badge-purple">유료</span></div>
+        <div class="slot-body">즉시 ON/OFF 소재 목록 + 스케일업 우선순위<br>중단 권고 소재·교체 방향</div>
+      </div>
+    </div>
+
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v4.0 | Page 9</div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       5.3 피로도 AI 인사이트
+  ════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <div class="page-title">📉 5.3 피로도 AI 인사이트 (riseReason)</div>
+
+    <p>피로도 분석 결과 화면의 <strong>"✨ 순위 변동 원인 AI 분석"</strong> 버튼으로 실행합니다.<br>
+    순위 변동이 큰 소재(급등·급락)를 자동 선별하여 태그 기반 원인을 분석합니다.</p>
+
+    <div class="section-title">분석 데이터 구성 (AI에 전달되는 정보)</div>
     <table>
-      <thead>
-        <tr>
-          <th>버전</th>
-          <th>날짜</th>
-          <th>주요 업데이트</th>
-        </tr>
-      </thead>
+      <thead><tr><th>데이터 항목</th><th>내용</th><th>역할</th></tr></thead>
+      <tbody>
+        <tr><td><strong>순위 변동</strong></td><td>▲N위 / ▼N위 (Total Score 기준)</td><td>급등·급락 선별 기준</td></tr>
+        <tr><td><strong>CPA 변화</strong></td><td>기준기간 CPA → 비교기간 CPA (변화율 %)</td><td>피로도 판정 핵심 지표</td></tr>
+        <tr><td><strong>전환수 변화</strong></td><td>기준 전환 → 비교 전환</td><td>성과 실제 변화 확인</td></tr>
+        <tr><td><strong>피로도 상태</strong></td><td>fresh / stable / warning / tired</td><td>피로 수준 컨텍스트</td></tr>
+        <tr><td><strong>meta 태그</strong></td><td>hooking·emotion·mechanic 등 2~3개</td><td>태그 기반 원인 분석 핵심</td></tr>
+        <tr><td><strong>★피로집중 목록</strong></td><td>CPA +20% 이상 소재 자동 추출</td><td>교체 우선순위 자동 결정</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-title">출력 슬롯 구성</div>
+
+    <div class="ai-slot-grid">
+      <div class="ai-slot" style="background:#ecfdf5;border-left:4px solid #10b981;">
+        <div class="slot-title" style="color:#10b981;">📈 급등 소재 원인 <span class="badge badge-green">무료·유료</span></div>
+        <div class="slot-body">
+          · 급등 소재명 + CPA 수치 → 공통 태그([태그명]) 기반 원인 2줄<br>
+          · CPA 증가 트렌드 요약 (★피로집중 소재 명시)<br>
+          · 교체 우선순위 (CPA 증가율 순)<br>
+          · 급등 소재 태그를 교체 소재에 적용하는 방향
+        </div>
+      </div>
+      <div class="ai-slot" style="background:#fef2f2;border-left:4px solid #ef4444;">
+        <div class="slot-title" style="color:#ef4444;">📉 피로도 진단 <span class="badge badge-purple">유료</span></div>
+        <div class="slot-body">하락 소재별 CPA 변화율 + 피로 패턴·취약 태그 분석 2줄</div>
+      </div>
+      <div class="ai-slot" style="background:#fffbeb;border-left:4px solid #f59e0b;">
+        <div class="slot-title" style="color:#f59e0b;">⏱️ 교체 타이밍 기준 <span class="badge badge-purple">유료</span></div>
+        <div class="slot-body">CPA·전환 수치 기반 즉시 교체 / 모니터링 소재 분리</div>
+      </div>
+      <div class="ai-slot" style="background:#f5f3ff;border-left:4px solid #7c3aed;">
+        <div class="slot-title" style="color:#7c3aed;">🔄 운영 액션 <span class="badge badge-purple">유료</span></div>
+        <div class="slot-body">ON 확대·OFF 실행·신소재 방향 3줄 (태그 기반 제작 가이드 포함)</div>
+      </div>
+    </div>
+
+    <div class="box box-green">
+      <strong>✅ 실측 검증 결과 (무료 플랜 예시)</strong>
+      finishReason: STOP (잘림 없음) ✅<br>
+      입력: ~824 토큰 / 출력: ~594 토큰 / 합계: ~1,418 토큰 (무료 한도 8,192 대비 17.3%)<br>
+      <strong>출력 예시</strong>: "A-Character-Keyart01A-DA CPA 6,638→762(-88.5%) — <strong>'키아트/수집욕/감동'</strong> 태그 조합이 신규 유저의 강력한 수집 욕구와 감성적 연결을 자극하여 전환 3→21건으로 급증했습니다."
+    </div>
+
+    <div class="box box-yellow">
+      <strong>⚠️ AI 인사이트 사용 시 주의</strong>
+      · <strong>429 오류</strong>: 분당 요청 한도 초과 → 1분 후 재시도<br>
+      · <strong>403 오류</strong>: API 키 오류 → AI 설정에서 키 재입력<br>
+      · 응답이 잘린 경우: <strong>"🔄 재분석"</strong> 버튼 클릭<br>
+      · 모델: <strong>Gemini 2.5 Flash</strong> (thinking 모드 비활성화로 출력 토큰 100% 활용)
+    </div>
+
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v4.0 | Page 10</div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       6. FAQ
+  ════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <div class="page-title">❓ 6. 자주 묻는 질문 (FAQ)</div>
+
+    <div class="faq-item">
+      <div class="faq-q">"컬럼을 찾을 수 없습니다" 오류가 나와요.</div>
+      <div class="faq-a">
+        <div class="box box-green" style="margin-top:6px;">
+          <strong>✅ 해결 방법</strong>
+          1. CSV를 엑셀로 열어 첫 번째 행(헤더) 확인<br>
+          2. 컬럼명을 표준명으로 수정 (예: "Date" → "일", "Conversions" → "전환")<br>
+          3. UTF-8 CSV 형식으로 저장 후 재업로드<br>
+          4. "다른 이름으로 저장 → CSV UTF-8(쉼표로 분리)"로 저장
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">지표가 모두 0으로 나와요.</div>
+      <div class="faq-a">
+        <div class="box box-green" style="margin-top:6px;">
+          <strong>✅ 해결 방법</strong>
+          1. 전환·비용·노출수 컬럼의 값이 숫자인지 확인<br>
+          2. 쉼표 포함 숫자("1,234") → 숫자만("1234")으로 변경<br>
+          3. "N/A", "-", 빈칸은 시스템이 자동으로 0으로 처리 (정상 동작)
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">ROAS 점수가 0이에요.</div>
+      <div class="faq-a">Revenue 컬럼이 없거나 모든 값이 0인 경우 ROAS를 자동 제외합니다. ROAS 가중치는 나머지 3개 지표에 자동 재배분됩니다. (예: 25%+25%+25%+25% → 33.3%+33.3%+33.3%+0%)</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">TXT 소재가 분석에서 빠졌어요.</div>
+      <div class="faq-a">정상입니다. TXT 유형(광고 제목/설명 텍스트)은 크리에이티브 태그 정보가 없어 분석 대상에서 <strong>자동 제외</strong>됩니다. BNR·VID만 분석됩니다.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Gemini AI 인사이트 버튼이 비활성화되어 있어요.</div>
+      <div class="faq-a">API 키 미설정 상태입니다. 네비게이션 상단 <strong>"✨ AI 설정"</strong> 버튼을 클릭하여 Google AI Studio에서 발급한 API 키를 입력하세요.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">AI 인사이트가 429 오류로 실패해요.</div>
+      <div class="faq-a">무료 API는 분당 15회 한도입니다. <strong>1분 후 재시도</strong>하거나 유료 플랜(분당 1,000회)으로 전환하세요.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Step 2 군집화를 하려면 CSV에 태그 컬럼이 반드시 있어야 하나요?</div>
+      <div class="faq-a">네, 필수입니다. <code>hooking</code>, <code>emotion</code>, <code>mechanic</code> 등 태그 컬럼이 없으면 군집화가 실행되지 않습니다. CSV 생성 시 소재별 태그를 사전에 입력해두세요.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">피로도 분석에서 "없음"으로 표시되는 소재가 있어요.</div>
+      <div class="faq-a">기준 기간에만 있거나 비교 기간에만 있는 소재는 "신규" 또는 "사라짐"으로 별도 표시됩니다. 두 기간 모두 존재하는 소재만 순위 변동이 계산됩니다.</div>
+    </div>
+
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v4.0 | Page 11</div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       7. Cheat Sheet + 버전 이력
+  ════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <div class="page-title">📋 7. 빠른 참조 (Cheat Sheet)</div>
+
+    <div class="cheat-grid">
+      <div class="cheat-card">
+        <div class="cheat-title">📊 가중치 프리셋</div>
+        <ul>
+          <li><strong>균형형 (기본)</strong>: 전환 25% | CPA 25% | IPM 25% | ROAS 25%</li>
+          <li><strong>전환 극대화</strong>: 전환 40% | CPA 30% | IPM 15% | ROAS 15%</li>
+          <li><strong>효율 최적화</strong>: 전환 20% | CPA 40% | IPM 30% | ROAS 10%</li>
+          <li><strong>수익 극대화</strong>: 전환 15% | CPA 15% | IPM 10% | ROAS 60%</li>
+        </ul>
+      </div>
+      <div class="cheat-card">
+        <div class="cheat-title">🏆 소재 등급 기준</div>
+        <ul>
+          <li>🏆 최우수 ≥ 80점 → 즉시 Scale-up</li>
+          <li>🌟 우수 60~79점 → 현행 유지</li>
+          <li>✅ 양호 40~59점 → 일부 최적화</li>
+          <li>⚠️ 보통 20~39점 → 타겟 재검토</li>
+          <li>🔴 개선 필요 &lt;20점 → 즉시 교체</li>
+        </ul>
+      </div>
+      <div class="cheat-card">
+        <div class="cheat-title">📉 피로도 상태 기준</div>
+        <ul>
+          <li>🟢 Fresh: CPA ≤ −20% → Scale-up</li>
+          <li>🔵 Stable: −20% ~ 0% → 유지</li>
+          <li>🟡 Warning: 0% ~ +20% → 모니터링</li>
+          <li>🔴 Tired: CPA > +20% → 즉시 교체</li>
+        </ul>
+      </div>
+      <div class="cheat-card">
+        <div class="cheat-title">🔬 군집 등급 기준</div>
+        <ul>
+          <li>S 최우수 ≥ 75점 → 예산 집중 투입</li>
+          <li>A 우수 60~74점 → 유사 소재 추가 제작</li>
+          <li>B 양호 45~59점 → 태그 보강 (Pivot)</li>
+          <li>C/D 보통·개선 필요 → Exit 검토</li>
+        </ul>
+      </div>
+      <div class="cheat-card">
+        <div class="cheat-title">✨ AI 인사이트 플랜 비교</div>
+        <ul>
+          <li>🆓 무료: 1회 호출 · 1슬롯 · 분당 15회</li>
+          <li>💎 유료: 2회 호출 · 전체 슬롯 · 분당 1,000회</li>
+          <li>429 오류 → 1분 후 재시도</li>
+          <li>403 오류 → API 키 재확인</li>
+        </ul>
+      </div>
+      <div class="cheat-card">
+        <div class="cheat-title">📂 주간 분석 루틴 (권장)</div>
+        <ul>
+          <li>① 전주 CSV 준비 (UTF-8 저장)</li>
+          <li>② Step 1 업로드 → 점수 계산</li>
+          <li>③ 피로도 분석 (전전주 vs 전주)</li>
+          <li>④ AI 인사이트 생성 → 교체 소재 결정</li>
+          <li>⑤ Step 2 군집화 → 승리 공식 도출</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top: 20px;">버전 이력</div>
+    <table>
+      <thead><tr><th style="width:16%">버전</th><th style="width:22%">날짜</th><th>주요 업데이트</th></tr></thead>
       <tbody>
         <tr>
-          <td><strong>v1.7</strong></td>
+          <td><strong>v4.0</strong> <span class="badge badge-red">현재</span></td>
+          <td>2026-04-13</td>
+          <td>피로도 AI 인사이트 고도화 — 태그 기반 CPA 트렌드·교체 우선순위·운영 액션; 피로도 테스트 UI 추가</td>
+        </tr>
+        <tr>
+          <td><strong>v3.9</strong></td>
+          <td>2026-04-12</td>
+          <td>소재 성과 AI 인사이트 품질 개선 — 태그 기반 원인 분석·개조식 불릿·bold 하이라이트</td>
+        </tr>
+        <tr>
+          <td><strong>v3.8</strong></td>
+          <td>2026-04-12</td>
+          <td>AI 인사이트 출력 잘림 버그 수정 — thinkingBudget:0, 소재명 끝 처리, 토큰 로그 추가</td>
+        </tr>
+        <tr>
+          <td><strong>v3.7</strong></td>
+          <td>2026-04-12</td>
+          <td>무료 플랜 AI 최소화(1회·1슬롯), TXT 소재 전 페이지 완전 제외, 플랜 선택 모달 개선</td>
+        </tr>
+        <tr>
+          <td><strong>v3.5</strong></td>
+          <td>2026-04-12</td>
+          <td>Step 2 군집화 v4.0 출시 — 하이브리드 군집화·태그 히트맵·차수 비교·Gemini 클러스터링 AI</td>
+        </tr>
+        <tr>
+          <td><strong>v3.0</strong></td>
+          <td>2026-04-12</td>
+          <td>Gemini AI 인사이트 — 소재 성과·피로도 분석 AI, 무료/유료 플랜 분기 구현</td>
+        </tr>
+        <tr>
+          <td><strong>v2.0 (v1.7)</strong></td>
           <td>2026-04-08</td>
-          <td>
-            • Phase 2 UX 개선 (로딩, 컬럼 매핑, 필터 요약)<br>
-            • Total Score 기준 피로도 분석
-          </td>
-        </tr>
-        <tr>
-          <td><strong>v1.6</strong></td>
-          <td>2026-04-08</td>
-          <td>
-            • 데이터 안정성 강화 (NaN 차단, TXT 유형 지원)
-          </td>
-        </tr>
-        <tr>
-          <td><strong>v1.5</strong></td>
-          <td>2026-04-08</td>
-          <td>
-            • ROAS 지표 추가<br>
-            • Rank 기반 점수 계산<br>
-            • 캠페인 복수 선택
-          </td>
+          <td>Step 1 통합 완성 — 로딩 인디케이터·컬럼 매핑 표시·필터 요약·Total Score 기준 피로도 개선</td>
         </tr>
       </tbody>
     </table>
-    
-    <div class="highlight-box" style="margin-top: 50px;">
-      <strong>🎓 빠른 참고 (Cheat Sheet)</strong><br><br>
-      <strong>가중치 프리셋</strong><br>
-      • 균형형: 전환 25% | CPA 25% | IPM 25% | ROAS 25%<br>
-      • 전환형: 전환 40% | CPA 30% | IPM 15% | ROAS 15%<br>
-      • 수익형: 전환 15% | CPA 15% | IPM 10% | ROAS 60%<br>
-      • 효율형: 전환 20% | CPA 40% | IPM 30% | ROAS 10%<br><br>
-      
-      <strong>등급 기준</strong><br>
-      • 최우수: ≥80점 → 예산 증액 검토<br>
-      • 우수: ≥60점 → 현행 유지<br>
-      • 양호: ≥40점 → 최적화 여지<br>
-      • 보통: ≥20점 → 개선 필요<br>
-      • 개선필요: <20점 → 교체 검토<br><br>
-      
-      <strong>피로도 기준</strong><br>
-      • Fresh: CPA ≤-20% → Scale-up<br>
-      • Stable: -20%~0% → 유지<br>
-      • Warning: 0%~20% → 모니터링<br>
-      • Tired: >20% → 교체
+
+    <div class="box box-red" style="margin-top: 20px; text-align: center;">
+      <strong>💡 문의 및 피드백</strong><br>
+      기능 추가 요청 또는 버그 리포트는 팀 내 채널로 문의해 주세요.<br>
+      R팀 마케팅 분석 시스템은 팀 피드백을 반영하여 지속 업데이트됩니다. 🚀
     </div>
-    
+
     <div class="footer">
-      Com2uS R팀 소재 분석 대시보드 v1.7 | Com2uS Marketing Team | Page 14<br>
-      <strong>감사합니다! 궁금한 점은 언제든 문의해 주세요. 🚀</strong>
+      Com2uS R팀 소재 분석 시스템 v4.0 (시스템 v7) | 2026. 04. 13 | Com2uS R Marketing Team<br>
+      <strong>Thank you for using R팀 소재 분석 시스템! 🎯</strong>
     </div>
   </div>
-  
+
 </body>
 </html>

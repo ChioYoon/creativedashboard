@@ -1,0 +1,311 @@
+/* ═══════════════════════════════════════════════════════════════
+   Gemini AI 인사이트 UI  |  Com2uS R팀 소재 분석 대시보드
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── 인사이트 박스 ── */
+.gai-box {
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  overflow: visible;        /* ★ hidden → visible (텍스트 잘림 방지) */
+  margin-top: 16px;
+  transition: box-shadow .2s;
+}
+.gai-box:hover { box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+
+.gai-loading { border-color: #dde1f0; background: #f8f9ff; }
+.gai-error   { border-color: #fecaca; background: #fff5f5; }
+.gai-done    { border-color: #c7d2fe; background: linear-gradient(135deg, #fafbff 0%, #f0f4ff 100%); }
+
+/* ── 헤더 ── */
+.gai-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(255,255,255,.7);
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+.gai-icon  { font-size: 16px; }
+.gai-title { font-size: 13px; font-weight: 700; color: #1e1b4b; flex: 1; }
+.gai-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: #fff;
+  border-radius: 20px;
+  letter-spacing: .3px;
+}
+
+/* ── 스피너 ── */
+.gai-spinner {
+  width: 14px; height: 14px;
+  border: 2px solid #c7d2fe;
+  border-top-color: #4f46e5;
+  border-radius: 50%;
+  animation: gai-spin .7s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes gai-spin { to { transform: rotate(360deg); } }
+
+/* ── 본문 ── */
+.gai-body {
+  padding: 16px 18px;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: #1f2937;
+  overflow: visible;        /* ★ 텍스트 잘림 방지 */
+}
+/* 슬롯 카드 레이아웃 사용 시 패딩 최소화 */
+.gai-body-slots {
+  padding: 12px 14px;
+}
+.gai-hint {
+  padding: 10px 16px;
+  font-size: 12.5px;
+  color: #6b7280;
+  margin: 0;
+}
+.gai-section-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1e1b4b;
+  margin: 14px 0 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(79,70,229,.15);
+}
+.gai-section-title:first-child { margin-top: 0; }
+.gai-para  { margin: 6px 0; white-space: pre-wrap; word-break: keep-all; }
+.gai-list  { margin: 6px 0 6px 16px; padding: 0; }
+.gai-list li { margin-bottom: 4px; line-height: 1.65; }
+
+/* ══════════════════════════════════════════════
+   사전 정의형 인사이트 슬롯 카드 레이아웃
+   ══════════════════════════════════════════════ */
+
+/* 6-슬롯 그리드 (소재 성과 분석) */
+.gai-slot-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+/* 4-슬롯 그리드 (피로도 분석) */
+.gai-slot-grid-4 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+/* 개별 카드 */
+.gai-slot-card {
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,.07);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow: visible;        /* ★ 내용 잘림 없음 */
+  min-height: 100px;        /* 최소 높이 보장 */
+}
+
+/* 카드 헤더 */
+.gai-slot-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+.gai-slot-icon  { font-size: 15px; flex-shrink: 0; }
+.gai-slot-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: -.2px;
+}
+
+/* 카드 본문 — 잘림 방지 핵심 */
+.gai-slot-body {
+  font-size: 12.5px;
+  line-height: 1.75;
+  color: #374151;
+  word-break: keep-all;     /* 한글 단어 중간 줄바꿈 방지 */
+  overflow-wrap: break-word;
+  overflow: visible;        /* ★ 넘쳐도 잘리지 않음 */
+}
+
+/* 개조식 불릿 아이템 (• - ▸ 로 시작하는 줄) */
+.gai-bullet {
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+  margin: 5px 0 5px 2px;
+  padding: 5px 10px;
+  background: rgba(0,0,0,.025);
+  border-radius: 6px;
+  font-size: 12.5px;
+  line-height: 1.7;
+  word-break: keep-all;
+}
+/* 첫 번째 불릿은 위 여백 줄임 */
+.gai-slot-body .gai-bullet:first-child { margin-top: 2px; }
+
+/* strong 하이라이트 */
+.gai-slot-body strong {
+  color: #111827;
+  font-weight: 700;
+  background: rgba(79,70,229,.08);
+  padding: 0 3px;
+  border-radius: 3px;
+}
+
+/* 잘린 슬롯 — 재분석 안내 배지 */
+.gai-truncate-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+  padding: 3px 8px;
+  background: #fef3c7;
+  border: 1px solid #fcd34d;
+  border-radius: 20px;
+  font-size: 11px;
+  color: #92400e;
+  cursor: default;
+}
+
+/* 재분석 버튼 (잘린 슬롯에 표시) */
+.gai-retry-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 4px 10px;
+  background: #fff;
+  border: 1.5px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #4f46e5;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.gai-retry-btn:hover { background: #eff6ff; border-color: #4f46e5; }
+
+/* 슬롯 요약 정보 바 */
+.gai-slot-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(79,70,229,.04);
+  border-top: 1px solid rgba(79,70,229,.08);
+  font-size: 11.5px;
+  color: #6b7280;
+  border-radius: 0 0 10px 10px;
+}
+
+/* ── 트리거 버튼 ── */
+.gai-trigger-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity .2s, transform .15s;
+  white-space: nowrap;
+}
+.gai-trigger-btn:hover:not(:disabled) { opacity: .88; transform: translateY(-1px); }
+.gai-trigger-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+.gai-trigger-btn .gai-btn-icon { font-size: 14px; }
+
+/* ── API 키 설정 버튼 (네비 삽입용) ── */
+.gai-nav-key-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: rgba(255,255,255,.85);
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background .2s;
+  white-space: nowrap;
+}
+.gai-nav-key-btn:hover { background: rgba(255,255,255,.28); color: #fff; }
+
+/* ── 섹션 헤더 내 AI 버튼 래퍼 ── */
+.gai-section-action {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 10px 14px;
+  background: rgba(79,70,229,.04);
+  border: 1px solid rgba(79,70,229,.12);
+  border-radius: 8px;
+}
+.gai-section-action .gai-key-status {
+  font-size: 11.5px;
+  font-weight: 600;
+  margin-left: auto;
+}
+
+/* ── 모달 오버레이 ── */
+.gai-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.gai-modal {
+  background: #fff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.2);
+  overflow: hidden;
+}
+.gai-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.gai-modal-header h3 { font-size: 16px; font-weight: 700; color: #111827; flex: 1; margin: 0; }
+.gai-modal-close {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #9ca3af;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 6px;
+  line-height: 1;
+}
+.gai-modal-close:hover { background: #f3f4f6; color: #374151; }
+.gai-modal-body { padding: 18px 20px 20px; }
+
+/* ── 반응형 ── */
+@media (max-width: 900px) {
+  .gai-slot-grid   { grid-template-columns: repeat(2, 1fr); }
+  .gai-slot-grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .gai-slot-grid,
+  .gai-slot-grid-4  { grid-template-columns: 1fr; }
+  .gai-section-action { flex-wrap: wrap; }
+  .gai-section-action .gai-key-status { margin-left: 0; }
+}
