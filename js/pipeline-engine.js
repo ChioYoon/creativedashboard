@@ -171,8 +171,8 @@ function plNormalizeColumns(parsed) {
     // TXT 행의 경우 파일명이 없을 수 있으므로, 소재명만 있으면 OK
     // BNR/VID는 일반적으로 둘 다 있을 것으로 기대
 
-    // 숫자 컬럼 정규화 (쉼표 제거)
-    ['전환', '비용', '노출수', '클릭수'].forEach(col => {
+    // 숫자 컬럼 정규화 (쉼표 제거) — Revenue 계열 추가
+    ['전환', '비용', '노출수', '클릭수', 'Revenue', 'revenue', 'REVENUE', '매출', '수익'].forEach(col => {
       if (newR[col]) newR[col] = String(newR[col]).replace(/,/g, '').trim();
     });
 

@@ -659,6 +659,74 @@
       margin-bottom: 20px;
     }
     
+    /* ── 임계값 라디오 선택 강조 ── */
+    label.thresh-active {
+      border-color: #E84855 !important;
+      background: #fff0f2 !important;
+      color: #E84855 !important;
+    }
+
+    /* ── 제외 소재 드롭다운 ── */
+    .excluded-detail {
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: #fff7f7;
+      border: 1px solid #fecaca;
+      border-radius: 8px;
+      font-size: 12.5px;
+      color: #7f1d1d;
+    }
+    .excluded-detail summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: #b91c1c;
+      user-select: none;
+    }
+    .excluded-detail ul {
+      margin: 8px 0 0 16px;
+      line-height: 1.8;
+    }
+
+    /* ── 커스텀 툴팁 ── */
+    .has-tooltip { position: relative; cursor: help; }
+    .has-tooltip::after {
+      content: attr(data-tip);
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1f2937;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 400;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .18s;
+      z-index: 9999;
+      line-height: 1.5;
+      max-width: 280px;
+      white-space: pre-line;
+      text-align: center;
+    }
+    .has-tooltip::before {
+      content: '';
+      position: absolute;
+      bottom: calc(100% + 1px);
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: #1f2937;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .18s;
+      z-index: 9999;
+    }
+    .has-tooltip:hover::after,
+    .has-tooltip:hover::before { opacity: 1; }
+
     /* 반응형 */
     @media (max-width: 768px) {
       .settings-grid {
@@ -718,12 +786,54 @@
     <!-- Section 1: 업로드 -->
     <section id="upload" class="section">
       <h2 class="section-title">📤 CSV 파일 업로드</h2>
-      <div class="upload-area" id="uploadArea">
-        <div class="upload-icon">📁</div>
-        <div class="upload-text">CSV 파일을 드래그하거나 클릭하여 업로드하세요</div>
-        <div class="upload-hint">권장 형식: 날짜, 캠페인, 소재명, 파일명, 전환, CPA, IPM, 매출(Revenue), 이미지링크 등</div>
+
+      <!-- 업로드 탭 -->
+      <div style="display:flex;gap:0;margin-bottom:0;border-bottom:2px solid #e5e7eb;">
+        <button id="tabFile" onclick="switchUploadTab('file')"
+          style="padding:10px 22px;font-size:14px;font-weight:600;border:none;border-bottom:3px solid #E84855;background:#fff;color:#E84855;cursor:pointer;margin-bottom:-2px;border-radius:8px 8px 0 0;">
+          📁 파일 업로드
+        </button>
+        <button id="tabPaste" onclick="switchUploadTab('paste')"
+          style="padding:10px 22px;font-size:14px;font-weight:600;border:none;border-bottom:3px solid transparent;background:#f8fafc;color:#6b7280;cursor:pointer;margin-bottom:-2px;border-radius:8px 8px 0 0;">
+          📋 CSV 직접 붙여넣기
+        </button>
       </div>
-      <input type="file" id="fileInput" accept=".csv" style="display: none;">
+
+      <!-- 탭1: 파일 업로드 -->
+      <div id="panelFile">
+        <div class="upload-area" id="uploadArea" style="position:relative;cursor:pointer;border-top-left-radius:0;border-top-right-radius:0;">
+          <input type="file" id="fileInput" accept=".csv"
+                 style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:10;"
+                 title="CSV 파일을 선택하세요">
+          <div class="upload-icon" style="pointer-events:none;">📁</div>
+          <div class="upload-text" style="pointer-events:none;">CSV 파일을 드래그하거나 클릭하여 업로드하세요</div>
+          <div class="upload-hint" style="pointer-events:none;">권장 형식: 날짜, 캠페인, 소재명, 파일명, 전환, CPA, IPM, 매출(Revenue), 이미지링크 등</div>
+        </div>
+      </div>
+
+      <!-- 탭2: CSV 직접 붙여넣기 -->
+      <div id="panelPaste" style="display:none;">
+        <div style="background:#f8fafc;border:1.5px dashed #d1d5db;border-top:none;border-radius:0 0 12px 12px;padding:20px;">
+          <div style="font-size:13px;color:#6b7280;margin-bottom:10px;">
+            💡 Excel에서 복사(Ctrl+A → Ctrl+C)하거나 CSV 파일 내용을 그대로 붙여넣으세요.
+          </div>
+          <textarea id="csvPasteArea"
+            placeholder="여기에 CSV 내용을 붙여넣으세요&#10;&#10;예시:&#10;일,캠페인,소재명,유형,전환,비용,노출수,클릭수&#10;2026-05-01,CMP_A,banner_01.png,BNR,12,48000,25000,320"
+            style="width:100%;height:180px;padding:12px;font-size:12.5px;font-family:monospace;border:1.5px solid #d1d5db;border-radius:8px;resize:vertical;outline:none;color:#374151;background:#fff;"></textarea>
+          <div style="display:flex;gap:10px;margin-top:12px;align-items:center;">
+            <button onclick="processPastedCSV()"
+              style="padding:10px 28px;background:linear-gradient(135deg,#E84855,#ff6b6b);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(232,72,85,.25);">
+              ✅ 분석 시작
+            </button>
+            <button onclick="document.getElementById('csvPasteArea').value=''"
+              style="padding:10px 18px;background:#f3f4f6;color:#6b7280;border:none;border-radius:8px;font-size:13px;cursor:pointer;">
+              🗑️ 초기화
+            </button>
+            <span style="font-size:12px;color:#9ca3af;">탭(Tab) 구분자도 지원합니다</span>
+          </div>
+        </div>
+      </div>
+
       <div id="uploadStatus" style="margin-top: 20px; padding: 15px; background: #f0f9ff; border-radius: 8px; display: none;">
         <strong>✅ 업로드 완료</strong>
         <div id="uploadInfo" style="margin-top: 10px; font-size: 14px; color: #374151;"></div>
@@ -834,6 +944,31 @@
         </div>
       </div>
       
+      <!-- ── 저노출/저전환 소재 제외 필터 ────────────────────────── -->
+      <div style="background:#f8fafc;border:1.5px solid #e5e7eb;border-radius:12px;padding:18px 20px;margin-top:10px;">
+        <div style="font-weight:700;color:#374151;font-size:14px;margin-bottom:4px;display:flex;align-items:center;gap:6px;">
+          🚫 저노출/저전환 소재 제외
+          <span style="font-size:11px;font-weight:400;color:#9ca3af;">(설정된 소재유형·캠페인·날짜 범위 기준 평균 대비)</span>
+        </div>
+        <div style="font-size:12.5px;color:#6b7280;margin-bottom:12px;">
+          평균 노출수 <strong>OR</strong> 평균 전환수가 기준 미만인 소재를 분석에서 제외합니다.
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px 14px;border:2px solid #e5e7eb;border-radius:8px;font-size:13px;font-weight:600;background:white;transition:all .15s;" id="thresh-label-0">
+            <input type="radio" name="thresholdFilter" value="0" checked onchange="updateThresholdLabel()"> 미적용
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px 14px;border:2px solid #e5e7eb;border-radius:8px;font-size:13px;font-weight:600;background:white;transition:all .15s;" id="thresh-label-10">
+            <input type="radio" name="thresholdFilter" value="10" onchange="updateThresholdLabel()"> 평균의 10% 미만 제외
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px 14px;border:2px solid #e5e7eb;border-radius:8px;font-size:13px;font-weight:600;background:white;transition:all .15s;" id="thresh-label-20">
+            <input type="radio" name="thresholdFilter" value="20" onchange="updateThresholdLabel()"> 평균의 20% 미만 제외
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px 14px;border:2px solid #e5e7eb;border-radius:8px;font-size:13px;font-weight:600;background:white;transition:all .15s;" id="thresh-label-30">
+            <input type="radio" name="thresholdFilter" value="30" onchange="updateThresholdLabel()"> 평균의 30% 미만 제외
+          </label>
+        </div>
+      </div>
+
       <div style="display: flex; gap: 15px; margin-top: 30px;">
         <button class="btn" onclick="calculateScores()">📊 점수 계산 실행</button>
         <button class="btn btn-secondary" onclick="resetScoring()">🔄 설정 초기화</button>
@@ -873,6 +1008,17 @@
       </div>
       <div id="scoringAIBox"></div>
 
+      <!-- 소재 유형별 요약 표 -->
+      <div id="typeSummaryContainer"></div>
+
+      <!-- 결과 추출 버튼 -->
+      <div id="exportBtnContainer" style="display:none;margin:16px 0 4px;">
+        <button onclick="exportResultHTML()" style="display:inline-flex;align-items:center;gap:8px;padding:10px 22px;background:linear-gradient(135deg,#1d4ed8,#3b82f6);color:white;border:none;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(59,130,246,.3);transition:all .2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+          📤 분석 결과 HTML 추출
+        </button>
+        <span style="font-size:12px;color:#6b7280;margin-left:10px;">AI 인사이트 제외 · 유관부서 공유용 단일 HTML 파일</span>
+      </div>
+
       <div class="table-container" style="margin-top: 20px;">
         <table>
           <thead>
@@ -880,16 +1026,16 @@
               <th>미리보기</th>
               <th>소재명/파일명</th>
               <th>유형</th>
-              <th>전환</th>
-              <th>CPA</th>
-              <th>IPM</th>
-              <th>ROAS</th>
-              <th>전환수 점수</th>
-              <th>CPA 점수</th>
-              <th>IPM 점수</th>
-              <th>ROAS 점수</th>
-              <th>총점</th>
-              <th>등급</th>
+              <th class="has-tooltip" data-tip="설치 또는 목표 행동 완료 횟수">전환 ℹ</th>
+              <th class="has-tooltip" data-tip="비용 ÷ 전환수&#10;전환 1건당 광고비용&#10;낮을수록 효율적">CPA ℹ</th>
+              <th class="has-tooltip" data-tip="(전환수 ÷ 노출수) × 1,000&#10;1,000회 노출당 전환수&#10;높을수록 전환 효율 우수">IPM ℹ</th>
+              <th class="has-tooltip" data-tip="(매출 ÷ 비용) × 100%&#10;광고비 대비 매출 수익률&#10;Revenue 컬럼 없으면 —">ROAS ℹ</th>
+              <th class="has-tooltip" data-tip="전환수 Rank 기반 점수&#10;(n - Rank + 1) / n × 100&#10;전환수 많을수록 높은 점수">전환수 점수 ℹ</th>
+              <th class="has-tooltip" data-tip="CPA Rank 기반 점수&#10;(n - Rank + 1) / n × 100&#10;CPA 낮을수록 높은 점수&#10;전환수=0이면 0점 고정">CPA 점수 ℹ</th>
+              <th class="has-tooltip" data-tip="IPM Rank 기반 점수&#10;(n - Rank + 1) / n × 100&#10;IPM 높을수록 높은 점수&#10;노출수=0이면 0점 고정">IPM 점수 ℹ</th>
+              <th class="has-tooltip" data-tip="ROAS Rank 기반 점수&#10;(n - Rank + 1) / n × 100&#10;ROAS 높을수록 높은 점수&#10;Revenue 없으면 자동 제외">ROAS 점수 ℹ</th>
+              <th class="has-tooltip" data-tip="전환·CPA·IPM·ROAS 점수 × 가중치 합산&#10;설정된 가중치 비율로 최종 점수 산출">총점 ℹ</th>
+              <th class="has-tooltip" data-tip="총점 기준 등급&#10;최우수 ≥80 / 우수 ≥60&#10;양호 ≥40 / 보통 ≥20 / 개선필요 &lt;20">등급 ℹ</th>
             </tr>
           </thead>
           <tbody id="tableBody">
@@ -1025,13 +1171,13 @@
               <th>미리보기</th>
               <th>소재명/파일명</th>
               <th>유형</th>
-              <th>기준 순위</th>
-              <th>비교 순위</th>
-              <th>순위 변동</th>
-              <th>기준 CPA</th>
-              <th>비교 CPA</th>
-              <th>CPA 변화율</th>
-              <th>피로도 상태</th>
+              <th class="has-tooltip" data-tip="기준 기간 Total Score 기준 순위">기준 순위 ℹ</th>
+              <th class="has-tooltip" data-tip="비교 기간 Total Score 기준 순위">비교 순위 ℹ</th>
+              <th class="has-tooltip" data-tip="기준 → 비교 기간 순위 변동&#10;▲ 상승 / ▼ 하락 / — 동일">순위 변동 ℹ</th>
+              <th class="has-tooltip" data-tip="기준 기간 CPA&#10;비용 ÷ 전환수 (원)">기준 CPA ℹ</th>
+              <th class="has-tooltip" data-tip="비교 기간 CPA&#10;비용 ÷ 전환수 (원)">비교 CPA ℹ</th>
+              <th class="has-tooltip" data-tip="(비교CPA − 기준CPA) ÷ 기준CPA × 100%&#10;양수(+): CPA 악화 = 피로도 증가&#10;음수(−): CPA 개선 = 효율 회복">CPA 변화율 ℹ</th>
+              <th class="has-tooltip" data-tip="CPA 변화율 기반 피로도 판정&#10;Fresh ≤−20% / Stable −20~0%&#10;Warning 0~+20% / Tired &gt;+20%">피로도 상태 ℹ</th>
             </tr>
           </thead>
           <tbody id="fatigueTableBody">
@@ -1084,11 +1230,603 @@
     }
   </style>
   
-  <!-- JavaScript -->
-  <script src="js/pipeline-engine.js"></script>
-  <script src="js/analysis-engine-v2.js"></script>
+  <!-- JavaScript (인라인 통합 — CSP 우회) -->
+  <script>
+/* ============================================================
+   pipeline-engine.js (인라인)
+   ============================================================ */
+const NON_TAG_COLS = new Set([
+  '소재명','유형','전환','비용','노출수','클릭수',
+  'name','type','conversion','cost','impression','click','ctr','ipm','cpa',
+  '링크','link','url','image_url','video_url','썸네일',
+  '앱 확장 소재','앱 확장 소재 유형',
+  'id','no','index','순번','date','날짜','기간','period',
+  '일','일자','투입일',
+  'campaign','캠페인','ad_set','adset','광고세트','광고그룹',
+  '사이즈','size','format','포맷','사이즈명',
+  '언어','language','lang','지역','region','국가','country','시기',
+  '통화 코드','통화코드','통화','currency','revenue','매출','Revenue',
+  '파일명','filename','file_name',
+  'remark','비고','note',
+  '유형 (BNR/VID)',
+  'audio_elements_bgm','audio_elements_sfx_emphasized',
+  'audio_elements_narration','audio_elements_cv',
+  'text_analysis_extracted_copy','title_specific_special_note',
+]);
+
+const INSIGHT_COL_PATTERNS = [
+  /marketer[\s_-]?insight/i,
+  /마케터[\s_]?인사이트/,
+  /insight[\s_]?memo/i,
+  /담당자[\s_]?인사이트/,
+];
+
+function plParseCSV(text) {
+  const lines = text.trim().split(/\r?\n/);
+  if (lines.length < 2) return null;
+  const headers = plParseCSVLine(lines[0]);
+  const rows = [];
+  for (let i = 1; i < lines.length; i++) {
+    if (!lines[i].trim()) continue;
+    const vals = plParseCSVLine(lines[i]);
+    const obj = {};
+    headers.forEach((h, idx) => { obj[h.trim()] = (vals[idx] || '').trim(); });
+    rows.push(obj);
+  }
+  const raw = { headers: headers.map(h => h.trim()), rows };
+  return plNormalizeColumns(raw);
+}
+
+function plParseCSVLine(line) {
+  const result = []; let cur = ''; let inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') { if (inQ && line[i+1] === '"') { cur += '"'; i++; } else inQ = !inQ; }
+    else if (ch === ',' && !inQ) { result.push(cur); cur = ''; }
+    else cur += ch;
+  }
+  result.push(cur);
+  return result;
+}
+
+function plNormalizeColumns(parsed) {
+  const { headers, rows } = parsed;
+  const HEADER_MAP = [
+    { target: '유형',  sources: ['유형', '유형 (BNR/VID)', 'type', '소재유형'] },
+    { target: '전환',  sources: ['전환', 'conversions', 'conversion', 'installs'] },
+    { target: '비용',  sources: ['비용', 'cost', 'spend'] },
+    { target: '노출수', sources: ['노출수', 'impressions', 'impression', 'impr'] },
+    { target: '클릭수', sources: ['클릭수', 'clicks', 'click'] },
+  ];
+  const renameMap = {};
+  HEADER_MAP.forEach(({ target, sources }) => {
+    if (headers.includes(target)) return;
+    for (const src of sources) {
+      if (headers.includes(src)) { renameMap[src] = target; break; }
+    }
+  });
+  const newHeaders = headers.map(h => renameMap[h] || h);
+  const newRows = rows.map(r => {
+    const newR = {};
+    Object.keys(r).forEach(k => { const mapped = renameMap[k] || k; newR[mapped] = r[k]; });
+    if (newR['파일명']) newR['파일명'] = String(newR['파일명']).trim();
+    if (newR['소재명']) newR['소재명'] = String(newR['소재명']).trim();
+    ['전환','비용','노출수','클릭수','Revenue','revenue','REVENUE','매출','수익'].forEach(col => {
+      if (newR[col]) newR[col] = String(newR[col]).replace(/,/g, '').trim();
+    });
+    return newR;
+  });
+  if (!newHeaders.includes('소재명')) newHeaders.splice(0, 0, '소재명');
+  if (!newHeaders.includes('파일명')) newHeaders.splice(1, 0, '파일명');
+  return { headers: newHeaders, rows: newRows, _renameMap: renameMap };
+}
+
+function plParseTags(raw) {
+  if (!raw) return [];
+  const cleaned = raw.replace(/^\[|\]$/g, '').replace(/'/g, '').replace(/"/g, '');
+  return cleaned.split(',').map(t => t.trim()).filter(t => t.length >= 2);
+}
+
+const META_COL_PATTERNS = [
+  /^(앱[\s_]?확장[\s_]?소재)/i,
+  /소재[\s_]?유형$/,
+  /(캠페인|광고그룹|광고[\s_]?세트)/,
+  /(통화[\s_]?코드|currency)/i,
+  /(revenue|매출|수익)/i,
+  /(파일[\s_]?명|filename)/i,
+  /^(일|일자|날짜|기간|투입일|시기)$/,
+  /^(사이즈|size|format|포맷)$/i,
+  /^(언어|language|lang|지역|국가|country|region)$/i,
+  /^(usp|concept)$/i,
+  /^(no|id|index|순번)$/i,
+  /^(link|url|링크)$/i,
+  /(image_url|video_url|썸네일)/i,
+  /^audio_elements_/i,
+  /^text_analysis_extracted/i,
+  /_special_note$/i,
+  /^(title_specific_special)/i,
+];
+
+function plDetectTagColumns(headers, rows) {
+  const tagCols = [], insightCols = [];
+  const tagRows = rows.filter(r => ['BNR','VID'].includes((r['유형']||'').toUpperCase()));
+  const sampleRows = (tagRows.length > 0 ? tagRows : rows).slice(0, Math.min(rows.length, 40));
+  headers.forEach(col => {
+    const colLower = col.toLowerCase().trim();
+    if (NON_TAG_COLS.has(col) || NON_TAG_COLS.has(colLower)) return;
+    if (META_COL_PATTERNS.some(p => p.test(col))) return;
+    if (INSIGHT_COL_PATTERNS.some(p => p.test(col))) { insightCols.push(col); return; }
+    if (/insight|인사이트|memo|메모/i.test(col)) { insightCols.push(col); return; }
+    const nonEmpty = sampleRows.filter(r => r[col] && r[col].trim()).length;
+    if (nonEmpty < sampleRows.length * 0.15) return;
+    const filledVals = sampleRows.filter(r => r[col] && r[col].trim()).map(r => r[col].trim());
+    if (filledVals.every(v => /^[\d.,\s%+-]+$/.test(v))) return;
+    if (filledVals.some(v => /https?:\/\//i.test(v))) return;
+    if (filledVals.every(v => /^\d{4}[-./]\d{1,2}[-./]\d{1,2}$/.test(v))) return;
+    const avgLen = filledVals.reduce((s, v) => s + v.length, 0) / filledVals.length;
+    if (avgLen > 60) { insightCols.push(col); return; }
+    if (filledVals.every(v => /^(true|false|TRUE|FALSE|예|아니오|yes|no)$/i.test(v))) return;
+    if (filledVals.every(v => /^(없음|none|null|n\/a|-|—|0)$/i.test(v))) return;
+    tagCols.push(col);
+  });
+  return { tagCols, insightCols };
+}
+
+const INSIGHT_STOPWORDS = new Set([
+  '의','을','를','이','가','은','는','에','에서','으로','로','와','과','도','만','까지','부터',
+  '하고','하여','하는','한','된','될','되어','있는','있음','없는','없음','하다','있다','없다',
+  '되다','같다','보다','위해','통해','대한','위한','따른','같이','함께','에게','에서는','으로는',
+  '소재','분석','결과','확인','필요','진행','예정','추가','변경','수정','검토','반영',
+  '광고','캠페인','집행','운영','성과','지표','개선','관련','해당','기타','전략','방향',
+  '요소','부분','측면','차원','단계','수준','정도','상태','현황','상황','조건',
+  '내용','항목','사항','사례','경우','문제','이슈','포인트','키포인트',
+  '테스트','실험','검증','평가','측정','파악','판단','인식',
+  '데이터','수치','효과','효율','영향','기여','도움',
+  '크리에이티브','배너','동영상','영상','이미지','비주얼','텍스트','카피','문구','메시지',
+  '유저','사용자','타겟','고객','유입','전환','클릭','노출','도달',
+  '예상','예측','전망','기대','추정','가능','가능성','확률','우려','리스크',
+  '이번','지난','다음','현재','향후','이후','이전','아직','특히','주로','매우','굉장히',
+  '높은','낮은','좋은','나쁜','큰','작은','많은','적은','강한','약한','빠른','느린',
+  '높음','낮음','좋음','나쁨','큼','작음','많음','적음','강함','약함','빠름','느림',
+  '통해','통한','따라','따른','의한','위한','위해','대한','관한','때문','덕분',
+  '또한','그리고','하지만','그러나','따라서','그래서','즉',
+  '것으로','것이','것을','것에','것은','것이다',
+  '추정됨','판단됨','보임','것같음','듯함',
+  'the','a','an','is','are','was','were','be','been','being','have','has','had',
+  'and','or','but','in','on','at','to','for','of','with','by','from',
+  'this','that','these','those','it','its','we','our','you','your','they','their',
+  'ad','ads','creative','creatives','performance','result','type','content','material',
+  'high','low','good','bad','more','less','much','many','very','so','such','too',
+  'can','will','should','would','could','may','might','must','shall',
+  'when','where','how','why','what','which','who',
+  'all','any','some','each','every','most','few','many','other','another',
+  'user','target','campaign','banner','video','image','conversion','click','impression',
+  'ctr','cvr','cpa','roi','kpi','metric','data','analysis','test','optimize',
+]);
+
+function plExtractInsightKeywords(text) {
+  if (!text || !text.trim()) return [];
+  text = text.replace(/\[마케터[^\]]*\]/g,'').replace(/\[타겟[^\]]*\]/g,'')
+             .replace(/\[개선[^\]]*\]/g,'').replace(/\[.*?의도\]/g,'')
+             .replace(/\[.*?심리\]/g,'').replace(/\[.*?방향\]/g,'')
+             .replace(/\[.*?전략\]/g,'').trim();
+  const phrases = text
+    .split(/[,\/\.\n;·|]/)
+    .map(p => p.replace(/^\s*[-·•\d\.\)]+\s*/, '').replace(/[^\w가-힣\s]/g,' ').trim())
+    .filter(p => p.length >= 4 && p.length <= 40);
+  const dedupedCandidates = [...new Set(phrases)];
+  const finalKeywords = dedupedCandidates
+    .filter(p => {
+      if (!p || p.length < 4) return false;
+      const tokens = p.split(/\s+/);
+      const allStop = tokens.every(t => INSIGHT_STOPWORDS.has(t) || INSIGHT_STOPWORDS.has(t.toLowerCase()));
+      if (allStop) return false;
+      return true;
+    })
+    .sort((a, b) => b.length - a.length)
+    .slice(0, 5);
+  return finalKeywords.map(k => '[MI] ' + k);
+}
+
+function isValidInsightKeyword(phrase) {
+  if (!phrase || phrase.length < 4) return false;
+  const p = phrase.trim();
+  const pLower = p.toLowerCase();
+  if (INSIGHT_STOPWORDS.has(p) || INSIGHT_STOPWORDS.has(pLower)) return false;
+  if (/^[\d\s%.,+-]+$/.test(p)) return false;
+  if ((p.match(/\d/g)||[]).length / p.length > 0.4) return false;
+  if (p.length <= 4 && !/\s/.test(p)) return false;
+  if (/^(https?:\/\/|www\.|\.com|\.kr)/i.test(p)) return false;
+  const korEngCount = (p.match(/[가-힣a-zA-Z]/g)||[]).length;
+  if (korEngCount < p.length * 0.6) return false;
+  return true;
+}
+
+const REQUIRED_COLS = ['소재명','유형','전환','비용','노출수'];
+
+function plValidateData(parsed) {
+  const { headers, rows } = parsed;
+  const missingRequired = REQUIRED_COLS.filter(c => !headers.includes(c));
+  const { tagCols, insightCols } = plDetectTagColumns(headers, rows);
+  const allTagSources = [...tagCols, ...insightCols];
+  const colResult = { missingRequired, tagCols, insightCols, score: missingRequired.length === 0 ? 'pass' : 'fail' };
+  const issues = [];
+  const vidBnrRows  = rows.filter(r => ['BNR','VID'].includes((r['유형']||'').toUpperCase()));
+  const txtRows     = rows.filter(r => (r['유형']||'').toUpperCase() === 'TXT');
+  const unknownType = rows.filter(r => !['BNR','VID','TXT'].includes((r['유형']||'').toUpperCase()));
+  const zeroConv    = vidBnrRows.filter(r => Number(r['전환']||0) === 0);
+  const noName      = vidBnrRows.filter(r => !r['소재명'] || !r['소재명'].trim());
+  const dupNames    = (() => {
+    const seen = {}; const dups = new Set();
+    vidBnrRows.forEach(r => { const n = r['소재명']; if (n && seen[n]) dups.add(n); seen[n] = true; });
+    return [...dups];
+  })();
+  const negVal = vidBnrRows.filter(r => Number(r['비용']||0) < 0 || Number(r['노출수']||0) < 0);
+  if (noName.length)      issues.push({ type:'warn',  msg:'소재명 누락 ' + noName.length + '건' });
+  if (dupNames.length)    issues.push({ type:'warn',  msg:'중복 소재명 ' + dupNames.length + '개' });
+  if (unknownType.length) issues.push({ type:'error', msg:'유형 불명 ' + unknownType.length + '건' });
+  if (negVal.length)      issues.push({ type:'error', msg:'비용/노출수 음수값 ' + negVal.length + '건' });
+  if (zeroConv.length)    issues.push({ type:'info',  msg:'전환 0인 소재 ' + zeroConv.length + '건' });
+  const dataResult = {
+    total:rows.length, vidBnr:vidBnrRows.length, txt:txtRows.length,
+    unknown:unknownType.length, dupCount:dupNames.length, dupNames,
+    zeroConv:zeroConv.length, issues,
+    score: (negVal.length === 0 && unknownType.length === 0) ? 'pass' : 'warn'
+  };
+  const noTag = vidBnrRows.filter(r => {
+    const allTags = allTagSources.map(c => r[c]||'').join(',').trim();
+    return !allTags || allTags.replace(/,/g,'').trim() === '';
+  });
+  const avgTagCount = (() => {
+    const counts = vidBnrRows.map(r => {
+      const combined = tagCols.map(c => r[c]||'').join(',');
+      return plParseTags(combined).length;
+    });
+    return counts.length ? (counts.reduce((a,b)=>a+b,0)/counts.length).toFixed(1) : 0;
+  })();
+  const tagResult = {
+    availTagCols: tagCols, insightCols,
+    noTag: noTag.length, avgTagCount,
+    score: noTag.length > vidBnrRows.length * 0.3 ? 'warn' : 'pass'
+  };
+  return { colResult, dataResult, tagResult, validRows: vidBnrRows };
+}
+
+function plCalcScores(rows, params, headers) {
+  const { wConv, wCpa, wIpm } = params;
+  const wSum = wConv + wCpa + wIpm || 100;
+  const { tagCols, insightCols } = plDetectTagColumns(headers, rows);
+  const creatives = rows.map(r => {
+    const name   = r['소재명'] || '';
+    const type   = (r['유형']||'BNR').toUpperCase();
+    const conv   = Math.max(0, Number(r['전환'] || 0));
+    const cost   = Math.max(0, Number(r['비용'] || 0));
+    const impr   = Math.max(1, Number(r['노출수'] || 1));
+    const clicks = Math.max(0, Number(r['클릭수'] || 0));
+    const ctr    = clicks / impr * 100;
+    const ipm    = conv / impr * 1000;
+    const cpa    = cost > 0 && conv > 0 ? cost / conv : (conv === 0 ? 99999 : 0);
+    const rawTags    = tagCols.map(c => r[c]||'').join(',');
+    const parsedTags = plParseTags(rawTags);
+    const insightText = insightCols.map(c => r[c]||'').join('. ');
+    const insightTags = insightText.trim() ? plExtractInsightKeywords(insightText) : [];
+    const allTags = [...new Set([...parsedTags, ...insightTags])];
+    return {
+      name, type, conversions:conv, cost, impressions:impr, clicks,
+      ctr:+ctr.toFixed(2), ipm:+ipm.toFixed(2), cpa:+cpa.toFixed(0),
+      tags: allTags,
+      tagSources: { fromTagCols: parsedTags, fromInsight: insightTags },
+      raw:r, score:0, grade:'', cluster:''
+    };
+  }).filter(c => c.name);
+  if (!creatives.length) return [];
+  const normalize = (vals, invert = false) => {
+    const min = Math.min(...vals), max = Math.max(...vals);
+    if (max === min) return vals.map(() => 50);
+    return vals.map(v => { const n = (v - min) / (max - min) * 100; return invert ? 100 - n : n; });
+  };
+  const convNorm = normalize(creatives.map(c => c.conversions));
+  const cpaNorm  = normalize(creatives.map(c => c.cpa), true);
+  const ipmNorm  = normalize(creatives.map(c => c.ipm));
+  creatives.forEach((c, i) => {
+    c.score = +((convNorm[i]*wConv + cpaNorm[i]*wCpa + ipmNorm[i]*wIpm) / wSum).toFixed(1);
+  });
+  const scores = creatives.map(c => c.score).sort((a,b)=>a-b);
+  const q1 = scores[Math.floor(scores.length * 0.25)] || 0;
+  const q2 = scores[Math.floor(scores.length * 0.50)] || 0;
+  const q3 = scores[Math.floor(scores.length * 0.75)] || 0;
+  creatives.forEach(c => {
+    if (c.score >= 75) c.grade = 'S';
+    else if (c.score >= 50) c.grade = 'A';
+    else if (c.score >= 25) c.grade = 'B';
+    else c.grade = 'C';
+  });
+  return creatives;
+}
+
+// 군집화 스텁 (Step2에서 사용, Step1은 불필요하나 참조 오류 방지용)
+function plRunClustering(creatives, params, prevInsights) { return []; }
+function plRunClusteringWithMinGuarantee(creatives, params, prevInsights) { return []; }
+function plCalcTagImpact(creatives) { return { impacts: [] }; }
+function plCompareInsights(curClusters, prevClusters, curTagImpacts, prevWinTags, prevLoseTags) { return { clusterDiff:[], tagDiff:[] }; }
+  </script>
+
+  <script>
+/* ============================================================
+   analysis-engine-v2.js (인라인)
+   ============================================================ */
+function detectDateColumn(headers) {
+  const datePatterns = [/^일$/,/^날짜$/,/^일자$/,/^date$/i,/^day$/i,/투입일/,/집행일/,/^시기$/];
+  for (const header of headers) {
+    if (datePatterns.some(p => p.test(header))) return header;
+  }
+  return null;
+}
+
+function parseDate(dateStr) {
+  if (!dateStr) return null;
+  const str = String(dateStr).trim();
+  if (/^\d{4}[-./]\d{1,2}[-./]\d{1,2}$/.test(str)) return new Date(str.replace(/[./]/g, '-'));
+  if (/^\d{8}$/.test(str)) {
+    const y = str.substring(0,4), m = str.substring(4,6), d = str.substring(6,8);
+    return new Date(y + '-' + m + '-' + d);
+  }
+  return null;
+}
+
+function formatDate(date) {
+  if (!date || !(date instanceof Date)) return '';
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return y + '-' + m + '-' + d;
+}
+
+function filterByDateRange(rows, dateColumn, startDate, endDate) {
+  if (!dateColumn) return rows;
+  const start = startDate ? new Date(startDate) : null;
+  const end   = endDate   ? new Date(endDate)   : null;
+  const filtered = rows.filter(row => {
+    const date = parseDate(row[dateColumn]);
+    if (!date) return false;
+    if (start && date < start) return false;
+    if (end   && date > end)   return false;
+    return true;
+  });
+  console.log('📅 기간 필터링: ' + rows.length + '개 행 → ' + filtered.length + '개 행');
+  return filtered;
+}
+
+function getDateRange(rows, dateColumn) {
+  if (!dateColumn) return { min: null, max: null };
+  let min = null, max = null;
+  rows.forEach(row => {
+    const date = parseDate(row[dateColumn]);
+    if (!date) return;
+    if (!min || date < min) min = date;
+    if (!max || date > max) max = date;
+  });
+  return { min: min ? formatDate(min) : null, max: max ? formatDate(max) : null };
+}
+
+function aggregateCreativeData(rows, groupBy) {
+  groupBy = groupBy || '소재명';
+  const creativeMap = new Map();
+  const sampleRow = rows.find(r => ['BNR','VID'].includes((r['유형']||'').toUpperCase()));
+  if (sampleRow && !sampleRow[groupBy]) groupBy = '소재명';
+  const bnrVidRows = rows.filter(r => ['BNR','VID'].includes((r['유형']||'').toUpperCase()));
+  console.log('📊 집계: 전체 ' + rows.length + '개 → BNR/VID ' + bnrVidRows.length + '개');
+  bnrVidRows.forEach(row => {
+    const key = row[groupBy];
+    if (!key || !key.trim()) return;
+    const conv  = parseFloat(row['전환'])  || 0;
+    const cost  = parseFloat(row['비용'])  || 0;
+    const impr  = parseFloat(row['노출수']) || 0;
+    const click = parseFloat(row['클릭수']) || 0;
+    // Revenue 파싱 (쉼표 제거 보장)
+    const rev   = parseFloat(String(row['Revenue'] || row['revenue'] || row['매출'] || '0').replace(/,/g,'')) || 0;
+    if (!creativeMap.has(key)) {
+      creativeMap.set(key, {
+        소재명: row['소재명'] || '', 파일명: row['파일명'] || '',
+        집계기준: key, 유형: row['유형'] || '',
+        전환: conv, 비용: cost, 노출수: impr, 클릭수: click, 매출: rev,
+        tags: {}, insights: {}, meta: {}
+      });
+      Object.keys(row).forEach(colKey => {
+        const val = row[colKey];
+        if (!val || val.trim() === '') return;
+        if (['소재명','파일명','유형','전환','비용','노출수','클릭수'].includes(colKey)) return;
+        if (/^(일|날짜|캠페인|광고그룹|링크|통화|orientation)/.test(colKey)) {
+          creativeMap.get(key).meta[colKey] = val;
+        } else if (/insight|인사이트|memo|메모/i.test(colKey)) {
+          creativeMap.get(key).insights[colKey] = val;
+        } else {
+          creativeMap.get(key).tags[colKey] = val;
+        }
+      });
+    } else {
+      const c = creativeMap.get(key);
+      c.전환 += conv; c.비용 += cost; c.노출수 += impr; c.클릭수 += click; c.매출 += rev;
+    }
+  });
+  const aggregated = Array.from(creativeMap.values()).map(c => {
+    c.CPA = c.전환 > 0 ? c.비용 / c.전환 : 0;
+    c.IPM = c.노출수 > 0 ? (c.전환 / c.노출수) * 1000 : 0;
+    c.CTR = c.노출수 > 0 ? (c.클릭수 / c.노출수) * 100 : 0;
+    c.ROAS = c.비용 > 0 ? c.매출 / c.비용 : 0;
+    return c;
+  });
+  console.log('✅ 소재 집계 완료 (기준: ' + groupBy + '): ' + aggregated.length + '개 소재');
+  return aggregated;
+}
+
+function calculateRankScores(creatives) {
+  const n = creatives.length;
+  if (n === 0) return [];
+  const sortedByConv = [...creatives].sort((a, b) => a.전환 - b.전환);
+  sortedByConv.forEach((c, idx) => { c.전환Rank = ((idx + 1) / n) * 100; });
+  const sortedByCPA = [...creatives].sort((a, b) => {
+    if (a.CPA === 0 && b.CPA === 0) return 0;
+    if (a.CPA === 0) return 1;
+    if (b.CPA === 0) return -1;
+    return b.CPA - a.CPA;
+  });
+  sortedByCPA.forEach((c, idx) => { c.CPARank = c.CPA === 0 ? 0 : ((idx + 1) / n) * 100; });
+  const sortedByIPM = [...creatives].sort((a, b) => a.IPM - b.IPM);
+  sortedByIPM.forEach((c, idx) => { c.IPMRank = ((idx + 1) / n) * 100; });
+  return creatives;
+}
+
+function calculateTotalScore(creatives, weights) {
+  weights = weights || { conv: 0.40, cpa: 0.35, ipm: 0.25 };
+  creatives.forEach(c => {
+    c.TotalScore = Math.round((c.전환Rank * weights.conv + c.CPARank * weights.cpa + c.IPMRank * weights.ipm) * 10) / 10;
+  });
+  creatives.sort((a, b) => b.TotalScore - a.TotalScore);
+  creatives.forEach((c, idx) => { c.Rank = idx + 1; });
+  const q1 = Math.ceil(creatives.length * 0.25);
+  const q2 = Math.ceil(creatives.length * 0.50);
+  const q3 = Math.ceil(creatives.length * 0.75);
+  creatives.forEach((c, idx) => {
+    if (idx < q1) c.등급 = '최우수';
+    else if (idx < q2) c.등급 = '우수';
+    else if (idx < q3) c.등급 = '보통';
+    else c.등급 = '미흡';
+  });
+  return creatives;
+}
+
+function runStep1_Scoring(rows, options) {
+  options = options || {};
+  const { weights, dateColumn: userDateColumn, startDate, endDate, groupBy = '소재명' } = options;
+  const headers = rows.length > 0 ? Object.keys(rows[0]) : [];
+  const dateColumn = userDateColumn || detectDateColumn(headers);
+  const fullDateRange = getDateRange(rows, dateColumn);
+  const filteredRows = filterByDateRange(rows, dateColumn, startDate, endDate);
+  if (filteredRows.length === 0) return { creatives:[], dateRange:fullDateRange, dateColumn, filteredDateRange:{min:null,max:null}, groupBy };
+  const filteredDateRange = getDateRange(filteredRows, dateColumn);
+  const aggregated = aggregateCreativeData(filteredRows, groupBy);
+  const ranked = calculateRankScores(aggregated);
+  const scored = calculateTotalScore(ranked, weights);
+  console.log('✅ Step 1 완료: ' + scored.length + '개 소재 분석');
+  return { creatives: scored, fullDateRange, filteredDateRange, dateColumn, groupBy };
+}
+
+function comparePeriods(rows, dateColumn, baseStart, baseEnd, compStart, compEnd, weights, groupBy) {
+  groupBy = groupBy || '소재명';
+  const baseRows = filterByDateRange(rows, dateColumn, baseStart, baseEnd);
+  const baseScored = calculateTotalScore(calculateRankScores(aggregateCreativeData(baseRows, groupBy)), weights);
+  const compRows = filterByDateRange(rows, dateColumn, compStart, compEnd);
+  const compScored = calculateTotalScore(calculateRankScores(aggregateCreativeData(compRows, groupBy)), weights);
+  const comparison = [];
+  const baseMap = new Map(baseScored.map(c => [c.집계기준, c]));
+  const compMap = new Map(compScored.map(c => [c.집계기준, c]));
+  const allCreatives = new Set([...baseMap.keys(), ...compMap.keys()]);
+  allCreatives.forEach(key => {
+    const base = baseMap.get(key), comp = compMap.get(key);
+    if (!base && !comp) return;
+    const item = {
+      소재명:(base||comp).소재명, 파일명:(base||comp).파일명, 집계기준:key, 유형:(base||comp).유형,
+      baseRank:base?.Rank||null, baseScore:base?.TotalScore||0, base전환:base?.전환||0, baseCPA:base?.CPA||0, baseIPM:base?.IPM||0,
+      compRank:comp?.Rank||null, compScore:comp?.TotalScore||0, comp전환:comp?.전환||0, compCPA:comp?.CPA||0, compIPM:comp?.IPM||0,
+      rankChange:null, scoreChange:null, status:'stable',
+      tags:(base||comp).tags, insights:(base||comp).insights, meta:(base||comp).meta
+    };
+    if (base && comp) {
+      item.rankChange = base.Rank - comp.Rank;
+      item.scoreChange = comp.TotalScore - base.TotalScore;
+      item.status = item.rankChange > 0 ? 'improved' : item.rankChange < 0 ? 'declined' : 'stable';
+    } else if (comp && !base) { item.status = 'new'; }
+    else if (base && !comp) { item.status = 'removed'; }
+    comparison.push(item);
+  });
+  comparison.sort((a, b) => {
+    if (a.rankChange === null && b.rankChange === null) return 0;
+    if (a.rankChange === null) return 1;
+    if (b.rankChange === null) return -1;
+    return b.rankChange - a.rankChange;
+  });
+  return { comparison, basePeriod:{start:baseStart,end:baseEnd,creatives:baseScored}, compPeriod:{start:compStart,end:compEnd,creatives:compScored}, groupBy };
+}
+
+function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy) {
+  groupBy = groupBy || '소재명';
+  if (!dateColumn) return { dates:[], creatives:{}, groupBy };
+  const dateGroups = new Map();
+  rows.forEach(row => {
+    const date = parseDate(row[dateColumn]);
+    if (!date) return;
+    const dk = formatDate(date);
+    if (!dateGroups.has(dk)) dateGroups.set(dk, []);
+    dateGroups.get(dk).push(row);
+  });
+  const sortedDates = Array.from(dateGroups.keys()).sort();
+  const rankingsByDate = new Map();
+  sortedDates.forEach(date => {
+    const scored = calculateTotalScore(calculateRankScores(aggregateCreativeData(dateGroups.get(date), groupBy)), weights);
+    rankingsByDate.set(date, scored);
+  });
+  const creativesMap = new Map();
+  sortedDates.forEach(date => {
+    rankingsByDate.get(date).forEach(c => {
+      const key = c.집계기준;
+      if (targetCreatives && !targetCreatives.includes(key)) return;
+      if (!creativesMap.has(key)) creativesMap.set(key, { 소재명:c.소재명, 파일명:c.파일명, 집계기준:key, 유형:c.유형, ranks:[], scores:[], dates:[] });
+      const cr = creativesMap.get(key);
+      cr.ranks.push(c.Rank); cr.scores.push(c.TotalScore); cr.dates.push(date);
+    });
+  });
+  return { dates:sortedDates, creatives:Object.fromEntries(creativesMap), groupBy };
+}
+  </script>
+
   <script>
     // v1.7: 로딩 인디케이터 함수
+    // ── 업로드 탭 전환
+    function switchUploadTab(tab) {
+      const isFile = tab === 'file';
+      document.getElementById('panelFile').style.display  = isFile ? '' : 'none';
+      document.getElementById('panelPaste').style.display = isFile ? 'none' : '';
+
+      const tFile  = document.getElementById('tabFile');
+      const tPaste = document.getElementById('tabPaste');
+      tFile.style.borderBottomColor  = isFile  ? '#E84855' : 'transparent';
+      tFile.style.color              = isFile  ? '#E84855' : '#6b7280';
+      tFile.style.background         = isFile  ? '#fff'    : '#f8fafc';
+      tPaste.style.borderBottomColor = !isFile ? '#E84855' : 'transparent';
+      tPaste.style.color             = !isFile ? '#E84855' : '#6b7280';
+      tPaste.style.background        = !isFile ? '#fff'    : '#f8fafc';
+    }
+
+    // ── CSV 붙여넣기 처리 (탭·쉼표 구분자 모두 지원)
+    function processPastedCSV() {
+      const raw = document.getElementById('csvPasteArea').value.trim();
+      if (!raw) {
+        alert('붙여넣은 내용이 없습니다. CSV 또는 Excel 복사 내용을 입력해 주세요.');
+        return;
+      }
+
+      // 탭 구분자(Excel 복사) → 쉼표 변환
+      // 단, 쉼표가 이미 많이 있으면 CSV로 간주
+      const lines = raw.split(/\r?\n/).filter(l => l.trim());
+      const firstLine = lines[0] || '';
+      const tabCount   = (firstLine.match(/\t/g) || []).length;
+      const commaCount = (firstLine.match(/,/g)  || []).length;
+
+      let csvText = raw;
+      if (tabCount > commaCount) {
+        // Excel 탭 복사: 탭 → 쉼표 변환 (값 내 쉼표는 따옴표로 감쌈)
+        csvText = lines.map(line =>
+          line.split('\t').map(cell => {
+            const trimmed = cell.trim();
+            return trimmed.includes(',') ? '"' + trimmed.replace(/"/g, '""') + '"' : trimmed;
+          }).join(',')
+        ).join('\n');
+      }
+
+      processCSV(csvText, '붙여넣기_데이터');
+    }
+
     function showLoadingIndicator(message = '처리 중...') {
       const indicator = document.getElementById('loadingIndicator');
       document.getElementById('loadingMessage').textContent = message;
@@ -1122,8 +1860,8 @@
       const uploadArea = document.getElementById('uploadArea');
       const fileInput = document.getElementById('fileInput');
       
-      // 파일 업로드 영역 클릭
-      uploadArea.addEventListener('click', () => fileInput.click());
+      // 파일 업로드 영역 클릭 — input이 overlay이므로 별도 click() 불필요
+      // (fileInput이 uploadArea 위에 투명하게 덮여있어 직접 클릭됨)
       
       // 드래그 앤 드롭
       uploadArea.addEventListener('dragover', (e) => {
@@ -1536,6 +2274,21 @@
     
     // ─── 피로도 분석용 필터 함수들 ───────────────────────────────────
 
+    // 임계값 라디오 선택 시 라벨 강조
+    function updateThresholdLabel() {
+      ['0','10','20','30'].forEach(v => {
+        const lbl = document.getElementById(`thresh-label-${v}`);
+        if (lbl) lbl.classList.remove('thresh-active');
+      });
+      const selected = document.querySelector('input[name="thresholdFilter"]:checked');
+      if (selected) {
+        const lbl = document.getElementById(`thresh-label-${selected.value}`);
+        if (lbl) lbl.classList.add('thresh-active');
+      }
+    }
+    // 초기 강조 적용
+    document.addEventListener('DOMContentLoaded', updateThresholdLabel);
+
     // 피로도 소재 유형 필터 업데이트
     function updateFatigueTypeFilter() {
       const types = [];
@@ -1657,8 +2410,39 @@
           filterSummary.push(`집계 기준: ${currentGroupBy}`);
           
           // 2. 집계
-          const aggregated = aggregateCreatives(filteredRows, currentGroupBy);
+          let aggregated = aggregateCreatives(filteredRows, currentGroupBy);
           console.log(`📊 집계 완료: ${aggregated.length}개 소재`);
+
+          // 2-1. 저노출/저전환 임계값 필터 적용
+          const thresholdPct = parseInt(document.querySelector('input[name="thresholdFilter"]:checked')?.value || '0');
+          let excludedCreatives = [];
+          let excludedByImp = 0, excludedByConv = 0;
+
+          if (thresholdPct > 0 && aggregated.length > 0) {
+            const avgImp  = aggregated.reduce((s, c) => s + c.노출수, 0) / aggregated.length;
+            const avgConv = aggregated.reduce((s, c) => s + c.전환,   0) / aggregated.length;
+            const impThresh  = avgImp  * (thresholdPct / 100);
+            const convThresh = avgConv * (thresholdPct / 100);
+
+            const passed = [], excluded = [];
+            aggregated.forEach(c => {
+              const failImp  = c.노출수 < impThresh;
+              const failConv = c.전환   < convThresh;
+              if (failImp || failConv) {
+                c._excludeReason = [];
+                if (failImp)  { c._excludeReason.push(`노출 ${c.노출수.toLocaleString()} < 기준 ${Math.round(impThresh).toLocaleString()}`); excludedByImp++; }
+                if (failConv) { c._excludeReason.push(`전환 ${c.전환} < 기준 ${convThresh.toFixed(1)}`); excludedByConv++; }
+                excluded.push(c);
+              } else {
+                passed.push(c);
+              }
+            });
+            excludedCreatives = excluded;
+            aggregated = passed;
+
+            console.log(`🚫 임계값(${thresholdPct}%) 필터: 제외 ${excluded.length}개 / 유지 ${passed.length}개`);
+            filterSummary.push(`저노출/저전환 ${thresholdPct}% 미만 제외: -${excluded.length}개`);
+          }
           
           // 3. 점수 계산
           const convWeight = parseInt(document.getElementById('conversionWeight').value) / 100;
@@ -1671,7 +2455,13 @@
           console.log(`✅ 점수 계산 완료: ${scoredCreatives.length}개 소재`);
           
           // 4. 결과 표시 (v1.7: 필터 조건 요약 포함)
-          displayScoringResults(scoredCreatives, filterSummary);
+          displayScoringResults(scoredCreatives, filterSummary, {
+            thresholdPct,
+            excludedCreatives,
+            excludedByImp,
+            excludedByConv,
+            totalBeforeFilter: scoredCreatives.length + excludedCreatives.length
+          });
           
         } catch (error) {
           console.error('❌ 점수 계산 오류:', error);
@@ -1784,13 +2574,29 @@
       convSorted.forEach(c => c.전환Rank = c.assignedRank);
       
       // CPA Rank (오름차순: CPA가 낮을수록 좋음)
-      const cpaSorted = [...creatives].sort((a, b) => a.CPA - b.CPA);
-      assignRankWithTies(cpaSorted, c => c.CPA);
+      // 전환수=0인 소재는 CPA 계산 불가 → 최하위 Rank(n)로 고정 처리
+      const cpaSorted = [...creatives].sort((a, b) => {
+        const aZero = a.전환 === 0;
+        const bZero = b.전환 === 0;
+        if (aZero && bZero) return 0;
+        if (aZero) return 1;   // a를 뒤로 (더 나쁜 순위)
+        if (bZero) return -1;  // b를 뒤로
+        return a.CPA - b.CPA;
+      });
+      assignRankWithTies(cpaSorted, c => c.전환 === 0 ? Infinity : c.CPA);
       cpaSorted.forEach(c => c.CPARank = c.assignedRank);
       
       // IPM Rank (내림차순: IPM이 높을수록 좋음)
-      const ipmSorted = [...creatives].sort((a, b) => b.IPM - a.IPM);
-      assignRankWithTies(ipmSorted, c => c.IPM);
+      // 노출수=0인 소재는 IPM 계산 불가 → 최하위 Rank(n)로 고정 처리
+      const ipmSorted = [...creatives].sort((a, b) => {
+        const aZero = a.노출수 === 0;
+        const bZero = b.노출수 === 0;
+        if (aZero && bZero) return 0;
+        if (aZero) return 1;   // a를 뒤로
+        if (bZero) return -1;  // b를 뒤로
+        return b.IPM - a.IPM;
+      });
+      assignRankWithTies(ipmSorted, c => c.노출수 === 0 ? -Infinity : c.IPM);
       ipmSorted.forEach(c => c.IPMRank = c.assignedRank);
       
       // ROAS Rank (내림차순: ROAS가 높을수록 좋음)
@@ -1802,8 +2608,10 @@
       const scored = creatives.map(c => {
         // Rank 점수 = (n - Rank + 1) / n × 100
         c.전환수점수 = ((n - c.전환Rank + 1) / n) * 100;
-        c.CPA점수 = ((n - c.CPARank + 1) / n) * 100;
-        c.IPM점수 = ((n - c.IPMRank + 1) / n) * 100;
+        // 전환수=0 → CPA 점수 0 강제 (전환 없는 소재에 높은 점수 부여 방지)
+        c.CPA점수 = c.전환 === 0 ? 0 : ((n - c.CPARank + 1) / n) * 100;
+        // 노출수=0 → IPM 점수 0 강제
+        c.IPM점수 = c.노출수 === 0 ? 0 : ((n - c.IPMRank + 1) / n) * 100;
         c.ROAS점수 = ((n - c.ROASRank + 1) / n) * 100;
         
         // Total Score 계산
@@ -1835,7 +2643,7 @@
     }
     
     // 점수 결과 표시 (v1.7: 필터 조건 요약 추가)
-    function displayScoringResults(creatives, filterSummary = []) {
+    function displayScoringResults(creatives, filterSummary = [], excludeInfo = {}) {
       document.getElementById('results').style.display = 'block';
       
       // 전역 변수에 저장 (모달에서 사용)
@@ -1852,8 +2660,32 @@
       document.getElementById('statAvg').textContent = avgScore;
       document.getElementById('statExcellent').textContent = excellent;
       
-      // v1.7: 필터 조건 요약 표시
-      if (filterSummary.length > 0) {
+      // 필터 조건 요약 표시
+      {
+        // 제외 소재 상세 HTML
+        let excludeDetailHtml = '';
+        const { thresholdPct = 0, excludedCreatives = [], excludedByImp = 0, excludedByConv = 0, totalBeforeFilter = total } = excludeInfo;
+
+        if (thresholdPct > 0 && excludedCreatives.length > 0) {
+          const listItems = excludedCreatives.map(c =>
+            `<li><strong>${c.key}</strong> — ${c._excludeReason.join(' / ')}</li>`
+          ).join('');
+          excludeDetailHtml = `
+            <details class="excluded-detail" style="margin-top:12px;">
+              <summary>🚫 제외된 소재 목록 보기 (${excludedCreatives.length}개)</summary>
+              <ul>${listItems}</ul>
+            </details>
+          `;
+        }
+
+        // 분석 대상 카운트 표시
+        const countLine = thresholdPct > 0
+          ? `분석 기준 적용: 전체 <strong>${totalBeforeFilter}개</strong> → 
+             ✅ 포함 <strong style="color:#10b981;">${total}개</strong> / 
+             🚫 제외 <strong style="color:#ef4444;">${excludedCreatives.length}개</strong>
+             <span style="color:#9ca3af;font-size:12px;margin-left:6px;">(노출 기준 ${excludedByImp}개·전환 기준 ${excludedByConv}개 중복 포함 가능)</span>`
+          : `총 <strong style="color:#E84855;">${total}개</strong> 소재 분석 완료`;
+
         const filterSummaryHtml = `
           <div style="background: linear-gradient(135deg, rgba(232, 72, 85, 0.08) 0%, rgba(255, 107, 107, 0.08) 100%); 
                       padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 4px solid #E84855;">
@@ -1864,17 +2696,15 @@
               ${filterSummary.map(item => `<div style="color: #4b5563;">• ${item}</div>`).join('')}
             </div>
             <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #e5e7eb; font-size: 13px; color: #6b7280;">
-              총 <strong style="color: #E84855;">${total}개</strong> 소재 분석 완료
+              ${countLine}
             </div>
+            ${excludeDetailHtml}
           </div>
         `;
         
-        // 테이블 위에 필터 요약 삽입
         const resultsSection = document.getElementById('results');
         const existingSummary = resultsSection.querySelector('.filter-summary');
-        if (existingSummary) {
-          existingSummary.remove();
-        }
+        if (existingSummary) existingSummary.remove();
         
         const summaryDiv = document.createElement('div');
         summaryDiv.className = 'filter-summary';
@@ -1914,7 +2744,7 @@
           <td style="text-align: right;">${c.전환.toLocaleString()}</td>
           <td style="text-align: right;">₩${Math.round(c.CPA).toLocaleString()}</td>
           <td style="text-align: right;">${c.IPM.toFixed(2)}</td>
-          <td style="text-align: right; font-weight: 600; color: ${c.ROAS > 1 ? '#10b981' : '#ef4444'};">${c.ROAS.toFixed(2)}</td>
+          <td style="text-align: right; font-weight: 600; color: #1f2937;">${c.매출 > 0 || c.비용 > 0 ? Math.round(c.ROAS * 100) + '%' : '—'}</td>
           <td style="text-align: right; font-weight: 600;">${c.전환수점수.toFixed(1)}</td>
           <td style="text-align: right; font-weight: 600;">${c.CPA점수.toFixed(1)}</td>
           <td style="text-align: right; font-weight: 600;">${c.IPM점수.toFixed(1)}</td>
@@ -1926,12 +2756,373 @@
         tbody.appendChild(tr);
       });
       
+      // ── 소재 유형별 요약 표 렌더링
+      renderTypeSummary(creatives);
+      // ── 결과 추출 버튼 표시
+      document.getElementById('exportBtnContainer').style.display = 'block';
+
       console.log('✅ 점수 결과 표시 완료');
       
       // 결과 섹션으로 스크롤
       scrollToSection('results');
     }
     
+    // ──────────────────────────────────────────────
+    // 분석 결과 HTML 추출 (유관부서 공유용)
+    // ──────────────────────────────────────────────
+    function exportResultHTML() {
+      const creatives = window.currentCreatives;
+      if (!creatives || creatives.length === 0) {
+        alert('분석 결과가 없습니다. 점수 계산을 먼저 실행해 주세요.');
+        return;
+      }
+
+      // 날짜/시각 문자열 (파일명용)
+      const now = new Date();
+      const pad = n => String(n).padStart(2, '0');
+      const dateStr = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}`;
+      const timeStr = `${pad(now.getHours())}${pad(now.getMinutes())}`;
+      const fileName = `소재분석결과_${dateStr}_${timeStr}.html`;
+
+      // ── 유형별 요약 데이터 계산 (renderTypeSummary와 동일 로직)
+      const typeMap = {};
+      creatives.forEach(c => {
+        const t = c.유형 || '기타';
+        if (!typeMap[t]) typeMap[t] = { count:0, 전환합:0, 비용합:0, 노출합:0, 매출합:0, 클릭합:0, 점수합:0 };
+        const m = typeMap[t];
+        m.count++; m.전환합 += c.전환||0; m.비용합 += c.비용||0;
+        m.노출합 += c.노출수||0; m.매출합 += c.매출||0;
+        m.클릭합 += c.클릭수||0; m.점수합 += c.TotalScore||0;
+      });
+      const types = Object.keys(typeMap).sort();
+      const total = { count:0, 전환합:0, 비용합:0, 노출합:0, 매출합:0, 클릭합:0, 점수합:0 };
+      types.forEach(t => {
+        const m = typeMap[t];
+        total.count += m.count; total.전환합 += m.전환합; total.비용합 += m.비용합;
+        total.노출합 += m.노출합; total.매출합 += m.매출합;
+        total.클릭합 += m.클릭합; total.점수합 += m.점수합;
+      });
+
+      function calcM(m) {
+        return {
+          wCPA:  m.전환합 > 0 ? m.비용합 / m.전환합 : null,
+          wROAS: m.비용합 > 0 ? m.매출합 / m.비용합 : null,
+          IPM:   m.노출합 > 0 ? (m.전환합 / m.노출합) * 1000 : null,
+          CTR:   m.노출합 > 0 ? (m.클릭합 / m.노출합) * 100 : null,
+          avgScore: m.count > 0 ? m.점수합 / m.count : 0,
+        };
+      }
+      function fc(v) { return v !== null ? '₩' + Math.round(v).toLocaleString() : '—'; }
+      function fr(v) { return v !== null ? Math.round(v*100)+'%' : '—'; }
+      function fi(v) { return v !== null ? v.toFixed(2) : '—'; }
+      function fct(v){ return v !== null ? v.toFixed(2)+'%' : '—'; }
+
+      // 유형 요약 행 HTML
+      function typeSummaryRowsHtml() {
+        if (types.length < 2) return '';
+        const typeColors = { BNR:'background:#dbeafe;color:#1d4ed8;', VID:'background:#ede9fe;color:#6d28d9;' };
+        let rows = types.map(t => {
+          const m = typeMap[t]; const met = calcM(m);
+          const bs = typeColors[t] || 'background:#f3f4f6;color:#374151;';
+          return `<tr>
+            <td style="text-align:center;padding:8px;"><span style="display:inline-block;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:700;${bs}">${t}</span></td>
+            <td style="text-align:right;padding:8px;">${m.count.toLocaleString()}</td>
+            <td style="text-align:right;padding:8px;">${m.전환합.toLocaleString()}</td>
+            <td style="text-align:right;padding:8px;">${fc(met.wCPA)}</td>
+            <td style="text-align:right;padding:8px;">${fi(met.IPM)}</td>
+            <td style="text-align:right;padding:8px;">${fct(met.CTR)}</td>
+            <td style="text-align:right;padding:8px;">${fr(met.wROAS)}</td>
+            <td style="text-align:right;padding:8px;color:#E84855;font-weight:700;">${met.avgScore.toFixed(1)}</td>
+          </tr>`;
+        }).join('');
+        const tm = calcM(total);
+        rows += `<tr style="background:#f0f4ff;font-weight:700;border-top:2px solid #d1d5db;">
+          <td style="text-align:center;padding:8px;">합계 / 전체 평균</td>
+          <td style="text-align:right;padding:8px;">${total.count.toLocaleString()}</td>
+          <td style="text-align:right;padding:8px;">${total.전환합.toLocaleString()}</td>
+          <td style="text-align:right;padding:8px;">${fc(tm.wCPA)}</td>
+          <td style="text-align:right;padding:8px;">${fi(tm.IPM)}</td>
+          <td style="text-align:right;padding:8px;">${fct(tm.CTR)}</td>
+          <td style="text-align:right;padding:8px;">${fr(tm.wROAS)}</td>
+          <td style="text-align:right;padding:8px;color:#E84855;font-weight:700;">${tm.avgScore.toFixed(1)}</td>
+        </tr>`;
+        return `
+          <div style="margin:20px 0 10px;border:1.5px solid #e5e7eb;border-radius:14px;overflow:hidden;">
+            <div style="padding:12px 18px;background:linear-gradient(135deg,#1e3a5f,#2563eb);color:#fff;">
+              <div style="font-weight:700;font-size:15px;">📊 소재 유형별 성과 요약</div>
+              <div style="font-size:11.5px;opacity:.8;margin-top:2px;">CPA · ROAS는 가중평균 (비용합/전환합 · 매출합/비용합) 기준</div>
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:13px;">
+              <thead><tr style="background:#f8fafc;border-bottom:2px solid #e5e7eb;">
+                <th style="padding:8px;text-align:center;color:#6b7280;">유형</th>
+                <th style="padding:8px;text-align:right;color:#6b7280;">소재수</th>
+                <th style="padding:8px;text-align:right;color:#6b7280;">전환수</th>
+                <th style="padding:8px;text-align:right;color:#6b7280;">CPA (가중평균)</th>
+                <th style="padding:8px;text-align:right;color:#6b7280;">IPM</th>
+                <th style="padding:8px;text-align:right;color:#6b7280;">CTR</th>
+                <th style="padding:8px;text-align:right;color:#6b7280;">ROAS (가중평균)</th>
+                <th style="padding:8px;text-align:right;color:#6b7280;">평균 점수</th>
+              </tr></thead>
+              <tbody>${rows}</tbody>
+            </table>
+          </div>`;
+      }
+
+      // ── 소재 상세 결과 행 HTML
+      const detailRows = creatives.map((c, i) => {
+        const gradeColors = { '최우수':'#dcfce7;color:#15803d', '우수':'#dbeafe;color:#1d4ed8', '양호':'#fef9c3;color:#a16207', '보통':'#f3f4f6;color:#374151', '개선필요':'#fee2e2;color:#b91c1c' };
+        const gc = gradeColors[c.등급] || '#f3f4f6;color:#374151';
+        const typeColors = { 'bnr':'background:#dbeafe;color:#1d4ed8;', 'vid':'background:#ede9fe;color:#6d28d9;' };
+        const tc = typeColors[c.유형?.toLowerCase()] || 'background:#f3f4f6;color:#374151;';
+        return `<tr style="border-bottom:1px solid #f3f4f6;${i%2===1?'background:#fafafa':''}">
+          <td style="padding:8px 10px;max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.key}</td>
+          <td style="padding:8px 10px;text-align:center;"><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:12px;font-weight:700;${tc}">${c.유형}</span></td>
+          <td style="padding:8px 10px;text-align:right;">${c.전환.toLocaleString()}</td>
+          <td style="padding:8px 10px;text-align:right;">₩${Math.round(c.CPA).toLocaleString()}</td>
+          <td style="padding:8px 10px;text-align:right;">${c.IPM.toFixed(2)}</td>
+          <td style="padding:8px 10px;text-align:right;font-weight:600;color:#1f2937;">${c.매출>0||c.비용>0 ? Math.round(c.ROAS*100)+'%' : '—'}</td>
+          <td style="padding:8px 10px;text-align:right;font-weight:600;">${c.전환수점수.toFixed(1)}</td>
+          <td style="padding:8px 10px;text-align:right;font-weight:600;">${c.CPA점수.toFixed(1)}</td>
+          <td style="padding:8px 10px;text-align:right;font-weight:600;">${c.IPM점수.toFixed(1)}</td>
+          <td style="padding:8px 10px;text-align:right;font-weight:600;">${c.ROAS점수.toFixed(1)}</td>
+          <td style="padding:8px 10px;text-align:right;font-weight:700;color:#E84855;font-size:15px;">${c.TotalScore.toFixed(1)}</td>
+          <td style="padding:8px 10px;text-align:center;"><span style="display:inline-block;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:700;background:${gc};">${c.등급}</span></td>
+        </tr>`;
+      }).join('');
+
+      // ── 통계 카드
+      const total2 = creatives.length;
+      const maxScore2 = creatives[0]?.TotalScore.toFixed(1) || 0;
+      const avgScore2 = total2 > 0 ? (creatives.reduce((s,c)=>s+c.TotalScore,0)/total2).toFixed(1) : 0;
+      const excellent2 = creatives.filter(c=>c.등급==='최우수').length;
+
+      // ── 현재 적용 필터 요약 (filter-summary DOM에서 추출)
+      const fsEl = document.querySelector('#results .filter-summary');
+      const filterSummaryHtml = fsEl ? fsEl.outerHTML : '';
+
+      // ── 전체 HTML 조합
+      const exportedAt = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+      const html = `<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>소재 성과 분석 결과 — ${exportedAt}</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+         background: #f8fafc; color: #1f2937; font-size: 14px; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+  h1 { font-size: 22px; font-weight: 800; color: #1e3a5f; margin-bottom: 4px; }
+  .meta { font-size: 12px; color: #9ca3af; margin-bottom: 24px; }
+  .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
+  .stat-card { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 12px;
+               padding: 16px 18px; text-align: center; }
+  .stat-label { font-size: 12px; color: #6b7280; margin-bottom: 6px; }
+  .stat-value { font-size: 28px; font-weight: 800; color: #E84855; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead tr { background: #f8fafc; border-bottom: 2px solid #e5e7eb; }
+  th { padding: 10px 10px; color: #6b7280; font-weight: 600; white-space: nowrap; }
+  .detail-wrap { background: #fff; border: 1.5px solid #e5e7eb; border-radius: 14px;
+                 overflow: hidden; margin-top: 16px; }
+  .detail-header { padding: 12px 18px; background: linear-gradient(135deg,#E84855,#ff6b6b);
+                   color: #fff; font-weight: 700; font-size: 15px; }
+  .footer { margin-top: 32px; text-align: center; font-size: 11.5px; color: #9ca3af;
+            border-top: 1px solid #e5e7eb; padding-top: 16px; }
+  @media print {
+    body { background: #fff; }
+    .wrap { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>📋 소재 성과 분석 결과</h1>
+  <div class="meta">추출일시: ${exportedAt} &nbsp;|&nbsp; Com2uS R팀 소재 분석 대시보드</div>
+
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-label">전체 소재 수</div><div class="stat-value">${total2}</div></div>
+    <div class="stat-card"><div class="stat-label">최고 점수</div><div class="stat-value">${maxScore2}</div></div>
+    <div class="stat-card"><div class="stat-label">평균 점수</div><div class="stat-value">${avgScore2}</div></div>
+    <div class="stat-card"><div class="stat-label">최우수 소재</div><div class="stat-value">${excellent2}</div></div>
+  </div>
+
+  ${filterSummaryHtml}
+
+  ${typeSummaryRowsHtml()}
+
+  <div class="detail-wrap" style="margin-top:16px;">
+    <div class="detail-header">📑 소재별 점수 상세</div>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead><tr>
+          <th style="text-align:left;">소재명/파일명</th>
+          <th>유형</th>
+          <th style="text-align:right;">전환</th>
+          <th style="text-align:right;">CPA</th>
+          <th style="text-align:right;">IPM</th>
+          <th style="text-align:right;">ROAS</th>
+          <th style="text-align:right;">전환수점수</th>
+          <th style="text-align:right;">CPA점수</th>
+          <th style="text-align:right;">IPM점수</th>
+          <th style="text-align:right;">ROAS점수</th>
+          <th style="text-align:right;">총점</th>
+          <th style="text-align:center;">등급</th>
+        </tr></thead>
+        <tbody>${detailRows}</tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    본 자료는 Com2uS R팀 소재 분석 대시보드에서 자동 생성되었습니다. &nbsp;|&nbsp;
+    AI 인사이트 제외 버전 &nbsp;|&nbsp; 내부 참고용
+  </div>
+</div>
+</body>
+</html>`;
+
+      // Blob 다운로드
+      const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href     = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
+
+      console.log(`✅ HTML 추출 완료: ${fileName}`);
+    }
+
+    // ──────────────────────────────────────────────
+    // 소재 유형별 요약 표 렌더링 (가중평균 CPA/ROAS)
+    // ──────────────────────────────────────────────
+    function renderTypeSummary(creatives) {
+      const container = document.getElementById('typeSummaryContainer');
+      if (!container) return;
+
+      // 유형별 집계 (BNR / VID / 기타)
+      const typeMap = {};
+      creatives.forEach(c => {
+        const t = c.유형 || '기타';
+        if (!typeMap[t]) {
+          typeMap[t] = { count: 0, 전환합: 0, 비용합: 0, 노출합: 0, 매출합: 0, 클릭합: 0, 점수합: 0 };
+        }
+        const m = typeMap[t];
+        m.count++;
+        m.전환합  += c.전환  || 0;
+        m.비용합  += c.비용  || 0;
+        m.노출합  += c.노출수 || 0;
+        m.매출합  += c.매출  || 0;
+        m.클릭합  += c.클릭수 || 0;
+        m.점수합  += c.TotalScore || 0;
+      });
+
+      const types = Object.keys(typeMap).sort(); // 알파벳 정렬
+
+      // 전체 합산 행 계산용
+      const total = { count: 0, 전환합: 0, 비용합: 0, 노출합: 0, 매출합: 0, 클릭합: 0, 점수합: 0 };
+      types.forEach(t => {
+        const m = typeMap[t];
+        total.count   += m.count;
+        total.전환합  += m.전환합;
+        total.비용합  += m.비용합;
+        total.노출합  += m.노출합;
+        total.매출합  += m.매출합;
+        total.클릭합  += m.클릭합;
+        total.점수합  += m.점수합;
+      });
+
+      // 지표 계산 헬퍼
+      function calcMetrics(m) {
+        const wCPA  = m.전환합 > 0 ? m.비용합 / m.전환합 : null;  // 가중평균 CPA
+        const wROAS = m.비용합 > 0 ? m.매출합 / m.비용합 : null;  // 가중평균 ROAS
+        const IPM   = m.노출합 > 0 ? (m.전환합 / m.노출합) * 1000 : null;
+        const CTR   = m.노출합 > 0 ? (m.클릭합 / m.노출합) * 100 : null;
+        const avgScore = m.count > 0 ? m.점수합 / m.count : 0;
+        return { wCPA, wROAS, IPM, CTR, avgScore };
+      }
+
+      function fmtCPA(v)   { return v !== null ? '₩' + Math.round(v).toLocaleString() : '—'; }
+      function fmtROAS(v)  { return v !== null ? Math.round(v * 100) + '%' : '—'; }
+      function fmtIPM(v)   { return v !== null ? v.toFixed(2) : '—'; }
+      function fmtCTR(v)   { return v !== null ? v.toFixed(2) + '%' : '—'; }
+      function fmtScore(v) { return v.toFixed(1); }
+
+      // 유형 배지 스타일
+      function typeBadge(t) {
+        const colors = {
+          'BNR': 'background:#dbeafe;color:#1d4ed8;',
+          'VID': 'background:#ede9fe;color:#6d28d9;',
+        };
+        const style = colors[t] || 'background:#f3f4f6;color:#374151;';
+        return `<span style="display:inline-block;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:700;${style}">${t}</span>`;
+      }
+
+      // 행 HTML 생성
+      function makeRow(label, m, isTotal) {
+        const { wCPA, wROAS, IPM, CTR, avgScore } = calcMetrics(m);
+        const rowStyle = isTotal
+          ? 'background:#f0f4ff;font-weight:700;border-top:2px solid #d1d5db;'
+          : '';
+        const labelHtml = isTotal
+          ? `<span style="font-weight:700;color:#374151;">합계 / 전체 평균</span>`
+          : typeBadge(label);
+        return `
+          <tr style="${rowStyle}">
+            <td style="text-align:center;padding:10px 8px;">${labelHtml}</td>
+            <td style="text-align:right;padding:10px 8px;">${m.count.toLocaleString()}</td>
+            <td style="text-align:right;padding:10px 8px;">${m.전환합.toLocaleString()}</td>
+            <td style="text-align:right;padding:10px 8px;">${fmtCPA(wCPA)}</td>
+            <td style="text-align:right;padding:10px 8px;">${fmtIPM(IPM)}</td>
+            <td style="text-align:right;padding:10px 8px;">${fmtCTR(CTR)}</td>
+            <td style="text-align:right;padding:10px 8px;">${fmtROAS(wROAS)}</td>
+            <td style="text-align:right;padding:10px 8px;color:#E84855;font-weight:700;">${fmtScore(avgScore)}</td>
+          </tr>`;
+      }
+
+      // 유형이 1개뿐이면 요약 표 불필요 — 표시 생략
+      if (types.length < 2) {
+        container.innerHTML = '';
+        return;
+      }
+
+      const bodyRows = types.map(t => makeRow(t, typeMap[t], false)).join('');
+      const totalRow  = makeRow('합계', total, true);
+
+      container.innerHTML = `
+        <div style="margin:20px 0 10px;background:#fff;border:1.5px solid #e5e7eb;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);">
+          <div style="padding:14px 20px;background:linear-gradient(135deg,#1e3a5f,#2563eb);color:#fff;display:flex;align-items:center;gap:10px;">
+            <span style="font-size:18px;">📊</span>
+            <div>
+              <div style="font-weight:700;font-size:15px;">소재 유형별 성과 요약</div>
+              <div style="font-size:11.5px;opacity:.8;margin-top:2px;">CPA · ROAS는 가중평균 (비용합/전환합 · 매출합/비용합) 기준</div>
+            </div>
+          </div>
+          <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;font-size:13.5px;">
+              <thead>
+                <tr style="background:#f8fafc;border-bottom:2px solid #e5e7eb;">
+                  <th style="padding:10px 8px;text-align:center;color:#6b7280;font-weight:600;">유형</th>
+                  <th style="padding:10px 8px;text-align:right;color:#6b7280;font-weight:600;">소재수</th>
+                  <th style="padding:10px 8px;text-align:right;color:#6b7280;font-weight:600;">전환수</th>
+                  <th style="padding:10px 8px;text-align:right;color:#6b7280;font-weight:600;">CPA <span style="font-size:11px;font-weight:400;">(가중평균)</span></th>
+                  <th style="padding:10px 8px;text-align:right;color:#6b7280;font-weight:600;">IPM</th>
+                  <th style="padding:10px 8px;text-align:right;color:#6b7280;font-weight:600;">CTR</th>
+                  <th style="padding:10px 8px;text-align:right;color:#6b7280;font-weight:600;">ROAS <span style="font-size:11px;font-weight:400;">(가중평균)</span></th>
+                  <th style="padding:10px 8px;text-align:right;color:#6b7280;font-weight:600;">평균 점수</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${bodyRows}
+                ${totalRow}
+              </tbody>
+            </table>
+          </div>
+        </div>`;
+    }
+
     // 설정 초기화
     function resetScoring() {
       // 가중치 초기화 (4개 지표 균등: 각 25%)
@@ -1945,10 +3136,13 @@
       document.querySelector('input[name="groupBy"][value="소재명"]').checked = true;
       currentGroupBy = '소재명';
       
+      // 저노출/저전환 임계값 초기화 (미적용)
+      const threshRadio = document.querySelector('input[name="thresholdFilter"][value="0"]');
+      if (threshRadio) { threshRadio.checked = true; updateThresholdLabel(); }
+
       // 소재 유형 필터 초기화 (BNR, VID 체크)
       document.getElementById('type_BNR').checked = true;
       document.getElementById('type_VID').checked = true;
-      document.getElementById('type_TXT').checked = false;
       updateTypeFilter();
       
       // 캠페인 필터 초기화 (전체 선택)
