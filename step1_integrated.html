@@ -3941,7 +3941,7 @@ img { display:block; }
       const scoring = type === 'scoring';
       // 잠긴 슬롯 목록: 무료는 각각 1슬롯만 제공, 나머지는 잠금
       const locked = scoring
-        ? ['📊 포맷별 성과 격차 (BNR vs VID)', '⚠️ 효율 하락 원인', '⚡ 즉시 실행 액션', '🚀 스케일업 후보', '🛑 중단 권고']
+        ? ['⚠️ 저효율 소재 분석', '⚡ 즉시 실행 액션', '🚀 스케일업 후보', '🛑 중단 권고']
         : ['📉 피로도 진단', '⏱️ 교체 타이밍 기준', '🔄 운영 액션'];
       const lockedItems = locked.map(l =>
         `<div style="display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid #f1f5f9;">
@@ -3952,10 +3952,10 @@ img { display:block; }
 
       // 무료/유료 비교 요약 라인
       const freeLine  = scoring
-        ? '🆓 무료: 1회 호출 · <strong>승리 패턴 태그</strong> 1슬롯'
+        ? '🆓 무료: 1회 호출 · <strong>위닝 소재 분석</strong> 1슬롯 (위닝+루징 포함)'
         : '🆓 무료: 1회 호출 · <strong>급등 소재 원인</strong> 1슬롯';
       const paidLine  = scoring
-        ? '💎 유료: 2회 호출 · <strong>6슬롯 전체</strong> + marketer_insight 원문 포함'
+        ? '💎 유료: 2회 호출 · <strong>5슬롯 전체</strong> + marketer_insight 원문 포함'
         : '💎 유료: 2회 호출 · <strong>4슬롯 전체</strong> + 교체 타이밍·운영 액션 포함';
 
       return `
@@ -4063,8 +4063,8 @@ img { display:block; }
 
         // ─── 프롬프트 생성 ───────────────────────────────────────────
         // scoringInsight splitMode:
-        //   isPaid=true  → { prompt1, prompt2,  splitMode:'paid_2call' }  6슬롯
-        //   isPaid=false → { prompt1,            splitMode:'free_1call' }  winTags 1슬롯
+        //   isPaid=true  → { prompt1, prompt2,  splitMode:'paid_2call' }  5슬롯
+        //   isPaid=false → { prompt1,            splitMode:'free_1call' }  winning 1슬롯 (위닝+루징 포함)
         const prompts = GeminiPrompts.scoringInsight(highPerf, lowPerf, { tagCols, isPaid });
         const { splitMode } = prompts;
 
@@ -4090,7 +4090,7 @@ img { display:block; }
           Object.assign(slots, parseScoringSlots(raw2) || {});
 
         } else {
-          // 무료(free_1call): 1회 호출, winTags 1슬롯
+          // 무료(free_1call): 1회 호출, winning 1슬롯 (위닝+루징 분리 구조)
           const raw1 = await callGeminiAPI(prompts.prompt1, { maxTokens: OUT_TOKENS });
           console.log(`[AI인사이트] 무료 단일응답(${raw1?.length}자):`, raw1?.slice(0, 300));
           Object.assign(slots, parseScoringSlots(raw1) || {});
@@ -4100,10 +4100,8 @@ img { display:block; }
         console.log(`[AI인사이트] 최종 슬롯 ${slotCount}개:`, Object.keys(slots));
 
         if (slotCount > 0) {
-          // 무료: winTags 1슬롯 + 업그레이드 유도 카드 추가
           const cardsHtml = buildScoringSlotCards(slots);
-          const upgradeHtml = !isPaid ? _buildUpgradeNudge('scoring') : '';
-          box.innerHTML = buildGeminiBox(cardsHtml + upgradeHtml, 'done', '', 'scoring');
+          box.innerHTML = buildGeminiBox(cardsHtml, 'done', '', 'scoring');
         } else {
           console.warn('⚠️ 슬롯 파싱 전체 실패');
           box.innerHTML = buildGeminiBox(

@@ -21,19 +21,21 @@ const GEMINI_CONFIG = {
   // Gemini 2.5 Flash 실제 제한: 입출력 합산 65,536(유료) / 8,192(무료) 토큰
   //
   // ★ 무료 전략: 1회 호출 + 핵심 슬롯 1개만 → rate limit 최소화 + 토큰 극소화
-  //   소재 성과: winTags 슬롯 1개 (1회 호출)  → ~400자 × 1.3(한글비율) ≈ 800토큰
+  //   소재 성과: winning 슬롯 1개 (1회 호출, 위닝+루징 분리 구조 포함)
+  //             → 위닝 소재 목록·공통패턴 + 저효율 소재 목록·차이점 + 즉시 권고
+  //             → ~700자 × 2토큰 ≈ 1400토큰
   //   피로도:    riseReason 슬롯 1개 (1회 호출) → ~350자 × 1.3 ≈ 700토큰
   //   ※ 마케터 인사이트(marketer_insight) 완전 미전송 → 입력 절감 → 출력 품질 향상
   //
   // ★ 유료 전략: marketer_insight 원문 200자 포함, 전체 슬롯
-  //   소재 성과: 3슬롯씩 2회 호출 (6슬롯)
+  //   소재 성과: 2슬롯씩 2회 호출 (winning+losing / actionItems+scaleUp+stopNow) = 5슬롯
   //   피로도: 2슬롯씩 2회 호출 (4슬롯)
   // ── 토큰 계산 근거 ────────────────────────────────────────────────────────
   // 한글 1자 ≈ 1.5~2토큰 (UTF-8 멀티바이트)
-  // 무료 winTags: 목표 출력 500자 × 2토큰 + 입력오버헤드 500 = 1500 → 1500 (여유)
-  // 유료 3슬롯: 슬롯당 300자 × 3 × 2토큰 + 오버헤드 = 2200 → 2500 (여유)
-  FREE_TOKENS:  1500,      // 무료: winTags 1슬롯 완전 출력 보장 (500자×2토큰+여유)
-  PAID_TOKENS:  2500,      // 유료: 3슬롯 × 300자 × 2토큰 + 안전마진
+  // 무료 winning: 목표 출력 700자 × 2토큰 + 입력오버헤드 500 = 1900 → 2000 (여유)
+  // 유료 1회차(2슬롯): 슬롯당 400자 × 2 × 2토큰 + 오버헤드 = 2200 → 2500 (여유)
+  FREE_TOKENS:  2000,      // 무료: winning 1슬롯 (위닝+루징 구조 포함) 완전 출력 보장
+  PAID_TOKENS:  2500,      // 유료: 2슬롯 × 400자 × 2토큰 + 안전마진
 
   // 피로도 분석 토큰
   // 무료 riseReason: 목표 출력 500자 × 2토큰 + 오버헤드 = 1500 → 1500 (여유)
@@ -313,10 +315,10 @@ const GeminiPrompts = {
    * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    * 플랜별 슬롯 구조:
    *   무료 (1회 호출):
-   *     winTags     : 승리 패턴 태그 (1회)
+   *     winning     : 위닝 소재 분석 (1회)
    *   유료 (2회 호출):
-   *     winTags / formatGap / lossReason  (1회서)
-   *     actionItems / scaleUp / stopNow   (2회서)
+   *     winning / losing            (1회차)
+   *     actionItems / scaleUp / stopNow  (2회차)
    *
    * @param {Array}  highPerf  - 고효율 소재 배열 (상위 N개)
    * @param {Array}  lowPerf   - 저효율 소재 배열 (하위 N개)
@@ -414,55 +416,65 @@ const GeminiPrompts = {
 
     // ── 슬롯별 프롬프트 ─────────────────────────────────────
     // ★ 핵심 설계 무료/유료 완전 분리:
-    //   무료: 1회 호출 — winTags 1슬롯만 (rate limit & 토큰 최소화)
-    //   유료: 2회 호출 — 전체 6슬롯 + marketer_insight 원문 포함
+    //   무료: 1회 호출 — winning 1슬롯 (위닝+루징 분리 구조, rate limit & 토큰 최소화)
+    //   유료: 2회 호출 — 전체 5슬롯 + marketer_insight 원문 포함
     const base = header + dataBlock + '\n\n';
 
     if (isPaid) {
-      // ── 유료: 2회 호출, 3슬롯씩 ─────────────────────────────
+      // ── 유료: 2회 호출 ─────────────────────────────────────────
+      // 1회차: winning(위닝 소재 분석) + losing(저효율 소재 분석)
+      // 2회차: actionItems(즉시 실행) + scaleUp(확장 후보) + stopNow(중단 권고)
       const inst1 =
-        `\n아래 JSON을 채워서 출력해 (개조식·태그 원인 분석 필수):\n` +
-        `- winTags: 고효율 소재 공통 태그 기반 원인 분석. 형식 → \n` +
-        `  • **[공통 태그명]** — 이 태그가 성과에 미친 영향 (소재명·IPM·CPA 수치 인용)\n` +
-        `  • 최우수/우수 소재의 크리에이티브 공통점 1~2줄\n` +
-        `  • 저효율 소재와의 핵심 태그 차이 1줄\n` +
-        `- formatGap: BNR/VID 포맷별 성과 차이 개조식 분석. 형식 →\n` +
-        `  • **BNR**: avgIPM X.XX / avgCPA XXX — 특징 1줄\n` +
-        `  • **VID**: avgIPM X.XX / avgCPA XXX — 특징 1줄\n` +
-        `  • 포맷 선택 권고 1줄\n` +
-        `- lossReason: 저효율 소재 공통 태그·패턴 분석. 형식 →\n` +
-        `  • **[공통 약점 태그/패턴]** — 성과 저하 원인 (소재명·수치 인용)\n` +
-        `  • 고효율 소재와 비교한 태그 차이 1줄\n` +
-        `{"winTags":"","formatGap":"","lossReason":""}`;
+        `\n아래 JSON 키를 반드시 포함해서 출력해. 다른 텍스트 금지.\n` +
+        `- winning: 위닝 소재 분석. 아래 형식 그대로:\n` +
+        `  **[위닝 소재 분석]**\n` +
+        `  • **소재명** (점수 XX.X / IPM X.XXX / CPA X,XXX) — 성과 우수 이유: [공통 태그명] 기반 1줄\n` +
+        `  (고효율 소재 전체 나열, 각 1줄)\n` +
+        `  **공통 패턴**: [공통 태그·크리에이티브 요소] — 이 패턴이 효과적인 이유 1~2줄\n` +
+        `- losing: 저효율 소재 분석. 아래 형식 그대로:\n` +
+        `  **[저효율 소재 분석]**\n` +
+        `  • **소재명** (점수 XX.X / IPM X.XXX / CPA X,XXX) — 저효율 원인: [문제 태그/패턴] 1줄\n` +
+        `  (저효율 소재 전체 나열, 각 1줄)\n` +
+        `  **위닝 대비 차이점**: [고효율 소재 대비 부족한 태그·요소] 1~2줄\n` +
+        `  **개선 방향**: 구체적 크리에이티브 수정 제안 1줄\n` +
+        `(줄바꿈은 \\n, 중요 어구는 **볼드**)\n` +
+        `{"winning":"","losing":""}`;
       const inst2 =
-        `\n아래 JSON을 채워서 출력해 (개조식, 소재명·수치 필수 인용):\n` +
-        `- actionItems: 형식 →\n` +
-        `  • **즉시 ON**: 소재명 — 근거 태그·수치 1줄\n` +
-        `  • **즉시 OFF**: 소재명 — 저하 원인·수치 1줄\n` +
-        `- scaleUp: 예산 확대 우선순위 개조식 →\n` +
-        `  • **1순위** 소재명 — 태그 근거·IPM·CPA 수치\n` +
-        `  • **2순위** 소재명 — 태그 근거·수치 (있을 경우)\n` +
-        `- stopNow: 즉시 중단 소재 개조식 →\n` +
-        `  • **중단** 소재명 — 문제 태그·패턴·수치\n` +
+        `\n아래 JSON 키를 반드시 포함해서 출력해. 다른 텍스트 금지.\n` +
+        `- actionItems: 즉시 실행 액션. 형식:\n` +
+        `  • **[확장 🟢]** 소재명 — 근거 태그·IPM·CPA 수치 1줄\n` +
+        `  • **[개선 🟡]** 소재명 — 수정 방향 1줄\n` +
+        `  • **[중단 🔴]** 소재명 — 중단 이유 수치 포함 1줄\n` +
+        `- scaleUp: 예산 확대 우선순위. 형식:\n` +
+        `  • **1순위** 소재명 — 태그 근거·IPM·CPA\n` +
+        `  • **2순위** 소재명 — 태그 근거·수치 (해당 시)\n` +
+        `  • 확장 시 예상 효과 1줄\n` +
+        `- stopNow: 즉시 중단 소재. 형식:\n` +
+        `  • **중단** 소재명 — 문제 태그·수치\n` +
         `  • 교체 방향 제안 1줄\n` +
+        `(줄바꿈은 \\n, 중요 어구는 **볼드**)\n` +
         `{"actionItems":"","scaleUp":"","stopNow":""}`;
       const prompt1 = base + inst1;
       const prompt2 = base + inst2;
       return { prompt1, prompt2, splitMode: 'paid_2call' };
     } else {
-      // ── 무료: 1회 호출, winTags 단독 ──────────────────────────
-      // ★ 핵심 전략:
-      //   - 개조식 + 태그 원인 분석 구조로 출력 품질 향상
-      //   - marketer_insight 완전 미포함 (입력 토큰 절감)
-      //   - **볼드**, \n 줄바꿈 허용 → 렌더러에서 HTML 변환
+      // ── 무료: 1회 호출, winning 단독 ──────────────────────────
+      // ★ 위닝/루징 분리 구조, 출력 포맷 강제
+      // ★ marketer_insight 완전 미포함 (입력 토큰 절감)
       const inst1 =
-        `\nJSON winTags를 채워 출력 (다른 텍스트 금지). 개조식·태그 원인 분석으로 작성:\n` +
-        `• **[고효율 공통 태그]** — 해당 태그가 성과 우수한 이유 (소재명·IPM·CPA 수치 인용) 2줄\n` +
-        `• **포맷 비교** — BNR avgIPM/avgCPA vs VID avgIPM/avgCPA 수치 인용 1줄\n` +
-        `• **저효율 차이점** — 고효율 대비 부족한 태그·크리에이티브 요소 1줄\n` +
-        `• **즉시 권고** — 소재명 명시 1줄\n` +
-        `(줄바꿈은 \\n, 중요 어구는 **볼드** 처리)\n` +
-        `{"winTags":""}`;
+        `\nJSON winning 키 하나만 채워 출력해. 다른 텍스트 금지.\n` +
+        `형식 (아래 구조 그대로 유지):\n` +
+        `**[위닝 소재]**\n` +
+        `• **소재명** (IPM X.XXX / CPA X,XXX) — 성과 우수 이유 1줄\n` +
+        `(고효율 소재 전체 나열)\n` +
+        `**공통 패턴**: 공통 태그·크리에이티브 요소 — 효과 이유 1줄\n` +
+        `**[저효율 소재]**\n` +
+        `• **소재명** (IPM X.XXX / CPA X,XXX) — 저효율 원인 1줄\n` +
+        `(저효율 소재 전체 나열)\n` +
+        `**위닝 대비 차이**: 부족한 태그·요소 1줄\n` +
+        `**즉시 권고**: [확장 🟢] 소재명 / [중단 🔴] 소재명 각 1줄\n` +
+        `(줄바꿈 \\n, 중요어구 **볼드**)\n` +
+        `{"winning":""}`;
       const prompt1 = base + inst1;
       return { prompt1, splitMode: 'free_1call' };
     }
@@ -774,8 +786,8 @@ function geminiMarkdownToHtml(md) {
 
 /**
  * ══════════════════════════════════════════════════════════
- *  사전 정의형 6-슬롯 인사이트 카드 렌더러 (소재 성과 분석용)
- *  parseScoringSlots(raw) → { winTags, formatGap, lossReason,
+ *  사전 정의형 5-슬롯 인사이트 카드 렌더러 (소재 성과 분석용)
+ *  parseScoringSlots(raw) → { winning, losing,
  *                              actionItems, scaleUp, stopNow }
  * ══════════════════════════════════════════════════════════
  */
@@ -848,7 +860,8 @@ function _cleanAndRepairJson(raw) {
 }
 
 function parseScoringSlots(raw) {
-  const KEYS = ['winTags','formatGap','lossReason','actionItems','scaleUp','stopNow'];
+  // winning/losing: 신규 키 + winTags(하위호환) 모두 인식
+  const KEYS = ['winning','losing','winTags','actionItems','scaleUp','stopNow'];
 
   // ── 시도 1: JSON 추출·복원 후 파싱 ────────────────────
   const cleaned = _cleanAndRepairJson(raw);
@@ -952,10 +965,12 @@ function _slotText(val, slotKey) {
 }
 
 function buildScoringSlotCards(slots) {
+  // winTags(구 키) → winning 으로 통합 (하위 호환)
+  if (slots.winTags && !slots.winning) slots.winning = slots.winTags;
+
   const defs = [
-    { key: 'winTags',     icon: '🏷️', title: '승리 패턴 태그',   color: '#10b981', bg: '#ecfdf5' },
-    { key: 'formatGap',   icon: '📊', title: '포맷별 성과 격차', color: '#3b82f6', bg: '#eff6ff' },
-    { key: 'lossReason',  icon: '⚠️', title: '효율 하락 원인',   color: '#f59e0b', bg: '#fffbeb' },
+    { key: 'winning',     icon: '🏆', title: '위닝 소재 분석',   color: '#10b981', bg: '#ecfdf5' },
+    { key: 'losing',      icon: '⚠️', title: '저효율 소재 분석', color: '#f59e0b', bg: '#fffbeb' },
     { key: 'actionItems', icon: '⚡', title: '즉시 실행 액션',   color: '#8b5cf6', bg: '#f5f3ff' },
     { key: 'scaleUp',     icon: '🚀', title: '스케일업 후보',    color: '#E8003D', bg: '#fff1f2' },
     { key: 'stopNow',     icon: '🛑', title: '중단 권고',        color: '#6b7280', bg: '#f9fafb' },
@@ -972,14 +987,20 @@ function buildScoringSlotCards(slots) {
   }
 
   // 활성 슬롯 수에 따라 그리드 컬럼 동적 결정
-  const cols = activeDefs.length >= 4 ? 3 : activeDefs.length >= 2 ? 2 : 1;
+  // winning 단독(무료 1슬롯)일 때는 1컬럼으로 가독성 확보
+  const isWinningOnly = activeDefs.length === 1 && activeDefs[0].key === 'winning';
+  const cols = isWinningOnly ? 1 : activeDefs.length >= 4 ? 3 : activeDefs.length >= 2 ? 2 : 1;
   const totalSlots = defs.length;
   const missingCount = totalSlots - activeDefs.length;
   const hasTruncated = activeDefs.some(d => (slots[d.key] || '').includes('…(잘림)'));
 
   // 요약 바 문구
   const summaryParts = [];
-  if (activeDefs.length < totalSlots) {
+  if (isWinningOnly) {
+    // 무료: winning 1슬롯 = 위닝+루징 모두 포함이므로 "부족" 표현 대신 플랜 안내
+    summaryParts.push(`📌 위닝/저효율 소재 분석 생성됨`);
+    summaryParts.push(`(유료 플랜: 즉시 실행 액션·스케일업·중단 권고 추가 제공)`);
+  } else if (activeDefs.length < totalSlots) {
     summaryParts.push(`📌 ${activeDefs.length}/${totalSlots}개 인사이트 생성됨`);
     summaryParts.push(`(${missingCount}개 항목은 데이터 부족으로 생략)`);
   } else {
@@ -1259,7 +1280,7 @@ function buildGeminiKeyModal() {
                 분당 1,000req · 무제한<br>
                 <span style="color:#059669;">▸ marketer_insight 원문 포함 (최대 200자)</span><br>
                 <span style="color:#059669;">▸ 소재 최대 5개 · <strong>2회 호출</strong></span><br>
-                <span style="color:#059669;">▸ 6슬롯 전체 제공</span>
+                <span style="color:#059669;">▸ 5슬롯 전체 제공</span>
               </div>
               <div class="gai-plan-check" id="planCheck_paid"
                 style="display:none;position:absolute;top:8px;right:8px;
