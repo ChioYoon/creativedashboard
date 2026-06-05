@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Com2uS R팀 소재 분석 시스템 사용 안내서 v4.0</title>
+  <title>Com2uS R팀 소재 분석 시스템 사용 안내서 v5.0</title>
   <style>
     @page { size: A4; margin: 18mm 20mm; }
 
@@ -279,11 +279,11 @@
     <div class="cover-meta">
       <div class="cover-meta-item">
         <span class="cover-meta-label">Version</span>
-        <span class="cover-meta-value">v4.0 (시스템 v7)</span>
+        <span class="cover-meta-value">v5.1 (시스템 v18)</span>
       </div>
       <div class="cover-meta-item">
         <span class="cover-meta-label">Updated</span>
-        <span class="cover-meta-value">2026. 04. 13</span>
+        <span class="cover-meta-value">2026. 05. 21</span>
       </div>
       <div class="cover-meta-item">
         <span class="cover-meta-label">Team</span>
@@ -303,33 +303,35 @@
       <div class="toc-item sub"><div><span class="toc-num">1.2</span>전체 분석 워크플로우</div><div class="toc-pg">3</div></div>
     </div>
     <div class="toc-section">
-      <div class="toc-item main"><div><span class="toc-num">2.</span>CSV 데이터 준비</div><div class="toc-pg">4</div></div>
+      <div class="toc-item main"><div><span class="toc-num">2.</span>CSV 데이터 준비 &amp; 업로드</div><div class="toc-pg">4</div></div>
       <div class="toc-item sub"><div><span class="toc-num">2.1</span>필수 컬럼 및 자동 인식 컬럼</div><div class="toc-pg">4</div></div>
-      <div class="toc-item sub"><div><span class="toc-num">2.2</span>태그 컬럼 (Step 2 군집화용)</div><div class="toc-pg">4</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">2.2</span>업로드 방식 — 파일 / CSV 직접 붙여넣기 <span class="badge badge-red" style="font-size:9px;padding:1px 6px;">NEW</span></div><div class="toc-pg">4</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">2.3</span>태그 컬럼 (Step 2 군집화용)</div><div class="toc-pg">4</div></div>
     </div>
     <div class="toc-section">
       <div class="toc-item main"><div><span class="toc-num">3.</span>Step 1 — 소재 성과 분석</div><div class="toc-pg">5</div></div>
       <div class="toc-item sub"><div><span class="toc-num">3.1</span>점수 계산 (4개 지표 가중치)</div><div class="toc-pg">5</div></div>
-      <div class="toc-item sub"><div><span class="toc-num">3.2</span>등급 기준 및 결과 해석</div><div class="toc-pg">5</div></div>
-      <div class="toc-item sub"><div><span class="toc-num">3.3</span>피로도 분석 (기간 비교)</div><div class="toc-pg">6</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">3.2</span>분석 결과 화면 구성 (저조 소재 카드·유형별 요약) <span class="badge badge-red" style="font-size:9px;padding:1px 6px;">NEW</span></div><div class="toc-pg">5</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">3.3</span>분석 결과 HTML 추출 (유관부서 공유용) <span class="badge badge-red" style="font-size:9px;padding:1px 6px;">NEW</span></div><div class="toc-pg">6</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">3.4</span>피로도 분석 (기간 비교)</div><div class="toc-pg">7</div></div>
     </div>
     <div class="toc-section">
-      <div class="toc-item main"><div><span class="toc-num">4.</span>Step 2 — 군집화 분석</div><div class="toc-pg">7</div></div>
-      <div class="toc-item sub"><div><span class="toc-num">4.1</span>Step 2-① 컬럼 설정 (step2_column_selector)</div><div class="toc-pg">7</div></div>
-      <div class="toc-item sub"><div><span class="toc-num">4.2</span>Step 2-② 군집화 실행 (step2_clustering)</div><div class="toc-pg">7</div></div>
-      <div class="toc-item sub"><div><span class="toc-num">4.3</span>군집 등급 및 결과 해석</div><div class="toc-pg">8</div></div>
+      <div class="toc-item main"><div><span class="toc-num">4.</span>Step 2 — 군집화 분석</div><div class="toc-pg">8</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">4.1</span>Step 2-① 컬럼 설정 (step2_column_selector)</div><div class="toc-pg">8</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">4.2</span>Step 2-② 군집화 실행 (step2_clustering)</div><div class="toc-pg">8</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">4.3</span>군집 등급 및 결과 해석</div><div class="toc-pg">9</div></div>
     </div>
     <div class="toc-section">
-      <div class="toc-item main"><div><span class="toc-num">5.</span>Gemini AI 인사이트</div><div class="toc-pg">9</div></div>
-      <div class="toc-item sub"><div><span class="toc-num">5.1</span>API 키 설정 및 플랜 선택</div><div class="toc-pg">9</div></div>
-      <div class="toc-item sub"><div><span class="toc-num">5.2</span>소재 성과 AI 인사이트</div><div class="toc-pg">9</div></div>
-      <div class="toc-item sub"><div><span class="toc-num">5.3</span>피로도 AI 인사이트</div><div class="toc-pg">10</div></div>
+      <div class="toc-item main"><div><span class="toc-num">5.</span>Gemini AI 인사이트</div><div class="toc-pg">10</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">5.1</span>API 키 설정 및 플랜 선택</div><div class="toc-pg">10</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">5.2</span>소재 성과 AI 인사이트 (winning · losing 분리) <span class="badge badge-red" style="font-size:9px;padding:1px 6px;">UPDATED</span></div><div class="toc-pg">10</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">5.3</span>피로도 AI 인사이트</div><div class="toc-pg">11</div></div>
     </div>
     <div class="toc-section">
-      <div class="toc-item main"><div><span class="toc-num">6.</span>자주 묻는 질문 (FAQ)</div><div class="toc-pg">11</div></div>
+      <div class="toc-item main"><div><span class="toc-num">6.</span>자주 묻는 질문 (FAQ)</div><div class="toc-pg">12</div></div>
     </div>
     <div class="toc-section">
-      <div class="toc-item main"><div><span class="toc-num">7.</span>빠른 참조 (Cheat Sheet) · 버전 이력</div><div class="toc-pg">12</div></div>
+      <div class="toc-item main"><div><span class="toc-num">7.</span>빠른 참조 (Cheat Sheet) · 버전 이력</div><div class="toc-pg">13</div></div>
     </div>
 
     <div class="box box-red" style="margin-top: 30px;">
@@ -340,7 +342,7 @@
       · <strong>빠른 참조</strong> → 마지막 Cheat Sheet(12p)를 책상에 붙여두세요.
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v4.0 | Com2uS R Marketing Team</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.0 | Com2uS R Marketing Team</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -437,7 +439,7 @@
       </tbody>
     </table>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v4.0 | Page 3</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.0 | Page 3</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -472,7 +474,42 @@
       · 비수치 데이터(N/A, -, 빈칸)는 <strong>자동으로 0 처리</strong>됩니다
     </div>
 
-    <div class="section-title">2.2 태그 컬럼 (Step 2 군집화 전용)</div>
+    <div class="section-title">2.2 업로드 방식 — 파일 / 직접 붙여넣기 <span class="badge badge-red" style="font-size:10px;">NEW</span></div>
+    <p>업로드 영역 상단의 <strong>두 가지 탭</strong> 중 하나를 선택해 데이터를 투입합니다. <strong>Excel에서 그대로 복사한 표 데이터</strong>도 인식되므로 CSV 저장 없이 바로 분석할 수 있습니다.</p>
+
+    <table>
+      <thead><tr><th style="width:22%">탭</th><th style="width:38%">사용 시나리오</th><th>지원 형식 / 동작</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>📁 파일 업로드</strong></td>
+          <td>광고 플랫폼에서 다운로드한 CSV가 손에 있을 때</td>
+          <td>드래그앤드롭 또는 클릭 → 파일 선택. 업로드 영역이 그대로 input[file] 역할을 합니다 (iframe 보안 우회).</td>
+        </tr>
+        <tr>
+          <td><strong>📋 CSV 직접 붙여넣기</strong> <span class="badge badge-red" style="font-size:9px;">NEW</span></td>
+          <td>Excel/Google Sheets 시트를 일부만 복사해 빠르게 분석할 때</td>
+          <td>텍스트 영역에 붙여넣고 <strong>"✅ 분석 시작"</strong> 클릭. <strong>탭(Tab) · 쉼표 구분자 모두 자동 감지</strong>되며, 파일명은 "붙여넣기_데이터"로 표시됩니다.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="box box-green">
+      <strong>✅ Excel → 붙여넣기 빠른 사용법</strong>
+      ① Excel 또는 Google Sheets에서 헤더 포함 전체 범위 선택 (Ctrl + A)<br>
+      ② 복사 (Ctrl + C)<br>
+      ③ 대시보드에서 <strong>"📋 CSV 직접 붙여넣기"</strong> 탭 클릭<br>
+      ④ 텍스트 영역에 붙여넣기 (Ctrl + V) → <strong>"✅ 분석 시작"</strong> 클릭<br>
+      ⑤ 업로드 성공 시 <strong>컬럼 매핑 상태</strong>와 <strong>"📊 점수 계산 시작하기 →"</strong> 버튼 자동 표시
+    </div>
+
+    <div class="box box-blue">
+      <strong>💡 업로드 직후 자동 안내 (양쪽 탭 공통)</strong>
+      · ✅/⚠️/✗ 아이콘으로 <strong>주요 컬럼 감지 상태</strong> 표시 (소재명·전환·비용·노출수·Revenue)<br>
+      · Revenue 컬럼이 없으면 <strong>"ROAS 가중치 자동 재배분"</strong> 안내 노출<br>
+      · 업로드 완료 시 <strong>"점수 계산 시작하기"</strong> 버튼이 나타나 다음 단계로 한 번에 이동
+    </div>
+
+    <div class="section-title">2.3 태그 컬럼 (Step 2 군집화 전용)</div>
     <p>Step 2 군집화 분석을 사용하려면 소재별 <strong>크리에이티브 태그 컬럼</strong>이 CSV에 포함되어야 합니다.</p>
 
     <table>
@@ -494,7 +531,7 @@
       · <strong>유료 AI 플랜</strong>: 원문 최대 200자 Gemini에 전달 → 깊은 인사이트
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v4.0 | Page 4</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.0 | Page 4</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -533,8 +570,22 @@
       <li><strong>집계 기준</strong>: 소재명 기준 또는 파일명 기준 선택</li>
     </ul>
 
-    <div class="section-title">3.2 등급 기준 및 결과 해석</div>
+    <div class="section-title">3.2 분석 결과 화면 구성 <span class="badge badge-red" style="font-size:10px;">NEW</span></div>
+    <p>점수 계산 완료 후 결과 섹션은 <strong>6개 블록</strong>이 순서대로 노출됩니다. 화면 위에서 아래로 한 번에 의사결정에 필요한 정보를 모두 확인할 수 있습니다.</p>
 
+    <table>
+      <thead><tr><th style="width:6%">순서</th><th style="width:24%">블록</th><th>내용 / 활용 포인트</th></tr></thead>
+      <tbody>
+        <tr><td><strong>①</strong></td><td><strong>스코어 카드 5개</strong> <span class="badge badge-red" style="font-size:9px;">UPDATED</span></td><td>전체 소재 수 · 최고 점수 · 평균 점수 · <strong>최우수 소재 수</strong> · <strong>저조 소재 수</strong> (개선필요 등급, 어두운 슬레이트 카드로 시각적 구분)</td></tr>
+        <tr><td><strong>②</strong></td><td><strong>📤 분석 결과 HTML 추출</strong> 버튼 <span class="badge badge-red" style="font-size:9px;">NEW</span></td><td>유관부서 공유용 단일 HTML 파일 다운로드 → 자세한 사용법은 <strong>3.3 참조</strong></td></tr>
+        <tr><td><strong>③</strong></td><td><strong>📌 적용된 필터 조건</strong></td><td>캠페인·소재유형·기간·집계기준 한 줄 요약 — 결과 캡처 시 컨텍스트 명확화</td></tr>
+        <tr><td><strong>④</strong></td><td><strong>✨ AI 인사이트</strong></td><td>"AI 인사이트 생성" 버튼 → 위닝/루징 분석 카드 (5번 섹션 참고)</td></tr>
+        <tr><td><strong>⑤</strong></td><td><strong>📊 소재 유형별 요약 표</strong> <span class="badge badge-red" style="font-size:9px;">NEW</span></td><td>BNR/VID 별 가중평균 <strong>CPA · IPM · CTR · ROAS · 평균점수</strong> + 합계행 — 포맷 의사결정 핵심 자료</td></tr>
+        <tr><td><strong>⑥</strong></td><td><strong>📑 소재 상세 테이블</strong></td><td>썸네일 · 전환 · CPA · IPM · ROAS · 4개 점수 · 총점 · 등급 (모든 컬럼 헤더에 ℹ 툴팁 제공)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="subsection-title">🏆 등급 기준</div>
     <table class="grade-table">
       <thead><tr><th>등급</th><th>점수 범위</th><th>색상</th><th>권장 액션</th></tr></thead>
       <tbody>
@@ -542,25 +593,75 @@
         <tr><td>🌟 우수</td><td>60~79점</td><td style="color:#10b981;font-weight:700;">녹색</td><td>현행 운영 유지, 신규 오디언스 테스트</td></tr>
         <tr><td>✅ 양호</td><td>40~59점</td><td style="color:#3b82f6;font-weight:700;">파란색</td><td>크리에이티브 요소 일부 최적화</td></tr>
         <tr><td>⚠️ 보통</td><td>20~39점</td><td style="color:#f59e0b;font-weight:700;">주황색</td><td>타겟·입찰 재검토 후 개선</td></tr>
-        <tr><td>🔴 개선 필요</td><td>< 20점</td><td style="color:#ef4444;font-weight:700;">빨간색</td><td>즉시 교체 또는 소재 리프레시</td></tr>
+        <tr><td>🔴 개선 필요</td><td>< 20점</td><td style="color:#ef4444;font-weight:700;">빨간색</td><td>즉시 교체 또는 소재 리프레시 — <strong>"저조 소재" 카드에 자동 카운트</strong></td></tr>
       </tbody>
     </table>
 
-    <div class="box box-red">
-      <strong>✨ AI 인사이트 — 소재 성과 분석 버튼</strong>
-      점수 계산 결과 화면 상단의 <strong>"✨ AI 인사이트 생성"</strong> 버튼을 누르면<br>
-      고효율/저효율 소재의 <strong>공통 태그 분석 + 포맷 비교 + 즉시 권고</strong>를 자동 생성합니다.<br>
-      (Gemini API 키 설정 필요 → 5번 섹션 참고)
+    <div class="box box-blue">
+      <strong>📊 소재 유형별 요약 표 읽는 법 (NEW)</strong>
+      · 표가 자동 표시되는 조건: <strong>BNR + VID 두 유형 모두 결과에 포함된 경우</strong>에만 노출<br>
+      · <strong>CPA/ROAS는 가중평균</strong>: 소재별 단순평균이 아닌 <strong>총비용·총전환·총매출 기반</strong> 가중평균<br>
+      · 하단 합계행: 전체 유형 통합 KPI — 캠페인 단위 벤치마크로 활용
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v4.0 | Page 5</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.0 | Page 5</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
-       3.3 피로도 분석
+       3.3 분석 결과 HTML 추출 (NEW)
   ════════════════════════════════════════════════════════ -->
   <div class="page">
-    <div class="page-title">🔍 3.3 피로도 분석 (기간 비교)</div>
+    <div class="page-title">📤 3.3 분석 결과 HTML 추출 <span class="badge badge-red" style="font-size:11px;">NEW</span></div>
+
+    <p>분석 결과 섹션의 <strong>"📤 분석 결과 HTML 추출"</strong> 버튼을 누르면, 현재 화면의 분석 결과를 <strong>단일 HTML 파일</strong>로 다운로드합니다. 첨부 1개로 유관부서·외부 파트너에게 공유할 수 있습니다.</p>
+
+    <div class="section-title">사용 시나리오</div>
+    <div class="step-row"><span class="step-num">1</span><div class="step-body">필터(캠페인·유형·기간)를 원하는 범위로 설정한 뒤 <strong>"점수 계산 실행"</strong></div></div>
+    <div class="step-row"><span class="step-num">2</span><div class="step-body">결과가 출력되면 상단 <strong>"📤 분석 결과 HTML 추출"</strong> 파란 버튼 클릭</div></div>
+    <div class="step-row"><span class="step-num">3</span><div class="step-body"><code>소재분석결과_YYYYMMDD_HHMM.html</code> 파일이 자동 다운로드 — 더블클릭하면 브라우저에서 즉시 열림</div></div>
+    <div class="step-row"><span class="step-num">4</span><div class="step-body">Slack/이메일 첨부 또는 인쇄(Ctrl+P) → 회의 자료로 사용</div></div>
+
+    <div class="section-title">추출 파일에 포함되는 내용</div>
+    <table>
+      <thead><tr><th style="width:32%">블록</th><th style="width:14%">포함 여부</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td><strong>스코어 카드 5개</strong> (저조 소재 포함)</td><td><span class="badge badge-green">포함</span></td><td>레드 그라데이션 + 슬레이트 카드</td></tr>
+        <tr><td><strong>적용된 필터 조건 요약</strong></td><td><span class="badge badge-green">포함</span></td><td>외부 공유 시 분석 범위 자동 명시</td></tr>
+        <tr><td><strong>소재 유형별 요약 표</strong> (가중평균)</td><td><span class="badge badge-green">포함</span></td><td>BNR/VID 양쪽 있을 때만</td></tr>
+        <tr><td><strong>소재 상세 테이블 + 미리보기 썸네일</strong></td><td><span class="badge badge-green">포함</span></td><td>BNR은 이미지, VID는 🎬 아이콘 (썸네일 있으면 ▶ 오버레이)</td></tr>
+        <tr><td>AI 인사이트 카드</td><td><span class="badge badge-gray">제외</span></td><td>외부 공유 시 모델 결과 노출 방지 — 본 시스템에서만 열람</td></tr>
+        <tr><td>가중치 슬라이더·계산 기준 UI</td><td><span class="badge badge-gray">제외</span></td><td>결과 위주 정적 페이지</td></tr>
+      </tbody>
+    </table>
+
+    <div class="box box-green">
+      <strong>✅ HTML 추출 파일 특징</strong>
+      · <strong>완전한 단일 HTML 파일</strong>: 외부 라이브러리·이미지 의존성 없음 (이미지 URL은 외부 접근 시점에 로드)<br>
+      · <strong>인쇄 최적화</strong>: <code>@media print</code> 적용 — Ctrl+P → PDF 저장 가능<br>
+      · <strong>모바일 반응형</strong>: 1400px 컨테이너, 좁은 화면에서 자동 스크롤<br>
+      · <strong>파일명 자동 시각화</strong>: <code>소재분석결과_20260521_1430.html</code> — 추출 시각 명시
+    </div>
+
+    <div class="box box-yellow">
+      <strong>⚠️ 추출 시 유의사항</strong>
+      · 분석 결과가 없는 상태에서 버튼을 누르면 <strong>"점수 계산을 먼저 실행해 주세요"</strong> 알림<br>
+      · 미리보기 이미지가 깨질 경우: 원본 CSV의 <strong>링크/image_url 컬럼 URL이 만료</strong>되었거나 외부망 차단 — 브라우저에서 URL 직접 접근으로 확인<br>
+      · 사외 공유 전 <strong>필터 조건과 추출 시각</strong>을 메일 본문에 함께 기재 권장
+    </div>
+
+    <div class="box box-red">
+      <strong>💡 활용 팁 — 주간 리포트 자동화</strong>
+      "전체 캠페인 / BNR+VID / 지난주" 필터 → 점수 계산 → HTML 추출 → 매주 월요일 정해진 채널에 첨부 한 번으로 <strong>주간 성과 리포트 발행</strong> 가능.
+    </div>
+
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.0 | Page 6</div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       3.4 피로도 분석
+  ════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <div class="page-title">🔍 3.4 피로도 분석 (기간 비교)</div>
 
     <p>두 기간의 소재 성과를 비교하여 <strong>순위 변동</strong>과 <strong>CPA 변화율</strong>을 추적합니다. 피로도를 조기 감지하여 교체 시점을 정확히 결정할 수 있습니다.</p>
 
@@ -623,7 +724,7 @@
       · <strong>TXT 소재</strong>: 피로도 분석에서도 완전 제외 (BNR/VID만 분석)
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v4.0 | Page 6</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.0 | Page 7</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -663,7 +764,7 @@
       · Step 2-① 컬럼 설정에서 가중치 수동 조정도 가능
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v4.0 | Page 7</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.0 | Page 8</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -721,7 +822,7 @@
       다음 차수 분석 시 이전 군집과 자동 비교하여 신규 군집(NEW 배지)·기존 군집 연속성을 표시합니다.
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v4.0 | Page 8</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.0 | Page 9</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -740,13 +841,14 @@
       <div class="plan-card" style="background:#fffbeb;border:2px solid #f59e0b;">
         <div class="plan-name" style="color:#d97706;">🆓 무료 플랜</div>
         <ul>
-          <li>분당 15회 요청 한도</li>
+          <li>분당 15회 요청 한도 (Gemini Free Tier)</li>
           <li>소재 최대 <strong>3개</strong> 분석</li>
           <li><strong>1회 호출 · 1슬롯</strong></li>
           <li>marketer_insight <strong>미전송</strong> (토큰 절감)</li>
-          <li>소재 성과: winTags 1슬롯</li>
-          <li>피로도: riseReason 1슬롯</li>
-          <li>출력 토큰: ~1,500/회</li>
+          <li>소재 성과: <strong>winning</strong> 1슬롯 (위닝+루징 포함)</li>
+          <li>피로도: <strong>riseReason</strong> 1슬롯</li>
+          <li>출력 토큰: ~2,000/회</li>
+          <li>🔒 잠긴 슬롯 영역에 <strong>유료 Pro 업그레이드 안내</strong> 카드 자동 노출 <span class="badge badge-red" style="font-size:9px;">NEW</span></li>
         </ul>
       </div>
       <div class="plan-card" style="background:#faf5ff;border:2px solid #7c3aed;">
@@ -756,36 +858,47 @@
           <li>소재 최대 <strong>5개</strong> 분석</li>
           <li><strong>2회 호출 · 전체 슬롯</strong></li>
           <li>marketer_insight <strong>원문 200자</strong> 전달</li>
-          <li>소재 성과: 6슬롯 전체</li>
-          <li>피로도: 4슬롯 전체</li>
-          <li>출력 토큰: ~2,500/회</li>
+          <li>소재 성과: <strong>winning · losing · actionItems · scaleUp · stopNow</strong> 5슬롯 <span class="badge badge-red" style="font-size:9px;">UPDATED</span></li>
+          <li>피로도: riseReason · fatigueDiag · swapTiming · opsAction 4슬롯</li>
+          <li>출력 토큰: ~2,500/회 (총 2회)</li>
         </ul>
       </div>
     </div>
 
-    <div class="section-title">5.2 소재 성과 AI 인사이트 (winTags)</div>
-    <p>점수 계산 결과 화면의 <strong>"✨ AI 인사이트 생성"</strong> 버튼으로 실행합니다.</p>
+    <div class="section-title">5.2 소재 성과 AI 인사이트 (winning · losing 분리) <span class="badge badge-red" style="font-size:10px;">UPDATED</span></div>
+    <p>점수 계산 결과 화면의 <strong>"✨ AI 인사이트 생성"</strong> 버튼으로 실행합니다. <strong>winning 슬롯이 단독일 때는 1컬럼 전체폭</strong>으로 렌더링되어 가독성이 높아집니다.</p>
 
     <div class="ai-slot-grid">
       <div class="ai-slot" style="background:#ecfdf5;border-left:4px solid #10b981;">
-        <div class="slot-title" style="color:#10b981;">🏷️ 승리 패턴 태그 <span class="badge badge-green">무료·유료</span></div>
-        <div class="slot-body">고효율 소재 공통 태그 기반 성과 원인 분석<br>· BNR vs VID 포맷 비교 (avgIPM/avgCPA)<br>· 저효율 소재 태그 차이점<br>· 즉시 권고 소재 명시</div>
+        <div class="slot-title" style="color:#10b981;">🏆 위닝 소재 분석 (winning) <span class="badge badge-green">무료·유료</span></div>
+        <div class="slot-body">고효율 소재 목록 + 공통 패턴<br>· 무료: 동일 슬롯 내부에 <strong>루징(저효율) 소재</strong>도 포함<br>· 유료: 위닝만 분리되어 더 깊은 분석</div>
       </div>
-      <div class="ai-slot" style="background:#eff6ff;border-left:4px solid #3b82f6;">
-        <div class="slot-title" style="color:#3b82f6;">📊 포맷별 성과 격차 <span class="badge badge-purple">유료</span></div>
-        <div class="slot-body">BNR/VID 포맷별 avgIPM·avgCPA 비교<br>포맷 선택 권고</div>
-      </div>
-      <div class="ai-slot" style="background:#fffbeb;border-left:4px solid #f59e0b;">
-        <div class="slot-title" style="color:#f59e0b;">⚠️ 효율 하락 원인 <span class="badge badge-purple">유료</span></div>
-        <div class="slot-body">저효율 소재 공통 태그·패턴 분석<br>고효율 대비 부족한 요소 명시</div>
+      <div class="ai-slot" style="background:#fef2f2;border-left:4px solid #ef4444;">
+        <div class="slot-title" style="color:#ef4444;">📉 루징 소재 분석 (losing) <span class="badge badge-purple">유료</span></div>
+        <div class="slot-body">저효율 소재 별도 카드<br>· 공통 약점 태그·패턴<br>· 위닝 대비 부족한 요소</div>
       </div>
       <div class="ai-slot" style="background:#f5f3ff;border-left:4px solid #7c3aed;">
-        <div class="slot-title" style="color:#7c3aed;">⚡ 즉시 실행 액션 <span class="badge badge-purple">유료</span></div>
-        <div class="slot-body">즉시 ON/OFF 소재 목록 + 스케일업 우선순위<br>중단 권고 소재·교체 방향</div>
+        <div class="slot-title" style="color:#7c3aed;">⚡ 즉시 실행 액션 (actionItems) <span class="badge badge-purple">유료</span></div>
+        <div class="slot-body">확장🟢 / 개선🟡 / 중단🔴 3분류<br>· 소재명 + 액션 + 근거 수치</div>
+      </div>
+      <div class="ai-slot" style="background:#ecfdf5;border-left:4px solid #059669;">
+        <div class="slot-title" style="color:#059669;">🚀 스케일업 후보 (scaleUp) <span class="badge badge-purple">유료</span></div>
+        <div class="slot-body">예산 확대 우선순위 TOP 소재<br>· 증액 권고 비율 포함</div>
+      </div>
+      <div class="ai-slot" style="background:#fef2f2;border-left:4px solid #dc2626;">
+        <div class="slot-title" style="color:#dc2626;">🛑 즉시 중단 권고 (stopNow) <span class="badge badge-purple">유료</span></div>
+        <div class="slot-body">예산 손실 차단용 즉시 OFF 목록<br>· CPA 악화·전환 0 등 명확한 근거</div>
       </div>
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v4.0 | Page 9</div>
+    <div class="box box-purple">
+      <strong>🔄 슬롯 키 변경 이력 (2026-05-21)</strong>
+      · <strong>winTags</strong> (구버전) → <strong>winning</strong>으로 통합 (하위 호환 자동 변환)<br>
+      · <strong>formatGap</strong> (포맷별 진단) → <strong>제거</strong> — 유형별 가중평균 표(3.2 ⑤)로 대체<br>
+      · 신규 슬롯: <strong>losing · scaleUp · stopNow</strong> 추가
+    </div>
+
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.0 | Page 10</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -851,7 +964,7 @@
       · 모델: <strong>Gemini 2.5 Flash</strong> (thinking 모드 비활성화로 출력 토큰 100% 활용)
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v4.0 | Page 10</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.0 | Page 11</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -915,7 +1028,32 @@
       <div class="faq-a">기준 기간에만 있거나 비교 기간에만 있는 소재는 "신규" 또는 "사라짐"으로 별도 표시됩니다. 두 기간 모두 존재하는 소재만 순위 변동이 계산됩니다.</div>
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v4.0 | Page 11</div>
+    <div class="faq-item">
+      <div class="faq-q">CSV 파일 저장 없이 Excel 데이터를 바로 분석할 수 있나요? <span class="badge badge-red" style="font-size:9px;">NEW</span></div>
+      <div class="faq-a">네, v5.0부터 가능합니다. 업로드 영역 상단의 <strong>"📋 CSV 직접 붙여넣기"</strong> 탭을 클릭하고, Excel/Sheets에서 헤더 포함 전체 범위를 복사(Ctrl+C) → 텍스트 영역에 붙여넣기(Ctrl+V) → <strong>"✅ 분석 시작"</strong>을 클릭하세요. 탭(Tab) 구분자와 쉼표 구분자 모두 자동 인식됩니다.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">분석 결과를 그대로 유관부서에 공유하려면? <span class="badge badge-red" style="font-size:9px;">NEW</span></div>
+      <div class="faq-a">결과 섹션 상단의 <strong>"📤 분석 결과 HTML 추출"</strong> 버튼을 클릭하면 미리보기 썸네일·유형별 요약·상세 테이블을 모두 포함한 단일 HTML 파일이 다운로드됩니다. AI 인사이트는 의도적으로 제외되어 사외 공유에도 안전합니다. 자세한 내용은 3.3 섹션 참고.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">"저조 소재" 카드가 빨간색이 아니라 회색인데, 잘못된 건가요? <span class="badge badge-red" style="font-size:9px;">NEW</span></div>
+      <div class="faq-a">정상입니다. v5.0부터 저조 소재 카드는 <strong>어두운 슬레이트(회색-청색) 그라데이션</strong>으로 변경되었습니다. 다른 4개 카드(전체/최고/평균/최우수)는 컴투스 레드, 저조 소재 카드만 슬레이트로 처리해 시각적으로 즉시 구분되도록 의도된 설계입니다.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">"소재 유형별 요약 표"가 화면에 안 나와요. <span class="badge badge-red" style="font-size:9px;">NEW</span></div>
+      <div class="faq-a">유형별 요약 표는 <strong>BNR과 VID 두 유형이 모두 결과에 포함된 경우에만</strong> 자동 노출됩니다. 한 가지 유형만 있을 때는 비교 의미가 없어 표시되지 않습니다. 소재 유형 필터를 "전체"로 두거나 BNR+VID를 모두 체크하세요.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">무료 플랜에서 AI 인사이트 카드 아래 회색 박스가 나오는데 이건 뭔가요? <span class="badge badge-red" style="font-size:9px;">NEW</span></div>
+      <div class="faq-a">v5.0 신규 기능인 <strong>"유료 Pro 업그레이드 유도 카드"</strong>입니다. 무료 플랜에서는 잠긴 슬롯(losing/scaleUp/stopNow 등)을 🔒 아이콘으로 표시하며 클릭 한 번으로 API 키 모달이 열려 유료 키로 전환할 수 있습니다.</div>
+    </div>
+
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.0 | Page 12</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -978,7 +1116,35 @@
           <li>② Step 1 업로드 → 점수 계산</li>
           <li>③ 피로도 분석 (전전주 vs 전주)</li>
           <li>④ AI 인사이트 생성 → 교체 소재 결정</li>
-          <li>⑤ Step 2 군집화 → 승리 공식 도출</li>
+          <li>⑤ 📤 HTML 추출 → 주간 리포트 공유</li>
+          <li>⑥ Step 2 군집화 → 승리 공식 도출</li>
+        </ul>
+      </div>
+      <div class="cheat-card">
+        <div class="cheat-title">📤 HTML 추출 활용 <span class="badge badge-red" style="font-size:9px;">NEW</span></div>
+        <ul>
+          <li>위치: 결과 섹션 상단 파란 버튼</li>
+          <li>포함: 스코어카드·유형별요약·상세표·썸네일</li>
+          <li>제외: AI 인사이트 (사외 공유 안전)</li>
+          <li>파일명: <code>소재분석결과_YYYYMMDD_HHMM.html</code></li>
+          <li>Ctrl+P → PDF 변환 가능</li>
+        </ul>
+      </div>
+      <div class="cheat-card">
+        <div class="cheat-title">📋 CSV 붙여넣기 <span class="badge badge-red" style="font-size:9px;">NEW</span></div>
+        <ul>
+          <li>업로드 영역 상단 "📋" 탭 클릭</li>
+          <li>Excel 범위 복사 → 텍스트영역 붙여넣기</li>
+          <li>탭/쉼표 구분자 자동 감지</li>
+          <li>"✅ 분석 시작" 버튼으로 즉시 진행</li>
+        </ul>
+      </div>
+      <div class="cheat-card">
+        <div class="cheat-title">📊 5개 스코어 카드 <span class="badge badge-red" style="font-size:9px;">UPDATED</span></div>
+        <ul>
+          <li>전체 / 최고 / 평균 / 최우수 (레드 카드 4개)</li>
+          <li><strong>저조 소재</strong> (슬레이트 카드 1개) — 개선필요 등급 카운트</li>
+          <li>HTML 추출 파일에도 동일하게 포함</li>
         </ul>
       </div>
     </div>
@@ -988,7 +1154,27 @@
       <thead><tr><th style="width:16%">버전</th><th style="width:22%">날짜</th><th>주요 업데이트</th></tr></thead>
       <tbody>
         <tr>
-          <td><strong>v4.0</strong> <span class="badge badge-red">현재</span></td>
+          <td><strong>v5.1</strong> <span class="badge badge-red">현재</span></td>
+          <td>2026-05-21</td>
+          <td>QA 기반 데이터 신뢰성·인사이트 강화 패치:
+            ① <strong>조건부 ROAS 재배분</strong> — 매출 보유 30% 미만이면 자동 "공정 모드"(매출=0 소재는 ROAS 평가에서 제외) ② 점수 계산 모드 라디오 4종(자동/엄격/공정/완전 제외) 옵션 추가
+            ③ <strong>분석 신뢰도 배지</strong>(높음·보통·낮음) — 소재수/기간/매출보유 3조건 평가
+            ④ <strong>위험 신호 아이콘</strong> — CPA 이상치(🚨)·학습 부진(⚠️)·LP 미스매치(🎯)·학습 단계(🌱) 자동 감지
+            ⑤ <strong>소재 메타 배지 칩</strong> — Concept/USP/hooking/emotion/art_style 한눈에 표시
+            ⑥ <strong>일별 트렌드 sparkline</strong> — 결과 테이블 마지막 컬럼
+            ⑦ <strong>캠페인 비교 모드</strong> — 2개 이상 캠페인 결과 자동 노출 (KPI 카드 + Top 10 소재 × 캠페인 교차표)
+            ⑧ <strong>유사 소재명 자동 감지</strong> — 시스템이 <strong>오타(병합 권장)</strong>와 <strong>변형(병합 비권장)</strong>을 자동 구분: 토큰 분할 후 ⓐ숫자 포함 토큰 차이(예 <code>01A↔01B</code>)는 변형, ⓑ5자 이상 알파벳 토큰의 1~2자 차이(예 <code>Character↔Charater</code>)는 오타로 분류
+            ⑨ <strong>피로도 데이터 부족 경고</strong> — 합계 7일 미만 시 사전 confirm 다이얼로그
+            ⑩ 데이터 품질 패치: <code>시기</code> 컬럼 datePattern 제거 · 언어 컬럼 오염 자동 정규화(<code>EN;https://www → EN</code>) · CSV 붙여넣기 따옴표 이스케이프 보완
+          </td>
+        </tr>
+        <tr>
+          <td><strong>v5.0</strong></td>
+          <td>2026-05-21</td>
+          <td>① CSV 직접 붙여넣기 탭 신설(Excel 범위 그대로 분석) ② <strong>저조 소재</strong> 스코어 카드 추가 (슬레이트 카드, 5번째) ③ <strong>📤 분석 결과 HTML 추출</strong> — 미리보기 포함 단일 HTML, AI 인사이트 제외, 사외 공유용 ④ <strong>유형별 가중평균 요약 표</strong>(BNR/VID, CPA·IPM·CTR·ROAS) 자동 노출 ⑤ AI 인사이트 슬롯 재구성: winning(위닝+루징 통합) → losing 별도 슬롯 분리, formatGap 제거, scaleUp/stopNow 신규</td>
+        </tr>
+        <tr>
+          <td><strong>v4.0</strong></td>
           <td>2026-04-13</td>
           <td>피로도 AI 인사이트 고도화 — 태그 기반 CPA 트렌드·교체 우선순위·운영 액션; 피로도 테스트 UI 추가</td>
         </tr>
@@ -1032,7 +1218,7 @@
     </div>
 
     <div class="footer">
-      Com2uS R팀 소재 분석 시스템 v4.0 (시스템 v7) | 2026. 04. 13 | Com2uS R Marketing Team<br>
+      Com2uS R팀 소재 분석 시스템 v5.0 (시스템 v17) | 2026. 05. 21 | Com2uS R Marketing Team<br>
       <strong>Thank you for using R팀 소재 분석 시스템! 🎯</strong>
     </div>
   </div>

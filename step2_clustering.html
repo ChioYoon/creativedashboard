@@ -627,6 +627,7 @@
     .ai-key-badge.unset { background:var(--orange-pale); color:var(--orange); }
   </style>
   <link rel="stylesheet" href="css/gemini-ui.css">
+  <script src="js/data-source.js"></script>
   <script src="js/gemini-api.js"></script>
 </head>
 <body>
@@ -1032,9 +1033,22 @@ window.addEventListener('DOMContentLoaded', () => {
   loadSession();
 });
 
+// v5.2 Stage 1-C: 타이틀별 sessionStorage 키 격리
+function _activeTitleId() {
+  if (window.DataSource && typeof window.DataSource.getActiveTitleId === 'function') {
+    return window.DataSource.getActiveTitleId();
+  }
+  try { return new URLSearchParams(window.location.search).get('title') || ''; }
+  catch (_) { return ''; }
+}
+function _sessKey() {
+  const tid = (_activeTitleId() || '').replace(/[^a-zA-Z0-9_-]/g, '');
+  return tid ? `r_team_cluster_session_${tid}` : 'r_team_cluster_session';
+}
+
 function loadSession() {
   try {
-    const raw = sessionStorage.getItem('r_team_cluster_session');
+    const raw = sessionStorage.getItem(_sessKey());
     if (!raw) throw new Error('세션 없음');
 
     sessionConfig = JSON.parse(raw);

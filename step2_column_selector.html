@@ -899,6 +899,8 @@
       to   { opacity: 1; transform: translateY(0); }
     }
   </style>
+  <!-- v5.2 Stage 1: 데이터 소스 추상화 (DataSource.getActiveTitleId, getSessionKey) -->
+  <script src="js/data-source.js"></script>
 </head>
 <body>
 
@@ -1974,14 +1976,14 @@ function saveConfig() {
     }))
   };
 
-  localStorage.setItem('r_team_cluster_config', JSON.stringify(config));
+  localStorage.setItem(_cfgKey(), JSON.stringify(config));
   const dt = new Date().toLocaleString('ko-KR');
   document.getElementById('lastSavedInfo').textContent = `마지막 저장: ${dt}`;
   showToast('설정이 저장되었습니다.', 'success');
 }
 
 function loadConfig() {
-  const raw = localStorage.getItem('r_team_cluster_config');
+  const raw = localStorage.getItem(_cfgKey());
   if (!raw) { showToast('저장된 설정이 없습니다.', 'error'); return; }
 
   try {
@@ -2092,15 +2094,15 @@ function proceedToClustering() {
   };
 
   try {
-    sessionStorage.setItem('r_team_cluster_session', JSON.stringify(config));
+    sessionStorage.setItem(_sessKey(), JSON.stringify(config));
     showToast('설정 저장 완료. 군집화 페이지로 이동합니다...', 'success');
-    setTimeout(() => { window.location.href = 'step2_clustering.html'; }, 900);
+    setTimeout(() => { window.location.href = _step2Url(); }, 900);
   } catch (e) {
     // sessionStorage 용량 초과 시 csvData 제외
     const lightConfig = { ...config, csvData: null };
-    sessionStorage.setItem('r_team_cluster_session', JSON.stringify(lightConfig));
+    sessionStorage.setItem(_sessKey(), JSON.stringify(lightConfig));
     showToast('설정 저장 완료 (대용량 데이터 제외). 이동합니다...', 'info');
-    setTimeout(() => { window.location.href = 'step2_clustering.html'; }, 900);
+    setTimeout(() => { window.location.href = _step2Url(); }, 900);
   }
 }
 
@@ -2135,7 +2137,7 @@ function showToast(msg, type = '') {
    초기화 - 저장된 설정 날짜 표시
 ═══════════════════════════════════════════════ */
 (function init() {
-  const raw = localStorage.getItem('r_team_cluster_config');
+  const raw = localStorage.getItem(_cfgKey());
   if (raw) {
     try {
       const conf = JSON.parse(raw);
@@ -2145,6 +2147,31 @@ function showToast(msg, type = '') {
   }
   updateSummaryMode();
 })();
+
+/* ═══════════════════════════════════════════════
+   v5.2 Stage 1-C: 타이틀별 storage 키 격리 헬퍼
+   - DataSource(js/data-source.js)가 로드되지 않은 경우 URL ?title= 만으로 fallback
+═══════════════════════════════════════════════ */
+function _activeTitleId() {
+  if (window.DataSource && typeof window.DataSource.getActiveTitleId === 'function') {
+    return window.DataSource.getActiveTitleId();
+  }
+  try {
+    return new URLSearchParams(window.location.search).get('title') || '';
+  } catch (_) {
+    return '';
+  }
+}
+function _suffix() {
+  const tid = (_activeTitleId() || '').replace(/[^a-zA-Z0-9_-]/g, '');
+  return tid ? `_${tid}` : '';
+}
+function _cfgKey()  { return `r_team_cluster_config${_suffix()}`; }
+function _sessKey() { return `r_team_cluster_session${_suffix()}`; }
+function _step2Url() {
+  const tid = _activeTitleId();
+  return tid ? `step2_clustering.html?title=${encodeURIComponent(tid)}` : 'step2_clustering.html';
+}
 </script>
 </body>
 </html>

@@ -7,6 +7,8 @@
   
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+  <!-- 데이터 소스 추상화 (v5.2 Stage 1) — CSV/JSON 단일 진입점, 타이틀 격리 -->
+  <script src="js/data-source.js"></script>
   <!-- Gemini AI 공통 모듈 -->
   <link rel="stylesheet" href="css/gemini-ui.css">
   <script src="js/gemini-api.js"></script>
@@ -781,10 +783,19 @@
 
       <!-- 페이지 이동 (우측) -->
       <div class="nav-page-btns">
+        <!-- v5.2 Stage 1: 타이틀 셀렉터 (백엔드 JSON 산출물 로드용) -->
+        <select id="titleSelector"
+                onchange="onTitleSelectorChange(this.value)"
+                title="분석할 타이틀 선택 (백엔드 산출 JSON 자동 로드)"
+                style="padding:7px 12px;border:1.5px solid rgba(255,255,255,.35);border-radius:6px;
+                       background:rgba(255,255,255,.12);color:#fff;font-size:12.5px;font-weight:600;
+                       cursor:pointer;max-width:240px;">
+          <option value="">📂 타이틀 선택 (직접 업로드)</option>
+        </select>
         <button class="gai-nav-key-btn" onclick="openGeminiModal()" title="Gemini AI 분석 설정">
           ✨ AI 설정
         </button>
-        <a class="nav-page-btn highlight" href="step2_column_selector.html">
+        <a class="nav-page-btn highlight" id="step2Link" href="step2_column_selector.html">
           Step 2 군집화 <span style="opacity:.7;">→</span>
         </a>
       </div>
@@ -957,6 +968,31 @@
         </div>
       </div>
       
+      <!-- ── ROAS 점수 계산 모드 (NEW v5.1) ────────────────────────── -->
+      <div style="background:#fef9f3;border:1.5px solid #fcd34d;border-radius:12px;padding:18px 20px;margin-top:10px;">
+        <div style="font-weight:700;color:#92400e;font-size:14px;margin-bottom:4px;display:flex;align-items:center;gap:6px;">
+          💰 ROAS 점수 계산 모드
+          <span style="font-size:11px;font-weight:400;color:#9ca3af;">(매출 데이터가 부분적으로만 있을 때 점수 왜곡 방지)</span>
+        </div>
+        <div style="font-size:12.5px;color:#6b7280;margin-bottom:12px;">
+          매출 데이터가 늦게 들어오는 환경에서 ROAS 점수 산출 방식을 선택합니다. 기본값은 <strong>"자동(권장)"</strong>입니다.
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px 14px;border:2px solid #fcd34d;border-radius:8px;font-size:13px;font-weight:600;background:#fffbeb;transition:all .15s;">
+            <input type="radio" name="roasMode" value="auto" checked> 🤖 자동 (매출 보유 30% 미만이면 자동 제외)
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px 14px;border:2px solid #e5e7eb;border-radius:8px;font-size:13px;font-weight:600;background:white;transition:all .15s;">
+            <input type="radio" name="roasMode" value="strict"> 📊 매출=0도 ROAS 0점 (엄격)
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px 14px;border:2px solid #e5e7eb;border-radius:8px;font-size:13px;font-weight:600;background:white;transition:all .15s;">
+            <input type="radio" name="roasMode" value="exclude"> 🎯 매출 보유 소재만 ROAS 평가 (공정)
+          </label>
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px 14px;border:2px solid #e5e7eb;border-radius:8px;font-size:13px;font-weight:600;background:white;transition:all .15s;">
+            <input type="radio" name="roasMode" value="off"> 🚫 ROAS 가중치 0% (완전 제외)
+          </label>
+        </div>
+      </div>
+
       <!-- ── 저노출/저전환 소재 제외 필터 ────────────────────────── -->
       <div style="background:#f8fafc;border:1.5px solid #e5e7eb;border-radius:12px;padding:18px 20px;margin-top:10px;">
         <div style="font-weight:700;color:#374151;font-size:14px;margin-bottom:4px;display:flex;align-items:center;gap:6px;">
@@ -1047,6 +1083,9 @@
       <!-- ⑤ 소재 유형별 요약 표 -->
       <div id="typeSummaryContainer"></div>
 
+      <!-- ⑤-2 캠페인 비교 표 (v5.1 NEW: 2개 이상 캠페인 결과 시 자동 노출) -->
+      <div id="campaignCompareContainer"></div>
+
       <!-- ⑥ 소재 상세 테이블 -->
       <div class="table-container" style="margin-top: 20px;">
         <table>
@@ -1065,11 +1104,12 @@
               <th class="has-tooltip" data-tip="ROAS Rank 기반 점수&#10;(n - Rank + 1) / n × 100&#10;ROAS 높을수록 높은 점수&#10;Revenue 없으면 자동 제외">ROAS 점수 ℹ</th>
               <th class="has-tooltip" data-tip="전환·CPA·IPM·ROAS 점수 × 가중치 합산&#10;설정된 가중치 비율로 최종 점수 산출">총점 ℹ</th>
               <th class="has-tooltip" data-tip="총점 기준 등급&#10;최우수 ≥80 / 우수 ≥60&#10;양호 ≥40 / 보통 ≥20 / 개선필요 &lt;20">등급 ℹ</th>
+              <th class="has-tooltip" data-tip="일별 전환수 추이 (sparkline)&#10;마지막 점은 가장 최근 일자">📈 추이 ℹ</th>
             </tr>
           </thead>
           <tbody id="tableBody">
             <tr>
-              <td colspan="13" style="text-align: center; padding: 40px; color: #9ca3af;">
+              <td colspan="14" style="text-align: center; padding: 40px; color: #9ca3af;">
                 점수 계산 실행 버튼을 클릭하여 분석을 시작하세요
               </td>
             </tr>
@@ -1343,6 +1383,12 @@ function plNormalizeColumns(parsed) {
     ['전환','비용','노출수','클릭수','Revenue','revenue','REVENUE','매출','수익'].forEach(col => {
       if (newR[col]) newR[col] = String(newR[col]).replace(/,/g, '').trim();
     });
+    // v5.1: 언어 컬럼 정규화 — 'EN;https://www' 같은 오염 데이터의 첫 토큰만 추출
+    if (newR['언어']) {
+      const lang = String(newR['언어']).split(/[;,|]/)[0].trim();
+      // URL 패턴이면 빈 값으로 (잘못된 데이터)
+      newR['언어'] = /^https?:\/\//i.test(lang) ? '' : lang;
+    }
     return newR;
   });
   if (!newHeaders.includes('소재명')) newHeaders.splice(0, 0, '소재명');
@@ -1585,7 +1631,8 @@ function plCompareInsights(curClusters, prevClusters, curTagImpacts, prevWinTags
    analysis-engine-v2.js (인라인)
    ============================================================ */
 function detectDateColumn(headers) {
-  const datePatterns = [/^일$/,/^날짜$/,/^일자$/,/^date$/i,/^day$/i,/투입일/,/집행일/,/^시기$/];
+  // v5.1: /^시기$/ 제거 — '시기'는 캠페인 페이즈 코드(예: 'A')이지 날짜가 아님
+  const datePatterns = [/^일$/,/^날짜$/,/^일자$/,/^date$/i,/^day$/i,/투입일/,/집행일/];
   for (const header of headers) {
     if (datePatterns.some(p => p.test(header))) return header;
   }
@@ -1844,16 +1891,224 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
 
       let csvText = raw;
       if (tabCount > commaCount) {
-        // Excel 탭 복사: 탭 → 쉼표 변환 (값 내 쉼표는 따옴표로 감쌈)
+        // Excel 탭 복사: 탭 → 쉼표 변환 (v5.1: 따옴표 또는 쉼표 또는 줄바꿈 포함 시 항상 quote)
         csvText = lines.map(line =>
           line.split('\t').map(cell => {
             const trimmed = cell.trim();
-            return trimmed.includes(',') ? '"' + trimmed.replace(/"/g, '""') + '"' : trimmed;
+            const needsQuote = trimmed.includes(',') || trimmed.includes('"') || trimmed.includes('\n');
+            return needsQuote ? '"' + trimmed.replace(/"/g, '""') + '"' : trimmed;
           }).join(',')
         ).join('\n');
       }
 
       processCSV(csvText, '붙여넣기_데이터');
+    }
+
+    // ──────────────────────────────────────────────
+    // 유사 소재명 자동 감지 (v5.1) — Levenshtein distance
+    // ──────────────────────────────────────────────
+    function _levenshtein(a, b) {
+      if (a === b) return 0;
+      if (!a.length) return b.length;
+      if (!b.length) return a.length;
+      const dp = Array(b.length + 1).fill(0).map((_, i) => i);
+      for (let i = 1; i <= a.length; i++) {
+        let prev = dp[0]; dp[0] = i;
+        for (let j = 1; j <= b.length; j++) {
+          const tmp = dp[j];
+          dp[j] = a[i-1] === b[j-1] ? prev : Math.min(prev, dp[j], dp[j-1]) + 1;
+          prev = tmp;
+        }
+      }
+      return dp[b.length];
+    }
+
+    // v5.1: 유사 소재명 분류 (오타 vs 변형)
+    // - 오타(typo): 명백한 오기 → 병합 default ON
+    //   예) 'A-Character-Collection01B-UA' vs 'A-Charater-Collection01B-UA'
+    // - 변형(variant): 숫자/단어 1자 차이 → 병합 default OFF
+    //   예) 'A-Hooking-Reward03A-UA' vs 'A-Hooking-Reward03B-UA'  (03A↔03B: 끝 1자 알파벳)
+    //   예) 'A-Adv-01A' vs 'A-Adv-02A'                          (01↔02: 숫자 차이)
+    function classifySimilarPair(a, b) {
+      const aTokens = a.split(/[-_]/);
+      const bTokens = b.split(/[-_]/);
+
+      // 토큰 수가 다르면 분류 불가 → variant (안전한 기본값)
+      if (aTokens.length !== bTokens.length) {
+        return { type: 'variant', reason: '토큰 구조 다름 (병합 비권장)' };
+      }
+
+      // 차이 나는 토큰 위치 식별
+      const diffIdx = [];
+      for (let i = 0; i < aTokens.length; i++) {
+        if (aTokens[i] !== bTokens[i]) diffIdx.push(i);
+      }
+
+      // 차이 토큰이 2개 이상이면 → 명확한 오타가 아님 → variant
+      if (diffIdx.length !== 1) {
+        return { type: 'variant', reason: `${diffIdx.length}개 토큰 차이 (병합 비권장)` };
+      }
+
+      const ta = aTokens[diffIdx[0]];
+      const tb = bTokens[diffIdx[0]];
+
+      // 두 토큰 모두 숫자를 포함 → 캠페인/소재 변형 코드 (병합 비권장)
+      const hasDigitA = /\d/.test(ta);
+      const hasDigitB = /\d/.test(tb);
+      if (hasDigitA && hasDigitB) {
+        return { type: 'variant', reason: '숫자/코드 토큰 차이 (예: 01A↔01B, 03↔04)' };
+      }
+
+      // 둘 다 매우 짧은 토큰(≤4자) → 코드일 가능성 높음 (예: 'DA' vs 'UA')
+      if (ta.length <= 4 && tb.length <= 4) {
+        return { type: 'variant', reason: '짧은 코드 토큰 차이 (예: DA↔UA)' };
+      }
+
+      // 길이 차가 ≤ 1이고 dist ≤ 2이며 알파벳-only 인 경우 → 오타
+      const dist = _levenshtein(ta, tb);
+      const lenOk = Math.abs(ta.length - tb.length) <= 1;
+      // 알파벳-only 또는 알파벳이 대부분(80% 이상)
+      const alphaRatio = (s) => (s.match(/[A-Za-z가-힣]/g) || []).length / s.length;
+      const mostlyAlpha = alphaRatio(ta) >= 0.8 && alphaRatio(tb) >= 0.8;
+
+      if (lenOk && dist <= 2 && mostlyAlpha && ta.length >= 5) {
+        return { type: 'typo', reason: `철자 오기 추정 (편집거리 ${dist})` };
+      }
+
+      // 그 외 안전한 기본값 → variant
+      return { type: 'variant', reason: '판단 모호 (병합 비권장)' };
+    }
+
+    function detectSimilarNames(keys) {
+      const pairs = [];
+      const arr = [...keys].filter(k => k && k.length >= 4);
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = i + 1; j < arr.length; j++) {
+          const a = arr[i], b = arr[j];
+          // 길이 차가 너무 크면 스킵
+          if (Math.abs(a.length - b.length) > 3) continue;
+          const dist = _levenshtein(a, b);
+          // 유사 기준: distance ≤ 2 AND 길이 대비 비율 ≤ 0.15
+          if (dist > 0 && dist <= 2 && dist / Math.max(a.length, b.length) <= 0.15) {
+            const cls = classifySimilarPair(a, b);
+            pairs.push({ a, b, dist, type: cls.type, reason: cls.reason });
+          }
+        }
+      }
+      return pairs;
+    }
+
+    // 사용자 확정 병합 매핑 (예: {'A-Charater-Collection01B-UA': 'A-Character-Collection01B-UA'})
+    window._creativeMergeMap = {};
+
+    function applySimilarMergeMap(rows, mergeMap, groupBy) {
+      if (!mergeMap || Object.keys(mergeMap).length === 0) return rows;
+      return rows.map(r => {
+        const newR = { ...r };
+        const orig = newR[groupBy];
+        if (orig && mergeMap[orig]) {
+          newR[groupBy] = mergeMap[orig];
+        }
+        return newR;
+      });
+    }
+
+    function buildSimilarNamesModalHtml(pairs) {
+      // 분류별 분리 노출 (오타 우선, 변형 후순위)
+      const typoPairs = pairs.filter(p => p.type === 'typo');
+      const variantPairs = pairs.filter(p => p.type === 'variant');
+      const ordered = [...typoPairs, ...variantPairs];
+
+      const renderPair = (p, i) => {
+        const isTypo = p.type === 'typo';
+        // 오타: 첫 번째 이름 유지가 default checked
+        // 변형: '병합하지 않음'이 default checked
+        const aChecked   = isTypo ? 'checked' : '';
+        const bChecked   = '';
+        const skipChecked = !isTypo ? 'checked' : '';
+
+        const badge = isTypo
+          ? `<span style="display:inline-block;background:#fef2f2;color:#dc2626;padding:2px 8px;border-radius:10px;font-size:10.5px;font-weight:700;">✏️ 오타 추정 — 병합 권장</span>`
+          : `<span style="display:inline-block;background:#f3f4f6;color:#6b7280;padding:2px 8px;border-radius:10px;font-size:10.5px;font-weight:700;">🔢 변형 소재 추정 — 병합 비권장</span>`;
+
+        return `
+          <div style="border:1px solid ${isTypo ? '#fecaca' : '#e5e7eb'};border-radius:8px;padding:12px;margin-bottom:8px;background:${isTypo ? '#fff5f5' : '#fafafa'};">
+            <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px;color:#374151;margin-bottom:8px;flex-wrap:wrap;gap:6px;">
+              <div>${badge} <span style="font-size:11.5px;color:#6b7280;">${p.reason} · 편집거리 ${p.dist}</span></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12.5px;">
+              <label style="display:flex;align-items:center;gap:6px;padding:8px;background:#fff;border:1.5px solid ${isTypo ? '#ef4444' : '#e5e7eb'};border-radius:6px;cursor:pointer;">
+                <input type="radio" name="merge_${i}" value="${p.a}" ${aChecked} data-other="${p.b}">
+                <span style="font-family:monospace;word-break:break-all;">${p.a}</span>
+              </label>
+              <label style="display:flex;align-items:center;gap:6px;padding:8px;background:#fff;border:1.5px solid #e5e7eb;border-radius:6px;cursor:pointer;">
+                <input type="radio" name="merge_${i}" value="${p.b}" ${bChecked} data-other="${p.a}">
+                <span style="font-family:monospace;word-break:break-all;">${p.b}</span>
+              </label>
+            </div>
+            <label style="display:flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;color:${!isTypo ? '#059669' : '#6b7280'};cursor:pointer;font-weight:${!isTypo ? '700' : '400'};">
+              <input type="radio" name="merge_${i}" value="__skip__" ${skipChecked}> 병합하지 않음
+            </label>
+          </div>
+        `;
+      };
+
+      const typoBlock = typoPairs.length > 0 ? `
+        <div style="margin-bottom:8px;padding:8px 12px;background:#fef2f2;border-radius:6px;font-size:12.5px;color:#991b1b;border-left:3px solid #ef4444;">
+          ✏️ <strong>오타 추정 ${typoPairs.length}쌍</strong> — 기본값 <strong>"병합"</strong>으로 설정됨 (필요 시 수정 가능)
+        </div>
+        ${typoPairs.map((p, idx) => renderPair(p, idx)).join('')}
+      ` : '';
+
+      const variantBlock = variantPairs.length > 0 ? `
+        <div style="margin:14px 0 8px;padding:8px 12px;background:#f3f4f6;border-radius:6px;font-size:12.5px;color:#374151;border-left:3px solid #9ca3af;">
+          🔢 <strong>변형 소재 추정 ${variantPairs.length}쌍</strong> — 기본값 <strong>"병합하지 않음"</strong>으로 설정됨 (별도 소재로 분석 권장)
+        </div>
+        ${variantPairs.map((p, idx) => renderPair(p, typoPairs.length + idx)).join('')}
+      ` : '';
+
+      return `
+        <div id="similarNamesModal" style="position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:9999;">
+          <div style="background:white;border-radius:12px;padding:24px;max-width:720px;width:92%;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+              <span style="font-size:22px;">🔍</span>
+              <h3 style="margin:0;font-size:18px;color:#1f2937;">유사한 소재명 ${pairs.length}쌍 감지됨</h3>
+            </div>
+            <p style="color:#6b7280;font-size:13px;margin-bottom:14px;line-height:1.6;">
+              시스템이 자동으로 <strong style="color:#dc2626;">"오타"</strong>와 <strong style="color:#374151;">"변형 소재"</strong>를 구분했습니다.<br>
+              아래 분류와 기본 선택을 확인하고 필요한 경우 수정한 뒤 <strong>"선택 적용"</strong>을 눌러 주세요.
+            </p>
+            ${typoBlock}
+            ${variantBlock}
+            <div style="display:flex;gap:10px;margin-top:16px;justify-content:flex-end;">
+              <button onclick="closeSimilarNamesModal(false)" style="padding:10px 20px;background:#f3f4f6;color:#6b7280;border:none;border-radius:8px;font-size:13px;cursor:pointer;">건너뛰기</button>
+              <button onclick="closeSimilarNamesModal(true)" style="padding:10px 24px;background:linear-gradient(135deg,#E84855,#ff6b6b);color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;">선택 적용</button>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    function closeSimilarNamesModal(apply) {
+      const modal = document.getElementById('similarNamesModal');
+      if (!modal) return;
+      if (apply) {
+        const radios = modal.querySelectorAll('input[type="radio"]:checked');
+        const map = {};
+        radios.forEach(r => {
+          const keep = r.value;
+          const other = r.dataset.other;
+          if (keep && keep !== '__skip__' && other) {
+            map[other] = keep;
+          }
+        });
+        window._creativeMergeMap = map;
+        const count = Object.keys(map).length;
+        if (count > 0) {
+          console.log(`✅ 소재명 병합 매핑 ${count}건 적용:`, map);
+          alert(`✅ ${count}개 소재명 병합 매핑이 적용되었습니다.\n점수 계산 시 자동 반영됩니다.`);
+        }
+      }
+      modal.remove();
     }
 
     function showLoadingIndicator(message = '처리 중...') {
@@ -1882,7 +2137,153 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     window.addEventListener('DOMContentLoaded', function() {
       console.log('✅ Step 1 통합 페이지 로드 완료');
       initializeEventListeners();
+      // v5.2 Stage 1: 타이틀 셀렉터 초기화 + URL ?title 자동 로드
+      initializeTitleSelector();
     });
+
+    // ──────────────────────────────────────────────
+    // v5.2 Stage 1: 타이틀 셀렉터 초기화 및 핸들러
+    // ──────────────────────────────────────────────
+    async function initializeTitleSelector() {
+      const selector = document.getElementById('titleSelector');
+      if (!selector || !window.DataSource) {
+        console.warn('[titleSelector] DataSource 모듈 또는 셀렉터 요소가 없습니다.');
+        return;
+      }
+
+      try {
+        const manifest = await window.DataSource.loadTitleManifest();
+        // 옵션 채우기 (기본 "직접 업로드" 옵션 유지 후 append)
+        manifest.forEach(t => {
+          const opt = document.createElement('option');
+          opt.value = t.id;
+          opt.textContent = `🎯 ${t.name}`;
+          opt.dataset.jsonUrl = t.json_url || '';
+          selector.appendChild(opt);
+        });
+        console.log(`[titleSelector] ${manifest.length}개 타이틀 등록`);
+
+        // URL의 ?title= 이 있으면 자동 선택 + 로드
+        const urlTitle = window.DataSource.readTitleFromUrl();
+        if (urlTitle) {
+          const matched = manifest.find(t => t.id === urlTitle);
+          if (matched) {
+            selector.value = urlTitle;
+            console.log(`[titleSelector] URL로부터 자동 선택: ${urlTitle}`);
+            await loadTitleFromJson(matched);
+          } else {
+            console.warn(`[titleSelector] URL의 title=${urlTitle} 가 manifest에 없습니다.`);
+          }
+        }
+
+        // Step 2 링크에도 titleId 전파 (sessionStorage 격리와 동일한 효과)
+        updateStep2Link();
+      } catch (e) {
+        console.error('[titleSelector] 초기화 실패:', e);
+      }
+    }
+
+    function onTitleSelectorChange(value) {
+      const selector = document.getElementById('titleSelector');
+      const option = selector.querySelector(`option[value="${value}"]`);
+      if (!value) {
+        // "직접 업로드" 선택 → 활성 타이틀 해제, URL 정리
+        window.DataSource.setActiveTitleId('');
+        updateStep2Link();
+        return;
+      }
+      const jsonUrl = option?.dataset?.jsonUrl || '';
+      if (!jsonUrl) {
+        alert('해당 타이틀의 JSON URL이 정의되지 않았습니다. js/titles.json 을 확인해 주세요.');
+        return;
+      }
+      window.DataSource.setActiveTitleId(value);
+      updateStep2Link();
+      loadTitleFromJson({ id: value, json_url: jsonUrl });
+    }
+
+    async function loadTitleFromJson(titleEntry) {
+      if (!window.DataSource) return;
+      try {
+        showLoadingIndicator(`🔄 ${titleEntry.id} 데이터 로딩 중...`);
+        const { normalized, sourceMeta } = await window.DataSource.loadCreativeData('json-url', {
+          url: titleEntry.json_url,
+          titleId: titleEntry.id,
+        });
+
+        // 기존 processCSV 와 동일한 후속 처리 — 전역 변수 갱신
+        normalizedData = { columns: normalized.columns, rows: normalized.rows };
+        rawData = normalized.rows;
+        console.log(`✅ JSON 로드 완료: ${sourceMeta.row_count}개 소재 (title=${sourceMeta.title_id})`);
+
+        // 캠페인·날짜 갱신 (기존 흐름 재사용)
+        const campaigns = extractCampaigns(rawData);
+        populateCampaignFilter(campaigns);
+
+        const dateColumn = detectDateColumn(normalizedData.columns);
+        let dateRangeInfo = '날짜 컬럼 없음';
+        if (dateColumn) {
+          const dates = rawData
+            .map(row => row[dateColumn])
+            .filter(d => d)
+            .map(d => parseDate(d))
+            .filter(d => d)
+            .sort((a, b) => a - b);
+          if (dates.length > 0) {
+            const minDate = formatDate(dates[0]);
+            const maxDate = formatDate(dates[dates.length - 1]);
+            dateRangeInfo = `${minDate} ~ ${maxDate}`;
+            document.getElementById('startDate').value = minDate;
+            document.getElementById('endDate').value = maxDate;
+            const midIndex = Math.floor(dates.length / 2);
+            const midDate = formatDate(dates[midIndex]);
+            document.getElementById('baselineStart').value = minDate;
+            document.getElementById('baselineEnd').value = midDate;
+            const nextDay = new Date(dates[midIndex]);
+            nextDay.setDate(nextDay.getDate() + 1);
+            document.getElementById('comparisonStart').value = formatDate(nextDay);
+            document.getElementById('comparisonEnd').value = maxDate;
+          }
+        }
+
+        // 업로드 상태 표시 (JSON 모드)
+        document.getElementById('uploadStatus').style.display = 'block';
+        document.getElementById('uploadInfo').innerHTML = `
+          <div style="margin-bottom: 15px;">
+            <div style="margin-bottom: 8px;">🎯 타이틀: <strong>${sourceMeta.title_id}</strong></div>
+            <div style="margin-bottom: 8px;">📊 데이터: <strong>${rawData.length}</strong>개 소재</div>
+            <div style="margin-bottom: 8px;">🎯 캠페인: <strong>${campaigns.length}</strong>개</div>
+            <div style="margin-bottom: 8px;">📅 날짜 범위: <strong>${dateRangeInfo}</strong></div>
+            <div style="margin-bottom: 8px;">🔄 생성 시각: <strong>${sourceMeta.row_count}개 · ${normalized._meta?.generated_at || '미상'}</strong></div>
+          </div>
+          <div style="padding: 10px 14px; background: #ecfdf5; border-left: 3px solid #10b981; border-radius: 6px; font-size: 12.5px; color: #065f46; margin-bottom: 12px;">
+            ✅ 백엔드 산출 JSON 로드 완료 — Stage 1 검증 모드 (Stage 2부터 nightly 자동 갱신 예정)
+          </div>
+          <button onclick="scrollToSection('scoring')"
+                  style="width: 100%; padding: 12px; background: linear-gradient(135deg, #E84855 0%, #FF6B6B 100%);
+                         color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;
+                         font-size: 15px;">
+            📊 점수 계산 시작하기 →
+          </button>
+        `;
+
+        hideLoadingIndicator();
+      } catch (e) {
+        hideLoadingIndicator();
+        console.error('[loadTitleFromJson] 실패:', e);
+        alert(`JSON 로드 실패: ${e.message}\n\nURL: ${titleEntry.json_url}`);
+      }
+    }
+
+    // Step 2 링크에 titleId 쿼리 자동 전파
+    function updateStep2Link() {
+      const link = document.getElementById('step2Link');
+      if (!link || !window.DataSource) return;
+      const tid = window.DataSource.getActiveTitleId();
+      link.href = tid
+        ? `step2_column_selector.html?title=${encodeURIComponent(tid)}`
+        : 'step2_column_selector.html';
+    }
     
     // 이벤트 리스너 초기화
     function initializeEventListeners() {
@@ -2041,6 +2442,25 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         const campaigns = extractCampaigns(rawData);
         populateCampaignFilter(campaigns);
         console.log(`✅ 캠페인 추출 완료: ${campaigns.length}개`);
+
+        // v5.1: 유사 소재명 자동 감지 (BNR/VID만 대상)
+        window._creativeMergeMap = {}; // 신규 업로드 시 초기화
+        const creativeNames = new Set();
+        rawData.forEach(r => {
+          if (r['유형'] === 'BNR' || r['유형'] === 'VID') {
+            if (r['소재명']) creativeNames.add(r['소재명']);
+          }
+        });
+        const similarPairs = detectSimilarNames(creativeNames);
+        if (similarPairs.length > 0) {
+          console.log(`🔍 유사 소재명 ${similarPairs.length}쌍 감지`, similarPairs);
+          // 모달은 업로드 정보 표시 직후에 띄움 (사용자가 데이터를 한 번 보고 결정)
+          setTimeout(() => {
+            const container = document.createElement('div');
+            container.innerHTML = buildSimilarNamesModalHtml(similarPairs);
+            document.body.appendChild(container.firstElementChild);
+          }, 600);
+        }
         
         // 4. 날짜 범위 추출
         console.log('🔄 날짜 범위 추출 중...');
@@ -2163,7 +2583,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     function populateCampaignFilter(campaigns) {
       // 점수 계산용 캠페인 필터 (체크박스)
       const container = document.getElementById('campaignCheckboxGroup');
-      
+
       // 기존 항목 유지 (전체 선택 체크박스)
       const existingAll = container.querySelector('#campaign_all');
       container.innerHTML = '';
@@ -2178,7 +2598,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         `;
         container.appendChild(allItem);
       }
-      
+
       // 캠페인 목록 추가
       campaigns.forEach((campaign, index) => {
         const item = document.createElement('div');
@@ -2190,7 +2610,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         `;
         container.appendChild(item);
       });
-      
+
       // 피로도 분석용 캠페인 필터 (체크박스)
       const fatigueContainer = document.getElementById('fatigueCampaignCheckboxGroup');
       if (fatigueContainer) {
@@ -2438,9 +2858,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           
           filterSummary.push(`집계 기준: ${currentGroupBy}`);
           
-          // 2. 집계
+          // 2. 집계 (v5.1: 유사 소재명 병합 매핑 적용)
+          filteredRows = applySimilarMergeMap(filteredRows, window._creativeMergeMap, currentGroupBy);
           let aggregated = aggregateCreatives(filteredRows, currentGroupBy);
-          console.log(`📊 집계 완료: ${aggregated.length}개 소재`);
+          console.log(`📊 집계 완료: ${aggregated.length}개 소재 (병합 매핑 ${Object.keys(window._creativeMergeMap||{}).length}건 적용)`);
 
           // 2-1. 저노출/저전환 임계값 필터 적용
           const thresholdPct = parseInt(document.querySelector('input[name="thresholdFilter"]:checked')?.value || '0');
@@ -2483,7 +2904,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           window._scoredCreatives = scoredCreatives; // ★ AI 인사이트 함수 스코프 접근 보장
           console.log(`✅ 점수 계산 완료: ${scoredCreatives.length}개 소재`);
           
-          // 4. 결과 표시 (v1.7: 필터 조건 요약 포함)
+          // 4. 결과 표시 (v1.7: 필터 조건 요약 포함, v5.1: 필터 행 전달)
+          window._lastFilteredRows = filteredRows; // 캠페인 비교용
           displayScoringResults(scoredCreatives, filterSummary, {
             thresholdPct,
             excludedCreatives,
@@ -2554,15 +2976,45 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     }
     
     // 점수 계산 (Rank 기반 정규화 + ROAS 추가 + 동점자 처리 + Revenue=0 처리)
+    // v5.1: ROAS 모드 4종 지원 (auto/strict/exclude/off)
     function calculateCreativeScores(creatives, convWeight, cpaWeight, ipmWeight, roasWeight) {
       if (creatives.length === 0) return [];
-      
+
       const n = creatives.length;
-      
-      // Revenue=0 데이터 체크 및 가중치 재배분 (v1.6 추가)
+
+      // ── ROAS 모드 결정 (v5.1) ──
+      const roasMode = document.querySelector('input[name="roasMode"]:checked')?.value || 'auto';
+      const revenueRatio = creatives.filter(c => c.매출 > 0).length / n;
       const hasRevenue = creatives.some(c => c.매출 > 0);
-      if (!hasRevenue && roasWeight > 0) {
-        console.warn('⚠️ Revenue 데이터 없음 → ROAS 가중치를 나머지 지표에 재배분');
+
+      // 메타데이터 저장 (UI 안내용)
+      window._roasMeta = {
+        mode: roasMode,
+        revenueRatio: revenueRatio,
+        revenueCount: creatives.filter(c => c.매출 > 0).length,
+        totalCount: n,
+        redistributed: false,
+        excludedFromRoas: 0
+      };
+
+      // 매출 보유 비율로 페어 평가용 마스크 (exclude 모드용)
+      const validForRoas = creatives.map(c => c.매출 > 0);
+
+      let effectiveRoasMode = roasMode;
+      // 자동 모드: 매출 보유 30% 미만 또는 매출 전무 → 재배분
+      if (roasMode === 'auto') {
+        if (!hasRevenue) {
+          effectiveRoasMode = 'off';
+        } else if (revenueRatio < 0.3) {
+          effectiveRoasMode = 'exclude'; // 매출 있는 소재끼리만 ROAS 평가
+        } else {
+          effectiveRoasMode = 'strict'; // 매출 충분 → 기존 동작
+        }
+      }
+
+      // off 모드 또는 매출 전무 → 가중치 재배분
+      if (effectiveRoasMode === 'off' && roasWeight > 0) {
+        console.warn('⚠️ ROAS 가중치 자동 재배분 — 모드: ' + roasMode);
         const totalOtherWeight = convWeight + cpaWeight + ipmWeight;
         if (totalOtherWeight > 0) {
           const ratio = (convWeight + cpaWeight + ipmWeight + roasWeight) / totalOtherWeight;
@@ -2570,8 +3022,14 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           cpaWeight = cpaWeight * ratio;
           ipmWeight = ipmWeight * ratio;
           roasWeight = 0;
+          window._roasMeta.redistributed = true;
         }
       }
+
+      if (effectiveRoasMode === 'exclude') {
+        window._roasMeta.excludedFromRoas = creatives.filter(c => c.매출 === 0).length;
+      }
+      window._roasMeta.effectiveMode = effectiveRoasMode;
       
       // 동점자를 고려한 Rank 부여 함수
       function assignRankWithTies(sortedArray, valueGetter) {
@@ -2629,10 +3087,22 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       ipmSorted.forEach(c => c.IPMRank = c.assignedRank);
       
       // ROAS Rank (내림차순: ROAS가 높을수록 좋음)
-      const roasSorted = [...creatives].sort((a, b) => b.ROAS - a.ROAS);
-      assignRankWithTies(roasSorted, c => c.ROAS);
-      roasSorted.forEach(c => c.ROASRank = c.assignedRank);
-      
+      // v5.1: exclude 모드에서는 매출=0 소재를 Rank 계산에서 분리
+      if (effectiveRoasMode === 'exclude') {
+        // 매출 있는 소재끼리만 Rank 부여 (1~k), 매출=0은 별도 처리
+        const withRev = creatives.filter(c => c.매출 > 0);
+        const withoutRev = creatives.filter(c => c.매출 === 0);
+        const roasSorted = [...withRev].sort((a, b) => b.ROAS - a.ROAS);
+        assignRankWithTies(roasSorted, c => c.ROAS);
+        roasSorted.forEach(c => c.ROASRank = c.assignedRank);
+        // 매출=0 소재는 ROAS Rank '-' (점수 산출에서 제외 플래그)
+        withoutRev.forEach(c => { c.ROASRank = null; c._roasExcluded = true; });
+      } else {
+        const roasSorted = [...creatives].sort((a, b) => b.ROAS - a.ROAS);
+        assignRankWithTies(roasSorted, c => c.ROAS);
+        roasSorted.forEach(c => c.ROASRank = c.assignedRank);
+      }
+
       // Step 2: Rank를 점수로 변환 (Rank가 낮을수록 높은 점수)
       const scored = creatives.map(c => {
         // Rank 점수 = (n - Rank + 1) / n × 100
@@ -2641,16 +3111,31 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         c.CPA점수 = c.전환 === 0 ? 0 : ((n - c.CPARank + 1) / n) * 100;
         // 노출수=0 → IPM 점수 0 강제
         c.IPM점수 = c.노출수 === 0 ? 0 : ((n - c.IPMRank + 1) / n) * 100;
-        c.ROAS점수 = ((n - c.ROASRank + 1) / n) * 100;
-        
-        // Total Score 계산
-        c.TotalScore = (
-          c.전환수점수 * convWeight +
-          c.CPA점수 * cpaWeight +
-          c.IPM점수 * ipmWeight +
-          c.ROAS점수 * roasWeight
-        );
-        
+
+        // ROAS 점수 (v5.1: 모드별 분기)
+        if (effectiveRoasMode === 'exclude' && c._roasExcluded) {
+          // 매출=0 소재는 ROAS 점수 평가에서 제외 → 나머지 3개 지표를 비례 가중
+          c.ROAS점수 = null; // null로 표기 (UI에서 — 표시)
+          const baseWeight = convWeight + cpaWeight + ipmWeight;
+          if (baseWeight > 0) {
+            c.TotalScore = (
+              c.전환수점수 * convWeight +
+              c.CPA점수 * cpaWeight +
+              c.IPM점수 * ipmWeight
+            ) / baseWeight * (convWeight + cpaWeight + ipmWeight + roasWeight);
+          } else {
+            c.TotalScore = 0;
+          }
+        } else {
+          c.ROAS점수 = (c.ROASRank != null) ? ((n - c.ROASRank + 1) / n) * 100 : 0;
+          c.TotalScore = (
+            c.전환수점수 * convWeight +
+            c.CPA점수 * cpaWeight +
+            c.IPM점수 * ipmWeight +
+            c.ROAS점수 * roasWeight
+          );
+        }
+
         return c;
       });
       
@@ -2672,12 +3157,200 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     }
     
     // 점수 결과 표시 (v1.7: 필터 조건 요약 추가)
+    // 데이터 신뢰도 평가 (v5.1)
+    // 기준: 소재수≥15 / 기간≥7일 / 매출보유≥30%
+    function evaluateReliability(creatives) {
+      const total = creatives.length;
+      const revRatio = total > 0 ? creatives.filter(c => c.매출 > 0).length / total : 0;
+      // 기간 추정: rawData의 날짜 범위
+      let days = 0;
+      try {
+        const dateColumn = detectDateColumn(normalizedData.columns);
+        if (dateColumn && rawData.length > 0) {
+          const dates = rawData.map(r => parseDate(r[dateColumn])).filter(d => d);
+          if (dates.length > 0) {
+            const min = new Date(Math.min(...dates));
+            const max = new Date(Math.max(...dates));
+            days = Math.ceil((max - min) / (1000*60*60*24)) + 1;
+          }
+        }
+      } catch (e) {}
+
+      const conditions = [
+        { key: '소재 수', value: total, threshold: 15, pass: total >= 15, suffix: '개', hint: '15개 이상 권장' },
+        { key: '분석 기간', value: days, threshold: 7, pass: days >= 7, suffix: '일', hint: '최소 7일 필요' },
+        { key: '매출 보유 비율', value: Math.round(revRatio*100), threshold: 30, pass: revRatio >= 0.3, suffix: '%', hint: 'ROAS 정확도 위해 30% 이상' }
+      ];
+
+      const passCount = conditions.filter(c => c.pass).length;
+      let level, color, bg, border, icon, label;
+      if (passCount === 3)     { level = 'high';  color = '#059669'; bg = '#ecfdf5'; border = '#10b981'; icon = '🟢'; label = '높음'; }
+      else if (passCount >= 1) { level = 'med';   color = '#d97706'; bg = '#fffbeb'; border = '#f59e0b'; icon = '🟡'; label = '보통'; }
+      else                     { level = 'low';   color = '#dc2626'; bg = '#fef2f2'; border = '#ef4444'; icon = '🔴'; label = '낮음'; }
+
+      return { conditions, level, color, bg, border, icon, label, passCount, total, days, revRatio };
+    }
+
+    function buildReliabilityBadgeHtml(rel) {
+      const items = rel.conditions.map(c => `
+        <div style="display:flex;align-items:center;gap:6px;font-size:12.5px;padding:4px 0;">
+          <span style="color:${c.pass ? '#059669' : '#9ca3af'};font-size:14px;">${c.pass ? '✓' : '✗'}</span>
+          <span style="color:#4b5563;">${c.key}:</span>
+          <strong style="color:${c.pass ? '#059669' : '#dc2626'};">${c.value}${c.suffix}</strong>
+          <span style="color:#9ca3af;font-size:11.5px;">(${c.hint})</span>
+        </div>
+      `).join('');
+      const suggestion = rel.level === 'high'
+        ? '결과를 신뢰하고 즉시 의사결정에 활용하세요.'
+        : rel.level === 'med'
+        ? '주요 트렌드는 신뢰 가능하나, 정밀한 의사결정은 데이터 보강 후 권장.'
+        : '표본이 부족합니다. 추가 데이터 누적 후 재분석을 권장합니다.';
+      return `
+        <div style="background:${rel.bg};border:1.5px solid ${rel.border};border-radius:10px;padding:14px 18px;margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+            <span style="font-size:22px;">${rel.icon}</span>
+            <span style="font-weight:700;color:${rel.color};font-size:15px;">분석 신뢰도: ${rel.label}</span>
+            <span style="font-size:12px;color:#6b7280;margin-left:auto;">${rel.passCount}/3 조건 충족</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:4px 16px;margin-bottom:8px;">
+            ${items}
+          </div>
+          <div style="font-size:12.5px;color:${rel.color};margin-top:6px;padding-top:8px;border-top:1px dashed ${rel.border};">
+            💡 ${suggestion}
+          </div>
+        </div>`;
+    }
+
+    // ──────────────────────────────────────────────
+    // 일별 sparkline 데이터 생성 (v5.1)
+    // ──────────────────────────────────────────────
+    function buildDailySparklineMap(rows, groupBy) {
+      const dateColumn = detectDateColumn(normalizedData.columns);
+      if (!dateColumn) return {};
+      const map = {}; // {key: [{date, 전환, CPA}, ...]}
+      rows.forEach(r => {
+        const key = r[groupBy];
+        if (!key) return;
+        const date = r[dateColumn];
+        if (!date) return;
+        if (!map[key]) map[key] = {};
+        if (!map[key][date]) map[key][date] = {전환:0, 비용:0, 노출수:0};
+        map[key][date].전환 += safeParseNumber(r['전환']);
+        map[key][date].비용 += safeParseNumber(r['비용']);
+        map[key][date].노출수 += safeParseNumber(r['노출수']);
+      });
+      // 정렬된 배열로 변환
+      const result = {};
+      Object.keys(map).forEach(key => {
+        const dailyArr = Object.entries(map[key])
+          .map(([date, v]) => ({
+            date,
+            전환: v.전환,
+            CPA: v.전환 > 0 ? v.비용 / v.전환 : 0,
+            노출수: v.노출수
+          }))
+          .sort((a, b) => a.date.localeCompare(b.date));
+        result[key] = dailyArr;
+      });
+      return result;
+    }
+
+    function buildSparklineSvg(values, opts = {}) {
+      const width = opts.width || 80;
+      const height = opts.height || 22;
+      const stroke = opts.stroke || '#E84855';
+      const fill = opts.fill || 'rgba(232,72,85,0.15)';
+      if (!values || values.length < 2) {
+        return `<span style="font-size:10px;color:#d1d5db;">—</span>`;
+      }
+      const max = Math.max(...values, 0);
+      const min = Math.min(...values);
+      const range = max - min || 1;
+      const step = width / (values.length - 1);
+      const points = values.map((v, i) => {
+        const x = (i * step).toFixed(1);
+        const y = (height - 2 - ((v - min) / range) * (height - 4)).toFixed(1);
+        return `${x},${y}`;
+      });
+      const polyPoints = points.join(' ');
+      const areaPath = `M0,${height} L${points.join(' L')} L${width},${height} Z`;
+      // 마지막 점 표시
+      const lastIdx = values.length - 1;
+      const lastX = (lastIdx * step).toFixed(1);
+      const lastY = (height - 2 - ((values[lastIdx] - min) / range) * (height - 4)).toFixed(1);
+      return `<svg width="${width}" height="${height}" style="overflow:visible;display:block;">
+        <path d="${areaPath}" fill="${fill}" stroke="none"/>
+        <polyline points="${polyPoints}" fill="none" stroke="${stroke}" stroke-width="1.5"/>
+        <circle cx="${lastX}" cy="${lastY}" r="2" fill="${stroke}"/>
+      </svg>`;
+    }
+
+    // 위험 신호 자동 감지 (v5.1)
+    // - CPA가 평균의 3배 이상 (이상치)
+    // - 노출수>1000인데 전환=0 (학습 부진)
+    // - CTR 상위 30% 인데 IPM 하위 30% (LP/타겟 미스매치)
+    function detectRiskSignals(creatives) {
+      if (creatives.length < 3) return {};
+      const valid = creatives.filter(c => c.전환 > 0);
+      const avgCPA = valid.length > 0 ? valid.reduce((s,c)=>s+c.CPA,0)/valid.length : 0;
+
+      // CTR Rank, IPM Rank (높을수록 좋음, 동률 무시 단순 계산)
+      const ctrSorted = [...creatives].sort((a,b)=>b.CTR-a.CTR);
+      const ipmSorted = [...creatives].sort((a,b)=>b.IPM-a.IPM);
+      const n = creatives.length;
+      const ctrTopThresh = ctrSorted[Math.floor(n*0.3)]?.CTR ?? 0;
+      const ipmBotThresh = ipmSorted[Math.floor(n*0.7)]?.IPM ?? 0;
+
+      const signals = {};
+      creatives.forEach(c => {
+        const sigs = [];
+        // 1. CPA 이상치
+        if (avgCPA > 0 && c.CPA > 0 && c.CPA >= avgCPA * 3) {
+          sigs.push({
+            icon: '🚨',
+            color: '#dc2626',
+            label: 'CPA 이상치',
+            detail: `CPA ₩${Math.round(c.CPA).toLocaleString()} — 평균 ₩${Math.round(avgCPA).toLocaleString()}의 ${(c.CPA/avgCPA).toFixed(1)}배`
+          });
+        }
+        // 2. 노출 많은데 전환 없음
+        if (c.노출수 >= 1000 && c.전환 === 0) {
+          sigs.push({
+            icon: '⚠️',
+            color: '#d97706',
+            label: '학습 부진',
+            detail: `노출 ${c.노출수.toLocaleString()}회 대비 전환 0건 — 타겟 또는 LP 점검 필요`
+          });
+        }
+        // 3. CTR 상위 / IPM 하위 (LP 미스매치)
+        if (c.CTR >= ctrTopThresh && c.노출수 >= 500 && c.IPM <= ipmBotThresh && c.IPM > 0) {
+          sigs.push({
+            icon: '🎯',
+            color: '#7c3aed',
+            label: 'LP 미스매치 의심',
+            detail: `클릭은 잘 나오지만(CTR ${c.CTR.toFixed(2)}%) 전환 효율 저조(IPM ${c.IPM.toFixed(2)}) — 랜딩 페이지 점검 권장`
+          });
+        }
+        // 4. 노출 < 500 (학습 단계)
+        if (c.노출수 > 0 && c.노출수 < 500) {
+          sigs.push({
+            icon: '🌱',
+            color: '#0ea5e9',
+            label: '학습 단계',
+            detail: `노출 ${c.노출수.toLocaleString()}회 — 표본 부족, 판단 보류 권장`
+          });
+        }
+        if (sigs.length > 0) signals[c.key] = sigs;
+      });
+      return signals;
+    }
+
     function displayScoringResults(creatives, filterSummary = [], excludeInfo = {}) {
       document.getElementById('results').style.display = 'block';
-      
+
       // 전역 변수에 저장 (모달에서 사용)
       window.currentCreatives = creatives;
-      
+
       // ① 통계 계산
       const total = creatives.length;
       const maxScore = creatives[0]?.TotalScore.toFixed(1) || 0;
@@ -2715,7 +3388,33 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
              <span style="color:#9ca3af;font-size:12px;margin-left:6px;">(노출 기준 ${excludedByImp}개·전환 기준 ${excludedByConv}개 중복 포함 가능)</span>`
           : `총 <strong style="color:#E84855;">${total}개</strong> 소재 분석 완료`;
 
+        // ROAS 모드 안내 메시지 (v5.1)
+        let roasNotice = '';
+        const rm = window._roasMeta;
+        if (rm) {
+          const pct = (rm.revenueRatio * 100).toFixed(0);
+          let icon = '💰', color = '#92400e', bg = '#fffbeb', border = '#fcd34d', text = '';
+          if (rm.effectiveMode === 'off') {
+            icon = '🚫'; text = `매출 데이터 부재 → ROAS 가중치 자동 재배분 (나머지 3개 지표로 평가)`;
+          } else if (rm.effectiveMode === 'exclude') {
+            icon = '🎯'; text = `매출 보유 ${rm.revenueCount}/${rm.totalCount}개 (${pct}%) → 매출=0 소재 ${rm.excludedFromRoas}개는 ROAS 평가에서 제외 (공정 모드)`;
+          } else if (rm.effectiveMode === 'strict') {
+            icon = '📊'; text = `매출 보유 ${rm.revenueCount}/${rm.totalCount}개 (${pct}%) → 매출=0 소재도 ROAS 0점으로 평가 (엄격 모드)`;
+            color = '#1d4ed8'; bg = '#eff6ff'; border = '#93c5fd';
+          }
+          if (text) {
+            roasNotice = `<div style="margin-top:10px;padding:10px 14px;background:${bg};border-left:3px solid ${border};border-radius:6px;font-size:12.5px;color:${color};">
+              <strong>${icon} ROAS 모드:</strong> ${text}
+            </div>`;
+          }
+        }
+
+        // v5.1: 분석 신뢰도 배지 (필터 요약 위에 노출)
+        const reliability = evaluateReliability(creatives);
+        const reliabilityHtml = buildReliabilityBadgeHtml(reliability);
+
         document.getElementById('filterSummarySlot').innerHTML = `
+          ${reliabilityHtml}
           <div class="filter-summary" style="background:linear-gradient(135deg,rgba(232,72,85,.08),rgba(255,107,107,.08));
                padding:15px;border-radius:10px;margin-bottom:20px;border-left:4px solid #E84855;">
             <div style="font-weight:600;margin-bottom:10px;color:#1f2937;font-size:14px;">📌 적용된 필터 조건</div>
@@ -2725,21 +3424,38 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             <div style="margin-top:10px;padding-top:10px;border-top:1px solid #e5e7eb;font-size:13px;color:#6b7280;">
               ${countLine}
             </div>
+            ${roasNotice}
             ${excludeDetailHtml}
           </div>`;
       }
       
+      // v5.1: 위험 신호 자동 감지
+      const riskSignals = detectRiskSignals(creatives);
+      window._riskSignals = riskSignals; // 외부 접근용
+
+      // v5.1: 일별 sparkline 데이터
+      const sparkRows = window._lastFilteredRows
+        ? applySimilarMergeMap(window._lastFilteredRows, window._creativeMergeMap, currentGroupBy)
+        : [];
+      const dailyMap = buildDailySparklineMap(sparkRows, currentGroupBy);
+
       // 테이블
       const tbody = document.getElementById('tableBody');
       tbody.innerHTML = '';
-      
+
       creatives.forEach((c, index) => {
         const tr = document.createElement('tr');
-        
+
         // 미리보기: 이미지 URL 추출
         const imageUrl = c.meta?.['링크'] || c.이미지링크 || '';
         const isVideo = c.유형 === 'VID';
         const hasImage = imageUrl && imageUrl.startsWith('http');
+
+        // 위험 신호 아이콘 HTML 생성
+        const sigs = riskSignals[c.key] || [];
+        const sigIconsHtml = sigs.length > 0
+          ? sigs.map(s => `<span class="has-tooltip" data-tip="${s.label}: ${s.detail}" style="font-size:14px;cursor:help;margin-right:2px;">${s.icon}</span>`).join('')
+          : '';
         
         // 썸네일 HTML 생성
         let previewHtml = '';
@@ -2750,13 +3466,24 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           // 이미지: 실제 이미지 표시
           previewHtml = `<img src="${imageUrl}" class="preview-thumbnail" onclick="openPreviewModal(${index})" alt="미리보기">`;
         } else {
-          // 없음: 플레이스홀더
-          previewHtml = '<span style="color: #9ca3af; font-size: 24px;">📷</span>';
+          // 없음: 클릭 가능한 플레이스홀더 (메타·인사이트 모달은 열림)
+          previewHtml = `<span class="preview-placeholder-clickable" onclick="openPreviewModal(${index})" title="소재 상세 정보 보기" style="cursor:pointer; color:#9ca3af; font-size:24px; display:inline-block; padding:8px 12px; border:1.5px dashed #d1d5db; border-radius:8px; transition:all .15s;" onmouseover="this.style.background='#fef2f2'; this.style.borderColor='#E84855';" onmouseout="this.style.background=''; this.style.borderColor='#d1d5db';">📷</span>`;
         }
-        
+
+        // v5.1: sparkline 셀 (일별 전환수 추이)
+        const dailyData = dailyMap[c.key] || [];
+        const sparkHtml = dailyData.length >= 2
+          ? `<div class="has-tooltip" data-tip="일별 전환수 추이 (${dailyData.length}일)&#10;${dailyData.slice(-7).map(d=>`${d.date.slice(5)}: ${d.전환}건`).join('&#10;')}" style="cursor:help;">${buildSparklineSvg(dailyData.map(d=>d.전환))}</div>`
+          : `<span style="font-size:10px;color:#d1d5db;">—</span>`;
+
         tr.innerHTML = `
           <td style="text-align: center;">${previewHtml}</td>
-          <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${c.key}</td>
+          <td style="max-width: 250px;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              ${sigIconsHtml}
+              <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.key}</span>
+            </div>
+          </td>
           <td><span class="badge badge-${c.유형.toLowerCase()}">${c.유형}</span></td>
           <td style="text-align: right;">${c.전환.toLocaleString()}</td>
           <td style="text-align: right;">₩${Math.round(c.CPA).toLocaleString()}</td>
@@ -2765,16 +3492,21 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td style="text-align: right; font-weight: 600;">${c.전환수점수.toFixed(1)}</td>
           <td style="text-align: right; font-weight: 600;">${c.CPA점수.toFixed(1)}</td>
           <td style="text-align: right; font-weight: 600;">${c.IPM점수.toFixed(1)}</td>
-          <td style="text-align: right; font-weight: 600;">${c.ROAS점수.toFixed(1)}</td>
+          <td style="text-align: right; font-weight: 600;${c.ROAS점수 == null ? 'color:#9ca3af;' : ''}">${c.ROAS점수 == null ? '—' : c.ROAS점수.toFixed(1)}</td>
           <td style="text-align: right; font-weight: 700; color: #E84855; font-size: 16px;">${c.TotalScore.toFixed(1)}</td>
           <td><span class="badge grade-${c.등급}">${c.등급}</span></td>
+          <td style="text-align:center;padding:6px 4px;">${sparkHtml}</td>
         `;
-        
+
         tbody.appendChild(tr);
       });
       
       // ── 소재 유형별 요약 표 렌더링
       renderTypeSummary(creatives);
+      // ── v5.1: 캠페인 비교 표 렌더링 (2개 이상 캠페인 시 자동)
+      if (window._lastFilteredRows) {
+        renderCampaignCompare(window._lastFilteredRows, creatives);
+      }
       // ── 결과 추출 버튼 표시
       document.getElementById('exportBtnContainer').style.display = 'block';
 
@@ -2956,7 +3688,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;">${c.전환수점수.toFixed(1)}</td>
           <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;">${c.CPA점수.toFixed(1)}</td>
           <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;">${c.IPM점수.toFixed(1)}</td>
-          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;">${c.ROAS점수.toFixed(1)}</td>
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;${c.ROAS점수 == null ? 'color:#9ca3af;' : ''}">${c.ROAS점수 == null ? '—' : c.ROAS점수.toFixed(1)}</td>
           <td style="padding:8px;text-align:right;vertical-align:middle;font-size:14px;font-weight:800;color:#E84855;">${c.TotalScore.toFixed(1)}</td>
           <td style="padding:8px;text-align:center;vertical-align:middle;">
             <span style="display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;${gs}">${c.등급}</span>
@@ -3191,6 +3923,137 @@ img { display:block; }
         </div>`;
     }
 
+    // ──────────────────────────────────────────────
+    // 캠페인 비교 표 (v5.1) — 2개 이상 캠페인 결과 시 자동 렌더링
+    // ──────────────────────────────────────────────
+    function renderCampaignCompare(filteredRows, scoredCreatives) {
+      const container = document.getElementById('campaignCompareContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      // 결과 소재 키 집합
+      const scoredKeys = new Set(scoredCreatives.map(c => c.key));
+
+      // 캠페인별 집계 (필터된 행 → 캠페인별 → 키별)
+      const campMap = {}; // {campaign: {key: {전환,비용,노출수,매출,클릭수}}}
+      filteredRows.forEach(r => {
+        const camp = r['캠페인'] || '미지정';
+        const key = r[currentGroupBy];
+        if (!key || !scoredKeys.has(key)) return;
+        if (!campMap[camp]) campMap[camp] = {};
+        if (!campMap[camp][key]) campMap[camp][key] = {전환:0, 비용:0, 노출수:0, 매출:0, 클릭수:0};
+        const acc = campMap[camp][key];
+        acc.전환 += safeParseNumber(r['전환']);
+        acc.비용 += safeParseNumber(r['비용']);
+        acc.노출수 += safeParseNumber(r['노출수']);
+        acc.매출 += safeParseNumber(r['매출'] || r['Revenue']);
+        acc.클릭수 += safeParseNumber(r['클릭수']);
+      });
+
+      const campaigns = Object.keys(campMap);
+      if (campaigns.length < 2) return; // 2개 미만이면 비교 의미 없음
+
+      // 캠페인별 종합 KPI
+      const campKPI = campaigns.map(camp => {
+        const items = Object.values(campMap[camp]);
+        const sum = items.reduce((s, i) => ({
+          전환: s.전환+i.전환, 비용: s.비용+i.비용, 노출수: s.노출수+i.노출수, 매출: s.매출+i.매출, 클릭수: s.클릭수+i.클릭수
+        }), {전환:0, 비용:0, 노출수:0, 매출:0, 클릭수:0});
+        return {
+          name: camp,
+          소재수: items.length,
+          전환: sum.전환,
+          비용: sum.비용,
+          노출수: sum.노출수,
+          매출: sum.매출,
+          클릭수: sum.클릭수,
+          CPA: sum.전환 > 0 ? sum.비용 / sum.전환 : 0,
+          IPM: sum.노출수 > 0 ? sum.전환/sum.노출수*1000 : 0,
+          CTR: sum.노출수 > 0 ? sum.클릭수/sum.노출수*100 : 0,
+          ROAS: sum.비용 > 0 ? sum.매출/sum.비용 : 0,
+        };
+      });
+
+      // 캠페인별 KPI 카드 (가로 스크롤, 풀네임 노출)
+      const fc = v => '₩' + Math.round(v||0).toLocaleString();
+      const cards = campKPI.map((k, i) => `
+        <div style="flex:1;min-width:260px;background:white;border:1.5px solid #e5e7eb;border-radius:10px;padding:14px;">
+          <div style="font-weight:700;color:#1e3a5f;font-size:12px;margin-bottom:8px;font-family:'Consolas',monospace;word-break:break-all;line-height:1.4;">
+            🎯 ${k.name}
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px;">
+            <div><span style="color:#9ca3af;">소재수</span> <strong>${k.소재수}</strong></div>
+            <div><span style="color:#9ca3af;">전환</span> <strong>${k.전환.toLocaleString()}</strong></div>
+            <div><span style="color:#9ca3af;">CPA</span> <strong>${fc(k.CPA)}</strong></div>
+            <div><span style="color:#9ca3af;">IPM</span> <strong>${k.IPM.toFixed(2)}</strong></div>
+            <div><span style="color:#9ca3af;">CTR</span> <strong>${k.CTR.toFixed(2)}%</strong></div>
+            <div><span style="color:#9ca3af;">ROAS</span> <strong style="color:${k.ROAS>1?'#059669':'#dc2626'};">${k.ROAS>0?Math.round(k.ROAS*100)+'%':'—'}</strong></div>
+          </div>
+        </div>
+      `).join('');
+
+      // 소재별 캠페인 교차표 (Top 10 소재만)
+      const top10Keys = scoredCreatives.slice(0, 10).map(c => c.key);
+      const crossRows = top10Keys.map(key => {
+        const rank = scoredCreatives.find(c => c.key === key)?.Rank || '-';
+        const cells = campaigns.map(camp => {
+          const data = campMap[camp][key];
+          if (!data || data.노출수 === 0) {
+            return `<td style="text-align:center;color:#d1d5db;padding:8px;">—</td>`;
+          }
+          const cpa = data.전환 > 0 ? data.비용 / data.전환 : 0;
+          const cpaText = cpa > 0 ? `₩${Math.round(cpa).toLocaleString()}` : '전환0';
+          return `<td style="padding:8px;text-align:right;font-size:12px;">
+            <div style="font-weight:600;">${cpaText}</div>
+            <div style="color:#9ca3af;font-size:10.5px;">전환 ${data.전환} · 노출 ${Math.round(data.노출수/1000)}K</div>
+          </td>`;
+        }).join('');
+        return `<tr style="border-bottom:1px solid #f0f0f0;">
+          <td style="padding:8px;font-size:12px;color:#9ca3af;text-align:center;width:40px;">#${rank}</td>
+          <td style="padding:8px;font-size:12.5px;font-weight:600;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${key}</td>
+          ${cells}
+        </tr>`;
+      }).join('');
+
+      const headerCells = campaigns.map(c => {
+        return `<th style="padding:9px;text-align:right;color:#6b7280;font-weight:600;font-size:11px;font-family:'Consolas',monospace;word-break:break-all;min-width:160px;line-height:1.4;">${c}</th>`;
+      }).join('');
+
+      container.innerHTML = `
+        <div style="margin:20px 0 10px;background:#fff;border:1.5px solid #e5e7eb;border-radius:14px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);">
+          <div style="padding:14px 20px;background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff;display:flex;align-items:center;gap:10px;">
+            <span style="font-size:18px;">🔀</span>
+            <div>
+              <div style="font-weight:700;font-size:15px;">캠페인 비교 (${campaigns.length}개 캠페인)</div>
+              <div style="font-size:11.5px;opacity:.8;margin-top:2px;">캠페인별 종합 KPI + Top 10 소재 교차 분석 — 캠페인별 CPA 차이로 타겟 적합도 확인</div>
+            </div>
+          </div>
+          <div style="padding:16px;background:#fafafa;">
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px;">
+              ${cards}
+            </div>
+            ${crossRows ? `
+            <div style="background:white;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;">
+              <div style="padding:10px 14px;background:#f8fafc;font-size:13px;font-weight:600;color:#374151;border-bottom:1px solid #e5e7eb;">
+                Top 10 소재 × 캠페인별 CPA
+              </div>
+              <div style="overflow-x:auto;">
+                <table style="width:100%;border-collapse:collapse;font-size:12.5px;">
+                  <thead>
+                    <tr style="background:#fafbfc;border-bottom:2px solid #e5e7eb;">
+                      <th style="padding:9px;text-align:center;color:#6b7280;font-weight:600;width:40px;">순위</th>
+                      <th style="padding:9px;text-align:left;color:#6b7280;font-weight:600;">소재명</th>
+                      ${headerCells}
+                    </tr>
+                  </thead>
+                  <tbody>${crossRows}</tbody>
+                </table>
+              </div>
+            </div>` : ''}
+          </div>
+        </div>`;
+    }
+
     // 설정 초기화
     function resetScoring() {
       // 가중치 초기화 (4개 지표 균등: 각 25%)
@@ -3232,18 +4095,39 @@ img { display:block; }
         alert('⚠️ 먼저 CSV 파일을 업로드하세요.');
         return;
       }
-      
+
       console.log('🔍 피로도 분석 시작...');
-      
+
       // 기간 가져오기
       const baseStart = document.getElementById('baselineStart').value;
       const baseEnd = document.getElementById('baselineEnd').value;
       const compStart = document.getElementById('comparisonStart').value;
       const compEnd = document.getElementById('comparisonEnd').value;
-      
+
       if (!baseStart || !baseEnd || !compStart || !compEnd) {
         alert('⚠️ 모든 날짜를 입력하세요.');
         return;
+      }
+
+      // v5.1: 피로도 분석 데이터 충분성 검증
+      const dayDiff = (s, e) => Math.ceil((new Date(e) - new Date(s)) / (1000*60*60*24)) + 1;
+      const baseDays = dayDiff(baseStart, baseEnd);
+      const compDays = dayDiff(compStart, compEnd);
+      const totalDays = baseDays + compDays;
+      if (totalDays < 7 || baseDays < 3 || compDays < 3) {
+        const proceed = confirm(
+          `⚠️ 피로도 분석 데이터 부족\n\n` +
+          `• 기준 기간: ${baseDays}일\n` +
+          `• 비교 기간: ${compDays}일\n` +
+          `• 합계: ${totalDays}일\n\n` +
+          `각 기간 3일 이상·합계 7일 이상을 권장합니다.\n` +
+          `짧은 기간 분석은 일별 변동성이 커서 신뢰도가 낮을 수 있습니다.\n\n` +
+          `그래도 계속 진행할까요?`
+        );
+        if (!proceed) {
+          console.log('🛑 사용자 취소 — 데이터 부족');
+          return;
+        }
       }
       
       // 피로도 분석용 필터 가져오기
@@ -3297,7 +4181,8 @@ img { display:block; }
         return;
       }
       
-      // 2. 기준/비교 기간 데이터 분리
+      // 2. 기준/비교 기간 데이터 분리 (v5.1: 유사 소재명 병합 매핑 적용)
+      filteredRows = applySimilarMergeMap(filteredRows, window._creativeMergeMap, fatigueGroupBy);
       const baselineRows = filterByDateRange(filteredRows, dateColumn, baseStart, baseEnd);
       const comparisonRows = filterByDateRange(filteredRows, dateColumn, compStart, compEnd);
       
@@ -3443,17 +4328,44 @@ img { display:block; }
     function displayFatigueResults(results) {
       _lastFatigueData = results;   // Gemini 분석용 캐싱
       document.getElementById('statistics').style.display = 'block';
-      
+
       // 통계
       const total = results.length;
       const up = results.filter(r => r.rankStatus === 'up').length;
       const down = results.filter(r => r.rankStatus === 'down').length;
       const tired = results.filter(r => r.fatigueStatus === 'tired').length;
-      
+
       document.getElementById('fatigueTotal').textContent = total;
       document.getElementById('fatigueUp').textContent = up;
       document.getElementById('fatigueDown').textContent = down;
       document.getElementById('fatigueTired').textContent = tired;
+
+      // v5.1: 데이터 부족 경고 배너
+      const baseStart = document.getElementById('baselineStart').value;
+      const baseEnd = document.getElementById('baselineEnd').value;
+      const compStart = document.getElementById('comparisonStart').value;
+      const compEnd = document.getElementById('comparisonEnd').value;
+      const dayDiff = (s, e) => Math.ceil((new Date(e) - new Date(s)) / (1000*60*60*24)) + 1;
+      const baseDays = dayDiff(baseStart, baseEnd);
+      const compDays = dayDiff(compStart, compEnd);
+      const oldBanner = document.getElementById('fatigueDataWarning');
+      if (oldBanner) oldBanner.remove();
+      if (baseDays + compDays < 7 || baseDays < 3 || compDays < 3) {
+        const banner = document.createElement('div');
+        banner.id = 'fatigueDataWarning';
+        banner.style.cssText = 'background:#fffbeb;border:1.5px solid #f59e0b;border-radius:10px;padding:14px 18px;margin:0 0 16px;';
+        banner.innerHTML = `
+          <div style="display:flex;align-items:center;gap:8px;font-weight:700;color:#92400e;font-size:14px;margin-bottom:6px;">
+            <span style="font-size:18px;">⚠️</span> 피로도 분석 데이터 부족 안내
+          </div>
+          <div style="font-size:12.5px;color:#92400e;line-height:1.6;">
+            기준 기간 <strong>${baseDays}일</strong> / 비교 기간 <strong>${compDays}일</strong>로 분석되었습니다.
+            짧은 기간(특히 3일 미만)은 일별 변동성이 커서 결과 신뢰도가 낮을 수 있습니다.
+            <br>📌 권장: 각 기간 ≥3일, 합계 ≥7일 데이터 누적 후 재분석.
+          </div>`;
+        const statsSection = document.getElementById('statistics');
+        if (statsSection) statsSection.insertBefore(banner, statsSection.firstChild);
+      }
       
       // 테이블
       const tbody = document.getElementById('fatigueTableBody');
@@ -3676,49 +4588,55 @@ img { display:block; }
     
     // 모달 열기 (점수 계산)
     // 모달 열기 (개선된 버전 - test_step1_scoring.html 기반)
+    // v5.2.1: 링크 없는 소재도 메타·인사이트만 표시하도록 보강 (Stage 2 백엔드 데이터 호환)
     function openPreviewModal(index) {
       if (!window.currentCreatives || !window.currentCreatives[index]) {
         alert('소재 정보를 찾을 수 없습니다.');
         return;
       }
-      
+
       const creative = window.currentCreatives[index];
       const contentUrl = creative.meta?.['링크'] || creative.이미지링크 || '';
       const isVideo = creative.유형 === 'VID';
-      
-      if (!contentUrl || !contentUrl.startsWith('http')) {
-        alert('미리보기 콘텐츠가 없습니다.');
-        return;
-      }
-      
+      const hasUrl = contentUrl && contentUrl.startsWith('http');
+      // 링크가 없어도 modal은 열리도록 (메타·인사이트만 표시)
+
       const modal = document.getElementById('previewModal');
       const modalBody = document.getElementById('modalBody');
-      
+
       let content = '';
-      
-      if (isVideo) {
-        // YouTube 비디오
-        const videoId = extractYouTubeId(contentUrl);
-        if (videoId) {
-          content = `
-            <iframe width="800" height="450"
-              src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              referrerpolicy="strict-origin-when-cross-origin"
-              style="border-radius: 12px;">
-            </iframe>
-          `;
-        } else {
-          content = '<p style="color: #ef4444; font-weight: 600;">⚠️ 유효하지 않은 YouTube URL입니다.</p>';
-        }
+
+      // v5.2.1: 미리보기 URL이 없으면 안내 박스 (백엔드 산출 JSON은 링크 없을 수 있음)
+      if (!hasUrl) {
+        content = `<div style="width:100%;max-width:600px;padding:36px 24px;background:#f9fafb;border:1.5px dashed #d1d5db;border-radius:12px;text-align:center;color:#6b7280;">
+          <div style="font-size:48px;margin-bottom:12px;">📂</div>
+          <div style="font-size:14px;font-weight:600;color:#374151;margin-bottom:6px;">미리보기 링크 없음</div>
+          <div style="font-size:12.5px;line-height:1.6;">
+            이 소재는 백엔드 파이프라인에서 자동 태깅된 결과입니다.<br>
+            로컬 파일 경로만 보유 (GDrive sync 폴더 내).<br>
+            <span style="display:inline-block;margin-top:8px;font-family:monospace;font-size:11px;color:#9ca3af;">파일명: ${creative.파일명 || creative.meta?.['파일명'] || '-'}</span>
+          </div>
+        </div>`;
+      } else if (isVideo) {
+        // v5.1.1: YouTube 임베드 + 오류 153 fallback UI (헬퍼 사용)
+        content = buildYouTubeEmbedHtml(extractYouTubeId(contentUrl));
       } else {
         // 이미지
         content = `<img src="${contentUrl}" class="modal-image" alt="${creative.소재명}">`;
       }
-      
-      // 모달 정보 (test_step1_scoring.html 스타일)
+
+      // v5.1.1: 마케터 인사이트 추출 (CSV 원본 컬럼)
+      const mktInsight = (creative.meta?.['marketer_insight'] || '').trim();
+      const insightBlock = mktInsight
+        ? `<div style="margin-top:14px;padding:14px 16px;background:linear-gradient(135deg,#fef9f3,#fef3c7);border-left:4px solid #f59e0b;border-radius:8px;">
+            <div style="display:flex;align-items:center;gap:6px;font-weight:700;color:#92400e;font-size:13.5px;margin-bottom:8px;">
+              <span style="font-size:16px;">💡</span> 마케터 인사이트
+            </div>
+            <div style="font-size:13px;color:#374151;line-height:1.7;white-space:pre-wrap;">${mktInsight}</div>
+          </div>`
+        : '';
+
+      // 모달 정보
       content += `
         <div class="modal-info">
           <h3>소재 상세 정보</h3>
@@ -3740,79 +4658,100 @@ img { display:block; }
           </div>
           <div class="modal-info-row">
             <div class="modal-info-label">Total Score</div>
-            <div class="modal-info-value"><strong style="font-size: 18px; color: #E84855;">${creative.TotalScore.toFixed(1)}</strong> <span style="font-size: 12px; color: #6b7280;">(${creative.등급})</span></div>
+            <div class="modal-info-value"><strong style="font-size: 18px; color: #E84855;">${(creative.TotalScore ?? 0).toFixed(1)}</strong> <span style="font-size: 12px; color: #6b7280;">(${creative.등급 || '미평가'})</span></div>
           </div>
           <div class="modal-info-row">
             <div class="modal-info-label">전환</div>
-            <div class="modal-info-value"><strong>${creative.전환.toLocaleString()}</strong></div>
+            <div class="modal-info-value"><strong>${(creative.전환 ?? 0).toLocaleString()}</strong></div>
           </div>
           <div class="modal-info-row">
             <div class="modal-info-label">CPA</div>
-            <div class="modal-info-value"><strong>₩${Math.round(creative.CPA).toLocaleString()}</strong></div>
+            <div class="modal-info-value"><strong>₩${Math.round(creative.CPA ?? 0).toLocaleString()}</strong></div>
           </div>
           <div class="modal-info-row">
             <div class="modal-info-label">IPM</div>
-            <div class="modal-info-value"><strong>${creative.IPM.toFixed(2)}</strong></div>
+            <div class="modal-info-value"><strong>${(creative.IPM ?? 0).toFixed(2)}</strong></div>
           </div>
           <div class="modal-info-row">
             <div class="modal-info-label">ROAS</div>
-            <div class="modal-info-value"><strong style="color: ${creative.ROAS > 1 ? '#10b981' : '#ef4444'};">${creative.ROAS.toFixed(2)}</strong></div>
+            <div class="modal-info-value"><strong style="color: ${(creative.ROAS ?? 0) > 1 ? '#10b981' : '#ef4444'};">${(creative.ROAS ?? 0).toFixed(2)}</strong></div>
           </div>
           <div class="modal-info-row">
             <div class="modal-info-label">매출 (Revenue)</div>
-            <div class="modal-info-value">₩${creative.매출.toLocaleString()}</div>
+            <div class="modal-info-value">₩${(creative.매출 ?? 0).toLocaleString()}</div>
           </div>
           <div class="modal-info-row">
             <div class="modal-info-label">비용</div>
-            <div class="modal-info-value">₩${creative.비용.toLocaleString()}</div>
+            <div class="modal-info-value">₩${(creative.비용 ?? 0).toLocaleString()}</div>
           </div>
           <div class="modal-info-row">
             <div class="modal-info-label">노출수</div>
-            <div class="modal-info-value">${creative.노출수.toLocaleString()}</div>
+            <div class="modal-info-value">${(creative.노출수 ?? 0).toLocaleString()}</div>
           </div>
           <div class="modal-info-row">
             <div class="modal-info-label">클릭수</div>
-            <div class="modal-info-value">${creative.클릭수.toLocaleString()}</div>
+            <div class="modal-info-value">${(creative.클릭수 ?? 0).toLocaleString()}</div>
           </div>
           <div class="modal-info-row">
             <div class="modal-info-label">CTR</div>
-            <div class="modal-info-value">${creative.CTR.toFixed(2)}%</div>
+            <div class="modal-info-value">${(creative.CTR ?? 0).toFixed(2)}%</div>
           </div>
+          ${insightBlock}
+          ${hasUrl ? `
           <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e5e7eb;">
             <a href="${contentUrl}" target="_blank" style="color: #E84855; text-decoration: none; font-weight: 600;">
               🔗 원본 링크 열기
             </a>
-          </div>
+          </div>` : ''}
         </div>
       `;
-      
+
       modalBody.innerHTML = content;
       modal.classList.add('active');
     }
     
+    // v5.1.1: YouTube 임베드 HTML 생성 헬퍼 — 오류 153 대비 fallback 포함
+    function buildYouTubeEmbedHtml(videoId) {
+      if (!videoId) {
+        return '<p style="color: #ef4444; font-weight: 600;">⚠️ 유효하지 않은 YouTube URL입니다.</p>';
+      }
+      const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
+      const origin = encodeURIComponent(location.origin || 'https://chioyoon.github.io');
+      const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1&fs=1&origin=${origin}`;
+      return `
+        <div style="position:relative;width:800px;max-width:100%;">
+          <iframe width="800" height="450"
+            src="${embedUrl}"
+            title="YouTube 영상 미리보기"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen; web-share"
+            allowfullscreen
+            referrerpolicy="strict-origin-when-cross-origin"
+            style="border-radius: 12px; display:block;">
+          </iframe>
+          <div style="margin-top:10px;padding:10px 14px;background:#fffbeb;border-left:3px solid #f59e0b;border-radius:6px;font-size:12.5px;color:#92400e;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+            <div>
+              <strong>⚠️ "동영상 플레이어 구성 오류" (153) 가 표시되나요?</strong><br>
+              <span style="font-size:11.5px;">→ 광고주가 외부 임베드를 차단한 경우입니다. 아래 버튼으로 YouTube에서 직접 확인하세요.</span>
+            </div>
+            <a href="${watchUrl}" target="_blank" rel="noopener"
+               style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#FF0000;color:white;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap;">
+              ▶ YouTube에서 열기
+            </a>
+          </div>
+        </div>
+      `;
+    }
+
     // 기존 showModal 함수 (호환성 유지)
     function showModal(name, type, imageUrl) {
       const modal = document.getElementById('previewModal');
       const modalBody = document.getElementById('modalBody');
-      
+
       let content = '';
-      
+
       if (type === 'VID') {
-        // YouTube 비디오
-        const videoId = extractYouTubeId(imageUrl);
-        if (videoId) {
-          content = `
-            <iframe width="800" height="450"
-              src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-          `;
-        } else {
-          content = '<p style="color: #ef4444; font-weight: 600;">⚠️ 유효하지 않은 YouTube URL입니다.</p>';
-        }
+        content = buildYouTubeEmbedHtml(extractYouTubeId(imageUrl));
       } else {
         // 이미지
         content = `<img src="${imageUrl}" class="modal-image" alt="${name}">`;
@@ -3840,24 +4779,11 @@ img { display:block; }
     function showFatigueModal(name, type, imageUrl, baselineCPA, comparisonCPA) {
       const modal = document.getElementById('previewModal');
       const modalBody = document.getElementById('modalBody');
-      
+
       let content = '';
-      
+
       if (type === 'VID') {
-        const videoId = extractYouTubeId(imageUrl);
-        if (videoId) {
-          content = `
-            <iframe width="800" height="450"
-              src="https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-              referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-          `;
-        } else {
-          content = '<p style="color: #ef4444; font-weight: 600;">⚠️ 유효하지 않은 YouTube URL입니다.</p>';
-        }
+        content = buildYouTubeEmbedHtml(extractYouTubeId(imageUrl));
       } else {
         content = `<img src="${imageUrl}" class="modal-image" alt="${name}">`;
       }

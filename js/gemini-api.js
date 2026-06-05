@@ -13,9 +13,12 @@
 const GEMINI_CONFIG = {
   MODEL:        'gemini-2.5-flash',        // Gemini 2.5 Flash (thinkingBudget:0으로 thinking 비활성화 → JSON 잘림 방지)
   BASE_URL:     'https://generativelanguage.googleapis.com/v1beta/models',
-  STORAGE_KEY:  'r_team_gemini_api_key',
+  // v5.2 (Stage 0 보안 핫픽스): 노출된 평문 키 영구 제거 → 담당자가 직접 발급한 키만 사용
+  // localStorage 키를 v2로 변경하여 이전 캐시 자동 무효화 (기존 노출 키 사용자 강제 재입력)
+  STORAGE_KEY:  'r_team_gemini_api_key_v2',
+  STORAGE_KEY_LEGACY: 'r_team_gemini_api_key',  // 마이그레이션 시 자동 정리용
   PLAN_KEY:     'r_team_gemini_plan',       // 'free' | 'paid'
-  DEFAULT_KEY:  'AIzaSyDLfOtC-fVYgVBtOgDF8A84mOoyK5MS38M',
+  DEFAULT_KEY:  '',  // 평문 임베드 금지 — 담당자별 Google AI Studio 키 사용 (https://aistudio.google.com/apikey)
 
   // ── 플랜별 출력 토큰 한도 ────────────────────────────────
   // Gemini 2.5 Flash 실제 제한: 입출력 합산 65,536(유료) / 8,192(무료) 토큰
@@ -55,9 +58,26 @@ const GEMINI_CONFIG = {
 /* ──────────────────────────────────────
    2. API 키 관리
 ────────────────────────────────────── */
+// v5.2: 백엔드 모드 감지 (?source=backend) — Stage 2~에서 서버 사이드 태깅 결과를 직접 로드하는 모드
+function isBackendMode() {
+  try {
+    return new URLSearchParams(window.location.search).get('source') === 'backend';
+  } catch (_) {
+    return false;
+  }
+}
+
 const GeminiKeyManager = {
   get() {
+    // v5.2: 레거시 키(v1)가 남아있으면 즉시 정리 (노출되었던 평문 키 캐시 무효화)
+    try {
+      if (GEMINI_CONFIG.STORAGE_KEY_LEGACY && localStorage.getItem(GEMINI_CONFIG.STORAGE_KEY_LEGACY)) {
+        localStorage.removeItem(GEMINI_CONFIG.STORAGE_KEY_LEGACY);
+        console.log('[보안] 레거시 Gemini 키 캐시를 자동 정리했습니다. 새 키를 입력해 주세요.');
+      }
+    } catch (_) {}
     const stored = localStorage.getItem(GEMINI_CONFIG.STORAGE_KEY);
+    // DEFAULT_KEY는 빈 문자열이어야 함 (Stage 0 이후 평문 임베드 금지)
     if (!stored && GEMINI_CONFIG.DEFAULT_KEY) {
       localStorage.setItem(GEMINI_CONFIG.STORAGE_KEY, GEMINI_CONFIG.DEFAULT_KEY);
       return GEMINI_CONFIG.DEFAULT_KEY;
@@ -66,7 +86,11 @@ const GeminiKeyManager = {
   },
   set(key)   { localStorage.setItem(GEMINI_CONFIG.STORAGE_KEY, key.trim()); },
   clear()    { localStorage.removeItem(GEMINI_CONFIG.STORAGE_KEY); },
-  isSet()    { return !!this.get(); },
+  isSet()    {
+    // 백엔드 모드에서는 클라이언트 키가 없어도 "설정됨"으로 간주 (서버에서 태깅 완료된 결과 사용)
+    if (isBackendMode()) return true;
+    return !!this.get();
+  },
 
   // ── 플랜 관리 (free / paid) ───────────────────────────────
   getPlan()  { return localStorage.getItem(GEMINI_CONFIG.PLAN_KEY) || 'free'; },
@@ -1224,16 +1248,19 @@ function buildGeminiKeyModal() {
         <!-- ── API 키 입력 ────────────────────────── -->
         <div style="margin-bottom:16px;">
           <label style="font-size:12px;font-weight:600;color:#374151;display:block;margin-bottom:6px;">
-            API 키
+            API 키 <span style="color:#ef4444;">*</span>
             <a href="https://aistudio.google.com/apikey" target="_blank"
                style="font-weight:400;color:#6366f1;margin-left:6px;font-size:11px;">
               Google AI Studio에서 발급 ↗
             </a>
           </label>
-          <input type="password" id="geminiKeyInput" placeholder="AIza..."
+          <input type="password" id="geminiKeyInput" placeholder="AIza... (담당자별 본인 키 입력)"
             style="width:100%;padding:10px 14px;border:1.5px solid #d1d5db;border-radius:8px;
                    font-size:13px;font-family:monospace;box-sizing:border-box;"
             value="${GeminiKeyManager.get()}">
+          <div style="font-size:11px;color:#6b7280;margin-top:5px;line-height:1.5;">
+            🔒 키는 본인 브라우저에만 저장됩니다 (서버·레포 미저장). 무료 한도: 분당 15회 / 일 1,500회.
+          </div>
         </div>
 
         <!-- ── 플랜 선택 토글 ─────────────────────── -->

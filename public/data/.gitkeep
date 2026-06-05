@@ -1,0 +1,10 @@
+# Stage 2 산출물 디렉토리
+
+본 디렉토리는 Stage 2(하네스 ② 자동 태깅 MVP)의 산출물을 호스팅하기 위한 자리표시 파일입니다.
+
+- 파일 구조: `{title_id}.json` (예: `pepp-us.json`, `starseed-jp.json`)
+- 스키마: `schema_version: "1.0"` (data-source.js의 normalizeFromJson 참조)
+- 생성 주체: Stage 4 nightly batch (현재는 수동 생성)
+- 대시보드 자동 로드: `step1_integrated.html?title={title_id}`
+
+Stage 1 검증용 더미는 `sample.json` 참조.

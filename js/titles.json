@@ -1,0 +1,19 @@
+[
+  {
+    "id": "pepp-us",
+    "name": "Pepp Heroes (US) — 선론칭",
+    "json_url": "public/data/pepp-us.json",
+    "description": "Stage 2 MVP — BNR+VID 선론칭 자동 태깅 결과 (pipeline/main.py 산출)",
+    "_pipeline_creatives_root": "G:\\공유 드라이브\\[펩 히어로즈] R마케팅실\\01. UA\\01. UA 소재",
+    "_pipeline_phases": ["선론칭"],
+    "_pipeline_types": ["BNR", "VID"],
+    "_pipeline_enabled": true
+  },
+  {
+    "id": "sample",
+    "name": "📦 샘플 데이터 (Stage 1 검증용)",
+    "json_url": "public/data/sample.json",
+    "description": "Stage 1 JSON 로더 검증용 더미 데이터. 실제 분석에는 사용하지 마세요.",
+    "_pipeline_enabled": false
+  }
+]

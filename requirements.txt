@@ -1,0 +1,19 @@
+# Com2uS R-Team CLOOP Pipeline - Stage 2 MVP dependencies
+# Python 3.11+ recommended (tested with 3.14)
+#
+# Install:
+#   pip install -r requirements.txt
+# Or via setup script:
+#   .\scripts\setup.ps1
+
+# Gemini SDK (official) - 2.x is current stable
+google-genai>=2.0.0,<3.0.0
+
+# Pydantic v2 data validation
+pydantic>=2.9.0,<3.0.0
+
+# .env loader
+python-dotenv>=1.0.0,<2.0.0
+
+# CLI progress bar
+tqdm>=4.66.0,<5.0.0
