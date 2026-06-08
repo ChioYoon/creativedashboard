@@ -96,6 +96,14 @@ def _build_plain_body(batch_result: dict) -> str:
             lines.append(f"    폴백 모델:    ✅ gemini-2.5-flash-lite")
         if r.get("daily_quota_exhausted"):
             lines.append(f"    quota 한도:   ⚠️ 폴백 모델도 한도 도달")
+        kpi_status = r.get("kpi_status")
+        if kpi_status and kpi_status != "skipped":
+            kpi_label = {
+                "success": f"✅ 성공 ({r.get('kpi_rows_fetched', 0)}행, {r.get('kpi_creatives_matched', 0)}개 소재 매칭)",
+                "failed": "❌ 실패 (태깅만 진행, KPI=0)",
+                "auth_failed": "🔑 인증 만료 — refresh token 재발급 필요",
+            }.get(kpi_status, kpi_status)
+            lines.append(f"    KPI fetch:   {kpi_label}")
         if r.get("output_path"):
             lines.append(f"    산출:        {r['output_path']}")
         errors = r.get("errors", [])
@@ -134,6 +142,15 @@ def _build_html_body(batch_result: dict) -> str:
         quota_badge = ""
         if r.get("daily_quota_exhausted"):
             quota_badge = ' <span style="background:#fee2e2;color:#991b1b;padding:2px 6px;border-radius:6px;font-size:11px;">quota 한도</span>'
+        kpi_badge = ""
+        kpi_status = r.get("kpi_status", "skipped")
+        if kpi_status == "success":
+            rows = r.get("kpi_rows_fetched", 0)
+            kpi_badge = f' <span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:6px;font-size:11px;">KPI {rows}행</span>'
+        elif kpi_status == "failed":
+            kpi_badge = ' <span style="background:#fee2e2;color:#991b1b;padding:2px 6px;border-radius:6px;font-size:11px;">KPI 실패</span>'
+        elif kpi_status == "auth_failed":
+            kpi_badge = ' <span style="background:#fef3c7;color:#92400e;padding:2px 6px;border-radius:6px;font-size:11px;">🔑 KPI 인증 만료</span>'
         errors_html = ""
         if r.get("errors"):
             error_items = "".join(
@@ -144,7 +161,7 @@ def _build_html_body(batch_result: dict) -> str:
 
         rows.append(f"""
         <tr style="border-bottom:1px solid #e5e7eb;">
-          <td style="padding:10px;"><strong>{r.get('title', '?')}</strong>{fallback_badge}{quota_badge}</td>
+          <td style="padding:10px;"><strong>{r.get('title', '?')}</strong>{fallback_badge}{quota_badge}{kpi_badge}</td>
           <td style="padding:10px;"><span style="background:{color};color:white;padding:3px 10px;border-radius:12px;font-size:12px;">{_status_label(status)}</span></td>
           <td style="padding:10px;text-align:right;">{r.get('tagged_records', 0)} / {r.get('scanned_folders', 0)}</td>
           <td style="padding:10px;text-align:right;">{r.get('cache_misses', 0)}</td>

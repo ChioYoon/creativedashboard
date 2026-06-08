@@ -352,3 +352,184 @@ Get-ScheduledTask -TaskName 'CLOOP-Nightly' | Get-ScheduledTaskInfo
 ```powershell
 .\scripts\register-task.ps1 -Unregister
 ```
+
+---
+
+## 💰 Stage 5 — Google Ads API 연동 (실 KPI fetch)
+
+Stage 0~4는 Gemini 태깅만 했고 KPI(`전환`, `비용`, `노출수`)는 0이었습니다. Stage 5는 Google Ads API에서 실제 매체 데이터를 가져와 태깅 결과와 join → 대시보드에서 진짜 점수 계산이 가능합니다.
+
+### 사전 조건
+
+**사용자 준비:**
+- Google Ads Manager Account (MCC) 접근권
+- 개별 Customer Account 권한
+- Developer Token 발급 완료
+- **컴투스 ENT GCP에 OAuth Desktop Client ID 발급** (IT 티켓 → 평균 1~5일)
+
+**시스템 준비:**
+- Stage 0~4 완료 (정상 동작 중)
+- Python venv 활성화 가능
+
+### 셋업 순서 (Stage 5-A: 1회만)
+
+#### 1️⃣ IT 티켓 — OAuth Client 발급 신청
+Com2uS ENT GCP IT팀에 다음 신청:
+- OAuth 2.0 Client ID (Application type: **Desktop**)
+- Consent screen: **Internal** (com2us.com 도메인 한정)
+- Scope: `https://www.googleapis.com/auth/adwords` 만
+- Service Account 미사용 (OAuth만)
+
+→ 발급되면 client_id + client_secret 받음.
+
+#### 2️⃣ OAuth refresh token 발급 (10분)
+```powershell
+.\scripts\setup-google-ads.ps1
+```
+
+진행 흐름:
+- client_id, client_secret, developer_token, MCC customer_id 입력
+- 브라우저 자동 오픈 → Google 계정 로그인 → 권한 동의
+- localhost:8080 콜백으로 refresh token 받음
+- `.secrets/google_ads.yaml` 자동 생성
+- `.env`에 `GOOGLE_ADS_CONFIG_PATH` 자동 추가
+- healthcheck 자동 실행
+
+#### 3️⃣ titles.json에 customer_id 입력
+```json
+{
+  "id": "pepp-us",
+  "name": "Pepp Heroes (US) — 선론칭",
+  ...
+  "_pipeline_google_ads_customer_id": "1234567890",
+  "_pipeline_google_ads_campaign_filter": [
+    "HQ_PH_US-EN_GA_NU_AD_ACA_..."
+  ],
+  "_pipeline_kpi_enabled": true
+}
+```
+
+- `customer_id`: 10자리, 하이픈 없이
+- `campaign_filter`: 캠페인명 정확히 일치. 비우면 전체 캠페인
+- `_pipeline_kpi_enabled: true` 시 nightly batch가 KPI fetch 시도
+
+#### 4️⃣ 수동 검증
+```powershell
+# 인증만 확인
+python -m pipeline.kpi --healthcheck
+
+# 최근 3일, 5개 소재 KPI 조회
+python -m pipeline.kpi --title pepp-us --days 3 --limit 5
+
+# GAQL 쿼리만 출력 (실 호출 X)
+python -m pipeline.kpi --title pepp-us --days 7 --dry-run
+```
+
+#### 5️⃣ E2E 검증 (자동화 진입 전 필수)
+1. 1개 소재 골라 Google Ads UI에서 어제 노출수 사람이 확인
+2. `python -m pipeline.main --title pepp-us` 실행
+3. `public/data/pepp-us.json` 의 같은 소재 `노출수` 비교 → 일치
+4. 대시보드 진입 → 점수가 0이 아닌 실제 값으로 변경
+
+E2E 통과 후 Stage 5-C(자동화) 진입.
+
+### 자동화 (Stage 5-C)
+
+Stage 4 nightly가 자동으로 KPI fetch를 포함합니다 — **별도 셋업 불필요**.
+
+```
+13:00 KST
+  ↓
+scripts\nightly.ps1
+  ↓
+pipeline.main --all-titles
+  ├─ 폴더 스캔
+  ├─ KPI batch fetch (Google Ads)  ← Stage 5 신규
+  ├─ Gemini 태깅
+  ├─ KPI ↔ 태그 in-process join
+  └─ public/data/{title}.json 저장
+  ↓
+git auto-commit + push
+  ↓
+이메일 발송 (✅ 태깅 N + KPI M행 배지 포함)
+```
+
+### 비용·운영
+
+- Google Ads API Basic access 한도: **15,000 operations/day**
+- 타이틀당 1 SearchStream 호출 = 1 operation
+- 10 타이틀 가정 → 일 10 operations (한도의 0.07%, 부담 없음)
+- GCP 측 비용: **0원** (OAuth client 발급만)
+
+### 트러블슈팅
+
+**Q. `--healthcheck` 가 'invalid_grant' 실패**
+→ Refresh token 만료. 사용자 OAuth 동의가 철회된 경우.
+```powershell
+.\scripts\setup-google-ads.ps1 -Reset
+.\scripts\setup-google-ads.ps1
+```
+
+**Q. 'PERMISSION_DENIED' 오류**
+→ login_customer_id(MCC)에 해당 customer 접근 권한 없음. Google Ads UI에서 권한 부여 또는 MCC ID 재확인.
+
+**Q. KPI fetch는 성공했는데 0행 매칭**
+→ Google Ads Ad.name 과 GDrive 폴더명 컨벤션 불일치. 매핑 검증용 쿼리 실행:
+```powershell
+python -m pipeline.kpi --customer-id 1234567890 --days 1 --dry-run
+```
+→ 출력된 GAQL 을 Google Ads Query Builder에 붙여넣어 실 매칭 확인.
+
+**Q. quota error: RESOURCE_EXHAUSTED**
+→ Basic access 일 한도 초과(드뭄). Standard access 신청 또는 N일 캐시 사용으로 대응.
+
+**Q. 야간 배치에서 KPI 실패 시 어떻게 알 수 있나요**
+→ 이메일에 `❌ KPI 실패` 또는 `🔑 KPI 인증 만료` 배지 표시. 본문에 오류 상세.
+
+**Q. customer_id에 하이픈 포함해서 입력했는데?**
+→ 스크립트가 자동 제거. 다만 정확하면 더 좋음 (10자리 숫자만).
+
+### 출력 JSON 변화 (스키마 v1 확장)
+
+KPI 추가 시 `CreativeRecord`에 다음 필드가 채워집니다:
+
+```json
+{
+  "creative_id": "A-AI-Defeatmonster01A-DA",
+  "소재명": "A-AI-Defeatmonster01A-DA",
+  ...
+  "전환": 152,         ← Stage 5 이전 0, 이제 실제 값
+  "비용": 1234567,
+  "노출수": 234567,
+  "클릭수": 4321,
+  "Revenue": 2345678,
+  "kpi_source": "google_ads",
+  "kpi_window_start": "2026-05-08",
+  "kpi_window_end": "2026-06-04",
+  "kpi_daily": [
+    {
+      "creative_name": "A-AI-Defeatmonster01A-DA",
+      "date": "2026-06-04",
+      "source": "google_ads",
+      "customer_id": "1234567890",
+      "impressions": 8421,
+      "clicks": 153,
+      "cost_micros": 56789012,
+      "cost": 56.789,
+      "conversions": 5.2,
+      "conversions_value": 89.0
+    },
+    ...
+  ]
+}
+```
+
+`kpi_daily` 는 대시보드의 sparkline·일별 트렌드 차트에 활용됩니다.
+
+### 다중 매체 확장 (Stage 6+)
+
+`pipeline/sources/base.py` 의 `KpiSource` ABC 구현으로 다음 매체 추가 가능:
+- AppsFlyer MMP → `pipeline/sources/appsflyer.py`
+- Airbridge MMP → `pipeline/sources/airbridge.py`
+
+각 매체 구현체는 동일한 `fetch_window()` 인터페이스를 따르며 main.py 변경 없이 통합됩니다.

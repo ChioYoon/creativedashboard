@@ -6,6 +6,9 @@
 .env.local
 .env.*.local
 
+# Stage 5: Google Ads OAuth refresh token, client_secret, developer_token 보관
+.secrets/
+
 # ─── Python ────────────────────────────────────
 __pycache__/
 *.py[cod]

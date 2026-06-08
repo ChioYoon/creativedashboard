@@ -17,3 +17,11 @@ python-dotenv>=1.0.0,<2.0.0
 
 # CLI progress bar
 tqdm>=4.66.0,<5.0.0
+
+# Stage 5: Google Ads API
+# NOTE: Python 3.14 requires google-ads >= 28.2.0 (older versions pinned to <3.13/<3.14).
+# Code uses only stable surface (load_from_storage, get_service, search_stream,
+# list_accessible_customers) which is unchanged from v22+ through v31.
+google-ads>=28.2.0,<32.0.0
+# OAuth flow helper (used only by scripts/setup-google-ads.ps1)
+google-auth-oauthlib>=1.2.0,<2.0.0

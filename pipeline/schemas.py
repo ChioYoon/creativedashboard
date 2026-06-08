@@ -115,7 +115,17 @@ class CreativeRecord(BaseModel):
     캠페인: Optional[str] = None
     사이즈: Optional[str] = None
     언어: Optional[str] = None
-    링크: Optional[str] = Field(None, description="대시보드 미리보기용 URL (GDrive 미리보기 등)")
+    링크: Optional[str] = Field(None, description="대시보드 미리보기용 URL — Stage 5에서 image_asset.full_size.url 또는 youtube URL이 자동 주입됨")
+
+    # Stage 5-D: 소재명(T) 단위 통합 분석을 위한 정규화 필드
+    creative_concept: Optional[str] = Field(
+        None,
+        description=(
+            "CSV T열 컨벤션 — 사이즈/언어 무관 콘셉트 코어. "
+            "예: 251104_BNR_A-Character-Adventure01A-DA_L_1200x628_EN → A-Character-Adventure01A-DA. "
+            "대시보드에서 같은 concept을 가진 L/S/V 변형을 통합 그룹핑 가능."
+        ),
+    )
 
     # 성과 지표 (Stage 2 MVP에서는 0으로 채움 — Stage 5의 매체 API가 추후 갱신)
     전환: int = 0
@@ -135,12 +145,100 @@ class CreativeRecord(BaseModel):
     gemini_model: Optional[str] = None
     source_files: list[str] = Field(default_factory=list, description="태깅에 사용된 파일들의 경로(폴더 내 variants)")
 
+    # ──────────────────────────────────────────────────────────
+    # Stage 5: 매체 KPI 메타 (Google Ads 등 외부 소스에서 채움)
+    # ──────────────────────────────────────────────────────────
+    kpi_source: Optional[str] = Field(
+        None, description="KPI 출처 식별자: 'google_ads', 'appsflyer', 'airbridge', None=태깅만 진행"
+    )
+    kpi_window_start: Optional[str] = Field(None, description="KPI 조회 시작일 YYYY-MM-DD")
+    kpi_window_end: Optional[str] = Field(None, description="KPI 조회 종료일 YYYY-MM-DD")
+    kpi_daily: list["CreativeKpiDaily"] = Field(
+        default_factory=list, description="일별 분리 KPI (대시보드 sparkline용)"
+    )
+
     class Config:
         populate_by_name = True  # alias와 원본 이름 둘 다 허용
 
 
 # ─────────────────────────────────────────────────────────────
-# 4. 산출 JSON 루트 (스키마 v1)
+# 4. Stage 5: 일별 KPI 모델
+# ─────────────────────────────────────────────────────────────
+class CreativeKpiDaily(BaseModel):
+    """(creative_name, campaign, ad_group, date) 4-key당 1개 — 매체별 일별 성과 지표.
+
+    Stage 5-D 변경: agg key를 (creative_name, date) 2-key → 4-key 다차원으로 확장.
+    같은 소재가 N개 캠페인에서 운영되면 N행 분리 보존되어 대시보드가 캠페인별 필터·비교 가능.
+
+    main.py가 fetch_window() 결과를 (creative_name) 키로 그룹핑한 뒤 CreativeRecord.kpi_daily에 주입.
+    대시보드는 (1) sparkline·일별 트렌드 차트, (2) 캠페인별 성과 비교, (3) URL 미리보기에 활용.
+    """
+
+    creative_name: str
+    date: str  # YYYY-MM-DD
+    source: str = Field(..., description="'google_ads', 'appsflyer', 'airbridge'")
+    customer_id: str = Field(..., description="매체별 계정/고객 ID")
+
+    # Stage 5-D 신규: 캠페인 단위 차원 보존 (CSV 행 단위와 일치)
+    campaign_name: str = Field("", description="캠페인 풀네임 (CSV C열)")
+    ad_group_name: str = Field("", description="광고그룹 풀네임 (CSV D열)")
+
+    # Stage 5-D 신규: 미리보기 URL (대시보드 모달 thumbnail/play)
+    asset_url: Optional[str] = Field(
+        None,
+        description=(
+            "IMAGE: googlesyndication 캐시 URL (image_asset.full_size.url). "
+            "YOUTUBE_VIDEO: https://www.youtube.com/watch?v={video_id}. "
+            "MEDIA_BUNDLE/기타: None."
+        ),
+    )
+    asset_type: Optional[str] = Field(
+        None, description="IMAGE | YOUTUBE_VIDEO | MEDIA_BUNDLE"
+    )
+
+    impressions: int = 0
+    clicks: int = 0
+    cost_micros: int = Field(0, description="Google Ads native 단위 (1,000,000 = 1 currency unit)")
+    cost: float = Field(0.0, description="cost_micros / 1_000_000 — 사람이 읽는 단위")
+    conversions: float = Field(0.0, description="Google Ads는 float (소수 가능)")
+    conversions_value: float = 0.0
+
+    class Config:
+        populate_by_name = True
+
+
+# Forward reference 해결 (CreativeRecord에서 CreativeKpiDaily를 참조하므로)
+CreativeRecord.model_rebuild()
+
+
+# ─────────────────────────────────────────────────────────────
+# 5. KPI 합계 헬퍼 (main.py에서 사용)
+# ─────────────────────────────────────────────────────────────
+class CreativeKpiTotals(BaseModel):
+    """일별 KPI 리스트의 합계 — CreativeRecord의 전환·비용 등 필드 채우는 데 사용."""
+
+    impressions: int = 0
+    clicks: int = 0
+    cost: float = 0.0
+    conversions: float = 0.0
+    conversions_value: float = 0.0
+
+
+def aggregate_kpi(daily: list[CreativeKpiDaily]) -> CreativeKpiTotals:
+    """일별 KPI 리스트 → 합계 모델."""
+    if not daily:
+        return CreativeKpiTotals()
+    return CreativeKpiTotals(
+        impressions=sum(d.impressions for d in daily),
+        clicks=sum(d.clicks for d in daily),
+        cost=sum(d.cost for d in daily),
+        conversions=sum(d.conversions for d in daily),
+        conversions_value=sum(d.conversions_value for d in daily),
+    )
+
+
+# ─────────────────────────────────────────────────────────────
+# 6. 산출 JSON 루트 (스키마 v1)
 # ─────────────────────────────────────────────────────────────
 class CreativeDataset(BaseModel):
     """public/data/{title}.json 의 루트 객체."""

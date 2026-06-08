@@ -29,10 +29,12 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 import time
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
+from typing import Optional
 
 from dotenv import load_dotenv
 from tqdm import tqdm
@@ -47,6 +49,38 @@ KST = timezone(timedelta(hours=9))
 
 # titles.json 위치 (프로젝트 루트 기준)
 TITLES_JSON_PATH = Path("js/titles.json")
+
+
+# ─────────────────────────────────────────────────────────────
+# Stage 5-D: 파일명 → 소재명(concept) 정규화
+# ─────────────────────────────────────────────────────────────
+# CSV 컨벤션:
+#   파일명 (S열): 251104_BNR_A-Character-Adventure01A-DA_L_1200x628_EN[.jpg]
+#   소재명 (T열): A-Character-Adventure01A-DA  ← 사이즈/언어/투입일 무관 콘셉트 코어
+# 정규식 그룹 1 = concept (T열 값).
+# 미스 시 None 반환 — main.py가 fallback (파일 stem 사용 또는 그대로).
+_FILENAME_TO_CONCEPT_RE = re.compile(
+    r"^\d{6}_(?:BNR|VID|HTML5|IMG|MP4)_(.+?)_[LSVF]_\d+x\d+_[A-Z]+(?:\.[A-Za-z0-9]+)?$",
+    re.IGNORECASE,
+)
+
+
+def filename_to_concept(filename: str) -> Optional[str]:
+    """파일명에서 콘셉트 코어(CSV T열) 추출.
+
+    예시:
+        251104_BNR_A-Character-Adventure01A-DA_L_1200x628_EN.jpg
+        → A-Character-Adventure01A-DA
+        251104_VID_A-Character-Combat01A-UA_L_1920x1080_EN
+        → A-Character-Combat01A-UA
+
+    Returns:
+        concept 문자열 또는 None (패턴 미스 시).
+    """
+    if not filename:
+        return None
+    m = _FILENAME_TO_CONCEPT_RE.match(filename.strip())
+    return m.group(1) if m else None
 
 
 # ─────────────────────────────────────────────────────────────
@@ -92,6 +126,20 @@ def build_arg_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="quota 한도 도달 시 flash-lite 자동 폴백 비활성화 (즉시 실패)",
     )
+    p.add_argument(
+        "--no-kpi",
+        action="store_true",
+        help="(Stage 5) 매체 KPI fetch 비활성화. 태깅만 진행. 디버그/오프라인 모드용.",
+    )
+    p.add_argument(
+        "--kpi-window-days",
+        type=int,
+        default=0,
+        help=(
+            "(Stage 5) KPI 조회 윈도우 일수 명시 오버라이드. "
+            "0 또는 미지정 시: titles.json _pipeline_google_ads_window_days → .env GOOGLE_ADS_KPI_WINDOW_DAYS → 28."
+        ),
+    )
     return p
 
 
@@ -123,18 +171,65 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
     cache_dir = os.environ.get("CACHE_DIR", "cache")
     output_dir = os.environ.get("OUTPUT_DIR", "public/data")
 
+    # Stage 5: KPI 관련 환경 변수 (env 기본값 — titles.json 의 per-title 오버라이드가 우선)
+    default_kpi_window_days = int(os.environ.get("GOOGLE_ADS_KPI_WINDOW_DAYS", "28") or "28")
+
     if title_override:
         # --all-titles 모드: titles.json의 _pipeline_* 필드 사용
         title = title_override["id"]
         root_str = title_override.get("_pipeline_creatives_root", "")
         phases = title_override.get("_pipeline_phases", ["선론칭"])
         types = title_override.get("_pipeline_types", ["BNR", "VID"])
+        # Stage 5 KPI 매핑 (titles.json _pipeline_google_ads_*)
+        google_ads_customer_id = title_override.get("_pipeline_google_ads_customer_id", "")
+        google_ads_campaign_filter = title_override.get("_pipeline_google_ads_campaign_filter", [])
+        kpi_enabled = bool(title_override.get("_pipeline_kpi_enabled", False))
+        kpi_window_days = int(
+            title_override.get("_pipeline_google_ads_window_days", default_kpi_window_days)
+            or default_kpi_window_days
+        )
     else:
-        # 단일 타이틀 모드: CLI 인자 + .env 사용
+        # 단일 타이틀 모드: CLI 인자 + titles.json _pipeline_* (Stage 5-D) + .env fallback
         title = args.title or os.environ.get("CLOOP_TITLE_ID", "")
-        root_str = args.root or os.environ.get("CLOOP_CREATIVES_ROOT", "")
-        phases = args.phase or ["선론칭"]
-        types = args.type or ["BNR", "VID"]
+
+        # Stage 5-D: titles.json에서 해당 타이틀 매칭 항목 자동 조회 (SSOT 유지)
+        # 단일 모드에서도 _pipeline_google_ads_* 필드를 .env 없이 활용 가능하게 함.
+        title_meta: dict = {}
+        if title and TITLES_JSON_PATH.exists():
+            try:
+                titles_list = json.loads(TITLES_JSON_PATH.read_text(encoding="utf-8"))
+                title_meta = next((t for t in titles_list if t.get("id") == title), {}) or {}
+            except Exception as e:
+                print(f"   [경고] titles.json 파싱 실패 (단일 모드 fallback): {e}")
+
+        root_str = args.root or title_meta.get("_pipeline_creatives_root", "") or os.environ.get("CLOOP_CREATIVES_ROOT", "")
+        phases = args.phase or title_meta.get("_pipeline_phases", ["선론칭"])
+        types = args.type or title_meta.get("_pipeline_types", ["BNR", "VID"])
+
+        # Stage 5 KPI: titles.json 우선, .env fallback
+        google_ads_customer_id = (
+            title_meta.get("_pipeline_google_ads_customer_id", "")
+            or os.environ.get("GOOGLE_ADS_CUSTOMER_ID", "")
+        )
+        google_ads_campaign_filter = title_meta.get("_pipeline_google_ads_campaign_filter", []) or []
+        if not google_ads_campaign_filter:
+            gcf = os.environ.get("GOOGLE_ADS_CAMPAIGN_FILTER", "")
+            google_ads_campaign_filter = (
+                [c.strip() for c in gcf.split(",") if c.strip()] if gcf else []
+            )
+        kpi_enabled = bool(
+            title_meta.get("_pipeline_kpi_enabled", False)
+            or (google_ads_customer_id and not title_meta)
+        ) and not args.no_kpi
+        # window_days: CLI > titles.json > .env > default 28
+        kpi_window_days = (
+            args.kpi_window_days
+            if args.kpi_window_days
+            else int(
+                title_meta.get("_pipeline_google_ads_window_days", default_kpi_window_days)
+                or default_kpi_window_days
+            )
+        )
 
     if not title:
         sys.exit("❌ --title, --all-titles, 또는 .env CLOOP_TITLE_ID 가 필요합니다.")
@@ -162,6 +257,12 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         "no_cache": args.no_cache,
         "dry_run": args.dry_run,
         "no_fallback": args.no_fallback,
+        # Stage 5: KPI 통합
+        "no_kpi": args.no_kpi,
+        "kpi_window_days": kpi_window_days,
+        "google_ads_customer_id": google_ads_customer_id,
+        "google_ads_campaign_filter": google_ads_campaign_filter,
+        "kpi_enabled": kpi_enabled and not args.no_kpi,
     }
 
 
@@ -241,6 +342,95 @@ def run(cfg: dict) -> dict:
     pversion = prompt_version()
     fallback_model = "gemini-2.5-flash-lite"
 
+    # ── 2-Stage5) KPI batch fetch (kpi_enabled=true 일 때만) ──
+    kpi_index: dict[str, list] = {}  # creative_name → list[CreativeKpiDaily]
+    kpi_window_start = None
+    kpi_window_end = None
+    kpi_status = "skipped"
+    if cfg.get("kpi_enabled") and cfg.get("google_ads_customer_id"):
+        try:
+            from .sources.google_ads import GoogleAdsKpiSource, default_window
+            from .cache import KpiCache
+
+            source = GoogleAdsKpiSource.from_env()
+            kpi_window_start, kpi_window_end = default_window(cfg["kpi_window_days"])
+            candidate_concepts = {c.creative_name for c in candidates}  # 폴더명 = T열 concept
+            print(
+                f"\n💰 2.5) KPI fetch (Google Ads) — "
+                f"{kpi_window_start} ~ {kpi_window_end}, "
+                f"customer={cfg['google_ads_customer_id']}, candidate concept {len(candidate_concepts)}개..."
+            )
+            # Stage 5-D: IN() 필터 제거. 폴더명(concept) vs asset.name(파일명) 매칭 불가
+            # → 전 asset fetch 후 concept 단위 그룹핑으로 매칭. SearchStream 1 operation 비용 동일.
+            kpi_rows = list(
+                source.fetch_window(
+                    customer_id=cfg["google_ads_customer_id"],
+                    start=kpi_window_start,
+                    end=kpi_window_end,
+                    creative_names=None,
+                    campaign_filter=cfg.get("google_ads_campaign_filter") or None,
+                )
+            )
+            # 그룹핑: concept(폴더명) → list[CreativeKpiDaily]
+            # asset.name(파일명) 에서 concept 추출 → 같은 concept의 L/S/V 변형 + 캠페인 분리 모두 보존
+            unmatched_assets: set[str] = set()
+            for row in kpi_rows:
+                concept = filename_to_concept(row.creative_name)
+                if concept is None:
+                    # 정규식 미스 — 파일명 stem 그대로 사용 (fallback)
+                    concept = row.creative_name.rsplit(".", 1)[0]
+                if concept in candidate_concepts:
+                    kpi_index.setdefault(concept, []).append(row)
+                else:
+                    unmatched_assets.add(concept)
+            if unmatched_assets:
+                # candidate에 없는 asset (GDrive에 폴더 없는 경우) — 로그만
+                print(
+                    f"   ℹ️  candidate 미매칭 asset {len(unmatched_assets)}개 "
+                    f"(GDrive 폴더에 없는 광고 asset, 대시보드 미표시): "
+                    f"{sorted(unmatched_assets)[:3]}{'...' if len(unmatched_assets)>3 else ''}"
+                )
+
+            # KPI 캐시 보존 (백업·오프라인 분석용)
+            try:
+                kpi_cache = KpiCache(cfg["cache_dir"], cfg["title"])
+                purged = kpi_cache.purge_old()
+                for row in kpi_rows:
+                    kpi_cache.put(
+                        row.model_dump(),
+                        source="google_ads",
+                        customer_id=cfg["google_ads_customer_id"],
+                    )
+                kpi_cache.save()
+                print(
+                    f"   → {len(kpi_rows)}행 fetch 완료 ({len(kpi_index)}개 소재 매칭). "
+                    f"캐시 오래된 항목 {purged}개 정리."
+                )
+            except Exception as cache_err:
+                print(f"   [경고] KPI 캐시 저장 실패 (무시): {cache_err}")
+
+            kpi_status = "success"
+            metrics["kpi_rows_fetched"] = len(kpi_rows)
+            metrics["kpi_creatives_matched"] = len(kpi_index)
+        except Exception as e:
+            err_type = type(e).__name__
+            err_msg = f"KPI fetch 실패 ({err_type}): {e}"
+            print(f"\n⚠️  {err_msg}")
+            print("   → 태깅은 계속 진행, KPI 필드는 0으로 채워짐.")
+            metrics["errors"].append(err_msg)
+            kpi_status = "failed"
+            # AuthError 만 batch 전체 중단 (다른 타이틀도 같은 token 사용)
+            if err_type == "AuthError":
+                metrics["status"] = "kpi_auth_failed"
+                kpi_status = "auth_failed"
+                # NOTE: 여기선 일단 태깅까지 마치고 정상 반환 — 호출 측에서 metrics 보고 결정
+    else:
+        if cfg.get("no_kpi"):
+            print("\n💰 KPI fetch: --no-kpi 옵션으로 비활성화됨")
+        elif not cfg.get("google_ads_customer_id"):
+            print("\n💰 KPI fetch: customer_id 미설정으로 건너뜀")
+    metrics["kpi_status"] = kpi_status
+
     # ── 3) 폴더별 태깅 루프 ──
     records: list[CreativeRecord] = []
     hits, misses, failures = 0, 0, 0
@@ -311,6 +501,41 @@ def run(cfg: dict) -> dict:
                     continue
 
         meta = c.parsed_meta
+
+        # Stage 5: KPI 주입
+        daily = kpi_index.get(c.creative_name, [])
+        kpi_fields = {}
+        preview_url: Optional[str] = None
+        if daily:
+            from .schemas import aggregate_kpi
+            totals = aggregate_kpi(daily)
+            kpi_fields = {
+                "전환": int(round(totals.conversions)),
+                "비용": int(round(totals.cost)),
+                "노출수": totals.impressions,
+                "클릭수": totals.clicks,
+                "Revenue": int(round(totals.conversions_value)),
+                "kpi_source": "google_ads",
+                "kpi_window_start": kpi_window_start.isoformat() if kpi_window_start else None,
+                "kpi_window_end": kpi_window_end.isoformat() if kpi_window_end else None,
+                "kpi_daily": daily,
+            }
+            # Stage 5-D: 미리보기 URL — 대표 파일과 매칭되는 asset_url 우선, 없으면 임의 1개.
+            # rep.name = 파일명 (예: 251104_BNR_..._L_1200x628_EN.jpg)
+            # daily[].creative_name = 동일 형식 → 정확히 일치하는 행의 asset_url 선호
+            rep_stem = rep.stem if rep else ""
+            rep_name = rep.name if rep else ""
+            for d in daily:
+                if not d.asset_url:
+                    continue
+                d_name = d.creative_name or ""
+                if d_name == rep_name or d_name.rsplit(".", 1)[0] == rep_stem:
+                    preview_url = d.asset_url
+                    break
+            if not preview_url:
+                # fallback: 첫 번째 URL이 있는 row
+                preview_url = next((d.asset_url for d in daily if d.asset_url), None)
+
         record = CreativeRecord(
             creative_id=c.creative_name,
             소재명=c.creative_name,
@@ -319,7 +544,8 @@ def run(cfg: dict) -> dict:
             일=meta.get("iso_date"),
             사이즈=meta.get("resolution"),
             언어=meta.get("lang"),
-            링크=None,  # Stage 3 진입 시 GDrive 미리보기 URL 채울 예정
+            링크=preview_url,  # Stage 5-D: Google Ads image_asset.full_size.url / youtube URL 자동 주입
+            creative_concept=filename_to_concept(rep.name) or c.creative_name,  # T열 정규화 (fallback=폴더명)
             hooking_strategy=tag_dict.get("hooking_strategy"),
             USP=tag_dict.get("core_usp"),
             art_style=tag_dict.get("visual_style"),
@@ -327,6 +553,7 @@ def run(cfg: dict) -> dict:
             tagged_at=datetime.now(KST).isoformat(timespec="seconds"),
             gemini_model=cfg["model"],
             source_files=[str(p.relative_to(cfg["root"])) for p in c.all_files],
+            **kpi_fields,
         )
         records.append(record)
 
