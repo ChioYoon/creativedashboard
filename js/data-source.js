@@ -116,6 +116,17 @@
     }
 
     const rows = data.creatives;
+
+    // Stage 5-F-1: deprecated `marketer_insight` 필드를 `one_line_insight` 로 alias.
+    // - Stage 5-E 가 Python 측에서 dual-write 하던 것을 JS 한 곳으로 격상 (정규화는 데이터 경계에서).
+    // - 구 JSON 이 marketer_insight 를 직접 가지고 있는 경우 보존 (== null 가드).
+    // - one_line_insight 부재 시 아무 작업도 안 함 (graceful).
+    rows.forEach((r) => {
+      if (r && r.marketer_insight == null && typeof r.one_line_insight === 'string') {
+        r.marketer_insight = r.one_line_insight;
+      }
+    });
+
     // 컬럼 헤더는 첫 행에서 추출 (병합 union)
     const colSet = new Set();
     rows.forEach((r) => Object.keys(r || {}).forEach((k) => colSet.add(k)));

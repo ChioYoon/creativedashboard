@@ -557,9 +557,10 @@ def run(cfg: dict) -> dict:
             hypothesis=tag_dict.get("hypothesis", []),
             test_ideas=tag_dict.get("test_ideas", []),
             one_line_insight=one_line,
-            # 후방 호환: 기존 대시보드가 marketer_insight 참조 시 깨지지 않도록 한 줄 가설 주입
-            # (Stage 5-F: 대시보드 JS normalizeFromJson 에서 alias 처리 후 schema 측 필드는 제거 예정)
-            marketer_insight=one_line,
+            # Stage 5-F-1: marketer_insight dual-write 제거 — alias는 js/data-source.js
+            # normalizeFromJson() 에서 처리. Python schema 의 marketer_insight 필드는
+            # 다음 회차에 제거 예정 (구 JSON 호환 위해 일단 default=None).
+            # marketer_insight=one_line,  # ← 제거됨 (JS-side alias 로 대체)
             tagged_at=datetime.now(KST).isoformat(timespec="seconds"),
             gemini_model=cfg["model"],
             source_files=[str(p.relative_to(cfg["root"])) for p in c.all_files],
