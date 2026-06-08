@@ -117,6 +117,51 @@ class TestRecommendation(str, Enum):
 
 
 # ─────────────────────────────────────────────────────────────
+# Stage 5-E 보강: 가설 ↔ KPI 메타 매핑 (analyze-signals.py 가설3 검증용)
+#
+# 한글 substring 매칭(이전 분석 스크립트의 verdict 로직)을 제거하고,
+# enum 변경 시 schema 한 곳만 수정하면 분석/대시보드/검증 step 모두
+# 자동 갱신되도록 메타데이터를 schema 옆에 둔다.
+#
+# 키 = enum.value (한글 라벨), 값 = (target_metric, direction).
+# - target_metric: 'CTR' | 'CVR' | 'CPA'
+# - direction:     'high' (값이 전체 평균보다 크면 가설 확증) | 'low' (작으면 확증)
+#                  None 이면 자동 verdict 보류 (사람이 보고 판단).
+# ─────────────────────────────────────────────────────────────
+HYPOTHESIS_KPI_MAP: dict[str, tuple[str, str | None]] = {
+    PerformanceHypothesis.HIGH_CTR_LIKELY.value:    ("CTR", "high"),
+    PerformanceHypothesis.HIGH_CVR_LIKELY.value:    ("CVR", "high"),
+    PerformanceHypothesis.LOW_RELEVANCE_RISK.value: ("CTR", "low"),
+    PerformanceHypothesis.LOW_CONVERSION_RISK.value: ("CVR", "low"),
+    PerformanceHypothesis.NICHE_AUDIENCE.value:      ("CPA", None),
+    PerformanceHypothesis.BROAD_APPEAL.value:        ("CTR", None),
+    PerformanceHypothesis.HIGH_FATIGUE_RISK.value:   ("CTR", None),
+}
+
+
+SIGNAL_FIELDS: tuple[str, ...] = ("strengths", "weaknesses", "hypothesis", "test_ideas")
+
+
+def signal_distribution(creatives: list[dict]) -> dict[str, "Counter"]:
+    """소재 리스트의 v2 신호 4종 분포를 Counter dict 로 반환.
+
+    analyze-signals.py / check-pipeline-output.py 양쪽에서 같은 패턴을 쓰던
+    것을 통일. 신호 필드 추가 시 SIGNAL_FIELDS 만 수정하면 전 분석 도구가
+    자동 인식.
+
+    Returns:
+        dict[field_name, Counter[signal_label, count]]
+    """
+    from collections import Counter  # local import — 모듈 import overhead 회피
+    counters = {f: Counter() for f in SIGNAL_FIELDS}
+    for r in creatives:
+        for f in SIGNAL_FIELDS:
+            for v in r.get(f) or []:
+                counters[f][v] += 1
+    return counters
+
+
+# ─────────────────────────────────────────────────────────────
 # 2. 단일 소재 태깅 결과 (Gemini structured output)
 # ─────────────────────────────────────────────────────────────
 class CreativeTag(BaseModel):

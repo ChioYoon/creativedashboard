@@ -12,6 +12,10 @@ import json
 import sys
 from pathlib import Path
 
+# schema 옆에 있는 signal 분포 헬퍼 재사용 (analyze-signals.py 와 동일 SoT)
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from pipeline.schemas import signal_distribution  # noqa: E402
+
 
 def main():
     p = argparse.ArgumentParser()
@@ -79,36 +83,25 @@ def main():
             print(f"    변주: {test_ideas}")
             print(f"    1줄: {one_line!r}")
 
-    # Stage 5-E v2: 전체 분포 자동 집계 (모든 record 대상)
-    from collections import Counter
-    all_strengths = Counter()
-    all_weaknesses = Counter()
-    all_hypothesis = Counter()
-    all_test_ideas = Counter()
-    for r in creatives:
-        for s in r.get("strengths", []) or []: all_strengths[s] += 1
-        for w in r.get("weaknesses", []) or []: all_weaknesses[w] += 1
-        for h in r.get("hypothesis", []) or []: all_hypothesis[h] += 1
-        for t in r.get("test_ideas", []) or []: all_test_ideas[t] += 1
-
-    if all_strengths or all_weaknesses:
+    # Stage 5-E v2: 전체 분포 자동 집계 (schema 헬퍼 사용 — analyze-signals.py 와 동일 SoT)
+    distribution = signal_distribution(creatives)
+    if any(distribution.values()):
         print(f"\n[전체 {len(creatives)}개 record 분포 — v2 신호 집계]")
-        if all_strengths:
-            print(f"  강점 Top:")
-            for s, n in all_strengths.most_common(5):
-                print(f"    {s:<25} {n:>3}건 ({n*100//len(creatives)}%)")
-        if all_weaknesses:
-            print(f"  약점 Top:")
-            for w, n in all_weaknesses.most_common(5):
-                print(f"    {w:<25} {n:>3}건 ({n*100//len(creatives)}%)")
-        if all_hypothesis:
-            print(f"  가설 Top:")
-            for h, n in all_hypothesis.most_common(5):
-                print(f"    {h:<35} {n:>3}건")
-        if all_test_ideas:
-            print(f"  변주 추천 Top:")
-            for t, n in all_test_ideas.most_common(5):
-                print(f"    {t:<25} {n:>3}건")
+        # (필드명, 헤더라벨, 라벨 컬럼폭) — 한 곳에서 출력 형식 통제
+        sections = [
+            ("strengths",  "강점 Top",        25),
+            ("weaknesses", "약점 Top",        25),
+            ("hypothesis", "가설 Top",        35),
+            ("test_ideas", "변주 추천 Top",   25),
+        ]
+        for field, header, width in sections:
+            counter = distribution[field]
+            if not counter:
+                continue
+            print(f"  {header}:")
+            for label, n in counter.most_common(5):
+                pct = f" ({n*100//len(creatives)}%)" if field in ("strengths", "weaknesses") else ""
+                print(f"    {label:<{width}} {n:>3}건{pct}")
 
     if not with_kpi:
         print("\n[!] 경고: KPI 채워진 record 0개.")

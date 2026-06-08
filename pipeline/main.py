@@ -551,13 +551,14 @@ def run(cfg: dict) -> dict:
             hooking_strategy=tag_dict.get("hooking_strategy"),
             USP=tag_dict.get("core_usp"),
             art_style=tag_dict.get("visual_style"),
-            # Stage 5-E v2: 구조화 신호 (분석·집계용)
-            strengths=tag_dict.get("strengths", []) or [],
-            weaknesses=tag_dict.get("weaknesses", []) or [],
-            hypothesis=tag_dict.get("hypothesis", []) or [],
-            test_ideas=tag_dict.get("test_ideas", []) or [],
+            # Stage 5-E v2: 구조화 신호 (분석·집계용). schema 가 default_factory=list 보장.
+            strengths=tag_dict.get("strengths", []),
+            weaknesses=tag_dict.get("weaknesses", []),
+            hypothesis=tag_dict.get("hypothesis", []),
+            test_ideas=tag_dict.get("test_ideas", []),
             one_line_insight=one_line,
             # 후방 호환: 기존 대시보드가 marketer_insight 참조 시 깨지지 않도록 한 줄 가설 주입
+            # (Stage 5-F: 대시보드 JS normalizeFromJson 에서 alias 처리 후 schema 측 필드는 제거 예정)
             marketer_insight=one_line,
             tagged_at=datetime.now(KST).isoformat(timespec="seconds"),
             gemini_model=cfg["model"],
