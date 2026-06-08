@@ -65,6 +65,51 @@ def main():
                   f"imp={daily[0].get('impressions', 0):,} | "
                   f"url? {'Y' if daily[0].get('asset_url') else 'N'}")
 
+        # Stage 5-E v2: 구조화 신호 표시
+        strengths = r.get("strengths", []) or []
+        weaknesses = r.get("weaknesses", []) or []
+        hypothesis = r.get("hypothesis", []) or []
+        test_ideas = r.get("test_ideas", []) or []
+        one_line = r.get("one_line_insight", "")
+        if strengths or weaknesses or hypothesis or test_ideas or one_line:
+            print(f"\n  [Stage 5-E v2 구조화 신호]")
+            print(f"    강점: {strengths}")
+            print(f"    약점: {weaknesses}")
+            print(f"    가설: {hypothesis}")
+            print(f"    변주: {test_ideas}")
+            print(f"    1줄: {one_line!r}")
+
+    # Stage 5-E v2: 전체 분포 자동 집계 (모든 record 대상)
+    from collections import Counter
+    all_strengths = Counter()
+    all_weaknesses = Counter()
+    all_hypothesis = Counter()
+    all_test_ideas = Counter()
+    for r in creatives:
+        for s in r.get("strengths", []) or []: all_strengths[s] += 1
+        for w in r.get("weaknesses", []) or []: all_weaknesses[w] += 1
+        for h in r.get("hypothesis", []) or []: all_hypothesis[h] += 1
+        for t in r.get("test_ideas", []) or []: all_test_ideas[t] += 1
+
+    if all_strengths or all_weaknesses:
+        print(f"\n[전체 {len(creatives)}개 record 분포 — v2 신호 집계]")
+        if all_strengths:
+            print(f"  강점 Top:")
+            for s, n in all_strengths.most_common(5):
+                print(f"    {s:<25} {n:>3}건 ({n*100//len(creatives)}%)")
+        if all_weaknesses:
+            print(f"  약점 Top:")
+            for w, n in all_weaknesses.most_common(5):
+                print(f"    {w:<25} {n:>3}건 ({n*100//len(creatives)}%)")
+        if all_hypothesis:
+            print(f"  가설 Top:")
+            for h, n in all_hypothesis.most_common(5):
+                print(f"    {h:<35} {n:>3}건")
+        if all_test_ideas:
+            print(f"  변주 추천 Top:")
+            for t, n in all_test_ideas.most_common(5):
+                print(f"    {t:<25} {n:>3}건")
+
     if not with_kpi:
         print("\n[!] 경고: KPI 채워진 record 0개.")
         print("    원인 후보:")

@@ -1,13 +1,22 @@
 """
-Pydantic 모델 — Stage 2 MVP 4-compact taxonomy.
+Pydantic 모델 — Stage 5-E (v2 구조화 taxonomy).
 
-제안서 검토 결과 채택한 콤팩트 분류 체계 (마케터 검수 과부하 60%+ 절감):
-  1. 후킹 전략 (Hooking Strategy) — 6개 enum
-  2. 핵심 메시지 소구 (Core USP) — 5개 enum
-  3. 비주얼/아트 스타일 (Visual/Art Style) — 5개 enum
-  4. 제작 기획 해석 (Marketer Insight) — 자유 서술 (3단 구조)
+Stage 2 MVP 4-compact + Stage 5-E 신호 기반 구조화:
+  1. 후킹 전략 (Hooking Strategy) — 6개 enum (기존)
+  2. 핵심 메시지 소구 (Core USP) — 5개 enum (기존)
+  3. 비주얼/아트 스타일 (Visual/Art Style) — 5개 enum (기존)
+  4. 강점 신호 (Strength Signals) — 10개 enum, 1-3개 다중 선택 (신규)
+  5. 약점 신호 (Weakness Signals) — 7개 enum, 0-3개 다중 선택 (신규)
+  6. 성과 가설 (Performance Hypothesis) — 7개 enum, 1-2개 다중 선택 (신규)
+  7. 테스트 변주 (Test Recommendations) — 8개 enum, 0-3개 다중 선택 (신규)
+  8. one_line_insight — 100자 미만 응축 가설 (서술형 593자 → 80자 평균, -86%)
 
-산출 JSON 스키마 v1 — js/data-source.js의 normalizeFromJson() 과 호환.
+목적:
+- 고/저효율 소재의 원인 분석을 자동 집계 가능하게 함 (KPI cross-tab)
+- 신규 제작 시 시험할 변주를 데이터로 추출 (test_ideas Top N)
+- Gemini 응답 토큰 약 73% 절감 (425 → 113 토큰/소재)
+
+산출 JSON 스키마 v2 — js/data-source.js의 normalizeFromJson() 과 호환.
 """
 
 from __future__ import annotations
@@ -53,15 +62,77 @@ class VisualStyle(str, Enum):
 
 
 # ─────────────────────────────────────────────────────────────
+# Stage 5-E: 신호 기반 구조화 enums (분석·집계 가능)
+# ─────────────────────────────────────────────────────────────
+class StrengthSignal(str, Enum):
+    """이 소재의 강점 (1-3개 다중 선택)."""
+
+    HOOK_VISUAL_IMPACT     = "강한 비주얼 임팩트"
+    HOOK_CHARACTER_APPEAL  = "캐릭터 매력 전면 노출"
+    HOOK_REWARD_PROMISE    = "보상 약속 명확"
+    HOOK_CURIOSITY         = "호기심/궁금증 유발"
+    VALUE_PROP_CLEAR       = "단일 명료한 가치 제안"
+    PROOF_SOCIAL_NUMBERS   = "수치·수상 사회증명"
+    EMOTIONAL_BOND         = "감성 유대/스토리텔링"
+    URGENCY_SCARCITY       = "출시일·한정 강조"
+    GAMEPLAY_SHOWCASE      = "게임플레이 자체 매력"
+    AUDIO_HOOK             = "오디오 후킹(BGM/SFX/Voice)"
+
+
+class WeaknessSignal(str, Enum):
+    """우려되는 약점 (0-3개 다중 선택)."""
+
+    UNCLEAR_GENRE          = "장르/게임성 불분명"
+    INFO_OVERLOAD          = "정보 과적 (텍스트/UI 산만)"
+    GENERIC_HOOK           = "후킹 식상/평이"
+    WEAK_CTA               = "행동 유도 약함/부재"
+    SMALL_TEXT_MOBILE      = "모바일 가독성 떨어지는 텍스트"
+    BRAND_INVISIBLE        = "타이틀/브랜드 인지 약함"
+    SLOW_PAYOFF            = "초반 3초 안에 가치 전달 실패"
+
+
+class PerformanceHypothesis(str, Enum):
+    """예상 성과 패턴 (1-2개 다중 선택). KPI cross-tab 검증용 가설."""
+
+    HIGH_CTR_LIKELY        = "높은 CTR 예상 — 강한 후킹"
+    HIGH_CVR_LIKELY        = "높은 CVR 예상 — 명확한 가치"
+    LOW_RELEVANCE_RISK     = "낮은 관련성 위험 — 정보 부족"
+    LOW_CONVERSION_RISK    = "낮은 전환 위험 — 행동 유도 약함"
+    NICHE_AUDIENCE         = "특정 타겟에 강하게 반응"
+    BROAD_APPEAL           = "범용 어필(Mass-market)"
+    HIGH_FATIGUE_RISK      = "피로도 빠를 위험 — 변주 필요"
+
+
+class TestRecommendation(str, Enum):
+    """다음 제작 시 시험할 변주 (0-3개 다중 선택). 신규 제작 가이드용."""
+
+    REPLICATE_HOOK_OTHER_CHAR   = "동일 후킹 + 다른 캐릭터"
+    SIMPLIFY_COPY               = "카피 1줄로 축약"
+    ADD_EXPLICIT_CTA            = "명시적 CTA 추가"
+    SHORTEN_TO_15SEC            = "15초 컷 테스트"
+    ADD_GAMEPLAY_CUT            = "게임플레이 컷 추가"
+    LOCALIZE_VARIANT            = "지역/언어 변주"
+    AB_TEST_VISUAL_STYLE        = "다른 art_style 변주 (A/B)"
+    SWAP_USP_ANGLE              = "다른 core_usp 각도 변주"
+
+
+# ─────────────────────────────────────────────────────────────
 # 2. 단일 소재 태깅 결과 (Gemini structured output)
 # ─────────────────────────────────────────────────────────────
 class CreativeTag(BaseModel):
-    """Gemini가 4-compact taxonomy에 따라 1개 소재를 분류한 결과."""
+    """Gemini가 1개 소재를 분석한 구조화 결과 (Stage 5-E v2 스키마).
+
+    설계 의도:
+    - 서술형 marketer_insight (593자 평균) 제거 → 구조화 신호로 대체
+    - 자동 집계·KPI cross-tab 가능 → 고/저효율 원인 분석 자동화
+    - 토큰 약 73% 절감 (425 → 113 토큰/소재)
+    - 한 줄 가설 + 구조화 신호로 마케터가 0.5초 안에 패턴 파악
+    """
 
     hooking_strategy: HookingStrategy = Field(
         ...,
         description=(
-            "초반 0~15초 후킹 기믹 분류. 다음 중 하나만 기재: "
+            "초반 0~15초 후킹 기믹 분류. 1개 선택: "
             "'실패/분노 유도', '캐릭터 외형 소구', '압도적 보상', "
             "'질문/선택 상황 제시', '비주얼 임팩트', '트렌드/인터넷 밈'."
         ),
@@ -69,7 +140,7 @@ class CreativeTag(BaseModel):
     core_usp: CoreUSP = Field(
         ...,
         description=(
-            "소재가 시청자에게 약속하는 가치. 다음 중 하나: "
+            "가치 제안. 1개 선택: "
             "'혜택형(무료뽑기/보상)', '전략/경쟁형(상성/조합)', "
             "'감성 유대형(교감/서사)', '편의성형(방치/빠른성장)', "
             "'대세감(출시일/사전등록수)'."
@@ -78,18 +149,53 @@ class CreativeTag(BaseModel):
     visual_style: VisualStyle = Field(
         ...,
         description=(
-            "아트 표현 기법. 다음 중 하나: '2D 일러스트', '3D 셀셰이딩', "
+            "아트 스타일. 1개 선택: '2D 일러스트', '3D 셀셰이딩', "
             "'2.5D 피규어 입체 화풍', '도트/픽셀 레트로', '시네마틱 실사 합성'."
         ),
     )
-    marketer_insight: str = Field(
+    # Stage 5-E 신규 — 구조화 신호 (자동 집계용)
+    strengths: list[StrengthSignal] = Field(
         ...,
-        min_length=80,
-        max_length=1500,  # v1.0.1: Gemini가 자연스럽게 700~1000자를 생성하는 도메인 특성 반영
+        min_length=1,
+        max_length=3,
         description=(
-            "[전략적 의도], [타겟 심리], [성과 예측 및 변주] 3단 구조의 한글 "
-            "마케팅 해석 평구. 단순한 사이즈/지면 사설은 금지하고 실제 기획 "
-            "의도와 타겟 심리 분석에 집중할 것. 각 단락은 [태그]로 시작."
+            "이 소재의 핵심 강점 1-3개. 영상/이미지에서 실제로 관찰된 항목만. "
+            "근거 없이 추측 금지. 우선순위 높은 순서로 나열."
+        ),
+    )
+    weaknesses: list[WeaknessSignal] = Field(
+        default_factory=list,
+        max_length=3,
+        description=(
+            "우려되는 약점 0-3개. 명백한 약점이 없다면 빈 리스트 []. "
+            "지나친 흠집내기 금지 — 마케팅 측면 실제 위험만."
+        ),
+    )
+    hypothesis: list[PerformanceHypothesis] = Field(
+        ...,
+        min_length=1,
+        max_length=2,
+        description=(
+            "예상 성과 가설 1-2개. 위 강점·약점에서 논리적으로 도출. "
+            "예: 강한 후킹 + CTA 약함 → HIGH_CTR_LIKELY + LOW_CONVERSION_RISK."
+        ),
+    )
+    test_ideas: list[TestRecommendation] = Field(
+        default_factory=list,
+        max_length=3,
+        description=(
+            "다음 제작 시 시험해볼 변주 0-3개. 약점 보완 또는 강점 증폭 관점. "
+            "당장 적용 가능한 구체적 변주만 — 막연한 '더 좋게' 금지."
+        ),
+    )
+    one_line_insight: str = Field(
+        ...,
+        min_length=20,
+        max_length=100,
+        description=(
+            "이 소재 1줄 가설 (20-100자 한글). 강점 + 약점 + 예상 결과를 통합. "
+            "예: '캐릭터 매력으로 시선 흡수 강하나 CTA 부족, 행동 유도 보강 시 CVR 개선 가능'. "
+            "수식어·미사여구·플랫폼 사설 금지."
         ),
     )
 
@@ -138,7 +244,23 @@ class CreativeRecord(BaseModel):
     hooking_strategy: Optional[str] = None
     core_usp: Optional[str] = Field(None, alias="USP")  # 기존 CSV의 USP 컬럼명과 호환
     visual_style: Optional[str] = Field(None, alias="art_style")  # 기존 art_style 컬럼명과 호환
-    marketer_insight: Optional[str] = None
+
+    # Stage 5-E: 구조화 신호 (분석·집계용). 기존 marketer_insight 대체.
+    strengths: list[str] = Field(default_factory=list, description="강점 신호 1-3개 (StrengthSignal enum 값)")
+    weaknesses: list[str] = Field(default_factory=list, description="약점 신호 0-3개 (WeaknessSignal enum 값)")
+    hypothesis: list[str] = Field(default_factory=list, description="성과 가설 1-2개 (PerformanceHypothesis enum 값)")
+    test_ideas: list[str] = Field(default_factory=list, description="테스트 변주 0-3개 (TestRecommendation enum 값)")
+    one_line_insight: Optional[str] = Field(None, description="응축된 1줄 가설 (20-100자)")
+
+    # 후방 호환: 기존 대시보드가 marketer_insight를 직접 참조하던 경우 깨지지 않도록.
+    # one_line_insight 의 값이 자동으로 채워짐 (data-source.js 정규화 후).
+    marketer_insight: Optional[str] = Field(
+        None,
+        description=(
+            "deprecated — one_line_insight 로 대체. "
+            "기존 대시보드 호환을 위해 동일 값이 자동 채워짐."
+        ),
+    )
 
     # 부가 메타 (Pydantic v2는 leading underscore 필드명을 금지하므로 일반 이름 사용)
     tagged_at: Optional[str] = None  # ISO 8601 (Gemini 태깅 시각)

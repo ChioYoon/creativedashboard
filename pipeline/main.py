@@ -536,6 +536,8 @@ def run(cfg: dict) -> dict:
                 # fallback: 첫 번째 URL이 있는 row
                 preview_url = next((d.asset_url for d in daily if d.asset_url), None)
 
+        # Stage 5-E: v2 신호 구조 추출 (서술형 marketer_insight 대체)
+        one_line = tag_dict.get("one_line_insight")
         record = CreativeRecord(
             creative_id=c.creative_name,
             소재명=c.creative_name,
@@ -549,7 +551,14 @@ def run(cfg: dict) -> dict:
             hooking_strategy=tag_dict.get("hooking_strategy"),
             USP=tag_dict.get("core_usp"),
             art_style=tag_dict.get("visual_style"),
-            marketer_insight=tag_dict.get("marketer_insight"),
+            # Stage 5-E v2: 구조화 신호 (분석·집계용)
+            strengths=tag_dict.get("strengths", []) or [],
+            weaknesses=tag_dict.get("weaknesses", []) or [],
+            hypothesis=tag_dict.get("hypothesis", []) or [],
+            test_ideas=tag_dict.get("test_ideas", []) or [],
+            one_line_insight=one_line,
+            # 후방 호환: 기존 대시보드가 marketer_insight 참조 시 깨지지 않도록 한 줄 가설 주입
+            marketer_insight=one_line,
             tagged_at=datetime.now(KST).isoformat(timespec="seconds"),
             gemini_model=cfg["model"],
             source_files=[str(p.relative_to(cfg["root"])) for p in c.all_files],

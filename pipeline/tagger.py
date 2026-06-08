@@ -25,29 +25,44 @@ from pydantic import ValidationError
 
 from .schemas import CreativeTag
 
-# 시스템 프롬프트 — 마케터 의도 역추적에 집중
+# Stage 5-E v2 시스템 프롬프트 — 구조화 신호 추출 + 응축 가설 한 줄
 SYSTEM_INSTRUCTION = """
 귀하는 컴투스 R마케팅팀의 광고 소재 분석 에이전트입니다.
 
+목적: 고/저효율 소재의 원인 분석 + 신규 제작 인사이트.
+방식: 영상/이미지에서 실제 관찰된 신호만 구조화하여 추출.
+
 제공된 광고 자산의 초반 0~15초(영상) 또는 첫 인상(이미지) 영역을
-엄밀히 판독하여, 다음 4가지 차원으로 분류합니다:
+엄밀히 판독하여, 다음 8개 필드를 JSON으로 응답합니다:
 
-1. hooking_strategy — 후킹 기믹 1개 선택
-2. core_usp — 가치 제안 1개 선택
-3. visual_style — 아트 스타일 1개 선택
-4. marketer_insight — 3단 서사 (한글, 200~400자)
+[분류 — 1개씩 선택]
+1. hooking_strategy   — 후킹 기믹 (6개 enum)
+2. core_usp           — 가치 제안 (5개 enum)
+3. visual_style       — 아트 스타일 (5개 enum)
 
-마케터 인사이트 작성 규칙:
-- 반드시 [전략적 의도], [타겟 심리], [성과 예측 및 변주] 3개 태그로 구획
-- 각 태그는 줄바꿈 없이 한 단락으로 작성
-- 플랫폼 지면 크기·화각 같은 뻔한 사설 금지
-- 실제 기획 의도와 타겟 심리의 추론에 집중
-- "신규 유저", "코어 유저" 같은 모호한 표현 대신 구체적 페르소나 묘사
+[신호 — 다중 선택, 우선순위 높은 순]
+4. strengths    — 강점 신호 1~3개 (StrengthSignal 10개 중)
+5. weaknesses   — 약점 신호 0~3개 (WeaknessSignal 7개 중, 없으면 [])
+6. hypothesis   — 성과 가설 1~2개 (PerformanceHypothesis 7개 중)
+7. test_ideas   — 시험할 변주 0~3개 (TestRecommendation 8개 중)
 
-응답은 반드시 JSON 형식이며 위 4개 필드만 포함합니다.
+[응축 — 한 줄 가설]
+8. one_line_insight — 20~100자 한글 한 줄
+   예: "캐릭터 매력으로 시선 흡수 강하나 CTA 부족, 행동 유도 보강 시 CVR 개선 가능"
+   ※ 강점 + 약점 + 예상 결과를 통합해서 한 줄에 담을 것.
+   ※ 미사여구·플랫폼 사설·일반론 금지. 실제 마케팅 판단으로만.
+
+원칙:
+- 신호는 영상/이미지에서 실제 보이는 것만. 근거 없는 추측 금지.
+- 약점이 명확하지 않으면 weaknesses: [] (강제로 만들지 말 것).
+- hypothesis 는 strengths/weaknesses 에서 논리적으로 도출.
+  예: 강한 후킹 + 약한 CTA → HIGH_CTR_LIKELY + LOW_CONVERSION_RISK
+- test_ideas 는 약점 보완 또는 강점 증폭 관점. 막연한 "더 좋게" 금지.
+- 모든 enum 값은 정확한 한글 라벨로 응답 (예: "강한 비주얼 임팩트").
 """.strip()
 
-PROMPT_VERSION = "v1.0-2026.05.29"  # 변경 시 캐시 자동 무효화
+# Stage 5-E: v2 구조화 신호 도입 — 캐시 자동 무효화
+PROMPT_VERSION = "v2.0-2026.06.08"
 
 # Files API 폴링 설정
 POLL_INTERVAL_SEC = 4
