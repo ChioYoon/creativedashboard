@@ -15,9 +15,16 @@ from pathlib import Path
 # schema 옆에 있는 signal 분포 헬퍼 재사용 (analyze-signals.py 와 동일 SoT)
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from pipeline.schemas import signal_distribution  # noqa: E402
+from pipeline.validators import check_signal_diversity  # noqa: E402
 
 
 def main():
+    # PowerShell cp949 console에서 em-dash(—) 등 unicode 출력 깨짐 방지
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
     p = argparse.ArgumentParser()
     p.add_argument("--title", default="pepp-us")
     p.add_argument("--path", default=None, help="JSON 직접 경로 지정 (선택)")
@@ -102,6 +109,15 @@ def main():
             for label, n in counter.most_common(5):
                 pct = f" ({n*100//len(creatives)}%)" if field in ("strengths", "weaknesses") else ""
                 print(f"    {label:<{width}} {n:>3}건{pct}")
+
+    # Stage 5-G.4: 분포 sanity check (top-1 enum 80% 이상 부여 시 경고)
+    diversity_warnings = check_signal_diversity(creatives, top_share_threshold=0.8)
+    if diversity_warnings:
+        print(f"\n[!] 분포 sanity check 경고 ({len(diversity_warnings)}건):")
+        for w in diversity_warnings:
+            print(f"    - {w}")
+    elif any(distribution.values()):
+        print(f"\n[OK] 분포 sanity check 통과 — top-1 enum 부여율 80% 미만 (variance 확보)")
 
     if not with_kpi:
         print("\n[!] 경고: KPI 채워진 record 0개.")

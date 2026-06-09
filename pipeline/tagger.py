@@ -25,7 +25,7 @@ from pydantic import ValidationError
 
 from .schemas import CreativeTag
 
-# Stage 5-E v2 시스템 프롬프트 — 구조화 신호 추출 + 응축 가설 한 줄
+# Stage 5-G v2.1 시스템 프롬프트 — hypothesis 공집합 허용 + few-shot 3개 + 분포 가이드
 SYSTEM_INSTRUCTION = """
 귀하는 컴투스 R마케팅팀의 광고 소재 분석 에이전트입니다.
 
@@ -43,7 +43,7 @@ SYSTEM_INSTRUCTION = """
 [신호 — 다중 선택, 우선순위 높은 순]
 4. strengths    — 강점 신호 1~3개 (StrengthSignal 10개 중)
 5. weaknesses   — 약점 신호 0~3개 (WeaknessSignal 7개 중, 없으면 [])
-6. hypothesis   — 성과 가설 1~2개 (PerformanceHypothesis 7개 중)
+6. hypothesis   — 성과 가설 0~2개 (PerformanceHypothesis 7개 중, 없으면 [])
 7. test_ideas   — 시험할 변주 0~3개 (TestRecommendation 8개 중)
 
 [응축 — 한 줄 가설]
@@ -55,14 +55,41 @@ SYSTEM_INSTRUCTION = """
 원칙:
 - 신호는 영상/이미지에서 실제 보이는 것만. 근거 없는 추측 금지.
 - 약점이 명확하지 않으면 weaknesses: [] (강제로 만들지 말 것).
-- hypothesis 는 strengths/weaknesses 에서 논리적으로 도출.
-  예: 강한 후킹 + 약한 CTA → HIGH_CTR_LIKELY + LOW_CONVERSION_RISK
+- hypothesis 는 strengths/weaknesses 에서 논리적으로 도출 가능할 때만.
+  · 확신할 근거가 없거나 신호가 평이하면 hypothesis: [] 응답.
+  · "안전한 default" (예: '높은 CTR 예상')를 모든 소재에 부여하지 말 것 — 신호 차별성 손실.
+  · 다양성 원칙: 같은 가설을 모든 소재가 공유하면 안 됨. 강점·약점에서 도출되는 가장
+    설명력 있는 1~2개만 선택. NICHE_AUDIENCE, LOW_RELEVANCE_RISK 등도 적극 고려.
 - test_ideas 는 약점 보완 또는 강점 증폭 관점. 막연한 "더 좋게" 금지.
 - 모든 enum 값은 정확한 한글 라벨로 응답 (예: "강한 비주얼 임팩트").
+
+[Few-shot 예시 — 응답 형식 + hypothesis 변별 학습용]
+
+예시 A) 강한 후킹 + 명확 CTA (긍정 가설 채움):
+  strengths: ["강한 비주얼 임팩트", "보상 약속 명확"]
+  weaknesses: []
+  hypothesis: ["높은 CTR 예상 — 강한 후킹", "높은 CVR 예상 — 명확한 가치"]
+  test_ideas: ["동일 후킹 + 다른 캐릭터"]
+  one_line_insight: "보상 약속을 시각 임팩트로 강조해 CTR·CVR 모두 우수 예상"
+
+예시 B) 평이한 후킹 + 신호 약함 (공집합 가설 — 가장 중요):
+  strengths: ["캐릭터 매력 전면 노출"]
+  weaknesses: ["후킹 식상/평이", "장르/게임성 불분명"]
+  hypothesis: []
+  test_ideas: ["다른 art_style 변주 (A/B)", "카피 1줄로 축약"]
+  one_line_insight: "캐릭터만 노출되고 장르 단서가 약해 성과 가설 보류, 후킹 변주 필요"
+  ※ 강·약점이 상쇄되거나 어느 hypothesis enum 도 강하게 부합하지 않으면 빈 리스트 정답.
+
+예시 C) 게임플레이 중심 + 변별적 (NICHE / LOW 사용):
+  strengths: ["게임플레이 자체 매력", "오디오 후킹(BGM/SFX/Voice)"]
+  weaknesses: ["행동 유도 약함/부재"]
+  hypothesis: ["특정 타겟에 강하게 반응", "낮은 전환 위험 — 행동 유도 약함"]
+  test_ideas: ["명시적 CTA 추가"]
+  one_line_insight: "게임플레이 + 사운드로 코어층 강하게 어필하나 CTA 부재로 전환 약함"
 """.strip()
 
-# Stage 5-E: v2 구조화 신호 도입 — 캐시 자동 무효화
-PROMPT_VERSION = "v2.0-2026.06.08"
+# Stage 5-G: hypothesis 공집합 허용 + few-shot 3개 + 분포 가이드 — 캐시 자동 무효화
+PROMPT_VERSION = "v2.1-2026.06.08-hypothesis-relax"
 
 # Files API 폴링 설정
 POLL_INTERVAL_SEC = 4
@@ -129,8 +156,12 @@ class GeminiTagger:
                     config=types.GenerateContentConfig(
                         response_mime_type="application/json",
                         response_schema=CreativeTag,
-                        temperature=0.2,
-                        thinking_config=types.ThinkingConfig(thinking_budget=0),
+                        # Stage 5-G.3:
+                        # - temperature 0.2 → 0.4: 안전 default-pick 완화 (variance ↑)
+                        # - thinking_budget 0 → 512: hypothesis 판단에 짧은 reasoning 허용
+                        # 비용 +$0.002 / 20 calls (무료 quota 내)
+                        temperature=0.4,
+                        thinking_config=types.ThinkingConfig(thinking_budget=512),
                     ),
                 )
                 break  # success

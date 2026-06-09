@@ -63,6 +63,12 @@ def group_by_signal(creatives, field: str) -> dict[str, list[dict]]:
 
 
 def main():
+    # PowerShell cp949 console에서 em-dash(—) 등 unicode 출력 깨짐 방지
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
     p = argparse.ArgumentParser()
     p.add_argument("--title", default="pepp-us")
     p.add_argument("--path", default=None)

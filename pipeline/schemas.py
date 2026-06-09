@@ -217,11 +217,12 @@ class CreativeTag(BaseModel):
         ),
     )
     hypothesis: list[PerformanceHypothesis] = Field(
-        ...,
-        min_length=1,
+        default_factory=list,
         max_length=2,
         description=(
-            "예상 성과 가설 1-2개. 위 강점·약점에서 논리적으로 도출. "
+            "예상 성과 가설 0-2개. 강점·약점에서 논리적으로 도출 가능할 때만. "
+            "확신할 근거가 없거나 신호가 평이하면 빈 리스트 []. "
+            "안전한 default 선택 금지 (모든 소재에 같은 가설 부여 X). "
             "예: 강한 후킹 + CTA 약함 → HIGH_CTR_LIKELY + LOW_CONVERSION_RISK."
         ),
     )
