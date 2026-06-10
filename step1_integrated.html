@@ -572,6 +572,28 @@
       color: #4338ca;
       margin-right: 4px;
     }
+    /* Stage 5-H v3: 칩 + 근거 페어 (세로 리스트) */
+    .signal-group-vertical {
+      display: block;
+    }
+    .signal-group-vertical .signal-group-label {
+      display: block;
+      margin-bottom: 6px;
+    }
+    .signal-pair {
+      margin: 0 0 8px 0;
+    }
+    .signal-evidence {
+      margin: 4px 0 0 4px;
+      padding: 3px 0 3px 10px;
+      font-size: 12px;
+      color: #6b7280;
+      line-height: 1.55;
+      border-left: 2px solid #d1d5db;
+    }
+    .signal-evidence.evidence-strength { border-left-color: #86efac; }
+    .signal-evidence.evidence-weakness { border-left-color: #fcd34d; }
+    .signal-evidence.evidence-testidea { border-left-color: #c4b5fd; }
     /* Stage 5-F-3: stats-grid 직후 분포 패널 (강점·약점·추천 변주 Top N) */
     .signal-dist-grid {
       display: grid;
@@ -1513,23 +1535,37 @@ function renderSignalDistribution(creatives) {
   panel.style.display = 'block';
 }
 
-// Stage 5-F-2: v2 구조화 신호(강점/약점/가설/변주 + one_line_insight)를 모달용 HTML로 렌더.
-// creative.meta 의 v2 필드가 모두 없으면 빈 문자열 반환 (graceful degrade).
+// Stage 5-F-2 / 5-H v3: v2 구조화 신호(강점/약점/가설/변주 + one_line_insight)를 모달용 HTML로 렌더.
+// 5-H: 강점/약점/변주는 칩 아래 근거(evidence)/실행안(action) 텍스트 페어 표시.
+//      근거 배열 부재 시(구 JSON) 칩만 표시 — graceful degrade.
 function buildSignalChipsHtml(creative) {
   const meta = (creative && creative.meta) || {};
   const groups = [
-    { label: '💪 강점',       items: meta.strengths,  cls: 'signal-chip-strength' },
-    { label: '⚠️ 약점',       items: meta.weaknesses, cls: 'signal-chip-weakness' },
-    { label: '🎯 가설',       items: meta.hypothesis, cls: 'signal-chip-hypothesis' },
-    { label: '💡 차주 변주',  items: meta.test_ideas, cls: 'signal-chip-testidea' },
+    { label: '💪 강점',       items: meta.strengths,  cls: 'signal-chip-strength',   evCls: 'evidence-strength', evidences: meta.strength_evidence },
+    { label: '⚠️ 약점',       items: meta.weaknesses, cls: 'signal-chip-weakness',   evCls: 'evidence-weakness', evidences: meta.weakness_evidence },
+    { label: '🎯 가설',       items: meta.hypothesis, cls: 'signal-chip-hypothesis', evCls: null,                evidences: null },
+    { label: '💡 차주 변주',  items: meta.test_ideas, cls: 'signal-chip-testidea',   evCls: 'evidence-testidea', evidences: meta.improvement_actions, evPrefix: '→ ' },
   ];
   const sections = groups
     .filter((g) => Array.isArray(g.items) && g.items.length)
     .map((g) => {
-      const chips = g.items.map((it) =>
-        `<span class="signal-chip ${g.cls}">${escapeHtml(it)}</span>`
-      ).join('');
-      return `<div class="signal-group"><span class="signal-group-label">${g.label}</span>${chips}</div>`;
+      const hasEvidence = Array.isArray(g.evidences) && g.evidences.some((e) => e && e.trim());
+      if (!hasEvidence) {
+        // 구 JSON (v2) 또는 가설 그룹 — 칩만 가로 나열 (기존 5-F-2 형태)
+        const chips = g.items.map((it) =>
+          `<span class="signal-chip ${g.cls}">${escapeHtml(it)}</span>`
+        ).join('');
+        return `<div class="signal-group"><span class="signal-group-label">${g.label}</span>${chips}</div>`;
+      }
+      // 5-H v3: 칩 + 근거 페어 세로 리스트
+      const rows = g.items.map((it, idx) => {
+        const ev = ((g.evidences && g.evidences[idx]) || '').trim();
+        const evHtml = ev
+          ? `<div class="signal-evidence ${g.evCls}">${escapeHtml((g.evPrefix || '') + ev)}</div>`
+          : '';
+        return `<div class="signal-pair"><span class="signal-chip ${g.cls}">${escapeHtml(it)}</span>${evHtml}</div>`;
+      }).join('');
+      return `<div class="signal-group signal-group-vertical"><span class="signal-group-label">${g.label}</span>${rows}</div>`;
     })
     .join('');
   const oneLine = (meta.one_line_insight || '').trim();
@@ -4879,6 +4915,11 @@ img { display:block; }
             <div class="modal-info-label">유형</div>
             <div class="modal-info-value"><strong style="color: ${creative.유형 === 'VID' ? '#8b5cf6' : '#f59e0b'};">${creative.유형}</strong> ${isVideo ? '(동영상)' : '(이미지)'}</div>
           </div>
+          ${(creative.meta?.creator_intent || '').trim() ? `
+          <div class="modal-info-row">
+            <div class="modal-info-label">🎬 제작 의도(추론)</div>
+            <div class="modal-info-value" style="font-style: italic; color: #6d28d9;">${escapeHtml(creative.meta.creator_intent.trim())}</div>
+          </div>` : ''}
           <div class="modal-info-row">
             <div class="modal-info-label">Total Score</div>
             <div class="modal-info-value"><strong style="font-size: 18px; color: #E84855;">${(creative.TotalScore ?? 0).toFixed(1)}</strong> <span style="font-size: 12px; color: #6b7280;">(${creative.등급 || '미평가'})</span></div>

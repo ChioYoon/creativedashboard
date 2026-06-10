@@ -162,16 +162,69 @@ def signal_distribution(creatives: list[dict]) -> dict[str, "Counter"]:
 
 
 # ─────────────────────────────────────────────────────────────
+# Stage 5-H: 신호 + 근거 페어 모델 (Gemini 경계 전용)
+#
+# object-list 가 1:1 정렬을 구조적으로 강제한다 — parallel-list 의
+# 순서 어긋남(탐지 불가 신뢰 문제)을 원천 차단. main.py 가 CreativeRecord
+# 로 평탄화하므로 signal_distribution/validators/대시보드는 무변경.
+# ─────────────────────────────────────────────────────────────
+class StrengthItem(BaseModel):
+    """강점 신호 + 시각적 근거 페어."""
+
+    signal: StrengthSignal = Field(..., description="강점 신호 enum")
+    evidence: str = Field(
+        ...,
+        min_length=15,
+        max_length=90,
+        description=(
+            "이 강점의 시각적 근거 (15-90자). 화면 위치·구성 요소·왜 효과적인지. "
+            "예: '3~9초 실제 전투 화면에서 광역 스킬 이펙트가 화면 절반을 채워 장르를 즉시 인지시킴'."
+        ),
+    )
+
+
+class WeaknessItem(BaseModel):
+    """약점 신호 + 근거 페어."""
+
+    signal: WeaknessSignal = Field(..., description="약점 신호 enum")
+    evidence: str = Field(
+        ...,
+        min_length=15,
+        max_length=90,
+        description=(
+            "이 약점의 근거 (15-90자). 무엇이 없는지/약한지 + 그로 인한 시청자 행동 결과. "
+            "가능하면 동일 장르 소재 일반 수준 대비 서술."
+        ),
+    )
+
+
+class TestIdeaItem(BaseModel):
+    """테스트 변주 + 구체 실행안 페어."""
+
+    idea: TestRecommendation = Field(..., description="변주 enum")
+    action: str = Field(
+        ...,
+        min_length=15,
+        max_length=90,
+        description=(
+            "당장 제작 지시 가능한 수준의 What+How (15-90자). 어느 컷에, 무엇을, 어떻게. "
+            "예: '엔드카드 마지막 2초에 다운로드 버튼 + 사전등록 보상 문구를 삽입한 B버전 제작'."
+        ),
+    )
+
+
+# ─────────────────────────────────────────────────────────────
 # 2. 단일 소재 태깅 결과 (Gemini structured output)
 # ─────────────────────────────────────────────────────────────
 class CreativeTag(BaseModel):
-    """Gemini가 1개 소재를 분석한 구조화 결과 (Stage 5-E v2 스키마).
+    """Gemini가 1개 소재를 분석한 구조화 결과 (Stage 5-H v3 스키마).
 
     설계 의도:
-    - 서술형 marketer_insight (593자 평균) 제거 → 구조화 신호로 대체
-    - 자동 집계·KPI cross-tab 가능 → 고/저효율 원인 분석 자동화
-    - 토큰 약 73% 절감 (425 → 113 토큰/소재)
-    - 한 줄 가설 + 구조화 신호로 마케터가 0.5초 안에 패턴 파악
+    - v2: 서술형 제거 → 구조화 신호 (집계·KPI cross-tab 자동화)
+    - v3 (5-H): 각 신호에 근거(evidence)·실행안(action) 페어 강제 — QA 피드백
+      ("enum 라벨만으로는 구체 강점 요소 확인 불가") 반영. 근거 강제 자체가
+      무차별 부여(강점 92%) 변별 장치로 작동.
+    - creator_intent: 제작 의도 복원 / one_line_insight: 처방형 (진단형 금지)
     """
 
     hooking_strategy: HookingStrategy = Field(
@@ -198,22 +251,22 @@ class CreativeTag(BaseModel):
             "'2.5D 피규어 입체 화풍', '도트/픽셀 레트로', '시네마틱 실사 합성'."
         ),
     )
-    # Stage 5-E 신규 — 구조화 신호 (자동 집계용)
-    strengths: list[StrengthSignal] = Field(
+    # Stage 5-H v3 — 신호 + 근거 페어 (object-list, 1:1 정렬 구조 강제)
+    strengths: list[StrengthItem] = Field(
         ...,
         min_length=1,
         max_length=3,
         description=(
-            "이 소재의 핵심 강점 1-3개. 영상/이미지에서 실제로 관찰된 항목만. "
-            "근거 없이 추측 금지. 우선순위 높은 순서로 나열."
+            "핵심 강점 1-3개, 각각 시각적 근거(evidence) 필수 동반. "
+            "구체적 근거를 댈 수 없는 강점은 선택하지 말 것. 우선순위 높은 순."
         ),
     )
-    weaknesses: list[WeaknessSignal] = Field(
+    weaknesses: list[WeaknessItem] = Field(
         default_factory=list,
         max_length=3,
         description=(
-            "우려되는 약점 0-3개. 명백한 약점이 없다면 빈 리스트 []. "
-            "지나친 흠집내기 금지 — 마케팅 측면 실제 위험만."
+            "우려되는 약점 0-3개, 각각 근거(evidence) 필수 동반. "
+            "명백한 약점이 없다면 빈 리스트 []. 지나친 흠집내기 금지."
         ),
     )
     hypothesis: list[PerformanceHypothesis] = Field(
@@ -226,22 +279,34 @@ class CreativeTag(BaseModel):
             "예: 강한 후킹 + CTA 약함 → HIGH_CTR_LIKELY + LOW_CONVERSION_RISK."
         ),
     )
-    test_ideas: list[TestRecommendation] = Field(
+    test_ideas: list[TestIdeaItem] = Field(
         default_factory=list,
         max_length=3,
         description=(
-            "다음 제작 시 시험해볼 변주 0-3개. 약점 보완 또는 강점 증폭 관점. "
-            "당장 적용 가능한 구체적 변주만 — 막연한 '더 좋게' 금지."
+            "다음 제작 시 시험해볼 변주 0-3개, 각각 구체 실행안(action) 필수 동반. "
+            "약점 보완 또는 강점 증폭 관점."
+        ),
+    )
+    creator_intent: str = Field(
+        ...,
+        min_length=20,
+        max_length=60,
+        description=(
+            "제작자가 이 소재로 의도했을 바를 1문장 추론 (20-60자). "
+            "평가가 아닌 의도 복원. "
+            "예: '실제 플레이 연출로 코어 게이머에게 게임성을 직접 증명하려는 의도'."
         ),
     )
     one_line_insight: str = Field(
         ...,
-        min_length=20,
-        max_length=100,
+        min_length=30,
+        max_length=140,
         description=(
-            "이 소재 1줄 가설 (20-100자 한글). 강점 + 약점 + 예상 결과를 통합. "
-            "예: '캐릭터 매력으로 시선 흡수 강하나 CTA 부족, 행동 유도 보강 시 CVR 개선 가능'. "
-            "수식어·미사여구·플랫폼 사설 금지."
+            "이 소재 1줄 (30-140자 한글). 구조 = [현재 평가 요약] — [구체 개선 방향]. "
+            "반드시 실행 가능한 개선 제안으로 끝낼 것. "
+            "진단형('~여지 있음') 금지, 처방형('~를 추가/교체/축약하여 ~개선')으로. "
+            "예: '전투 연출로 코어층 후킹은 강하나 마무리 행동 유도가 비어 있음 — "
+            "엔드카드에 보상 연계 CTA를 추가해 전환 직결 구조로 개선'."
         ),
     )
 
@@ -292,11 +357,27 @@ class CreativeRecord(BaseModel):
     visual_style: Optional[str] = Field(None, alias="art_style")  # 기존 art_style 컬럼명과 호환
 
     # Stage 5-E: 구조화 신호 (분석·집계용). 기존 marketer_insight 대체.
+    # Stage 5-H: parallel-list 평탄화 형태 유지 (signal_distribution/validators/대시보드 호환).
     strengths: list[str] = Field(default_factory=list, description="강점 신호 1-3개 (StrengthSignal enum 값)")
     weaknesses: list[str] = Field(default_factory=list, description="약점 신호 0-3개 (WeaknessSignal enum 값)")
     hypothesis: list[str] = Field(default_factory=list, description="성과 가설 1-2개 (PerformanceHypothesis enum 값)")
     test_ideas: list[str] = Field(default_factory=list, description="테스트 변주 0-3개 (TestRecommendation enum 값)")
-    one_line_insight: Optional[str] = Field(None, description="응축된 1줄 가설 (20-100자)")
+    one_line_insight: Optional[str] = Field(None, description="응축된 1줄 (처방형, 30-140자)")
+
+    # Stage 5-H v3: 신호별 근거/실행안 (strengths/weaknesses/test_ideas 와 index 1:1).
+    # CreativeTag(object-list)를 main.py 가 평탄화 — 정렬은 Gemini 경계에서 구조적으로 보장됨.
+    strength_evidence: list[str] = Field(
+        default_factory=list, description="강점별 시각적 근거 (strengths 와 index 1:1)"
+    )
+    weakness_evidence: list[str] = Field(
+        default_factory=list, description="약점별 근거 (weaknesses 와 index 1:1)"
+    )
+    improvement_actions: list[str] = Field(
+        default_factory=list, description="변주별 구체 실행안 (test_ideas 와 index 1:1)"
+    )
+    creator_intent: Optional[str] = Field(
+        None, description="제작 의도 추론 1문장 (20-60자) — 모달 상단 소재 정보 영역 표시"
+    )
 
     # 후방 호환: 기존 대시보드가 marketer_insight를 직접 참조하던 경우 깨지지 않도록.
     # one_line_insight 의 값이 자동으로 채워짐 (data-source.js 정규화 후).

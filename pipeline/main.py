@@ -537,7 +537,14 @@ def run(cfg: dict) -> dict:
                 preview_url = next((d.asset_url for d in daily if d.asset_url), None)
 
         # Stage 5-E: v2 신호 구조 추출 (서술형 marketer_insight 대체)
+        # Stage 5-H v3: tag_dict 의 strengths/weaknesses/test_ideas 가 object-list
+        # ({signal, evidence} / {idea, action}) 로 들어옴 — parallel-list 로 평탄화.
+        # 정렬은 Gemini 경계(CreativeTag object-list)에서 구조적으로 보장됨.
+        # 구 캐시 형태(list[str]) 는 PROMPT_VERSION 키로 격리되어 유입 불가.
         one_line = tag_dict.get("one_line_insight")
+        _strength_items = tag_dict.get("strengths", []) or []
+        _weakness_items = tag_dict.get("weaknesses", []) or []
+        _test_items = tag_dict.get("test_ideas", []) or []
         record = CreativeRecord(
             creative_id=c.creative_name,
             소재명=c.creative_name,
@@ -551,11 +558,15 @@ def run(cfg: dict) -> dict:
             hooking_strategy=tag_dict.get("hooking_strategy"),
             USP=tag_dict.get("core_usp"),
             art_style=tag_dict.get("visual_style"),
-            # Stage 5-E v2: 구조화 신호 (분석·집계용). schema 가 default_factory=list 보장.
-            strengths=tag_dict.get("strengths", []),
-            weaknesses=tag_dict.get("weaknesses", []),
+            # Stage 5-H v3: object-list → parallel-list 평탄화 (하위 소비자 호환)
+            strengths=[i["signal"] for i in _strength_items],
+            strength_evidence=[i.get("evidence", "") for i in _strength_items],
+            weaknesses=[i["signal"] for i in _weakness_items],
+            weakness_evidence=[i.get("evidence", "") for i in _weakness_items],
             hypothesis=tag_dict.get("hypothesis", []),
-            test_ideas=tag_dict.get("test_ideas", []),
+            test_ideas=[i["idea"] for i in _test_items],
+            improvement_actions=[i.get("action", "") for i in _test_items],
+            creator_intent=tag_dict.get("creator_intent"),
             one_line_insight=one_line,
             # Stage 5-F-1: marketer_insight dual-write 제거 — alias는 js/data-source.js
             # normalizeFromJson() 에서 처리. Python schema 의 marketer_insight 필드는
