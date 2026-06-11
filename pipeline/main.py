@@ -434,6 +434,7 @@ def run(cfg: dict) -> dict:
     # ── 3) 폴더별 태깅 루프 ──
     records: list[CreativeRecord] = []
     hits, misses, failures = 0, 0, 0
+    skipped_quota = 0  # quota 소진으로 이번 실행에서 건너뛴 캐시 미스 항목 (다음 실행 시 자동 재시도)
     started_at = time.time()
     daily_quota_exhausted = False  # 한 번 발생하면 같은 모델로 더 시도 불필요
 
@@ -450,6 +451,12 @@ def run(cfg: dict) -> dict:
             tag_dict = cached
             hits += 1
         else:
+            # 2026-06-11 수정: quota 소진 시에도 루프를 끊지 않고 (이전엔 break)
+            # 캐시 미스 항목만 건너뜀 — 순서상 뒤에 있는 캐시 히트 record 가
+            # 산출 JSON 에서 통째로 누락되던 퇴보(31→20건) 방지.
+            if daily_quota_exhausted:
+                skipped_quota += 1
+                continue
             try:
                 tag = tagger.tag_creative(rep)
                 tag_dict = tag.model_dump()
@@ -488,13 +495,15 @@ def run(cfg: dict) -> dict:
                         failures += 1
                         continue
                 elif is_quota_exhausted and metrics["fallback_used"]:
-                    # 폴백 모델도 한도 도달
+                    # 폴백 모델도 한도 도달 — 이후 Gemini 호출은 스킵하되
+                    # 캐시 히트 항목은 계속 처리 (break 금지: 산출 JSON 퇴보 방지)
                     tqdm.write(
-                        f"   [실패] {c.creative_name}: 폴백 모델 quota도 한도 도달, 나머지 건너뜀"
+                        f"   [quota] {c.creative_name}: 폴백 모델 quota도 한도 도달 — "
+                        f"이후 신규 태깅은 건너뛰고 캐시 항목만 처리"
                     )
-                    failures += 1
+                    skipped_quota += 1
                     daily_quota_exhausted = True
-                    break  # 더 시도해도 같은 에러, 루프 종료
+                    continue
                 else:
                     tqdm.write(f"   [실패] {c.creative_name}: {e}")
                     failures += 1
@@ -611,17 +620,20 @@ def run(cfg: dict) -> dict:
     print(f"   캐시 히트:     {hits}")
     print(f"   Gemini 호출:   {misses}")
     print(f"   실패:          {failures}")
+    if skipped_quota:
+        print(f"   quota 보류:    {skipped_quota} (다음 실행/nightly 에서 자동 재시도)")
     if metrics["fallback_used"]:
         print(f"   폴백 사용:     ✅ {fallback_model}")
     print(f"   산출 파일:     {out_path}")
     print(f"   대시보드 URL:  step1_integrated.html?title={cfg['title']}")
 
     metrics.update({
-        "status": "success" if failures == 0 else "partial",
+        "status": "success" if (failures == 0 and skipped_quota == 0) else "partial",
         "tagged_records": len(records),
         "cache_hits": hits,
         "cache_misses": misses,
         "failures": failures,
+        "skipped_quota": skipped_quota,
         "duration_sec": round(duration, 1),
         "output_path": str(out_path),
         "daily_quota_exhausted": daily_quota_exhausted,
