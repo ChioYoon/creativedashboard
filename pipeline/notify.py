@@ -145,8 +145,10 @@ def _build_html_body(batch_result: dict) -> str:
         kpi_badge = ""
         kpi_status = r.get("kpi_status", "skipped")
         if kpi_status == "success":
-            rows = r.get("kpi_rows_fetched", 0)
-            kpi_badge = f' <span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:6px;font-size:11px;">KPI {rows}행</span>'
+            # NOTE: 변수명 'rows' 사용 금지 — L128 의 HTML 행 리스트를 덮어써
+            #       'int' object has no attribute 'append' 크래시 발생 (2026-06-11 수정)
+            kpi_row_count = r.get("kpi_rows_fetched", 0)
+            kpi_badge = f' <span style="background:#dcfce7;color:#166534;padding:2px 6px;border-radius:6px;font-size:11px;">KPI {kpi_row_count}행</span>'
         elif kpi_status == "failed":
             kpi_badge = ' <span style="background:#fee2e2;color:#991b1b;padding:2px 6px;border-radius:6px;font-size:11px;">KPI 실패</span>'
         elif kpi_status == "auth_failed":

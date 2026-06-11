@@ -175,7 +175,7 @@ class StrengthItem(BaseModel):
     evidence: str = Field(
         ...,
         min_length=15,
-        max_length=90,
+        max_length=130,  # 목표 90자 (description) + LLM 초과 마진 — 거부로 인한 소재 전체 실패 방지
         description=(
             "이 강점의 시각적 근거 (15-90자). 화면 위치·구성 요소·왜 효과적인지. "
             "예: '3~9초 실제 전투 화면에서 광역 스킬 이펙트가 화면 절반을 채워 장르를 즉시 인지시킴'."
@@ -190,7 +190,7 @@ class WeaknessItem(BaseModel):
     evidence: str = Field(
         ...,
         min_length=15,
-        max_length=90,
+        max_length=130,  # 목표 90자 (description) + LLM 초과 마진 — 거부로 인한 소재 전체 실패 방지
         description=(
             "이 약점의 근거 (15-90자). 무엇이 없는지/약한지 + 그로 인한 시청자 행동 결과. "
             "가능하면 동일 장르 소재 일반 수준 대비 서술."
@@ -205,7 +205,7 @@ class TestIdeaItem(BaseModel):
     action: str = Field(
         ...,
         min_length=15,
-        max_length=90,
+        max_length=130,  # 목표 90자 (description) + LLM 초과 마진 — 거부로 인한 소재 전체 실패 방지
         description=(
             "당장 제작 지시 가능한 수준의 What+How (15-90자). 어느 컷에, 무엇을, 어떻게. "
             "예: '엔드카드 마지막 2초에 다운로드 버튼 + 사전등록 보상 문구를 삽입한 B버전 제작'."
@@ -290,7 +290,7 @@ class CreativeTag(BaseModel):
     creator_intent: str = Field(
         ...,
         min_length=20,
-        max_length=60,
+        max_length=100,  # 목표 60자 (description) + LLM 초과 마진 (2026-06-11 validation 실패 1건 대응)
         description=(
             "제작자가 이 소재로 의도했을 바를 1문장 추론 (20-60자). "
             "평가가 아닌 의도 복원. "
@@ -300,7 +300,7 @@ class CreativeTag(BaseModel):
     one_line_insight: str = Field(
         ...,
         min_length=30,
-        max_length=140,
+        max_length=180,  # 목표 140자 (description) + LLM 초과 마진
         description=(
             "이 소재 1줄 (30-140자 한글). 구조 = [현재 평가 요약] — [구체 개선 방향]. "
             "반드시 실행 가능한 개선 제안으로 끝낼 것. "
