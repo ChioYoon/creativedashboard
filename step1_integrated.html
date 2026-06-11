@@ -2816,10 +2816,15 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     }
     
     // 캠페인 목록 추출
+    // Stage 5-F-4: JSON 모드에서는 record-level '캠페인'이 null (1 소재 = N 캠페인 운영)
+    //              → kpi_daily[].campaign_name 에서 수집. CSV 모드는 기존 그대로.
     function extractCampaigns(rows) {
       const campaigns = new Set();
       rows.forEach(row => {
         if (row['캠페인']) campaigns.add(row['캠페인']);
+        if (Array.isArray(row.kpi_daily)) {
+          row.kpi_daily.forEach(k => { if (k.campaign_name) campaigns.add(k.campaign_name); });
+        }
       });
       return Array.from(campaigns).sort();
     }
@@ -3055,19 +3060,54 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           let filterSummary = [];
           
           // 캠페인 필터 (다중 선택 지원)
+          // Stage 5-F-4: JSON 모드 (row.kpi_daily 보유)는 row 제외가 아니라 "KPI 교체" —
+          //   각 소재의 전환/비용/노출수/클릭수/Revenue 를 선택 캠페인의 kpi_daily 합으로
+          //   교체한 사본을 만들면, 이후 집계→점수→표→분포 패널→캠페인 비교가 전부
+          //   캠페인 기준으로 자동 재계산됨 (calculateCreativeScores 는 KPI 필드만 읽음).
+          //   선택 캠페인에서 미운영(매칭 kpi_daily 0행)인 소재는 제외 (CSV 의미론과 일관).
+          //   rawData 원본은 비파괴 — 필터 해제 시 즉시 원복.
           if (currentCampaign) {
-            if (Array.isArray(currentCampaign)) {
-              // 배열인 경우 (복수 선택)
-              filteredRows = filteredRows.filter(row => currentCampaign.includes(row['캠페인']));
-              filterSummary.push(`캠페인: ${currentCampaign.join(', ')}`);
-              console.log(`🎯 캠페인 필터: ${currentCampaign.join(', ')} → ${filteredRows.length}개 행`);
+            const selectedCampaigns = Array.isArray(currentCampaign) ? currentCampaign : [currentCampaign];
+            const isJsonKpiMode = filteredRows.some(row => Array.isArray(row.kpi_daily) && row.kpi_daily.length);
+            if (isJsonKpiMode) {
+              const beforeCount = filteredRows.length;
+              filteredRows = filteredRows.map(row => {
+                if (!Array.isArray(row.kpi_daily) || !row.kpi_daily.length) return null; // KPI 이력 없는 소재 — 캠페인 기준 보기에서 제외
+                const matched = row.kpi_daily.filter(k => selectedCampaigns.includes(k.campaign_name));
+                if (!matched.length) return null; // 선택 캠페인에서 미운영 → 제외
+                const agg = matched.reduce((s, k) => {
+                  s.전환 += (k.conversions || 0);
+                  s.비용 += (k.cost || 0);
+                  s.노출수 += (k.impressions || 0);
+                  s.클릭수 += (k.clicks || 0);
+                  s.매출 += (k.conversions_value || 0);
+                  return s;
+                }, { 전환: 0, 비용: 0, 노출수: 0, 클릭수: 0, 매출: 0 });
+                return {
+                  ...row,
+                  전환: Math.round(agg.전환),
+                  비용: Math.round(agg.비용),
+                  노출수: agg.노출수,
+                  클릭수: agg.클릭수,
+                  Revenue: Math.round(agg.매출),
+                };
+              }).filter(Boolean);
+              const excludedCount = beforeCount - filteredRows.length;
+              window._campaignKpiSwapActive = true; // 표시용 플래그 (필터 요약/배지)
+              filterSummary.push(
+                `캠페인: ${selectedCampaigns.join(', ')} — KPI·점수 캠페인 기준 재계산` +
+                (excludedCount ? ` (미운영 ${excludedCount}개 제외)` : '')
+              );
+              console.log(`🎯 캠페인 필터(JSON·KPI 교체): ${selectedCampaigns.join(', ')} → ${filteredRows.length}개 행 (미운영 ${excludedCount}개 제외)`);
             } else {
-              // 문자열인 경우 (단일 선택)
-              filteredRows = filteredRows.filter(row => row['캠페인'] === currentCampaign);
-              filterSummary.push(`캠페인: ${currentCampaign}`);
-              console.log(`🎯 캠페인 필터: ${currentCampaign} → ${filteredRows.length}개 행`);
+              window._campaignKpiSwapActive = false;
+              // CSV 모드 — 기존 row 제외 필터 그대로
+              filteredRows = filteredRows.filter(row => selectedCampaigns.includes(row['캠페인']));
+              filterSummary.push(`캠페인: ${selectedCampaigns.join(', ')}`);
+              console.log(`🎯 캠페인 필터: ${selectedCampaigns.join(', ')} → ${filteredRows.length}개 행`);
             }
           } else {
+            window._campaignKpiSwapActive = false;
             filterSummary.push('캠페인: 전체');
           }
       
