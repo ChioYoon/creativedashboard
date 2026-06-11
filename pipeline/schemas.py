@@ -175,7 +175,7 @@ class StrengthItem(BaseModel):
     evidence: str = Field(
         ...,
         min_length=15,
-        max_length=130,  # 목표 90자 (description) + LLM 초과 마진 — 거부로 인한 소재 전체 실패 방지
+        max_length=250,  # 목표 90자 (description). 영어 인용 포함 evidence 는 130자도 초과 (2026-06-11 minigame 3건) — 거부 비용이 커서 충분히 관대하게
         description=(
             "이 강점의 시각적 근거 (15-90자). 화면 위치·구성 요소·왜 효과적인지. "
             "예: '3~9초 실제 전투 화면에서 광역 스킬 이펙트가 화면 절반을 채워 장르를 즉시 인지시킴'."
@@ -190,7 +190,7 @@ class WeaknessItem(BaseModel):
     evidence: str = Field(
         ...,
         min_length=15,
-        max_length=130,  # 목표 90자 (description) + LLM 초과 마진 — 거부로 인한 소재 전체 실패 방지
+        max_length=250,  # 목표 90자 (description). 영어 인용 포함 evidence 는 130자도 초과 (2026-06-11 minigame 3건) — 거부 비용이 커서 충분히 관대하게
         description=(
             "이 약점의 근거 (15-90자). 무엇이 없는지/약한지 + 그로 인한 시청자 행동 결과. "
             "가능하면 동일 장르 소재 일반 수준 대비 서술."
@@ -205,7 +205,7 @@ class TestIdeaItem(BaseModel):
     action: str = Field(
         ...,
         min_length=15,
-        max_length=130,  # 목표 90자 (description) + LLM 초과 마진 — 거부로 인한 소재 전체 실패 방지
+        max_length=250,  # 목표 90자 (description). 영어 인용 포함 evidence 는 130자도 초과 (2026-06-11 minigame 3건) — 거부 비용이 커서 충분히 관대하게
         description=(
             "당장 제작 지시 가능한 수준의 What+How (15-90자). 어느 컷에, 무엇을, 어떻게. "
             "예: '엔드카드 마지막 2초에 다운로드 버튼 + 사전등록 보상 문구를 삽입한 B버전 제작'."
