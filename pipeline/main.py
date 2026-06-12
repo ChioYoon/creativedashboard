@@ -315,9 +315,12 @@ def run(cfg: dict) -> dict:
 
     print(f"   → {summarize(candidates)}")
     metrics["scanned_folders"] = len(candidates)
+    # Stage 5-I: 풀 백분위·KPI 매칭은 전체 기준(--limit 무관). 파일럿(--limit N)도
+    # production 과 동일한 풀에서 백분위를 산출해야 캐시된 kpi_reality_check 가 정확.
+    full_candidates = candidates
     if cfg["limit"] > 0:
         candidates = candidates[: cfg["limit"]]
-        print(f"   → --limit {cfg['limit']} 적용: {len(candidates)}개로 축소")
+        print(f"   → --limit {cfg['limit']} 적용: 태깅 {len(candidates)}개로 축소 (백분위 풀은 전체 {len(full_candidates)}개 유지)")
     if not candidates:
         msg = "분석 대상 소재 폴더가 없습니다 (경로/차수/유형 필터 확인 필요)"
         print(f"   [경고] {msg}")
@@ -354,7 +357,7 @@ def run(cfg: dict) -> dict:
 
             source = GoogleAdsKpiSource.from_env()
             kpi_window_start, kpi_window_end = default_window(cfg["kpi_window_days"])
-            candidate_concepts = {c.creative_name for c in candidates}  # 폴더명 = T열 concept
+            candidate_concepts = {c.creative_name for c in full_candidates}  # 폴더명 = T열 concept (전체 기준 — 풀 백분위용)
             print(
                 f"\n💰 2.5) KPI fetch (Google Ads) — "
                 f"{kpi_window_start} ~ {kpi_window_end}, "
@@ -431,6 +434,108 @@ def run(cfg: dict) -> dict:
             print("\n💰 KPI fetch: customer_id 미설정으로 건너뜀")
     metrics["kpi_status"] = kpi_status
 
+    # ── 2.7) Stage 5-I: 풀 데이터 컨텍스트 + 소재별 백분위 산출 ──
+    # KPI 가 태깅보다 먼저 fetch 되므로(위) 태깅 시점에 풀 분포·실제 KPI 를
+    # 컨텍스트로 주입 가능. 백분위는 코드가 정확히 계산 (AI 는 해석만).
+    from .schemas import aggregate_kpi, signal_distribution
+
+    POOL_IMP_THRESHOLD = 100  # 노출 100 미만은 KPI 노이즈 — 백분위 풀에서 제외
+
+    def _pct_better(value, pool, higher_better=True):
+        """value 가 pool(정렬 전 리스트)에서 이긴 비율 0-100 (높을수록 우수)."""
+        if not pool or len(pool) < 2:
+            return None
+        if higher_better:
+            beat = sum(1 for p in pool if p < value)
+        else:
+            beat = sum(1 for p in pool if p > value)
+        return round(beat / (len(pool) - 1) * 100)
+
+    # 소재별 집계 KPI (전체 후보 기준 — 풀 백분위가 --limit 에 영향받지 않도록)
+    per_creative_kpi = {}  # creative_name → {ctr, cvr, cpa, imp}
+    for c in full_candidates:
+        daily = kpi_index.get(c.creative_name, [])
+        if not daily:
+            continue
+        t = aggregate_kpi(daily)
+        if t.impressions <= 0:
+            continue
+        per_creative_kpi[c.creative_name] = {
+            "ctr": t.clicks / t.impressions * 100,
+            "cvr": t.conversions / t.impressions * 100,
+            "cpa": (t.cost / t.conversions) if t.conversions else None,
+            "imp": t.impressions,
+        }
+
+    # 백분위 풀 (노출 임계 이상)
+    pool = [v for v in per_creative_kpi.values() if v["imp"] >= POOL_IMP_THRESHOLD]
+    ctr_pool = sorted(v["ctr"] for v in pool)
+    cvr_pool = sorted(v["cvr"] for v in pool)
+    cpa_pool = sorted(v["cpa"] for v in pool if v["cpa"] is not None)
+
+    def _q(sorted_list, frac):
+        if not sorted_list:
+            return None
+        return sorted_list[min(len(sorted_list) - 1, int(len(sorted_list) * frac))]
+
+    # 소재별 백분위 (record 저장 + 컨텍스트용)
+    creative_percentiles = {}  # creative_name → {ctr, cvr, cpa} (0-100, 높을수록 우수)
+    for name, v in per_creative_kpi.items():
+        creative_percentiles[name] = {
+            "ctr": _pct_better(v["ctr"], ctr_pool, True),
+            "cvr": _pct_better(v["cvr"], cvr_pool, True),
+            "cpa": _pct_better(v["cpa"], cpa_pool, False) if v["cpa"] is not None else None,
+        }
+
+    # pool_context (공유 텍스트) — 직전 JSON 신호분포 + 백분위 임계
+    pool_context = ""
+    if pool:
+        dist_line = ""
+        try:
+            prev_path = cfg["output_dir"] / f"{cfg['title']}.json"
+            if prev_path.exists():
+                prev = json.loads(prev_path.read_text(encoding="utf-8"))
+                prev_creatives = prev.get("creatives", [])
+                if prev_creatives:
+                    sd = signal_distribution(prev_creatives)
+                    n_prev = len(prev_creatives)
+                    tops = [
+                        f"'{k}' {v*100//n_prev}%"
+                        for k, v in sd["strengths"].most_common(3)
+                        if v * 100 // n_prev >= 50
+                    ]
+                    if tops:
+                        dist_line = f"\n- 강점 분포(다수 공유 = 차별점 아님): {', '.join(tops)}"
+        except Exception:
+            pass
+
+        def _fmt(q):
+            return f"{q:.1f}" if q is not None else "?"
+        pool_context = (
+            f"[풀 데이터 컨텍스트 — 같은 타이틀 광고 집행 {len(pool)}개 소재 기준]"
+            f"{dist_line}\n"
+            f"- 실제 CTR 분포: 하위25% {_fmt(_q(ctr_pool, 0.25))}% / 중앙 {_fmt(_q(ctr_pool, 0.5))}% / 상위25% {_fmt(_q(ctr_pool, 0.75))}%\n"
+            f"- 실제 CVR 분포: 하위25% {_fmt(_q(cvr_pool, 0.25))}% / 중앙 {_fmt(_q(cvr_pool, 0.5))}% / 상위25% {_fmt(_q(cvr_pool, 0.75))}%"
+        )
+    if pool_context:
+        print(f"   📊 2.7) 풀 컨텍스트 산출: 백분위 풀 {len(pool)}개 소재 (노출≥{POOL_IMP_THRESHOLD})")
+
+    def build_extra_context(creative_name):
+        """소재별 동적 컨텍스트 (pool_context + 이 소재 실제 성과)."""
+        v = per_creative_kpi.get(creative_name)
+        if not v:
+            return (pool_context + "\n[이 소재의 실제 성과] 광고 집행 이력 없음 — 시각 분석만 수행").strip()
+        p = creative_percentiles.get(creative_name, {})
+        # pct = 풀에서 이긴 비율(높을수록 우수). 절반 기준 상위/하위로 명확히 표현.
+        def _top(pct):
+            if pct is None:
+                return "?"
+            return f"상위 {max(1, 100 - pct)}%" if pct >= 50 else f"하위 {max(1, pct)}%"
+        parts = [f"CTR {v['ctr']:.1f}% ({_top(p.get('ctr'))})", f"CVR {v['cvr']:.2f}% ({_top(p.get('cvr'))})"]
+        if v["cpa"] is not None:
+            parts.append(f"CPA {round(v['cpa']):,}원 ({_top(p.get('cpa'))})")
+        return (pool_context + "\n[이 소재의 실제 성과] " + ", ".join(parts)).strip()
+
     # ── 3) 폴더별 태깅 루프 ──
     records: list[CreativeRecord] = []
     hits, misses, failures = 0, 0, 0
@@ -458,7 +563,8 @@ def run(cfg: dict) -> dict:
                 skipped_quota += 1
                 continue
             try:
-                tag = tagger.tag_creative(rep)
+                # Stage 5-I: 풀 분포 + 이 소재 실제 KPI 백분위를 동적 컨텍스트로 주입
+                tag = tagger.tag_creative(rep, extra_context=build_extra_context(c.creative_name))
                 tag_dict = tag.model_dump()
                 cache.put(sha, pversion, tag_dict)
                 cache.save()
@@ -483,9 +589,9 @@ def run(cfg: dict) -> dict:
                     tagger = GeminiTagger(api_key=cfg["api_key"], model=fallback_model)
                     metrics["fallback_used"] = True
                     daily_quota_exhausted = False
-                    # 같은 소재 재시도
+                    # 같은 소재 재시도 (Stage 5-I: 동일 컨텍스트 주입)
                     try:
-                        tag = tagger.tag_creative(rep)
+                        tag = tagger.tag_creative(rep, extra_context=build_extra_context(c.creative_name))
                         tag_dict = tag.model_dump()
                         cache.put(sha, pversion, tag_dict)
                         cache.save()
@@ -577,6 +683,9 @@ def run(cfg: dict) -> dict:
             improvement_actions=[i.get("action", "") for i in _test_items],
             creator_intent=tag_dict.get("creator_intent"),
             one_line_insight=one_line,
+            # Stage 5-I: 실제 KPI 정합성 해석(AI) + 백분위(코드 산출)
+            kpi_reality_check=tag_dict.get("kpi_reality_check"),
+            kpi_percentiles=creative_percentiles.get(c.creative_name),
             # Stage 5-F-1: marketer_insight dual-write 제거 — alias는 js/data-source.js
             # normalizeFromJson() 에서 처리. Python schema 의 marketer_insight 필드는
             # 다음 회차에 제거 예정 (구 JSON 호환 위해 일단 default=None).

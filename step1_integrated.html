@@ -615,6 +615,32 @@
       color: #4338ca;
       margin-right: 4px;
     }
+    /* Stage 5-I: 데이터 체크(KPI 정합성 해석) + 백분위 배지 */
+    .signal-reality {
+      margin-top: 8px;
+      padding: 10px 14px;
+      background: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      border-radius: 6px;
+      font-size: 13px;
+      color: #1e3a5f;
+      line-height: 1.6;
+    }
+    .signal-reality-key {
+      font-weight: 700;
+      color: #1d4ed8;
+      margin-right: 4px;
+    }
+    .pctile-badge {
+      display: inline-block;
+      padding: 1px 7px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      vertical-align: middle;
+    }
+    .pctile-top { background: #dcfce7; color: #166534; }
+    .pctile-bottom { background: #fef3c7; color: #92400e; }
     /* Stage 5-H v3: 칩 + 근거 페어 (세로 리스트) */
     .signal-group-vertical {
       display: block;
@@ -1615,7 +1641,22 @@ function buildSignalChipsHtml(creative) {
   const oneLineHtml = oneLine
     ? `<div class="signal-oneline"><span class="signal-oneline-key">🔑 한 줄</span>${escapeHtml(oneLine)}</div>`
     : '';
-  return sections + oneLineHtml;
+  // Stage 5-I: 실제 KPI 정합성 해석 (KPI 있을 때만)
+  const reality = (meta.kpi_reality_check || '').trim();
+  const realityHtml = reality
+    ? `<div class="signal-reality"><span class="signal-reality-key">📊 데이터 체크</span>${escapeHtml(reality)}</div>`
+    : '';
+  return sections + oneLineHtml + realityHtml;
+}
+
+// Stage 5-I: 풀 대비 백분위(0-100, 높을수록 우수) → 상위/하위 배지 HTML.
+// 절반 기준: pct>=50 → 상위 (녹색), pct<50 → 하위 (주황).
+function pctBadgeHtml(pct) {
+  if (pct === null || pct === undefined) return '';
+  const top = pct >= 50;
+  const label = top ? `상위 ${Math.max(1, 100 - pct)}%` : `하위 ${Math.max(1, pct)}%`;
+  const cls = top ? 'pctile-top' : 'pctile-bottom';
+  return ` <span class="pctile-badge ${cls}">${label}</span>`;
 }
 
 function plParseCSV(text) {
@@ -5013,7 +5054,7 @@ img { display:block; }
           </div>
           <div class="modal-info-row">
             <div class="modal-info-label">CPA</div>
-            <div class="modal-info-value"><strong>₩${Math.round(creative.CPA ?? 0).toLocaleString()}</strong></div>
+            <div class="modal-info-value"><strong>₩${Math.round(creative.CPA ?? 0).toLocaleString()}</strong>${pctBadgeHtml(creative.meta?.kpi_percentiles?.cpa)}</div>
           </div>
           <div class="modal-info-row">
             <div class="modal-info-label">IPM</div>
@@ -5041,7 +5082,7 @@ img { display:block; }
           </div>
           <div class="modal-info-row">
             <div class="modal-info-label">CTR</div>
-            <div class="modal-info-value">${(creative.CTR ?? 0).toFixed(2)}%</div>
+            <div class="modal-info-value">${(creative.CTR ?? 0).toFixed(2)}%${pctBadgeHtml(creative.meta?.kpi_percentiles?.ctr)}</div>
           </div>
           ${signalsBlock}
           ${insightBlock}

@@ -309,6 +309,18 @@ class CreativeTag(BaseModel):
             "엔드카드에 보상 연계 CTA를 추가해 전환 직결 구조로 개선'."
         ),
     )
+    # Stage 5-I: 시각 가설 vs 실제 KPI 정합성 해석 (KPI 컨텍스트가 주입됐을 때만).
+    kpi_reality_check: Optional[str] = Field(
+        None,
+        max_length=200,  # 목표 40-150자 + LLM 마진
+        description=(
+            "[이 소재의 실제 성과]에 KPI 가 제공됐을 때만 작성 (40-150자 한글). "
+            "시각적 기대(가설)와 실제 KPI 의 정합/모순 + 시사점. KPI 가 없으면 생략(null). "
+            "어미는 해석 후 행동: '~이므로 ~필요/검증'. "
+            "예: '캐릭터 매력으로 높은 CTR 기대했으나 실제 CTR 하위 25% — "
+            "후킹이 클릭으로 이어지지 않아 첫 3초 강화 필요'."
+        ),
+    )
 
 
 # ─────────────────────────────────────────────────────────────
@@ -377,6 +389,14 @@ class CreativeRecord(BaseModel):
     )
     creator_intent: Optional[str] = Field(
         None, description="제작 의도 추론 1문장 (20-60자) — 모달 상단 소재 정보 영역 표시"
+    )
+    # Stage 5-I: 시각 가설 vs 실제 KPI 정합성 해석 (KPI 있을 때만)
+    kpi_reality_check: Optional[str] = Field(
+        None, description="실제 KPI vs 시각 가설 정합/모순 해석 (모달 '📊 데이터 체크' 표시)"
+    )
+    # Stage 5-I: 풀 대비 백분위 (코드 산출 — AI 아님). 키: ctr/cvr/cpa, 값: '상위 N%' 표시용 0-100
+    kpi_percentiles: Optional[dict] = Field(
+        None, description="풀 대비 백분위 {ctr, cvr, cpa} — 코드 계산, 모달 배지용"
     )
 
     # 후방 호환: 기존 대시보드가 marketer_insight를 직접 참조하던 경우 깨지지 않도록.

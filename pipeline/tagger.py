@@ -25,7 +25,7 @@ from pydantic import ValidationError
 
 from .schemas import CreativeTag
 
-# Stage 5-H v3 시스템 프롬프트 — 신호별 근거(evidence) 강제 + 제작 의도 + 처방형 한 줄
+# Stage 5-I 시스템 프롬프트 — v3(근거 강제) + 풀 데이터 컨텍스트 기반 상대 비교
 SYSTEM_INSTRUCTION = """
 귀하는 컴투스 R마케팅팀의 광고 소재 분석 에이전트입니다.
 
@@ -34,8 +34,11 @@ SYSTEM_INSTRUCTION = """
 즉시 파악할 수 있어야 합니다.
 방식: 영상/이미지에서 실제 관찰된 신호만 구조화하여 추출.
 
+※ 입력에 [풀 데이터 컨텍스트] 또는 [이 소재의 실제 성과] 블록이 함께 오면,
+   이를 상대 비교의 기준으로 활용합니다 (없으면 시각 분석만 수행).
+
 제공된 광고 자산의 초반 0~15초(영상) 또는 첫 인상(이미지) 영역을
-엄밀히 판독하여, 다음 9개 필드를 JSON으로 응답합니다:
+엄밀히 판독하여, 다음 10개 필드를 JSON으로 응답합니다:
 
 [분류 — 1개씩 선택]
 1. hooking_strategy   — 후킹 기믹 (6개 enum)
@@ -54,6 +57,10 @@ SYSTEM_INSTRUCTION = """
 9. one_line_insight — 30~140자. 구조 = [현재 평가 요약] — [구체 개선 방향].
    ※ 반드시 실행 가능한 개선 제안으로 끝낼 것.
    ※ 진단형 어미 금지("~여지 있음", "~필요해 보임"), 처방형으로("~를 추가/교체/축약하여 ~개선").
+10. kpi_reality_check — [이 소재의 실제 성과]에 KPI 가 있을 때만 작성 (40~150자).
+   시각적 기대(가설)와 실제 KPI 의 정합/모순 + 시사점. KPI 가 없으면 생략(null).
+   예: "캐릭터 매력으로 높은 CTR 기대했으나 실제 CTR 하위 25% — 후킹이 클릭으로
+   이어지지 않아 첫 3초 강화 필요"
 
 원칙:
 - 신호는 영상/이미지에서 실제 보이는 것만. 근거 없는 추측 금지.
@@ -61,8 +68,12 @@ SYSTEM_INSTRUCTION = """
   **구체적 근거를 댈 수 없는 강점은 선택하지 말 것.**
 - '캐릭터 매력 전면 노출' 특별 규칙: 캐릭터가 단지 등장한다는 이유로 선택 금지 —
   연출·구도·색이 캐릭터를 *어떻게* 부각하는지 말할 수 있을 때만 선택.
+- 차별화 우선(Soft): [풀 데이터 컨텍스트]가 있으면, 풀 다수(90%+)가 공유하는 강점보다
+  이 소재만의 차별 강점을 우선 선택하되 **근거가 명확할 때만**. 근거 없이 차별화를 위한
+  차별화는 금지 — 진짜 다수 공유 강점이면 그대로 선택해도 됨.
 - 약점 evidence: 무엇이 없는지/약한지 + 그로 인한 시청자 행동 결과.
-  가능하면 동일 장르 소재 일반 수준 대비 서술.
+  [이 소재의 실제 성과]에 KPI 가 있으면 풀 대비 실제 위치를 반영
+  (예: "CTR 5.2%로 풀 하위 25%"). 없으면 동일 장르 일반 수준 대비 관념 서술.
 - 약점이 명확하지 않으면 weaknesses: [] (강제로 만들지 말 것).
 - hypothesis 는 strengths/weaknesses 에서 논리적으로 도출 가능할 때만.
   · 확신할 근거가 없거나 신호가 평이하면 hypothesis: [] 응답.
@@ -117,10 +128,16 @@ SYSTEM_INSTRUCTION = """
   ]
   creator_intent: "실제 플레이 연출로 코어 게이머에게 게임성을 직접 증명하려는 의도"
   one_line_insight: "전투 연출로 코어층 후킹은 강하나 마무리 행동 유도가 비어 있음 — 엔드카드에 보상 연계 CTA를 추가해 전환 직결 구조로 개선"
+
+[KPI 컨텍스트 활용 예시 — 입력에 [이 소재의 실제 성과]가 함께 올 때]
+  입력 예: [이 소재의 실제 성과] CTR 5.2% (풀 하위 25%), CVR 0.3% (풀 하위 25%)
+  → weaknesses 한 항목에 풀 위치 반영:
+     {"signal": "후킹 식상/평이", "evidence": "정적 일러스트 단일 구성 — 실제 CTR 5.2%로 풀 하위 25%에 머물러 첫 시선 유지력이 약함"}
+  → kpi_reality_check: "캐릭터 비주얼로 시선 후킹을 기대했으나 실제 CTR·CVR 모두 풀 하위 25% — 시각 매력이 클릭·전환으로 이어지지 않아 후킹 장치 자체를 재설계 필요"
 """.strip()
 
-# Stage 5-H: 신호별 근거 강제 + 제작 의도 + 처방형 한 줄 — 캐시 자동 무효화
-PROMPT_VERSION = "v3.0-2026.06.10-evidence-densify"
+# Stage 5-I: v3 근거 강제 + 풀 데이터 컨텍스트(실제 KPI 상대 비교) — 캐시 자동 무효화
+PROMPT_VERSION = "v3.1-2026.06.12-pool-context"
 
 # Files API 폴링 설정
 POLL_INTERVAL_SEC = 4
@@ -167,12 +184,21 @@ class GeminiTagger:
             time.sleep(GENERATE_MIN_INTERVAL_SEC - elapsed)
         self._last_call_at = time.time()
 
-    def tag_creative(self, file_path: Path) -> CreativeTag:
+    def tag_creative(self, file_path: Path, extra_context: str = "") -> CreativeTag:
         """1개 미디어 파일을 4-compact taxonomy로 태깅.
+
+        Args:
+            file_path: 분석할 미디어 파일.
+            extra_context: Stage 5-I — 풀 분포·실제 KPI 백분위 등 동적 컨텍스트.
+                비어 있으면 기존 정적 프롬프트만 사용 (graceful).
 
         503/429 에러는 자동 재시도 (지수 백오프 + retry-after 존중).
         """
         asset = self._upload_and_wait(file_path)
+        # Stage 5-I: 동적 컨텍스트가 있으면 contents 에 텍스트 part 추가
+        contents = [asset, SYSTEM_INSTRUCTION]
+        if extra_context:
+            contents.append(extra_context)
 
         # 503(서버 일시 부하) / 429(rate limit) 자동 재시도
         # v1.0.1: 최대 3회, 지수 백오프 (5→15→45초)
@@ -183,7 +209,7 @@ class GeminiTagger:
             try:
                 response = self.client.models.generate_content(
                     model=self.model,
-                    contents=[asset, SYSTEM_INSTRUCTION],
+                    contents=contents,
                     config=types.GenerateContentConfig(
                         response_mime_type="application/json",
                         response_schema=CreativeTag,
