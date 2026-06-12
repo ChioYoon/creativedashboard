@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
   "title_id": "pepp-us",
-  "generated_at": "2026-06-11T22:54:40+09:00",
+  "generated_at": "2026-06-12T13:00:33+09:00",
   "pipeline_version": "stage2-mvp",
-  "gemini_model": "gemini-2.5-flash-lite",
+  "gemini_model": "gemini-2.5-flash",
   "creatives": [
     {
       "creative_id": "A-AI-1000Sum01A-DA",
@@ -55,7 +55,7 @@
       ],
       "creator_intent": "압도적인 소환 보상을 전면에 내세워 신규 유저의 다운로드를 직접적으로 유도하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:38+09:00",
+      "tagged_at": "2026-06-12T13:00:22+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-1000Sum01A-DA\\260616_BNR_A-AI-1000Sum01A-DA_L_1200x628_EN.png",
@@ -120,7 +120,7 @@
       ],
       "creator_intent": "압도적인 보상과 매력적인 캐릭터로 신규 유저의 호기심을 자극하여 클릭을 유도하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:38+09:00",
+      "tagged_at": "2026-06-12T13:00:22+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-1000Sum01B-DA\\260616_BNR_A-AI-1000Sum01B-DA_L_1200x628_EN.png",
@@ -183,7 +183,7 @@
       ],
       "creator_intent": "다양한 영웅 캐릭터와 승리의 장면을 통해 게임의 판타지 세계관과 모험의 재미를 직관적으로 전달하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:38+09:00",
+      "tagged_at": "2026-06-12T13:00:22+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-Defeatmonster01A-DA\\260429_BNR_A-AI-Defeatmonster01A-DA_L_1200x628_EN.png",
@@ -192,8 +192,8 @@
         "01. BNR\\선론칭\\A-AI-Defeatmonster01A-DA\\260429_BNR_A-AI-Defeatmonster01A-DA_V_1200x1500_EN.png"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "260429_BNR_A-AI-Defeatmonster01A-DA_V_1200x1500_EN.png",
@@ -763,7 +763,7 @@
       ],
       "creator_intent": "두 가지 상반된 매력의 캐릭터를 제시하여 시청자의 취향을 자극하고 호기심을 유발하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:38+09:00",
+      "tagged_at": "2026-06-12T13:00:22+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-Favoritehero01A-DA\\260429_BNR_A-AI-Favoritehero01A-DA_L_1200x628_EN.png",
@@ -772,8 +772,8 @@
         "01. BNR\\선론칭\\A-AI-Favoritehero01A-DA\\260429_BNR_A-AI-Favoritehero01A-DA_V_1200x1500_EN.png"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "260429_BNR_A-AI-Favoritehero01A-DA_L_1200x628_EN.png",
@@ -1357,7 +1357,7 @@
       ],
       "creator_intent": "두 가지 매력적인 캐릭터 중 하나를 선택하게 하여 게임에 대한 흥미를 유발하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:38+09:00",
+      "tagged_at": "2026-06-12T13:00:22+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-Favoritehero01B-DA\\260429_BNR_A-AI-Favoritehero01B-DA_L_1200x628_EN.png",
@@ -1366,8 +1366,8 @@
         "01. BNR\\선론칭\\A-AI-Favoritehero01B-DA\\260429_BNR_A-AI-Favoritehero01B-DA_V_1200x1500_EN.png"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "260429_BNR_A-AI-Favoritehero01B-DA_L_1200x628_EN.png",
@@ -1917,7 +1917,7 @@
       ],
       "creator_intent": "승리의 쾌감과 매력적인 영웅 팀을 통해 게임의 핵심 재미를 직관적으로 전달하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:38+09:00",
+      "tagged_at": "2026-06-12T13:00:22+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-Victory01A-DA\\260429_BNR_A-AI-Victory01A-DA_L_1200x628_EN.png",
@@ -1926,8 +1926,8 @@
         "01. BNR\\선론칭\\A-AI-Victory01A-DA\\260429_BNR_A-AI-Victory01A-DA_V_1200x1500_EN.png"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "260429_BNR_A-AI-Victory01A-DA_V_1200x1500_EN.png",
@@ -2537,7 +2537,7 @@
       ],
       "creator_intent": "명확한 보상 가치를 전면에 내세워 사전등록 참여를 직접적으로 유도하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:39+09:00",
+      "tagged_at": "2026-06-12T13:00:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-100usd01A-DA\\260406_BNR_A-Character-100usd01A-DA_L_1200x628_EN.jpg",
@@ -2546,8 +2546,8 @@
         "01. BNR\\선론칭\\A-Character-100usd01A-DA\\260406_BNR_A-Character-100usd01A-DA_V_1200x1500_EN.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-100usd01A-DA_L_1200x628_EN.jpg",
@@ -5003,7 +5003,7 @@
       ],
       "creator_intent": "다채로운 캐릭터와 역동적인 전투 장면으로 게임의 밝고 활기찬 분위기를 전달하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:39+09:00",
+      "tagged_at": "2026-06-12T13:00:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Adventure01A-DA\\251104_BNR_A-Character-Adventure01A-DA_L_1200x628_EN.jpg",
@@ -5020,8 +5020,8 @@
         "01. BNR\\선론칭\\A-Character-Adventure01A-DA\\Moloco\\251104_BNR_A-Character-Adventure01A-DA_V_768x1024.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "251104_BNR_A-Character-Adventure01A-DA_L_1200x628_EN.jpg",
@@ -7653,7 +7653,7 @@
       ],
       "creator_intent": "매력적인 캐릭터 비주얼과 긍정적인 메시지로 잠재 유저의 호기심을 자극하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:39+09:00",
+      "tagged_at": "2026-06-12T13:00:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Adventure02A-DA\\EN\\251111_BNR_A-Character-Adventure02A-DA_L_1200x628_EN.jpg",
@@ -7678,8 +7678,8 @@
         "01. BNR\\선론칭\\A-Character-Adventure02A-DA\\ES\\251111_BNR_A-Character-Adventure02A-DA_V_1200x1500_ES.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "251111_BNR_A-Character-Adventure02A-DA_V_1200x1500_EN.jpg",
@@ -10457,7 +10457,7 @@
       ],
       "creator_intent": "매력적인 캐릭터 비주얼과 밝은 분위기로 캐주얼 게임 유저의 호기심을 자극하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:39+09:00",
+      "tagged_at": "2026-06-12T13:00:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Adventure03A-DA\\EN\\251118_BNR_A-Character-Adventure03A-DA_L_1200x628_EN.jpg",
@@ -10478,8 +10478,8 @@
         "01. BNR\\선론칭\\A-Character-Adventure03A-DA\\ES\\251118_BNR_A-Character-Adventure03A-DA_V_1200x1500_ES.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "251118_BNR_A-Character-Adventure03A-DA_S_1200x1200_EN.jpg",
@@ -12039,7 +12039,7 @@
       ],
       "creator_intent": "매력적인 캐릭터와 비주얼로 게임 세계관에 대한 호기심을 자극하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:39+09:00",
+      "tagged_at": "2026-06-12T13:00:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Adventure04A-DA\\260406_BNR_A-Character-Adventure04A-DA_L_1200x628_EN.jpg",
@@ -12048,8 +12048,8 @@
         "01. BNR\\선론칭\\A-Character-Adventure04A-DA\\260406_BNR_A-Character-Adventure04A-DA_V_1200x1500_EN.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-Adventure04A-DA_L_1200x628_EN.jpg",
@@ -14535,7 +14535,7 @@
       ],
       "creator_intent": "다채로운 캐릭터와 역동적인 전투 연출로 게임의 매력을 시각적으로 어필하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:39+09:00",
+      "tagged_at": "2026-06-12T13:00:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Adventure05A-DA\\260406_BNR_A-Character-Adventure05A-DA_L_1200x628_EN.jpg",
@@ -14544,8 +14544,8 @@
         "01. BNR\\선론칭\\A-Character-Adventure05A-DA\\260406_BNR_A-Character-Adventure05A-DA_V_1200x1500_EN.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-Adventure05A-DA_V_1200x1500_EN.jpg",
@@ -16985,7 +16985,7 @@
       ],
       "creator_intent": "다양한 매력의 캐릭터들을 전면에 내세워 게임에 대한 호기심을 유발하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:39+09:00",
+      "tagged_at": "2026-06-12T13:00:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Collection01A-DA\\EN\\251118_BNR_A-Character-Collection01A-DA_L_1200x628_EN.jpg",
@@ -17010,8 +17010,8 @@
         "01. BNR\\선론칭\\A-Character-Collection01A-DA\\ES\\251118_BNR_A-Character-Collection01A-DA_V_1200x1500_ES.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "251118_BNR_A-Character-Collection01A-DA_L_1200x628_EN.jpg",
@@ -18299,7 +18299,7 @@
       ],
       "creator_intent": "개성 있는 캐릭터와 흥미로운 슬로건으로 게임에 대한 호기심을 유발하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:39+09:00",
+      "tagged_at": "2026-06-12T13:00:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Comics01A-DA\\260406_BNR_A-Character-Comics01A-DA_L_1200x628_EN.jpg",
@@ -18308,8 +18308,8 @@
         "01. BNR\\선론칭\\A-Character-Comics01A-DA\\260406_BNR_A-Character-Comics01A-DA_V_1200x1500_EN.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-Comics01A-DA_L_1200x628_EN.jpg",
@@ -20813,7 +20813,7 @@
       ],
       "creator_intent": "다양한 매력의 캐릭터들을 전면에 내세워 게임에 대한 호기심을 유발하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:39+09:00",
+      "tagged_at": "2026-06-12T13:00:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Keyart01A-DA\\251104_BNR_A-Character-Keyart01A-DA_L_1200x628_EN.png",
@@ -20847,8 +20847,8 @@
         "01. BNR\\선론칭\\A-Character-Keyart01A-DA\\Moloco\\260428\\260428_BNR_A-Character-Keyart01A-DA_V_768x1024_EN.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-Keyart01A-DA_S_1200x1200_EN.jpg",
@@ -22872,7 +22872,7 @@
       ],
       "creator_intent": "다양한 매력의 영웅들을 전면에 내세워 게임의 수집 및 육성 요소를 직관적으로 어필하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:40+09:00",
+      "tagged_at": "2026-06-12T13:00:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Keyart02A-DA\\251104_BNR_L-Character-Keyart02A-DA_L_1200x628_EN.png",
@@ -22906,8 +22906,8 @@
         "01. BNR\\선론칭\\A-Character-Keyart02A-DA\\Moloco\\260428\\260428_BNR_A-Character-Keyart02A-DA_V_768x1024_EN.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-Keyart02A-DA_L_1200x628_EN.jpg",
@@ -24915,7 +24915,7 @@
       ],
       "creator_intent": "귀여운 캐릭터와 밝은 분위기로 신규 유저의 호감도를 높여 설치를 유도하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:40+09:00",
+      "tagged_at": "2026-06-12T13:00:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Life01A-DA\\251104_BNR_A-Character-Life01A-DA_L_1200x628_EN.jpg",
@@ -24936,8 +24936,8 @@
         "01. BNR\\선론칭\\A-Character-Life01A-DA\\Moloco\\260406_BNR_A-Character-Life01A-DA_V_768x1024_EN.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "251104_BNR_A-Character-Life01A-DA_S_1200x1200_EN.jpg",
@@ -27665,7 +27665,7 @@
       ],
       "creator_intent": "매력적인 캐릭터 디자인으로 신규 유저의 관심을 유도하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:40+09:00",
+      "tagged_at": "2026-06-12T13:00:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Life02A-DA\\260406_BNR_A-Character-Life02A-DA_L_1200x628_EN.jpg",
@@ -27674,8 +27674,8 @@
         "01. BNR\\선론칭\\A-Character-Life02A-DA\\260406_BNR_A-Character-Life02A-DA_V_1200x1500_EN.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-Life02A-DA_L_1200x628_EN.jpg",
@@ -29667,7 +29667,7 @@
       ],
       "creator_intent": "개성 강한 캐릭터 비주얼로 시청자의 흥미를 유발하고 즉시 플레이를 유도하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:40+09:00",
+      "tagged_at": "2026-06-12T13:00:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Mob-Adventure01A-DA\\EN\\251111_BNR_A-Mob-Adventure01A-DA_L_1200x628_EN.jpg",
@@ -29692,8 +29692,8 @@
         "01. BNR\\선론칭\\A-Mob-Adventure01A-DA\\ES\\251111_BNR_A-Mob-Adventure01A-DA_V_1200x1500_ES.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "251111_BNR_A-Mob-Adventure01A-DA_L_1200x628_EN.jpg",
@@ -32389,7 +32389,7 @@
       ],
       "creator_intent": "매력적인 캐릭터와 비주얼로 게임의 세계관과 전투 재미를 암시하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:40+09:00",
+      "tagged_at": "2026-06-12T13:00:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Mob-Adventure02A-DA\\260406_BNR_A-Mob-Adventure02A-DA_L_1200x628_EN.jpg",
@@ -32406,8 +32406,8 @@
         "01. BNR\\선론칭\\A-Mob-Adventure02A-DA\\Moloco\\260406_BNR_A-Character-Adventure02A-DA_V_768x1024_EN.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Mob-Adventure02A-DA_L_1200x628_EN.jpg",
@@ -34957,7 +34957,7 @@
       ],
       "creator_intent": "매력적인 신규 캐릭터 'Karbel'을 전면에 내세워 유저의 호기심을 자극하고 접속을 유도하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:40+09:00",
+      "tagged_at": "2026-06-12T13:00:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\L-Character-Reward01A-DA\\EN\\251211_BNR_L-Character-Reward01A-DA_L_1200x628_EN.jpg",
@@ -34970,8 +34970,8 @@
         "01. BNR\\선론칭\\L-Character-Reward01A-DA\\ES\\251125_BNR_L-Character-Reward01A-DA_V_1200x1920_ES.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "251211_BNR_L-Character-Reward01A-DA_L_1200x628_EN.jpg",
@@ -35261,7 +35261,7 @@
       ],
       "creator_intent": "압도적인 보상 금액과 매력적인 캐릭터로 사전등록 참여를 직접적으로 유도하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:40+09:00",
+      "tagged_at": "2026-06-12T13:00:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\CPP\\EN\\251118_BNR_P-DA-Character-100usd01_1290x2796_EN.jpg",
@@ -35326,7 +35326,7 @@
       ],
       "creator_intent": "압도적인 보상 금액으로 신규 유저의 사전 등록 참여를 직접적으로 유도하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:41+09:00",
+      "tagged_at": "2026-06-12T13:00:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-100usd01\\EN\\251118_BNR_P-DA-Character-100usd01_L_1200x628_EN.jpg",
@@ -35395,7 +35395,7 @@
       ],
       "creator_intent": "다양한 매력의 캐릭터들을 전면에 내세워 게임에 대한 호기심을 유발하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:41+09:00",
+      "tagged_at": "2026-06-12T13:00:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-illust01\\251104_BNR_P-DA-Character-illust01_L_1200x628_EN.png",
@@ -35460,7 +35460,7 @@
       ],
       "creator_intent": "다양한 매력의 영웅들을 전면에 내세워 게임의 수집 및 육성 요소를 직관적으로 어필하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:41+09:00",
+      "tagged_at": "2026-06-12T13:00:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-illust02\\251104_BNR_P-DA-Character-illust02_L_1200x628_EN.png",
@@ -35525,7 +35525,7 @@
       ],
       "creator_intent": "귀여운 캐릭터와 밝은 분위기로 신규 유저의 호감도를 높여 설치를 유도하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:41+09:00",
+      "tagged_at": "2026-06-12T13:00:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-SD01\\251104_BNR_P-DA-Character-SD01_L_1200x628_EN.jpg",
@@ -35590,7 +35590,7 @@
       ],
       "creator_intent": "다채로운 캐릭터와 역동적인 전투 장면으로 게임의 밝고 활기찬 분위기를 전달하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:41+09:00",
+      "tagged_at": "2026-06-12T13:00:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-SD02\\251104_BNR_P-DA-Character-SD02_L_1200x628_EN.jpg",
@@ -35655,7 +35655,7 @@
       ],
       "creator_intent": "다양한 매력의 캐릭터들을 전면에 내세워 게임에 대한 호기심을 유발하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:41+09:00",
+      "tagged_at": "2026-06-12T13:00:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-Slogan01\\EN\\251118_BNR_P-DA-Character-Slogan01_L_1200x628_EN.jpg",
@@ -35726,7 +35726,7 @@
       ],
       "creator_intent": "매력적인 캐릭터 비주얼과 밝은 분위기로 캐주얼 게임 유저의 호기심을 자극하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:41+09:00",
+      "tagged_at": "2026-06-12T13:00:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-Slogan02\\EN\\251118_BNR_P-DA-Character-Slogan02_L_1200x628_EN.jpg",
@@ -35795,7 +35795,7 @@
       ],
       "creator_intent": "매력적인 캐릭터 비주얼과 긍정적인 메시지로 잠재 유저의 호기심을 자극하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:42+09:00",
+      "tagged_at": "2026-06-12T13:00:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Slogan-Aya01\\EN\\251111_BNR_P-DA-Slogan-Aya_L_1200x628_EN.jpg",
@@ -35864,7 +35864,7 @@
       ],
       "creator_intent": "개성 강한 캐릭터 비주얼로 시청자의 흥미를 유발하고 즉시 플레이를 유도하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:42+09:00",
+      "tagged_at": "2026-06-12T13:00:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Slogan-Goblin01\\EN\\251111_BNR_P-DA-Slogan-Goblin_L_1200x628_EN.jpg",
@@ -35931,7 +35931,7 @@
       ],
       "creator_intent": "위협적인 상황과 쉬운 성장을 대비시켜 게임의 재미와 편의성을 동시에 어필하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:42+09:00",
+      "tagged_at": "2026-06-12T13:00:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\선론칭\\L-Mob-Adventure01A-UA\\EN\\251211_VID_L-Mob-Adventure01A-UA_L_1920x1080_EN.mp4",
@@ -35945,8 +35945,8 @@
         "02. VID\\선론칭\\L-Mob-Adventure01A-UA\\ES\\251125_VID_L-Mob-Adventure01A-UA_V_1080x1920_ES.mp4"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "251202_VID_L-Mob-Adventure01A-UA_V_1080x1920_EN",
@@ -36162,7 +36162,7 @@
       ],
       "creator_intent": "매력적인 캐릭터와 화려한 전투 연출로 게임의 재미를 직접 보여주려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:43+09:00",
+      "tagged_at": "2026-06-12T13:00:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection01A-UA\\251104_VID_A-Character-Collection01A-UA_L_1920x1080_EN.mp4",
@@ -36176,8 +36176,8 @@
         "02. VID\\상시\\A-Character-Collection01A-UA\\작업용\\PH_SL_UA_verA_W_EN.mp4"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "251104_VID_A-Character-Collection01A-UA_L_1920x1080_EN",
@@ -39097,7 +39097,7 @@
       ],
       "creator_intent": "다양한 캐릭터와 화려한 전투 연출로 게임의 매력을 직접적으로 보여주려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:43+09:00",
+      "tagged_at": "2026-06-12T13:00:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection01B-UA\\EN\\251204_VID_A-Character-Collection01B-UA_L_1920x1080_EN.mp4",
@@ -39114,8 +39114,8 @@
         "02. VID\\상시\\A-Character-Collection01B-UA\\ES\\251203_VID_A-Character-Collection01B-UA_V_1080x1920_ES.mp4"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "251204_VID_A-Character-Collection01B-UA_S_1080x1080_EN",
@@ -45203,7 +45203,7 @@
       ],
       "creator_intent": "매력적인 캐릭터와 파격적인 보상으로 신규 유저의 시선을 사로잡으려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:44+09:00",
+      "tagged_at": "2026-06-12T13:00:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection02A-PV\\EN\\251211_VID_A-Character-Collection02A-PV_L_1920x1080_EN.mp4",
@@ -45272,7 +45272,7 @@
       ],
       "creator_intent": "다양한 캐릭터와 성장, 전략 요소를 보여주며 게임의 전반적인 매력을 어필하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:44+09:00",
+      "tagged_at": "2026-06-12T13:00:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection02A-UA\\260123_VID_A-Character-Collection02A-UA_L_1920x1080_EN.mp4",
@@ -45334,7 +45334,7 @@
       ],
       "creator_intent": "귀여운 캐릭터와 캐주얼한 게임플레이를 통해 폭넓은 유저층에게 모험 RPG의 즐거움을 전달하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:45+09:00",
+      "tagged_at": "2026-06-12T13:00:26+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection02B-UA\\260123_VID_A-Character-Collection02B-UA_L_1920x1080_EN.mp4",
@@ -45392,7 +45392,7 @@
       ],
       "creator_intent": "다양한 영웅의 매력과 실제 전투 연출을 통해 게임의 전략적 재미를 어필하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:45+09:00",
+      "tagged_at": "2026-06-12T13:00:26+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection02C-UA\\260123_VID_A-Character-Collection02C-UA_L_1920x1080_EN.mp4",
@@ -45450,7 +45450,7 @@
       ],
       "creator_intent": "다양한 영웅과 그들의 전투 스타일을 직접 보여주어 게임의 캐릭터 수집 및 전략적 재미를 어필하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:46+09:00",
+      "tagged_at": "2026-06-12T13:00:26+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection02D-UA\\260123_VID_A-Character-Collection02D-UA_L_1920x1080_EN.mp4",
@@ -45512,7 +45512,7 @@
       ],
       "creator_intent": "초반 강력한 보상으로 시선을 사로잡고, 세계관과 게임의 핵심 재미를 순차적으로 전달하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:46+09:00",
+      "tagged_at": "2026-06-12T13:00:27+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection03A-PV\\260123_VID_A-Character-Collection03A-PV_L_1920x1080_EN.mp4",
@@ -45574,7 +45574,7 @@
       ],
       "creator_intent": "초반 강력한 보상 약속으로 유저를 후킹하고, 스토리텔링과 실제 게임플레이를 보여주며 게임의 매력을 어필하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:47+09:00",
+      "tagged_at": "2026-06-12T13:00:27+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection03B-PV\\260123_VID_A-Character-Collection03B-PV_L_1920x1080_EN.mp4",
@@ -45638,7 +45638,7 @@
       ],
       "creator_intent": "강력한 보상과 매력적인 캐릭터, 서사로 유저의 호기심을 자극하고 다운로드를 유도하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:47+09:00",
+      "tagged_at": "2026-06-12T13:00:28+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection03C-PV\\260123_VID_A-Character-Collection03C-PV_L_1920x1080_EN.mp4",
@@ -45702,7 +45702,7 @@
       ],
       "creator_intent": "초반 보상으로 유저를 후킹하고, 스토리텔링과 캐릭터별 게임플레이를 통해 게임의 매력을 어필하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:48+09:00",
+      "tagged_at": "2026-06-12T13:00:28+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection03D-PV\\260123_VID_A-Character-Collection03D-PV_L_1920x1080_EN.mp4",
@@ -45766,7 +45766,7 @@
       ],
       "creator_intent": "슬롯머신 연출과 대량 보상 약속으로 유저의 호기심을 자극하고 게임 플레이를 유도하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:49+09:00",
+      "tagged_at": "2026-06-12T13:00:28+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection04A-UA\\260616_VID_A-Character-Collection04A-UA_L_1920x1080_EN.mp4",
@@ -45828,7 +45828,7 @@
       ],
       "creator_intent": "초반 대량 보상 약속으로 유저의 호기심을 자극하고, 아기자기한 전투 플레이를 통해 게임의 매력을 전달하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:49+09:00",
+      "tagged_at": "2026-06-12T13:00:29+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection04B-UA\\260616_VID_A-Character-Collection04B-UA_L_1920x1080_EN.mp4",
@@ -45890,7 +45890,7 @@
       ],
       "creator_intent": "매력적인 캐릭터와 핵심 게임플레이를 순차적으로 보여주며 전략 RPG의 재미를 어필하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:50+09:00",
+      "tagged_at": "2026-06-12T13:00:29+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Combat01A-UA\\260123_VID_A-Character-Combat01A-UA_L_1920x1080_EN.mp4",
@@ -45907,8 +45907,8 @@
         "02. VID\\상시\\A-Character-Combat01A-UA\\엔드카드 수정본\\251209_VID_A-Character-Combat01A-UA_V_1080x1920_EN.mp4"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "260120_VID_A-Character-Combat01A-UA_L_1920x1080_EN",
@@ -52006,7 +52006,7 @@
       ],
       "creator_intent": "다양한 캐릭터들의 개성과 화려한 스킬 연출로 게임의 매력을 어필하고 다운로드를 유도하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:50+09:00",
+      "tagged_at": "2026-06-12T13:00:29+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Combat01B-UA\\EN\\251204_VID_A-Character-Combat01B-UA_L_1920x1080_EN.mp4",
@@ -52020,8 +52020,8 @@
         "02. VID\\상시\\A-Character-Combat01B-UA\\ES\\251203_VID_A-Character-Combat01B-UA_V_1080x1920_ES.mp4"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "251204_VID_A-Character-Combat01B-UA_V_1080x1920_EN",
@@ -58127,7 +58127,7 @@
       ],
       "creator_intent": "매력적인 캐릭터와 화려한 전투 연출로 게임에 대한 호기심을 자극하고, 대규모 보상을 통해 사전 등록 전환을 유도하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:51+09:00",
+      "tagged_at": "2026-06-12T13:00:30+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Combat02A-UA\\260616_VID_A-Character-Combat02A-UA_L_1920x1080_EN.mp4",
@@ -58189,7 +58189,7 @@
       ],
       "creator_intent": "매력적인 캐릭터와 화려한 스킬 연출을 순차적으로 보여주며 게임의 비주얼과 액션성을 어필하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:51+09:00",
+      "tagged_at": "2026-06-12T13:00:30+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Combat02B-UA\\260616_VID_A-Character-Combat02B-UA_L_1920x1080_EN.mp4",
@@ -58253,7 +58253,7 @@
       ],
       "creator_intent": "귀여운 캐릭터와 아기자기한 퀘스트 수행 과정을 보여주며 캐주얼한 게임성을 어필하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:51:52+09:00",
+      "tagged_at": "2026-06-12T13:00:30+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-minigame01A-FK\\EN\\251125_VID_A-Hooking-minigame01A-FK_L_1920x1080_EN.mp4",
@@ -58264,8 +58264,8 @@
         "02. VID\\상시\\A-Hooking-minigame01A-FK\\ES\\251125_VID_A-Hooking-minigame01A-FK_V_1080x1920_ES.mp4"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "251125_VID_A-Hooking-minigame01A-FK_L_1920x1080_EN",
@@ -58561,8 +58561,8 @@
       ],
       "creator_intent": "귀여운 캐릭터와 퀘스트 기반 게임플레이를 통해 신규 유저의 흥미를 유발하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:53:22+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-12T13:00:31+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-minigame02A-FK\\260123_VID_A-Hooking-minigame02A-FK_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Hooking-minigame02A-FK\\260123_VID_A-Hooking-minigame02A-FK_S_1080x1080_EN.mp4",
@@ -58625,8 +58625,8 @@
       ],
       "creator_intent": "귀여운 캐릭터 비주얼과 스토리텔링으로 신규 유저의 호기심을 자극하여 게임에 대한 관심을 유도하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:53:23+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-12T13:00:31+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-minigame02B-FK\\260123_VID_A-Hooking-minigame02B-FK_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Hooking-minigame02B-FK\\260123_VID_A-Hooking-minigame02B-FK_S_1080x1080_EN.mp4",
@@ -58689,8 +58689,8 @@
       ],
       "creator_intent": "귀여운 캐릭터와 퀘스트 기반 게임 플레이를 통해 신규 유저의 흥미를 유발하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:53:59+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-12T13:00:32+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-minigame02C-FK\\260123_VID_A-Hooking-minigame02C-FK_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Hooking-minigame02C-FK\\260123_VID_A-Hooking-minigame02C-FK_S_1080x1080_EN.mp4",
@@ -58752,8 +58752,8 @@
       ],
       "creator_intent": "매력적인 캐릭터와 따뜻한 스토리텔링으로 감성적인 유저층의 흥미를 유발하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:54:37+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-12T13:00:32+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-minigame02D-FK\\260123_VID_A-Hooking-minigame02D-FK_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Hooking-minigame02D-FK\\260123_VID_A-Hooking-minigame02D-FK_S_1080x1080_EN.mp4",
@@ -58816,8 +58816,8 @@
       ],
       "creator_intent": "매력적인 캐릭터와 보상을 전면에 내세워 클릭을 유도하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:54:38+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-12T13:00:32+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-Reward02A-FK\\EN\\251211_VID_A-Hooking-Reward02A-FK_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Hooking-Reward02A-FK\\EN\\251211_VID_A-Hooking-Reward02A-FK_S_1080x1080_EN.mp4",
@@ -58833,8 +58833,8 @@
         "02. VID\\상시\\A-Hooking-Reward02A-FK\\ES\\251211_VID_A-Hooking-Reward02A-FK_V_1200x1500_ES.mp4"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "251211_VID_A-Hooking-Reward02A-FK_L_1920x1080_EN",
@@ -63530,8 +63530,8 @@
       ],
       "creator_intent": "강력한 보상 제시와 긴박감으로 즉각적인 클릭을 유도하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:54:38+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-12T13:00:33+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-Reward03A-UA\\EN\\251211_VID_A-Hooking-Reward03A-UA_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Hooking-Reward03A-UA\\EN\\251211_VID_A-Hooking-Reward03A-UA_S_1080x1080_EN.mp4",
@@ -63546,8 +63546,8 @@
         "02. VID\\상시\\A-Hooking-Reward03A-UA\\ES\\251211_VID_A-Hooking-Reward03A-UA_V_1200x1500_ES.mp4"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-03",
-      "kpi_window_end": "2026-06-10",
+      "kpi_window_start": "2026-01-04",
+      "kpi_window_end": "2026-06-11",
       "kpi_daily": [
         {
           "creative_name": "260406_VID_A-Hooking-Reward03A-UA_S_1080x1080_EN",
@@ -68097,8 +68097,8 @@
       ],
       "creator_intent": "매력적인 캐릭터와 파격적인 보상으로 신규 유저의 즉각적인 클릭과 다운로드를 유도하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:54:39+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-12T13:00:33+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Testimonial-US01A-UA\\260616_VID_A-Testimonial-US01A-UA_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Testimonial-US01A-UA\\260616_VID_A-Testimonial-US01A-UA_S_1080x1080_EN.mp4",
@@ -68161,8 +68161,8 @@
       ],
       "creator_intent": "매력적인 캐릭터와 풍성한 보상을 앞세워 신규 유저의 흥미를 유발하고 사전 등록을 유도하려는 의도",
       "marketer_insight": null,
-      "tagged_at": "2026-06-11T22:54:39+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-12T13:00:33+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Testimonial-US01B-UA\\260616_VID_A-Testimonial-US01B-UA_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Testimonial-US01B-UA\\260616_VID_A-Testimonial-US01B-UA_S_1080x1080_EN.mp4",
@@ -68177,11 +68177,11 @@
   "metrics": {
     "scanned_folders": 58,
     "tagged_records": 58,
-    "cache_hits": 55,
-    "cache_misses": 3,
+    "cache_hits": 58,
+    "cache_misses": 0,
     "failures": 0,
-    "duration_sec": 182.0,
+    "duration_sec": 11.4,
     "prompt_version": "v3.0-2026.06.10-evidence-densify",
-    "fallback_used": true
+    "fallback_used": false
   }
 }
