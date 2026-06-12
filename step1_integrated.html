@@ -641,6 +641,44 @@
     }
     .pctile-top { background: #dcfce7; color: #166534; }
     .pctile-bottom { background: #fef3c7; color: #92400e; }
+    /* Stage 5-I QA: 모달 KPI 지표 테이블 (줄 글 행 → 그리드 카드) */
+    .kpi-metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(124px, 1fr));
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .kpi-metric-cell {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 8px 10px;
+      min-width: 0;
+    }
+    .kpi-metric-cell-score {
+      background: #fef2f2;
+      border-color: #fecaca;
+    }
+    .kpi-metric-label {
+      font-size: 11px;
+      color: #6b7280;
+      font-weight: 600;
+      margin-bottom: 3px;
+      white-space: nowrap;
+    }
+    .kpi-metric-value {
+      font-size: 14px;
+      color: #1f2937;
+      font-weight: 700;
+      line-height: 1.45;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+    .kpi-metric-sub {
+      font-size: 11px;
+      color: #6b7280;
+      font-weight: 500;
+    }
     /* Stage 5-H v3: 칩 + 근거 페어 (세로 리스트) */
     .signal-group-vertical {
       display: block;
@@ -1637,16 +1675,25 @@ function buildSignalChipsHtml(creative) {
       return `<div class="signal-group signal-group-vertical"><span class="signal-group-label">${g.label}</span>${rows}</div>`;
     })
     .join('');
-  const oneLine = (meta.one_line_insight || '').trim();
-  const oneLineHtml = oneLine
-    ? `<div class="signal-oneline"><span class="signal-oneline-key">🔑 한 줄</span>${escapeHtml(oneLine)}</div>`
+  return sections;
+}
+
+// Stage 5-I QA: '🔑 한 줄'과 '💡 마케터 인사이트'(alias 라 동일 내용 중복 출력) 통합.
+// 데이터 체크와 함께 모달 '소재 상세 정보' 상단에 배치.
+// JSON 모드: one_line_insight 사용 (marketer_insight 는 data-source.js alias 로 동일값).
+// CSV 모드: one_line_insight 부재 시 marketer_insight 컬럼 원문 fallback.
+function buildInsightBlocksHtml(creative) {
+  const meta = (creative && creative.meta) || {};
+  const insight = ((meta.one_line_insight || meta.marketer_insight) || '').trim();
+  const insightHtml = insight
+    ? `<div class="signal-oneline"><span class="signal-oneline-key">💡 한 줄 인사이트</span>${escapeHtml(insight)}</div>`
     : '';
-  // Stage 5-I: 실제 KPI 정합성 해석 (KPI 있을 때만)
+  // 실제 KPI 정합성 해석 (KPI 있을 때만)
   const reality = (meta.kpi_reality_check || '').trim();
   const realityHtml = reality
     ? `<div class="signal-reality"><span class="signal-reality-key">📊 데이터 체크</span>${escapeHtml(reality)}</div>`
     : '';
-  return sections + oneLineHtml + realityHtml;
+  return insightHtml + realityHtml;
 }
 
 // Stage 5-I: 풀 대비 백분위(0-100, 높을수록 우수) → 상위/하위 배지 HTML.
@@ -5001,22 +5048,10 @@ img { display:block; }
         content = `<img src="${contentUrl}" class="modal-image" alt="${creative.소재명}">`;
       }
 
-      // v5.1.1: 마케터 인사이트 추출 (CSV 원본 컬럼)
-      // Stage 5-F-1: marketer_insight 는 data-source.js 에서 one_line_insight 로 alias 됨.
-      //              따라서 JSON 모드에서도 이 블록은 v2 한 줄 요약을 표시함.
-      //              구 CSV/JSON 호환을 위해 유지하되, v2 구조화 칩(아래 signalsBlock)이
-      //              주된 표시 영역이 됨.
-      const mktInsight = (creative.meta?.['marketer_insight'] || '').trim();
-      const insightBlock = mktInsight
-        ? `<div style="margin-top:14px;padding:14px 16px;background:linear-gradient(135deg,#fef9f3,#fef3c7);border-left:4px solid #f59e0b;border-radius:8px;">
-            <div style="display:flex;align-items:center;gap:6px;font-weight:700;color:#92400e;font-size:13.5px;margin-bottom:8px;">
-              <span style="font-size:16px;">💡</span> 마케터 인사이트
-            </div>
-            <div style="font-size:13px;color:#374151;line-height:1.7;white-space:pre-wrap;">${escapeHtml(mktInsight)}</div>
-          </div>`
-        : '';
+      // Stage 5-I QA: '한 줄'+'마케터 인사이트' 통합 블록 + 데이터 체크 — 상단 배치
+      const insightBlocks = buildInsightBlocksHtml(creative);
 
-      // Stage 5-F-2: v2 구조화 신호 (강점/약점/가설/변주) + 한 줄 응축 가설
+      // Stage 5-F-2: v2 구조화 신호 칩 (강점/약점/가설/변주)
       const signalsBlock = buildSignalChipsHtml(creative);
 
       // 모달 정보
@@ -5044,48 +5079,50 @@ img { display:block; }
             <div class="modal-info-label">🎬 제작 의도(추론)</div>
             <div class="modal-info-value" style="font-style: italic; color: #6d28d9;">${escapeHtml(creative.meta.creator_intent.trim())}</div>
           </div>` : ''}
-          <div class="modal-info-row">
-            <div class="modal-info-label">Total Score</div>
-            <div class="modal-info-value"><strong style="font-size: 18px; color: #E84855;">${(creative.TotalScore ?? 0).toFixed(1)}</strong> <span style="font-size: 12px; color: #6b7280;">(${creative.등급 || '미평가'})</span></div>
-          </div>
-          <div class="modal-info-row">
-            <div class="modal-info-label">전환</div>
-            <div class="modal-info-value"><strong>${(creative.전환 ?? 0).toLocaleString()}</strong></div>
-          </div>
-          <div class="modal-info-row">
-            <div class="modal-info-label">CPA</div>
-            <div class="modal-info-value"><strong>₩${Math.round(creative.CPA ?? 0).toLocaleString()}</strong>${pctBadgeHtml(creative.meta?.kpi_percentiles?.cpa)}</div>
-          </div>
-          <div class="modal-info-row">
-            <div class="modal-info-label">IPM</div>
-            <div class="modal-info-value"><strong>${(creative.IPM ?? 0).toFixed(2)}</strong></div>
-          </div>
-          <div class="modal-info-row">
-            <div class="modal-info-label">ROAS</div>
-            <div class="modal-info-value"><strong style="color: ${(creative.ROAS ?? 0) > 1 ? '#10b981' : '#ef4444'};">${(creative.ROAS ?? 0).toFixed(2)}</strong></div>
-          </div>
-          <div class="modal-info-row">
-            <div class="modal-info-label">매출 (Revenue)</div>
-            <div class="modal-info-value">₩${(creative.매출 ?? 0).toLocaleString()}</div>
-          </div>
-          <div class="modal-info-row">
-            <div class="modal-info-label">비용</div>
-            <div class="modal-info-value">₩${(creative.비용 ?? 0).toLocaleString()}</div>
-          </div>
-          <div class="modal-info-row">
-            <div class="modal-info-label">노출수</div>
-            <div class="modal-info-value">${(creative.노출수 ?? 0).toLocaleString()}</div>
-          </div>
-          <div class="modal-info-row">
-            <div class="modal-info-label">클릭수</div>
-            <div class="modal-info-value">${(creative.클릭수 ?? 0).toLocaleString()}</div>
-          </div>
-          <div class="modal-info-row">
-            <div class="modal-info-label">CTR</div>
-            <div class="modal-info-value">${(creative.CTR ?? 0).toFixed(2)}%${pctBadgeHtml(creative.meta?.kpi_percentiles?.ctr)}</div>
+          ${insightBlocks}
+          <div class="kpi-metric-grid">
+            <div class="kpi-metric-cell kpi-metric-cell-score">
+              <div class="kpi-metric-label">Total Score</div>
+              <div class="kpi-metric-value"><strong style="font-size: 17px; color: #E84855;">${(creative.TotalScore ?? 0).toFixed(1)}</strong> <span class="kpi-metric-sub">${creative.등급 || '미평가'}</span></div>
+            </div>
+            <div class="kpi-metric-cell">
+              <div class="kpi-metric-label">전환</div>
+              <div class="kpi-metric-value">${(creative.전환 ?? 0).toLocaleString()}</div>
+            </div>
+            <div class="kpi-metric-cell">
+              <div class="kpi-metric-label">CPA</div>
+              <div class="kpi-metric-value">₩${Math.round(creative.CPA ?? 0).toLocaleString()}${pctBadgeHtml(creative.meta?.kpi_percentiles?.cpa)}</div>
+            </div>
+            <div class="kpi-metric-cell">
+              <div class="kpi-metric-label">IPM</div>
+              <div class="kpi-metric-value">${(creative.IPM ?? 0).toFixed(2)}</div>
+            </div>
+            <div class="kpi-metric-cell">
+              <div class="kpi-metric-label">ROAS</div>
+              <div class="kpi-metric-value" style="color: ${(creative.ROAS ?? 0) > 1 ? '#10b981' : '#ef4444'};">${(creative.ROAS ?? 0).toFixed(2)}</div>
+            </div>
+            <div class="kpi-metric-cell">
+              <div class="kpi-metric-label">매출 (Revenue)</div>
+              <div class="kpi-metric-value">₩${(creative.매출 ?? 0).toLocaleString()}</div>
+            </div>
+            <div class="kpi-metric-cell">
+              <div class="kpi-metric-label">비용</div>
+              <div class="kpi-metric-value">₩${(creative.비용 ?? 0).toLocaleString()}</div>
+            </div>
+            <div class="kpi-metric-cell">
+              <div class="kpi-metric-label">노출수</div>
+              <div class="kpi-metric-value">${(creative.노출수 ?? 0).toLocaleString()}</div>
+            </div>
+            <div class="kpi-metric-cell">
+              <div class="kpi-metric-label">클릭수</div>
+              <div class="kpi-metric-value">${(creative.클릭수 ?? 0).toLocaleString()}</div>
+            </div>
+            <div class="kpi-metric-cell">
+              <div class="kpi-metric-label">CTR</div>
+              <div class="kpi-metric-value">${(creative.CTR ?? 0).toFixed(2)}%${pctBadgeHtml(creative.meta?.kpi_percentiles?.ctr)}</div>
+            </div>
           </div>
           ${signalsBlock}
-          ${insightBlock}
           ${hasUrl ? `
           <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e5e7eb;">
             <a href="${contentUrl}" target="_blank" style="color: #E84855; text-decoration: none; font-weight: 600;">
