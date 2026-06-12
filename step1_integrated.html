@@ -641,6 +641,19 @@
     }
     .pctile-top { background: #dcfce7; color: #166534; }
     .pctile-bottom { background: #fef3c7; color: #92400e; }
+    /* Stage 5-J: 표 '성과 백분위' 셀 (CTR/CVR/CPA 배지 묶음) + 컬럼 가시성 토글 */
+    #resultTable:not(.show-pctile) .col-pctile { display: none; }
+    .pctile-cell { display: flex; flex-direction: column; gap: 2px; align-items: flex-start; }
+    .pctile-cell-row { display: flex; align-items: center; gap: 4px; white-space: nowrap; }
+    .pctile-cell-key { font-size: 10px; color: #9ca3af; font-weight: 700; width: 26px; display: inline-block; }
+    /* Stage 5-J: 분포 패널 '풀 대비 성과' 상·하위 카드 */
+    .signal-perf-block { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 14px; }
+    .signal-perf-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px; }
+    .signal-perf-card h4 { margin: 0 0 8px; font-size: 13px; color: #334155; }
+    .signal-perf-card ul { list-style: none; margin: 0; padding: 0; }
+    .signal-perf-card li { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12.5px; padding: 3px 0; color: #475569; }
+    .signal-perf-card li > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    @media (max-width: 640px) { .signal-perf-block { grid-template-columns: 1fr; } }
     /* Stage 5-I QA: 모달 KPI 지표 테이블 (줄 글 행 → 그리드 카드) */
     .kpi-metric-grid {
       display: grid;
@@ -1338,8 +1351,19 @@
       <div id="campaignCompareContainer"></div>
 
       <!-- ⑥ 소재 상세 테이블 -->
+      <!-- Stage 5-J: 풀 대비 백분위 정렬 드롭다운 (KPI 보유 소재 있을 때만 노출) -->
+      <div id="resultSortBar" style="display:none;margin-top:18px;font-size:13px;color:#374151;">
+        <label style="font-weight:600;margin-right:6px;">🔀 정렬 기준</label>
+        <select id="resultSortSelect" onchange="applyResultSort(this.value)" style="padding:5px 10px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;background:#fff;color:#1f2937;font-weight:600;">
+          <option value="score">종합 점수 (기본)</option>
+          <option value="ctr">CTR 풀 백분위 높은 순</option>
+          <option value="cvr">CVR 풀 백분위 높은 순</option>
+          <option value="cpa">CPA 풀 백분위 높은 순</option>
+        </select>
+        <span style="color:#9ca3af;margin-left:8px;font-size:12px;">풀 백분위는 Google Ads KPI 보유 소재 기준</span>
+      </div>
       <div class="table-container" style="margin-top: 20px;">
-        <table>
+        <table id="resultTable">
           <thead>
             <tr>
               <th>미리보기</th>
@@ -1355,12 +1379,13 @@
               <th class="has-tooltip" data-tip="ROAS Rank 기반 점수&#10;(n - Rank + 1) / n × 100&#10;ROAS 높을수록 높은 점수&#10;Revenue 없으면 자동 제외">ROAS 점수 ℹ</th>
               <th class="has-tooltip" data-tip="전환·CPA·IPM·ROAS 점수 × 가중치 합산&#10;설정된 가중치 비율로 최종 점수 산출">총점 ℹ</th>
               <th class="has-tooltip" data-tip="총점 기준 등급&#10;최우수 ≥80 / 우수 ≥60&#10;양호 ≥40 / 보통 ≥20 / 개선필요 &lt;20">등급 ℹ</th>
+              <th class="col-pctile has-tooltip" data-tip="풀(같은 타이틀 광고 집행 소재) 대비 백분위&#10;CTR/CVR/CPA 각각 상위/하위 N%&#10;Google Ads KPI 보유 소재만 표시">성과 백분위 ℹ</th>
               <th class="has-tooltip" data-tip="일별 전환수 추이 (sparkline)&#10;마지막 점은 가장 최근 일자">📈 추이 ℹ</th>
             </tr>
           </thead>
           <tbody id="tableBody">
             <tr>
-              <td colspan="14" style="text-align: center; padding: 40px; color: #9ca3af;">
+              <td colspan="15" style="text-align: center; padding: 40px; color: #9ca3af;">
                 점수 계산 실행 버튼을 클릭하여 분석을 시작하세요
               </td>
             </tr>
@@ -1623,6 +1648,32 @@ function renderSignalDistribution(creatives) {
       return `<li><span>${escapeHtml(label)}</span><span><span class="dist-count">${cnt}건</span>${pctHtml}</span></li>`;
     }).join('') || '<li style="color:#9ca3af;">(데이터 없음)</li>';
 
+  // Stage 5-J: 풀 대비 성과 — CTR 백분위 기준 상·하위 소재 랭킹 (KPI 보유 소재 4개 이상일 때만)
+  const withPctile = (creatives || []).filter(
+    (c) => c && c.meta && c.meta.kpi_percentiles && c.meta.kpi_percentiles.ctr != null
+  );
+  let perfHtml = '';
+  if (withPctile.length >= 4) {
+    const sorted = withPctile.slice().sort(
+      (a, b) => b.meta.kpi_percentiles.ctr - a.meta.kpi_percentiles.ctr
+    );
+    const top = sorted.slice(0, 3);
+    const bottom = sorted.slice(-3).reverse();
+    const item = (c) =>
+      `<li><span>${escapeHtml(c.key || c.소재명 || '')}</span>${pctBadgeHtml(c.meta.kpi_percentiles.ctr)}</li>`;
+    perfHtml = `
+      <div class="signal-perf-block">
+        <div class="signal-perf-card">
+          <h4>🎯 CTR 풀 상위 (후킹 우수)</h4>
+          <ul>${top.map(item).join('')}</ul>
+        </div>
+        <div class="signal-perf-card">
+          <h4>🐢 CTR 풀 하위 (후킹 약함)</h4>
+          <ul>${bottom.map(item).join('')}</ul>
+        </div>
+      </div>`;
+  }
+
   panel.innerHTML = `
     <div class="signal-dist-grid">
       <div class="signal-dist-card dist-strength">
@@ -1638,6 +1689,7 @@ function renderSignalDistribution(creatives) {
         <ul>${renderList(testIdeas, 3, false)}</ul>
       </div>
     </div>
+    ${perfHtml}
   `;
   panel.style.display = 'block';
 }
@@ -1704,6 +1756,35 @@ function pctBadgeHtml(pct) {
   const label = top ? `상위 ${Math.max(1, 100 - pct)}%` : `하위 ${Math.max(1, pct)}%`;
   const cls = top ? 'pctile-top' : 'pctile-bottom';
   return ` <span class="pctile-badge ${cls}">${label}</span>`;
+}
+
+// Stage 5-J: 표 '성과 백분위' 셀 — CTR/CVR/CPA 배지 묶음. KPI(백분위) 없으면 '—'.
+function pctileCellHtml(p) {
+  if (!p || (p.ctr == null && p.cvr == null && p.cpa == null)) {
+    return '<span style="color:#d1d5db;font-size:11px;">—</span>';
+  }
+  const row = (label, v) => (v == null)
+    ? ''
+    : `<div class="pctile-cell-row"><span class="pctile-cell-key">${label}</span>${pctBadgeHtml(v)}</div>`;
+  return `<div class="pctile-cell">${row('CTR', p.ctr)}${row('CVR', p.cvr)}${row('CPA', p.cpa)}</div>`;
+}
+
+// Stage 5-J: 결과 표를 정렬 기준으로 재정렬 후 행만 재렌더 (currentCreatives 를 in-place 정렬해
+// 모달 인덱스 정합 유지). 백분위 없는 소재는 하단으로.
+function applyResultSort(key) {
+  const cs = window.currentCreatives;
+  if (!cs || !cs.length) return;
+  if (key === 'score') {
+    cs.sort((a, b) => (b.TotalScore || 0) - (a.TotalScore || 0));
+  } else {
+    const pv = (c) => {
+      const p = c.meta && c.meta.kpi_percentiles;
+      const v = p ? p[key] : null;
+      return v == null ? -1 : v;  // 백분위(높을수록 우수) 없으면 -1 → 최하단
+    };
+    cs.sort((a, b) => pv(b) - pv(a));
+  }
+  renderResultTableRows(cs);
 }
 
 function plParseCSV(text) {
@@ -3761,6 +3842,73 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       return signals;
     }
 
+    // Stage 5-J: 결과 표 행 렌더링 (displayScoringResults 최초 렌더 + applyResultSort 재정렬 공용).
+    // riskSignals/dailyMap 은 window 에 보관된 값을 읽어 정렬 재렌더 시 재계산 불필요.
+    // index 는 화면 표시 순서와 동일 → openPreviewModal(index) 가 currentCreatives[index] 와 정합.
+    function renderResultTableRows(creatives) {
+      const tbody = document.getElementById('tableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      const riskSignals = window._riskSignals || {};
+      const dailyMap = window._dailyMap || {};
+
+      creatives.forEach((c, index) => {
+        const tr = document.createElement('tr');
+
+        // 미리보기: 이미지 URL 추출
+        const imageUrl = c.meta?.['링크'] || c.이미지링크 || '';
+        const isVideo = c.유형 === 'VID';
+        const hasImage = imageUrl && imageUrl.startsWith('http');
+
+        // 위험 신호 아이콘 HTML 생성
+        const sigs = riskSignals[c.key] || [];
+        const sigIconsHtml = sigs.length > 0
+          ? sigs.map(s => `<span class="has-tooltip" data-tip="${s.label}: ${s.detail}" style="font-size:14px;cursor:help;margin-right:2px;">${s.icon}</span>`).join('')
+          : '';
+
+        // 썸네일 HTML 생성
+        let previewHtml = '';
+        if (isVideo) {
+          previewHtml = `<div class="preview-video" onclick="openPreviewModal(${index})"></div>`;
+        } else if (hasImage) {
+          previewHtml = `<img src="${imageUrl}" class="preview-thumbnail" onclick="openPreviewModal(${index})" alt="미리보기">`;
+        } else {
+          previewHtml = `<span class="preview-placeholder-clickable" onclick="openPreviewModal(${index})" title="소재 상세 정보 보기" style="cursor:pointer; color:#9ca3af; font-size:24px; display:inline-block; padding:8px 12px; border:1.5px dashed #d1d5db; border-radius:8px; transition:all .15s;" onmouseover="this.style.background='#fef2f2'; this.style.borderColor='#E84855';" onmouseout="this.style.background=''; this.style.borderColor='#d1d5db';">📷</span>`;
+        }
+
+        // v5.1: sparkline 셀 (일별 전환수 추이)
+        const dailyData = dailyMap[c.key] || [];
+        const sparkHtml = dailyData.length >= 2
+          ? `<div class="has-tooltip" data-tip="일별 전환수 추이 (${dailyData.length}일)&#10;${dailyData.slice(-7).map(d=>`${d.date.slice(5)}: ${d.전환}건`).join('&#10;')}" style="cursor:help;">${buildSparklineSvg(dailyData.map(d=>d.전환))}</div>`
+          : `<span style="font-size:10px;color:#d1d5db;">—</span>`;
+
+        tr.innerHTML = `
+          <td style="text-align: center;">${previewHtml}</td>
+          <td style="max-width: 250px;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              ${sigIconsHtml}
+              <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.key}</span>
+            </div>
+          </td>
+          <td><span class="badge badge-${c.유형.toLowerCase()}">${c.유형}</span></td>
+          <td style="text-align: right;">${c.전환.toLocaleString()}</td>
+          <td style="text-align: right;">₩${Math.round(c.CPA).toLocaleString()}</td>
+          <td style="text-align: right;">${c.IPM.toFixed(2)}</td>
+          <td style="text-align: right; font-weight: 600; color: #1f2937;">${c.매출 > 0 || c.비용 > 0 ? Math.round(c.ROAS * 100) + '%' : '—'}</td>
+          <td style="text-align: right; font-weight: 600;">${c.전환수점수.toFixed(1)}</td>
+          <td style="text-align: right; font-weight: 600;">${c.CPA점수.toFixed(1)}</td>
+          <td style="text-align: right; font-weight: 600;">${c.IPM점수.toFixed(1)}</td>
+          <td style="text-align: right; font-weight: 600;${c.ROAS점수 == null ? 'color:#9ca3af;' : ''}">${c.ROAS점수 == null ? '—' : c.ROAS점수.toFixed(1)}</td>
+          <td style="text-align: right; font-weight: 700; color: #E84855; font-size: 16px;">${c.TotalScore.toFixed(1)}</td>
+          <td><span class="badge grade-${c.등급}">${c.등급}</span></td>
+          <td class="col-pctile" style="text-align:left;">${pctileCellHtml(c.meta && c.meta.kpi_percentiles)}</td>
+          <td style="text-align:center;padding:6px 4px;">${sparkHtml}</td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+    }
+
     function displayScoringResults(creatives, filterSummary = [], excludeInfo = {}) {
       document.getElementById('results').style.display = 'block';
 
@@ -3855,68 +4003,21 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         : [];
       const dailyMap = buildDailySparklineMap(sparkRows, currentGroupBy);
 
-      // 테이블
-      const tbody = document.getElementById('tableBody');
-      tbody.innerHTML = '';
+      // 테이블 (Stage 5-J: 행 렌더링을 renderResultTableRows 로 추출 — 정렬 재렌더와 공용)
+      window._dailyMap = dailyMap;
+      renderResultTableRows(creatives);
 
-      creatives.forEach((c, index) => {
-        const tr = document.createElement('tr');
+      // Stage 5-J: 풀 백분위 보유 소재가 있을 때만 '성과 백분위' 컬럼 + 정렬바 노출.
+      //            필터/재계산 시마다 정렬은 기본(종합 점수)으로 리셋.
+      const hasPctile = creatives.some(c => c.meta && c.meta.kpi_percentiles &&
+        (c.meta.kpi_percentiles.ctr != null || c.meta.kpi_percentiles.cvr != null || c.meta.kpi_percentiles.cpa != null));
+      const _tableEl = document.getElementById('resultTable');
+      if (_tableEl) _tableEl.classList.toggle('show-pctile', hasPctile);
+      const _sortBar = document.getElementById('resultSortBar');
+      if (_sortBar) _sortBar.style.display = hasPctile ? 'block' : 'none';
+      const _sortSel = document.getElementById('resultSortSelect');
+      if (_sortSel) _sortSel.value = 'score';
 
-        // 미리보기: 이미지 URL 추출
-        const imageUrl = c.meta?.['링크'] || c.이미지링크 || '';
-        const isVideo = c.유형 === 'VID';
-        const hasImage = imageUrl && imageUrl.startsWith('http');
-
-        // 위험 신호 아이콘 HTML 생성
-        const sigs = riskSignals[c.key] || [];
-        const sigIconsHtml = sigs.length > 0
-          ? sigs.map(s => `<span class="has-tooltip" data-tip="${s.label}: ${s.detail}" style="font-size:14px;cursor:help;margin-right:2px;">${s.icon}</span>`).join('')
-          : '';
-        
-        // 썸네일 HTML 생성
-        let previewHtml = '';
-        if (isVideo) {
-          // 동영상: 플레이 버튼 표시
-          previewHtml = `<div class="preview-video" onclick="openPreviewModal(${index})"></div>`;
-        } else if (hasImage) {
-          // 이미지: 실제 이미지 표시
-          previewHtml = `<img src="${imageUrl}" class="preview-thumbnail" onclick="openPreviewModal(${index})" alt="미리보기">`;
-        } else {
-          // 없음: 클릭 가능한 플레이스홀더 (메타·인사이트 모달은 열림)
-          previewHtml = `<span class="preview-placeholder-clickable" onclick="openPreviewModal(${index})" title="소재 상세 정보 보기" style="cursor:pointer; color:#9ca3af; font-size:24px; display:inline-block; padding:8px 12px; border:1.5px dashed #d1d5db; border-radius:8px; transition:all .15s;" onmouseover="this.style.background='#fef2f2'; this.style.borderColor='#E84855';" onmouseout="this.style.background=''; this.style.borderColor='#d1d5db';">📷</span>`;
-        }
-
-        // v5.1: sparkline 셀 (일별 전환수 추이)
-        const dailyData = dailyMap[c.key] || [];
-        const sparkHtml = dailyData.length >= 2
-          ? `<div class="has-tooltip" data-tip="일별 전환수 추이 (${dailyData.length}일)&#10;${dailyData.slice(-7).map(d=>`${d.date.slice(5)}: ${d.전환}건`).join('&#10;')}" style="cursor:help;">${buildSparklineSvg(dailyData.map(d=>d.전환))}</div>`
-          : `<span style="font-size:10px;color:#d1d5db;">—</span>`;
-
-        tr.innerHTML = `
-          <td style="text-align: center;">${previewHtml}</td>
-          <td style="max-width: 250px;">
-            <div style="display:flex;align-items:center;gap:6px;">
-              ${sigIconsHtml}
-              <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.key}</span>
-            </div>
-          </td>
-          <td><span class="badge badge-${c.유형.toLowerCase()}">${c.유형}</span></td>
-          <td style="text-align: right;">${c.전환.toLocaleString()}</td>
-          <td style="text-align: right;">₩${Math.round(c.CPA).toLocaleString()}</td>
-          <td style="text-align: right;">${c.IPM.toFixed(2)}</td>
-          <td style="text-align: right; font-weight: 600; color: #1f2937;">${c.매출 > 0 || c.비용 > 0 ? Math.round(c.ROAS * 100) + '%' : '—'}</td>
-          <td style="text-align: right; font-weight: 600;">${c.전환수점수.toFixed(1)}</td>
-          <td style="text-align: right; font-weight: 600;">${c.CPA점수.toFixed(1)}</td>
-          <td style="text-align: right; font-weight: 600;">${c.IPM점수.toFixed(1)}</td>
-          <td style="text-align: right; font-weight: 600;${c.ROAS점수 == null ? 'color:#9ca3af;' : ''}">${c.ROAS점수 == null ? '—' : c.ROAS점수.toFixed(1)}</td>
-          <td style="text-align: right; font-weight: 700; color: #E84855; font-size: 16px;">${c.TotalScore.toFixed(1)}</td>
-          <td><span class="badge grade-${c.등급}">${c.등급}</span></td>
-          <td style="text-align:center;padding:6px 4px;">${sparkHtml}</td>
-        `;
-
-        tbody.appendChild(tr);
-      });
-      
       // ── 소재 유형별 요약 표 렌더링
       renderTypeSummary(creatives);
       // ── v5.1: 캠페인 비교 표 렌더링 (2개 이상 캠페인 시 자동)
