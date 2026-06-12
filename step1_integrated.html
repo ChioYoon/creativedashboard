@@ -518,6 +518,14 @@
       color: #9f1239;
     }
     /* Stage 5-F-2: v2 구조화 신호 칩 (강점/약점/가설/변주 + one_line_insight) */
+    /* QA 가독성 보강 (2026-06-11): titleSelector 의 닫힌 상태는 빨간 헤더 위라
+       흰 글씨가 맞지만, 펼친 option 목록은 OS 가 흰 배경으로 그리므로
+       흰 글씨가 보이지 않음 — option 에만 어두운 색 강제. */
+    #titleSelector option {
+      color: #1f2937;
+      background: #ffffff;
+      font-weight: 600;
+    }
     .signal-group {
       display: flex;
       flex-wrap: wrap;
