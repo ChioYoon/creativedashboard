@@ -683,8 +683,14 @@ def run(cfg: dict) -> dict:
             improvement_actions=[i.get("action", "") for i in _test_items],
             creator_intent=tag_dict.get("creator_intent"),
             one_line_insight=one_line,
-            # Stage 5-I: 실제 KPI 정합성 해석(AI) + 백분위(코드 산출)
-            kpi_reality_check=tag_dict.get("kpi_reality_check"),
+            # Stage 5-I: 실제 KPI 정합성 해석(AI) + 백분위(코드 산출).
+            # 하드 가드: KPI 없는 소재는 모델 출력과 무관하게 강제 None —
+            # flash-lite 폴백이 타 소재 수치를 베껴 환각 reality_check 를 쓴 사례 차단.
+            kpi_reality_check=(
+                tag_dict.get("kpi_reality_check")
+                if c.creative_name in per_creative_kpi
+                else None
+            ),
             kpi_percentiles=creative_percentiles.get(c.creative_name),
             # Stage 5-F-1: marketer_insight dual-write 제거 — alias는 js/data-source.js
             # normalizeFromJson() 에서 처리. Python schema 의 marketer_insight 필드는
