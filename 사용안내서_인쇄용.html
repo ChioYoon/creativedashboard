@@ -151,6 +151,7 @@
     .fatigue-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:12px 0; }
     .fatigue-card{ border-radius:var(--radius-md); padding:10px; text-align:center; font-size:12px; background:var(--surface-soft); border:1px solid var(--hairline-warm); }
     .fatigue-card .fc-icon{ font-size:22px; display:block; margin-bottom:4px; }
+    .wf-icon:empty, .fc-icon:empty{ display:none; }  /* 이모지 제거 후 빈 아이콘 공백 정리 */
     .fatigue-card .fc-name{ font-weight:700; margin-bottom:3px; font-size:13px; }
     .fatigue-card .fc-cpa{ font-size:11px; color:var(--text-secondary); margin-bottom:4px; }
     .fatigue-card .fc-action{ font-size:11px; font-weight:600; }
@@ -181,7 +182,7 @@
   </style>
 </head>
 <body>
-  <button class="print-btn no-print" onclick="window.print()">🖨️ 인쇄하기</button>
+  <button class="print-btn no-print" onclick="window.print()">인쇄하기</button>
 
   <!-- ════════════════════════════════════════════════════════
        표지
@@ -214,7 +215,7 @@
        목차
   ════════════════════════════════════════════════════════ -->
   <div class="page">
-    <div class="toc-title">📑 목차</div>
+    <div class="toc-title">목차</div>
     <div class="toc-section">
       <div class="toc-item main"><div><span class="toc-num">1.</span>시스템 개요 및 워크플로우</div><div class="toc-pg">3</div></div>
       <div class="toc-item sub"><div><span class="toc-num">1.1</span>도구 구성 및 접속 방법</div><div class="toc-pg">3</div></div>
@@ -249,14 +250,14 @@
       <div class="toc-item main"><div><span class="toc-num">6.</span>자주 묻는 질문 (FAQ)</div><div class="toc-pg">12</div></div>
     </div>
     <div class="toc-section">
-      <div class="toc-item main"><div><span class="toc-num">✨</span>AI 구조화 인사이트 &amp; 풀 대비 성과 <span class="badge badge-red" style="font-size:9px;padding:1px 6px;">v5.2</span></div><div class="toc-pg">13</div></div>
+      <div class="toc-item main"><div><span class="toc-num"></span>AI 구조화 인사이트 &amp; 풀 대비 성과 <span class="badge badge-red" style="font-size:9px;padding:1px 6px;">v5.2</span></div><div class="toc-pg">13</div></div>
     </div>
     <div class="toc-section">
       <div class="toc-item main"><div><span class="toc-num">7.</span>빠른 참조 (Cheat Sheet) · 버전 이력</div><div class="toc-pg">14</div></div>
     </div>
 
     <div class="box box-red" style="margin-top: 30px;">
-      <strong>💡 안내서 활용 가이드</strong>
+      <strong>안내서 활용 가이드</strong>
       이 안내서는 R마케팅팀의 <strong>소재 분석 업무 전체</strong>를 다룹니다.<br>
       · <strong>처음 사용자</strong> → 1 → 2 → 3 → 4 순서로 읽어주세요.<br>
       · <strong>Step 2 / AI 인사이트 신규 사용자</strong> → 4, 5번 섹션을 참고하세요.<br>
@@ -270,16 +271,16 @@
        1. 시스템 개요
   ════════════════════════════════════════════════════════ -->
   <div class="page">
-    <div class="page-title">📌 1. 시스템 개요 및 워크플로우</div>
+    <div class="page-title">1. 시스템 개요 및 워크플로우</div>
 
     <div class="section-title">1.1 도구 구성 및 접속 방법</div>
 
     <div class="box box-green" style="margin-bottom:16px;">
-      <strong>🌐 접속 URL (GitHub Pages — 설치 없이 바로 사용)</strong>
+      <strong>접속 URL (GitHub Pages — 설치 없이 바로 사용)</strong>
       <div style="margin-top:10px;background:rgba(255,255,255,.7);border-radius:6px;padding:10px 14px;">
         <div style="font-size:11px;color:#6b7280;font-weight:700;letter-spacing:1px;margin-bottom:4px;">홈 대시보드 (시작 페이지)</div>
         <div style="font-size:14px;font-weight:800;color:#059669;letter-spacing:.3px;word-break:break-all;">
-          🔗 https://chioyoon.github.io/creativedashboard/
+          https://chioyoon.github.io/creativedashboard/
         </div>
       </div>
       <div style="margin-top:8px;font-size:12.5px;color:#374151;">
@@ -295,22 +296,22 @@
         <tr>
           <td><code style="font-size:11px;word-break:break-all;">…/creativedashboard/</code></td>
           <td>홈 대시보드 — 워크플로우 안내, Step1/2 진입 버튼</td>
-          <td><span class="badge badge-green">✅ 운영</span></td>
+          <td><span class="badge badge-green">운영</span></td>
         </tr>
         <tr>
           <td><code style="font-size:11px;word-break:break-all;">…/step1_integrated.html</code></td>
           <td><strong>Step 1</strong> — CSV 업로드 → 점수 계산 → 피로도 분석 → AI 인사이트</td>
-          <td><span class="badge badge-green">✅ 운영</span></td>
+          <td><span class="badge badge-green">운영</span></td>
         </tr>
         <tr>
           <td><code style="font-size:11px;word-break:break-all;">…/step2_column_selector.html</code></td>
           <td><strong>Step 2-①</strong> — 태그 컬럼 선택, 가중치 설정, 군집화 모드 결정</td>
-          <td><span class="badge badge-green">✅ 운영</span></td>
+          <td><span class="badge badge-green">운영</span></td>
         </tr>
         <tr>
           <td><code style="font-size:11px;word-break:break-all;">…/step2_clustering.html</code></td>
           <td><strong>Step 2-②</strong> — 하이브리드 군집화 실행, 결과 시각화, AI 인사이트</td>
-          <td><span class="badge badge-green">✅ 운영</span></td>
+          <td><span class="badge badge-green">운영</span></td>
         </tr>
       </tbody>
     </table>
@@ -320,32 +321,32 @@
 
     <div class="workflow">
       <div class="wf-step">
-        <span class="wf-icon">📂</span>
+        <span class="wf-icon"></span>
         CSV 업로드<br><span style="font-weight:300;font-size:10px;">BNR/VID 자동분리</span>
       </div>
       <div class="wf-arrow">→</div>
       <div class="wf-step">
-        <span class="wf-icon">📊</span>
+        <span class="wf-icon"></span>
         Step 1<br><span style="font-weight:300;font-size:10px;">점수계산·피로도</span>
       </div>
       <div class="wf-arrow">→</div>
       <div class="wf-step">
-        <span class="wf-icon">✨</span>
+        <span class="wf-icon"></span>
         AI 인사이트<br><span style="font-weight:300;font-size:10px;">Gemini 분석</span>
       </div>
       <div class="wf-arrow">→</div>
       <div class="wf-step step2">
-        <span class="wf-icon">🏷️</span>
+        <span class="wf-icon"></span>
         Step 2-①<br><span style="font-weight:300;font-size:10px;">컬럼·가중치 설정</span>
       </div>
       <div class="wf-arrow">→</div>
       <div class="wf-step step2">
-        <span class="wf-icon">🔬</span>
+        <span class="wf-icon"></span>
         Step 2-②<br><span style="font-weight:300;font-size:10px;">군집화·시각화</span>
       </div>
       <div class="wf-arrow">→</div>
       <div class="wf-step step3">
-        <span class="wf-icon">🚀</span>
+        <span class="wf-icon"></span>
         전략 수립<br><span style="font-weight:300;font-size:10px;">ScaleUp·Exit</span>
       </div>
     </div>
@@ -353,10 +354,10 @@
     <table>
       <thead><tr><th>항목</th><th>기존 방식</th><th>시스템 활용</th><th>개선 효과</th></tr></thead>
       <tbody>
-        <tr><td><strong>처리 시간</strong></td><td>2~3시간 수동 집계</td><td>5분 이내 자동 계산</td><td><strong>⬇️ 90% 단축</strong></td></tr>
-        <tr><td><strong>분석 깊이</strong></td><td>지표 단순 비교</td><td>4지표 가중치 + 태그 군집</td><td><strong>⬆️ 다차원 분석</strong></td></tr>
-        <tr><td><strong>피로도 추적</strong></td><td>수동 주간 비교</td><td>자동 CPA 변화율 추적</td><td><strong>✅ 조기 감지</strong></td></tr>
-        <tr><td><strong>크리에이티브 인사이트</strong></td><td>담당자 주관적 판단</td><td>태그 기반 AI 원인 분석</td><td><strong>✨ 데이터 기반</strong></td></tr>
+        <tr><td><strong>처리 시간</strong></td><td>2~3시간 수동 집계</td><td>5분 이내 자동 계산</td><td><strong>90% 단축</strong></td></tr>
+        <tr><td><strong>분석 깊이</strong></td><td>지표 단순 비교</td><td>4지표 가중치 + 태그 군집</td><td><strong>다차원 분석</strong></td></tr>
+        <tr><td><strong>피로도 추적</strong></td><td>수동 주간 비교</td><td>자동 CPA 변화율 추적</td><td><strong>조기 감지</strong></td></tr>
+        <tr><td><strong>크리에이티브 인사이트</strong></td><td>담당자 주관적 판단</td><td>태그 기반 AI 원인 분석</td><td><strong>데이터 기반</strong></td></tr>
       </tbody>
     </table>
 
@@ -367,7 +368,7 @@
        2. CSV 준비
   ════════════════════════════════════════════════════════ -->
   <div class="page">
-    <div class="page-title">📂 2. CSV 데이터 준비</div>
+    <div class="page-title">2. CSV 데이터 준비</div>
 
     <div class="section-title">2.1 필수 컬럼 및 자동 인식 컬럼</div>
     <p>아래 컬럼명을 포함한 CSV 파일을 준비합니다. <strong>다른 이름도 자동 인식</strong>되므로 원본 CSV를 그대로 사용해도 됩니다.</p>
@@ -388,7 +389,7 @@
     </table>
 
     <div class="box box-yellow">
-      <strong>⚠️ 업로드 주의사항</strong>
+      <strong>업로드 주의사항</strong>
       · 파일 형식: <strong>CSV (쉼표 구분)</strong>만 지원 — .xlsx 불가<br>
       · 인코딩: <strong>UTF-8</strong> 권장 (한글 깨짐 방지)<br>
       · TXT 유형 소재는 <strong>자동 제외</strong>됩니다 (BNR/VID만 분석)<br>
@@ -402,30 +403,30 @@
       <thead><tr><th style="width:22%">탭</th><th style="width:38%">사용 시나리오</th><th>지원 형식 / 동작</th></tr></thead>
       <tbody>
         <tr>
-          <td><strong>📁 파일 업로드</strong></td>
+          <td><strong>파일 업로드</strong></td>
           <td>광고 플랫폼에서 다운로드한 CSV가 손에 있을 때</td>
           <td>드래그앤드롭 또는 클릭 → 파일 선택. 업로드 영역이 그대로 input[file] 역할을 합니다 (iframe 보안 우회).</td>
         </tr>
         <tr>
-          <td><strong>📋 CSV 직접 붙여넣기</strong> <span class="badge badge-red" style="font-size:9px;">NEW</span></td>
+          <td><strong>CSV 직접 붙여넣기</strong> <span class="badge badge-red" style="font-size:9px;">NEW</span></td>
           <td>Excel/Google Sheets 시트를 일부만 복사해 빠르게 분석할 때</td>
-          <td>텍스트 영역에 붙여넣고 <strong>"✅ 분석 시작"</strong> 클릭. <strong>탭(Tab) · 쉼표 구분자 모두 자동 감지</strong>되며, 파일명은 "붙여넣기_데이터"로 표시됩니다.</td>
+          <td>텍스트 영역에 붙여넣고 <strong>"분석 시작"</strong> 클릭. <strong>탭(Tab) · 쉼표 구분자 모두 자동 감지</strong>되며, 파일명은 "붙여넣기_데이터"로 표시됩니다.</td>
         </tr>
       </tbody>
     </table>
 
     <div class="box box-green">
-      <strong>✅ Excel → 붙여넣기 빠른 사용법</strong>
+      <strong>Excel → 붙여넣기 빠른 사용법</strong>
       ① Excel 또는 Google Sheets에서 헤더 포함 전체 범위 선택 (Ctrl + A)<br>
       ② 복사 (Ctrl + C)<br>
-      ③ 대시보드에서 <strong>"📋 CSV 직접 붙여넣기"</strong> 탭 클릭<br>
-      ④ 텍스트 영역에 붙여넣기 (Ctrl + V) → <strong>"✅ 분석 시작"</strong> 클릭<br>
-      ⑤ 업로드 성공 시 <strong>컬럼 매핑 상태</strong>와 <strong>"📊 점수 계산 시작하기 →"</strong> 버튼 자동 표시
+      ③ 대시보드에서 <strong>"CSV 직접 붙여넣기"</strong> 탭 클릭<br>
+      ④ 텍스트 영역에 붙여넣기 (Ctrl + V) → <strong>"분석 시작"</strong> 클릭<br>
+      ⑤ 업로드 성공 시 <strong>컬럼 매핑 상태</strong>와 <strong>"점수 계산 시작하기 →"</strong> 버튼 자동 표시
     </div>
 
     <div class="box box-blue">
-      <strong>💡 업로드 직후 자동 안내 (양쪽 탭 공통)</strong>
-      · ✅/⚠️/✗ 아이콘으로 <strong>주요 컬럼 감지 상태</strong> 표시 (소재명·전환·비용·노출수·Revenue)<br>
+      <strong>업로드 직후 자동 안내 (양쪽 탭 공통)</strong>
+      · //아이콘으로 <strong>주요 컬럼 감지 상태</strong> 표시 (소재명·전환·비용·노출수·Revenue)<br>
       · Revenue 컬럼이 없으면 <strong>"ROAS 가중치 자동 재배분"</strong> 안내 노출<br>
       · 업로드 완료 시 <strong>"점수 계산 시작하기"</strong> 버튼이 나타나 다음 단계로 한 번에 이동
     </div>
@@ -446,7 +447,7 @@
     </table>
 
     <div class="box box-green">
-      <strong>✅ marketer_insight 컬럼 자동 처리</strong>
+      <strong>marketer_insight 컬럼 자동 처리</strong>
       <code>marketer_insight</code> 컬럼이 있으면 시스템이 자동 감지합니다.<br>
       · <strong>무료 AI 플랜</strong>: 토큰 절감을 위해 미전송 (핵심 태그로 대체)<br>
       · <strong>유료 AI 플랜</strong>: 원문 최대 200자 Gemini에 전달 → 깊은 인사이트
@@ -459,7 +460,7 @@
        3. Step 1 — 소재 성과 분석
   ════════════════════════════════════════════════════════ -->
   <div class="page">
-    <div class="page-title">📊 3. Step 1 — 소재 성과 분석</div>
+    <div class="page-title">3. Step 1 — 소재 성과 분석</div>
 
     <div class="section-title">3.1 점수 계산 (4개 지표 가중치)</div>
     <p><strong>Total Score</strong>는 4개 지표를 Rank 기반으로 계산한 후 가중치를 적용하여 산출합니다.</p>
@@ -475,7 +476,7 @@
     </table>
 
     <div class="box box-blue">
-      <strong>💡 가중치 프리셋 가이드</strong>
+      <strong>가중치 프리셋 가이드</strong>
       슬라이더로 직접 조정하거나 아래 추천 프리셋을 참고하세요.<br><br>
       · <strong>균형형 (기본)</strong>: 전환 25% | CPA 25% | IPM 25% | ROAS 25% — 일반적인 분석<br>
       · <strong>전환 극대화</strong>: 전환 40% | CPA 30% | IPM 15% | ROAS 15% — UA 캠페인 중점<br>
@@ -483,7 +484,7 @@
       · <strong>수익 극대화</strong>: 전환 15% | CPA 15% | IPM 10% | ROAS 60% — LTV 높은 게임
     </div>
 
-    <div class="subsection-title">📋 필터 옵션</div>
+    <div class="subsection-title">필터 옵션</div>
     <ul>
       <li><strong>소재 유형</strong>: BNR (이미지) / VID (동영상) — TXT는 분석에서 자동 제외</li>
       <li><strong>캠페인</strong>: 단일 선택 또는 전체 (캠페인 드롭다운)</li>
@@ -498,28 +499,28 @@
       <thead><tr><th style="width:6%">순서</th><th style="width:24%">블록</th><th>내용 / 활용 포인트</th></tr></thead>
       <tbody>
         <tr><td><strong>①</strong></td><td><strong>스코어 카드 5개</strong> <span class="badge badge-red" style="font-size:9px;">UPDATED</span></td><td>전체 소재 수 · 최고 점수 · 평균 점수 · <strong>최우수 소재 수</strong> · <strong>저조 소재 수</strong> (개선필요 등급, 어두운 슬레이트 카드로 시각적 구분)</td></tr>
-        <tr><td><strong>②</strong></td><td><strong>📤 분석 결과 HTML 추출</strong> 버튼 <span class="badge badge-red" style="font-size:9px;">NEW</span></td><td>유관부서 공유용 단일 HTML 파일 다운로드 → 자세한 사용법은 <strong>3.3 참조</strong></td></tr>
-        <tr><td><strong>③</strong></td><td><strong>📌 적용된 필터 조건</strong></td><td>캠페인·소재유형·기간·집계기준 한 줄 요약 — 결과 캡처 시 컨텍스트 명확화</td></tr>
-        <tr><td><strong>④</strong></td><td><strong>✨ AI 인사이트</strong></td><td>"AI 인사이트 생성" 버튼 → 위닝/루징 분석 카드 (5번 섹션 참고)</td></tr>
-        <tr><td><strong>⑤</strong></td><td><strong>📊 소재 유형별 요약 표</strong> <span class="badge badge-red" style="font-size:9px;">NEW</span></td><td>BNR/VID 별 가중평균 <strong>CPA · IPM · CTR · ROAS · 평균점수</strong> + 합계행 — 포맷 의사결정 핵심 자료</td></tr>
-        <tr><td><strong>⑥</strong></td><td><strong>📑 소재 상세 테이블</strong></td><td>썸네일 · 전환 · CPA · IPM · ROAS · 4개 점수 · 총점 · 등급 (모든 컬럼 헤더에 ℹ 툴팁 제공)</td></tr>
+        <tr><td><strong>②</strong></td><td><strong>분석 결과 HTML 추출</strong> 버튼 <span class="badge badge-red" style="font-size:9px;">NEW</span></td><td>유관부서 공유용 단일 HTML 파일 다운로드 → 자세한 사용법은 <strong>3.3 참조</strong></td></tr>
+        <tr><td><strong>③</strong></td><td><strong>적용된 필터 조건</strong></td><td>캠페인·소재유형·기간·집계기준 한 줄 요약 — 결과 캡처 시 컨텍스트 명확화</td></tr>
+        <tr><td><strong>④</strong></td><td><strong>AI 인사이트</strong></td><td>"AI 인사이트 생성" 버튼 → 위닝/루징 분석 카드 (5번 섹션 참고)</td></tr>
+        <tr><td><strong>⑤</strong></td><td><strong>소재 유형별 요약 표</strong> <span class="badge badge-red" style="font-size:9px;">NEW</span></td><td>BNR/VID 별 가중평균 <strong>CPA · IPM · CTR · ROAS · 평균점수</strong> + 합계행 — 포맷 의사결정 핵심 자료</td></tr>
+        <tr><td><strong>⑥</strong></td><td><strong>소재 상세 테이블</strong></td><td>썸네일 · 전환 · CPA · IPM · ROAS · 4개 점수 · 총점 · 등급 (모든 컬럼 헤더에 툴팁 제공)</td></tr>
       </tbody>
     </table>
 
-    <div class="subsection-title">🏆 등급 기준</div>
+    <div class="subsection-title">등급 기준</div>
     <table class="grade-table">
       <thead><tr><th>등급</th><th>점수 범위</th><th>색상</th><th>권장 액션</th></tr></thead>
       <tbody>
-        <tr><td>🏆 최우수</td><td>≥ 80점</td><td style="color:#059669;font-weight:700;">진한 녹색</td><td>예산 즉시 증액 (Scale-up)</td></tr>
-        <tr><td>🌟 우수</td><td>60~79점</td><td style="color:#10b981;font-weight:700;">녹색</td><td>현행 운영 유지, 신규 오디언스 테스트</td></tr>
-        <tr><td>✅ 양호</td><td>40~59점</td><td style="color:#3b82f6;font-weight:700;">파란색</td><td>크리에이티브 요소 일부 최적화</td></tr>
-        <tr><td>⚠️ 보통</td><td>20~39점</td><td style="color:#f59e0b;font-weight:700;">주황색</td><td>타겟·입찰 재검토 후 개선</td></tr>
-        <tr><td>🔴 개선 필요</td><td>< 20점</td><td style="color:#ef4444;font-weight:700;">빨간색</td><td>즉시 교체 또는 소재 리프레시 — <strong>"저조 소재" 카드에 자동 카운트</strong></td></tr>
+        <tr><td>최우수</td><td>≥ 80점</td><td style="color:#059669;font-weight:700;">진한 녹색</td><td>예산 즉시 증액 (Scale-up)</td></tr>
+        <tr><td>우수</td><td>60~79점</td><td style="color:#10b981;font-weight:700;">녹색</td><td>현행 운영 유지, 신규 오디언스 테스트</td></tr>
+        <tr><td>양호</td><td>40~59점</td><td style="color:#3b82f6;font-weight:700;">파란색</td><td>크리에이티브 요소 일부 최적화</td></tr>
+        <tr><td>보통</td><td>20~39점</td><td style="color:#f59e0b;font-weight:700;">주황색</td><td>타겟·입찰 재검토 후 개선</td></tr>
+        <tr><td>개선 필요</td><td>< 20점</td><td style="color:#ef4444;font-weight:700;">빨간색</td><td>즉시 교체 또는 소재 리프레시 — <strong>"저조 소재" 카드에 자동 카운트</strong></td></tr>
       </tbody>
     </table>
 
     <div class="box box-blue">
-      <strong>📊 소재 유형별 요약 표 읽는 법 (NEW)</strong>
+      <strong>소재 유형별 요약 표 읽는 법 (NEW)</strong>
       · 표가 자동 표시되는 조건: <strong>BNR + VID 두 유형 모두 결과에 포함된 경우</strong>에만 노출<br>
       · <strong>CPA/ROAS는 가중평균</strong>: 소재별 단순평균이 아닌 <strong>총비용·총전환·총매출 기반</strong> 가중평균<br>
       · 하단 합계행: 전체 유형 통합 KPI — 캠페인 단위 벤치마크로 활용
@@ -532,13 +533,13 @@
        3.3 분석 결과 HTML 추출 (NEW)
   ════════════════════════════════════════════════════════ -->
   <div class="page">
-    <div class="page-title">📤 3.3 분석 결과 HTML 추출 <span class="badge badge-red" style="font-size:11px;">NEW</span></div>
+    <div class="page-title">3.3 분석 결과 HTML 추출 <span class="badge badge-red" style="font-size:11px;">NEW</span></div>
 
-    <p>분석 결과 섹션의 <strong>"📤 분석 결과 HTML 추출"</strong> 버튼을 누르면, 현재 화면의 분석 결과를 <strong>단일 HTML 파일</strong>로 다운로드합니다. 첨부 1개로 유관부서·외부 파트너에게 공유할 수 있습니다.</p>
+    <p>분석 결과 섹션의 <strong>"분석 결과 HTML 추출"</strong> 버튼을 누르면, 현재 화면의 분석 결과를 <strong>단일 HTML 파일</strong>로 다운로드합니다. 첨부 1개로 유관부서·외부 파트너에게 공유할 수 있습니다.</p>
 
     <div class="section-title">사용 시나리오</div>
     <div class="step-row"><span class="step-num">1</span><div class="step-body">필터(캠페인·유형·기간)를 원하는 범위로 설정한 뒤 <strong>"점수 계산 실행"</strong></div></div>
-    <div class="step-row"><span class="step-num">2</span><div class="step-body">결과가 출력되면 상단 <strong>"📤 분석 결과 HTML 추출"</strong> 파란 버튼 클릭</div></div>
+    <div class="step-row"><span class="step-num">2</span><div class="step-body">결과가 출력되면 상단 <strong>"분석 결과 HTML 추출"</strong> 파란 버튼 클릭</div></div>
     <div class="step-row"><span class="step-num">3</span><div class="step-body"><code>소재분석결과_YYYYMMDD_HHMM.html</code> 파일이 자동 다운로드 — 더블클릭하면 브라우저에서 즉시 열림</div></div>
     <div class="step-row"><span class="step-num">4</span><div class="step-body">Slack/이메일 첨부 또는 인쇄(Ctrl+P) → 회의 자료로 사용</div></div>
 
@@ -549,14 +550,14 @@
         <tr><td><strong>스코어 카드 5개</strong> (저조 소재 포함)</td><td><span class="badge badge-green">포함</span></td><td>레드 그라데이션 + 슬레이트 카드</td></tr>
         <tr><td><strong>적용된 필터 조건 요약</strong></td><td><span class="badge badge-green">포함</span></td><td>외부 공유 시 분석 범위 자동 명시</td></tr>
         <tr><td><strong>소재 유형별 요약 표</strong> (가중평균)</td><td><span class="badge badge-green">포함</span></td><td>BNR/VID 양쪽 있을 때만</td></tr>
-        <tr><td><strong>소재 상세 테이블 + 미리보기 썸네일</strong></td><td><span class="badge badge-green">포함</span></td><td>BNR은 이미지, VID는 🎬 아이콘 (썸네일 있으면 ▶ 오버레이)</td></tr>
+        <tr><td><strong>소재 상세 테이블 + 미리보기 썸네일</strong></td><td><span class="badge badge-green">포함</span></td><td>BNR은 이미지, VID는 아이콘 (썸네일 있으면 ▶ 오버레이)</td></tr>
         <tr><td>AI 인사이트 카드</td><td><span class="badge badge-gray">제외</span></td><td>외부 공유 시 모델 결과 노출 방지 — 본 시스템에서만 열람</td></tr>
         <tr><td>가중치 슬라이더·계산 기준 UI</td><td><span class="badge badge-gray">제외</span></td><td>결과 위주 정적 페이지</td></tr>
       </tbody>
     </table>
 
     <div class="box box-green">
-      <strong>✅ HTML 추출 파일 특징</strong>
+      <strong>HTML 추출 파일 특징</strong>
       · <strong>완전한 단일 HTML 파일</strong>: 외부 라이브러리·이미지 의존성 없음 (이미지 URL은 외부 접근 시점에 로드)<br>
       · <strong>인쇄 최적화</strong>: <code>@media print</code> 적용 — Ctrl+P → PDF 저장 가능<br>
       · <strong>모바일 반응형</strong>: 1400px 컨테이너, 좁은 화면에서 자동 스크롤<br>
@@ -564,14 +565,14 @@
     </div>
 
     <div class="box box-yellow">
-      <strong>⚠️ 추출 시 유의사항</strong>
+      <strong>추출 시 유의사항</strong>
       · 분석 결과가 없는 상태에서 버튼을 누르면 <strong>"점수 계산을 먼저 실행해 주세요"</strong> 알림<br>
       · 미리보기 이미지가 깨질 경우: 원본 CSV의 <strong>링크/image_url 컬럼 URL이 만료</strong>되었거나 외부망 차단 — 브라우저에서 URL 직접 접근으로 확인<br>
       · 사외 공유 전 <strong>필터 조건과 추출 시각</strong>을 메일 본문에 함께 기재 권장
     </div>
 
     <div class="box box-red">
-      <strong>💡 활용 팁 — 주간 리포트 자동화</strong>
+      <strong>활용 팁 — 주간 리포트 자동화</strong>
       "전체 캠페인 / BNR+VID / 지난주" 필터 → 점수 계산 → HTML 추출 → 매주 월요일 정해진 채널에 첨부 한 번으로 <strong>주간 성과 리포트 발행</strong> 가능.
     </div>
 
@@ -582,7 +583,7 @@
        3.4 피로도 분석
   ════════════════════════════════════════════════════════ -->
   <div class="page">
-    <div class="page-title">🔍 3.4 피로도 분석 (기간 비교)</div>
+    <div class="page-title">3.4 피로도 분석 (기간 비교)</div>
 
     <p>두 기간의 소재 성과를 비교하여 <strong>순위 변동</strong>과 <strong>CPA 변화율</strong>을 추적합니다. 피로도를 조기 감지하여 교체 시점을 정확히 결정할 수 있습니다.</p>
 
@@ -590,30 +591,30 @@
     <div class="step-row"><span class="step-num">1</span><div class="step-body"><strong>기준 기간</strong> 설정 — 비교의 기준이 되는 과거 기간 입력 (예: 3/01~3/31)</div></div>
     <div class="step-row"><span class="step-num">2</span><div class="step-body"><strong>비교 기간</strong> 설정 — 현재 또는 최근 기간 입력 (예: 4/01~4/13)</div></div>
     <div class="step-row"><span class="step-num">3</span><div class="step-body"><strong>"자동 분할"</strong> 버튼 — 전체 데이터 기간을 자동으로 절반씩 나눠 설정</div></div>
-    <div class="step-row"><span class="step-num">4</span><div class="step-body"><strong>"🔍 피로도 분석 실행"</strong> 버튼 클릭 → 결과 자동 표시</div></div>
+    <div class="step-row"><span class="step-num">4</span><div class="step-body"><strong>"피로도 분석 실행"</strong> 버튼 클릭 → 결과 자동 표시</div></div>
 
     <div class="section-title">피로도 상태 기준</div>
     <div class="fatigue-grid">
       <div class="fatigue-card" style="background:#f0fdf4;border:2px solid #10b981;">
-        <span class="fc-icon">🟢</span>
+        <span class="fc-icon"></span>
         <div class="fc-name" style="color:#059669;">Fresh</div>
         <div class="fc-cpa">CPA ≤ −20%</div>
         <div class="fc-action" style="color:#059669;">→ 예산 증액 (Scale-up)</div>
       </div>
       <div class="fatigue-card" style="background:#eff6ff;border:2px solid #3b82f6;">
-        <span class="fc-icon">🔵</span>
+        <span class="fc-icon"></span>
         <div class="fc-name" style="color:#2563eb;">Stable</div>
         <div class="fc-cpa">−20% ~ 0%</div>
         <div class="fc-action" style="color:#2563eb;">→ 현행 유지 (Maintain)</div>
       </div>
       <div class="fatigue-card" style="background:#fefce8;border:2px solid #f59e0b;">
-        <span class="fc-icon">🟡</span>
+        <span class="fc-icon"></span>
         <div class="fc-name" style="color:#d97706;">Warning</div>
         <div class="fc-cpa">0% ~ +20%</div>
         <div class="fc-action" style="color:#d97706;">→ 모니터링 강화 (Watch)</div>
       </div>
       <div class="fatigue-card" style="background:#fef2f2;border:2px solid #ef4444;">
-        <span class="fc-icon">🔴</span>
+        <span class="fc-icon"></span>
         <div class="fc-name" style="color:#dc2626;">Tired</div>
         <div class="fc-cpa">CPA > +20%</div>
         <div class="fc-action" style="color:#dc2626;">→ 즉시 교체 (Replace)</div>
@@ -631,15 +632,15 @@
     </table>
 
     <div class="box box-red">
-      <strong>✨ AI 인사이트 — 순위 변동 원인 AI 분석 버튼</strong>
-      피로도 분석 결과 화면의 <strong>"✨ 순위 변동 원인 AI 분석"</strong> 버튼을 누르면<br>
+      <strong>AI 인사이트 — 순위 변동 원인 AI 분석 버튼</strong>
+      피로도 분석 결과 화면의 <strong>"순위 변동 원인 AI 분석"</strong> 버튼을 누르면<br>
       · 급등 소재의 <strong>태그 기반 원인 분석</strong> (CPA·전환수 수치 인용)<br>
       · 하락 소재의 <strong>CPA 증가 트렌드 진단</strong> (피로 집중 소재 명시)<br>
       · <strong>교체 우선순위</strong> (CPA 증가율 순) + <strong>운영 액션</strong> 자동 생성
     </div>
 
     <div class="box box-yellow">
-      <strong>⚠️ 피로도 분석 핵심 규칙</strong>
+      <strong>피로도 분석 핵심 규칙</strong>
       · <strong>순위 기준</strong>: Total Score 기준 순위 비교 (점수 계산과 일관성)<br>
       · <strong>피로도 판정 기준</strong>: CPA 변화율 (CPA 악화 = 피로도)<br>
       · <strong>TXT 소재</strong>: 피로도 분석에서도 완전 제외 (BNR/VID만 분석)
@@ -652,7 +653,7 @@
        4. Step 2 — 군집화 분석
   ════════════════════════════════════════════════════════ -->
   <div class="page">
-    <div class="page-title">🔬 4. Step 2 — 군집화 분석</div>
+    <div class="page-title">4. Step 2 — 군집화 분석</div>
 
     <div class="section-title">4.1 Step 2-① 컬럼 설정 (<code>step2_column_selector.html</code>)</div>
     <p>Step 1에서 사용한 CSV를 그대로 업로드하고, 군집화에 사용할 태그 컬럼과 설정을 지정합니다.</p>
@@ -679,7 +680,7 @@
     </table>
 
     <div class="box box-purple">
-      <strong>✨ marketer_insight [MI] 태그 우대 처리</strong>
+      <strong>marketer_insight [MI] 태그 우대 처리</strong>
       · 군집화 시 [MI] 태그는 <strong>1.5배 가중치</strong> 자동 적용<br>
       · 노이즈 필터링 면제 → 마케터 의도가 반영된 태그가 군집 핵심으로 우선 선정<br>
       · Step 2-① 컬럼 설정에서 가중치 수동 조정도 가능
@@ -692,17 +693,17 @@
        4.3 군집 등급 해석
   ════════════════════════════════════════════════════════ -->
   <div class="page">
-    <div class="page-title">🏷️ 4.3 군집 등급 및 결과 해석</div>
+    <div class="page-title">4.3 군집 등급 및 결과 해석</div>
 
     <div class="section-title">군집 등급 기준</div>
     <table>
       <thead><tr><th>등급</th><th>군집 평균 점수 기준</th><th>의미</th><th>권장 전략</th></tr></thead>
       <tbody>
-        <tr><td><span class="badge badge-red">S 최우수</span></td><td>≥ 75점</td><td>압도적 고성과 태그 조합</td><td>🚀 Scale-up — 예산 집중 투입</td></tr>
-        <tr><td><span class="badge badge-gold">A 우수</span></td><td>60~74점</td><td>안정적 고성과</td><td>✅ 유지하며 유사 소재 추가 제작</td></tr>
-        <tr><td><span class="badge badge-blue">B 양호</span></td><td>45~59점</td><td>평균 이상</td><td>🔄 Pivot — 부족한 태그 보강</td></tr>
-        <tr><td><span class="badge badge-gray">C 보통</span></td><td>30~44점</td><td>평균 수준</td><td>⚠️ 최적화 후 재평가</td></tr>
-        <tr><td><span class="badge badge-gray">D 개선 필요</span></td><td>&lt; 30점</td><td>저성과 태그 조합</td><td>⛔ Exit — 제작 중단 검토</td></tr>
+        <tr><td><span class="badge badge-red">S 최우수</span></td><td>≥ 75점</td><td>압도적 고성과 태그 조합</td><td>Scale-up — 예산 집중 투입</td></tr>
+        <tr><td><span class="badge badge-gold">A 우수</span></td><td>60~74점</td><td>안정적 고성과</td><td>유지하며 유사 소재 추가 제작</td></tr>
+        <tr><td><span class="badge badge-blue">B 양호</span></td><td>45~59점</td><td>평균 이상</td><td>Pivot — 부족한 태그 보강</td></tr>
+        <tr><td><span class="badge badge-gray">C 보통</span></td><td>30~44점</td><td>평균 수준</td><td>최적화 후 재평가</td></tr>
+        <tr><td><span class="badge badge-gray">D 개선 필요</span></td><td>&lt; 30점</td><td>저성과 태그 조합</td><td>Exit — 제작 중단 검토</td></tr>
       </tbody>
     </table>
 
@@ -711,34 +712,34 @@
     <table>
       <thead><tr><th>색상</th><th>의미</th><th>활용법</th></tr></thead>
       <tbody>
-        <tr><td style="color:#059669;font-weight:700;">🟢 진한 녹색</td><td>해당 태그 → 고성과 (평균 이상)</td><td>신규 소재 제작 시 <strong>반드시 포함</strong></td></tr>
-        <tr><td style="color:#f59e0b;font-weight:700;">🟡 노란색</td><td>해당 태그 → 중간 성과</td><td>다른 강점 태그와 조합 시 효과</td></tr>
-        <tr><td style="color:#ef4444;font-weight:700;">🔴 빨간색</td><td>해당 태그 → 저성과</td><td>신규 소재에서 <strong>제외 권장</strong></td></tr>
+        <tr><td style="color:#059669;font-weight:700;">진한 녹색</td><td>해당 태그 → 고성과 (평균 이상)</td><td>신규 소재 제작 시 <strong>반드시 포함</strong></td></tr>
+        <tr><td style="color:#f59e0b;font-weight:700;">노란색</td><td>해당 태그 → 중간 성과</td><td>다른 강점 태그와 조합 시 효과</td></tr>
+        <tr><td style="color:#ef4444;font-weight:700;">빨간색</td><td>해당 태그 → 저성과</td><td>신규 소재에서 <strong>제외 권장</strong></td></tr>
       </tbody>
     </table>
 
     <div class="section-title">Step 2 AI 인사이트 — 3블록 구성</div>
     <div class="ai-slot-grid">
       <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #DC2828;">
-        <div class="slot-title" style="color:#DC2828;">🚀 Scale-up 전략</div>
+        <div class="slot-title" style="color:#DC2828;">Scale-up 전략</div>
         <div class="slot-body">유지·확장해야 할 태그 조합과 이유 (불릿 2~3개, 태그명·점수 인용)</div>
       </div>
       <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #DC2828;">
-        <div class="slot-title" style="color:#DC2828;">🔄 Pivot 전략</div>
+        <div class="slot-title" style="color:#DC2828;">Pivot 전략</div>
         <div class="slot-body">보강하거나 새로 시도해야 할 크리에이티브 방향 (제작 가이드 포함)</div>
       </div>
       <div class="ai-slot" style="background:#f9fafb;border-left:4px solid #6b7280;">
-        <div class="slot-title" style="color:#6b7280;">⛔ Exit 전략</div>
+        <div class="slot-title" style="color:#6b7280;">Exit 전략</div>
         <div class="slot-body">성과가 낮아 중단해야 할 패턴 (근거 수치 포함)</div>
       </div>
       <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #DC2828;">
-        <div class="slot-title" style="color:#DC2828;">🔬 군집 심층 분석</div>
+        <div class="slot-title" style="color:#DC2828;">군집 심층 분석</div>
         <div class="slot-body">군집별 마케팅 맥락 해석 + 성패 소재 결정적 차이 분석</div>
       </div>
     </div>
 
     <div class="box box-blue">
-      <strong>ℹ️ 차수 히스토리 저장</strong>
+      <strong>차수 히스토리 저장</strong>
       군집화 완료 후 <strong>"이번 차수 저장"</strong> 버튼을 클릭하면 localStorage에 저장됩니다.<br>
       다음 차수 분석 시 이전 군집과 자동 비교하여 신규 군집(NEW 배지)·기존 군집 연속성을 표시합니다.
     </div>
@@ -750,17 +751,17 @@
        5. Gemini AI 인사이트
   ════════════════════════════════════════════════════════ -->
   <div class="page">
-    <div class="page-title">✨ 5. Gemini AI 인사이트</div>
+    <div class="page-title">5. Gemini AI 인사이트</div>
 
     <div class="section-title">5.1 API 키 설정 및 플랜 선택</div>
 
-    <div class="step-row"><span class="step-num">1</span><div class="step-body">네비게이션 상단 <strong>"✨ AI 설정"</strong> 버튼 클릭</div></div>
+    <div class="step-row"><span class="step-num">1</span><div class="step-body">네비게이션 상단 <strong>"AI 설정"</strong> 버튼 클릭</div></div>
     <div class="step-row"><span class="step-num">2</span><div class="step-body"><a href="https://aistudio.google.com/apikey" style="color:#DC2828;">Google AI Studio</a>에서 발급한 <strong>API 키 입력</strong></div></div>
     <div class="step-row"><span class="step-num">3</span><div class="step-body"><strong>플랜 선택</strong> (무료 / 유료) 후 <strong>"저장 &amp; 테스트"</strong> 버튼 클릭</div></div>
 
     <div class="plan-compare">
       <div class="plan-card" style="background:#FAF9F7;border:2px solid #DC2828;">
-        <div class="plan-name" style="color:#d97706;">🆓 무료 플랜</div>
+        <div class="plan-name" style="color:#d97706;">무료 플랜</div>
         <ul>
           <li>분당 15회 요청 한도 (Gemini Free Tier)</li>
           <li>소재 최대 <strong>3개</strong> 분석</li>
@@ -769,11 +770,11 @@
           <li>소재 성과: <strong>winning</strong> 1슬롯 (위닝+루징 포함)</li>
           <li>피로도: <strong>riseReason</strong> 1슬롯</li>
           <li>출력 토큰: ~2,000/회</li>
-          <li>🔒 잠긴 슬롯 영역에 <strong>유료 Pro 업그레이드 안내</strong> 카드 자동 노출 <span class="badge badge-red" style="font-size:9px;">NEW</span></li>
+          <li>잠긴 슬롯 영역에 <strong>유료 Pro 업그레이드 안내</strong> 카드 자동 노출 <span class="badge badge-red" style="font-size:9px;">NEW</span></li>
         </ul>
       </div>
       <div class="plan-card" style="background:#FAF9F7;border:2px solid #DC2828;">
-        <div class="plan-name" style="color:#DC2828;">💎 유료 Pro 플랜</div>
+        <div class="plan-name" style="color:#DC2828;">유료 Pro 플랜</div>
         <ul>
           <li>분당 1,000회 요청 한도</li>
           <li>소재 최대 <strong>5개</strong> 분석</li>
@@ -787,33 +788,33 @@
     </div>
 
     <div class="section-title">5.2 소재 성과 AI 인사이트 (winning · losing 분리) <span class="badge badge-red" style="font-size:10px;">UPDATED</span></div>
-    <p>점수 계산 결과 화면의 <strong>"✨ AI 인사이트 생성"</strong> 버튼으로 실행합니다. <strong>winning 슬롯이 단독일 때는 1컬럼 전체폭</strong>으로 렌더링되어 가독성이 높아집니다.</p>
+    <p>점수 계산 결과 화면의 <strong>"AI 인사이트 생성"</strong> 버튼으로 실행합니다. <strong>winning 슬롯이 단독일 때는 1컬럼 전체폭</strong>으로 렌더링되어 가독성이 높아집니다.</p>
 
     <div class="ai-slot-grid">
       <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #DC2828;">
-        <div class="slot-title" style="color:#DC2828;">🏆 위닝 소재 분석 (winning) <span class="badge badge-green">무료·유료</span></div>
+        <div class="slot-title" style="color:#DC2828;">위닝 소재 분석 (winning) <span class="badge badge-green">무료·유료</span></div>
         <div class="slot-body">고효율 소재 목록 + 공통 패턴<br>· 무료: 동일 슬롯 내부에 <strong>루징(저효율) 소재</strong>도 포함<br>· 유료: 위닝만 분리되어 더 깊은 분석</div>
       </div>
       <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #ef4444;">
-        <div class="slot-title" style="color:#ef4444;">📉 루징 소재 분석 (losing) <span class="badge badge-purple">유료</span></div>
+        <div class="slot-title" style="color:#ef4444;">루징 소재 분석 (losing) <span class="badge badge-purple">유료</span></div>
         <div class="slot-body">저효율 소재 별도 카드<br>· 공통 약점 태그·패턴<br>· 위닝 대비 부족한 요소</div>
       </div>
       <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #DC2828;">
-        <div class="slot-title" style="color:#DC2828;">⚡ 즉시 실행 액션 (actionItems) <span class="badge badge-purple">유료</span></div>
-        <div class="slot-body">확장🟢 / 개선🟡 / 중단🔴 3분류<br>· 소재명 + 액션 + 근거 수치</div>
+        <div class="slot-title" style="color:#DC2828;">즉시 실행 액션 (actionItems) <span class="badge badge-purple">유료</span></div>
+        <div class="slot-body">확장/ 개선/ 중단3분류<br>· 소재명 + 액션 + 근거 수치</div>
       </div>
       <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #059669;">
-        <div class="slot-title" style="color:#059669;">🚀 스케일업 후보 (scaleUp) <span class="badge badge-purple">유료</span></div>
+        <div class="slot-title" style="color:#059669;">스케일업 후보 (scaleUp) <span class="badge badge-purple">유료</span></div>
         <div class="slot-body">예산 확대 우선순위 TOP 소재<br>· 증액 권고 비율 포함</div>
       </div>
       <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #dc2626;">
-        <div class="slot-title" style="color:#dc2626;">🛑 즉시 중단 권고 (stopNow) <span class="badge badge-purple">유료</span></div>
+        <div class="slot-title" style="color:#dc2626;">즉시 중단 권고 (stopNow) <span class="badge badge-purple">유료</span></div>
         <div class="slot-body">예산 손실 차단용 즉시 OFF 목록<br>· CPA 악화·전환 0 등 명확한 근거</div>
       </div>
     </div>
 
     <div class="box box-purple">
-      <strong>🔄 슬롯 키 변경 이력 (2026-05-21)</strong>
+      <strong>슬롯 키 변경 이력 (2026-05-21)</strong>
       · <strong>winTags</strong> (구버전) → <strong>winning</strong>으로 통합 (하위 호환 자동 변환)<br>
       · <strong>formatGap</strong> (포맷별 진단) → <strong>제거</strong> — 유형별 가중평균 표(3.2 ⑤)로 대체<br>
       · 신규 슬롯: <strong>losing · scaleUp · stopNow</strong> 추가
@@ -826,9 +827,9 @@
        5.3 피로도 AI 인사이트
   ════════════════════════════════════════════════════════ -->
   <div class="page">
-    <div class="page-title">📉 5.3 피로도 AI 인사이트 (riseReason)</div>
+    <div class="page-title">5.3 피로도 AI 인사이트 (riseReason)</div>
 
-    <p>피로도 분석 결과 화면의 <strong>"✨ 순위 변동 원인 AI 분석"</strong> 버튼으로 실행합니다.<br>
+    <p>피로도 분석 결과 화면의 <strong>"순위 변동 원인 AI 분석"</strong> 버튼으로 실행합니다.<br>
     순위 변동이 큰 소재(급등·급락)를 자동 선별하여 태그 기반 원인을 분석합니다.</p>
 
     <div class="section-title">분석 데이터 구성 (AI에 전달되는 정보)</div>
@@ -840,7 +841,7 @@
         <tr><td><strong>전환수 변화</strong></td><td>기준 전환 → 비교 전환</td><td>성과 실제 변화 확인</td></tr>
         <tr><td><strong>피로도 상태</strong></td><td>fresh / stable / warning / tired</td><td>피로 수준 컨텍스트</td></tr>
         <tr><td><strong>meta 태그</strong></td><td>hooking·emotion·mechanic 등 2~3개</td><td>태그 기반 원인 분석 핵심</td></tr>
-        <tr><td><strong>★피로집중 목록</strong></td><td>CPA +20% 이상 소재 자동 추출</td><td>교체 우선순위 자동 결정</td></tr>
+        <tr><td><strong>피로집중 목록</strong></td><td>CPA +20% 이상 소재 자동 추출</td><td>교체 우선순위 자동 결정</td></tr>
       </tbody>
     </table>
 
@@ -848,40 +849,40 @@
 
     <div class="ai-slot-grid">
       <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #DC2828;">
-        <div class="slot-title" style="color:#DC2828;">📈 급등 소재 원인 <span class="badge badge-green">무료·유료</span></div>
+        <div class="slot-title" style="color:#DC2828;">급등 소재 원인 <span class="badge badge-green">무료·유료</span></div>
         <div class="slot-body">
           · 급등 소재명 + CPA 수치 → 공통 태그([태그명]) 기반 원인 2줄<br>
-          · CPA 증가 트렌드 요약 (★피로집중 소재 명시)<br>
+          · CPA 증가 트렌드 요약 (피로집중 소재 명시)<br>
           · 교체 우선순위 (CPA 증가율 순)<br>
           · 급등 소재 태그를 교체 소재에 적용하는 방향
         </div>
       </div>
       <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #ef4444;">
-        <div class="slot-title" style="color:#ef4444;">📉 피로도 진단 <span class="badge badge-purple">유료</span></div>
+        <div class="slot-title" style="color:#ef4444;">피로도 진단 <span class="badge badge-purple">유료</span></div>
         <div class="slot-body">하락 소재별 CPA 변화율 + 피로 패턴·취약 태그 분석 2줄</div>
       </div>
       <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #DC2828;">
-        <div class="slot-title" style="color:#DC2828;">⏱️ 교체 타이밍 기준 <span class="badge badge-purple">유료</span></div>
+        <div class="slot-title" style="color:#DC2828;">⏱ 교체 타이밍 기준 <span class="badge badge-purple">유료</span></div>
         <div class="slot-body">CPA·전환 수치 기반 즉시 교체 / 모니터링 소재 분리</div>
       </div>
       <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #DC2828;">
-        <div class="slot-title" style="color:#DC2828;">🔄 운영 액션 <span class="badge badge-purple">유료</span></div>
+        <div class="slot-title" style="color:#DC2828;">운영 액션 <span class="badge badge-purple">유료</span></div>
         <div class="slot-body">ON 확대·OFF 실행·신소재 방향 3줄 (태그 기반 제작 가이드 포함)</div>
       </div>
     </div>
 
     <div class="box box-green">
-      <strong>✅ 실측 검증 결과 (무료 플랜 예시)</strong>
-      finishReason: STOP (잘림 없음) ✅<br>
+      <strong>실측 검증 결과 (무료 플랜 예시)</strong>
+      finishReason: STOP (잘림 없음) <br>
       입력: ~824 토큰 / 출력: ~594 토큰 / 합계: ~1,418 토큰 (무료 한도 8,192 대비 17.3%)<br>
       <strong>출력 예시</strong>: "A-Character-Keyart01A-DA CPA 6,638→762(-88.5%) — <strong>'키아트/수집욕/감동'</strong> 태그 조합이 신규 유저의 강력한 수집 욕구와 감성적 연결을 자극하여 전환 3→21건으로 급증했습니다."
     </div>
 
     <div class="box box-yellow">
-      <strong>⚠️ AI 인사이트 사용 시 주의</strong>
+      <strong>AI 인사이트 사용 시 주의</strong>
       · <strong>429 오류</strong>: 분당 요청 한도 초과 → 1분 후 재시도<br>
       · <strong>403 오류</strong>: API 키 오류 → AI 설정에서 키 재입력<br>
-      · 응답이 잘린 경우: <strong>"🔄 재분석"</strong> 버튼 클릭<br>
+      · 응답이 잘린 경우: <strong>"재분석"</strong> 버튼 클릭<br>
       · 모델: <strong>Gemini 2.5 Flash</strong> (thinking 모드 비활성화로 출력 토큰 100% 활용)
     </div>
 
@@ -892,13 +893,13 @@
        6. FAQ
   ════════════════════════════════════════════════════════ -->
   <div class="page">
-    <div class="page-title">❓ 6. 자주 묻는 질문 (FAQ)</div>
+    <div class="page-title">6. 자주 묻는 질문 (FAQ)</div>
 
     <div class="faq-item">
       <div class="faq-q">"컬럼을 찾을 수 없습니다" 오류가 나와요.</div>
       <div class="faq-a">
         <div class="box box-green" style="margin-top:6px;">
-          <strong>✅ 해결 방법</strong>
+          <strong>해결 방법</strong>
           1. CSV를 엑셀로 열어 첫 번째 행(헤더) 확인<br>
           2. 컬럼명을 표준명으로 수정 (예: "Date" → "일", "Conversions" → "전환")<br>
           3. UTF-8 CSV 형식으로 저장 후 재업로드<br>
@@ -911,7 +912,7 @@
       <div class="faq-q">지표가 모두 0으로 나와요.</div>
       <div class="faq-a">
         <div class="box box-green" style="margin-top:6px;">
-          <strong>✅ 해결 방법</strong>
+          <strong>해결 방법</strong>
           1. 전환·비용·노출수 컬럼의 값이 숫자인지 확인<br>
           2. 쉼표 포함 숫자("1,234") → 숫자만("1234")으로 변경<br>
           3. "N/A", "-", 빈칸은 시스템이 자동으로 0으로 처리 (정상 동작)
@@ -931,7 +932,7 @@
 
     <div class="faq-item">
       <div class="faq-q">Gemini AI 인사이트 버튼이 비활성화되어 있어요.</div>
-      <div class="faq-a">API 키 미설정 상태입니다. 네비게이션 상단 <strong>"✨ AI 설정"</strong> 버튼을 클릭하여 Google AI Studio에서 발급한 API 키를 입력하세요.</div>
+      <div class="faq-a">API 키 미설정 상태입니다. 네비게이션 상단 <strong>"AI 설정"</strong> 버튼을 클릭하여 Google AI Studio에서 발급한 API 키를 입력하세요.</div>
     </div>
 
     <div class="faq-item">
@@ -951,12 +952,12 @@
 
     <div class="faq-item">
       <div class="faq-q">CSV 파일 저장 없이 Excel 데이터를 바로 분석할 수 있나요? <span class="badge badge-red" style="font-size:9px;">NEW</span></div>
-      <div class="faq-a">네, v5.0부터 가능합니다. 업로드 영역 상단의 <strong>"📋 CSV 직접 붙여넣기"</strong> 탭을 클릭하고, Excel/Sheets에서 헤더 포함 전체 범위를 복사(Ctrl+C) → 텍스트 영역에 붙여넣기(Ctrl+V) → <strong>"✅ 분석 시작"</strong>을 클릭하세요. 탭(Tab) 구분자와 쉼표 구분자 모두 자동 인식됩니다.</div>
+      <div class="faq-a">네, v5.0부터 가능합니다. 업로드 영역 상단의 <strong>"CSV 직접 붙여넣기"</strong> 탭을 클릭하고, Excel/Sheets에서 헤더 포함 전체 범위를 복사(Ctrl+C) → 텍스트 영역에 붙여넣기(Ctrl+V) → <strong>"분석 시작"</strong>을 클릭하세요. 탭(Tab) 구분자와 쉼표 구분자 모두 자동 인식됩니다.</div>
     </div>
 
     <div class="faq-item">
       <div class="faq-q">분석 결과를 그대로 유관부서에 공유하려면? <span class="badge badge-red" style="font-size:9px;">NEW</span></div>
-      <div class="faq-a">결과 섹션 상단의 <strong>"📤 분석 결과 HTML 추출"</strong> 버튼을 클릭하면 미리보기 썸네일·유형별 요약·상세 테이블을 모두 포함한 단일 HTML 파일이 다운로드됩니다. AI 인사이트는 의도적으로 제외되어 사외 공유에도 안전합니다. 자세한 내용은 3.3 섹션 참고.</div>
+      <div class="faq-a">결과 섹션 상단의 <strong>"분석 결과 HTML 추출"</strong> 버튼을 클릭하면 미리보기 썸네일·유형별 요약·상세 테이블을 모두 포함한 단일 HTML 파일이 다운로드됩니다. AI 인사이트는 의도적으로 제외되어 사외 공유에도 안전합니다. 자세한 내용은 3.3 섹션 참고.</div>
     </div>
 
     <div class="faq-item">
@@ -971,20 +972,20 @@
 
     <div class="faq-item">
       <div class="faq-q">무료 플랜에서 AI 인사이트 카드 아래 회색 박스가 나오는데 이건 뭔가요? <span class="badge badge-red" style="font-size:9px;">NEW</span></div>
-      <div class="faq-a">v5.0 신규 기능인 <strong>"유료 Pro 업그레이드 유도 카드"</strong>입니다. 무료 플랜에서는 잠긴 슬롯(losing/scaleUp/stopNow 등)을 🔒 아이콘으로 표시하며 클릭 한 번으로 API 키 모달이 열려 유료 키로 전환할 수 있습니다.</div>
+      <div class="faq-a">v5.0 신규 기능인 <strong>"유료 Pro 업그레이드 유도 카드"</strong>입니다. 무료 플랜에서는 잠긴 슬롯(losing/scaleUp/stopNow 등)을 아이콘으로 표시하며 클릭 한 번으로 API 키 모달이 열려 유료 키로 전환할 수 있습니다.</div>
     </div>
 
     <div class="footer">Com2uS R팀 소재 분석 시스템 v5.2 | Page 12</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
-       ✨ AI 구조화 인사이트 & 풀 대비 성과 (v5.2)
+       AI 구조화 인사이트 & 풀 대비 성과 (v5.2)
   ════════════════════════════════════════════════════════ -->
   <div class="page">
-    <div class="page-title">✨ AI 구조화 인사이트 &amp; 풀 대비 성과 <span class="badge badge-red" style="font-size:11px;">v5.2 NEW</span></div>
+    <div class="page-title">AI 구조화 인사이트 &amp; 풀 대비 성과 <span class="badge badge-red" style="font-size:11px;">v5.2 NEW</span></div>
 
     <div class="box box-red">
-      <strong>📌 어디서 보이나요? — 타이틀 모드</strong>
+      <strong>어디서 보이나요? — 타이틀 모드</strong>
       AI 구조화 인사이트는 <strong>자동 태깅 파이프라인</strong>이 만든 데이터에서 표시됩니다.<br>
       · <strong>타이틀 모드</strong>: 우측 상단 드롭다운에서 타이틀 선택 → 자동 태깅 소재 + 실제 KPI(Google Ads) 동시 로드 → AI 인사이트·데이터 체크·백분위 전부 노출.<br>
       · <strong>CSV 수동 업로드</strong>: 직접 올린 데이터만 분석 (AI 인사이트 없음, 점수·표·피로도는 동일 동작).
@@ -994,29 +995,29 @@
     <table>
       <thead><tr><th style="width:26%">항목</th><th>설명</th></tr></thead>
       <tbody>
-        <tr><td><strong>💡 한 줄 인사이트</strong></td><td>현재 평가 + 구체 개선 방향 한 문장 (처방형: "~를 추가/교체하여 ~개선")</td></tr>
-        <tr><td><strong>📊 데이터 체크</strong><br><span style="font-size:11px;color:#888;">KPI 보유 소재만</span></td><td>시각적 기대(가설) vs 실제 KPI 의 정합/모순 해석. 예: "캐릭터 매력으로 높은 CTR 기대했으나 실제 CTR 하위 25% — 후킹이 클릭으로 이어지지 않아 첫 3초 강화 필요"</td></tr>
-        <tr><td><strong>KPI 지표 + 성과 백분위</strong></td><td>Total Score~CTR 지표 카드. CTR·CPA 옆에 <strong>풀 대비 배지</strong>(🟩 상위 N% / 🟧 하위 N%)</td></tr>
-        <tr><td><strong>🎬 제작 의도(추론)</strong></td><td>제작자가 이 소재로 의도했을 바를 1문장 복원 (평가 아닌 의도)</td></tr>
+        <tr><td><strong>한 줄 인사이트</strong></td><td>현재 평가 + 구체 개선 방향 한 문장 (처방형: "~를 추가/교체하여 ~개선")</td></tr>
+        <tr><td><strong>데이터 체크</strong><br><span style="font-size:11px;color:#888;">KPI 보유 소재만</span></td><td>시각적 기대(가설) vs 실제 KPI 의 정합/모순 해석. 예: "캐릭터 매력으로 높은 CTR 기대했으나 실제 CTR 하위 25% — 후킹이 클릭으로 이어지지 않아 첫 3초 강화 필요"</td></tr>
+        <tr><td><strong>KPI 지표 + 성과 백분위</strong></td><td>Total Score~CTR 지표 카드. CTR·CPA 옆에 <strong>풀 대비 배지</strong>(상위 N% / 하위 N%)</td></tr>
+        <tr><td><strong>제작 의도(추론)</strong></td><td>제작자가 이 소재로 의도했을 바를 1문장 복원 (평가 아닌 의도)</td></tr>
         <tr><td><strong>강점 / 약점 + 근거</strong></td><td>각 칩 아래 <strong>근거(evidence)</strong>: 화면 어디에·무엇이·왜 효과적/약한지 구체 서술</td></tr>
-        <tr><td><strong>🎯 가설 / 💡 차주 변주</strong></td><td>성과 가설 + 다음 제작 변주 아이디어 + 실행안(어느 컷에·무엇을·어떻게)</td></tr>
+        <tr><td><strong>가설 / 차주 변주</strong></td><td>성과 가설 + 다음 제작 변주 아이디어 + 실행안(어느 컷에·무엇을·어떻게)</td></tr>
       </tbody>
     </table>
 
     <div class="section-title" style="margin-top:18px;">신호 분포 패널 + 풀 대비 성과</div>
     <p style="font-size:13px;line-height:1.7;margin:6px 0;">점수 결과 화면 상단(스코어 카드 아래)에 자동 표시 — 회차 전체 패턴을 한눈에:</p>
     <ul style="font-size:13px;line-height:1.8;">
-      <li>💪 <strong>주요 강점 Top 5</strong> · ⚠️ <strong>주요 약점 Top 5</strong> · 🚀 <strong>다음 제작 추천 Top 3</strong> (부여율 % 포함)</li>
-      <li>🎯 <strong>풀 대비 성과</strong> — CTR 백분위 <strong>상위 3 / 하위 3 소재</strong> (KPI 보유 4건 이상 시)</li>
+      <li><strong>주요 강점 Top 5</strong> · <strong>주요 약점 Top 5</strong> · <strong>다음 제작 추천 Top 3</strong> (부여율 % 포함)</li>
+      <li><strong>풀 대비 성과</strong> — CTR 백분위 <strong>상위 3 / 하위 3 소재</strong> (KPI 보유 4건 이상 시)</li>
     </ul>
     <div style="background:#FAF9F7;border-left:4px solid #DC2828;padding:10px 14px;border-radius:6px;font-size:12.5px;margin-top:10px;">
-      ⚠️ <strong>부여율 해석</strong> — 어떤 강점이 90% 이상이면 "풀 다수가 공유하는 일반 특성"이라 차별점이 아닙니다. <strong>소수만 가진 차별화 강점</strong>을 찾는 데 분포를 활용하세요.
+      <strong>부여율 해석</strong> — 어떤 강점이 90% 이상이면 "풀 다수가 공유하는 일반 특성"이라 차별점이 아닙니다. <strong>소수만 가진 차별화 강점</strong>을 찾는 데 분포를 활용하세요.
     </div>
 
     <div class="section-title" style="margin-top:18px;">결과 표 — 성과 백분위 컬럼 + 정렬</div>
     <ul style="font-size:13px;line-height:1.8;">
       <li><strong>성과 백분위 컬럼</strong>: 소재별 CTR/CVR/CPA 풀 대비 상위/하위 N% 배지</li>
-      <li><strong>🔀 정렬 기준 드롭다운</strong>: 종합 점수(기본) / CTR·CVR·CPA 풀 백분위 높은순 — "풀에서 후킹(CTR) 잘된 소재"로 즉시 줄세우기</li>
+      <li><strong>정렬 기준 드롭다운</strong>: 종합 점수(기본) / CTR·CVR·CPA 풀 백분위 높은순 — "풀에서 후킹(CTR) 잘된 소재"로 즉시 줄세우기</li>
       <li>※ KPI 보유 소재가 있는 <strong>타이틀 모드</strong>에서만 노출 (CSV 모드는 자동 숨김)</li>
     </ul>
 
@@ -1027,11 +1028,11 @@
        7. Cheat Sheet + 버전 이력
   ════════════════════════════════════════════════════════ -->
   <div class="page">
-    <div class="page-title">📋 7. 빠른 참조 (Cheat Sheet)</div>
+    <div class="page-title">7. 빠른 참조 (Cheat Sheet)</div>
 
     <div class="cheat-grid">
       <div class="cheat-card">
-        <div class="cheat-title">📊 가중치 프리셋</div>
+        <div class="cheat-title">가중치 프리셋</div>
         <ul>
           <li><strong>균형형 (기본)</strong>: 전환 25% | CPA 25% | IPM 25% | ROAS 25%</li>
           <li><strong>전환 극대화</strong>: 전환 40% | CPA 30% | IPM 15% | ROAS 15%</li>
@@ -1040,26 +1041,26 @@
         </ul>
       </div>
       <div class="cheat-card">
-        <div class="cheat-title">🏆 소재 등급 기준</div>
+        <div class="cheat-title">소재 등급 기준</div>
         <ul>
-          <li>🏆 최우수 ≥ 80점 → 즉시 Scale-up</li>
-          <li>🌟 우수 60~79점 → 현행 유지</li>
-          <li>✅ 양호 40~59점 → 일부 최적화</li>
-          <li>⚠️ 보통 20~39점 → 타겟 재검토</li>
-          <li>🔴 개선 필요 &lt;20점 → 즉시 교체</li>
+          <li>최우수 ≥ 80점 → 즉시 Scale-up</li>
+          <li>우수 60~79점 → 현행 유지</li>
+          <li>양호 40~59점 → 일부 최적화</li>
+          <li>보통 20~39점 → 타겟 재검토</li>
+          <li>개선 필요 &lt;20점 → 즉시 교체</li>
         </ul>
       </div>
       <div class="cheat-card">
-        <div class="cheat-title">📉 피로도 상태 기준</div>
+        <div class="cheat-title">피로도 상태 기준</div>
         <ul>
-          <li>🟢 Fresh: CPA ≤ −20% → Scale-up</li>
-          <li>🔵 Stable: −20% ~ 0% → 유지</li>
-          <li>🟡 Warning: 0% ~ +20% → 모니터링</li>
-          <li>🔴 Tired: CPA > +20% → 즉시 교체</li>
+          <li>Fresh: CPA ≤ −20% → Scale-up</li>
+          <li>Stable: −20% ~ 0% → 유지</li>
+          <li>Warning: 0% ~ +20% → 모니터링</li>
+          <li>Tired: CPA > +20% → 즉시 교체</li>
         </ul>
       </div>
       <div class="cheat-card">
-        <div class="cheat-title">🔬 군집 등급 기준</div>
+        <div class="cheat-title">군집 등급 기준</div>
         <ul>
           <li>S 최우수 ≥ 75점 → 예산 집중 투입</li>
           <li>A 우수 60~74점 → 유사 소재 추가 제작</li>
@@ -1068,27 +1069,27 @@
         </ul>
       </div>
       <div class="cheat-card">
-        <div class="cheat-title">✨ AI 인사이트 플랜 비교</div>
+        <div class="cheat-title">AI 인사이트 플랜 비교</div>
         <ul>
-          <li>🆓 무료: 1회 호출 · 1슬롯 · 분당 15회</li>
-          <li>💎 유료: 2회 호출 · 전체 슬롯 · 분당 1,000회</li>
+          <li>무료: 1회 호출 · 1슬롯 · 분당 15회</li>
+          <li>유료: 2회 호출 · 전체 슬롯 · 분당 1,000회</li>
           <li>429 오류 → 1분 후 재시도</li>
           <li>403 오류 → API 키 재확인</li>
         </ul>
       </div>
       <div class="cheat-card">
-        <div class="cheat-title">📂 주간 분석 루틴 (권장)</div>
+        <div class="cheat-title">주간 분석 루틴 (권장)</div>
         <ul>
           <li>① 전주 CSV 준비 (UTF-8 저장)</li>
           <li>② Step 1 업로드 → 점수 계산</li>
           <li>③ 피로도 분석 (전전주 vs 전주)</li>
           <li>④ AI 인사이트 생성 → 교체 소재 결정</li>
-          <li>⑤ 📤 HTML 추출 → 주간 리포트 공유</li>
+          <li>⑤ HTML 추출 → 주간 리포트 공유</li>
           <li>⑥ Step 2 군집화 → 승리 공식 도출</li>
         </ul>
       </div>
       <div class="cheat-card">
-        <div class="cheat-title">📤 HTML 추출 활용 <span class="badge badge-red" style="font-size:9px;">NEW</span></div>
+        <div class="cheat-title">HTML 추출 활용 <span class="badge badge-red" style="font-size:9px;">NEW</span></div>
         <ul>
           <li>위치: 결과 섹션 상단 파란 버튼</li>
           <li>포함: 스코어카드·유형별요약·상세표·썸네일</li>
@@ -1098,16 +1099,16 @@
         </ul>
       </div>
       <div class="cheat-card">
-        <div class="cheat-title">📋 CSV 붙여넣기 <span class="badge badge-red" style="font-size:9px;">NEW</span></div>
+        <div class="cheat-title">CSV 붙여넣기 <span class="badge badge-red" style="font-size:9px;">NEW</span></div>
         <ul>
-          <li>업로드 영역 상단 "📋" 탭 클릭</li>
+          <li>업로드 영역 상단 "" 탭 클릭</li>
           <li>Excel 범위 복사 → 텍스트영역 붙여넣기</li>
           <li>탭/쉼표 구분자 자동 감지</li>
-          <li>"✅ 분석 시작" 버튼으로 즉시 진행</li>
+          <li>"분석 시작" 버튼으로 즉시 진행</li>
         </ul>
       </div>
       <div class="cheat-card">
-        <div class="cheat-title">📊 5개 스코어 카드 <span class="badge badge-red" style="font-size:9px;">UPDATED</span></div>
+        <div class="cheat-title">5개 스코어 카드 <span class="badge badge-red" style="font-size:9px;">UPDATED</span></div>
         <ul>
           <li>전체 / 최고 / 평균 / 최우수 (레드 카드 4개)</li>
           <li><strong>저조 소재</strong> (슬레이트 카드 1개) — 개선필요 등급 카운트</li>
@@ -1125,10 +1126,10 @@
           <td>2026-06-12</td>
           <td>AI 자동 태깅 인사이트 표면화:
             ① <strong>타이틀 선택 모드</strong> — 자동 태깅 소재 + 실제 KPI 를 드롭다운으로 즉시 로드 (CSV 불필요)
-            ② <strong>AI 구조화 인사이트</strong> — 강점/약점/가설/변주 칩 + 각 항목 <strong>근거(evidence)</strong> + <strong>🎬 제작 의도(추론)</strong>
-            ③ <strong>💡 한 줄 인사이트 + 📊 데이터 체크</strong> — 시각 기대(가설) vs 실제 KPI 정합/모순 해석 (KPI 보유 소재만)
+            ② <strong>AI 구조화 인사이트</strong> — 강점/약점/가설/변주 칩 + 각 항목 <strong>근거(evidence)</strong> + <strong>제작 의도(추론)</strong>
+            ③ <strong>한 줄 인사이트 + 데이터 체크</strong> — 시각 기대(가설) vs 실제 KPI 정합/모순 해석 (KPI 보유 소재만)
             ④ <strong>성과 백분위</strong> — 같은 타이틀 풀 대비 CTR/CVR/CPA 상위/하위 N% (모달 배지 + 결과 표 컬럼)
-            ⑤ <strong>신호 분포 패널</strong> — 강점/약점 Top 5 · 추천 변주 Top 3 + 🎯 풀 대비 성과(상·하위 소재)
+            ⑤ <strong>신호 분포 패널</strong> — 강점/약점 Top 5 · 추천 변주 Top 3 + 풀 대비 성과(상·하위 소재)
             ⑥ <strong>정렬 기준 드롭다운</strong> — 결과 표를 종합점수 / CTR·CVR·CPA 풀 백분위로 재정렬
           </td>
         </tr>
@@ -1138,7 +1139,7 @@
           <td>QA 기반 데이터 신뢰성·인사이트 강화 패치:
             ① <strong>조건부 ROAS 재배분</strong> — 매출 보유 30% 미만이면 자동 "공정 모드"(매출=0 소재는 ROAS 평가에서 제외) ② 점수 계산 모드 라디오 4종(자동/엄격/공정/완전 제외) 옵션 추가
             ③ <strong>분석 신뢰도 배지</strong>(높음·보통·낮음) — 소재수/기간/매출보유 3조건 평가
-            ④ <strong>위험 신호 아이콘</strong> — CPA 이상치(🚨)·학습 부진(⚠️)·LP 미스매치(🎯)·학습 단계(🌱) 자동 감지
+            ④ <strong>위험 신호 아이콘</strong> — CPA 이상치()·학습 부진()·LP 미스매치()·학습 단계() 자동 감지
             ⑤ <strong>소재 메타 배지 칩</strong> — Concept/USP/hooking/emotion/art_style 한눈에 표시
             ⑥ <strong>일별 트렌드 sparkline</strong> — 결과 테이블 마지막 컬럼
             ⑦ <strong>캠페인 비교 모드</strong> — 2개 이상 캠페인 결과 자동 노출 (KPI 카드 + Top 10 소재 × 캠페인 교차표)
@@ -1150,7 +1151,7 @@
         <tr>
           <td><strong>v5.0</strong></td>
           <td>2026-05-21</td>
-          <td>① CSV 직접 붙여넣기 탭 신설(Excel 범위 그대로 분석) ② <strong>저조 소재</strong> 스코어 카드 추가 (슬레이트 카드, 5번째) ③ <strong>📤 분석 결과 HTML 추출</strong> — 미리보기 포함 단일 HTML, AI 인사이트 제외, 사외 공유용 ④ <strong>유형별 가중평균 요약 표</strong>(BNR/VID, CPA·IPM·CTR·ROAS) 자동 노출 ⑤ AI 인사이트 슬롯 재구성: winning(위닝+루징 통합) → losing 별도 슬롯 분리, formatGap 제거, scaleUp/stopNow 신규</td>
+          <td>① CSV 직접 붙여넣기 탭 신설(Excel 범위 그대로 분석) ② <strong>저조 소재</strong> 스코어 카드 추가 (슬레이트 카드, 5번째) ③ <strong>분석 결과 HTML 추출</strong> — 미리보기 포함 단일 HTML, AI 인사이트 제외, 사외 공유용 ④ <strong>유형별 가중평균 요약 표</strong>(BNR/VID, CPA·IPM·CTR·ROAS) 자동 노출 ⑤ AI 인사이트 슬롯 재구성: winning(위닝+루징 통합) → losing 별도 슬롯 분리, formatGap 제거, scaleUp/stopNow 신규</td>
         </tr>
         <tr>
           <td><strong>v4.0</strong></td>
@@ -1191,14 +1192,14 @@
     </table>
 
     <div class="box box-red" style="margin-top: 20px; text-align: center;">
-      <strong>💡 문의 및 피드백</strong><br>
+      <strong>문의 및 피드백</strong><br>
       기능 추가 요청 또는 버그 리포트는 팀 내 채널로 문의해 주세요.<br>
-      R팀 마케팅 분석 시스템은 팀 피드백을 반영하여 지속 업데이트됩니다. 🚀
+      R팀 마케팅 분석 시스템은 팀 피드백을 반영하여 지속 업데이트됩니다. 
     </div>
 
     <div class="footer">
       Com2uS R팀 소재 분석 시스템 v5.2 (시스템 v19) | 2026. 06. 12 | Com2uS R Marketing Team<br>
-      <strong>Thank you for using R팀 소재 분석 시스템! 🎯</strong>
+      <strong>Thank you for using R팀 소재 분석 시스템! </strong>
     </div>
   </div>
 
