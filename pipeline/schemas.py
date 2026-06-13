@@ -68,7 +68,11 @@ class StrengthSignal(str, Enum):
     """이 소재의 강점 (1-3개 다중 선택)."""
 
     HOOK_VISUAL_IMPACT     = "강한 비주얼 임팩트"
-    HOOK_CHARACTER_APPEAL  = "캐릭터 매력 전면 노출"
+    # Stage 5-K: '캐릭터 매력 전면 노출'(91% catch-all) → 연출 방식별 4분할로 변별
+    CHAR_ROSTER            = "다수 캐릭터 라인업"
+    CHAR_CUTE_SD           = "SD/귀여운 캐릭터 연출"
+    CHAR_HERO_SPOTLIGHT    = "단일 주인공 스포트라이트"
+    CHAR_ACTION            = "캐릭터 액션/전투 연출"
     HOOK_REWARD_PROMISE    = "보상 약속 명확"
     HOOK_CURIOSITY         = "호기심/궁금증 유발"
     VALUE_PROP_CLEAR       = "단일 명료한 가치 제안"
