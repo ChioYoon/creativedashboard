@@ -173,6 +173,65 @@ def scan_creative_folders(
     return candidates
 
 
+def scan_by_filename(
+    root: Path,
+    types: Iterable[str] = ("BNR", "VID"),
+) -> list[CreativeCandidate]:
+    """파일명 규칙 기반 스캔 — 폴더 중첩 구조에 무관 (펩과 다른 레이아웃 지원).
+
+    루트 하위를 재귀 스캔하여 FILENAME_PATTERN 매칭 파일만 수집하고, 파싱된
+    creative_name 으로 그룹핑한다. 차수/유형 폴더 순서가 다르거나 언어 하위폴더가
+    끼어 있어도(예: 도원암귀 `차수/유형/소재명/언어/파일`) 동작한다.
+    - type 은 파일명에서 추출 (폴더명 무관).
+    - phase(차수)는 루트 직속 폴더명에서 추론 (메타 용도).
+    - 파일명 규칙 미매칭 파일(템플릿·작업본 등)은 자동 제외.
+    """
+    if not root.exists():
+        raise FileNotFoundError(f"소재 루트 폴더가 없습니다: {root}")
+
+    types_up = {t.upper() for t in types}
+    groups: dict[str, list[Path]] = {}
+    meta_by_name: dict[str, dict] = {}
+    for p in sorted(root.rglob("*")):
+        if not (p.is_file() and p.suffix.lower() in MEDIA_EXTS):
+            continue
+        meta = parse_filename(p.name)
+        if not meta or meta["type"].upper() not in types_up:
+            continue
+        cname = meta["creative_name"]
+        groups.setdefault(cname, []).append(p)
+        meta_by_name.setdefault(cname, meta)
+
+    candidates: list[CreativeCandidate] = []
+    for cname in sorted(groups):
+        files = sorted(groups[cname])
+        ctype = meta_by_name[cname]["type"].upper()
+        rep = _pick_representative(files)
+        # folder_path = 소재명과 동일한 조상 폴더 (없으면 대표 파일의 부모)
+        folder_path = rep.parent
+        for anc in rep.parents:
+            if anc.name == cname:
+                folder_path = anc
+                break
+        # 차수 = 루트 기준 첫 경로 세그먼트 (메타 용도)
+        try:
+            phase = rep.relative_to(root).parts[0]
+        except (ValueError, IndexError):
+            phase = ""
+        candidates.append(
+            CreativeCandidate(
+                creative_name=cname,
+                creative_type=ctype,
+                phase=phase,
+                folder_path=folder_path,
+                all_files=files,
+                representative_file=rep,
+                parsed_meta=parse_filename(rep.name) or {},
+            )
+        )
+    return candidates
+
+
 def summarize(candidates: list[CreativeCandidate]) -> str:
     """스캔 결과 요약 문자열."""
     if not candidates:

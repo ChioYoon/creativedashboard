@@ -40,7 +40,7 @@ from dotenv import load_dotenv
 from tqdm import tqdm
 
 from .cache import TagCache, file_sha256
-from .scanner import scan_creative_folders, summarize
+from .scanner import scan_creative_folders, scan_by_filename, summarize
 from .schemas import CreativeDataset, CreativeRecord
 from .tagger import GeminiTagger, prompt_version
 
@@ -180,6 +180,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         root_str = title_override.get("_pipeline_creatives_root", "")
         phases = title_override.get("_pipeline_phases", ["선론칭"])
         types = title_override.get("_pipeline_types", ["BNR", "VID"])
+        scan_mode = title_override.get("_pipeline_scan_mode", "foldered")
         # Stage 5 KPI 매핑 (titles.json _pipeline_google_ads_*)
         google_ads_customer_id = title_override.get("_pipeline_google_ads_customer_id", "")
         google_ads_campaign_filter = title_override.get("_pipeline_google_ads_campaign_filter", [])
@@ -205,6 +206,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         root_str = args.root or title_meta.get("_pipeline_creatives_root", "") or os.environ.get("CLOOP_CREATIVES_ROOT", "")
         phases = args.phase or title_meta.get("_pipeline_phases", ["선론칭"])
         types = args.type or title_meta.get("_pipeline_types", ["BNR", "VID"])
+        scan_mode = title_meta.get("_pipeline_scan_mode", "foldered")
 
         # Stage 5 KPI: titles.json 우선, .env fallback
         google_ads_customer_id = (
@@ -253,6 +255,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         "output_dir": Path(output_dir),
         "phases": phases,
         "types": types,
+        "scan_mode": scan_mode,
         "limit": args.limit,
         "no_cache": args.no_cache,
         "dry_run": args.dry_run,
@@ -303,9 +306,13 @@ def run(cfg: dict) -> dict:
     # ── 1) 스캔 ──
     print("🔍 1) 로컬 폴더 스캔 중...")
     try:
-        candidates = scan_creative_folders(
-            root=cfg["root"], phases=cfg["phases"], types=cfg["types"]
-        )
+        if cfg.get("scan_mode") == "by-filename":
+            # 파일명 기반 스캔 (폴더 레이아웃이 펩과 다른 타이틀 — 예: 도원암귀)
+            candidates = scan_by_filename(root=cfg["root"], types=cfg["types"])
+        else:
+            candidates = scan_creative_folders(
+                root=cfg["root"], phases=cfg["phases"], types=cfg["types"]
+            )
     except FileNotFoundError as e:
         msg = f"소재 루트 폴더 없음: {e}"
         print(f"   [실패] {msg}")

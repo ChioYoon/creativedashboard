@@ -14,6 +14,17 @@
     "_pipeline_kpi_enabled": true
   },
   {
+    "id": "tougenanki",
+    "name": "도원암귀: Crimson Inferno",
+    "json_url": "public/data/tougenanki.json",
+    "description": "도원암귀 UA Asset — 시각 분석 전용(KPI 미연동). 파일명 기반 스캔(폴더 레이아웃 무관).",
+    "_pipeline_creatives_root": "G:\\공유 드라이브\\[도원암귀_MKT] 외부 드라이브\\1. 소재\\0. 제작 완료 소재 (MKT Asset)\\0. UA Asset",
+    "_pipeline_scan_mode": "by-filename",
+    "_pipeline_types": ["BNR", "VID"],
+    "_pipeline_enabled": true,
+    "_pipeline_kpi_enabled": false
+  },
+  {
     "id": "sample",
     "name": "📦 샘플 데이터 (Stage 1 검증용)",
     "json_url": "public/data/sample.json",
