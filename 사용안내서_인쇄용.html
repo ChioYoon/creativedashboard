@@ -5,261 +5,179 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Com2uS R팀 소재 분석 시스템 사용 안내서 v5.2</title>
   <style>
-    @page { size: A4; margin: 18mm 20mm; }
+    /* ===== Pretendard — self-hosted (Com2uS DS) ===== */
+    @font-face { font-family:"Pretendard"; src:url("assets/fonts/PretendardVariable.woff2") format("woff2-variations"), url("assets/fonts/PretendardVariable.woff2") format("woff2"); font-weight:45 920; font-style:normal; font-display:swap; }
+    @font-face { font-family:"Pretendard"; src:url("assets/fonts/Pretendard-Regular.woff2") format("woff2"); font-weight:400; font-display:swap; }
+    @font-face { font-family:"Pretendard"; src:url("assets/fonts/Pretendard-Medium.woff2") format("woff2"); font-weight:500; font-display:swap; }
+    @font-face { font-family:"Pretendard"; src:url("assets/fonts/Pretendard-SemiBold.woff2") format("woff2"); font-weight:600; font-display:swap; }
+    @font-face { font-family:"Pretendard"; src:url("assets/fonts/Pretendard-Bold.woff2") format("woff2"); font-weight:700; font-display:swap; }
+    @font-face { font-family:"Pretendard"; src:url("assets/fonts/Pretendard-ExtraBold.woff2") format("woff2"); font-weight:800; font-display:swap; }
+    @font-face { font-family:"Pretendard"; src:url("assets/fonts/Pretendard-Black.woff2") format("woff2"); font-weight:900; font-display:swap; }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
-      line-height: 1.65;
-      color: #1f2937;
-      background: #f0f2f5;
-    }
-
-    /* ── 페이지 컨테이너 ─────────────────────────── */
-    .page {
-      width: 210mm;
-      min-height: 297mm;
-      padding: 18mm 20mm;
-      margin: 0 auto 24px;
-      background: white;
-      box-shadow: 0 4px 16px rgba(0,0,0,.12);
-      position: relative;
-      overflow: hidden;
-    }
-
-    @media print {
-      body { background: white; }
-      .page { box-shadow: none; margin: 0; page-break-after: always; }
-      .no-print { display: none !important; }
+    :root{
+      --red-100:#DC2828; --red-200:#A51E1E; --red-300:#891110; --red-400:#6C1214; --red-500:#40100F;
+      --gray-00:#FFFFFF; --gray-05:#E5E5E5; --gray-10:#CCCCCC; --gray-20:#B2B2B2; --gray-30:#999999;
+      --gray-40:#808080; --gray-50:#666666; --gray-60:#4C4C4C; --gray-70:#333333; --gray-80:#191919; --gray-90:#000000;
+      --brand:#DC2828; --brand-hover:#A51E1E; --brand-active:#891110;
+      --text-primary:#191919; --text-secondary:#666666; --text-tertiary:#999999;
+      --bg-base:#FFFFFF; --bg-subtle:#E5E5E5; --border:#CCCCCC;
+      --surface-soft:#FAF9F7; --surface-card:#F4F2EF; --hairline-warm:#E4E1DC;
+      --radius-sm:4px; --radius-md:8px; --radius-lg:16px; --radius-full:9999px;
+      --shadow-sm:0 1px 2px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.08);
+      --shadow-md:0 2px 8px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.06);
+      --dur-base:.2s;
+      --font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
     }
 
-    /* ── 표지 ────────────────────────────────────── */
-    .cover {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      background: linear-gradient(145deg, #E8003D 0%, #b5012f 50%, #7c0020 100%);
-      color: white;
-      padding: 30mm 20mm;
-    }
-    .cover-accent {
-      position: absolute;
-      top: 0; right: 0;
-      width: 160px; height: 160px;
-      background: rgba(255,255,255,.06);
-      border-radius: 0 0 0 100%;
-    }
-    .cover-accent2 {
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 200px; height: 200px;
-      background: rgba(255,255,255,.05);
-      border-radius: 0 100% 0 0;
-    }
-    .cover-logo { font-size: 80px; margin-bottom: 24px; }
-    .cover-tag {
-      font-size: 12px; font-weight: 700; letter-spacing: 3px;
-      text-transform: uppercase; opacity: .7;
-      background: rgba(255,255,255,.15);
-      padding: 5px 16px; border-radius: 20px; margin-bottom: 20px;
-    }
-    .cover-title {
-      font-size: 40px; font-weight: 900; line-height: 1.25;
-      margin-bottom: 14px; letter-spacing: -0.5px;
-    }
-    .cover-subtitle {
-      font-size: 20px; opacity: .85; margin-bottom: 50px; font-weight: 300;
-    }
-    .cover-divider {
-      width: 60px; height: 3px; background: rgba(255,255,255,.5);
-      margin: 0 auto 40px; border-radius: 2px;
-    }
-    .cover-meta {
-      display: flex; gap: 32px; justify-content: center;
-      font-size: 13px; opacity: .8;
-    }
-    .cover-meta-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-    .cover-meta-label { font-size: 10px; opacity: .6; letter-spacing: 1px; text-transform: uppercase; }
-    .cover-meta-value { font-size: 15px; font-weight: 700; }
-
-    /* ── 목차 ────────────────────────────────────── */
-    .toc-title {
-      font-size: 28px; font-weight: 800; color: #E8003D;
-      margin-bottom: 28px;
-      padding-bottom: 12px;
-      border-bottom: 3px solid #E8003D;
-    }
-    .toc-section { margin-bottom: 6px; }
-    .toc-item {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 9px 12px; border-radius: 8px;
-      font-size: 14px; transition: background .15s;
-      border-bottom: 1px solid #f3f4f6;
-    }
-    .toc-item.main { font-weight: 700; font-size: 15px; background: #fef2f2; color: #b91c1c; border: none; margin-bottom: 2px; }
-    .toc-item.sub { padding-left: 28px; color: #374151; font-size: 13px; }
-    .toc-num { color: #E8003D; font-weight: 700; margin-right: 8px; min-width: 24px; }
-    .toc-pg { color: #9ca3af; font-size: 12px; font-weight: 600; white-space: nowrap; margin-left: 8px; }
-
-    /* ── 본문 공통 ────────────────────────────────── */
-    .page-title {
-      font-size: 28px; font-weight: 800; color: #E8003D;
-      margin-bottom: 24px; padding-bottom: 10px;
-      border-bottom: 3px solid #E8003D;
-      display: flex; align-items: center; gap: 10px;
-    }
-    .section-title {
-      font-size: 18px; font-weight: 700; color: #1f2937;
-      margin: 26px 0 14px;
-      padding: 8px 14px;
-      border-left: 5px solid #E8003D;
-      background: #fef2f2;
-      border-radius: 0 6px 6px 0;
-    }
-    .subsection-title {
-      font-size: 15px; font-weight: 700; color: #374151;
-      margin: 18px 0 10px;
-      display: flex; align-items: center; gap: 6px;
+    @page { size:A4; margin:18mm 20mm; }
+    *{ margin:0; padding:0; box-sizing:border-box; }
+    body{
+      font-family:var(--font); line-height:1.65;
+      color:var(--text-primary); background:var(--gray-05);
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
     }
 
-    p { margin-bottom: 12px; font-size: 13.5px; text-align: justify; word-wrap: break-word; }
-    ul, ol { margin: 10px 0 10px 22px; }
-    li { margin-bottom: 7px; font-size: 13.5px; word-wrap: break-word; line-height: 1.6; }
-    code { font-family: 'Consolas', monospace; font-size: 12px; background: #f3f4f6; padding: 1px 5px; border-radius: 4px; }
+    .page{
+      width:210mm; min-height:297mm; padding:18mm 20mm;
+      margin:0 auto 24px; background:var(--bg-base);
+      box-shadow:var(--shadow-md); position:relative; overflow:hidden;
+    }
+    @media print{
+      body{ background:#fff; }
+      .page{ box-shadow:none; margin:0; page-break-after:always; }
+      .no-print{ display:none !important; }
+    }
 
-    /* ── 박스 ─────────────────────────────────────── */
-    .box {
-      padding: 14px 16px; margin: 14px 0; border-radius: 8px;
-      font-size: 13px; line-height: 1.7; word-wrap: break-word;
+    /* ===== Cover — stark white field, red wordmark, black display title ===== */
+    .cover{
+      display:flex; flex-direction:column; justify-content:center; align-items:flex-start;
+      text-align:left; background:var(--bg-base); color:var(--text-primary); padding:34mm 24mm;
     }
-    .box-red    { background: #fef2f2; border-left: 4px solid #E8003D; }
-    .box-blue   { background: #eff6ff; border-left: 4px solid #3b82f6; }
-    .box-green  { background: #f0fdf4; border-left: 4px solid #10b981; }
-    .box-yellow { background: #fefce8; border-left: 4px solid #f59e0b; }
-    .box-purple { background: #faf5ff; border-left: 4px solid #7c3aed; }
-    .box-gray   { background: #f9fafb; border-left: 4px solid #6b7280; }
-    .box strong { display: block; margin-bottom: 6px; font-size: 13.5px; }
+    .cover-accent{ position:absolute; top:0; left:0; right:0; width:100%; height:8px; background:var(--brand); border-radius:0; }
+    .cover-accent2{ position:static; width:64px; height:4px; background:var(--brand); border-radius:2px; margin:0 0 28px; }
+    .cover-logo{ height:44px; width:auto; margin-bottom:44px; display:block; }
+    .cover-tag{
+      font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
+      color:var(--brand); background:transparent; padding:0; margin-bottom:22px; border-radius:0; opacity:1;
+    }
+    .cover-title{
+      font-size:52px; font-weight:900; line-height:1.12; letter-spacing:-.02em;
+      color:var(--text-primary); margin-bottom:18px;
+    }
+    .cover-subtitle{ font-size:17px; font-weight:500; color:var(--text-secondary); margin-bottom:56px; opacity:1; }
+    .cover-divider{ display:none; }
+    .cover-meta{ display:flex; gap:48px; justify-content:flex-start; font-size:13px; opacity:1; }
+    .cover-meta-item{ display:flex; flex-direction:column; align-items:flex-start; gap:5px; }
+    .cover-meta-label{ font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--text-tertiary); opacity:1; }
+    .cover-meta-value{ font-size:16px; font-weight:700; color:var(--text-primary); }
 
-    /* ── 표 ───────────────────────────────────────── */
-    table {
-      width: 100%; border-collapse: collapse; margin: 14px 0;
-      font-size: 12.5px; table-layout: fixed;
+    /* ===== TOC ===== */
+    .toc-title{
+      font-size:32px; font-weight:800; letter-spacing:-.015em; color:var(--text-primary);
+      margin-bottom:28px; padding-bottom:14px; border-bottom:2px solid var(--brand);
     }
-    th {
-      background: #E8003D; color: white; padding: 9px 11px;
-      text-align: left; font-weight: 700; word-wrap: break-word;
+    .toc-section{ margin-bottom:6px; }
+    .toc-item{
+      display:flex; justify-content:space-between; align-items:center;
+      padding:9px 12px; border-radius:var(--radius-sm);
+      font-size:14px; border-bottom:1px solid var(--gray-05);
     }
-    td { padding: 8px 11px; border-bottom: 1px solid #f0f0f0; word-wrap: break-word; vertical-align: top; }
-    tr:nth-child(even) td { background: #fafafa; }
+    .toc-item.main{ font-weight:700; font-size:15px; background:var(--surface-soft); color:var(--text-primary); border:none; border-left:3px solid var(--brand); margin-bottom:2px; }
+    .toc-item.sub{ padding-left:28px; color:var(--text-secondary); font-size:13px; }
+    .toc-num{ color:var(--brand); font-weight:700; margin-right:8px; min-width:24px; }
+    .toc-pg{ color:var(--text-tertiary); font-size:12px; font-weight:600; white-space:nowrap; margin-left:8px; }
 
-    /* ── 배지 ─────────────────────────────────────── */
-    .badge {
-      display: inline-block; padding: 2px 9px; border-radius: 12px;
-      font-size: 10.5px; font-weight: 700; vertical-align: middle;
+    /* ===== Titles ===== */
+    .page-title{
+      font-size:30px; font-weight:800; letter-spacing:-.015em; color:var(--text-primary);
+      margin-bottom:24px; padding-bottom:12px; border-bottom:2px solid var(--brand);
+      display:flex; align-items:center; gap:10px;
     }
-    .badge-red    { background: #E8003D; color: white; }
-    .badge-green  { background: #10b981; color: white; }
-    .badge-blue   { background: #3b82f6; color: white; }
-    .badge-purple { background: #7c3aed; color: white; }
-    .badge-gray   { background: #6b7280; color: white; }
-    .badge-gold   { background: #f59e0b; color: white; }
+    .section-title{
+      font-size:18px; font-weight:700; color:var(--text-primary);
+      margin:26px 0 14px; padding:6px 0 6px 14px;
+      border-left:4px solid var(--brand); background:transparent; border-radius:0;
+    }
+    .subsection-title{ font-size:15px; font-weight:700; color:var(--text-secondary); margin:18px 0 10px; display:flex; align-items:center; gap:6px; }
 
-    /* ── 스텝 넘버 ────────────────────────────────── */
-    .step-num {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 26px; height: 26px; background: #E8003D; color: white;
-      border-radius: 50%; font-weight: 700; font-size: 13px;
-      margin-right: 8px; flex-shrink: 0;
-    }
-    .step-row { display: flex; align-items: flex-start; margin-bottom: 10px; font-size: 13.5px; }
-    .step-row .step-body { flex: 1; padding-top: 3px; }
+    p{ margin-bottom:12px; font-size:13.5px; color:var(--text-primary); text-align:left; word-wrap:break-word; }
+    ul,ol{ margin:10px 0 10px 22px; }
+    li{ margin-bottom:7px; font-size:13.5px; color:var(--text-primary); word-wrap:break-word; line-height:1.6; }
+    strong{ font-weight:700; }
+    code{ font-family:"Pretendard",Consolas,monospace; font-size:12px; background:var(--surface-card); color:var(--red-300); padding:1px 6px; border-radius:var(--radius-sm); }
 
-    /* ── 워크플로우 다이어그램 ────────────────────── */
-    .workflow {
-      display: flex; align-items: center; gap: 0;
-      margin: 16px 0; flex-wrap: nowrap; overflow-x: auto;
-    }
-    .wf-step {
-      flex: 1; min-width: 0;
-      background: linear-gradient(135deg, #E8003D, #b5012f);
-      color: white; border-radius: 8px;
-      padding: 10px 8px; text-align: center;
-      font-size: 11.5px; font-weight: 700; line-height: 1.4;
-    }
-    .wf-step .wf-icon { font-size: 18px; display: block; margin-bottom: 4px; }
-    .wf-arrow {
-      color: #E8003D; font-size: 20px; font-weight: 700;
-      padding: 0 4px; flex-shrink: 0;
-    }
-    .wf-step.step2 { background: linear-gradient(135deg, #7c3aed, #5b21b6); }
-    .wf-step.step3 { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+    /* ===== Callout boxes — mono + Red only ===== */
+    .box{ padding:14px 16px; margin:14px 0; border-radius:var(--radius-md); font-size:13px; line-height:1.7; background:var(--surface-soft); border-left:4px solid var(--gray-20); word-wrap:break-word; }
+    .box strong{ display:block; margin-bottom:6px; font-size:13.5px; }
+    .box-red{ background:#FCEDED; border-left-color:var(--brand); }
+    .box-yellow{ background:var(--bg-subtle); border-left-color:var(--gray-80); }
+    .box-blue,.box-green,.box-gray,.box-purple{ background:var(--surface-soft); border-left-color:var(--gray-30); }
 
-    /* ── AI 인사이트 슬롯 미리보기 ──────────────── */
-    .ai-slot-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0;
+    /* ===== Data table — Notion-quiet, Com2uS-skinned ===== */
+    table{ width:100%; border-collapse:collapse; margin:14px 0; font-size:12.5px; table-layout:fixed; }
+    th{
+      background:var(--bg-subtle); color:var(--text-secondary);
+      padding:10px 12px; text-align:left; font-weight:600;
+      font-size:11px; letter-spacing:.04em; text-transform:uppercase;
+      border-bottom:1px solid var(--border); word-wrap:break-word;
     }
-    .ai-slot {
-      border-radius: 8px; padding: 10px 12px; font-size: 12px;
-    }
-    .ai-slot .slot-title { font-weight: 700; margin-bottom: 4px; font-size: 12.5px; }
-    .ai-slot .slot-body { color: #374151; line-height: 1.6; }
+    td{ padding:9px 12px; border-bottom:1px solid var(--gray-05); color:var(--text-primary); word-wrap:break-word; vertical-align:top; line-height:1.5; }
+    tr:last-child td{ border-bottom:none; }
+    .grade-table td:first-child{ font-weight:700; }
 
-    /* ── 피로도 상태 배지 ─────────────────────────── */
-    .fatigue-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 12px 0;
-    }
-    .fatigue-card {
-      border-radius: 8px; padding: 10px; text-align: center; font-size: 12px;
-    }
-    .fatigue-card .fc-icon { font-size: 22px; display: block; margin-bottom: 4px; }
-    .fatigue-card .fc-name { font-weight: 700; margin-bottom: 3px; font-size: 13px; }
-    .fatigue-card .fc-cpa { font-size: 11px; color: #6b7280; margin-bottom: 4px; }
-    .fatigue-card .fc-action { font-size: 11px; font-weight: 600; }
+    /* ===== Badges ===== */
+    .badge{ display:inline-block; padding:2px 9px; border-radius:var(--radius-full); font-size:10.5px; font-weight:700; vertical-align:middle; line-height:1.5; }
+    .badge-red{ background:var(--brand); color:#fff; }
+    .badge-green,.badge-blue,.badge-purple,.badge-gold,.badge-gray{ background:var(--gray-80); color:#fff; }
 
-    /* ── 등급 뱃지 ───────────────────────────────── */
-    .grade-table td:first-child { font-weight: 700; }
+    /* ===== Step number ===== */
+    .step-num{ display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; background:var(--brand); color:#fff; border-radius:var(--radius-full); font-weight:700; font-size:13px; margin-right:8px; flex-shrink:0; }
+    .step-row{ display:flex; align-items:flex-start; margin-bottom:10px; font-size:13.5px; }
+    .step-row .step-body{ flex:1; padding-top:3px; }
 
-    /* ── 플랜 비교표 ─────────────────────────────── */
-    .plan-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 14px 0; }
-    .plan-card {
-      border-radius: 10px; padding: 14px; font-size: 12px;
-    }
-    .plan-card .plan-name { font-size: 15px; font-weight: 800; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-    .plan-card li { margin-bottom: 5px; }
+    /* ===== Workflow ===== */
+    .workflow{ display:flex; align-items:stretch; gap:0; margin:16px 0; flex-wrap:nowrap; overflow-x:auto; }
+    .wf-step{ flex:1; min-width:0; background:var(--bg-base); border:1px solid var(--border); border-top:3px solid var(--brand); color:var(--text-primary); border-radius:var(--radius-md); padding:12px 8px; text-align:center; font-size:11.5px; font-weight:700; line-height:1.4; }
+    .wf-step.step2,.wf-step.step3{ border-top-color:var(--gray-40); }
+    .wf-step .wf-icon{ font-size:18px; display:block; margin-bottom:4px; }
+    .wf-arrow{ color:var(--brand); font-size:18px; font-weight:700; padding:0 5px; flex-shrink:0; align-self:center; }
 
-    /* ── 푸터 ─────────────────────────────────────── */
-    .footer {
-      position: absolute; bottom: 12mm; left: 20mm; right: 20mm;
-      text-align: center; font-size: 10.5px; color: #9ca3af;
-      border-top: 1px solid #e5e7eb; padding-top: 7px;
-    }
-    @media print { .footer { position: fixed; } }
+    /* ===== AI slot / fatigue / plan / cheat cards ===== */
+    .ai-slot-grid{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:12px 0; }
+    .ai-slot{ border-radius:var(--radius-md); padding:10px 12px; font-size:12px; background:var(--surface-soft); border:1px solid var(--hairline-warm); }
+    .ai-slot .slot-title{ font-weight:700; margin-bottom:4px; font-size:12.5px; }
+    .ai-slot .slot-body{ color:var(--text-secondary); line-height:1.6; }
 
-    /* ── 인쇄 버튼 ────────────────────────────────── */
-    .print-btn {
-      position: fixed; top: 20px; right: 20px; z-index: 9999;
-      padding: 10px 22px;
-      background: linear-gradient(135deg, #E8003D, #b5012f);
-      color: white; border: none; border-radius: 8px;
-      font-size: 14px; font-weight: 700; cursor: pointer;
-      box-shadow: 0 4px 14px rgba(232,0,61,.35);
-    }
-    .print-btn:hover { transform: translateY(-2px); }
+    .fatigue-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:12px 0; }
+    .fatigue-card{ border-radius:var(--radius-md); padding:10px; text-align:center; font-size:12px; background:var(--surface-soft); border:1px solid var(--hairline-warm); }
+    .fatigue-card .fc-icon{ font-size:22px; display:block; margin-bottom:4px; }
+    .fatigue-card .fc-name{ font-weight:700; margin-bottom:3px; font-size:13px; }
+    .fatigue-card .fc-cpa{ font-size:11px; color:var(--text-secondary); margin-bottom:4px; }
+    .fatigue-card .fc-action{ font-size:11px; font-weight:600; }
 
-    /* ── 체크시트 ─────────────────────────────────── */
-    .cheat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
-    .cheat-card { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px 14px; font-size: 12px; }
-    .cheat-card .cheat-title { font-weight: 700; color: #E8003D; margin-bottom: 8px; font-size: 13px; }
-    .cheat-card li { margin-bottom: 4px; font-size: 12px; }
+    .plan-compare{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:14px 0; }
+    .plan-card{ border-radius:var(--radius-md); padding:14px; font-size:12px; background:var(--surface-soft); border:1px solid var(--hairline-warm); }
+    .plan-card .plan-name{ font-size:15px; font-weight:800; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+    .plan-card li{ margin-bottom:5px; }
 
-    /* ── FAQ ─────────────────────────────────────── */
-    .faq-item { margin-bottom: 18px; }
-    .faq-q { font-weight: 700; font-size: 14px; color: #1f2937; margin-bottom: 6px; }
-    .faq-q::before { content: 'Q. '; color: #E8003D; }
-    .faq-a { font-size: 13.5px; color: #374151; padding-left: 16px; }
+    .cheat-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:16px; }
+    .cheat-card{ background:var(--surface-soft); border:1px solid var(--hairline-warm); border-radius:var(--radius-md); padding:12px 14px; font-size:12px; }
+    .cheat-card .cheat-title{ font-weight:700; color:var(--brand); margin-bottom:8px; font-size:13px; }
+    .cheat-card li{ margin-bottom:4px; font-size:12px; }
+
+    /* ===== FAQ ===== */
+    .faq-item{ margin-bottom:18px; }
+    .faq-q{ font-weight:700; font-size:14px; color:var(--text-primary); margin-bottom:6px; }
+    .faq-q::before{ content:'Q. '; color:var(--brand); font-weight:800; }
+    .faq-a{ font-size:13.5px; color:var(--text-secondary); padding-left:16px; }
+
+    /* ===== Footer ===== */
+    .footer{ position:absolute; bottom:12mm; left:20mm; right:20mm; text-align:center; font-size:10.5px; color:var(--text-tertiary); border-top:1px solid var(--gray-05); padding-top:7px; }
+    @media print{ .footer{ position:fixed; } }
+
+    /* ===== Print button ===== */
+    .print-btn{ position:fixed; top:20px; right:20px; z-index:9999; padding:11px 22px; background:var(--brand); color:#fff; border:none; border-radius:var(--radius-md); font-family:var(--font); font-size:14px; font-weight:700; cursor:pointer; box-shadow:var(--shadow-md); transition:background var(--dur-base); }
+    .print-btn:hover{ background:var(--brand-hover); }
   </style>
 </head>
 <body>
@@ -270,9 +188,9 @@
   ════════════════════════════════════════════════════════ -->
   <div class="page cover">
     <div class="cover-accent"></div>
-    <div class="cover-accent2"></div>
-    <div class="cover-logo">📊</div>
+    <img class="cover-logo" src="assets/com2us/logo-primary-red.png" alt="Com2uS">
     <div class="cover-tag">Com2uS R Marketing Team</div>
+    <div class="cover-accent2"></div>
     <div class="cover-title">소재 분석 시스템<br>사용 안내서</div>
     <div class="cover-subtitle">Step 1 성과 분석 · Step 2 군집화 분석 · Gemini AI 인사이트</div>
     <div class="cover-divider"></div>
@@ -283,7 +201,7 @@
       </div>
       <div class="cover-meta-item">
         <span class="cover-meta-label">Updated</span>
-        <span class="cover-meta-value">2026. 05. 21</span>
+        <span class="cover-meta-value">2026. 06. 13</span>
       </div>
       <div class="cover-meta-item">
         <span class="cover-meta-label">Team</span>
@@ -801,20 +719,20 @@
 
     <div class="section-title">Step 2 AI 인사이트 — 3블록 구성</div>
     <div class="ai-slot-grid">
-      <div class="ai-slot" style="background:#fef2f2;border-left:4px solid #E8003D;">
-        <div class="slot-title" style="color:#E8003D;">🚀 Scale-up 전략</div>
+      <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #DC2828;">
+        <div class="slot-title" style="color:#DC2828;">🚀 Scale-up 전략</div>
         <div class="slot-body">유지·확장해야 할 태그 조합과 이유 (불릿 2~3개, 태그명·점수 인용)</div>
       </div>
-      <div class="ai-slot" style="background:#faf5ff;border-left:4px solid #7c3aed;">
-        <div class="slot-title" style="color:#7c3aed;">🔄 Pivot 전략</div>
+      <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #DC2828;">
+        <div class="slot-title" style="color:#DC2828;">🔄 Pivot 전략</div>
         <div class="slot-body">보강하거나 새로 시도해야 할 크리에이티브 방향 (제작 가이드 포함)</div>
       </div>
       <div class="ai-slot" style="background:#f9fafb;border-left:4px solid #6b7280;">
         <div class="slot-title" style="color:#6b7280;">⛔ Exit 전략</div>
         <div class="slot-body">성과가 낮아 중단해야 할 패턴 (근거 수치 포함)</div>
       </div>
-      <div class="ai-slot" style="background:#eff6ff;border-left:4px solid #3b82f6;">
-        <div class="slot-title" style="color:#3b82f6;">🔬 군집 심층 분석</div>
+      <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #DC2828;">
+        <div class="slot-title" style="color:#DC2828;">🔬 군집 심층 분석</div>
         <div class="slot-body">군집별 마케팅 맥락 해석 + 성패 소재 결정적 차이 분석</div>
       </div>
     </div>
@@ -837,11 +755,11 @@
     <div class="section-title">5.1 API 키 설정 및 플랜 선택</div>
 
     <div class="step-row"><span class="step-num">1</span><div class="step-body">네비게이션 상단 <strong>"✨ AI 설정"</strong> 버튼 클릭</div></div>
-    <div class="step-row"><span class="step-num">2</span><div class="step-body"><a href="https://aistudio.google.com/apikey" style="color:#E8003D;">Google AI Studio</a>에서 발급한 <strong>API 키 입력</strong></div></div>
+    <div class="step-row"><span class="step-num">2</span><div class="step-body"><a href="https://aistudio.google.com/apikey" style="color:#DC2828;">Google AI Studio</a>에서 발급한 <strong>API 키 입력</strong></div></div>
     <div class="step-row"><span class="step-num">3</span><div class="step-body"><strong>플랜 선택</strong> (무료 / 유료) 후 <strong>"저장 &amp; 테스트"</strong> 버튼 클릭</div></div>
 
     <div class="plan-compare">
-      <div class="plan-card" style="background:#fffbeb;border:2px solid #f59e0b;">
+      <div class="plan-card" style="background:#FAF9F7;border:2px solid #DC2828;">
         <div class="plan-name" style="color:#d97706;">🆓 무료 플랜</div>
         <ul>
           <li>분당 15회 요청 한도 (Gemini Free Tier)</li>
@@ -854,8 +772,8 @@
           <li>🔒 잠긴 슬롯 영역에 <strong>유료 Pro 업그레이드 안내</strong> 카드 자동 노출 <span class="badge badge-red" style="font-size:9px;">NEW</span></li>
         </ul>
       </div>
-      <div class="plan-card" style="background:#faf5ff;border:2px solid #7c3aed;">
-        <div class="plan-name" style="color:#7c3aed;">💎 유료 Pro 플랜</div>
+      <div class="plan-card" style="background:#FAF9F7;border:2px solid #DC2828;">
+        <div class="plan-name" style="color:#DC2828;">💎 유료 Pro 플랜</div>
         <ul>
           <li>분당 1,000회 요청 한도</li>
           <li>소재 최대 <strong>5개</strong> 분석</li>
@@ -872,23 +790,23 @@
     <p>점수 계산 결과 화면의 <strong>"✨ AI 인사이트 생성"</strong> 버튼으로 실행합니다. <strong>winning 슬롯이 단독일 때는 1컬럼 전체폭</strong>으로 렌더링되어 가독성이 높아집니다.</p>
 
     <div class="ai-slot-grid">
-      <div class="ai-slot" style="background:#ecfdf5;border-left:4px solid #10b981;">
-        <div class="slot-title" style="color:#10b981;">🏆 위닝 소재 분석 (winning) <span class="badge badge-green">무료·유료</span></div>
+      <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #DC2828;">
+        <div class="slot-title" style="color:#DC2828;">🏆 위닝 소재 분석 (winning) <span class="badge badge-green">무료·유료</span></div>
         <div class="slot-body">고효율 소재 목록 + 공통 패턴<br>· 무료: 동일 슬롯 내부에 <strong>루징(저효율) 소재</strong>도 포함<br>· 유료: 위닝만 분리되어 더 깊은 분석</div>
       </div>
-      <div class="ai-slot" style="background:#fef2f2;border-left:4px solid #ef4444;">
+      <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #ef4444;">
         <div class="slot-title" style="color:#ef4444;">📉 루징 소재 분석 (losing) <span class="badge badge-purple">유료</span></div>
         <div class="slot-body">저효율 소재 별도 카드<br>· 공통 약점 태그·패턴<br>· 위닝 대비 부족한 요소</div>
       </div>
-      <div class="ai-slot" style="background:#f5f3ff;border-left:4px solid #7c3aed;">
-        <div class="slot-title" style="color:#7c3aed;">⚡ 즉시 실행 액션 (actionItems) <span class="badge badge-purple">유료</span></div>
+      <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #DC2828;">
+        <div class="slot-title" style="color:#DC2828;">⚡ 즉시 실행 액션 (actionItems) <span class="badge badge-purple">유료</span></div>
         <div class="slot-body">확장🟢 / 개선🟡 / 중단🔴 3분류<br>· 소재명 + 액션 + 근거 수치</div>
       </div>
-      <div class="ai-slot" style="background:#ecfdf5;border-left:4px solid #059669;">
+      <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #059669;">
         <div class="slot-title" style="color:#059669;">🚀 스케일업 후보 (scaleUp) <span class="badge badge-purple">유료</span></div>
         <div class="slot-body">예산 확대 우선순위 TOP 소재<br>· 증액 권고 비율 포함</div>
       </div>
-      <div class="ai-slot" style="background:#fef2f2;border-left:4px solid #dc2626;">
+      <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #dc2626;">
         <div class="slot-title" style="color:#dc2626;">🛑 즉시 중단 권고 (stopNow) <span class="badge badge-purple">유료</span></div>
         <div class="slot-body">예산 손실 차단용 즉시 OFF 목록<br>· CPA 악화·전환 0 등 명확한 근거</div>
       </div>
@@ -929,8 +847,8 @@
     <div class="section-title">출력 슬롯 구성</div>
 
     <div class="ai-slot-grid">
-      <div class="ai-slot" style="background:#ecfdf5;border-left:4px solid #10b981;">
-        <div class="slot-title" style="color:#10b981;">📈 급등 소재 원인 <span class="badge badge-green">무료·유료</span></div>
+      <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #DC2828;">
+        <div class="slot-title" style="color:#DC2828;">📈 급등 소재 원인 <span class="badge badge-green">무료·유료</span></div>
         <div class="slot-body">
           · 급등 소재명 + CPA 수치 → 공통 태그([태그명]) 기반 원인 2줄<br>
           · CPA 증가 트렌드 요약 (★피로집중 소재 명시)<br>
@@ -938,16 +856,16 @@
           · 급등 소재 태그를 교체 소재에 적용하는 방향
         </div>
       </div>
-      <div class="ai-slot" style="background:#fef2f2;border-left:4px solid #ef4444;">
+      <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #ef4444;">
         <div class="slot-title" style="color:#ef4444;">📉 피로도 진단 <span class="badge badge-purple">유료</span></div>
         <div class="slot-body">하락 소재별 CPA 변화율 + 피로 패턴·취약 태그 분석 2줄</div>
       </div>
-      <div class="ai-slot" style="background:#fffbeb;border-left:4px solid #f59e0b;">
-        <div class="slot-title" style="color:#f59e0b;">⏱️ 교체 타이밍 기준 <span class="badge badge-purple">유료</span></div>
+      <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #DC2828;">
+        <div class="slot-title" style="color:#DC2828;">⏱️ 교체 타이밍 기준 <span class="badge badge-purple">유료</span></div>
         <div class="slot-body">CPA·전환 수치 기반 즉시 교체 / 모니터링 소재 분리</div>
       </div>
-      <div class="ai-slot" style="background:#f5f3ff;border-left:4px solid #7c3aed;">
-        <div class="slot-title" style="color:#7c3aed;">🔄 운영 액션 <span class="badge badge-purple">유료</span></div>
+      <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #DC2828;">
+        <div class="slot-title" style="color:#DC2828;">🔄 운영 액션 <span class="badge badge-purple">유료</span></div>
         <div class="slot-body">ON 확대·OFF 실행·신소재 방향 3줄 (태그 기반 제작 가이드 포함)</div>
       </div>
     </div>
@@ -1091,7 +1009,7 @@
       <li>💪 <strong>주요 강점 Top 5</strong> · ⚠️ <strong>주요 약점 Top 5</strong> · 🚀 <strong>다음 제작 추천 Top 3</strong> (부여율 % 포함)</li>
       <li>🎯 <strong>풀 대비 성과</strong> — CTR 백분위 <strong>상위 3 / 하위 3 소재</strong> (KPI 보유 4건 이상 시)</li>
     </ul>
-    <div style="background:#fff7ed;border-left:4px solid #f59e0b;padding:10px 14px;border-radius:6px;font-size:12.5px;margin-top:10px;">
+    <div style="background:#FAF9F7;border-left:4px solid #DC2828;padding:10px 14px;border-radius:6px;font-size:12.5px;margin-top:10px;">
       ⚠️ <strong>부여율 해석</strong> — 어떤 강점이 90% 이상이면 "풀 다수가 공유하는 일반 특성"이라 차별점이 아닙니다. <strong>소수만 가진 차별화 강점</strong>을 찾는 데 분포를 활용하세요.
     </div>
 
