@@ -22,7 +22,8 @@
     "_pipeline_scan_mode": "by-filename",
     "_pipeline_types": ["BNR", "VID"],
     "_pipeline_enabled": true,
-    "_pipeline_kpi_enabled": false
+    "_pipeline_kpi_enabled": false,
+    "_pipeline_prompt_version_pin": "v3.3-2026.06.13-character-split-single"
   },
   {
     "id": "sample",
