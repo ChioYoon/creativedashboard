@@ -1774,6 +1774,7 @@ function pctileCellHtml(p) {
 function applyResultSort(key) {
   const cs = window.currentCreatives;
   if (!cs || !cs.length) return;
+  window._headerSort = null;  // 드롭다운 정렬 사용 → 헤더 정렬 표시 해제
   if (key === 'score') {
     cs.sort((a, b) => (b.TotalScore || 0) - (a.TotalScore || 0));
   } else {
@@ -1785,6 +1786,69 @@ function applyResultSort(key) {
     cs.sort((a, b) => pv(b) - pv(a));
   }
   renderResultTableRows(cs);
+  updateSortIndicators();
+}
+
+// 5-J 후속: 표 헤더 클릭 정렬. 같은 컬럼 재클릭 시 오름/내림 토글.
+// 신규 컬럼은 숫자 내림차순(높을수록 위) / 문자 오름차순 기본.
+function sortByColumn(field, type) {
+  const cs = window.currentCreatives;
+  if (!cs || !cs.length) return;
+  const st = window._headerSort || {};
+  const dir = (st.field === field)
+    ? (st.dir === 'desc' ? 'asc' : 'desc')
+    : (type === 'str' ? 'asc' : 'desc');
+  window._headerSort = { field, dir };
+  const val = (c) => {
+    const v = c[field];
+    if (type === 'str') return (v == null ? '' : String(v));
+    return (v == null || isNaN(v)) ? -Infinity : Number(v);
+  };
+  cs.sort((a, b) => {
+    const va = val(a), vb = val(b);
+    if (type === 'str') return dir === 'asc' ? va.localeCompare(vb) : vb.localeCompare(va);
+    return dir === 'asc' ? va - vb : vb - va;
+  });
+  const sel = document.getElementById('resultSortSelect');
+  if (sel) sel.value = 'score';  // 드롭다운 중립화 (실제 정렬은 헤더 기준, 인디케이터로 표시)
+  renderResultTableRows(cs);
+  updateSortIndicators();
+}
+
+// 활성 정렬 컬럼에 ▲/▼ 표시
+function updateSortIndicators() {
+  const st = window._headerSort || {};
+  document.querySelectorAll('#resultTable thead th[data-sortkey] .sort-ind').forEach((ind) => {
+    const th = ind.closest('th');
+    ind.textContent = (th && th.dataset.sortkey === st.field) ? (st.dir === 'asc' ? ' ▲' : ' ▼') : '';
+  });
+}
+
+// 결과 표 헤더에 클릭 정렬 부착 (헤더 텍스트 → creative 필드 매핑). 정적 thead라 1회면 충분(멱등).
+function attachHeaderSort() {
+  const table = document.getElementById('resultTable');
+  if (!table) return;
+  const MAP = {
+    '전환': ['전환', 'num'], 'CPA': ['CPA', 'num'], 'IPM': ['IPM', 'num'], 'ROAS': ['ROAS', 'num'],
+    '전환수점수': ['전환수점수', 'num'], 'CPA점수': ['CPA점수', 'num'], 'IPM점수': ['IPM점수', 'num'],
+    'ROAS점수': ['ROAS점수', 'num'], '총점': ['TotalScore', 'num'], '등급': ['TotalScore', 'num'],
+  };
+  table.querySelectorAll('thead th').forEach((th) => {
+    if (th.dataset.sortBound) return;  // 멱등
+    const label = th.textContent.replace(/[ℹ▲▼]/g, '').replace(/\s+/g, '');
+    const hit = MAP[label];
+    if (!hit) return;
+    const [field, type] = hit;
+    th.dataset.sortkey = field;
+    th.dataset.sortBound = '1';
+    th.style.cursor = 'pointer';
+    th.title = (th.getAttribute('data-tip') || '') + '\n(클릭하여 정렬)';
+    const ind = document.createElement('span');
+    ind.className = 'sort-ind';
+    ind.style.cssText = 'color:#E84855;font-weight:800;';
+    th.appendChild(ind);
+    th.addEventListener('click', () => sortByColumn(field, type));
+  });
 }
 
 function plParseCSV(text) {
@@ -4017,6 +4081,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       if (_sortBar) _sortBar.style.display = hasPctile ? 'block' : 'none';
       const _sortSel = document.getElementById('resultSortSelect');
       if (_sortSel) _sortSel.value = 'score';
+      // 5-J 후속: 헤더 클릭 정렬 부착(멱등) + 필터 변경 시 정렬 상태 초기화
+      window._headerSort = null;
+      attachHeaderSort();
+      updateSortIndicators();
 
       // ── 소재 유형별 요약 표 렌더링
       renderTypeSummary(creatives);
