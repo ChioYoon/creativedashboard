@@ -4062,6 +4062,20 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const fr  = v => v !== null && v !== undefined ? Math.round(v * 100) + '%' : '—';
       const fi  = v => v !== null && v !== undefined ? Number(v).toFixed(2) : '—';
       const fct = v => v !== null && v !== undefined ? Number(v).toFixed(2) + '%' : '—';
+      // 5-J 후속: 성과 백분위 셀 (추출본은 독립 HTML이라 인라인 스타일). KPI 보유 소재 있을 때만 컬럼 노출.
+      const hasPctile = creatives.some(c => { const p = c.meta?.kpi_percentiles; return p && (p.ctr != null || p.cvr != null || p.cpa != null); });
+      const fpct = (p) => {
+        if (p === null || p === undefined) return '';
+        const top = p >= 50;
+        const label = top ? `상위 ${Math.max(1, 100 - p)}%` : `하위 ${Math.max(1, p)}%`;
+        const st = top ? 'background:#dcfce7;color:#166534;' : 'background:#fef3c7;color:#92400e;';
+        return `<span style="display:inline-block;padding:1px 6px;border-radius:10px;font-size:10px;font-weight:700;${st}">${label}</span>`;
+      };
+      const pctileCell = (p) => {
+        if (!p || (p.ctr == null && p.cvr == null && p.cpa == null)) return '<span style="color:#d1d5db;">—</span>';
+        const row = (lbl, v) => v == null ? '' : `<div style="display:flex;gap:4px;align-items:center;white-space:nowrap;"><span style="font-size:9px;color:#9ca3af;font-weight:700;width:24px;">${lbl}</span>${fpct(v)}</div>`;
+        return `<div style="display:flex;flex-direction:column;gap:2px;align-items:flex-start;">${row('CTR', p.ctr)}${row('CVR', p.cvr)}${row('CPA', p.cpa)}</div>`;
+      };
 
       const gradeStyle = {
         '최우수': 'background:#dcfce7;color:#15803d;',
@@ -4217,6 +4231,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td style="padding:8px;text-align:center;vertical-align:middle;">
             <span style="display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;${gs}">${c.등급}</span>
           </td>
+          ${hasPctile ? `<td style="padding:8px;vertical-align:middle;">${pctileCell(c.meta?.kpi_percentiles)}</td>` : ''}
         </tr>`;
       }).join('');
 
@@ -4295,6 +4310,7 @@ img { display:block; }
           <th style="text-align:right;">ROAS점수</th>
           <th style="text-align:right;">총점</th>
           <th style="text-align:center;">등급</th>
+          ${hasPctile ? '<th style="text-align:left;min-width:120px;">성과 백분위</th>' : ''}
         </tr></thead>
         <tbody>${detailRows}</tbody>
       </table>
