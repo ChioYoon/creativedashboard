@@ -1,8 +1,85 @@
 {
   "schema_version": "1.0",
   "title_id": "tougenanki",
-  "generated_at": null,
-  "prompt_version": null,
-  "note": "도원암귀 UA Asset — 태깅 대기(Gemini quota 리셋 후 자동 생성). 26개 소재 스캔 확인됨.",
-  "creatives": []
+  "generated_at": "2026-06-14T14:57:26+09:00",
+  "pipeline_version": "stage2-mvp",
+  "gemini_model": "gemini-2.5-flash-lite",
+  "creatives": [
+    {
+      "creative_id": "FGT-IP-MudanoSSR01-DA",
+      "소재명": "FGT-IP-MudanoSSR01-DA",
+      "파일명": "260624_BNR_FGT-IP-MudanoSSR01-DA_L_1200x628_JP.jpg",
+      "유형": "BNR",
+      "일": "2026-06-24",
+      "캠페인": null,
+      "사이즈": "1200x628",
+      "언어": "JP",
+      "링크": null,
+      "creative_concept": "FGT-IP-MudanoSSR01-DA",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "비주얼 임팩트",
+      "USP": "대세감(출시일/사전등록수)",
+      "art_style": "2D 일러스트",
+      "strengths": [
+        "강한 비주얼 임팩트",
+        "단일 주인공 스포트라이트",
+        "보상 약속 명확"
+      ],
+      "weaknesses": [
+        "장르/게임성 불분명",
+        "행동 유도 약함/부재"
+      ],
+      "hypothesis": [
+        "높은 CTR 예상 — 강한 후킹",
+        "낮은 전환 위험 — 행동 유도 약함"
+      ],
+      "test_ideas": [
+        "게임플레이 컷 추가",
+        "명시적 CTA 추가"
+      ],
+      "one_line_insight": "강렬한 비주얼로 시선 후킹은 성공했으나 게임 장르 인지가 어려워 전환율이 낮을 수 있음 — 게임플레이 컷을 추가해 장르 명확성을 높이고 CTA를 강화하여 전환율 개선 필요",
+      "strength_evidence": [
+        "붉은 피가 흘러내리는 배경과 주인공의 강렬한 눈빛, 흑백 대비 의상이 시선을 압도하며 장르의 어두운 분위기를 즉시 전달함",
+        "주인공 캐릭터를 화면 중앙에 배치하고 얼굴 클로즈업, 독특한 눈매와 붉은 액체가 묻은 손 연출로 강렬한 인상을 줌",
+        "화면 하단 '参加者 限定プレゼント' 문구가 붉은 배경 위에 흰색으로 강조되어 참여 시 얻을 수 있는 혜택을 명확히 인지시킴"
+      ],
+      "weakness_evidence": [
+        "전투 장면이나 게임 UI가 전혀 노출되지 않아, 캐릭터와 배경 아트만으로는 어떤 장르의 게임인지 파악하기 어려움",
+        "사전 등록 버튼('今すぐ応募する')은 있으나, 명확한 CTA 문구 부족 및 보상과의 직접적 연계성이 약해 클릭 전환율이 낮을 수 있음"
+      ],
+      "improvement_actions": [
+        "화면 중앙 주인공 하단에 실제 게임 전투 장면 띠를 삽입하여 장르와 게임성을 즉시 인지시키도록 수정",
+        "엔드카드 '参加者 限定プレゼント' 문구 옆에 '지금 사전등록하고 100% 보상 받기!' 문구를 추가하여 행동 유도 강화"
+      ],
+      "creator_intent": "강렬한 비주얼과 캐릭터 매력으로 호기심을 자극하여 사전 등록을 유도하려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "marketer_insight": null,
+      "tagged_at": "2026-06-14T14:57:15+09:00",
+      "gemini_model": "gemini-2.5-flash-lite",
+      "source_files": [
+        "3. FGT\\1. 배너\\FGT-IP-MudanoSSR01-DA\\260624_BNR_FGT-IP-MudanoSSR01-DA_L_1200x628_JP.jpg",
+        "3. FGT\\1. 배너\\FGT-IP-MudanoSSR01-DA\\260624_BNR_FGT-IP-MudanoSSR01-DA_S_1200x1200_JP.jpg",
+        "3. FGT\\1. 배너\\FGT-IP-MudanoSSR01-DA\\260624_BNR_FGT-IP-MudanoSSR01-DA_V_1200x1500_JP.jpg"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": []
+    }
+  ],
+  "metrics": {
+    "scanned_folders": 26,
+    "tagged_records": 1,
+    "cache_hits": 0,
+    "cache_misses": 1,
+    "failures": 0,
+    "duration_sec": 28.2,
+    "prompt_version": "v3.3-2026.06.13-character-split-single",
+    "fallback_used": true
+  }
 }
