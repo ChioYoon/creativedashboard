@@ -115,6 +115,12 @@ def build_arg_parser() -> argparse.ArgumentParser:
         help="소재 유형 (기본: BNR, VID). 다중 지정 가능: --type BNR --type VID",
     )
     p.add_argument("--limit", type=int, default=0, help="소재 폴더 N개로 제한 (0=전체)")
+    p.add_argument(
+        "--pilot",
+        action="store_true",
+        help="(토큰 절감) 파일럿 모드 — 캐시 버전에 '-pilot' 접미 + 출력은 {title}.pilot.json. "
+        "production 캐시/JSON 미오염으로 프롬프트를 자유롭게 반복 튜닝 (보통 --limit 와 함께).",
+    )
     p.add_argument("--no-cache", action="store_true", help="캐시 무시하고 강제 재태깅")
     p.add_argument(
         "--dry-run",
@@ -181,6 +187,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         phases = title_override.get("_pipeline_phases", ["선론칭"])
         types = title_override.get("_pipeline_types", ["BNR", "VID"])
         scan_mode = title_override.get("_pipeline_scan_mode", "foldered")
+        prompt_version_pin = title_override.get("_pipeline_prompt_version_pin", "")
         # Stage 5 KPI 매핑 (titles.json _pipeline_google_ads_*)
         google_ads_customer_id = title_override.get("_pipeline_google_ads_customer_id", "")
         google_ads_campaign_filter = title_override.get("_pipeline_google_ads_campaign_filter", [])
@@ -207,6 +214,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         phases = args.phase or title_meta.get("_pipeline_phases", ["선론칭"])
         types = args.type or title_meta.get("_pipeline_types", ["BNR", "VID"])
         scan_mode = title_meta.get("_pipeline_scan_mode", "foldered")
+        prompt_version_pin = title_meta.get("_pipeline_prompt_version_pin", "")
 
         # Stage 5 KPI: titles.json 우선, .env fallback
         google_ads_customer_id = (
@@ -256,6 +264,8 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         "phases": phases,
         "types": types,
         "scan_mode": scan_mode,
+        "prompt_version_pin": prompt_version_pin,
+        "pilot": args.pilot,
         "limit": args.limit,
         "no_cache": args.no_cache,
         "dry_run": args.dry_run,
@@ -349,7 +359,12 @@ def run(cfg: dict) -> dict:
     # ── 2) 캐시·태거 준비 ──
     cache = TagCache(cfg["cache_dir"], cfg["title"])
     tagger = GeminiTagger(api_key=cfg["api_key"], model=cfg["model"])
-    pversion = prompt_version()
+    # ① 파일럿: 캐시 버전에 '-pilot' 접미 (production 캐시 미오염)
+    # ② 타이틀 핀: _pipeline_prompt_version_pin 이 있으면 글로벌 bump 무시 (재태깅 격리)
+    if cfg.get("pilot"):
+        pversion = prompt_version() + "-pilot"
+    else:
+        pversion = cfg.get("prompt_version_pin") or prompt_version()
     fallback_model = "gemini-2.5-flash-lite"
 
     # ── 2-Stage5) KPI batch fetch (kpi_enabled=true 일 때만) ──
@@ -593,7 +608,10 @@ def run(cfg: dict) -> dict:
                         f"{fallback_model} 으로 전환하여 재시도"
                     )
                     cfg["model"] = fallback_model
+                    _carry_usage = dict(tagger.usage)  # 1차 태거 토큰 실측 이어받기
                     tagger = GeminiTagger(api_key=cfg["api_key"], model=fallback_model)
+                    for _k, _v in _carry_usage.items():
+                        tagger.usage[_k] += _v
                     metrics["fallback_used"] = True
                     daily_quota_exhausted = False
                     # 같은 소재 재시도 (Stage 5-I: 동일 컨텍스트 주입)
@@ -730,7 +748,9 @@ def run(cfg: dict) -> dict:
         },
     )
 
-    out_path = cfg["output_dir"] / f"{cfg['title']}.json"
+    # ① 파일럿은 별도 파일로 출력 (production JSON 미오염 — 백업/복원 불필요)
+    out_name = f"{cfg['title']}.pilot.json" if cfg.get("pilot") else f"{cfg['title']}.json"
+    out_path = cfg["output_dir"] / out_name
     out_path.parent.mkdir(parents=True, exist_ok=True)
     payload = dataset.model_dump(by_alias=True)
     out_path.write_text(
@@ -746,6 +766,13 @@ def run(cfg: dict) -> dict:
         print(f"   quota 보류:    {skipped_quota} (다음 실행/nightly 에서 자동 재시도)")
     if metrics["fallback_used"]:
         print(f"   폴백 사용:     ✅ {fallback_model}")
+    u = tagger.usage
+    if u["calls"] > 0:
+        print(
+            f"   토큰 실측:     입력 {u['prompt']:,} / 출력 {u['output']:,} / "
+            f"thinking {u['thoughts']:,} / 합계 {u['total']:,} "
+            f"({u['calls']}콜, 평균 {u['total'] // max(1, u['calls']):,}/콜)"
+        )
     print(f"   산출 파일:     {out_path}")
     print(f"   대시보드 URL:  step1_integrated.html?title={cfg['title']}")
 
@@ -755,6 +782,7 @@ def run(cfg: dict) -> dict:
         "cache_hits": hits,
         "cache_misses": misses,
         "failures": failures,
+        "token_usage": dict(tagger.usage),
         "skipped_quota": skipped_quota,
         "duration_sec": round(duration, 1),
         "output_path": str(out_path),

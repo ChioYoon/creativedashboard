@@ -91,6 +91,13 @@ def _build_plain_body(batch_result: dict) -> str:
         lines.append(f"    태깅 완료:    {r.get('tagged_records', 0)}")
         lines.append(f"    캐시 히트:    {r.get('cache_hits', 0)}")
         lines.append(f"    Gemini 호출:  {r.get('cache_misses', 0)}")
+        _tu = r.get("token_usage") or {}
+        if _tu.get("calls"):
+            lines.append(
+                f"    토큰 사용:    합계 {_tu.get('total', 0):,} "
+                f"(입력 {_tu.get('prompt', 0):,}/출력 {_tu.get('output', 0):,}/"
+                f"thinking {_tu.get('thoughts', 0):,}, {_tu.get('calls')}콜)"
+            )
         lines.append(f"    실패:        {r.get('failures', 0)}")
         if r.get("fallback_used"):
             lines.append(f"    폴백 모델:    ✅ gemini-2.5-flash-lite")

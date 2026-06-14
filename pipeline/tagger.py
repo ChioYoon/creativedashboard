@@ -161,6 +161,8 @@ class GeminiTagger:
         self.client = genai.Client(api_key=api_key)
         self.model = model
         self._last_call_at: float = 0.0
+        # ⓪ 토큰 실측 — response.usage_metadata 누적 (최적화 판단용)
+        self.usage = {"calls": 0, "prompt": 0, "output": 0, "thoughts": 0, "total": 0}
 
     # ──────────────────────────────────────────────────────────
     # Files API
@@ -248,6 +250,15 @@ class GeminiTagger:
                 time.sleep(wait_sec)
         else:
             raise last_exc
+
+        # ⓪ 토큰 사용량 누적 (실측)
+        um = getattr(response, "usage_metadata", None)
+        if um is not None:
+            self.usage["calls"] += 1
+            self.usage["prompt"] += int(getattr(um, "prompt_token_count", 0) or 0)
+            self.usage["output"] += int(getattr(um, "candidates_token_count", 0) or 0)
+            self.usage["thoughts"] += int(getattr(um, "thoughts_token_count", 0) or 0)
+            self.usage["total"] += int(getattr(um, "total_token_count", 0) or 0)
 
         try:
             return CreativeTag.model_validate_json(response.text)
