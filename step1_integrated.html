@@ -1329,6 +1329,18 @@
           📤 분석 결과 HTML 추출
         </button>
         <span style="font-size:12px;color:#6b7280;margin-left:10px;">소재 미리보기 포함 · AI 인사이트 제외 · 유관부서 공유용 단일 HTML 파일</span>
+        <div style="margin-top:10px;">
+          <button onclick="exportCreativeBrief()"
+            style="display:inline-flex;align-items:center;gap:8px;padding:11px 24px;
+                   background:linear-gradient(135deg,#E84855,#ff6b6b);color:white;border:none;
+                   border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;
+                   box-shadow:0 4px 12px rgba(232,72,85,.3);transition:all .2s;"
+            onmouseover="this.style.transform='translateY(-2px)'"
+            onmouseout="this.style.transform='translateY(0)'">
+            📝 제작 브리프 추출
+          </button>
+          <span style="font-size:12px;color:#6b7280;margin-left:10px;">분포·우수소재 종합 → 디자이너 전달용 '다음 제작 가이드' 1장</span>
+        </div>
       </div>
 
       <!-- ③ 적용된 필터 조건 (JS로 동적 삽입 — id="filterSummarySlot") -->
@@ -4401,6 +4413,155 @@ img { display:block; }
       document.body.appendChild(a); a.click();
       setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
       console.log('✅ HTML 추출 완료: ' + fileName);
+    }
+
+    // ──────────────────────────────────────────────
+    // 제작 브리프 추출 (디자이너 전달용 '다음 제작 가이드')
+    // 우수/저성과 대비를 종합해 재현할 강점·피할 약점·다음 액션·벤치마크를 1장으로
+    // ──────────────────────────────────────────────
+    function exportCreativeBrief() {
+      const cs = window.currentCreatives;
+      if (!cs || !cs.length) { alert('분석 결과가 없습니다. 점수 계산을 먼저 실행해 주세요.'); return; }
+      const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+      const now = new Date(); const pad = n => String(n).padStart(2, '0');
+      const dateStr = `${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}`;
+      const timeStr = `${pad(now.getHours())}${pad(now.getMinutes())}`;
+      const exportedAt = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+      const fileName = `소재제작브리프_${dateStr}_${timeStr}.html`;
+      const titleName = document.getElementById('titleSelector')?.selectedOptions?.[0]?.textContent?.trim() || '';
+
+      const meta = (c, f) => Array.isArray(c.meta?.[f]) ? c.meta[f] : [];
+      const sorted = [...cs].sort((a, b) => (b.TotalScore || 0) - (a.TotalScore || 0));
+      const n = sorted.length;
+      const half = Math.max(1, Math.round(n / 2));
+      const winners = sorted.slice(0, half);
+      const losers = sorted.slice(-half);
+      const avgScore = (cs.reduce((s, c) => s + (c.TotalScore || 0), 0) / n).toFixed(1);
+
+      const freq = (arr, f) => { const m = new Map(); arr.forEach(c => meta(c, f).forEach(s => m.set(s, (m.get(s) || 0) + 1))); return m; };
+      const wStr = freq(winners, 'strengths'), lStr = freq(losers, 'strengths');
+      // 재현할 강점: 우수군 빈도 높고, 우수군 비중이 저성과군보다 높은 것(차별 우위)
+      const reproduce = [...wStr.keys()].map(s => {
+        const wr = wStr.get(s) / winners.length, lr = (lStr.get(s) || 0) / losers.length;
+        return { s, w: wStr.get(s), wr, lift: wr - lr };
+      }).sort((a, b) => b.lift - a.lift || b.w - a.w).slice(0, 5);
+      // 피할 약점: 저성과군에 흔한 약점
+      const lWeak = freq(losers, 'weaknesses');
+      const avoid = [...lWeak.entries()].map(([s, c]) => ({ s, c })).sort((a, b) => b.c - a.c).slice(0, 5);
+      // 다음 제작 추천: 전체 변주 빈도 Top + 우수군 구체 실행안 샘플
+      const allTest = freq(cs, 'test_ideas');
+      const recommend = [...allTest.entries()].map(([s, c]) => ({ s, c })).sort((a, b) => b.c - a.c).slice(0, 5);
+      const actionSamples = [];
+      for (const c of winners) { const a = meta(c, 'improvement_actions'); if (a[0]) actionSamples.push(a[0]); if (actionSamples.length >= 4) break; }
+      // 벤치마크 우수 소재 Top 3
+      const bench = winners.slice(0, 3).map(c => ({
+        name: c.key, score: (c.TotalScore || 0).toFixed(1), grade: c.등급 || '', type: c.유형 || '',
+        strength: meta(c, 'strengths')[0] || '', evidence: meta(c, 'strength_evidence')[0] || '',
+        oneLine: c.meta?.one_line_insight || ''
+      }));
+      // CTR 풀 상위 (KPI 보유 시)
+      const withCtr = cs.filter(c => c.meta?.kpi_percentiles?.ctr != null)
+        .sort((a, b) => b.meta.kpi_percentiles.ctr - a.meta.kpi_percentiles.ctr);
+      const ctrTop = withCtr.slice(0, 3);
+
+      const reproduceHtml = reproduce.length ? reproduce.map(r =>
+        `<li><strong>${esc(r.s)}</strong> <span class="cnt">우수 ${r.w}건 (${Math.round(r.wr*100)}%)</span>${r.lift>0.05?'<span class="diff">차별 우위</span>':''}</li>`).join('') : '<li class="none">AI 태그 데이터 없음</li>';
+      const avoidHtml = avoid.length ? avoid.map(a =>
+        `<li><strong>${esc(a.s)}</strong> <span class="cnt">저성과 ${a.c}건</span></li>`).join('') : '<li class="none">두드러진 공통 약점 없음 — 양호</li>';
+      const recHtml = recommend.length ? recommend.map(r =>
+        `<li><strong>${esc(r.s)}</strong> <span class="cnt">${r.c}건 추천</span></li>`).join('') : '<li class="none">데이터 없음</li>';
+      const actHtml = actionSamples.length ? `<div class="acts"><div class="acts-h">우수 소재의 구체 실행안 (참고)</div><ul>${actionSamples.map(a=>`<li>${esc(a)}</li>`).join('')}</ul></div>` : '';
+      const benchHtml = bench.map((b, i) => `
+        <div class="bench-card">
+          <div class="bench-rank">#${i+1}</div>
+          <div class="bench-body">
+            <div class="bench-name">${esc(b.name)} <span class="bench-meta">${esc(b.type)} · ${b.score}점 · ${esc(b.grade)}</span></div>
+            ${b.strength ? `<div class="bench-str">💪 ${esc(b.strength)}</div>` : ''}
+            ${b.evidence ? `<div class="bench-ev">${esc(b.evidence)}</div>` : ''}
+            ${b.oneLine ? `<div class="bench-one">🔑 ${esc(b.oneLine)}</div>` : ''}
+          </div>
+        </div>`).join('');
+      const ctrHtml = ctrTop.length ? `
+  <div class="sec">
+    <div class="sec-h"><span class="sec-ic">🎯</span>실제 후킹 우수 (CTR 풀 상위)</div>
+    <ul class="lst">${ctrTop.map(c=>`<li><strong>${esc(c.key)}</strong> <span class="cnt">CTR 상위 ${Math.max(1,100-c.meta.kpi_percentiles.ctr)}%</span></li>`).join('')}</ul>
+  </div>` : '';
+
+      const html = `<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>소재 제작 브리프 — ${exportedAt}</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f4f2ef;color:#191919;font-size:14px;line-height:1.6;}
+.wrap{max-width:920px;margin:0 auto;padding:32px 24px;}
+.head{border-left:6px solid #DC2828;padding:4px 0 4px 16px;margin-bottom:8px;}
+h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
+.sub{font-size:13px;color:#666;margin-top:4px;}
+.kpis{display:flex;gap:16px;margin:18px 0 24px;flex-wrap:wrap;}
+.kpi{background:#fff;border:1px solid #e5e5e5;border-radius:10px;padding:12px 18px;}
+.kpi .v{font-size:22px;font-weight:800;color:#DC2828;}
+.kpi .l{font-size:11px;color:#999;letter-spacing:.04em;text-transform:uppercase;font-weight:600;}
+.sec{background:#fff;border:1px solid #e5e5e5;border-radius:14px;padding:18px 22px;margin-bottom:16px;}
+.sec-h{font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.sec-ic{font-size:18px;}
+.lst{list-style:none;}
+.lst li{padding:8px 0;border-bottom:1px solid #f0eee9;font-size:14px;}
+.lst li:last-child{border-bottom:none;}
+.lst .cnt{font-size:12px;color:#999;margin-left:8px;}
+.lst .diff{font-size:11px;font-weight:700;color:#166534;background:#dcfce7;padding:1px 7px;border-radius:9px;margin-left:8px;}
+.lst .none{color:#999;}
+.acts{margin-top:12px;background:#faf9f7;border-radius:8px;padding:12px 14px;}
+.acts-h{font-size:12px;font-weight:700;color:#666;margin-bottom:6px;}
+.acts ul{margin:0 0 0 18px;font-size:13px;color:#333;}
+.acts li{margin-bottom:4px;}
+.bench-card{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid #f0eee9;}
+.bench-card:last-child{border-bottom:none;}
+.bench-rank{font-size:20px;font-weight:900;color:#DC2828;min-width:34px;}
+.bench-name{font-weight:700;font-size:14px;}
+.bench-meta{font-size:11px;color:#999;font-weight:500;margin-left:6px;}
+.bench-str{font-size:13px;font-weight:600;margin-top:5px;}
+.bench-ev{font-size:12.5px;color:#555;margin-top:3px;padding-left:10px;border-left:2px solid #e4e1dc;}
+.bench-one{font-size:12.5px;color:#1d4ed8;margin-top:5px;}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.footer{margin-top:26px;text-align:center;font-size:11.5px;color:#999;border-top:1px solid #e5e5e5;padding-top:14px;}
+@media(max-width:680px){.two{grid-template-columns:1fr;}}
+@media print{body{background:#fff;}}
+</style></head><body><div class="wrap">
+  <div class="head"><h1>소재 제작 브리프</h1><div class="sub">${esc(titleName)} · 분석 ${n}개 소재 · ${exportedAt}</div></div>
+  <div class="kpis">
+    <div class="kpi"><div class="v">${n}</div><div class="l">분석 소재</div></div>
+    <div class="kpi"><div class="v">${avgScore}</div><div class="l">평균 점수</div></div>
+    <div class="kpi"><div class="v">${winners.length}</div><div class="l">우수군(상위 절반)</div></div>
+  </div>
+  <div class="sec">
+    <div class="sec-h"><span class="sec-ic">✅</span>재현할 강점 <span style="font-size:12px;color:#999;font-weight:500;">— 우수 소재에서 두드러진 요소</span></div>
+    <ul class="lst">${reproduceHtml}</ul>
+  </div>
+  <div class="two">
+    <div class="sec">
+      <div class="sec-h"><span class="sec-ic">⛔</span>피할 약점 <span style="font-size:11px;color:#999;font-weight:500;">— 저성과 소재 공통</span></div>
+      <ul class="lst">${avoidHtml}</ul>
+    </div>
+    <div class="sec">
+      <div class="sec-h"><span class="sec-ic">🚀</span>다음 제작 추천</div>
+      <ul class="lst">${recHtml}</ul>
+      ${actHtml}
+    </div>
+  </div>
+  ${ctrHtml}
+  <div class="sec">
+    <div class="sec-h"><span class="sec-ic">🏆</span>벤치마크 소재 <span style="font-size:12px;color:#999;font-weight:500;">— 이 방향으로 제작</span></div>
+    ${benchHtml || '<div style="color:#999;">AI 태그 데이터 없음</div>'}
+  </div>
+  <div class="footer">Com2uS R팀 소재 분석 대시보드 자동 생성 · 디자이너 전달용 · ${exportedAt}</div>
+</div></body></html>`;
+
+      const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = fileName;
+      document.body.appendChild(a); a.click();
+      setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
+      console.log('✅ 제작 브리프 추출 완료: ' + fileName);
     }
 
     // ──────────────────────────────────────────────
