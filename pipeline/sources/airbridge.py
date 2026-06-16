@@ -14,6 +14,105 @@ from typing import Iterable, Optional
 
 from ..schemas import CreativeMmpDaily
 
+import os
+import sys
+import time
+from datetime import date, timedelta
+
+import requests
+
+from ..base_errors import AuthError, QuotaError
+
+API_BASE = "https://api.airbridge.io/reports/api"
+REPORT_VERSIONS = {"actuals": "v7", "revenue": "v3", "retention": "v5"}
+RETENTION_MAX_DAYS = 92
+
+
+class AirbridgeMmpSource:
+    """Airbridge 3 리포트 비동기 페치 → CreativeMmpDaily 병합. (KpiSource ABC 미상속 — 반환형 상이)"""
+
+    def __init__(self, token: str, app_name: str, session=None,
+                 poll_interval_sec: float = 3.0, poll_timeout_sec: float = 180.0):
+        self.token = token
+        self.app_name = app_name
+        self.session = session or requests.Session()
+        self.poll_interval_sec = poll_interval_sec
+        self.poll_timeout_sec = poll_timeout_sec
+
+    @classmethod
+    def from_env(cls) -> "AirbridgeMmpSource":
+        token = os.environ.get("AIRBRIDGE_API_TOKEN", "").strip()
+        app = os.environ.get("AIRBRIDGE_APP_NAME", "").strip()
+        if not token or not app:
+            raise FileNotFoundError(
+                "AIRBRIDGE_API_TOKEN / AIRBRIDGE_APP_NAME 미설정. "
+                ".env 에 추가하세요 (Airbridge 대시보드 Settings>Tokens)."
+            )
+        return cls(token=token, app_name=app)
+
+    def source_name(self) -> str:
+        return "airbridge"
+
+    def _headers(self) -> dict:
+        return {"Authorization": f"Bearer {self.token}", "Content-Type": "application/json"}
+
+    def _url(self, report_path: str) -> str:
+        # report_path 예: "actuals/query" → 버전 prefix 자동
+        report = report_path.split("/")[0]
+        ver = REPORT_VERSIONS.get(report, "v7")
+        return f"{API_BASE}/{ver}/apps/{self.app_name}/{report_path}"
+
+    def _create_and_poll(self, report_path: str, body: dict) -> dict:
+        """POST 로 리포트 생성 → taskId → GET 폴링 → SUCCESS 결과 반환."""
+        try:
+            resp = self.session.post(self._url(report_path), json=body, headers=self._headers(), timeout=30)
+            resp.raise_for_status()
+        except Exception as e:
+            self._raise_classified(e)
+        task_id = (resp.json().get("task") or {}).get("id")
+        if not task_id:
+            raise RuntimeError(f"Airbridge 리포트 생성 응답에 task.id 없음: {resp.json()}")
+
+        poll_url = f"{self._url(report_path)}/{task_id}"
+        waited = 0.0
+        while waited <= self.poll_timeout_sec:
+            try:
+                g = self.session.get(poll_url, headers=self._headers(), timeout=30)
+                g.raise_for_status()
+            except Exception as e:
+                self._raise_classified(e)
+            payload = g.json()
+            status = (payload.get("task") or {}).get("status", "")
+            if status == "SUCCESS":
+                return payload
+            if status in ("FAILURE", "CANCELED"):
+                raise RuntimeError(f"Airbridge 리포트 실패: status={status}")
+            time.sleep(self.poll_interval_sec)
+            waited += self.poll_interval_sec
+        raise RuntimeError(f"Airbridge 리포트 폴링 타임아웃 ({self.poll_timeout_sec}s)")
+
+    @staticmethod
+    def _raise_classified(e: Exception):
+        msg = str(e).lower()
+        if "401" in msg or "403" in msg or "unauthorized" in msg:
+            raise AuthError(f"Airbridge 인증 실패: {e}")
+        if "429" in msg or "too many" in msg:
+            raise QuotaError(f"Airbridge rate limit: {e}")
+        raise RuntimeError(f"Airbridge HTTP 오류: {e}")
+
+    def auth_check(self) -> bool:
+        """cheap call — 최근 1일 Actuals 1행 요청으로 인증·앱 접근 검증."""
+        end = date.today() - timedelta(days=1)
+        body = {"from": end.isoformat(), "to": end.isoformat(),
+                "groupBys": ["event_date"], "metrics": ["impressions"], "filters": [], "sorts": []}
+        try:
+            self._create_and_poll("actuals/query", body)
+            print(f"[airbridge.auth_check] OK (app={self.app_name})", file=sys.stderr)
+            return True
+        except Exception as e:
+            print(f"[airbridge.auth_check] FAIL: {type(e).__name__}: {e}", file=sys.stderr)
+            return False
+
 
 def _gb(row: dict) -> tuple[str, str, str]:
     """row 의 groupBy 에서 (creative, channel, date) 추출."""

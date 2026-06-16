@@ -18,6 +18,7 @@ from datetime import date
 from typing import Iterable, Optional, Sequence
 
 from ..schemas import CreativeKpiDaily
+from ..base_errors import AuthError, QuotaError  # re-export (기존 import 경로 호환)
 
 
 class KpiSource(ABC):
@@ -75,16 +76,3 @@ class KpiSource(ABC):
         raise NotImplementedError
 
 
-class AuthError(RuntimeError):
-    """OAuth 인증 실패 (401, 403, invalid_grant 등).
-
-    main.py가 이 예외를 잡으면 전체 batch를 중단하고 알림 메일에
-    '[CLOOP 🔑] 인증 만료, 재발급 필요' 표시해야 함.
-    """
-
-
-class QuotaError(RuntimeError):
-    """API quota 초과 (RESOURCE_EXHAUSTED 등).
-
-    해당 타이틀만 KPI 실패 처리, 다른 타이틀 계속 진행.
-    """
