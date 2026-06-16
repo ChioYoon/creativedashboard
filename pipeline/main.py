@@ -116,6 +116,19 @@ def inject_mmp_into_records(records, mmp_daily, source_name="airbridge"):
         r.mmp_revenue = a["revenue_d7"]
         r.mmp_daily = rows
 
+    # phase-2: 4지표 보유 소재들로 품질 종합점수 산출 후 주입
+    scored_metrics = {
+        r.creative_id: {"d1_ipm": r.mmp_d1_ipm, "d1_cpi": r.mmp_d1_cpi,
+                        "d7_roas": r.mmp_d7_roas, "d1_retention": r.mmp_d1_retention}
+        for r in records if r.mmp_source
+    }
+    if scored_metrics:
+        from .mmp_metrics import compute_mmp_quality_scores
+        qscores = compute_mmp_quality_scores(scored_metrics)
+        for r in records:
+            if r.creative_id in qscores:
+                r.mmp_quality_score = qscores[r.creative_id]
+
 
 # ─────────────────────────────────────────────────────────────
 # 1. CLI 파서
