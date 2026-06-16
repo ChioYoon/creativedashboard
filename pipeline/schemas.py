@@ -438,12 +438,48 @@ class CreativeRecord(BaseModel):
         default_factory=list, description="일별 분리 KPI (대시보드 sparkline용)"
     )
 
+    # ──────────────────────────────────────────────────────────
+    # Stage 7: MMP(Airbridge) 소재 품질 레이어 — 非Google 매체. 전부 Optional(graceful).
+    # 산출은 코드(pipeline/mmp_metrics.py). 대시보드는 별도 "소재 품질" 레이어로 표시.
+    # ──────────────────────────────────────────────────────────
+    mmp_source: Optional[str] = Field(None, description="MMP 출처: 'airbridge' | None")
+    mmp_channels: list[str] = Field(default_factory=list, description="이 소재가 노출된 비-Google 채널")
+    mmp_d1_ipm: Optional[float] = Field(None, description="D1 잔존수/노출×1000 (높을수록 좋음)")
+    mmp_d1_cpi: Optional[float] = Field(None, description="비용/D1 잔존수 (낮을수록 좋음, 잔존0→None)")
+    mmp_d7_roas: Optional[float] = Field(None, description="D7 누적매출/비용 (높을수록 좋음, 비용0→None)")
+    mmp_d1_retention: Optional[float] = Field(None, description="D1 잔존수/설치수 ×100 (0~100)")
+    mmp_quality_score: Optional[dict] = Field(None, description="4지표 rank 종합 {total,grade,rank,...} (phase-2)")
+    mmp_installs: Optional[int] = None
+    mmp_retained_d1: Optional[int] = None
+    mmp_cost: Optional[int] = None
+    mmp_revenue: Optional[int] = None  # D7 누적매출 합
+    mmp_daily: list["CreativeMmpDaily"] = Field(default_factory=list, description="채널별·일별(sparkline)")
+
     class Config:
         populate_by_name = True  # alias와 원본 이름 둘 다 허용
 
 
 # ─────────────────────────────────────────────────────────────
-# 4. Stage 5: 일별 KPI 모델
+# 4. Stage 7: MMP(Airbridge) 일별 소재 데이터 모델
+# ─────────────────────────────────────────────────────────────
+class CreativeMmpDaily(BaseModel):
+    """MMP(Airbridge) 일별·채널별 소재 데이터. kpi_daily(Google Ads)와 분리된 레이어.
+
+    date = 코호트 기준 설치일(YYYY-MM-DD). 비용/노출은 해당일, 잔존/매출은 코호트 누적.
+    """
+    creative_name: str
+    date: str
+    channel: str                  # 비-Google 매체명 (Meta/TikTok/ASA 등)
+    impressions: int = 0
+    clicks: int = 0
+    cost: int = 0                 # 정수 화폐단위(KRW)
+    installs: int = 0            # 코호트 설치수 (Retention interval-0)
+    retained_d1: int = 0         # D1 잔존수 (Retention interval-1)
+    revenue_d7: int = 0          # D0~D7 누적 인앱매출
+
+
+# ─────────────────────────────────────────────────────────────
+# 5. Stage 5: 일별 KPI 모델
 # ─────────────────────────────────────────────────────────────
 class CreativeKpiDaily(BaseModel):
     """(creative_name, campaign, ad_group, date) 4-key당 1개 — 매체별 일별 성과 지표.
