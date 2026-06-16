@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
   "title_id": "tougenanki",
-  "generated_at": "2026-06-15T13:02:54+09:00",
+  "generated_at": "2026-06-16T13:17:12+09:00",
   "pipeline_version": "stage2-mvp",
-  "gemini_model": "gemini-2.5-flash-lite",
+  "gemini_model": "gemini-2.5-flash",
   "creatives": [
     {
       "creative_id": "FGT-IP-MudanoSSR01-DA",
@@ -59,7 +59,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:36+09:00",
+      "tagged_at": "2026-06-16T13:04:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-MudanoSSR01-DA\\260624_BNR_FGT-IP-MudanoSSR01-DA_L_1200x628_JP.jpg",
@@ -127,7 +127,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:36+09:00",
+      "tagged_at": "2026-06-16T13:04:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-OniMainTVA01-DA\\260624_BNR_FGT-IP-OniMainTVA01-DA_L_1200x628_JP.jpg",
@@ -191,7 +191,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:36+09:00",
+      "tagged_at": "2026-06-16T13:04:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-OniMomotaroTVA01-DA\\260518_BNR_FGT-IP-OniMomotaroTVA01-DA_L_1200x628_JP.jpg",
@@ -257,7 +257,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:37+09:00",
+      "tagged_at": "2026-06-16T13:04:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-HomarePV01-PV\\260421_VID_P-Character-HomarePV01-PV_S_1080x1080_JP.mp4",
@@ -322,7 +322,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:37+09:00",
+      "tagged_at": "2026-06-16T13:04:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-JinPV01-PV\\260421_VID_P-Character-JinPV01-PV_S_1080x1080_JP.mp4",
@@ -389,7 +389,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:37+09:00",
+      "tagged_at": "2026-06-16T13:04:57+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-KyoyaPV01-PV\\JP\\260421_VID_P-Character-KyoyaPV01-PV_S_1080x1080_JP.mp4",
@@ -454,7 +454,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:37+09:00",
+      "tagged_at": "2026-06-16T13:04:57+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-MudanoPV01-PV\\260401_VID_P-Character-MudanoPV01-PV_S_1080x1080_JP.mp4",
@@ -521,7 +521,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:37+09:00",
+      "tagged_at": "2026-06-16T13:04:57+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-ShikiPV01-PV\\260421_VID_P-Character-ShikiPV01-PV_S_1080x1080_JP.mp4",
@@ -586,7 +586,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:38+09:00",
+      "tagged_at": "2026-06-16T13:04:58+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-TsubakiriPV01-PV\\260421_VID_P-Character-TsubakiriPV01-PV_S_1080x1080_JP.mp4",
@@ -653,7 +653,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:38+09:00",
+      "tagged_at": "2026-06-16T13:04:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Gamer-IngamePV01-PV\\260421_VID_P-Gamer-IngamePV01-PV_S_1080x1080_JP.mp4",
@@ -718,7 +718,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:38+09:00",
+      "tagged_at": "2026-06-16T13:04:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Gamer-RasetsuBattle01-DA\\JP\\260223_BNR_P-Gamer-RasetsuBattle01-DA_L_1200x628_JP.jpg",
@@ -786,7 +786,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:39+09:00",
+      "tagged_at": "2026-06-16T13:04:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Cinematic01-PV\\260421_VID_P-IP-Cinematic01-PV_S_1080x1080_JP.mp4",
@@ -851,7 +851,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:39+09:00",
+      "tagged_at": "2026-06-16T13:05:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Cutscene01-UA\\JP\\260519_VID_P-IP-Cutscene0-UA_L_1920x1080_JP.mp4"
@@ -912,7 +912,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:39+09:00",
+      "tagged_at": "2026-06-16T13:05:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\0. 엔드카드\\P-IP-Endcard01-EC\\JP\\260127_VID_P-IP-Endcard01-EC_L_1080x1080_JP.mp4",
@@ -976,7 +976,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:39+09:00",
+      "tagged_at": "2026-06-16T13:05:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\0. 엔드카드\\(활용불가) P-IP-Endcard02-EC\\JP\\260127_VID_P-IP-Endcard02-EC_L_1920x1080_JP.mp4"
@@ -1040,7 +1040,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:39+09:00",
+      "tagged_at": "2026-06-16T13:05:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-OniMainTVA01-DA\\JP\\260810_BNR_P-IP-OniMainTVA01-DA_L_1200x628_JP.jpg",
@@ -1075,45 +1075,45 @@
       "노출수": 0,
       "클릭수": 0,
       "Revenue": 0,
-      "hooking_strategy": "질문/선택 상황 제시",
+      "hooking_strategy": "비주얼 임팩트",
       "USP": "감성 유대형(교감/서사)",
       "art_style": "2D 일러스트",
       "strengths": [
         "다수 캐릭터 라인업",
-        "호기심/궁금증 유발",
-        "강한 비주얼 임팩트"
+        "강한 비주얼 임팩트",
+        "호기심/궁금증 유발"
       ],
       "weaknesses": [
         "장르/게임성 불분명",
         "행동 유도 약함/부재"
       ],
       "hypothesis": [
-        "높은 CTR 예상 — 강한 후킹",
+        "특정 타겟에 강하게 반응",
         "낮은 전환 위험 — 행동 유도 약함"
       ],
       "test_ideas": [
-        "명시적 CTA 추가",
-        "게임플레이 컷 추가"
+        "게임플레이 컷 추가",
+        "명시적 CTA 추가"
       ],
-      "one_line_insight": "강렬한 비주얼과 스토리텔링으로 호기심을 자극하지만, 게임성과 행동 유도가 불분명함 — 실제 게임 플레이 컷과 명확한 CTA를 추가하여 전환율을 개선합니다.",
+      "one_line_insight": "원작 IP의 다수 캐릭터와 강렬한 비주얼로 후킹은 강하나 게임성과 행동 유도가 불분명함 — 인게임 스크린샷과 명확한 CTA를 추가하여 전환율을 개선",
       "strength_evidence": [
-        "화면 중앙과 좌우에 다양한 개성과 외형을 가진 10명 이상의 캐릭터들이 배치되어 수집형 게임의 매력을 시각적으로 어필합니다.",
-        "상단 카피 '귀 vs 모모타로, 진정한 악은 누구인가'가 선악 구도를 모호하게 제시하며 스토리에 대한 궁금증을 강하게 유발합니다.",
-        "붉은색 혈흔과 기괴한 오니 캐릭터, 그리고 주인공의 강렬한 표정이 어우러져 다크 판타지 장르의 분위기를 초반부터 압도적으로 전달합니다."
+        "화면 중앙에 7명 이상의 개성 강한 캐릭터들이 역동적인 포즈로 배치되어 수집형 RPG의 매력을 강하게 어필함",
+        "붉은 피와 무기, 거대한 괴물의 모습이 어두운 배경과 대비되어 강렬하고 잔혹한 세계관을 시각적으로 각인시킴",
+        "상단 카피 '鬼VS桃太郎, 生存をかけた戦いへ!'가 익숙한 설화의 비틀린 전개와 생존이라는 키워드로 스토리에 대한 궁금증을 자극함"
       ],
       "weakness_evidence": [
-        "캐릭터 일러스트만으로 구성되어 실제 게임 플레이 화면이나 전투 시스템에 대한 단서가 전혀 없어 어떤 장르의 게임인지 인지하기 어렵습니다.",
-        "하단 '공식 게임 등장' 문구 외에 다운로드 유도 문구나 사전등록 혜택 등 구체적인 행동 유도 메시지가 없어 전환으로 이어지기 어렵습니다."
+        "캐릭터 일러스트 외에 실제 게임플레이 UI나 전투 시스템에 대한 시각적 단서가 없어 어떤 장르의 게임인지 인지하기 어려움",
+        "다운로드 버튼이나 명확한 CTA 문구가 부재하며, 앱스토어 아이콘만으로는 즉각적인 행동 유도력이 약해 보임"
       ],
       "improvement_actions": [
-        "하단에 '지금 사전등록하고 한정 캐릭터 받기'와 같은 구체적인 보상 연계 CTA 문구를 추가하여 전환율을 높입니다.",
-        "메인 일러스트 하단 또는 중앙에 실제 게임 플레이 스크린샷 띠를 삽입하여 게임의 장르와 핵심 재미 요소를 명확히 전달합니다."
+        "하단 '공식 게임 등장' 띠 위에 실제 인게임 전투 화면을 작게 삽입하여 장르와 게임성을 명확히 전달",
+        "앱스토어 아이콘 옆에 '지금 플레이' 또는 '사전등록' 문구를 추가하여 시청자의 다음 행동을 명확히 유도"
       ],
-      "creator_intent": "원작 IP의 다크한 세계관과 매력적인 캐릭터 라인업을 통해 스토리와 수집의 재미를 어필하려는 의도",
+      "creator_intent": "원작 애니메이션의 강렬한 분위기와 다수 캐릭터의 매력을 전면에 내세워 팬덤을 후킹하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:39+09:00",
+      "tagged_at": "2026-06-16T13:12:10+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-OniMomotaroTVA01-DA\\JP\\260223_BNR_P-IP-OniMomotaroTVA01-DA_L_1200x628_JP.jpg",
@@ -1181,7 +1181,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:39+09:00",
+      "tagged_at": "2026-06-16T13:12:10+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-RasetsuTVA01-DA\\JP\\260810_BNR_P-IP-RasetsuTVA01-DA_L_1200x628_JP.jpg",
@@ -1254,7 +1254,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:39+09:00",
+      "tagged_at": "2026-06-16T13:12:11+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Teaser01-PV\\260421_VID_P-IP-Teaser01-PV_S_1080x1080_JP.mp4",
@@ -1317,7 +1317,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:39+09:00",
+      "tagged_at": "2026-06-16T13:12:11+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR01-DA\\JP\\수정 전(무다노 캐릭터 컬러감 없는 버전)\\260223_BNR_P-Reward-MudanoSSR01-DA_L_1200x628_JP.jpg",
@@ -1390,7 +1390,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:39+09:00",
+      "tagged_at": "2026-06-16T13:12:11+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR01-DA\\JP\\260209_BNR_P-Reward-MudanoSSR01-DA-A_L_1200x628_JP.jpg",
@@ -1458,7 +1458,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:39+09:00",
+      "tagged_at": "2026-06-16T13:12:12+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR02-DA (CTA)\\JP\\수정 전\\260223_BNR_P-Reward-MudanoSSR02-DA_L_1200x628_JP.jpg",
@@ -1526,7 +1526,7 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:39+09:00",
+      "tagged_at": "2026-06-16T13:12:12+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-OniMomotaroSSR01-DA\\JP\\260810_BNR_P-Reward-OniMomotaroSSR01-DA_L_1200x628_JP.jpg",
@@ -1539,6 +1539,154 @@
         "1. 사전예약\\1. BNR\\P-Reward-OniMomotaroSSR01-DA\\JP\\수정 전\\260223_BNR_P-Reward-OniMomotaroSSR01-DA_S_1200x1200_JP.jpg",
         "1. 사전예약\\1. BNR\\P-Reward-OniMomotaroSSR01-DA\\JP\\수정 전\\260223_BNR_P-Reward-OniMomotaroSSR01-DA_V_1080x1920_JP.jpg",
         "1. 사전예약\\1. BNR\\P-Reward-OniMomotaroSSR01-DA\\JP\\수정 전\\260223_BNR_P-Reward-OniMomotaroSSR01-DA_V_1200x1500_JP.jpg"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": []
+    },
+    {
+      "creative_id": "P-Reward-RasetsuSSR01-DA",
+      "소재명": "P-Reward-RasetsuSSR01-DA",
+      "파일명": "260810_BNR_P-Reward-RasetsuSSR01-DA_L_1200x628_JP.jpg",
+      "유형": "BNR",
+      "일": "2026-08-10",
+      "캠페인": null,
+      "사이즈": "1200x628",
+      "언어": "JP",
+      "링크": null,
+      "creative_concept": "P-Reward-RasetsuSSR01-DA",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "캐릭터 외형 소구",
+      "USP": "혜택형(무료뽑기/보상)",
+      "art_style": "2D 일러스트",
+      "strengths": [
+        "다수 캐릭터 라인업",
+        "보상 약속 명확",
+        "호기심/궁금증 유발"
+      ],
+      "weaknesses": [
+        "장르/게임성 불분명",
+        "후킹 식상/평이"
+      ],
+      "hypothesis": [
+        "높은 CTR 예상 — 강한 후킹",
+        "낮은 관련성 위험 — 정보 부족"
+      ],
+      "test_ideas": [
+        "게임플레이 컷 추가",
+        "명시적 CTA 추가",
+        "다른 core_usp 각도 변주"
+      ],
+      "one_line_insight": "다수 캐릭터 라인업과 SSR 보상 약속으로 후킹은 강하나, 게임성 정보가 부족해 전환에 어려움이 예상됨 — 실제 게임플레이 컷을 추가하여 장르 인지도를 높이고 명확한 CTA로 전환을 유도해야 합니다.",
+      "strength_evidence": [
+        "화면 중앙에 8명의 개성 강한 캐릭터들이 나란히 배치되어 수집형 게임의 라인업을 명확히 보여주며 다양한 매력을 어필합니다.",
+        "중앙 하단에 'SSR 캐릭터를 반드시 GET'이라는 문구가 크게 강조되어 사전등록 시 얻을 수 있는 핵심 보상을 명확히 제시합니다.",
+        "캐릭터들의 독특한 외형과 일부 캐릭터의 피 묻은 연출, 그리고 'Crimson Inferno'라는 부제가 게임의 다크한 분위기에 대한 호기심을 자극합니다."
+      ],
+      "weakness_evidence": [
+        "캐릭터 일러스트와 보상 정보만 제공될 뿐, 실제 게임플레이 화면이나 장르를 유추할 수 있는 시각적 단서가 없어 어떤 게임인지 알기 어렵습니다.",
+        "정적인 일러스트 나열 방식은 동일 장르의 다른 소재들과 비교했을 때 시각적 임팩트나 동적인 후킹 요소가 부족하여 시선 유지력이 약할 수 있습니다."
+      ],
+      "improvement_actions": [
+        "캐릭터 일러스트 하단 또는 배경에 실제 전투 장면이나 핵심 게임플레이 UI를 작게 삽입하여 장르 인지도를 높입니다.",
+        "하단 앱스토어/구글플레이 버튼 옆에 '지금 사전등록'과 같은 명확한 행동 유도 문구를 추가하여 전환율을 개선합니다.",
+        "캐릭터 외형 소구와 보상 약속 외에, 게임의 핵심 전략 요소나 스토리 일부를 짧은 문구로 추가하여 가치 제안을 다각화합니다."
+      ],
+      "creator_intent": "매력적인 캐릭터 라인업과 SSR 보상 약속으로 팬덤을 형성하고 사전등록을 유도하려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "marketer_insight": null,
+      "tagged_at": "2026-06-16T13:12:26+09:00",
+      "gemini_model": "gemini-2.5-flash",
+      "source_files": [
+        "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR01-DA\\JP\\260810_BNR_P-Reward-RasetsuSSR01-DA_L_1200x628_JP.jpg",
+        "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR01-DA\\JP\\260810_BNR_P-Reward-RasetsuSSR01-DA_S_1080x1080_JP.jpg",
+        "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR01-DA\\JP\\260810_BNR_P-Reward-RasetsuSSR01-DA_S_1200x1200_JP.jpg",
+        "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR01-DA\\JP\\260810_BNR_P-Reward-RasetsuSSR01-DA_V_1080x1920_JP.jpg",
+        "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR01-DA\\JP\\260810_BNR_P-Reward-RasetsuSSR01-DA_V_1200x1500_JP.jpg",
+        "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR01-DA\\JP\\수정 전\\260223_BNR_P-Reward-RasetsuSSR01-DA_L_1200x628_JP.jpg",
+        "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR01-DA\\JP\\수정 전\\260223_BNR_P-Reward-RasetsuSSR01-DA_S_1080x1080_JP.jpg",
+        "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR01-DA\\JP\\수정 전\\260223_BNR_P-Reward-RasetsuSSR01-DA_S_1200x1200_JP.jpg",
+        "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR01-DA\\JP\\수정 전\\260223_BNR_P-Reward-RasetsuSSR01-DA_V_1080x1920_JP.jpg",
+        "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR01-DA\\JP\\수정 전\\260223_BNR_P-Reward-RasetsuSSR01-DA_V_1200x1500_JP.jpg"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": []
+    },
+    {
+      "creative_id": "P-Reward-RasetsuSSR02-DA",
+      "소재명": "P-Reward-RasetsuSSR02-DA",
+      "파일명": "260810_BNR_P-Reward-RasetsuSSR02-DA_L_1200x628_JP.jpg",
+      "유형": "BNR",
+      "일": "2026-08-10",
+      "캠페인": null,
+      "사이즈": "1200x628",
+      "언어": "JP",
+      "링크": null,
+      "creative_concept": "P-Reward-RasetsuSSR02-DA",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "캐릭터 외형 소구",
+      "USP": "혜택형(무료뽑기/보상)",
+      "art_style": "2D 일러스트",
+      "strengths": [
+        "다수 캐릭터 라인업",
+        "보상 약속 명확",
+        "강한 비주얼 임팩트"
+      ],
+      "weaknesses": [
+        "장르/게임성 불분명",
+        "행동 유도 약함/부재"
+      ],
+      "hypothesis": [
+        "높은 CTR 예상 — 강한 후킹",
+        "낮은 전환 위험 — 행동 유도 약함"
+      ],
+      "test_ideas": [
+        "명시적 CTA 추가",
+        "게임플레이 컷 추가"
+      ],
+      "one_line_insight": "다수 캐릭터 라인업과 SSR 보상 강조로 후킹은 강하나, 게임성 불분명 및 CTA 부재가 약점 — 실제 게임플레이 컷과 명확한 CTA 버튼을 추가하여 전환율을 개선해야 합니다.",
+      "strength_evidence": [
+        "화면 전체에 8명의 개성 강한 2D 일러스트 캐릭터들이 나란히 배치되어 수집형 RPG의 매력을 직관적으로 어필합니다.",
+        "중앙에 'SSR 캐릭터를 얻을 기회'와 '사전등록 선물 GET' 문구가 명확하게 제시되어 유저에게 직접적인 혜택을 약속합니다.",
+        "붉은색 배경과 캐릭터들의 강렬한 표정, 그리고 'Crimson Inferno' 타이틀이 어우러져 다크 판타지 분위기를 효과적으로 전달합니다."
+      ],
+      "weakness_evidence": [
+        "캐릭터 일러스트와 보상 정보만 있을 뿐, 실제 게임플레이 화면이나 전투 연출이 없어 어떤 장르의 게임인지 파악하기 어렵습니다.",
+        "사전등록 보상을 강조하지만, 구체적인 '지금 등록하기'와 같은 CTA 버튼이나 문구가 명확히 부각되지 않아 행동 전환을 유도하는 힘이 약합니다."
+      ],
+      "improvement_actions": [
+        "하단 Google Play/App Store 로고 위에 '지금 사전등록' 버튼을 추가하여 유저의 다음 행동을 명확히 유도합니다.",
+        "캐릭터 라인업 일부를 줄이고 그 자리에 실제 게임 전투 장면 스크린샷을 삽입하여 장르와 게임성을 직관적으로 보여줍니다."
+      ],
+      "creator_intent": "다수의 매력적인 캐릭터와 사전등록 보상을 전면에 내세워 잠재 유저의 호기심과 참여를 유도하려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "marketer_insight": null,
+      "tagged_at": "2026-06-16T13:17:11+09:00",
+      "gemini_model": "gemini-2.5-flash",
+      "source_files": [
+        "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR02-DA (CTA)\\JP\\260810_BNR_P-Reward-RasetsuSSR02-DA_L_1200x628_JP.jpg",
+        "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR02-DA (CTA)\\JP\\260810_BNR_P-Reward-RasetsuSSR02-DA_S_1080x1080_JP.jpg",
+        "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR02-DA (CTA)\\JP\\260810_BNR_P-Reward-RasetsuSSR02-DA_S_1200x1200_JP.jpg",
+        "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR02-DA (CTA)\\JP\\260810_BNR_P-Reward-RasetsuSSR02-DA_V_1080x1920_JP.jpg",
+        "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR02-DA (CTA)\\JP\\260810_BNR_P-Reward-RasetsuSSR02-DA_V_1200x1500_JP.jpg",
+        "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR02-DA (CTA)\\JP\\수정 전\\260223_BNR_P-Reward-RasetsuSSR02-DA_L_1200x628_JP.jpg",
+        "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR02-DA (CTA)\\JP\\수정 전\\260223_BNR_P-Reward-RasetsuSSR02-DA_S_1080x1080_JP.jpg",
+        "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR02-DA (CTA)\\JP\\수정 전\\260223_BNR_P-Reward-RasetsuSSR02-DA_S_1200x1200_JP.jpg",
+        "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR02-DA (CTA)\\JP\\수정 전\\260223_BNR_P-Reward-RasetsuSSR02-DA_V_1080x1920_JP.jpg",
+        "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR02-DA (CTA)\\JP\\수정 전\\260223_BNR_P-Reward-RasetsuSSR02-DA_V_1200x1500_JP.jpg"
       ],
       "kpi_source": null,
       "kpi_window_start": null,
@@ -1599,8 +1747,8 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "marketer_insight": null,
-      "tagged_at": "2026-06-15T13:02:54+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-16T13:17:12+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Reward-SkillcardSSR01-UA\\JP\\260313_VID_P-Reward-SkillcardSSR01-UA_L_1920x1080_JP.mp4",
         "1. 사전예약\\2. VID\\P-Reward-SkillcardSSR01-UA\\JP\\260313_VID_P-Reward-SkillcardSSR01-UA_V_1080x1920_JP.mp4",
@@ -1614,12 +1762,12 @@
   ],
   "metrics": {
     "scanned_folders": 26,
-    "tagged_records": 24,
-    "cache_hits": 24,
-    "cache_misses": 0,
-    "failures": 1,
-    "duration_sec": 17.5,
+    "tagged_records": 26,
+    "cache_hits": 23,
+    "cache_misses": 3,
+    "failures": 0,
+    "duration_sec": 736.7,
     "prompt_version": "v3.3-2026.06.13-character-split-single",
-    "fallback_used": true
+    "fallback_used": false
   }
 }
