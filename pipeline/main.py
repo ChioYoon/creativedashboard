@@ -40,6 +40,7 @@ from dotenv import load_dotenv
 from tqdm import tqdm
 
 from .cache import TagCache, file_sha256
+from .mmp_metrics import aggregate_creative_mmp, compute_mmp_quality
 from .scanner import scan_creative_folders, scan_by_filename, summarize
 from .schemas import CreativeDataset, CreativeRecord
 from .scoring import compute_creative_scores
@@ -82,6 +83,38 @@ def filename_to_concept(filename: str) -> Optional[str]:
         return None
     m = _FILENAME_TO_CONCEPT_RE.match(filename.strip())
     return m.group(1) if m else None
+
+
+def inject_mmp_into_records(records, mmp_daily, source_name="airbridge"):
+    """CreativeMmpDaily 리스트를 소재명(concept)으로 join 하여 records 에 mmp_* 주입.
+
+    소재명 매칭: Airbridge ad_creative == 파일명/소재명 컨벤션. concept(폴더명) 기준 join.
+    """
+    if not mmp_daily:
+        return
+    by_concept: dict[str, list] = {}
+    for d in mmp_daily:
+        concept = filename_to_concept(d.creative_name) or d.creative_name.rsplit(".", 1)[0]
+        by_concept.setdefault(concept, []).append(d)
+
+    for r in records:
+        rows = by_concept.get(r.creative_id) or by_concept.get(r.소재명)
+        if not rows:
+            continue
+        agg = aggregate_creative_mmp(rows)
+        a = next(iter(agg.values()))
+        q = compute_mmp_quality(a)
+        r.mmp_source = source_name
+        r.mmp_channels = sorted(a["channels"])
+        r.mmp_d1_ipm = round(q["d1_ipm"], 3)
+        r.mmp_d1_cpi = None if q["d1_cpi"] is None else round(q["d1_cpi"], 1)
+        r.mmp_d7_roas = None if q["d7_roas"] is None else round(q["d7_roas"], 4)
+        r.mmp_d1_retention = round(q["d1_retention"], 2)
+        r.mmp_installs = a["installs"]
+        r.mmp_retained_d1 = a["retained_d1"]
+        r.mmp_cost = a["cost"]
+        r.mmp_revenue = a["revenue_d7"]
+        r.mmp_daily = rows
 
 
 # ─────────────────────────────────────────────────────────────
@@ -197,6 +230,9 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
             title_override.get("_pipeline_google_ads_window_days", default_kpi_window_days)
             or default_kpi_window_days
         )
+        airbridge_enabled = bool(title_override.get("_pipeline_airbridge_enabled", False))
+        airbridge_exclude_channels = title_override.get("_pipeline_airbridge_exclude_channels",
+                                                        ["googleadwords", "Google Ads"])
     else:
         # 단일 타이틀 모드: CLI 인자 + titles.json _pipeline_* (Stage 5-D) + .env fallback
         title = args.title or os.environ.get("CLOOP_TITLE_ID", "")
@@ -241,6 +277,9 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
                 or default_kpi_window_days
             )
         )
+        airbridge_enabled = bool(title_meta.get("_pipeline_airbridge_enabled", False))
+        airbridge_exclude_channels = title_meta.get("_pipeline_airbridge_exclude_channels",
+                                                    ["googleadwords", "Google Ads"])
 
     if not title:
         sys.exit("❌ --title, --all-titles, 또는 .env CLOOP_TITLE_ID 가 필요합니다.")
@@ -277,6 +316,8 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         "google_ads_customer_id": google_ads_customer_id,
         "google_ads_campaign_filter": google_ads_campaign_filter,
         "kpi_enabled": kpi_enabled and not args.no_kpi,
+        "airbridge_enabled": bool(airbridge_enabled),
+        "airbridge_exclude_channels": airbridge_exclude_channels,
     }
 
 
@@ -456,6 +497,29 @@ def run(cfg: dict) -> dict:
         elif not cfg.get("google_ads_customer_id"):
             print("\n💰 KPI fetch: customer_id 미설정으로 건너뜀")
     metrics["kpi_status"] = kpi_status
+
+    # ── 2.6) Stage 7: Airbridge MMP 페치 (非Google 매체 품질 레이어) ──
+    mmp_status = "skipped"
+    if cfg.get("airbridge_enabled"):
+        try:
+            from .sources.airbridge import AirbridgeMmpSource
+            from datetime import date as _date, timedelta as _td
+            mmp_src = AirbridgeMmpSource.from_env()
+            _win = cfg.get("kpi_window_days") or cfg.get("google_ads_window_days") or 159
+            _end = _date.today() - _td(days=1)
+            _start = _end - _td(days=_win - 1)
+            mmp_daily = mmp_src.fetch_mmp_window(
+                _start, _end, exclude_channels=set(cfg.get("airbridge_exclude_channels", [])))
+            cfg["_mmp_daily"] = mmp_daily   # 레코드 생성 후 주입 (records 는 아래 루프에서 생성됨)
+            mmp_status = "success"
+            metrics["mmp_rows_fetched"] = len(mmp_daily)
+            print(f"   → Airbridge {len(mmp_daily)}행 fetch (非Google 매체)")
+        except Exception as e:
+            err_type = type(e).__name__
+            print(f"\n⚠️  MMP fetch 실패 ({err_type}): {e} → mmp_* 비움, 진행 계속")
+            metrics["errors"].append(f"MMP fetch 실패: {e}")
+            mmp_status = "auth_failed" if err_type == "AuthError" else "failed"
+    metrics["mmp_status"] = mmp_status
 
     # ── 2.7) Stage 5-I: 풀 데이터 컨텍스트 + 소재별 백분위 산출 ──
     # KPI 가 태깅보다 먼저 fetch 되므로(위) 태깅 시점에 풀 분포·실제 KPI 를
@@ -728,6 +792,10 @@ def run(cfg: dict) -> dict:
             **kpi_fields,
         )
         records.append(record)
+
+    # Stage 7: 페치해둔 MMP daily 를 records 에 주입 (소재명 join)
+    if cfg.get("_mmp_daily"):
+        inject_mmp_into_records(records, cfg["_mmp_daily"], source_name="airbridge")
 
     # ── Stage 6: 점수 산출 (대시보드 calculateCreativeScores 와 동일 — pipeline/scoring.py) ──
     # 기본 가중치 25/25/25/25 + roas_mode=auto. compute_creative_scores 가 입력 dict 를
