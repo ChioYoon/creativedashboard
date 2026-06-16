@@ -113,6 +113,72 @@ class AirbridgeMmpSource:
             print(f"[airbridge.auth_check] FAIL: {type(e).__name__}: {e}", file=sys.stderr)
             return False
 
+    def _date_chunks(self, start: date, end: date, max_days: int):
+        cur = start
+        while cur <= end:
+            chunk_end = min(end, cur + timedelta(days=max_days - 1))
+            yield cur, chunk_end
+            cur = chunk_end + timedelta(days=1)
+
+    def _actuals_body(self, start, end):
+        return {"from": start.isoformat(), "to": end.isoformat(),
+                "groupBys": ["ad_creative", "channel", "event_date"],
+                "metrics": ["impressions", "clicks", "cost", "app_installs"], "filters": [], "sorts": []}
+
+    def _retention_body(self, start, end):
+        return {"from": start.isoformat(), "to": end.isoformat(), "granularity": "day",
+                "intervalsPeriod": 1, "groupBy": {"fields": ["ad_creative", "channel", "event_date"]},
+                "startEvents": ["app_install"], "returnEvents": ["app_open"],
+                "measurementOption": "general_retention"}
+
+    def _revenue_body(self, start, end):
+        return {"from": start.isoformat(), "to": end.isoformat(), "granularity": "day",
+                "groupBy": {"fields": ["ad_creative", "channel", "event_date"]},
+                "startEvents": ["app_install"], "returnEvents": ["app_order_complete"],
+                "metric": "app_revenue", "aggregationType": "cumulative", "intervalsPeriodIndexes": [7]}
+
+    def fetch_mmp_window(self, start: date, end: date,
+                         exclude_channels: Optional[set] = None) -> list[CreativeMmpDaily]:
+        """3 리포트 페치 → 파싱 → 병합. Retention 은 92일 청크 분할.
+
+        Revenue/Retention 이 ad_creative 미지원이면 해당 dict 가 비어 retained_d1/revenue_d7=0 →
+        compute_mmp_quality 에서 None/0 (스펙 R1: 가용 지표만).
+        """
+        exclude = exclude_channels or set()
+        # Actuals (최대 400일 — 통으로)
+        actuals: list[dict] = []
+        ar = self._create_and_poll("actuals/query", self._actuals_body(start, end))
+        actuals.extend(parse_actuals(ar, exclude))
+        # Revenue (통으로)
+        rev: dict = {}
+        try:
+            rr = self._create_and_poll("revenue/query", self._revenue_body(start, end))
+            rev.update(parse_revenue(rr, exclude))
+        except Exception as e:
+            print(f"   [airbridge] Revenue 리포트 생략: {e}", file=sys.stderr)
+        # Retention (92일 청크)
+        ret: dict = {}
+        for cs, ce in self._date_chunks(start, end, RETENTION_MAX_DAYS):
+            try:
+                rt = self._create_and_poll("retention/query", self._retention_body(cs, ce))
+                ret.update(parse_retention(rt, exclude))
+            except Exception as e:
+                print(f"   [airbridge] Retention 청크 {cs}~{ce} 생략: {e}", file=sys.stderr)
+        return merge_reports(actuals, ret, rev)
+
+    def fetch_metadata_groupbys(self, report: str) -> list:
+        """Get Metadata(GroupBy) — 7-A 에서 ad_creative 지원 확인용. report: actuals|revenue|retention."""
+        ver = REPORT_VERSIONS.get(report, "v7")
+        url = f"{API_BASE}/{ver}/apps/{self.app_name}/{report}/metadata/groupBys"
+        try:
+            r = self.session.get(url, headers=self._headers(), timeout=30)
+            r.raise_for_status()
+            data = r.json()
+            return data.get("groupBys", data.get("data", []))
+        except Exception as e:
+            print(f"[airbridge.metadata] {report} 실패: {e}", file=sys.stderr)
+            return []
+
 
 def _gb(row: dict) -> tuple[str, str, str]:
     """row 의 groupBy 에서 (creative, channel, date) 추출."""
