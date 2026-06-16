@@ -654,6 +654,20 @@
     .signal-perf-card li { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12.5px; padding: 3px 0; color: #475569; }
     .signal-perf-card li > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     @media (max-width: 640px) { .signal-perf-block { grid-template-columns: 1fr; } }
+    /* Stage 7-C: 소재 품질(MMP) 레이어 — 非Google 매체 (teal 로 Google Ads(red) 와 시각 구분) */
+    .mmp-section { margin-top: 16px; padding-top: 14px; border-top: 1px dashed #99f6e4; }
+    .mmp-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+    .mmp-head-title { font-size: 13px; font-weight: 700; color: #0f766e; }
+    .mmp-channel-badge { display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: 10.5px; font-weight: 700; background: #ccfbf1; color: #115e59; }
+    .mmp-score-badge { margin-left: auto; font-size: 12px; font-weight: 700; color: #115e59; background: #f0fdfa; border: 1px solid #5eead4; border-radius: 8px; padding: 3px 10px; }
+    .mmp-metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .mmp-metric-cell { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 8px; padding: 8px 10px; min-width: 0; }
+    .mmp-metric-label { font-size: 11px; color: #0f766e; font-weight: 600; margin-bottom: 3px; white-space: nowrap; }
+    .mmp-metric-value { font-size: 14px; color: #134e4a; font-weight: 700; word-break: keep-all; }
+    @media (max-width: 640px) { .mmp-metric-grid { grid-template-columns: repeat(2, 1fr); } }
+    /* 결과표 MMP 컬럼 (col-pctile 토글 패턴 동일) */
+    #resultTable:not(.show-mmp) .col-mmp { display: none; }
+    .mmp-score-cell { display: inline-block; padding: 2px 9px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: help; white-space: nowrap; }
     /* Stage 5-I QA: 모달 KPI 지표 테이블 (줄 글 행 → 그리드 카드) */
     .kpi-metric-grid {
       display: grid;
@@ -1371,6 +1385,7 @@
           <option value="ctr">CTR 풀 백분위 높은 순</option>
           <option value="cvr">CVR 풀 백분위 높은 순</option>
           <option value="cpa">CPA 풀 백분위 높은 순</option>
+          <option id="resultSortMmpOpt" value="mmpscore" style="display:none;">MMP 품질점수 높은 순</option>
         </select>
         <span style="color:#9ca3af;margin-left:8px;font-size:12px;">풀 백분위는 Google Ads KPI 보유 소재 기준</span>
       </div>
@@ -1392,12 +1407,13 @@
               <th class="has-tooltip" data-tip="전환·CPA·IPM·ROAS 점수 × 가중치 합산&#10;설정된 가중치 비율로 최종 점수 산출">총점 ℹ</th>
               <th class="has-tooltip" data-tip="총점 기준 등급&#10;최우수 ≥80 / 우수 ≥60&#10;양호 ≥40 / 보통 ≥20 / 개선필요 &lt;20">등급 ℹ</th>
               <th class="col-pctile has-tooltip" data-tip="풀(같은 타이틀 광고 집행 소재) 대비 백분위&#10;CTR/CVR/CPA 각각 상위/하위 N%&#10;Google Ads KPI 보유 소재만 표시">성과 백분위 ℹ</th>
+              <th class="col-mmp has-tooltip" data-tip="소재 품질(MMP · 非Google 매체)&#10;품질점수 = D1 IPM·D1 CPI·D7 ROAS·D1 잔존 종합&#10;마우스오버 시 4지표 상세&#10;Airbridge 연동 소재만 표시">소재 품질(MMP) ℹ</th>
               <th class="has-tooltip" data-tip="일별 전환수 추이 (sparkline)&#10;마지막 점은 가장 최근 일자">📈 추이 ℹ</th>
             </tr>
           </thead>
           <tbody id="tableBody">
             <tr>
-              <td colspan="15" style="text-align: center; padding: 40px; color: #9ca3af;">
+              <td colspan="16" style="text-align: center; padding: 40px; color: #9ca3af;">
                 점수 계산 실행 버튼을 클릭하여 분석을 시작하세요
               </td>
             </tr>
@@ -1686,6 +1702,33 @@ function renderSignalDistribution(creatives) {
       </div>`;
   }
 
+  // Stage 7-C: MMP 품질점수 기준 상·하위 소재 랭킹 (mmp 품질점수 보유 4건 이상일 때만)
+  const withMmp = (creatives || []).filter(
+    (c) => c && c.meta && c.meta.mmp_source && c.meta.mmp_quality_score && c.meta.mmp_quality_score.total != null
+  );
+  let mmpPerfHtml = '';
+  if (withMmp.length >= 4) {
+    const sortedM = withMmp.slice().sort(
+      (a, b) => b.meta.mmp_quality_score.total - a.meta.mmp_quality_score.total
+    );
+    const itemM = (c) => {
+      const qs = c.meta.mmp_quality_score;
+      const style = MMP_GRADE_STYLE[qs.grade] || 'background:#f3f4f6;color:#374151;';
+      return `<li><span>${escapeHtml(c.key || c.소재명 || '')}</span><span class="mmp-score-cell" style="${style}">${qs.total} ${escapeHtml(qs.grade)}</span></li>`;
+    };
+    mmpPerfHtml = `
+      <div class="signal-perf-block">
+        <div class="signal-perf-card">
+          <h4>🏆 MMP 품질 상위 (非Google 매체)</h4>
+          <ul>${sortedM.slice(0, 3).map(itemM).join('')}</ul>
+        </div>
+        <div class="signal-perf-card">
+          <h4>🔻 MMP 품질 하위 (非Google 매체)</h4>
+          <ul>${sortedM.slice(-3).reverse().map(itemM).join('')}</ul>
+        </div>
+      </div>`;
+  }
+
   panel.innerHTML = `
     <div class="signal-dist-grid">
       <div class="signal-dist-card dist-strength">
@@ -1702,6 +1745,7 @@ function renderSignalDistribution(creatives) {
       </div>
     </div>
     ${perfHtml}
+    ${mmpPerfHtml}
   `;
   panel.style.display = 'block';
 }
@@ -1781,6 +1825,59 @@ function pctileCellHtml(p) {
   return `<div class="pctile-cell">${row('CTR', p.ctr)}${row('CVR', p.cvr)}${row('CPA', p.cpa)}</div>`;
 }
 
+// Stage 7-C: 소재 품질(MMP) — 모달 섹션 + 표 배지. meta.mmp_source 있을 때만 (graceful).
+const MMP_GRADE_STYLE = {
+  '최우수': 'background:#ccfbf1;color:#115e59;',
+  '우수':   'background:#d1fae5;color:#065f46;',
+  '양호':   'background:#fef9c3;color:#854d0e;',
+  '보통':   'background:#fed7aa;color:#9a3412;',
+  '개선필요': 'background:#fee2e2;color:#991b1b;',
+};
+function mmpFmt(m) {
+  return {
+    ipm:  m.mmp_d1_ipm == null ? '—' : Number(m.mmp_d1_ipm).toFixed(2),
+    cpi:  m.mmp_d1_cpi == null ? '—' : '₩' + Math.round(m.mmp_d1_cpi).toLocaleString(),
+    roas: m.mmp_d7_roas == null ? '—' : Number(m.mmp_d7_roas).toFixed(2),
+    ret:  m.mmp_d1_retention == null ? '—' : Number(m.mmp_d1_retention).toFixed(1) + '%',
+  };
+}
+// 모달 '🎯 소재 품질(MMP)' 섹션 — 4지표 그리드 + 채널 배지 + 품질점수.
+function buildMmpSectionHtml(creative) {
+  const m = (creative && creative.meta) || {};
+  if (!m.mmp_source) return '';
+  const f = mmpFmt(m);
+  const channels = (Array.isArray(m.mmp_channels) ? m.mmp_channels : [])
+    .map((c) => `<span class="mmp-channel-badge">${escapeHtml(c)}</span>`).join('');
+  const qs = m.mmp_quality_score;
+  const scoreBadge = (qs && qs.total != null)
+    ? `<span class="mmp-score-badge">품질점수 ${qs.total} · ${escapeHtml(qs.grade)} · #${qs.rank}</span>` : '';
+  const cell = (label, val) =>
+    `<div class="mmp-metric-cell"><div class="mmp-metric-label">${label}</div><div class="mmp-metric-value">${val}</div></div>`;
+  return `
+    <div class="mmp-section">
+      <div class="mmp-head">
+        <span class="mmp-head-title">🎯 소재 품질 (MMP · 非Google 매체)</span>
+        ${channels}${scoreBadge}
+      </div>
+      <div class="mmp-metric-grid">
+        ${cell('D1 IPM', f.ipm)}${cell('D1 CPI', f.cpi)}${cell('D7 ROAS', f.roas)}${cell('D1 잔존', f.ret)}
+      </div>
+    </div>`;
+}
+// 결과표 MMP 셀 — 품질점수 배지(등급색) + 4지표 native 툴팁. mmp 없으면 '—'.
+function mmpCellHtml(meta) {
+  const m = meta || {};
+  const qs = m.mmp_quality_score;
+  if (!m.mmp_source || !qs || qs.total == null) {
+    return '<span style="color:#d1d5db;font-size:11px;">—</span>';
+  }
+  const f = mmpFmt(m);
+  let tip = `D1 IPM ${f.ipm} · D1 CPI ${f.cpi} · D7 ROAS ${f.roas} · D1 잔존 ${f.ret}`;
+  if (Array.isArray(m.mmp_channels) && m.mmp_channels.length) tip += ` · 채널 ${m.mmp_channels.join('/')}`;
+  const style = MMP_GRADE_STYLE[qs.grade] || 'background:#f3f4f6;color:#374151;';
+  return `<span class="mmp-score-cell" style="${style}" title="${escapeHtml(tip)}">${qs.total} ${escapeHtml(qs.grade)}</span>`;
+}
+
 // Stage 5-J: 결과 표를 정렬 기준으로 재정렬 후 행만 재렌더 (currentCreatives 를 in-place 정렬해
 // 모달 인덱스 정합 유지). 백분위 없는 소재는 하단으로.
 function applyResultSort(key) {
@@ -1789,6 +1886,13 @@ function applyResultSort(key) {
   window._headerSort = null;  // 드롭다운 정렬 사용 → 헤더 정렬 표시 해제
   if (key === 'score') {
     cs.sort((a, b) => (b.TotalScore || 0) - (a.TotalScore || 0));
+  } else if (key === 'mmpscore') {
+    // Stage 7-C: MMP 품질점수 내림차순. 점수 없는 소재는 최하단.
+    const mv = (c) => {
+      const q = c.meta && c.meta.mmp_quality_score;
+      return (q && q.total != null) ? q.total : -1;
+    };
+    cs.sort((a, b) => mv(b) - mv(a));
   } else {
     const pv = (c) => {
       const p = c.meta && c.meta.kpi_percentiles;
@@ -3978,6 +4082,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td style="text-align: right; font-weight: 700; color: #E84855; font-size: 16px;">${c.TotalScore.toFixed(1)}</td>
           <td><span class="badge grade-${c.등급}">${c.등급}</span></td>
           <td class="col-pctile" style="text-align:left;">${pctileCellHtml(c.meta && c.meta.kpi_percentiles)}</td>
+          <td class="col-mmp" style="text-align:center;">${mmpCellHtml(c.meta)}</td>
           <td style="text-align:center;padding:6px 4px;">${sparkHtml}</td>
         `;
 
@@ -4087,10 +4192,19 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       //            필터/재계산 시마다 정렬은 기본(종합 점수)으로 리셋.
       const hasPctile = creatives.some(c => c.meta && c.meta.kpi_percentiles &&
         (c.meta.kpi_percentiles.ctr != null || c.meta.kpi_percentiles.cvr != null || c.meta.kpi_percentiles.cpa != null));
+      // Stage 7-C: MMP 품질점수 보유 소재가 있을 때만 'MMP' 컬럼 노출 (col-pctile 패턴 동일)
+      const hasMmp = creatives.some(c => c.meta && c.meta.mmp_source &&
+        c.meta.mmp_quality_score && c.meta.mmp_quality_score.total != null);
       const _tableEl = document.getElementById('resultTable');
-      if (_tableEl) _tableEl.classList.toggle('show-pctile', hasPctile);
+      if (_tableEl) {
+        _tableEl.classList.toggle('show-pctile', hasPctile);
+        _tableEl.classList.toggle('show-mmp', hasMmp);
+      }
       const _sortBar = document.getElementById('resultSortBar');
-      if (_sortBar) _sortBar.style.display = hasPctile ? 'block' : 'none';
+      if (_sortBar) _sortBar.style.display = (hasPctile || hasMmp) ? 'block' : 'none';
+      // MMP 정렬 옵션은 mmp 데이터 있을 때만 노출
+      const _mmpOpt = document.getElementById('resultSortMmpOpt');
+      if (_mmpOpt) _mmpOpt.style.display = hasMmp ? '' : 'none';
       const _sortSel = document.getElementById('resultSortSelect');
       if (_sortSel) _sortSel.value = 'score';
       // 5-J 후속: 헤더 클릭 정렬 부착(멱등) + 필터 변경 시 정렬 상태 초기화
@@ -5468,6 +5582,7 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
               <div class="kpi-metric-value">${(creative.CTR ?? 0).toFixed(2)}%${pctBadgeHtml(creative.meta?.kpi_percentiles?.ctr)}</div>
             </div>
           </div>
+          ${buildMmpSectionHtml(creative)}
           ${signalsBlock}
           ${hasUrl ? `
           <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e5e7eb;">
