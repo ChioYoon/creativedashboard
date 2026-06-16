@@ -514,6 +514,11 @@ def run(cfg: dict) -> dict:
             mmp_status = "success"
             metrics["mmp_rows_fetched"] = len(mmp_daily)
             print(f"   → Airbridge {len(mmp_daily)}행 fetch (非Google 매체)")
+        except FileNotFoundError:
+            # 토큰 미설정(.env 에 AIRBRIDGE_* 없음) = 아직 7-A 미완 — 에러 아닌 건너뜀.
+            # enabled=true 로 둬도 토큰 추가 전까지 nightly 메일이 깨끗하게 유지됨.
+            print("   💠 MMP: AIRBRIDGE_API_TOKEN 미설정 → 건너뜀 (7-A 토큰 발급 후 자동 활성)")
+            mmp_status = "skipped"
         except Exception as e:
             err_type = type(e).__name__
             print(f"\n⚠️  MMP fetch 실패 ({err_type}): {e} → mmp_* 비움, 진행 계속")
