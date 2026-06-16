@@ -42,6 +42,7 @@ from tqdm import tqdm
 from .cache import TagCache, file_sha256
 from .scanner import scan_creative_folders, scan_by_filename, summarize
 from .schemas import CreativeDataset, CreativeRecord
+from .scoring import compute_creative_scores
 from .tagger import GeminiTagger, prompt_version
 
 # Asia/Seoul timezone
@@ -728,6 +729,37 @@ def run(cfg: dict) -> dict:
         )
         records.append(record)
 
+    # ── Stage 6: 점수 산출 (대시보드 calculateCreativeScores 와 동일 — pipeline/scoring.py) ──
+    # 기본 가중치 25/25/25/25 + roas_mode=auto. compute_creative_scores 가 입력 dict 를
+    # in-place 변형하므로 records 와 positional zip (소재명 중복 무관). KPI 없는 타이틀은
+    # 전 소재 0 → 무해. 대시보드는 KPI 로 런타임 재계산하므로 이 스냅샷은 이메일·리포트용.
+    score_summary = {"graded": 0, "grades": {}, "top": None}
+    if records:
+        score_inputs = [
+            {"전환": r.전환, "비용": r.비용, "노출수": r.노출수, "클릭수": r.클릭수, "매출": r.Revenue}
+            for r in records
+        ]
+        compute_creative_scores(score_inputs)  # in-place 변형
+        for r, s in zip(records, score_inputs):
+            r.scores = {
+                "total": round(s["TotalScore"], 2),
+                "grade": s["등급"],
+                "rank": s["Rank"],
+                "conv": round(s["전환수점수"], 2),
+                "cpa": round(s["CPA점수"], 2),
+                "ipm": round(s["IPM점수"], 2),
+                "roas": None if s["ROAS점수"] is None else round(s["ROAS점수"], 2),
+            }
+        # 이메일/콘솔용 요약 — KPI 보유분(점수 변별 있는 소재)만 집계
+        scored_records = [r for r in records if (r.전환 or r.노출수 or r.비용)]
+        for r in scored_records:
+            g = r.scores["grade"]
+            score_summary["grades"][g] = score_summary["grades"].get(g, 0) + 1
+        score_summary["graded"] = len(scored_records)
+        if scored_records:
+            best = min(scored_records, key=lambda r: r.scores["rank"])
+            score_summary["top"] = {"name": best.소재명, "total": best.scores["total"], "grade": best.scores["grade"]}
+
     # ── 4) 산출물 저장 ──
     cache.save()
     duration = time.time() - started_at
@@ -745,6 +777,7 @@ def run(cfg: dict) -> dict:
             "duration_sec": round(duration, 1),
             "prompt_version": pversion,
             "fallback_used": metrics["fallback_used"],
+            "score_summary": score_summary,  # Stage 6: 기본 가중치 점수 요약
         },
     )
 
@@ -773,6 +806,13 @@ def run(cfg: dict) -> dict:
             f"thinking {u['thoughts']:,} / 합계 {u['total']:,} "
             f"({u['calls']}콜, 평균 {u['total'] // max(1, u['calls']):,}/콜)"
         )
+    if score_summary["graded"] > 0:
+        g = score_summary["grades"]
+        grade_str = " · ".join(f"{k} {v}" for k, v in g.items())
+        print(f"   점수 산출:     KPI 보유 {score_summary['graded']}건 ({grade_str})")
+        if score_summary["top"]:
+            t = score_summary["top"]
+            print(f"   최고 점수:     {t['name']} — {t['total']}점 ({t['grade']})")
     print(f"   산출 파일:     {out_path}")
     print(f"   대시보드 URL:  step1_integrated.html?title={cfg['title']}")
 
@@ -787,6 +827,7 @@ def run(cfg: dict) -> dict:
         "duration_sec": round(duration, 1),
         "output_path": str(out_path),
         "daily_quota_exhausted": daily_quota_exhausted,
+        "score_summary": score_summary,  # Stage 6: 이메일 알림용 점수 요약
     })
     return metrics
 
