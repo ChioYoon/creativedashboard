@@ -10,7 +10,7 @@ HTTP 무의존 파서(parse_*/merge_reports)와 HTTP 클라이언트(AirbridgeMm
 """
 from __future__ import annotations
 
-from typing import Iterable, Optional
+from typing import Optional
 
 from ..schemas import CreativeMmpDaily
 

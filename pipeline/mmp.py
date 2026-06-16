@@ -12,7 +12,6 @@ import argparse
 import json
 import sys
 from datetime import date, timedelta
-from pathlib import Path
 
 from dotenv import load_dotenv
 
@@ -59,15 +58,6 @@ def cmd_metadata_check() -> int:
     print("\n" + ("✅ 3 리포트 전부 소재 단위 지원 — 4지표 전부 산출 가능"
                   if ok_all else "⚠️ 일부 미지원 — 가용 지표만으로 분석(스펙 R1 합의대로)"))
     return 0
-
-
-def _resolve_title(title_id: str) -> dict:
-    path = Path("js/titles.json")
-    titles = json.loads(path.read_text(encoding="utf-8"))
-    m = next((t for t in titles if t.get("id") == title_id), None)
-    if not m:
-        sys.exit(f"❌ titles.json 에 title='{title_id}' 없음")
-    return m
 
 
 def cmd_fetch(args) -> int:

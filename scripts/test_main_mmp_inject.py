@@ -14,4 +14,19 @@ r = recs[0]
 assert r.mmp_source == "airbridge" and r.mmp_retained_d1 == 40
 assert abs(r.mmp_d1_ipm - 4.0) < 1e-9 and abs(r.mmp_d7_roas - 1.2) < 1e-9
 assert "Meta" in r.mmp_channels and len(r.mmp_daily) == 1
+
+# 멀티변형 concept: 두 파일명(L/V 변형)이 한 concept 으로 정규화 → 지표는 전체 SUM 이어야 함
+# (concept 단위 합산 — 첫 변형만 반영하던 데이터 손실 회귀 가드)
+recs2 = [CreativeRecord(creative_id="A-Y-DA", 소재명="A-Y-DA", 파일명="y.png", 유형="BNR")]
+daily2 = [
+    CreativeMmpDaily(creative_name="251104_BNR_A-Y-DA_L_1200x628_EN.jpg", date="2026-02-01", channel="Meta",
+                     impressions=10000, clicks=100, cost=30000, installs=50, retained_d1=50, revenue_d7=20000),
+    CreativeMmpDaily(creative_name="251104_VID_A-Y-DA_L_1920x1080_EN.mp4", date="2026-02-01", channel="TikTok",
+                     impressions=10000, clicks=80, cost=20000, installs=50, retained_d1=90, revenue_d7=10000),
+]
+inject_mmp_into_records(recs2, daily2, source_name="airbridge")
+r2 = recs2[0]
+assert r2.mmp_retained_d1 == 140, r2.mmp_retained_d1       # 50+90 (모든 변형 합산)
+assert r2.mmp_cost == 50000 and r2.mmp_revenue == 30000
+assert sorted(r2.mmp_channels) == ["Meta", "TikTok"] and len(r2.mmp_daily) == 2
 print("✅ test_main_mmp_inject 통과")

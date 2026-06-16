@@ -40,7 +40,7 @@ from dotenv import load_dotenv
 from tqdm import tqdm
 
 from .cache import TagCache, file_sha256
-from .mmp_metrics import aggregate_creative_mmp, compute_mmp_quality
+from .mmp_metrics import aggregate_rows_total, compute_mmp_quality
 from .scanner import scan_creative_folders, scan_by_filename, summarize
 from .schemas import CreativeDataset, CreativeRecord
 from .scoring import compute_creative_scores
@@ -101,8 +101,9 @@ def inject_mmp_into_records(records, mmp_daily, source_name="airbridge"):
         rows = by_concept.get(r.creative_id) or by_concept.get(r.소재명)
         if not rows:
             continue
-        agg = aggregate_creative_mmp(rows)
-        a = next(iter(agg.values()))
+        # concept 의 모든 변형(L/S/V·채널)을 하나로 합산 — Google Ads aggregate_kpi 와 동일 의미론.
+        # (creative_name 별로 쪼개면 첫 변형만 반영되는 데이터 손실 발생 — 멀티변형 소재가 핵심 대상)
+        a = aggregate_rows_total(rows)
         q = compute_mmp_quality(a)
         r.mmp_source = source_name
         r.mmp_channels = sorted(a["channels"])
