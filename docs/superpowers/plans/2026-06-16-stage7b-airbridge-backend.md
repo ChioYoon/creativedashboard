@@ -1249,3 +1249,21 @@ git commit -m "[Stage 7-B phase-2] MMP 품질 종합점수 (4지표 rank 종합)
 - **7-C (대시보드 "소재 품질" 레이어)**: `step1_integrated.html` 모달 섹션 + 결과표 MMP 컬럼 + `data-source.js` 패스스루. mmp_* 데이터가 JSON 에 생긴 뒤 별도 계획.
 - **7-D (자동화·E2E)**: nightly 통합(main.py 에 이미 배선되어 자동 포함) + notify.py mmp_status 표면화 + Airbridge UI 1:1 검증.
 - **AppsFlyer 소스**: 공통 ABC 추출 후 동일 패턴.
+
+---
+
+## 실행 완료 (2026-06-17, main 머지 87f1323)
+
+서브에이전트 주도(superpowers) 9 태스크 TDD 실행 → 최종 리뷰(opus) → 머지. 11 커밋.
+
+- **신규 파일**: `pipeline/mmp_metrics.py`(집계+4지표+종합점수), `pipeline/sources/airbridge.py`(3리포트 비동기 클라+파서), `pipeline/base_errors.py`(공통 예외), `pipeline/mmp.py`(CLI), 테스트 8종(`scripts/test_*`).
+- **수정**: `schemas.py`(CreativeMmpDaily+mmp_* 12필드), `main.py`(페치+소재명 join+주입, graceful skip), `sources/base.py`(에러 re-export), `titles.json`/`.env.example`(설정).
+- **검증**: 8 단위 테스트 + Stage 6 회귀(verify-scoring) 전부 통과. 전 모듈 컴파일 OK.
+- **최종 리뷰 수정**: concept 멀티변형 합산 버그(첫 변형만 반영 → 전체 SUM, `aggregate_rows_total`) + minor 정리. 멀티변형 회귀 테스트 추가.
+- **graceful**: 토큰 미설정 시 mmp_status="skipped"(무에러). enabled=true 라 토큰 .env 추가 즉시 자동 활성.
+
+### 잔여(후속)
+- **7-A (사용자)**: Airbridge 토큰 발급 → `.env` 기입 → `python -m pipeline.mmp --metadata-check` 로 ad_creative groupBy(R1) 검증 → `--healthcheck`/`--dry-run`/실 fetch.
+- **7-C**: 대시보드 "소재 품질(MMP)" 레이어 UI (별도 계획).
+- **7-D**: nightly 자동 통합은 main.py 배선으로 자동 포함 — notify.py mmp_status 표면화 + Airbridge UI 1:1 검증만 남음.
+- 실 API 응답 key 명은 7-A 1건 실호출 후 `parse_*` 소폭 조정 가능성(문서 caveat).
