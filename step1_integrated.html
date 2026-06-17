@@ -1760,6 +1760,7 @@ function setSbRadio(name, value) {
     r.checked = r.value === value;
   });
   if (name === 'groupBy') {
+    currentGroupBy = value;
     document.getElementById('sbGroupByName').classList.toggle('selected', value === '소재명');
     document.getElementById('sbGroupByFile').classList.toggle('selected', value === '파일명');
   }
@@ -6285,9 +6286,6 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
     <span id="thresh-label-10"></span>
     <span id="thresh-label-20"></span>
     <span id="thresh-label-30"></span>
-    <!-- 피로도 분석 기준 -->
-    <input type="radio" name="fatigueGroupBy" value="소재명" checked>
-    <input type="radio" name="fatigueGroupBy" value="파일명">
   </div>
 </body>
 </html>
