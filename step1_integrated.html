@@ -1201,6 +1201,55 @@
         grid-column: span 1;
       }
     }
+
+    /* ── Main Tabs ── */
+    .ds-tab-bar {
+      display: flex; align-items: flex-end; gap: 0;
+      border-bottom: 2px solid var(--hairline-warm);
+      background: var(--bg-base); padding: 0 20px; flex-shrink: 0;
+    }
+    .ds-tab {
+      padding: 10px 18px; font-size: 13px; font-weight: 600;
+      color: var(--text-secondary); background: none; border: none;
+      border-bottom: 3px solid transparent; cursor: pointer;
+      margin-bottom: -2px; transition: color var(--dur-fast), border-color var(--dur-fast);
+    }
+    .ds-tab:hover { color: var(--text-primary); }
+    .ds-tab.active { color: var(--brand-primary); border-bottom-color: var(--brand-primary); }
+    .ds-tab-panel { padding: 20px; }
+    .ds-tab-panel.hidden { display: none; }
+
+    /* ── Stats Row (소재 목록 탭 상단) ── */
+    .ds-stats-row {
+      display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;
+    }
+    .ds-stat-chip {
+      display: flex; flex-direction: column;
+      background: var(--bg-base); border: 1px solid var(--hairline-warm);
+      border-radius: var(--radius-md); padding: 10px 14px;
+      min-width: 90px;
+    }
+    .ds-stat-chip-label { font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; }
+    .ds-stat-chip-value { font-size: 20px; font-weight: 800; color: var(--text-primary); }
+
+    /* ── 컬럼 헤더 툴팁 ── */
+    .th-info {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--surface-sink); color: var(--text-secondary);
+      font-size: 9px; font-weight: 700; cursor: help; vertical-align: middle;
+      margin-left: 3px;
+    }
+    .has-tooltip { position: relative; }
+    .has-tooltip:hover::after {
+      content: attr(data-tip);
+      position: absolute; top: calc(100% + 4px); left: 0; z-index: 50;
+      background: var(--text-primary); color: #fff;
+      font-size: 11px; line-height: 1.5; font-weight: 400;
+      padding: 6px 10px; border-radius: var(--radius-md);
+      white-space: pre-wrap; max-width: 220px; pointer-events: none;
+      box-shadow: var(--shadow-md);
+    }
   </style>
 </head>
 <body>
@@ -1412,295 +1461,214 @@
 
     <!-- Main Content -->
     <main class="ds-main" id="mainContent">
-    
-    <!-- 업로드 상태 표시 (사이드바 업로드 후 피드백) -->
-    <div id="uploadStatus" style="display:none;margin:12px 20px;padding:10px 14px;background:#f0f9ff;border-radius:8px;font-size:13px;">
-      <strong>✅ 업로드 완료</strong>
-      <div id="uploadInfo" style="margin-top:6px;font-size:12px;color:#374151;"></div>
-    </div>
-    
-    <!-- Section 3: 분석 결과 -->
-    <section id="results" class="section" style="display: none;">
-      <h2 class="section-title">📋 분석 결과</h2>
 
-      <!-- ① 스코어 카드 (5개) -->
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-label">전체 소재 수</div>
-          <div class="stat-value" id="statTotal">0</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">최고 점수</div>
-          <div class="stat-value" id="statMax">0</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">평균 점수</div>
-          <div class="stat-value" id="statAvg">0</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">최우수 소재</div>
-          <div class="stat-value" id="statExcellent">0</div>
-        </div>
-        <div class="stat-card stat-card-poor">
-          <div class="stat-label">저조 소재</div>
-          <div class="stat-value" id="statPoor">0</div>
-          <div class="stat-sub">개선필요 등급</div>
-        </div>
+      <!-- 업로드 상태 표시 (사이드바 업로드 후 피드백) -->
+      <div id="uploadStatus" style="display:none;margin:12px 20px;padding:10px 14px;background:#f0f9ff;border-radius:8px;font-size:13px;">
+        <strong>✅ 업로드 완료</strong>
+        <div id="uploadInfo" style="margin-top:6px;font-size:12px;color:#374151;"></div>
       </div>
 
-      <!-- Stage 5-F-3: v2 구조화 신호 분포 패널 (강점·약점 Top 5 + 추천 변주 Top 3) -->
-      <div id="signalDistributionPanel" style="display:none;margin-top:18px;"></div>
-
-      <!-- ② 분석 결과 HTML 추출 버튼 -->
-      <div id="exportBtnContainer" style="display:none;margin:0 0 16px;">
-        <button onclick="exportResultHTML()"
-          style="display:inline-flex;align-items:center;gap:8px;padding:11px 24px;
-                 background:linear-gradient(135deg,#1d4ed8,#3b82f6);color:white;border:none;
-                 border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;
-                 box-shadow:0 4px 12px rgba(59,130,246,.3);transition:all .2s;"
-          onmouseover="this.style.transform='translateY(-2px)'"
-          onmouseout="this.style.transform='translateY(0)'">
-          📤 분석 결과 HTML 추출
-        </button>
-        <span style="font-size:12px;color:#6b7280;margin-left:10px;">소재 미리보기 포함 · AI 인사이트 제외 · 유관부서 공유용 단일 HTML 파일</span>
-        <div style="margin-top:10px;">
-          <button onclick="exportCreativeBrief()"
-            style="display:inline-flex;align-items:center;gap:8px;padding:11px 24px;
-                   background:linear-gradient(135deg,#E84855,#ff6b6b);color:white;border:none;
-                   border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;
-                   box-shadow:0 4px 12px rgba(232,72,85,.3);transition:all .2s;"
-            onmouseover="this.style.transform='translateY(-2px)'"
-            onmouseout="this.style.transform='translateY(0)'">
-            📝 제작 브리프 추출
-          </button>
-          <span style="font-size:12px;color:#6b7280;margin-left:10px;">분포·우수소재 종합 → 디자이너 전달용 '다음 제작 가이드' 1장</span>
-        </div>
-      </div>
-
-      <!-- ③ 적용된 필터 조건 (JS로 동적 삽입 — id="filterSummarySlot") -->
-      <div id="filterSummarySlot"></div>
-
-      <!-- ④ Gemini AI 인사이트 -->
-      <div class="gai-section-action">
-        <button class="gai-trigger-btn" onclick="runScoringAIInsight()">
-          <span class="gai-btn-icon">✨</span> AI 인사이트 생성
-        </button>
-        <span style="font-size:12px;color:#6b7280;">고효율 vs 저효율 소재 특성 비교 · 확장 제안</span>
-        <span class="gai-key-status" style="font-size:11.5px;font-weight:600;margin-left:auto;"></span>
-      </div>
-      <div id="scoringAIBox"></div>
-
-      <!-- ⑤ 소재 유형별 요약 표 -->
-      <div id="typeSummaryContainer"></div>
-
-      <!-- ⑤-2 캠페인 비교 표 (v5.1 NEW: 2개 이상 캠페인 결과 시 자동 노출) -->
-      <div id="campaignCompareContainer"></div>
-
-      <!-- ⑥ 소재 상세 테이블 -->
-      <!-- Stage 8: 분석 레이어 선택 (Google Ads 기준 / MMP 품질 기준) -->
-      <div id="analysisLayerBar" class="analysis-layer-bar">
-        <span style="font-size:13px;font-weight:700;color:#374151;">📊 분석 레이어</span>
+      <!-- 분석 레이어 바 (MMP 연동 시만 노출) -->
+      <div id="analysisLayerBar" class="analysis-layer-bar" style="padding:8px 20px;background:var(--bg-base);border-bottom:1px solid var(--hairline-warm);">
+        <span style="font-size:12px;font-weight:700;color:var(--text-secondary);">분석 레이어</span>
         <div class="layer-toggle-group">
           <button id="layerBtnAds" class="layer-toggle-btn active-ads" onclick="switchAnalysisLayer('ads')">Google Ads 기준</button>
           <button id="layerBtnMmp" class="layer-toggle-btn" onclick="switchAnalysisLayer('mmp')">MMP 품질 기준</button>
         </div>
         <span id="layerHint" class="layer-hint">Google Ads 종합점수 기준으로 정렬 중</span>
       </div>
-      <!-- Stage 5-J: 풀 대비 백분위 정렬 드롭다운 (KPI 보유 소재 있을 때만 노출) -->
-      <div id="resultSortBar" style="display:none;margin-top:18px;font-size:13px;color:#374151;">
-        <label style="font-weight:600;margin-right:6px;">🔀 정렬 기준</label>
-        <select id="resultSortSelect" onchange="applyResultSort(this.value)" style="padding:5px 10px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;background:#fff;color:#1f2937;font-weight:600;">
-          <option value="score">종합 점수 (기본)</option>
-          <option value="ctr">CTR 풀 백분위 높은 순</option>
-          <option value="cvr">CVR 풀 백분위 높은 순</option>
-          <option value="cpa">CPA 풀 백분위 높은 순</option>
-          <option id="resultSortMmpOpt" value="mmpscore" style="display:none;">MMP 품질점수 높은 순</option>
-        </select>
-        <span style="color:#9ca3af;margin-left:8px;font-size:12px;">풀 백분위는 Google Ads KPI 보유 소재 기준</span>
-      </div>
-      <div class="table-container" style="margin-top: 20px;">
-        <table id="resultTable">
-          <thead>
-            <tr>
-              <th>미리보기</th>
-              <th>소재명/파일명</th>
-              <th>유형</th>
-              <th class="has-tooltip" data-tip="설치 또는 목표 행동 완료 횟수">전환 ℹ</th>
-              <th class="has-tooltip" data-tip="비용 ÷ 전환수&#10;전환 1건당 광고비용&#10;낮을수록 효율적">CPA ℹ</th>
-              <th class="has-tooltip" data-tip="(전환수 ÷ 노출수) × 1,000&#10;1,000회 노출당 전환수&#10;높을수록 전환 효율 우수">IPM ℹ</th>
-              <th class="has-tooltip" data-tip="(매출 ÷ 비용) × 100%&#10;광고비 대비 매출 수익률&#10;Revenue 컬럼 없으면 —">ROAS ℹ</th>
-              <th class="has-tooltip" data-tip="전환수 Rank 기반 점수&#10;(n - Rank + 1) / n × 100&#10;전환수 많을수록 높은 점수">전환수 점수 ℹ</th>
-              <th class="has-tooltip" data-tip="CPA Rank 기반 점수&#10;(n - Rank + 1) / n × 100&#10;CPA 낮을수록 높은 점수&#10;전환수=0이면 0점 고정">CPA 점수 ℹ</th>
-              <th class="has-tooltip" data-tip="IPM Rank 기반 점수&#10;(n - Rank + 1) / n × 100&#10;IPM 높을수록 높은 점수&#10;노출수=0이면 0점 고정">IPM 점수 ℹ</th>
-              <th class="has-tooltip" data-tip="ROAS Rank 기반 점수&#10;(n - Rank + 1) / n × 100&#10;ROAS 높을수록 높은 점수&#10;Revenue 없으면 자동 제외">ROAS 점수 ℹ</th>
-              <th class="has-tooltip" data-tip="전환·CPA·IPM·ROAS 점수 × 가중치 합산&#10;설정된 가중치 비율로 최종 점수 산출">총점 ℹ</th>
-              <th class="has-tooltip" data-tip="총점 기준 등급&#10;최우수 ≥80 / 우수 ≥60&#10;양호 ≥40 / 보통 ≥20 / 개선필요 &lt;20">등급 ℹ</th>
-              <th class="col-pctile has-tooltip" data-tip="풀(같은 타이틀 광고 집행 소재) 대비 백분위&#10;CTR/CVR/CPA 각각 상위/하위 N%&#10;Google Ads KPI 보유 소재만 표시">성과 백분위 ℹ</th>
-              <th class="col-mmp has-tooltip" data-tip="소재 품질(MMP · 非Google 매체)&#10;품질점수 = D1 IPM·D1 CPI·D7 ROAS·D1 잔존 종합&#10;마우스오버 시 4지표 상세&#10;Airbridge 연동 소재만 표시">소재 품질(MMP) ℹ</th>
-              <th class="has-tooltip" data-tip="일별 전환수 추이 (sparkline)&#10;마지막 점은 가장 최근 일자">📈 추이 ℹ</th>
-            </tr>
-          </thead>
-          <tbody id="tableBody">
-            <tr>
-              <td colspan="16" style="text-align: center; padding: 40px; color: #9ca3af;">
-                점수 계산 실행 버튼을 클릭하여 분석을 시작하세요
-              </td>
-            </tr>
-          </tbody>
-        </table>
+
+      <!-- 탭 바 (결과 존재 시 노출) -->
+      <nav id="mainTabBar" class="ds-tab-bar" style="display:none;">
+        <button class="ds-tab active" data-tab="creative-list" onclick="switchMainTab('creative-list')">소재 목록</button>
+        <button class="ds-tab" data-tab="summary" onclick="switchMainTab('summary')">전체 성과 요약</button>
+        <button class="ds-tab" data-tab="fatigue" onclick="switchMainTab('fatigue')">피로도</button>
+      </nav>
+
+      <!-- 탭 패널 1: 소재 목록 -->
+      <div id="tabCreativeList" class="ds-tab-panel hidden">
+        <!-- 통계 칩 행 -->
+        <div class="ds-stats-row">
+          <div class="ds-stat-chip"><span class="ds-stat-chip-label">전체 소재</span><span class="ds-stat-chip-value" id="statTotal">0</span></div>
+          <div class="ds-stat-chip"><span class="ds-stat-chip-label">최고 점수</span><span class="ds-stat-chip-value" id="statMax">0</span></div>
+          <div class="ds-stat-chip"><span class="ds-stat-chip-label">평균 점수</span><span class="ds-stat-chip-value" id="statAvg">0</span></div>
+          <div class="ds-stat-chip"><span class="ds-stat-chip-label">최우수</span><span class="ds-stat-chip-value" id="statExcellent" style="color:var(--brand-primary);">0</span></div>
+          <div class="ds-stat-chip"><span class="ds-stat-chip-label">개선필요</span><span class="ds-stat-chip-value" id="statPoor" style="color:#6b7280;">0</span></div>
+        </div>
+
+        <!-- 필터 요약 슬롯 -->
+        <div id="filterSummarySlot"></div>
+
+        <!-- AI 인사이트 버튼 -->
+        <div class="gai-section-action">
+          <button class="gai-trigger-btn" onclick="runScoringAIInsight()">
+            <span class="gai-btn-icon">AI 인사이트 생성</span>
+          </button>
+          <span class="gai-key-status" style="font-size:11.5px;font-weight:600;margin-left:auto;"></span>
+        </div>
+        <div id="scoringAIBox"></div>
+
+        <!-- 정렬 바 -->
+        <div id="resultSortBar" style="display:none;margin:0 0 12px;font-size:13px;color:var(--text-primary);">
+          <label style="font-weight:600;margin-right:6px;">정렬</label>
+          <select id="resultSortSelect" onchange="applyResultSort(this.value)" style="padding:5px 10px;border:1px solid var(--border-default);border-radius:var(--radius-md);font-size:13px;background:var(--bg-base);color:var(--text-primary);font-weight:600;">
+            <option value="score">종합 점수 (기본)</option>
+            <option value="ctr">CTR 풀 백분위 높은 순</option>
+            <option value="cvr">CVR 풀 백분위 높은 순</option>
+            <option value="cpa">CPA 풀 백분위 높은 순</option>
+            <option id="resultSortMmpOpt" value="mmpscore" style="display:none;">MMP 품질점수 높은 순</option>
+          </select>
+          <!-- 내보내기 버튼 -->
+          <button class="ds-btn-secondary" style="margin-left:12px;" onclick="exportResultHTML()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            HTML 추출
+          </button>
+        </div>
+        <div id="exportBtnContainer" style="display:none;">
+          <button class="ds-btn-secondary" onclick="exportCreativeBrief()">제작 브리프 추출</button>
+        </div>
+
+        <!-- 소재 테이블 -->
+        <div class="table-container">
+          <table id="resultTable">
+            <thead>
+              <tr>
+                <th>미리보기</th>
+                <th>소재명</th>
+                <th>유형</th>
+                <th class="has-tooltip" data-tip="설치 또는 목표 행동 완료 횟수">전환 <span class="th-info">?</span></th>
+                <th class="has-tooltip" data-tip="비용 ÷ 전환수 · 낮을수록 효율적">CPA <span class="th-info">?</span></th>
+                <th class="has-tooltip" data-tip="(전환수 ÷ 노출수) × 1,000 · 높을수록 우수">IPM <span class="th-info">?</span></th>
+                <th class="has-tooltip" data-tip="(매출 ÷ 비용) × 100% · Revenue 컬럼 없으면 —">ROAS <span class="th-info">?</span></th>
+                <th class="has-tooltip" data-tip="전환수·CPA·IPM·ROAS 점수의 가중치 합산">총점 <span class="th-info">?</span></th>
+                <th class="has-tooltip" data-tip="총점 기준 등급 · 최우수≥80 / 우수≥60 / 양호≥40">등급 <span class="th-info">?</span></th>
+                <th class="col-pctile has-tooltip" data-tip="풀 대비 백분위 · CTR/CVR/CPA · Google Ads KPI 보유 소재">성과 <span class="th-info">?</span></th>
+                <th class="col-mmp has-tooltip" data-tip="소재 품질(MMP) · D1 IPM·D1 CPI·D7 ROAS·D1 잔존 종합">MMP <span class="th-info">?</span></th>
+                <th class="has-tooltip" data-tip="일별 전환수 추이">추이 <span class="th-info">?</span></th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              <tr><td colspan="12" style="text-align:center;padding:40px;color:var(--text-secondary);">점수 계산을 실행하세요</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
-    </section>
-    
-    <!-- Section 4: 피로도 분석 -->
-    <section id="fatigue" class="section" style="display: none;">
-      <h2 class="section-title">🔍 소재 피로도 분석</h2>
-      
-      <div class="settings-grid filter-grid-fatigue">
-        <!-- 분석 기준 (피로도용) -->
-        <div class="setting-group">
-          <label class="setting-label">분석 기준</label>
-          <div class="radio-group">
-            <label class="radio-item">
-              <input type="radio" name="fatigueGroupBy" value="소재명" checked>
-              <span>소재명</span>
-            </label>
-            <label class="radio-item">
-              <input type="radio" name="fatigueGroupBy" value="파일명">
-              <span>파일명</span>
-            </label>
-          </div>
-        </div>
-        
-        <!-- 소재 유형 필터 (피로도용 - 체크박스) — TXT는 분석 제외, BNR/VID만 표시 -->
-        <div class="setting-group">
-          <label class="setting-label">소재 유형</label>
-          <div class="checkbox-group" style="max-height: 150px;">
-            <div class="checkbox-item">
-              <input type="checkbox" id="fatigue_type_BNR" value="BNR" checked onchange="updateFatigueTypeFilter()">
-              <label for="fatigue_type_BNR">BNR (이미지)</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="fatigue_type_VID" value="VID" checked onchange="updateFatigueTypeFilter()">
-              <label for="fatigue_type_VID">VID (비디오)</label>
-            </div>
-            <!-- TXT는 분석 대상이 아니므로 표시하지 않음 -->
-          </div>
-          <div class="selected-count" id="fatigueTypeSelectedCount">2개 선택됨</div>
-        </div>
-        
-        <!-- 캠페인 필터 (피로도용 - 검색 가능한 체크박스) -->
-        <div class="setting-group">
-          <label class="setting-label">캠페인 필터</label>
-          <input type="text" id="fatigueCampaignSearchInput" class="search-input" placeholder="캠페인 검색..." oninput="filterFatigueCampaignList()">
-          <div class="checkbox-group" id="fatigueCampaignCheckboxGroup">
-            <div class="checkbox-item">
-              <input type="checkbox" id="fatigue_campaign_all" value="" checked onchange="toggleAllFatigueCampaigns(this)">
-              <label for="fatigue_campaign_all"><strong>전체 선택</strong></label>
-            </div>
-          </div>
-          <div class="selected-count" id="fatigueCampaignSelectedCount">전체 캠페인 선택됨</div>
-        </div>
-      </div>
-      
-      <div class="settings-grid">
-        <!-- 기준 기간 (범위 지정) -->
-        <div class="setting-group">
-          <label class="setting-label">📅 기준 기간</label>
-          <div class="date-range-container">
-            <input type="date" id="baselineStart" class="setting-input">
-            <span class="date-separator">~</span>
-            <input type="date" id="baselineEnd" class="setting-input">
-          </div>
-          <small style="color: #6b7280; font-size: 11px; margin-top: 5px; display: block;">과거 기준 기간 (시작 ~ 종료)</small>
-        </div>
-        
-        <!-- 비교 기간 (범위 지정) -->
-        <div class="setting-group">
-          <label class="setting-label">📅 비교 기간</label>
-          <div class="date-range-container">
-            <input type="date" id="comparisonStart" class="setting-input">
-            <span class="date-separator">~</span>
-            <input type="date" id="comparisonEnd" class="setting-input">
-          </div>
-          <small style="color: #6b7280; font-size: 11px; margin-top: 5px; display: block;">최근 비교 기간 (시작 ~ 종료)</small>
-        </div>
-      </div>
-      
-      <div style="display: flex; gap: 15px; margin-top: 30px;">
-        <button class="btn" onclick="runFatigueAnalysis()">🔍 피로도 분석 실행</button>
-        <button class="btn btn-secondary" onclick="resetFatigue()">🔄 설정 초기화</button>
-      </div>
-    </section>
-    
-    <!-- Section 5: 피로도 통계 -->
-    <section id="statistics" class="section" style="display: none;">
-      <h2 class="section-title">📈 피로도 통계</h2>
-      
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-label">분석 소재 수</div>
-          <div class="stat-value" id="fatigueTotal">0</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">순위 상승</div>
-          <div class="stat-value" id="fatigueUp">0</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">순위 하락</div>
-          <div class="stat-value" id="fatigueDown">0</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">피로 소재 (주의)</div>
-          <div class="stat-value" id="fatigueTired">0</div>
-        </div>
-      </div>
-      
-      <!-- ✨ Gemini AI 인사이트 (피로도 분석) -->
-      <div class="gai-section-action" style="margin-top:16px;">
-        <button class="gai-trigger-btn" onclick="runFatigueAIInsight()">
-          <span class="gai-btn-icon">✨</span> 순위 변동 원인 AI 분석
-        </button>
-        <span style="font-size:12px;color:#6b7280;">상승/하락 소재 원인 추론 · 운용 권고</span>
-        <span class="gai-key-status" style="font-size:11.5px;font-weight:600;margin-left:auto;"></span>
-      </div>
-      <div id="fatigueAIBox"></div>
-
-      <div class="table-container" style="margin-top: 20px;">
-        <table>
-          <thead>
-            <tr>
-              <th>미리보기</th>
-              <th>소재명/파일명</th>
-              <th>유형</th>
-              <th class="has-tooltip" data-tip="기준 기간 Total Score 기준 순위">기준 순위 ℹ</th>
-              <th class="has-tooltip" data-tip="비교 기간 Total Score 기준 순위">비교 순위 ℹ</th>
-              <th class="has-tooltip" data-tip="기준 → 비교 기간 순위 변동&#10;▲ 상승 / ▼ 하락 / — 동일">순위 변동 ℹ</th>
-              <th class="has-tooltip" data-tip="기준 기간 CPA&#10;비용 ÷ 전환수 (원)">기준 CPA ℹ</th>
-              <th class="has-tooltip" data-tip="비교 기간 CPA&#10;비용 ÷ 전환수 (원)">비교 CPA ℹ</th>
-              <th class="has-tooltip" data-tip="(비교CPA − 기준CPA) ÷ 기준CPA × 100%&#10;양수(+): CPA 악화 = 피로도 증가&#10;음수(−): CPA 개선 = 효율 회복">CPA 변화율 ℹ</th>
-              <th class="has-tooltip" data-tip="CPA 변화율 기반 피로도 판정&#10;Fresh ≤−20% / Stable −20~0%&#10;Warning 0~+20% / Tired &gt;+20%">피로도 상태 ℹ</th>
-            </tr>
-          </thead>
-          <tbody id="fatigueTableBody">
-            <tr>
-              <td colspan="10" style="text-align: center; padding: 40px; color: #9ca3af;">
-                피로도 분석 실행 버튼을 클릭하여 분석을 시작하세요
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- 탭 패널 2: 전체 성과 요약 -->
+      <div id="tabSummary" class="ds-tab-panel hidden">
+        <!-- 캠페인 비교 (기존 유지) -->
+        <div id="campaignCompareContainer"></div>
+        <!-- 유형별 요약 (Task 6에서 교체) -->
+        <div id="typeSummaryContainer"></div>
+        <!-- 교차 성과 (Task 6에서 추가) -->
+        <div id="crossPerformanceContainer"></div>
+        <!-- AI 태그 (Task 6에서 추가) -->
+        <div id="signalDistributionPanel"></div>
       </div>
 
-    </section>
-    
-    <!-- Section 6: 순위 변동 차트 -->
-    <section id="chart" class="section" style="display: none;">
-      <h2 class="section-title">📉 Top 10 순위 변동 추이</h2>
-      <div class="chart-container" style="height: 500px;">
-        <canvas id="rankChart"></canvas>
+      <!-- 탭 패널 3: 피로도 (Task 7에서 채움) -->
+      <div id="tabFatigue" class="ds-tab-panel hidden">
+        <div id="fatigueTabContent">
+          <!-- 피로도 분석 (기존 섹션 내용 보존 — Task 7에서 리디자인) -->
+          <section id="fatigue" class="section">
+            <h2 class="section-title">🔍 소재 피로도 분석</h2>
+            <div class="settings-grid filter-grid-fatigue">
+              <div class="setting-group">
+                <label class="setting-label">분석 기준</label>
+                <div class="radio-group">
+                  <label class="radio-item"><input type="radio" name="fatigueGroupBy" value="소재명" checked><span>소재명</span></label>
+                  <label class="radio-item"><input type="radio" name="fatigueGroupBy" value="파일명"><span>파일명</span></label>
+                </div>
+              </div>
+              <div class="setting-group">
+                <label class="setting-label">소재 유형</label>
+                <div class="checkbox-group" style="max-height: 150px;">
+                  <div class="checkbox-item"><input type="checkbox" id="fatigue_type_BNR" value="BNR" checked onchange="updateFatigueTypeFilter()"><label for="fatigue_type_BNR">BNR (이미지)</label></div>
+                  <div class="checkbox-item"><input type="checkbox" id="fatigue_type_VID" value="VID" checked onchange="updateFatigueTypeFilter()"><label for="fatigue_type_VID">VID (비디오)</label></div>
+                </div>
+                <div class="selected-count" id="fatigueTypeSelectedCount">2개 선택됨</div>
+              </div>
+              <div class="setting-group">
+                <label class="setting-label">캠페인 필터</label>
+                <input type="text" id="fatigueCampaignSearchInput" class="search-input" placeholder="캠페인 검색..." oninput="filterFatigueCampaignList()">
+                <div class="checkbox-group" id="fatigueCampaignCheckboxGroup">
+                  <div class="checkbox-item"><input type="checkbox" id="fatigue_campaign_all" value="" checked onchange="toggleAllFatigueCampaigns(this)"><label for="fatigue_campaign_all"><strong>전체 선택</strong></label></div>
+                </div>
+                <div class="selected-count" id="fatigueCampaignSelectedCount">전체 캠페인 선택됨</div>
+              </div>
+            </div>
+            <div class="settings-grid">
+              <div class="setting-group">
+                <label class="setting-label">📅 기준 기간</label>
+                <div class="date-range-container">
+                  <input type="date" id="baselineStart" class="setting-input">
+                  <span class="date-separator">~</span>
+                  <input type="date" id="baselineEnd" class="setting-input">
+                </div>
+                <small style="color: #6b7280; font-size: 11px; margin-top: 5px; display: block;">과거 기준 기간 (시작 ~ 종료)</small>
+              </div>
+              <div class="setting-group">
+                <label class="setting-label">📅 비교 기간</label>
+                <div class="date-range-container">
+                  <input type="date" id="comparisonStart" class="setting-input">
+                  <span class="date-separator">~</span>
+                  <input type="date" id="comparisonEnd" class="setting-input">
+                </div>
+                <small style="color: #6b7280; font-size: 11px; margin-top: 5px; display: block;">최근 비교 기간 (시작 ~ 종료)</small>
+              </div>
+            </div>
+            <div style="display: flex; gap: 15px; margin-top: 30px;">
+              <button class="btn" onclick="runFatigueAnalysis()">🔍 피로도 분석 실행</button>
+              <button class="btn btn-secondary" onclick="resetFatigue()">🔄 설정 초기화</button>
+            </div>
+          </section>
+
+          <!-- 피로도 통계 -->
+          <section id="statistics" class="section" style="display: none;">
+            <h2 class="section-title">📈 피로도 통계</h2>
+            <div class="stats-grid">
+              <div class="stat-card"><div class="stat-label">분석 소재 수</div><div class="stat-value" id="fatigueTotal">0</div></div>
+              <div class="stat-card"><div class="stat-label">순위 상승</div><div class="stat-value" id="fatigueUp">0</div></div>
+              <div class="stat-card"><div class="stat-label">순위 하락</div><div class="stat-value" id="fatigueDown">0</div></div>
+              <div class="stat-card"><div class="stat-label">피로 소재 (주의)</div><div class="stat-value" id="fatigueTired">0</div></div>
+            </div>
+            <div class="gai-section-action" style="margin-top:16px;">
+              <button class="gai-trigger-btn" onclick="runFatigueAIInsight()"><span class="gai-btn-icon">✨</span> 순위 변동 원인 AI 분석</button>
+              <span style="font-size:12px;color:#6b7280;">상승/하락 소재 원인 추론 · 운용 권고</span>
+              <span class="gai-key-status" style="font-size:11.5px;font-weight:600;margin-left:auto;"></span>
+            </div>
+            <div id="fatigueAIBox"></div>
+            <div class="table-container" style="margin-top: 20px;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>미리보기</th><th>소재명/파일명</th><th>유형</th>
+                    <th class="has-tooltip" data-tip="기준 기간 Total Score 기준 순위">기준 순위 ℹ</th>
+                    <th class="has-tooltip" data-tip="비교 기간 Total Score 기준 순위">비교 순위 ℹ</th>
+                    <th class="has-tooltip" data-tip="기준 → 비교 기간 순위 변동&#10;▲ 상승 / ▼ 하락 / — 동일">순위 변동 ℹ</th>
+                    <th class="has-tooltip" data-tip="기준 기간 CPA">기준 CPA ℹ</th>
+                    <th class="has-tooltip" data-tip="비교 기간 CPA">비교 CPA ℹ</th>
+                    <th class="has-tooltip" data-tip="(비교CPA − 기준CPA) ÷ 기준CPA × 100%">CPA 변화율 ℹ</th>
+                    <th class="has-tooltip" data-tip="CPA 변화율 기반 피로도 판정">피로도 상태 ℹ</th>
+                  </tr>
+                </thead>
+                <tbody id="fatigueTableBody">
+                  <tr><td colspan="10" style="text-align: center; padding: 40px; color: #9ca3af;">피로도 분석 실행 버튼을 클릭하여 분석을 시작하세요</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- 순위 변동 차트 -->
+          <section id="chart" class="section" style="display: none;">
+            <h2 class="section-title">📉 Top 10 순위 변동 추이</h2>
+            <div class="chart-container" style="height: 500px;">
+              <canvas id="rankChart"></canvas>
+            </div>
+          </section>
+        </div>
       </div>
-    </section>
+
     </main>
   </div>
 
@@ -1798,6 +1766,22 @@ function updateWeightDisplay(slider, valId) {
   // 히든 Input 동기화 (resetScoring 호환)
   const inputEl = document.getElementById(slider.id + 'Input');
   if (inputEl) inputEl.value = slider.value;
+}
+
+/* ── 메인 탭 전환 ── */
+function switchMainTab(tab) {
+  const PANELS = {
+    'creative-list': 'tabCreativeList',
+    'summary': 'tabSummary',
+    'fatigue': 'tabFatigue'
+  };
+  document.querySelectorAll('.ds-tab').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === tab);
+  });
+  Object.entries(PANELS).forEach(([key, id]) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('hidden', key !== tab);
+  });
 }
 
 /* ============================================================
@@ -4313,7 +4297,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     }
 
     function displayScoringResults(creatives, filterSummary = [], excludeInfo = {}) {
-      document.getElementById('results').style.display = 'block';
+      // 탭 바 표시 + 소재 목록 탭으로 초기화
+      const mainTabBar = document.getElementById('mainTabBar');
+      if (mainTabBar) mainTabBar.style.display = 'flex';
+      switchMainTab('creative-list');
 
       // 전역 변수에 저장 (모달에서 사용)
       window.currentCreatives = creatives;
@@ -4465,9 +4452,6 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       }
 
       console.log('✅ 점수 결과 표시 완료');
-
-      // 결과 섹션으로 스크롤
-      scrollToSection('results');
     }
     
     // ──────────────────────────────────────────────
@@ -6046,9 +6030,9 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
         return;
       }
 
-      // 결과 섹션 보이기 (숨김 상태에서 버튼 클릭 시 대비)
-      const resultsSection = document.getElementById('results');
-      if (resultsSection) resultsSection.style.display = 'block';
+      // 탭 바 보이기 + 소재 목록 탭으로 전환 (숨김 상태에서 버튼 클릭 시 대비)
+      const mainTabBar = document.getElementById('mainTabBar');
+      if (mainTabBar) { mainTabBar.style.display = 'flex'; switchMainTab('creative-list'); }
 
       // 로딩 표시
       box.innerHTML = buildGeminiBox('', 'loading');
