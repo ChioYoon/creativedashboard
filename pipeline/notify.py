@@ -111,6 +111,15 @@ def _build_plain_body(batch_result: dict) -> str:
                 "auth_failed": "🔑 인증 만료 — refresh token 재발급 필요",
             }.get(kpi_status, kpi_status)
             lines.append(f"    KPI fetch:   {kpi_label}")
+        # Stage 7: Airbridge MMP 상태 (skipped=미설정/미연동은 노이즈라 생략)
+        mmp_status = r.get("mmp_status")
+        if mmp_status and mmp_status != "skipped":
+            mmp_label = {
+                "success": f"✅ 성공 ({r.get('mmp_rows_fetched', 0)}행, 非Google 매체)",
+                "failed": "❌ 실패 (태깅·Google Ads는 진행, mmp_* 비움)",
+                "auth_failed": "🔑 토큰 만료/무효 — AIRBRIDGE_API_TOKEN 재확인",
+            }.get(mmp_status, mmp_status)
+            lines.append(f"    MMP fetch:   {mmp_label}")
         ss = r.get("score_summary") or {}
         if ss.get("graded"):
             grade_str = " · ".join(f"{k} {v}" for k, v in ss.get("grades", {}).items())
@@ -167,6 +176,16 @@ def _build_html_body(batch_result: dict) -> str:
             kpi_badge = ' <span style="background:#fee2e2;color:#991b1b;padding:2px 6px;border-radius:6px;font-size:11px;">KPI 실패</span>'
         elif kpi_status == "auth_failed":
             kpi_badge = ' <span style="background:#fef3c7;color:#92400e;padding:2px 6px;border-radius:6px;font-size:11px;">🔑 KPI 인증 만료</span>'
+        # Stage 7: Airbridge MMP 배지 (teal — 대시보드 MMP 레이어와 동일 계열). skipped 는 생략.
+        mmp_badge = ""
+        mmp_status = r.get("mmp_status", "skipped")
+        if mmp_status == "success":
+            mmp_row_count = r.get("mmp_rows_fetched", 0)
+            mmp_badge = f' <span style="background:#ccfbf1;color:#115e59;padding:2px 6px;border-radius:6px;font-size:11px;">MMP {mmp_row_count}행</span>'
+        elif mmp_status == "failed":
+            mmp_badge = ' <span style="background:#fee2e2;color:#991b1b;padding:2px 6px;border-radius:6px;font-size:11px;">MMP 실패</span>'
+        elif mmp_status == "auth_failed":
+            mmp_badge = ' <span style="background:#fef3c7;color:#92400e;padding:2px 6px;border-radius:6px;font-size:11px;">🔑 MMP 토큰</span>'
         score_badge = ""
         ss = r.get("score_summary") or {}
         if ss.get("graded") and ss.get("top"):
@@ -185,7 +204,7 @@ def _build_html_body(batch_result: dict) -> str:
 
         rows.append(f"""
         <tr style="border-bottom:1px solid #e5e7eb;">
-          <td style="padding:10px;"><strong>{r.get('title', '?')}</strong>{fallback_badge}{quota_badge}{kpi_badge}{score_badge}</td>
+          <td style="padding:10px;"><strong>{r.get('title', '?')}</strong>{fallback_badge}{quota_badge}{kpi_badge}{mmp_badge}{score_badge}</td>
           <td style="padding:10px;"><span style="background:{color};color:white;padding:3px 10px;border-radius:12px;font-size:12px;">{_status_label(status)}</span></td>
           <td style="padding:10px;text-align:right;">{r.get('tagged_records', 0)} / {r.get('scanned_folders', 0)}</td>
           <td style="padding:10px;text-align:right;">{r.get('cache_misses', 0)}</td>
