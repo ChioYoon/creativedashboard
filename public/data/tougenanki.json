@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "title_id": "tougenanki",
-  "generated_at": "2026-06-16T13:17:12+09:00",
+  "generated_at": "2026-06-17T13:01:42+09:00",
   "pipeline_version": "stage2-mvp",
   "gemini_model": "gemini-2.5-flash",
   "creatives": [
@@ -58,8 +58,17 @@
       "creator_intent": "강렬한 비주얼과 캐릭터 매력으로 호기심을 자극하여 사전 등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 1,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:04:55+09:00",
+      "tagged_at": "2026-06-17T13:00:33+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-MudanoSSR01-DA\\260624_BNR_FGT-IP-MudanoSSR01-DA_L_1200x628_JP.jpg",
@@ -69,7 +78,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "FGT-IP-OniMainTVA01-DA",
@@ -126,8 +149,17 @@
       "creator_intent": "원작 애니메이션의 다크한 분위기와 매력적인 캐릭터들을 전면에 내세워 팬덤 유저들의 관심을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 2,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:04:55+09:00",
+      "tagged_at": "2026-06-17T13:00:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-OniMainTVA01-DA\\260624_BNR_FGT-IP-OniMainTVA01-DA_L_1200x628_JP.jpg",
@@ -137,7 +169,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "FGT-IP-OniMomotaroTVA01-DA",
@@ -190,8 +236,17 @@
       "creator_intent": "다수의 매력적인 캐릭터와 강렬한 전투 분위기로 애니메이션 팬 및 액션 게임 유저의 관심을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 3,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:04:55+09:00",
+      "tagged_at": "2026-06-17T13:00:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-OniMomotaroTVA01-DA\\260518_BNR_FGT-IP-OniMomotaroTVA01-DA_L_1200x628_JP.jpg",
@@ -201,7 +256,201 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
+    },
+    {
+      "creative_id": "FGT-Ingame-Friendship01-DA",
+      "소재명": "FGT-Ingame-Friendship01-DA",
+      "파일명": "260623_BNR_FGT-Ingame-Friendship01-DA_L_1200x628_JP.jpg",
+      "유형": "BNR",
+      "일": "2026-06-23",
+      "캠페인": null,
+      "사이즈": "1200x628",
+      "언어": "JP",
+      "링크": null,
+      "creative_concept": "FGT-Ingame-Friendship01-DA",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "캐릭터 외형 소구",
+      "USP": "대세감(출시일/사전등록수)",
+      "art_style": "2D 일러스트",
+      "strengths": [
+        "다수 캐릭터 라인업",
+        "호기심/궁금증 유발",
+        "단일 명료한 가치 제안"
+      ],
+      "weaknesses": [
+        "장르/게임성 불분명",
+        "타이틀/브랜드 인지 약함"
+      ],
+      "hypothesis": [
+        "높은 CTR 예상 — 강한 후킹",
+        "특정 타겟에 강하게 반응"
+      ],
+      "test_ideas": [
+        "게임플레이 컷 추가",
+        "카피 1줄로 축약",
+        "다른 core_usp 각도 변주"
+      ],
+      "one_line_insight": "캐릭터 비주얼과 선행 테스트 기회로 후킹은 강하나, 장르/게임성 정보가 부족함 — 실제 게임플레이 컷을 추가하여 유저의 이해도를 높이고 전환율을 개선",
+      "strength_evidence": [
+        "화면 중앙에 3명의 개성 강한 애니메이션 스타일 캐릭터가 나란히 배치되어 수집형 게임의 라인업 매력을 어필함.",
+        "강렬한 붉은색과 검은색 배경에 '프리미엄 선행 플레이 테스트' 문구가 시선을 사로잡아 게임 내용에 대한 궁금증을 유발함.",
+        "'프리미엄 선행 플레이 테스트'와 '지금 바로 응모하기' 버튼이 명확하게 제시되어 시청자가 해야 할 행동과 얻을 가치를 직관적으로 전달함."
+      ],
+      "weakness_evidence": [
+        "캐릭터와 총기 이미지만으로는 실제 게임플레이 방식이나 장르에 대한 구체적인 단서가 부족하여 시청자가 게임을 이해하기 어려움.",
+        "상단에 작은 로고와 Com2uS 로고가 있지만, 메인 카피가 '선행 플레이 테스트'에 집중되어 게임 타이틀 자체의 인지도를 높이는 데는 한계가 있음."
+      ],
+      "improvement_actions": [
+        "캐릭터 주변에 실제 게임플레이 스크린샷이나 짧은 전투 연출 컷을 추가하여 장르와 게임성을 명확히 전달하도록 개선",
+        "메인 카피 하단에 '액션 RPG' 또는 '수집형 전략' 등 장르를 명시하는 한 줄 카피를 추가하여 정보 전달력을 높임",
+        "선행 플레이 테스트 외에 '한정판 캐릭터 증정' 등 혜택형 USP를 강조하는 문구를 추가하여 다양한 유저층을 공략"
+      ],
+      "creator_intent": "매력적인 캐릭터와 프리미엄 테스트 기회를 통해 팬덤을 형성하고 초기 유저를 확보하려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 4,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
+      "marketer_insight": null,
+      "tagged_at": "2026-06-17T13:01:24+09:00",
+      "gemini_model": "gemini-2.5-flash",
+      "source_files": [
+        "3. FGT\\1. 배너\\FGT-Ingame-Friendship01-DA\\260623_BNR_FGT-Ingame-Friendship01-DA_L_1200x628_JP.jpg",
+        "3. FGT\\1. 배너\\FGT-Ingame-Friendship01-DA\\260623_BNR_FGT-Ingame-Friendship01-DA_S_1200x1200_JP.jpg",
+        "3. FGT\\1. 배너\\FGT-Ingame-Friendship01-DA\\260623_BNR_FGT-Ingame-Friendship01-DA_V_1200x1500_JP.jpg",
+        "3. FGT\\1. 배너\\FGT-Ingame-Kyoyatcg01-DA\\260623_BNR_FGT-Ingame-Friendship01-DA_L_1200x628_JP.jpg"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
+    },
+    {
+      "creative_id": "FGT-Ingame-Kyoyatcg01-DA",
+      "소재명": "FGT-Ingame-Kyoyatcg01-DA",
+      "파일명": "260623_BNR_FGT-Ingame-Kyoyatcg01-DA_S_1200x1200_JP.jpg",
+      "유형": "BNR",
+      "일": "2026-06-23",
+      "캠페인": null,
+      "사이즈": "1200x1200",
+      "언어": "JP",
+      "링크": null,
+      "creative_concept": "FGT-Ingame-Kyoyatcg01-DA",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "캐릭터 외형 소구",
+      "USP": "대세감(출시일/사전등록수)",
+      "art_style": "2D 일러스트",
+      "strengths": [
+        "단일 주인공 스포트라이트",
+        "게임플레이 자체 매력",
+        "출시일·한정 강조"
+      ],
+      "weaknesses": [
+        "장르/게임성 불분명",
+        "정보 과적 (텍스트/UI 산만)"
+      ],
+      "hypothesis": [
+        "특정 타겟에 강하게 반응",
+        "낮은 전환 위험 — 행동 유도 약함"
+      ],
+      "test_ideas": [
+        "카피 1줄로 축약",
+        "명시적 CTA 추가"
+      ],
+      "one_line_insight": "캐릭터와 인게임 화면을 통해 게임의 매력을 어필하지만, 장르와 핵심 가치가 불분명함 — 핵심 카피를 명확히 하고 CTA 주변에 구체적 혜택을 추가하여 전환율을 개선",
+      "strength_evidence": [
+        "화면 좌측에 메인 캐릭터가 전신 일러스트로 크게 배치되어 독특한 외형과 분위기를 강조하며 시선을 집중시킴",
+        "화면 중앙 스마트폰에 실제 인게임 전투 화면이 노출되어, 3D 셀셰이딩 캐릭터들의 액션과 UI를 통해 게임성을 직접적으로 보여줌",
+        "하단에 'プレミアム 先行プレイテスト' (프리미엄 선행 플레이 테스트) 문구가 붉은색으로 강조되어 조기 참여의 특별함을 어필함"
+      ],
+      "weakness_evidence": [
+        "메인 캐릭터의 독특한 외형과 인게임 플레이 화면이 함께 제시되지만, 두 요소 간의 연결성이나 게임의 핵심 장르가 명확히 전달되지 않아 혼란을 줄 수 있음",
+        "캐릭터 정보, 인게임 화면, 게임 타이틀, 플레이 테스트 문구 등 다양한 정보가 한 화면에 밀집되어 있어 시청자가 핵심 메시지를 파악하기 어려움"
+      ],
+      "improvement_actions": [
+        "메인 캐릭터와 인게임 화면의 연결성을 명확히 하는 1줄 카피를 추가하여 장르나 핵심 재미를 직관적으로 전달하도록 개선",
+        "하단의 '今すぐ応募する' (지금 바로 응모하기) 버튼 주변에 선행 플레이 테스트의 구체적인 혜택이나 기간을 명시하여 행동 유도를 강화"
+      ],
+      "creator_intent": "독특한 캐릭터 비주얼과 실제 게임 플레이를 동시에 보여주며 선행 플레이 테스트 참여를 유도하려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 5,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
+      "marketer_insight": null,
+      "tagged_at": "2026-06-17T13:01:38+09:00",
+      "gemini_model": "gemini-2.5-flash",
+      "source_files": [
+        "3. FGT\\1. 배너\\FGT-Ingame-Kyoyatcg01-DA\\260623_BNR_FGT-Ingame-Kyoyatcg01-DA_S_1200x1200_JP.jpg",
+        "3. FGT\\1. 배너\\FGT-Ingame-Kyoyatcg01-DA\\260623_BNR_FGT-Ingame-Kyoyatcg01-DA_V_1200x1500_JP.jpg"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-Character-HomarePV01-PV",
@@ -256,8 +505,17 @@
       "creator_intent": "캐릭터의 극적인 서사와 변신을 통해 강렬한 인상을 남기고 호기심을 유발하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 6,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:04:56+09:00",
+      "tagged_at": "2026-06-17T13:01:38+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-HomarePV01-PV\\260421_VID_P-Character-HomarePV01-PV_S_1080x1080_JP.mp4",
@@ -266,7 +524,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-Character-JinPV01-PV",
@@ -321,8 +593,17 @@
       "creator_intent": "매력적인 단일 캐릭터의 화려한 액션 연출과 사전등록 보상으로 유저의 시선을 사로잡으려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 7,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:04:56+09:00",
+      "tagged_at": "2026-06-17T13:01:39+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-JinPV01-PV\\260421_VID_P-Character-JinPV01-PV_S_1080x1080_JP.mp4",
@@ -331,7 +612,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-Character-KyoyaPV01-PV",
@@ -388,8 +683,17 @@
       "creator_intent": "매력적인 주인공 캐릭터의 화려한 액션과 SSR 보상을 전면에 내세워 사전등록 유저를 확보하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 8,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:04:57+09:00",
+      "tagged_at": "2026-06-17T13:01:39+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-KyoyaPV01-PV\\JP\\260421_VID_P-Character-KyoyaPV01-PV_S_1080x1080_JP.mp4",
@@ -398,7 +702,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-Character-MudanoPV01-PV",
@@ -453,8 +771,17 @@
       "creator_intent": "강렬한 캐릭터 액션과 비주얼 임팩트를 통해 사전등록 보상과 함께 게임에 대한 호기심을 유발하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 9,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:04:57+09:00",
+      "tagged_at": "2026-06-17T13:01:39+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-MudanoPV01-PV\\260401_VID_P-Character-MudanoPV01-PV_S_1080x1080_JP.mp4",
@@ -463,7 +790,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-Character-ShikiPV01-PV",
@@ -520,8 +861,17 @@
       "creator_intent": "강렬한 캐릭터 액션과 SSR 보상을 전면에 내세워 액션 RPG 팬들의 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 10,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:04:57+09:00",
+      "tagged_at": "2026-06-17T13:01:39+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-ShikiPV01-PV\\260421_VID_P-Character-ShikiPV01-PV_S_1080x1080_JP.mp4",
@@ -530,7 +880,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-Character-TsubakiriPV01-PV",
@@ -585,8 +949,17 @@
       "creator_intent": "매력적인 캐릭터 비주얼과 SSR 보상 약속을 통해 사전등록 유저를 확보하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 11,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:04:58+09:00",
+      "tagged_at": "2026-06-17T13:01:40+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-TsubakiriPV01-PV\\260421_VID_P-Character-TsubakiriPV01-PV_S_1080x1080_JP.mp4",
@@ -595,7 +968,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-Gamer-IngamePV01-PV",
@@ -652,8 +1039,17 @@
       "creator_intent": "원작 애니메이션의 강렬한 전투 연출과 캐릭터 매력을 통해 팬덤을 후킹하고 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 12,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:04:59+09:00",
+      "tagged_at": "2026-06-17T13:01:40+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Gamer-IngamePV01-PV\\260421_VID_P-Gamer-IngamePV01-PV_S_1080x1080_JP.mp4",
@@ -662,7 +1058,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-Gamer-RasetsuBattle01-DA",
@@ -717,8 +1127,17 @@
       "creator_intent": "다수의 매력적인 캐릭터와 강력한 사전등록 보상으로 유저의 관심을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 13,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:04:59+09:00",
+      "tagged_at": "2026-06-17T13:01:40+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Gamer-RasetsuBattle01-DA\\JP\\260223_BNR_P-Gamer-RasetsuBattle01-DA_L_1200x628_JP.jpg",
@@ -730,7 +1149,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-IP-Cinematic01-PV",
@@ -785,8 +1218,17 @@
       "creator_intent": "매력적인 다수 캐릭터의 강렬한 액션 연출로 시청자의 시선을 사로잡고 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 14,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:04:59+09:00",
+      "tagged_at": "2026-06-17T13:01:41+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Cinematic01-PV\\260421_VID_P-IP-Cinematic01-PV_S_1080x1080_JP.mp4",
@@ -795,7 +1237,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-IP-Cutscene0-UA",
@@ -850,8 +1306,17 @@
       "creator_intent": "강렬한 비주얼과 캐릭터의 서사적 매력을 통해 시청자의 호기심을 자극하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 15,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:05:00+09:00",
+      "tagged_at": "2026-06-17T13:01:41+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Cutscene01-UA\\JP\\260519_VID_P-IP-Cutscene0-UA_L_1920x1080_JP.mp4"
@@ -859,7 +1324,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-IP-Endcard01-EC",
@@ -911,8 +1390,17 @@
       "creator_intent": "강렬한 타이틀 로고 비주얼로 게임의 분위기를 전달하고 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 16,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:05:00+09:00",
+      "tagged_at": "2026-06-17T13:01:41+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\0. 엔드카드\\P-IP-Endcard01-EC\\JP\\260127_VID_P-IP-Endcard01-EC_L_1080x1080_JP.mp4",
@@ -922,7 +1410,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-IP-Endcard02-EC",
@@ -975,8 +1477,17 @@
       "creator_intent": "매력적인 다수 캐릭터 비주얼을 통해 유저의 호기심을 자극하고 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 17,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:05:00+09:00",
+      "tagged_at": "2026-06-17T13:01:41+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\0. 엔드카드\\(활용불가) P-IP-Endcard02-EC\\JP\\260127_VID_P-IP-Endcard02-EC_L_1920x1080_JP.mp4"
@@ -984,7 +1495,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-IP-OniMainTVA01-DA",
@@ -1039,8 +1564,17 @@
       "creator_intent": "원작 애니메이션의 인지도를 활용하여 캐릭터와 사전등록 보상으로 팬덤의 참여를 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 18,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:05:00+09:00",
+      "tagged_at": "2026-06-17T13:01:41+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-OniMainTVA01-DA\\JP\\260810_BNR_P-IP-OniMainTVA01-DA_L_1200x628_JP.jpg",
@@ -1057,7 +1591,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-IP-OniMomotaroTVA01-DA",
@@ -1112,8 +1660,17 @@
       "creator_intent": "원작 애니메이션의 강렬한 분위기와 다수 캐릭터의 매력을 전면에 내세워 팬덤을 후킹하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 19,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:12:10+09:00",
+      "tagged_at": "2026-06-17T13:01:41+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-OniMomotaroTVA01-DA\\JP\\260223_BNR_P-IP-OniMomotaroTVA01-DA_L_1200x628_JP.jpg",
@@ -1125,7 +1682,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-IP-RasetsuTVA01-DA",
@@ -1180,8 +1751,17 @@
       "creator_intent": "인기 애니메이션 IP의 캐릭터 비주얼과 다크한 세계관을 강조하여 원작 팬들의 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 20,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:12:10+09:00",
+      "tagged_at": "2026-06-17T13:01:41+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-RasetsuTVA01-DA\\JP\\260810_BNR_P-IP-RasetsuTVA01-DA_L_1200x628_JP.jpg",
@@ -1198,7 +1778,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-IP-Teaser01-PV",
@@ -1253,8 +1847,17 @@
       "creator_intent": "강렬한 분위기와 애니메이션 IP를 활용한 스토리텔링으로 시청자의 호기심을 유발하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 21,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:12:11+09:00",
+      "tagged_at": "2026-06-17T13:01:41+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Teaser01-PV\\260421_VID_P-IP-Teaser01-PV_S_1080x1080_JP.mp4",
@@ -1263,7 +1866,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-Reward-MudanoSSR01-DA",
@@ -1316,8 +1933,17 @@
       "creator_intent": "강렬한 캐릭터 비주얼과 확정 보상으로 특정 타겟층의 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 22,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:12:11+09:00",
+      "tagged_at": "2026-06-17T13:01:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR01-DA\\JP\\수정 전(무다노 캐릭터 컬러감 없는 버전)\\260223_BNR_P-Reward-MudanoSSR01-DA_L_1200x628_JP.jpg",
@@ -1334,7 +1960,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-Reward-MudanoSSR01-DA-A",
@@ -1389,8 +2029,17 @@
       "creator_intent": "강렬한 캐릭터 비주얼과 SSR 확정 보상을 전면에 내세워 사전등록 유입을 극대화하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 23,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:12:11+09:00",
+      "tagged_at": "2026-06-17T13:01:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR01-DA\\JP\\260209_BNR_P-Reward-MudanoSSR01-DA-A_L_1200x628_JP.jpg",
@@ -1402,7 +2051,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-Reward-MudanoSSR02-DA",
@@ -1457,8 +2120,17 @@
       "creator_intent": "강렬한 비주얼과 보상 약속으로 신규 유저의 호기심을 자극하고 사전 등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 24,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:12:12+09:00",
+      "tagged_at": "2026-06-17T13:01:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR02-DA (CTA)\\JP\\수정 전\\260223_BNR_P-Reward-MudanoSSR02-DA_L_1200x628_JP.jpg",
@@ -1470,7 +2142,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-Reward-OniMomotaroSSR01-DA",
@@ -1525,8 +2211,17 @@
       "creator_intent": "SSR 캐릭터 획득 보상으로 신규 유저의 즉각적인 클릭 및 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 25,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:12:12+09:00",
+      "tagged_at": "2026-06-17T13:01:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-OniMomotaroSSR01-DA\\JP\\260810_BNR_P-Reward-OniMomotaroSSR01-DA_L_1200x628_JP.jpg",
@@ -1543,7 +2238,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-Reward-RasetsuSSR01-DA",
@@ -1600,8 +2309,17 @@
       "creator_intent": "매력적인 캐릭터 라인업과 SSR 보상 약속으로 팬덤을 형성하고 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 26,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:12:26+09:00",
+      "tagged_at": "2026-06-17T13:01:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR01-DA\\JP\\260810_BNR_P-Reward-RasetsuSSR01-DA_L_1200x628_JP.jpg",
@@ -1618,7 +2336,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-Reward-RasetsuSSR02-DA",
@@ -1673,8 +2405,17 @@
       "creator_intent": "다수의 매력적인 캐릭터와 사전등록 보상을 전면에 내세워 잠재 유저의 호기심과 참여를 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 27,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:17:11+09:00",
+      "tagged_at": "2026-06-17T13:01:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR02-DA (CTA)\\JP\\260810_BNR_P-Reward-RasetsuSSR02-DA_L_1200x628_JP.jpg",
@@ -1691,7 +2432,21 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-Reward-SkillcardSSR01-UA",
@@ -1746,8 +2501,17 @@
       "creator_intent": "SSR 캐릭터 보상을 전면에 내세워 유저의 즉각적인 관심을 유도하고 사전등록 전환을 노리는 의도.",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 28,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:17:12+09:00",
+      "tagged_at": "2026-06-17T13:01:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Reward-SkillcardSSR01-UA\\JP\\260313_VID_P-Reward-SkillcardSSR01-UA_L_1920x1080_JP.mp4",
@@ -1757,17 +2521,36 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     }
   ],
   "metrics": {
-    "scanned_folders": 26,
-    "tagged_records": 26,
-    "cache_hits": 23,
-    "cache_misses": 3,
+    "scanned_folders": 28,
+    "tagged_records": 28,
+    "cache_hits": 26,
+    "cache_misses": 2,
     "failures": 0,
-    "duration_sec": 736.7,
+    "duration_sec": 68.8,
     "prompt_version": "v3.3-2026.06.13-character-split-single",
-    "fallback_used": false
+    "fallback_used": false,
+    "score_summary": {
+      "graded": 0,
+      "grades": {},
+      "top": null
+    }
   }
 }
