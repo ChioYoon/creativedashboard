@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "title_id": "pepp-us",
-  "generated_at": "2026-06-16T13:04:46+09:00",
+  "generated_at": "2026-06-17T10:22:44+09:00",
   "pipeline_version": "stage2-mvp",
   "gemini_model": "gemini-2.5-flash",
   "creatives": [
@@ -60,8 +60,17 @@
       "creator_intent": "압도적인 무료 소환 보상을 전면에 내세워 유저의 즉각적인 다운로드 전환을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 28,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:00:47+09:00",
+      "tagged_at": "2026-06-17T10:22:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-1000Sum01A-DA\\260616_BNR_A-AI-1000Sum01A-DA_L_1200x628_EN.png",
@@ -72,7 +81,19 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-AI-1000Sum01B-DA",
@@ -127,8 +148,17 @@
       "creator_intent": "압도적인 무료 소환 기회를 전면에 내세워 신규 유저의 유입을 극대화하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 29,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:00:47+09:00",
+      "tagged_at": "2026-06-17T10:22:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-1000Sum01B-DA\\260616_BNR_A-AI-1000Sum01B-DA_L_1200x628_EN.png",
@@ -139,7 +169,19 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-AI-Defeatmonster01A-DA",
@@ -198,8 +240,17 @@
         "cvr": 8,
         "cpa": 12
       },
+      "scores": {
+        "total": 67.92,
+        "grade": "우수",
+        "rank": 25,
+        "conv": 60.0,
+        "cpa": 63.33,
+        "ipm": 60.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:00:47+09:00",
+      "tagged_at": "2026-06-17T10:22:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-Defeatmonster01A-DA\\260429_BNR_A-AI-Defeatmonster01A-DA_L_1200x628_EN.png",
@@ -208,8 +259,8 @@
         "01. BNR\\선론칭\\A-AI-Defeatmonster01A-DA\\260429_BNR_A-AI-Defeatmonster01A-DA_V_1200x1500_EN.png"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "260429_BNR_A-AI-Defeatmonster01A-DA_V_1200x1500_EN.png",
@@ -723,7 +774,19 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
-      ]
+      ],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-AI-Favoritehero01A-DA",
@@ -781,8 +844,17 @@
         "cvr": 4,
         "cpa": 8
       },
+      "scores": {
+        "total": 66.67,
+        "grade": "우수",
+        "rank": 26,
+        "conv": 58.33,
+        "cpa": 61.67,
+        "ipm": 58.33,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:00:47+09:00",
+      "tagged_at": "2026-06-17T10:22:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-Favoritehero01A-DA\\260429_BNR_A-AI-Favoritehero01A-DA_L_1200x628_EN.png",
@@ -791,8 +863,8 @@
         "01. BNR\\선론칭\\A-AI-Favoritehero01A-DA\\260429_BNR_A-AI-Favoritehero01A-DA_V_1200x1500_EN.png"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "260429_BNR_A-AI-Favoritehero01A-DA_L_1200x628_EN.png",
@@ -1322,7 +1394,19 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
-      ]
+      ],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-AI-Favoritehero01B-DA",
@@ -1381,8 +1465,17 @@
         "cvr": 15,
         "cpa": 20
       },
+      "scores": {
+        "total": 70.0,
+        "grade": "우수",
+        "rank": 23,
+        "conv": 61.67,
+        "cpa": 66.67,
+        "ipm": 63.33,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:00:47+09:00",
+      "tagged_at": "2026-06-17T10:22:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-Favoritehero01B-DA\\260429_BNR_A-AI-Favoritehero01B-DA_L_1200x628_EN.png",
@@ -1391,8 +1484,8 @@
         "01. BNR\\선론칭\\A-AI-Favoritehero01B-DA\\260429_BNR_A-AI-Favoritehero01B-DA_V_1200x1500_EN.png"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "260429_BNR_A-AI-Favoritehero01B-DA_L_1200x628_EN.png",
@@ -1890,7 +1983,19 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
-      ]
+      ],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-AI-Treasure01A-DA",
@@ -1945,8 +2050,17 @@
       "creator_intent": "압도적인 무료 소환 보상을 전면에 내세워 신규 유저의 즉각적인 다운로드를 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 30,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:30+09:00",
+      "tagged_at": "2026-06-17T10:22:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-Treasure01A-DA\\260616_BNR_A-AI-Treasure01A-DA_L_1200x628_EN.png",
@@ -1957,7 +2071,19 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-AI-Victory01A-DA",
@@ -2016,8 +2142,17 @@
         "cvr": 100,
         "cpa": 36
       },
+      "scores": {
+        "total": 81.67,
+        "grade": "최우수",
+        "rank": 17,
+        "conv": 63.33,
+        "cpa": 73.33,
+        "ipm": 100.0,
+        "roas": 90.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:30+09:00",
+      "tagged_at": "2026-06-17T10:22:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-Victory01A-DA\\260429_BNR_A-AI-Victory01A-DA_L_1200x628_EN.png",
@@ -2026,8 +2161,8 @@
         "01. BNR\\선론칭\\A-AI-Victory01A-DA\\260429_BNR_A-AI-Victory01A-DA_V_1200x1500_EN.png"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "260429_BNR_A-AI-Victory01A-DA_V_1200x1500_EN.png",
@@ -2589,7 +2724,19 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
-      ]
+      ],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Character-100usd01A-DA",
@@ -2648,8 +2795,17 @@
         "cvr": 46,
         "cpa": 76
       },
+      "scores": {
+        "total": 82.08,
+        "grade": "최우수",
+        "rank": 14,
+        "conv": 73.33,
+        "cpa": 90.0,
+        "ipm": 76.67,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:30+09:00",
+      "tagged_at": "2026-06-17T10:22:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-100usd01A-DA\\260406_BNR_A-Character-100usd01A-DA_L_1200x628_EN.jpg",
@@ -2658,8 +2814,8 @@
         "01. BNR\\선론칭\\A-Character-100usd01A-DA\\260406_BNR_A-Character-100usd01A-DA_V_1200x1500_EN.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-100usd01A-DA_L_1200x628_EN.jpg",
@@ -5061,7 +5217,19 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
-      ]
+      ],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Character-Adventure01A-DA",
@@ -5120,8 +5288,17 @@
         "cvr": 85,
         "cpa": 80
       },
+      "scores": {
+        "total": 96.25,
+        "grade": "최우수",
+        "rank": 1,
+        "conv": 100.0,
+        "cpa": 91.67,
+        "ipm": 93.33,
+        "roas": 100.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:30+09:00",
+      "tagged_at": "2026-06-17T10:22:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Adventure01A-DA\\251104_BNR_A-Character-Adventure01A-DA_L_1200x628_EN.jpg",
@@ -5138,8 +5315,8 @@
         "01. BNR\\선론칭\\A-Character-Adventure01A-DA\\Moloco\\251104_BNR_A-Character-Adventure01A-DA_V_768x1024.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "251104_BNR_A-Character-Adventure01A-DA_L_1200x628_EN.jpg",
@@ -7717,6 +7894,40 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
+      ],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.131,
+      "mmp_d1_cpi": 55.8,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 17.39,
+      "mmp_quality_score": {
+        "total": 78.33,
+        "grade": "우수",
+        "rank": 10,
+        "ipm": 73.3,
+        "cpi": 76.7,
+        "roas": 90.0,
+        "retention": 73.3
+      },
+      "mmp_installs": 23,
+      "mmp_retained_d1": 4,
+      "mmp_cost": 223,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "251104_BNR_A-Character-Adventure01A-DA_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 30425,
+          "clicks": 242,
+          "cost": 223,
+          "installs": 23,
+          "retained_d1": 4,
+          "revenue_d7": 0
+        }
       ]
     },
     {
@@ -7776,8 +7987,17 @@
         "cvr": 31,
         "cpa": 52
       },
+      "scores": {
+        "total": 81.25,
+        "grade": "최우수",
+        "rank": 18,
+        "conv": 86.67,
+        "cpa": 80.0,
+        "ipm": 70.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:30+09:00",
+      "tagged_at": "2026-06-17T10:22:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Adventure02A-DA\\EN\\251111_BNR_A-Character-Adventure02A-DA_L_1200x628_EN.jpg",
@@ -7802,8 +8022,8 @@
         "01. BNR\\선론칭\\A-Character-Adventure02A-DA\\ES\\251111_BNR_A-Character-Adventure02A-DA_V_1200x1500_ES.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "251111_BNR_A-Character-Adventure02A-DA_V_1200x1500_EN.jpg",
@@ -10525,6 +10745,40 @@
           "conversions": 1.0,
           "conversions_value": 0.0
         }
+      ],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 50.83,
+        "grade": "양호",
+        "rank": 14,
+        "ipm": 56.7,
+        "cpi": 0.0,
+        "roas": 90.0,
+        "retention": 56.7
+      },
+      "mmp_installs": 6,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 68,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "251111_BNR_A-Character-Adventure02A-DA_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 8983,
+          "clicks": 82,
+          "cost": 68,
+          "installs": 6,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
       ]
     },
     {
@@ -10584,8 +10838,17 @@
         "cvr": 27,
         "cpa": 16
       },
+      "scores": {
+        "total": 72.92,
+        "grade": "우수",
+        "rank": 21,
+        "conv": 70.0,
+        "cpa": 65.0,
+        "ipm": 68.33,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:30+09:00",
+      "tagged_at": "2026-06-17T10:22:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Adventure03A-DA\\EN\\251118_BNR_A-Character-Adventure03A-DA_L_1200x628_EN.jpg",
@@ -10606,8 +10869,8 @@
         "01. BNR\\선론칭\\A-Character-Adventure03A-DA\\ES\\251118_BNR_A-Character-Adventure03A-DA_V_1200x1500_ES.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "251118_BNR_A-Character-Adventure03A-DA_S_1200x1200_EN.jpg",
@@ -12113,6 +12376,40 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
+      ],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 50.83,
+        "grade": "양호",
+        "rank": 15,
+        "ipm": 56.7,
+        "cpi": 0.0,
+        "roas": 90.0,
+        "retention": 56.7
+      },
+      "mmp_installs": 1,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 15,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "251118_BNR_A-Character-Adventure03A-DA_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 3774,
+          "clicks": 11,
+          "cost": 15,
+          "installs": 1,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
       ]
     },
     {
@@ -12166,8 +12463,17 @@
         "cvr": 77,
         "cpa": 84
       },
+      "scores": {
+        "total": 88.33,
+        "grade": "최우수",
+        "rank": 7,
+        "conv": 81.67,
+        "cpa": 93.33,
+        "ipm": 90.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:30+09:00",
+      "tagged_at": "2026-06-17T10:22:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Adventure04A-DA\\260406_BNR_A-Character-Adventure04A-DA_L_1200x628_EN.jpg",
@@ -12176,8 +12482,8 @@
         "01. BNR\\선론칭\\A-Character-Adventure04A-DA\\260406_BNR_A-Character-Adventure04A-DA_V_1200x1500_EN.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-Adventure04A-DA_L_1200x628_EN.jpg",
@@ -14611,7 +14917,19 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
-      ]
+      ],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Character-Adventure05A-DA",
@@ -14664,8 +14982,17 @@
         "cvr": 65,
         "cpa": 92
       },
+      "scores": {
+        "total": 86.67,
+        "grade": "최우수",
+        "rank": 9,
+        "conv": 76.67,
+        "cpa": 96.67,
+        "ipm": 85.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:31+09:00",
+      "tagged_at": "2026-06-17T10:22:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Adventure05A-DA\\260406_BNR_A-Character-Adventure05A-DA_L_1200x628_EN.jpg",
@@ -14674,8 +15001,8 @@
         "01. BNR\\선론칭\\A-Character-Adventure05A-DA\\260406_BNR_A-Character-Adventure05A-DA_V_1200x1500_EN.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-Adventure05A-DA_V_1200x1500_EN.jpg",
@@ -17061,7 +17388,19 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
-      ]
+      ],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Character-Collection01A-DA",
@@ -17120,8 +17459,17 @@
         "cvr": 38,
         "cpa": 28
       },
+      "scores": {
+        "total": 74.17,
+        "grade": "우수",
+        "rank": 20,
+        "conv": 65.0,
+        "cpa": 70.0,
+        "ipm": 73.33,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:31+09:00",
+      "tagged_at": "2026-06-17T10:22:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Collection01A-DA\\EN\\251118_BNR_A-Character-Collection01A-DA_L_1200x628_EN.jpg",
@@ -17146,8 +17494,8 @@
         "01. BNR\\선론칭\\A-Character-Collection01A-DA\\ES\\251118_BNR_A-Character-Collection01A-DA_V_1200x1500_ES.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "251118_BNR_A-Character-Collection01A-DA_L_1200x628_EN.jpg",
@@ -18381,6 +18729,40 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
+      ],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.106,
+      "mmp_d1_cpi": 57.0,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 28.57,
+      "mmp_quality_score": {
+        "total": 81.67,
+        "grade": "최우수",
+        "rank": 8,
+        "ipm": 70.0,
+        "cpi": 73.3,
+        "roas": 90.0,
+        "retention": 93.3
+      },
+      "mmp_installs": 7,
+      "mmp_retained_d1": 2,
+      "mmp_cost": 114,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "251118_BNR_A-Character-Collection01A-DA_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 18912,
+          "clicks": 108,
+          "cost": 114,
+          "installs": 7,
+          "retained_d1": 2,
+          "revenue_d7": 0
+        }
       ]
     },
     {
@@ -18440,8 +18822,17 @@
         "cvr": 50,
         "cpa": 68
       },
+      "scores": {
+        "total": 82.08,
+        "grade": "최우수",
+        "rank": 15,
+        "conv": 75.0,
+        "cpa": 86.67,
+        "ipm": 78.33,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:31+09:00",
+      "tagged_at": "2026-06-17T10:22:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Comics01A-DA\\260406_BNR_A-Character-Comics01A-DA_L_1200x628_EN.jpg",
@@ -18450,8 +18841,8 @@
         "01. BNR\\선론칭\\A-Character-Comics01A-DA\\260406_BNR_A-Character-Comics01A-DA_V_1200x1500_EN.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-Comics01A-DA_L_1200x628_EN.jpg",
@@ -20901,7 +21292,19 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
-      ]
+      ],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Character-Keyart01A-DA",
@@ -20958,8 +21361,17 @@
         "cvr": 69,
         "cpa": 100
       },
+      "scores": {
+        "total": 90.0,
+        "grade": "최우수",
+        "rank": 6,
+        "conv": 85.0,
+        "cpa": 100.0,
+        "ipm": 86.67,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:31+09:00",
+      "tagged_at": "2026-06-17T10:22:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Keyart01A-DA\\251104_BNR_A-Character-Keyart01A-DA_L_1200x628_EN.png",
@@ -20993,8 +21405,8 @@
         "01. BNR\\선론칭\\A-Character-Keyart01A-DA\\Moloco\\260428\\260428_BNR_A-Character-Keyart01A-DA_V_768x1024_EN.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-Keyart01A-DA_S_1200x1200_EN.jpg",
@@ -22964,6 +23376,40 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
+      ],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.174,
+      "mmp_d1_cpi": 51.3,
+      "mmp_d7_roas": 0.0585,
+      "mmp_d1_retention": 21.21,
+      "mmp_quality_score": {
+        "total": 83.33,
+        "grade": "최우수",
+        "rank": 6,
+        "ipm": 80.0,
+        "cpi": 80.0,
+        "roas": 96.7,
+        "retention": 76.7
+      },
+      "mmp_installs": 33,
+      "mmp_retained_d1": 7,
+      "mmp_cost": 359,
+      "mmp_revenue": 21,
+      "mmp_daily": [
+        {
+          "creative_name": "251104_BNR_A-Character-Keyart01A-DA_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 40295,
+          "clicks": 378,
+          "cost": 359,
+          "installs": 33,
+          "retained_d1": 7,
+          "revenue_d7": 21
+        }
       ]
     },
     {
@@ -23021,8 +23467,17 @@
         "cvr": 54,
         "cpa": 96
       },
+      "scores": {
+        "total": 86.25,
+        "grade": "최우수",
+        "rank": 10,
+        "conv": 78.33,
+        "cpa": 98.33,
+        "ipm": 80.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:31+09:00",
+      "tagged_at": "2026-06-17T10:22:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Keyart02A-DA\\251104_BNR_L-Character-Keyart02A-DA_L_1200x628_EN.png",
@@ -23056,8 +23511,8 @@
         "01. BNR\\선론칭\\A-Character-Keyart02A-DA\\Moloco\\260428\\260428_BNR_A-Character-Keyart02A-DA_V_768x1024_EN.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-Keyart02A-DA_L_1200x628_EN.jpg",
@@ -25011,6 +25466,40 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
+      ],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.102,
+      "mmp_d1_cpi": 59.2,
+      "mmp_d7_roas": 0.0056,
+      "mmp_d1_retention": 14.63,
+      "mmp_quality_score": {
+        "total": 73.33,
+        "grade": "우수",
+        "rank": 11,
+        "ipm": 66.7,
+        "cpi": 66.7,
+        "roas": 93.3,
+        "retention": 66.7
+      },
+      "mmp_installs": 41,
+      "mmp_retained_d1": 6,
+      "mmp_cost": 355,
+      "mmp_revenue": 2,
+      "mmp_daily": [
+        {
+          "creative_name": "251104_BNR_A-Character-Keyart02A-DA_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 58594,
+          "clicks": 486,
+          "cost": 355,
+          "installs": 41,
+          "retained_d1": 6,
+          "revenue_d7": 2
+        }
       ]
     },
     {
@@ -25070,8 +25559,17 @@
         "cvr": 42,
         "cpa": 72
       },
+      "scores": {
+        "total": 85.0,
+        "grade": "최우수",
+        "rank": 11,
+        "conv": 88.33,
+        "cpa": 88.33,
+        "ipm": 75.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:31+09:00",
+      "tagged_at": "2026-06-17T10:22:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Life01A-DA\\251104_BNR_A-Character-Life01A-DA_L_1200x628_EN.jpg",
@@ -25092,8 +25590,8 @@
         "01. BNR\\선론칭\\A-Character-Life01A-DA\\Moloco\\260406_BNR_A-Character-Life01A-DA_V_768x1024_EN.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "251104_BNR_A-Character-Life01A-DA_S_1200x1200_EN.jpg",
@@ -27767,6 +28265,40 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
+      ],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.144,
+      "mmp_d1_cpi": 49.2,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 15.62,
+      "mmp_quality_score": {
+        "total": 80.83,
+        "grade": "최우수",
+        "rank": 9,
+        "ipm": 76.7,
+        "cpi": 86.7,
+        "roas": 90.0,
+        "retention": 70.0
+      },
+      "mmp_installs": 32,
+      "mmp_retained_d1": 5,
+      "mmp_cost": 246,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "251104_BNR_A-Character-Life01A-DA_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 34702,
+          "clicks": 278,
+          "cost": 246,
+          "installs": 32,
+          "retained_d1": 5,
+          "revenue_d7": 0
+        }
       ]
     },
     {
@@ -27828,8 +28360,17 @@
         "cvr": 35,
         "cpa": 88
       },
+      "scores": {
+        "total": 81.67,
+        "grade": "최우수",
+        "rank": 16,
+        "conv": 71.67,
+        "cpa": 95.0,
+        "ipm": 71.67,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:32+09:00",
+      "tagged_at": "2026-06-17T10:22:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Life02A-DA\\260406_BNR_A-Character-Life02A-DA_L_1200x628_EN.jpg",
@@ -27838,8 +28379,8 @@
         "01. BNR\\선론칭\\A-Character-Life02A-DA\\260406_BNR_A-Character-Life02A-DA_V_1200x1500_EN.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-Life02A-DA_L_1200x628_EN.jpg",
@@ -29777,7 +30318,19 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
-      ]
+      ],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Event-Rowena01A-DA",
@@ -29834,8 +30387,17 @@
       "creator_intent": "신규 SSR 캐릭터의 매력과 파격적인 보상을 전면에 내세워 유저의 즉각적인 플레이를 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 31,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:53+09:00",
+      "tagged_at": "2026-06-17T10:22:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Event-Rowena01A-DA\\260616_BNR_A-Event-Rowena01A-DA_L_1200x628_EN.jpg",
@@ -29846,7 +30408,19 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Mob-Adventure01A-DA",
@@ -29905,8 +30479,17 @@
         "cvr": 19,
         "cpa": 40
       },
+      "scores": {
+        "total": 77.08,
+        "grade": "우수",
+        "rank": 19,
+        "conv": 80.0,
+        "cpa": 75.0,
+        "ipm": 65.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:53+09:00",
+      "tagged_at": "2026-06-17T10:22:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Mob-Adventure01A-DA\\EN\\251111_BNR_A-Mob-Adventure01A-DA_L_1200x628_EN.jpg",
@@ -29931,8 +30514,8 @@
         "01. BNR\\선론칭\\A-Mob-Adventure01A-DA\\ES\\251111_BNR_A-Mob-Adventure01A-DA_V_1200x1500_ES.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "251111_BNR_A-Mob-Adventure01A-DA_L_1200x628_EN.jpg",
@@ -32574,6 +33157,40 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
+      ],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 50.83,
+        "grade": "양호",
+        "rank": 16,
+        "ipm": 56.7,
+        "cpi": 0.0,
+        "roas": 90.0,
+        "retention": 56.7
+      },
+      "mmp_installs": 1,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 17,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "251111_BNR_A-Mob-Adventure01A-DA_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 4963,
+          "clicks": 27,
+          "cost": 17,
+          "installs": 1,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
       ]
     },
     {
@@ -32627,8 +33244,17 @@
         "cvr": 62,
         "cpa": 44
       },
+      "scores": {
+        "total": 82.92,
+        "grade": "최우수",
+        "rank": 13,
+        "conv": 83.33,
+        "cpa": 76.67,
+        "ipm": 83.33,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:53+09:00",
+      "tagged_at": "2026-06-17T10:22:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Mob-Adventure02A-DA\\260406_BNR_A-Mob-Adventure02A-DA_L_1200x628_EN.jpg",
@@ -32645,8 +33271,8 @@
         "01. BNR\\선론칭\\A-Mob-Adventure02A-DA\\Moloco\\260406_BNR_A-Character-Adventure02A-DA_V_768x1024_EN.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Mob-Adventure02A-DA_L_1200x628_EN.jpg",
@@ -35144,7 +35770,19 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
-      ]
+      ],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "L-Character-Reward01A-DA",
@@ -35203,8 +35841,17 @@
         "cvr": 0,
         "cpa": null
       },
+      "scores": {
+        "total": 50.42,
+        "grade": "양호",
+        "rank": 27,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 56.67,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:53+09:00",
+      "tagged_at": "2026-06-17T10:22:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\L-Character-Reward01A-DA\\EN\\251211_BNR_L-Character-Reward01A-DA_L_1200x628_EN.jpg",
@@ -35217,8 +35864,8 @@
         "01. BNR\\선론칭\\L-Character-Reward01A-DA\\ES\\251125_BNR_L-Character-Reward01A-DA_V_1200x1920_ES.jpg"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "251211_BNR_L-Character-Reward01A-DA_L_1200x628_EN.jpg",
@@ -35460,6 +36107,40 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
+      ],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 50.83,
+        "grade": "양호",
+        "rank": 17,
+        "ipm": 56.7,
+        "cpi": 0.0,
+        "roas": 90.0,
+        "retention": 56.7
+      },
+      "mmp_installs": 5,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 47,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "251211_BNR_L-Character-Reward01A-DA_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 6340,
+          "clicks": 48,
+          "cost": 47,
+          "installs": 5,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
       ]
     },
     {
@@ -35515,8 +36196,17 @@
       "creator_intent": "압도적인 보상 금액으로 신규 유저의 사전등록 참여를 직접적으로 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 32,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:54+09:00",
+      "tagged_at": "2026-06-17T10:22:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\CPP\\EN\\251118_BNR_P-DA-Character-100usd01_1290x2796_EN.jpg",
@@ -35527,7 +36217,19 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-DA-Character-100usd01",
@@ -35582,8 +36284,17 @@
       "creator_intent": "압도적인 보상 금액을 전면에 내세워 사전 등록 전환율을 극대화하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 33,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:54+09:00",
+      "tagged_at": "2026-06-17T10:22:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-100usd01\\EN\\251118_BNR_P-DA-Character-100usd01_L_1200x628_EN.jpg",
@@ -35598,7 +36309,19 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-DA-Character-illust01",
@@ -35651,8 +36374,17 @@
       "creator_intent": "매력적인 다수 캐릭터 비주얼로 시청자의 호기심을 자극하여 게임에 대한 관심을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 34,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:54+09:00",
+      "tagged_at": "2026-06-17T10:22:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-illust01\\251104_BNR_P-DA-Character-illust01_L_1200x628_EN.png",
@@ -35663,7 +36395,19 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-DA-Character-illust02",
@@ -35716,8 +36460,17 @@
       "creator_intent": "다양한 매력의 캐릭터들을 전면에 내세워 수집형 RPG의 잠재적 이용자 관심을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 35,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:54+09:00",
+      "tagged_at": "2026-06-17T10:22:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-illust02\\251104_BNR_P-DA-Character-illust02_L_1200x628_EN.png",
@@ -35728,7 +36481,19 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-DA-Character-SD01",
@@ -35783,8 +36548,17 @@
       "creator_intent": "귀여운 캐릭터와 밝은 분위기로 신규 유저의 호감을 얻어 다운로드를 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 36,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:54+09:00",
+      "tagged_at": "2026-06-17T10:22:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-SD01\\251104_BNR_P-DA-Character-SD01_L_1200x628_EN.jpg",
@@ -35795,7 +36569,19 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-DA-Character-SD02",
@@ -35850,8 +36636,17 @@
       "creator_intent": "귀여운 SD 캐릭터와 비주얼 임팩트로 신규 유저의 흥미를 유발하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 37,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:54+09:00",
+      "tagged_at": "2026-06-17T10:22:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-SD02\\251104_BNR_P-DA-Character-SD02_L_1200x628_EN.jpg",
@@ -35862,7 +36657,19 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-DA-Character-Slogan01",
@@ -35917,8 +36724,17 @@
       "creator_intent": "귀여운 캐릭터들의 매력을 전면에 내세워 시청자의 호기심을 유발하고 클릭을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 38,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:55+09:00",
+      "tagged_at": "2026-06-17T10:22:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-Slogan01\\EN\\251118_BNR_P-DA-Character-Slogan01_L_1200x628_EN.jpg",
@@ -35933,7 +36749,19 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-DA-Character-Slogan02",
@@ -35988,8 +36816,17 @@
       "creator_intent": "귀여운 캐릭터 비주얼과 다양한 영웅 라인업으로 신규 유저의 호감을 얻으려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 39,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:55+09:00",
+      "tagged_at": "2026-06-17T10:22:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-Slogan02\\EN\\251118_BNR_P-DA-Character-Slogan02_L_1200x628_EN.jpg",
@@ -36004,7 +36841,19 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-DA-Slogan-Aya01",
@@ -36059,8 +36908,17 @@
       "creator_intent": "귀여운 캐릭터와 명료한 슬로건으로 게임에 대한 호기심을 유발하고 플레이를 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 40,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:55+09:00",
+      "tagged_at": "2026-06-17T10:22:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Slogan-Aya01\\EN\\251111_BNR_P-DA-Slogan-Aya_L_1200x628_EN.jpg",
@@ -36075,7 +36933,19 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "P-DA-Slogan-Goblin01",
@@ -36130,8 +37000,17 @@
       "creator_intent": "귀여운 캐릭터와 비주얼로 시선을 사로잡고 게임 플레이에 대한 호기심을 유발하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 41,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:55+09:00",
+      "tagged_at": "2026-06-17T10:22:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Slogan-Goblin01\\EN\\251111_BNR_P-DA-Slogan-Goblin_L_1200x628_EN.jpg",
@@ -36146,7 +37025,19 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "L-Mob-Adventure01A-UA",
@@ -36204,8 +37095,17 @@
         "cvr": 23,
         "cpa": 4
       },
+      "scores": {
+        "total": 70.83,
+        "grade": "우수",
+        "rank": 22,
+        "conv": 68.33,
+        "cpa": 60.0,
+        "ipm": 66.67,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:55+09:00",
+      "tagged_at": "2026-06-17T10:22:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\선론칭\\L-Mob-Adventure01A-UA\\EN\\251211_VID_L-Mob-Adventure01A-UA_L_1920x1080_EN.mp4",
@@ -36219,8 +37119,8 @@
         "02. VID\\선론칭\\L-Mob-Adventure01A-UA\\ES\\251125_VID_L-Mob-Adventure01A-UA_V_1080x1920_ES.mp4"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "251202_VID_L-Mob-Adventure01A-UA_V_1080x1920_EN",
@@ -36382,6 +37282,40 @@
           "conversions": 8.0,
           "conversions_value": 8.0
         }
+      ],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.088,
+      "mmp_d1_cpi": 139.0,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 7.69,
+      "mmp_quality_score": {
+        "total": 70.0,
+        "grade": "우수",
+        "rank": 12,
+        "ipm": 63.3,
+        "cpi": 63.3,
+        "roas": 90.0,
+        "retention": 63.3
+      },
+      "mmp_installs": 13,
+      "mmp_retained_d1": 1,
+      "mmp_cost": 139,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "251211_VID_L-Mob-Adventure01A-UA_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 11375,
+          "clicks": 112,
+          "cost": 139,
+          "installs": 13,
+          "retained_d1": 1,
+          "revenue_d7": 0
+        }
       ]
     },
     {
@@ -36435,8 +37369,17 @@
         "cvr": 92,
         "cpa": 64
       },
+      "scores": {
+        "total": 90.42,
+        "grade": "최우수",
+        "rank": 5,
+        "conv": 91.67,
+        "cpa": 85.0,
+        "ipm": 96.67,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:56+09:00",
+      "tagged_at": "2026-06-17T10:22:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection01A-UA\\251104_VID_A-Character-Collection01A-UA_L_1920x1080_EN.mp4",
@@ -36450,8 +37393,8 @@
         "02. VID\\상시\\A-Character-Collection01A-UA\\작업용\\PH_SL_UA_verA_W_EN.mp4"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "251104_VID_A-Character-Collection01A-UA_L_1920x1080_EN",
@@ -39317,6 +40260,40 @@
           "conversions": 1.0,
           "conversions_value": 0.0
         }
+      ],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 50.83,
+        "grade": "양호",
+        "rank": 18,
+        "ipm": 56.7,
+        "cpi": 0.0,
+        "roas": 90.0,
+        "retention": 56.7
+      },
+      "mmp_installs": 6,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 69,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "251104_VID_A-Character-Collection01A-UA_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 3846,
+          "clicks": 24,
+          "cost": 69,
+          "installs": 6,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
       ]
     },
     {
@@ -39370,8 +40347,17 @@
         "cvr": 81,
         "cpa": 60
       },
+      "scores": {
+        "total": 91.25,
+        "grade": "최우수",
+        "rank": 4,
+        "conv": 98.33,
+        "cpa": 83.33,
+        "ipm": 91.67,
+        "roas": 91.67
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:56+09:00",
+      "tagged_at": "2026-06-17T10:22:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection01B-UA\\EN\\251204_VID_A-Character-Collection01B-UA_L_1920x1080_EN.mp4",
@@ -39388,8 +40374,8 @@
         "02. VID\\상시\\A-Character-Collection01B-UA\\ES\\251203_VID_A-Character-Collection01B-UA_V_1080x1920_ES.mp4"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "251204_VID_A-Character-Collection01B-UA_S_1080x1080_EN",
@@ -45423,6 +46409,40 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
+      ],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 50.83,
+        "grade": "양호",
+        "rank": 19,
+        "ipm": 56.7,
+        "cpi": 0.0,
+        "roas": 90.0,
+        "retention": 56.7
+      },
+      "mmp_installs": 2,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 17,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "251204_VID_A-Character-Collection01B-UA_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 1281,
+          "clicks": 15,
+          "cost": 17,
+          "installs": 2,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
       ]
     },
     {
@@ -45478,8 +46498,17 @@
       "creator_intent": "압도적인 보상과 매력적인 캐릭터로 신규 유저의 즉각적인 클릭을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 42,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:57+09:00",
+      "tagged_at": "2026-06-17T10:22:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection02A-PV\\EN\\251211_VID_A-Character-Collection02A-PV_L_1920x1080_EN.mp4",
@@ -45494,7 +46523,41 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 50.83,
+        "grade": "양호",
+        "rank": 20,
+        "ipm": 56.7,
+        "cpi": 0.0,
+        "roas": 90.0,
+        "retention": 56.7
+      },
+      "mmp_installs": 2,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 36,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "251211_VID_A-Character-Collection02A-PV_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 2029,
+          "clicks": 30,
+          "cost": 36,
+          "installs": 2,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "A-Character-Collection02A-UA",
@@ -45545,8 +46608,17 @@
       "creator_intent": "다양하고 귀여운 캐릭터와 쉬운 성장 시스템을 보여주며 캐주얼 RPG 유저의 관심을 끌려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 43,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:57+09:00",
+      "tagged_at": "2026-06-17T10:22:37+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection02A-UA\\260123_VID_A-Character-Collection02A-UA_L_1920x1080_EN.mp4",
@@ -45556,7 +46628,41 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 50.83,
+        "grade": "양호",
+        "rank": 21,
+        "ipm": 56.7,
+        "cpi": 0.0,
+        "roas": 90.0,
+        "retention": 56.7
+      },
+      "mmp_installs": 1,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 21,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "260123_VID_A-Character-Collection02A-UA_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 1294,
+          "clicks": 9,
+          "cost": 21,
+          "installs": 1,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "A-Character-Collection02B-UA",
@@ -45611,8 +46717,17 @@
       "creator_intent": "귀여운 캐릭터 비주얼과 수집/성장 요소를 강조하여 신규 유저의 흥미를 유발하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 44,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:57+09:00",
+      "tagged_at": "2026-06-17T10:22:37+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection02B-UA\\260123_VID_A-Character-Collection02B-UA_L_1920x1080_EN.mp4",
@@ -45622,7 +46737,41 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 50.83,
+        "grade": "양호",
+        "rank": 22,
+        "ipm": 56.7,
+        "cpi": 0.0,
+        "roas": 90.0,
+        "retention": 56.7
+      },
+      "mmp_installs": 0,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 7,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "260123_VID_A-Character-Collection02B-UA_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 520,
+          "clicks": 3,
+          "cost": 7,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "A-Character-Collection02C-UA",
@@ -45677,8 +46826,17 @@
       "creator_intent": "다양한 매력의 캐릭터들을 보여주며 게임의 전략적 재미를 어필하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 45,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:58+09:00",
+      "tagged_at": "2026-06-17T10:22:37+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection02C-UA\\260123_VID_A-Character-Collection02C-UA_L_1920x1080_EN.mp4",
@@ -45688,7 +46846,41 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 50.83,
+        "grade": "양호",
+        "rank": 23,
+        "ipm": 56.7,
+        "cpi": 0.0,
+        "roas": 90.0,
+        "retention": 56.7
+      },
+      "mmp_installs": 2,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 28,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "260123_VID_A-Character-Collection02C-UA_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 1647,
+          "clicks": 12,
+          "cost": 28,
+          "installs": 2,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "A-Character-Collection02D-UA",
@@ -45743,8 +46935,17 @@
       "creator_intent": "다양한 캐릭터의 매력과 전투 연출을 통해 게임의 재미를 직접 보여주려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 46,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:58+09:00",
+      "tagged_at": "2026-06-17T10:22:37+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection02D-UA\\260123_VID_A-Character-Collection02D-UA_L_1920x1080_EN.mp4",
@@ -45754,7 +46955,41 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 50.83,
+        "grade": "양호",
+        "rank": 24,
+        "ipm": 56.7,
+        "cpi": 0.0,
+        "roas": 90.0,
+        "retention": 56.7
+      },
+      "mmp_installs": 0,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 11,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "260123_VID_A-Character-Collection02D-UA_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 821,
+          "clicks": 6,
+          "cost": 11,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "A-Character-Collection03A-PV",
@@ -45809,8 +47044,17 @@
       "creator_intent": "매력적인 캐릭터와 풍성한 보상으로 신규 유저의 즉각적인 클릭을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 47,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:59+09:00",
+      "tagged_at": "2026-06-17T10:22:38+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection03A-PV\\260123_VID_A-Character-Collection03A-PV_L_1920x1080_EN.mp4",
@@ -45820,7 +47064,41 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 50.83,
+        "grade": "양호",
+        "rank": 25,
+        "ipm": 56.7,
+        "cpi": 0.0,
+        "roas": 90.0,
+        "retention": 56.7
+      },
+      "mmp_installs": 0,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 10,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "260123_VID_A-Character-Collection03A-PV_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 626,
+          "clicks": 10,
+          "cost": 10,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "A-Character-Collection03B-PV",
@@ -45875,8 +47153,17 @@
       "creator_intent": "매력적인 캐릭터와 파격적인 보상으로 신규 유저의 즉각적인 관심을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 48,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:01:59+09:00",
+      "tagged_at": "2026-06-17T10:22:38+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection03B-PV\\260123_VID_A-Character-Collection03B-PV_L_1920x1080_EN.mp4",
@@ -45886,7 +47173,41 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 50.83,
+        "grade": "양호",
+        "rank": 26,
+        "ipm": 56.7,
+        "cpi": 0.0,
+        "roas": 90.0,
+        "retention": 56.7
+      },
+      "mmp_installs": 0,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 21,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "260123_VID_A-Character-Collection03B-PV_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 1164,
+          "clicks": 18,
+          "cost": 21,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "A-Character-Collection03C-PV",
@@ -45941,8 +47262,17 @@
       "creator_intent": "압도적인 보상과 시네마틱 연출로 유저의 흥미를 유발하고 게임에 대한 기대감을 높이려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 49,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:02:00+09:00",
+      "tagged_at": "2026-06-17T10:22:38+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection03C-PV\\260123_VID_A-Character-Collection03C-PV_L_1920x1080_EN.mp4",
@@ -45952,7 +47282,41 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.516,
+      "mmp_d1_cpi": 36.0,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 33.33,
+      "mmp_quality_score": {
+        "total": 95.0,
+        "grade": "최우수",
+        "rank": 2,
+        "ipm": 96.7,
+        "cpi": 96.7,
+        "roas": 90.0,
+        "retention": 96.7
+      },
+      "mmp_installs": 3,
+      "mmp_retained_d1": 1,
+      "mmp_cost": 36,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "260123_VID_A-Character-Collection03C-PV_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 1937,
+          "clicks": 40,
+          "cost": 36,
+          "installs": 3,
+          "retained_d1": 1,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "A-Character-Collection03D-PV",
@@ -46009,8 +47373,17 @@
       "creator_intent": "매력적인 캐릭터와 파격적인 보상으로 신규 유저의 즉각적인 클릭을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 50,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:02:00+09:00",
+      "tagged_at": "2026-06-17T10:22:39+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection03D-PV\\260123_VID_A-Character-Collection03D-PV_L_1920x1080_EN.mp4",
@@ -46020,7 +47393,41 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 50.83,
+        "grade": "양호",
+        "rank": 27,
+        "ipm": 56.7,
+        "cpi": 0.0,
+        "roas": 90.0,
+        "retention": 56.7
+      },
+      "mmp_installs": 2,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 37,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "260123_VID_A-Character-Collection03D-PV_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 1800,
+          "clicks": 31,
+          "cost": 37,
+          "installs": 2,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "A-Character-Collection04A-UA",
@@ -46073,8 +47480,17 @@
       "creator_intent": "대규모 무료 소환 기회와 귀여운 캐릭터, 박진감 넘치는 전투 연출로 신규 유저 유입을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 51,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:02:01+09:00",
+      "tagged_at": "2026-06-17T10:22:39+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection04A-UA\\260616_VID_A-Character-Collection04A-UA_L_1920x1080_EN.mp4",
@@ -46084,7 +47500,19 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Character-Collection04B-UA",
@@ -46137,8 +47565,17 @@
       "creator_intent": "대규모 무료 보상과 화려한 연출로 신규 유저의 즉각적인 클릭과 설치를 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 52,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:02:02+09:00",
+      "tagged_at": "2026-06-17T10:22:39+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection04B-UA\\260616_VID_A-Character-Collection04B-UA_L_1920x1080_EN.mp4",
@@ -46148,7 +47585,19 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Character-Combat01A-UA",
@@ -46207,8 +47656,17 @@
         "cvr": 88,
         "cpa": 56
       },
+      "scores": {
+        "total": 92.92,
+        "grade": "최우수",
+        "rank": 2,
+        "conv": 96.67,
+        "cpa": 81.67,
+        "ipm": 95.0,
+        "roas": 98.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:02:02+09:00",
+      "tagged_at": "2026-06-17T10:22:40+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Combat01A-UA\\260123_VID_A-Character-Combat01A-UA_L_1920x1080_EN.mp4",
@@ -46225,8 +47683,8 @@
         "02. VID\\상시\\A-Character-Combat01A-UA\\엔드카드 수정본\\251209_VID_A-Character-Combat01A-UA_V_1080x1920_EN.mp4"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "260120_VID_A-Character-Combat01A-UA_L_1920x1080_EN",
@@ -52276,6 +53734,40 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
+      ],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.249,
+      "mmp_d1_cpi": 57.0,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 22.22,
+      "mmp_quality_score": {
+        "total": 83.33,
+        "grade": "최우수",
+        "rank": 7,
+        "ipm": 86.7,
+        "cpi": 73.3,
+        "roas": 90.0,
+        "retention": 83.3
+      },
+      "mmp_installs": 9,
+      "mmp_retained_d1": 2,
+      "mmp_cost": 114,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "260123_VID_A-Character-Combat01A-UA_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 8023,
+          "clicks": 97,
+          "cost": 114,
+          "installs": 9,
+          "retained_d1": 2,
+          "revenue_d7": 0
+        }
       ]
     },
     {
@@ -52335,8 +53827,17 @@
         "cvr": 73,
         "cpa": 32
       },
+      "scores": {
+        "total": 87.5,
+        "grade": "최우수",
+        "rank": 8,
+        "conv": 95.0,
+        "cpa": 71.67,
+        "ipm": 88.33,
+        "roas": 95.0
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:02:02+09:00",
+      "tagged_at": "2026-06-17T10:22:40+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Combat01B-UA\\EN\\251204_VID_A-Character-Combat01B-UA_L_1920x1080_EN.mp4",
@@ -52350,8 +53851,8 @@
         "02. VID\\상시\\A-Character-Combat01B-UA\\ES\\251203_VID_A-Character-Combat01B-UA_V_1080x1920_ES.mp4"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "251204_VID_A-Character-Combat01B-UA_V_1080x1920_EN",
@@ -58401,6 +59902,40 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
+      ],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.586,
+      "mmp_d1_cpi": 25.6,
+      "mmp_d7_roas": 0.1016,
+      "mmp_d1_retention": 41.67,
+      "mmp_quality_score": {
+        "total": 100.0,
+        "grade": "최우수",
+        "rank": 1,
+        "ipm": 100.0,
+        "cpi": 100.0,
+        "roas": 100.0,
+        "retention": 100.0
+      },
+      "mmp_installs": 12,
+      "mmp_retained_d1": 5,
+      "mmp_cost": 128,
+      "mmp_revenue": 13,
+      "mmp_daily": [
+        {
+          "creative_name": "251204_VID_A-Character-Combat01B-UA_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 8528,
+          "clicks": 82,
+          "cost": 128,
+          "installs": 12,
+          "retained_d1": 5,
+          "revenue_d7": 13
+        }
       ]
     },
     {
@@ -58454,8 +59989,17 @@
       "creator_intent": "다양한 매력의 캐릭터와 풍성한 보상을 앞세워 신규 유저의 흥미를 유발하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 53,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:02:03+09:00",
+      "tagged_at": "2026-06-17T10:22:40+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Combat02A-UA\\260616_VID_A-Character-Combat02A-UA_L_1920x1080_EN.mp4",
@@ -58465,7 +60009,19 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Character-Combat02B-UA",
@@ -58518,8 +60074,17 @@
       "creator_intent": "매력적인 캐릭터 비주얼과 화려한 전투 연출로 시청자의 흥미를 유발하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 54,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:02:03+09:00",
+      "tagged_at": "2026-06-17T10:22:40+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Combat02B-UA\\260616_VID_A-Character-Combat02B-UA_L_1920x1080_EN.mp4",
@@ -58529,7 +60094,19 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Hooking-minigame01A-FK",
@@ -58585,8 +60162,17 @@
         "cvr": 12,
         "cpa": 0
       },
+      "scores": {
+        "total": 68.75,
+        "grade": "우수",
+        "rank": 24,
+        "conv": 66.67,
+        "cpa": 58.33,
+        "ipm": 61.67,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:02:03+09:00",
+      "tagged_at": "2026-06-17T10:22:41+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-minigame01A-FK\\EN\\251125_VID_A-Hooking-minigame01A-FK_L_1920x1080_EN.mp4",
@@ -58597,8 +60183,8 @@
         "02. VID\\상시\\A-Hooking-minigame01A-FK\\ES\\251125_VID_A-Hooking-minigame01A-FK_V_1080x1920_ES.mp4"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "251125_VID_A-Hooking-minigame01A-FK_L_1920x1080_EN",
@@ -58840,6 +60426,40 @@
           "conversions": 9.0,
           "conversions_value": 9.0
         }
+      ],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.24,
+      "mmp_d1_cpi": 49.7,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 23.08,
+      "mmp_quality_score": {
+        "total": 85.83,
+        "grade": "최우수",
+        "rank": 5,
+        "ipm": 83.3,
+        "cpi": 83.3,
+        "roas": 90.0,
+        "retention": 86.7
+      },
+      "mmp_installs": 13,
+      "mmp_retained_d1": 3,
+      "mmp_cost": 149,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "251125_VID_A-Hooking-minigame01A-FK_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 12509,
+          "clicks": 119,
+          "cost": 149,
+          "installs": 13,
+          "retained_d1": 3,
+          "revenue_d7": 0
+        }
       ]
     },
     {
@@ -58895,8 +60515,17 @@
       "creator_intent": "귀여운 캐릭터와 쉬운 성장 과정을 보여주며 신규 유저의 흥미를 유발하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 55,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:02:04+09:00",
+      "tagged_at": "2026-06-17T10:22:41+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-minigame02A-FK\\260123_VID_A-Hooking-minigame02A-FK_L_1920x1080_EN.mp4",
@@ -58906,7 +60535,41 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 50.83,
+        "grade": "양호",
+        "rank": 28,
+        "ipm": 56.7,
+        "cpi": 0.0,
+        "roas": 90.0,
+        "retention": 56.7
+      },
+      "mmp_installs": 1,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 31,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "260123_VID_A-Hooking-minigame02A-FK_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 2336,
+          "clicks": 18,
+          "cost": 31,
+          "installs": 1,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "A-Hooking-minigame02B-FK",
@@ -58959,8 +60622,17 @@
       "creator_intent": "귀여운 캐릭터와 퀘스트 기반의 상호작용으로 게임의 매력을 어필하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 56,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:02:05+09:00",
+      "tagged_at": "2026-06-17T10:22:41+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-minigame02B-FK\\260123_VID_A-Hooking-minigame02B-FK_L_1920x1080_EN.mp4",
@@ -58970,7 +60642,41 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.405,
+      "mmp_d1_cpi": 38.0,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 25.0,
+      "mmp_quality_score": {
+        "total": 91.67,
+        "grade": "최우수",
+        "rank": 3,
+        "ipm": 93.3,
+        "cpi": 93.3,
+        "roas": 90.0,
+        "retention": 90.0
+      },
+      "mmp_installs": 8,
+      "mmp_retained_d1": 2,
+      "mmp_cost": 76,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "260123_VID_A-Hooking-minigame02B-FK_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 4939,
+          "clicks": 57,
+          "cost": 76,
+          "installs": 8,
+          "retained_d1": 2,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "A-Hooking-minigame02C-FK",
@@ -59025,8 +60731,17 @@
       "creator_intent": "귀여운 캐릭터와 미션 수행 과정을 통해 게임의 아기자기한 분위기와 스토리텔링 요소를 보여주려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 57,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:02:05+09:00",
+      "tagged_at": "2026-06-17T10:22:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-minigame02C-FK\\260123_VID_A-Hooking-minigame02C-FK_L_1920x1080_EN.mp4",
@@ -59036,7 +60751,41 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.078,
+      "mmp_d1_cpi": 161.0,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 7.69,
+      "mmp_quality_score": {
+        "total": 68.33,
+        "grade": "우수",
+        "rank": 13,
+        "ipm": 60.0,
+        "cpi": 60.0,
+        "roas": 90.0,
+        "retention": 63.3
+      },
+      "mmp_installs": 13,
+      "mmp_retained_d1": 1,
+      "mmp_cost": 161,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "260123_VID_A-Hooking-minigame02C-FK_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 12833,
+          "clicks": 196,
+          "cost": 161,
+          "installs": 13,
+          "retained_d1": 1,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "A-Hooking-minigame02D-FK",
@@ -59088,8 +60837,17 @@
       "creator_intent": "귀여운 캐릭터와 퀘스트 기반의 서사를 통해 신규 유저의 흥미를 유발하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 58,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:02:06+09:00",
+      "tagged_at": "2026-06-17T10:22:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-minigame02D-FK\\260123_VID_A-Hooking-minigame02D-FK_L_1920x1080_EN.mp4",
@@ -59099,7 +60857,41 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.396,
+      "mmp_d1_cpi": 42.0,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 21.43,
+      "mmp_quality_score": {
+        "total": 87.5,
+        "grade": "최우수",
+        "rank": 4,
+        "ipm": 90.0,
+        "cpi": 90.0,
+        "roas": 90.0,
+        "retention": 80.0
+      },
+      "mmp_installs": 14,
+      "mmp_retained_d1": 3,
+      "mmp_cost": 126,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "260123_VID_A-Hooking-minigame02D-FK_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 7584,
+          "clicks": 140,
+          "cost": 126,
+          "installs": 14,
+          "retained_d1": 3,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "A-Hooking-Reward02A-FK",
@@ -59158,8 +60950,17 @@
         "cvr": 58,
         "cpa": 24
       },
+      "scores": {
+        "total": 83.33,
+        "grade": "최우수",
+        "rank": 12,
+        "conv": 90.0,
+        "cpa": 68.33,
+        "ipm": 81.67,
+        "roas": 93.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:02:55+09:00",
+      "tagged_at": "2026-06-17T10:22:43+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-Reward02A-FK\\EN\\251211_VID_A-Hooking-Reward02A-FK_L_1920x1080_EN.mp4",
@@ -59176,8 +60977,8 @@
         "02. VID\\상시\\A-Hooking-Reward02A-FK\\ES\\251211_VID_A-Hooking-Reward02A-FK_V_1200x1500_ES.mp4"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "251211_VID_A-Hooking-Reward02A-FK_L_1920x1080_EN",
@@ -63819,6 +65620,40 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
+      ],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 50.83,
+        "grade": "양호",
+        "rank": 29,
+        "ipm": 56.7,
+        "cpi": 0.0,
+        "roas": 90.0,
+        "retention": 56.7
+      },
+      "mmp_installs": 0,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 14,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "251211_VID_A-Hooking-Reward02A-FK_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 710,
+          "clicks": 13,
+          "cost": 14,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
       ]
     },
     {
@@ -63872,8 +65707,17 @@
         "cvr": 96,
         "cpa": 48
       },
+      "scores": {
+        "total": 91.67,
+        "grade": "최우수",
+        "rank": 3,
+        "conv": 93.33,
+        "cpa": 78.33,
+        "ipm": 98.33,
+        "roas": 96.67
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:03:23+09:00",
+      "tagged_at": "2026-06-17T10:22:43+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-Reward03A-UA\\EN\\251211_VID_A-Hooking-Reward03A-UA_L_1920x1080_EN.mp4",
@@ -63889,8 +65733,8 @@
         "02. VID\\상시\\A-Hooking-Reward03A-UA\\ES\\251211_VID_A-Hooking-Reward03A-UA_V_1200x1500_ES.mp4"
       ],
       "kpi_source": "google_ads",
-      "kpi_window_start": "2026-01-08",
-      "kpi_window_end": "2026-06-15",
+      "kpi_window_start": "2026-01-09",
+      "kpi_window_end": "2026-06-16",
       "kpi_daily": [
         {
           "creative_name": "260406_VID_A-Hooking-Reward03A-UA_S_1080x1080_EN",
@@ -68388,6 +70232,40 @@
           "conversions": 0.0,
           "conversions_value": 0.0
         }
+      ],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 50.83,
+        "grade": "양호",
+        "rank": 30,
+        "ipm": 56.7,
+        "cpi": 0.0,
+        "roas": 90.0,
+        "retention": 56.7
+      },
+      "mmp_installs": 0,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 6,
+      "mmp_revenue": 0,
+      "mmp_daily": [
+        {
+          "creative_name": "251211_VID_A-Hooking-Reward03A-UA_ALL_Mixed_EN",
+          "date": "2026-06-16",
+          "channel": "facebook.business",
+          "impressions": 415,
+          "clicks": 10,
+          "cost": 6,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
       ]
     },
     {
@@ -68441,8 +70319,17 @@
       "creator_intent": "진행자의 설명을 통해 게임의 다양한 콘텐츠와 풍성한 보상을 소개하여 신규 유저 유입을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 59,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:04:15+09:00",
+      "tagged_at": "2026-06-17T10:22:43+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Testimonial-US01A-UA\\260616_VID_A-Testimonial-US01A-UA_L_1920x1080_EN.mp4",
@@ -68452,7 +70339,19 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Testimonial-US01B-UA",
@@ -68505,8 +70404,17 @@
       "creator_intent": "귀여운 캐릭터와 보물찾기라는 명확한 목표를 제시하여 보상형 게임을 선호하는 유저에게 어필하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
+      "scores": {
+        "total": 36.25,
+        "grade": "보통",
+        "rank": 60,
+        "conv": 56.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 88.33
+      },
       "marketer_insight": null,
-      "tagged_at": "2026-06-16T13:04:46+09:00",
+      "tagged_at": "2026-06-17T10:22:44+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Testimonial-US01B-UA\\260616_VID_A-Testimonial-US01B-UA_L_1920x1080_EN.mp4",
@@ -68516,17 +70424,42 @@
       "kpi_source": null,
       "kpi_window_start": null,
       "kpi_window_end": null,
-      "kpi_daily": []
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_daily": []
     }
   ],
   "metrics": {
     "scanned_folders": 60,
     "tagged_records": 60,
-    "cache_hits": 54,
-    "cache_misses": 6,
+    "cache_hits": 60,
+    "cache_misses": 0,
     "failures": 0,
-    "duration_sec": 239.6,
+    "duration_sec": 10.0,
     "prompt_version": "v3.3-2026.06.13-character-split-single",
-    "fallback_used": false
+    "fallback_used": false,
+    "score_summary": {
+      "graded": 27,
+      "grades": {
+        "우수": 8,
+        "최우수": 18,
+        "양호": 1
+      },
+      "top": {
+        "name": "A-Character-Adventure01A-DA",
+        "total": 96.25,
+        "grade": "최우수"
+      }
+    }
   }
 }

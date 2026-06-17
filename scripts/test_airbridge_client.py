@@ -1,31 +1,39 @@
 # -*- coding: utf-8 -*-
-"""AirbridgeMmpSource HTTP 폴링 로직 검증 (requests monkeypatch)."""
+"""AirbridgeMmpSource 폴링 + fetch_mmp_window end-to-end (실 형식 mock, requests 대체)."""
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from datetime import date
 import pipeline.sources.airbridge as ab
 
-class FakeResp:
-    def __init__(self, payload, status=200): self._p = payload; self.status_code = status
-    def json(self): return self._p
-    def raise_for_status(self):
-        if self.status_code >= 400: raise RuntimeError(f"HTTP {self.status_code}")
+
+class Resp:
+    def __init__(s, p): s._p = p; s.status_code = 200
+    def json(s): return s._p
+    def raise_for_status(s): pass
+
 
 class FakeSession:
-    """POST → taskId, 1번째 GET → RUNNING, 2번째 GET → SUCCESS+rows."""
-    def __init__(self): self.gets = 0
-    def post(self, url, **kw): return FakeResp({"task": {"id": "task-123"}})
-    def get(self, url, **kw):
-        self.gets += 1
-        if self.gets < 2:
-            return FakeResp({"task": {"status": "RUNNING"}})
-        return FakeResp({"task": {"status": "SUCCESS"}, "rows": [
-            {"groupBy": {"ad_creative": "A-X-DA", "channel": "Meta", "event_date": "2026-02-01"},
-             "metrics": {"impressions": 1000, "clicks": 10, "cost": 5000, "app_installs": 20}}]})
+    """POST → task.taskId / 1번째 GET → RUNNING / 2번째 GET → SUCCESS + 실 형식 rows."""
+    def __init__(s): s.gets = 0
+    def post(s, url, **kw): return Resp({"task": {"taskId": "t-1", "status": "PENDING"}})
+    def get(s, url, **kw):
+        s.gets += 1
+        if s.gets < 2:
+            return Resp({"task": {"status": "RUNNING"}})
+        return Resp({"actuals": {"data": {"rows": [
+            {"groupBys": ["260123_VID_A-X-FK_V_1080x1920_EN", "facebook.business", "2026-02-10"],
+             "values": {"impressions_channel": {"value": 1000.0}, "clicks_channel": {"value": 20.0},
+                        "cost_channel": {"value": 500.0}, "app_installs": {"value": 40.0},
+                        "retention_app_open_day_1_count": {"value": 12.0}, "custom_revenue_j75a3l": {"value": 60.0}}},
+            {"groupBys": ["x", "google.adwords", "2026-02-10"], "values": {"cost_channel": {"value": 9.0}}},
+        ]}}, "task": {"taskId": "t-1", "status": "SUCCESS"}})
+
 
 src = ab.AirbridgeMmpSource(token="t", app_name="pepp", session=FakeSession(), poll_interval_sec=0)
-rows = src._create_and_poll("actuals/query", {"from": "2026-02-01"})
-assert rows["task"]["status"] == "SUCCESS" and len(rows["rows"]) == 1
 assert src.source_name() == "airbridge"
+daily = src.fetch_mmp_window(date(2026, 2, 1), date(2026, 2, 28), exclude_channels={"google.adwords"})
+assert len(daily) == 1, f"google 제외 → 1행, 실제 {len(daily)}"
+d = daily[0]
+assert d.channel == "facebook.business" and d.cost == 500 and d.retained_d1 == 12 and d.revenue_d7 == 60
 print("✅ test_airbridge_client 통과")

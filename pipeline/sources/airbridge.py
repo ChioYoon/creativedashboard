@@ -1,43 +1,102 @@
 # -*- coding: utf-8 -*-
-"""Airbridge MMP Source — Stage 7.
+"""Airbridge MMP Source — Stage 7 (7-A 실 API 검증 후 재작성).
 
-3개 비동기 리포트(Actuals/Revenue/Retention)를 페치→파싱→소재별 CreativeMmpDaily 병합.
-HTTP 무의존 파서(parse_*/merge_reports)와 HTTP 클라이언트(AirbridgeMmpSource)를 분리해
-파서는 mock fixture로 단위 검증한다.
+설계(2026-06-17 실 API 진단으로 확정):
+- 모든 품질 메트릭이 **Actuals 리포트 단일 쿼리**에 존재 → Revenue/Retention 별도 리포트 불필요.
+  · 비용/노출/클릭: 채널측 cost_channel·impressions_channel·clicks_channel (광고 네트워크 연동, 4h 갱신)
+  · 설치: app_installs
+  · D1 잔존수: retention_app_open_day_1_count
+  · D7 누적매출: custom_revenue_j75a3l ("Revenue - Sum - D7" — ⚠️ 앱별 custom, titles.json 오버라이드 가능)
+- 비동기: POST actuals/query → task.taskId → GET 폴링(task.status SUCCESS).
+- 결과: result["actuals"]["data"]["rows"], 각 row = {groupBys:[ad_creative,channel,event_date], values:{metric:{value}}}.
+- 非Google 필터: channel 제외 목록(google.adwords + 오가닉/테스트) + ad_creative 비어있는 행(오가닉) 제외.
 
-⚠️ 리포트 응답 JSON key 명은 7-A 1건 실호출로 최종 확인 — parse_* 만 소폭 조정 가능.
-레퍼런스: https://help.airbridge.io/en/references/actuals-report
+메트릭/필드 식별자 출처: GET https://api.airbridge.io/dataspec/v2/apps/{app}/actual-report/{metrics,fields}
 """
 from __future__ import annotations
-
-from typing import Optional
-
-from ..schemas import CreativeMmpDaily
 
 import os
 import sys
 import time
 from datetime import date, timedelta
+from typing import Optional
 
 import requests
 
 from ..base_errors import AuthError, QuotaError
+from ..schemas import CreativeMmpDaily
 
 API_BASE = "https://api.airbridge.io/reports/api"
-REPORT_VERSIONS = {"actuals": "v7", "revenue": "v3", "retention": "v5"}
-RETENTION_MAX_DAYS = 92
+DATASPEC_BASE = "https://api.airbridge.io/dataspec/v2"
+ACTUALS_VER = "v7"
+
+# 품질지표 → Airbridge Actuals 메트릭 key 매핑. 값이 빈 문자열이면 해당 메트릭 생략(→ 0).
+# revenue_d7 는 앱별 custom 메트릭이라 env/titles 로 오버라이드 가능.
+DEFAULT_METRICS = {
+    "impressions": "impressions_channel",
+    "clicks": "clicks_channel",
+    "cost": "cost_channel",
+    "installs": "app_installs",
+    "retained_d1": "retention_app_open_day_1_count",
+    "revenue_d7": "custom_revenue_j75a3l",
+}
+
+# 비-Google 유료 소재 분석이 목적 → Google + 오가닉/테스트 채널 제외.
+DEFAULT_EXCLUDE_CHANNELS = ["google.adwords", "unattributed", "appstore", "sns", "airbridge_sdk_test"]
+
+
+def parse_actuals_rows(result: dict, metrics_map: dict, exclude_channels: set,
+                       default_date: str = "") -> list[CreativeMmpDaily]:
+    """Actuals SUCCESS 결과 → CreativeMmpDaily 리스트 (HTTP 무의존, 단위 테스트용).
+
+    row = {"groupBys": [ad_creative, channel(, event_date)], "values": {metric_key: {"value": x}}}
+    event_date 미포함 grouping(소재×채널 집계)이면 date 는 default_date(윈도우 종료일) 사용.
+    ad_creative 가 빈 문자열(오가닉)이거나 channel 이 제외 목록이면 스킵.
+    """
+    rows = (((result.get("actuals") or {}).get("data") or {}).get("rows")) or []
+    out: list[CreativeMmpDaily] = []
+    for row in rows:
+        gb = row.get("groupBys") or []
+        if len(gb) < 2:
+            continue
+        creative, channel = gb[0], gb[1]
+        dt = gb[2] if len(gb) > 2 else default_date
+        if not creative or channel in exclude_channels:
+            continue
+        vals = row.get("values") or {}
+
+        def gv(field: str) -> float:
+            key = metrics_map.get(field) or ""
+            if not key:
+                return 0.0
+            cell = vals.get(key) or {}
+            return float(cell.get("value", 0) or 0)
+
+        out.append(CreativeMmpDaily(
+            creative_name=creative, date=dt, channel=channel,
+            impressions=int(round(gv("impressions"))),
+            clicks=int(round(gv("clicks"))),
+            cost=int(round(gv("cost"))),
+            installs=int(round(gv("installs"))),
+            retained_d1=int(round(gv("retained_d1"))),
+            revenue_d7=int(round(gv("revenue_d7"))),
+        ))
+    return out
 
 
 class AirbridgeMmpSource:
-    """Airbridge 3 리포트 비동기 페치 → CreativeMmpDaily 병합. (KpiSource ABC 미상속 — 반환형 상이)"""
+    """Airbridge Actuals 단일 쿼리로 소재별 MMP 품질 데이터 수집. (KpiSource ABC 미상속 — 반환형 상이)"""
 
-    def __init__(self, token: str, app_name: str, session=None,
-                 poll_interval_sec: float = 3.0, poll_timeout_sec: float = 180.0):
+    def __init__(self, token: str, app_name: str, metrics_map: Optional[dict] = None,
+                 session=None, poll_interval_sec: float = 4.0, poll_timeout_sec: float = 300.0,
+                 request_timeout: float = 90.0):
         self.token = token
         self.app_name = app_name
+        self.metrics_map = dict(metrics_map) if metrics_map else dict(DEFAULT_METRICS)
         self.session = session or requests.Session()
         self.poll_interval_sec = poll_interval_sec
         self.poll_timeout_sec = poll_timeout_sec
+        self.request_timeout = request_timeout
 
     @classmethod
     def from_env(cls) -> "AirbridgeMmpSource":
@@ -46,9 +105,14 @@ class AirbridgeMmpSource:
         if not token or not app:
             raise FileNotFoundError(
                 "AIRBRIDGE_API_TOKEN / AIRBRIDGE_APP_NAME 미설정. "
-                ".env 에 추가하세요 (Airbridge 대시보드 Settings>Tokens)."
+                ".env 에 추가하세요 (Airbridge 대시보드 토큰 관리 > API Token)."
             )
-        return cls(token=token, app_name=app)
+        metrics = dict(DEFAULT_METRICS)
+        # D7 매출 custom 메트릭은 앱별로 다름 — 오버라이드 허용 (빈 문자열이면 매출 생략)
+        rev = os.environ.get("AIRBRIDGE_REVENUE_D7_METRIC")
+        if rev is not None:
+            metrics["revenue_d7"] = rev.strip()
+        return cls(token=token, app_name=app, metrics_map=metrics)
 
     def source_name(self) -> str:
         return "airbridge"
@@ -56,31 +120,37 @@ class AirbridgeMmpSource:
     def _headers(self) -> dict:
         return {"Authorization": f"Bearer {self.token}", "Content-Type": "application/json"}
 
-    def _url(self, report_path: str) -> str:
-        # report_path 예: "actuals/query" → 버전 prefix 자동
-        report = report_path.split("/")[0]
-        ver = REPORT_VERSIONS.get(report, "v7")
-        return f"{API_BASE}/{ver}/apps/{self.app_name}/{report_path}"
+    def _actuals_url(self) -> str:
+        return f"{API_BASE}/{ACTUALS_VER}/apps/{self.app_name}/actuals/query"
 
-    def _create_and_poll(self, report_path: str, body: dict) -> dict:
-        """POST 로 리포트 생성 → taskId → GET 폴링 → SUCCESS 결과 반환."""
+    def _query_metrics(self) -> list[str]:
+        """매핑에서 빈 값 제외한 실제 메트릭 key 목록 (중복 제거, 순서 보존)."""
+        seen, out = set(), []
+        for k in ("impressions", "clicks", "cost", "installs", "retained_d1", "revenue_d7"):
+            m = self.metrics_map.get(k) or ""
+            if m and m not in seen:
+                seen.add(m); out.append(m)
+        return out
+
+    def _create_and_poll(self, body: dict) -> dict:
+        """POST actuals/query → task.taskId → GET 폴링 → SUCCESS payload."""
+        url = self._actuals_url()
         try:
-            resp = self.session.post(self._url(report_path), json=body, headers=self._headers(), timeout=30)
+            resp = self.session.post(url, json=body, headers=self._headers(), timeout=self.request_timeout)
             resp.raise_for_status()
         except Exception as e:
-            self._raise_classified(e)
-        task_id = (resp.json().get("task") or {}).get("id")
+            self._raise_classified(e, resp_obj=locals().get("resp"))
+        task_id = (resp.json().get("task") or {}).get("taskId")
         if not task_id:
-            raise RuntimeError(f"Airbridge 리포트 생성 응답에 task.id 없음: {resp.json()}")
+            raise RuntimeError(f"Airbridge 응답에 task.taskId 없음: {resp.json()}")
 
-        poll_url = f"{self._url(report_path)}/{task_id}"
         waited = 0.0
         while waited <= self.poll_timeout_sec:
             try:
-                g = self.session.get(poll_url, headers=self._headers(), timeout=30)
+                g = self.session.get(f"{url}/{task_id}", headers=self._headers(), timeout=self.request_timeout)
                 g.raise_for_status()
             except Exception as e:
-                self._raise_classified(e)
+                self._raise_classified(e, resp_obj=locals().get("g"))
             payload = g.json()
             status = (payload.get("task") or {}).get("status", "")
             if status == "SUCCESS":
@@ -89,164 +159,60 @@ class AirbridgeMmpSource:
                 raise RuntimeError(f"Airbridge 리포트 실패: status={status}")
             time.sleep(self.poll_interval_sec)
             waited += self.poll_interval_sec
-        raise RuntimeError(f"Airbridge 리포트 폴링 타임아웃 ({self.poll_timeout_sec}s)")
+        raise RuntimeError(f"Airbridge 폴링 타임아웃 ({self.poll_timeout_sec}s)")
 
     @staticmethod
-    def _raise_classified(e: Exception):
+    def _raise_classified(e: Exception, resp_obj=None):
+        code = getattr(getattr(resp_obj, "status_code", None), "__int__", lambda: None)() if resp_obj is not None else None
         msg = str(e).lower()
-        if "401" in msg or "403" in msg or "unauthorized" in msg:
+        if code in (401, 403) or "401" in msg or "403" in msg or "unauthorized" in msg:
             raise AuthError(f"Airbridge 인증 실패: {e}")
-        if "429" in msg or "too many" in msg:
+        if code == 429 or "429" in msg or "too many" in msg:
             raise QuotaError(f"Airbridge rate limit: {e}")
         raise RuntimeError(f"Airbridge HTTP 오류: {e}")
 
     def auth_check(self) -> bool:
-        """cheap call — 최근 1일 Actuals 1행 요청으로 인증·앱 접근 검증."""
+        """cheap call — 최근 1일 Actuals(event_date, impressions_channel) 로 인증·앱 검증."""
         end = date.today() - timedelta(days=1)
         body = {"from": end.isoformat(), "to": end.isoformat(),
-                "groupBys": ["event_date"], "metrics": ["impressions"], "filters": [], "sorts": []}
+                "groupBys": ["event_date"], "metrics": ["impressions_channel"], "filters": [], "sorts": []}
         try:
-            self._create_and_poll("actuals/query", body)
+            self._create_and_poll(body)
             print(f"[airbridge.auth_check] OK (app={self.app_name})", file=sys.stderr)
             return True
         except Exception as e:
             print(f"[airbridge.auth_check] FAIL: {type(e).__name__}: {e}", file=sys.stderr)
             return False
 
-    def _date_chunks(self, start: date, end: date, max_days: int):
-        cur = start
-        while cur <= end:
-            chunk_end = min(end, cur + timedelta(days=max_days - 1))
-            yield cur, chunk_end
-            cur = chunk_end + timedelta(days=1)
-
-    def _actuals_body(self, start, end):
-        return {"from": start.isoformat(), "to": end.isoformat(),
-                "groupBys": ["ad_creative", "channel", "event_date"],
-                "metrics": ["impressions", "clicks", "cost", "app_installs"], "filters": [], "sorts": []}
-
-    def _retention_body(self, start, end):
-        return {"from": start.isoformat(), "to": end.isoformat(), "granularity": "day",
-                "intervalsPeriod": 1, "groupBy": {"fields": ["ad_creative", "channel", "event_date"]},
-                "startEvents": ["app_install"], "returnEvents": ["app_open"],
-                "measurementOption": "general_retention"}
-
-    def _revenue_body(self, start, end):
-        return {"from": start.isoformat(), "to": end.isoformat(), "granularity": "day",
-                "groupBy": {"fields": ["ad_creative", "channel", "event_date"]},
-                "startEvents": ["app_install"], "returnEvents": ["app_order_complete"],
-                "metric": "app_revenue", "aggregationType": "cumulative", "intervalsPeriodIndexes": [7]}
-
     def fetch_mmp_window(self, start: date, end: date,
                          exclude_channels: Optional[set] = None) -> list[CreativeMmpDaily]:
-        """3 리포트 페치 → 파싱 → 병합. Retention 은 92일 청크 분할.
+        """기간 내 ad_creative×channel×date Actuals 단일 쿼리 → CreativeMmpDaily 리스트.
 
-        Revenue/Retention 이 ad_creative 미지원이면 해당 dict 가 비어 retained_d1/revenue_d7=0 →
-        compute_mmp_quality 에서 None/0 (스펙 R1: 가용 지표만).
+        non-Google + 유료 소재만(오가닉/제외채널/빈 ad_creative 스킵). 최대 400일.
         """
-        exclude = exclude_channels or set()
-        # Actuals (최대 400일 — 통으로)
-        actuals: list[dict] = []
-        ar = self._create_and_poll("actuals/query", self._actuals_body(start, end))
-        actuals.extend(parse_actuals(ar, exclude))
-        # Revenue (통으로)
-        rev: dict = {}
-        try:
-            rr = self._create_and_poll("revenue/query", self._revenue_body(start, end))
-            rev.update(parse_revenue(rr, exclude))
-        except Exception as e:
-            print(f"   [airbridge] Revenue 리포트 생략: {e}", file=sys.stderr)
-        # Retention (92일 청크)
-        ret: dict = {}
-        for cs, ce in self._date_chunks(start, end, RETENTION_MAX_DAYS):
-            try:
-                rt = self._create_and_poll("retention/query", self._retention_body(cs, ce))
-                ret.update(parse_retention(rt, exclude))
-            except Exception as e:
-                print(f"   [airbridge] Retention 청크 {cs}~{ce} 생략: {e}", file=sys.stderr)
-        return merge_reports(actuals, ret, rev)
+        exclude = set(exclude_channels) if exclude_channels else set(DEFAULT_EXCLUDE_CHANNELS)
+        # event_date 미포함 = 소재×채널 집계 → 행 수가 응답 cap(100) 아래로 유지됨.
+        # 4 품질지표는 소재별 합계라 일별 불필요(cohort 메트릭은 Airbridge가 이미 윈도우 집계).
+        body = {
+            "from": start.isoformat(), "to": end.isoformat(),
+            "groupBys": ["ad_creative", "channel"],
+            "metrics": self._query_metrics(), "filters": [], "sorts": [],
+        }
+        result = self._create_and_poll(body)
+        pg = result.get("pagination") or {}
+        if pg.get("hasNext"):
+            print(f"   [airbridge] ⚠️ 결과 {pg.get('totalCount')}행 중 100행만 수신(응답 cap) — "
+                  f"소재×채널 100조합 초과. 일부 소재 누락 가능.", file=sys.stderr)
+        return parse_actuals_rows(result, self.metrics_map, exclude, default_date=end.isoformat())
 
-    def fetch_metadata_groupbys(self, report: str) -> list:
-        """Get Metadata(GroupBy) — 7-A 에서 ad_creative 지원 확인용. report: actuals|revenue|retention."""
-        ver = REPORT_VERSIONS.get(report, "v7")
-        url = f"{API_BASE}/{ver}/apps/{self.app_name}/{report}/metadata/groupBys"
+    def fetch_dataspec(self, kind: str) -> list[str]:
+        """GET dataspec actual-report/{kind} → key 목록 (kind: 'metrics' | 'fields'). 7-A 검증용."""
+        url = f"{DATASPEC_BASE}/apps/{self.app_name}/actual-report/{kind}"
         try:
-            r = self.session.get(url, headers=self._headers(), timeout=30)
+            r = self.session.get(url, headers={"Authorization": f"Bearer {self.token}"}, timeout=self.request_timeout)
             r.raise_for_status()
             data = r.json()
-            return data.get("groupBys", data.get("data", []))
+            return [f.get("key") for g in data.get("data", []) for f in g.get("fields", []) if f.get("key")]
         except Exception as e:
-            print(f"[airbridge.metadata] {report} 실패: {e}", file=sys.stderr)
+            print(f"[airbridge.dataspec] {kind} 실패: {e}", file=sys.stderr)
             return []
-
-
-def _gb(row: dict) -> tuple[str, str, str]:
-    """row 의 groupBy 에서 (creative, channel, date) 추출."""
-    g = row.get("groupBy", {})
-    return g.get("ad_creative", ""), g.get("channel", ""), g.get("event_date", "")
-
-
-def parse_actuals(result: dict, exclude_channels: set) -> list[dict]:
-    """Actuals 결과 → [{creative, channel, date, impressions, clicks, cost, installs}] (제외채널 필터)."""
-    out = []
-    for row in result.get("rows", []):
-        creative, channel, date = _gb(row)
-        if not creative or channel in exclude_channels:
-            continue
-        m = row.get("metrics", {})
-        out.append({
-            "creative": creative, "channel": channel, "date": date,
-            "impressions": int(m.get("impressions", 0) or 0),
-            "clicks": int(m.get("clicks", 0) or 0),
-            "cost": int(round(float(m.get("cost", 0) or 0))),
-            "installs": int(m.get("app_installs", 0) or 0),
-        })
-    return out
-
-
-def parse_retention(result: dict, exclude_channels: set) -> dict:
-    """Retention 결과 → {(creative,channel,date): (installs_interval0, retained_d1_interval1)}."""
-    out = {}
-    for row in result.get("rows", []):
-        creative, channel, date = _gb(row)
-        if not creative or channel in exclude_channels:
-            continue
-        intervals = row.get("intervals", []) or []
-        installs = int(intervals[0]) if len(intervals) > 0 else 0
-        retained_d1 = int(intervals[1]) if len(intervals) > 1 else 0
-        out[(creative, channel, date)] = (installs, retained_d1)
-    return out
-
-
-def parse_revenue(result: dict, exclude_channels: set) -> dict:
-    """Revenue 결과 → {(creative,channel,date): revenue_d7}. app_revenue(cumulative D7)."""
-    out = {}
-    for row in result.get("rows", []):
-        creative, channel, date = _gb(row)
-        if not creative or channel in exclude_channels:
-            continue
-        m = row.get("metrics", {})
-        out[(creative, channel, date)] = int(round(float(m.get("app_revenue", 0) or 0)))
-    return out
-
-
-def merge_reports(actuals: list[dict], retention: dict, revenue: dict) -> list[CreativeMmpDaily]:
-    """3 리포트를 (creative,channel,date) 키로 병합 → CreativeMmpDaily 리스트.
-
-    Actuals 가 기준(노출/비용/설치). retention/revenue 는 코호트 기준이라 같은 키로 left-join.
-    Retention 미지원(소재 단위 불가) 시 dict 비어 retained_d1=installs_actuals 못 쓰고 0 →
-    해당 지표는 산출 시 None/0 처리(스펙 R1: 가용 지표만).
-    """
-    out = []
-    for a in actuals:
-        key = (a["creative"], a["channel"], a["date"])
-        ret_installs, retained_d1 = retention.get(key, (0, 0))
-        # 설치수 base 는 Retention interval-0 우선, 없으면 Actuals app_installs
-        installs = ret_installs if ret_installs > 0 else a["installs"]
-        out.append(CreativeMmpDaily(
-            creative_name=a["creative"], date=a["date"], channel=a["channel"],
-            impressions=a["impressions"], clicks=a["clicks"], cost=a["cost"],
-            installs=installs, retained_d1=retained_d1,
-            revenue_d7=revenue.get(key, 0),
-        ))
-    return out

@@ -1,35 +1,29 @@
 # -*- coding: utf-8 -*-
-"""Airbridge 리포트 응답 파서 검증 (mock fixture — 문서화된 row 구조 기준)."""
+"""parse_actuals_rows 검증 — 실 Airbridge Actuals 결과 형식 (groupBys 리스트 + values 딕트)."""
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from pipeline.sources.airbridge import parse_actuals, parse_retention, parse_revenue, merge_reports
+from pipeline.sources.airbridge import parse_actuals_rows, DEFAULT_METRICS
 
-# Airbridge 리포트 결과는 groupBy 값 배열 + metric 값 배열 형태 (rows).
-ACTUALS = {"rows": [
-    {"groupBy": {"ad_creative": "A-Test01A-DA", "channel": "Meta", "event_date": "2026-02-01"},
-     "metrics": {"impressions": 10000, "clicks": 200, "cost": 50000, "app_installs": 100}},
-    {"groupBy": {"ad_creative": "A-Test01A-DA", "channel": "googleadwords", "event_date": "2026-02-01"},
-     "metrics": {"impressions": 99999, "clicks": 1, "cost": 1, "app_installs": 1}},  # 제외 대상
-]}
-RETENTION = {"rows": [
-    {"groupBy": {"ad_creative": "A-Test01A-DA", "channel": "Meta", "event_date": "2026-02-01"},
-     "intervals": [100, 40]},  # interval0=설치, interval1=D1 잔존
-]}
-REVENUE = {"rows": [
-    {"groupBy": {"ad_creative": "A-Test01A-DA", "channel": "Meta", "event_date": "2026-02-01"},
-     "metrics": {"app_revenue": 60000}},  # intervalsPeriodIndexes:[7] cumulative
-]}
+# 실 API 형식: result.actuals.data.rows[], row = {groupBys:[creative,channel,date], values:{key:{value}}}
+RESULT = {"actuals": {"data": {"rows": [
+    {"groupBys": ["260123_VID_A-AI-Pinball01A-FK_V_1080x1920_EN", "facebook.business", "2026-02-10"],
+     "values": {"impressions_channel": {"value": 5000.0}, "clicks_channel": {"value": 120.0},
+                "cost_channel": {"value": 719.0}, "app_installs": {"value": 140.0},
+                "retention_app_open_day_1_count": {"value": 9.0}, "custom_revenue_j75a3l": {"value": 3.8}}},
+    # google.adwords → 제외 채널
+    {"groupBys": ["251104_BNR_A-Character-Keyart01A-DA_ALL_Mixed_EN", "google.adwords", "2026-02-10"],
+     "values": {"cost_channel": {"value": 9999.0}, "app_installs": {"value": 500.0}}},
+    # ad_creative 빈 문자열(오가닉) → 제외
+    {"groupBys": ["", "unattributed", "2026-02-10"],
+     "values": {"app_installs": {"value": 44.0}}},
+]}}}
 
-a = parse_actuals(ACTUALS, exclude_channels={"googleadwords"})
-assert len(a) == 1 and a[0]["impressions"] == 10000 and a[0]["installs"] == 100
-ret = parse_retention(RETENTION, exclude_channels={"googleadwords"})
-assert ret[("A-Test01A-DA", "Meta", "2026-02-01")] == (100, 40)
-rev = parse_revenue(REVENUE, exclude_channels={"googleadwords"})
-assert rev[("A-Test01A-DA", "Meta", "2026-02-01")] == 60000
-
-merged = merge_reports(a, ret, rev)
-assert len(merged) == 1
-m = merged[0]
-assert m.creative_name == "A-Test01A-DA" and m.installs == 100 and m.retained_d1 == 40 and m.revenue_d7 == 60000
+rows = parse_actuals_rows(RESULT, DEFAULT_METRICS, exclude_channels={"google.adwords", "unattributed"})
+assert len(rows) == 1, f"기대 1행(facebook만), 실제 {len(rows)}"
+d = rows[0]
+assert d.creative_name == "260123_VID_A-AI-Pinball01A-FK_V_1080x1920_EN"
+assert d.channel == "facebook.business" and d.date == "2026-02-10"
+assert d.impressions == 5000 and d.clicks == 120 and d.cost == 719
+assert d.installs == 140 and d.retained_d1 == 9 and d.revenue_d7 == 4  # 3.8 반올림
 print("✅ test_airbridge_parse 통과")

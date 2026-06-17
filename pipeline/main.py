@@ -85,6 +85,26 @@ def filename_to_concept(filename: str) -> Optional[str]:
     return m.group(1) if m else None
 
 
+def mmp_concept(name: str) -> str:
+    """Airbridge ad_creative(파일명) → concept. 표준 정규식 우선, 실패 시 관대한 추출.
+
+    Airbridge 소재명은 Google Ads/폴더와 동일 컨벤션이나 사이즈/해상도 토큰이 다양:
+      251104_BNR_A-Character-Keyart01A-DA_L_1200x628_EN  → 표준(filename_to_concept)
+      251104_BNR_A-Character-Keyart01A-DA_ALL_Mixed_EN   → Facebook 통합(_ALL_Mixed_) → fallback
+    fallback: {6자리}_{유형}_ 접두 제거 후 concept(언더스코어 없음)만 취함.
+    """
+    if not name:
+        return ""
+    c = filename_to_concept(name)
+    if c:
+        return c
+    stem = name.rsplit("/", 1)[-1].rsplit(".", 1)[0]
+    parts = stem.split("_")
+    if len(parts) >= 3 and re.fullmatch(r"\d{6}", parts[0]):
+        return parts[2]  # [date, TYPE, CONCEPT, size, res, lang] — concept 는 하이픈만 사용
+    return stem
+
+
 def inject_mmp_into_records(records, mmp_daily, source_name="airbridge"):
     """CreativeMmpDaily 리스트를 소재명(concept)으로 join 하여 records 에 mmp_* 주입.
 
@@ -94,8 +114,7 @@ def inject_mmp_into_records(records, mmp_daily, source_name="airbridge"):
         return
     by_concept: dict[str, list] = {}
     for d in mmp_daily:
-        concept = filename_to_concept(d.creative_name) or d.creative_name.rsplit(".", 1)[0]
-        by_concept.setdefault(concept, []).append(d)
+        by_concept.setdefault(mmp_concept(d.creative_name), []).append(d)
 
     for r in records:
         rows = by_concept.get(r.creative_id) or by_concept.get(r.소재명)

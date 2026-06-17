@@ -18,7 +18,8 @@ from dotenv import load_dotenv
 
 def _exclude_channels() -> set:
     import os
-    raw = os.environ.get("AIRBRIDGE_EXCLUDE_CHANNELS", "googleadwords,Google Ads")
+    from .sources.airbridge import DEFAULT_EXCLUDE_CHANNELS
+    raw = os.environ.get("AIRBRIDGE_EXCLUDE_CHANNELS", ",".join(DEFAULT_EXCLUDE_CHANNELS))
     return {c.strip() for c in raw.split(",") if c.strip()}
 
 
@@ -38,25 +39,32 @@ def cmd_healthcheck() -> int:
 
 
 def cmd_metadata_check() -> int:
-    """7-A 핵심: Revenue·Retention 의 ad_creative groupBy 지원 확인."""
+    """7-A 검증: Actuals dataspec 에서 ad_creative 필드 + 매핑된 메트릭 존재 확인."""
     from .sources.airbridge import AirbridgeMmpSource
     try:
         src = AirbridgeMmpSource.from_env()
     except Exception as e:
         print(f"❌ 초기화 실패: {e}")
         return 1
-    print("🔍 ad_creative groupBy 지원 검증 (스펙 R1):")
-    ok_all = True
-    for report in ("actuals", "revenue", "retention"):
-        gbs = src.fetch_metadata_groupbys(report)
-        names = {(g.get("name") or g) if isinstance(g, dict) else g for g in gbs}
-        supported = "ad_creative" in names
-        mark = "✅" if supported else "⚠️ 미지원 → 해당 지표 소재단위 생략"
-        print(f"   {report:<10}: ad_creative {mark}")
-        if not supported:
-            ok_all = False
-    print("\n" + ("✅ 3 리포트 전부 소재 단위 지원 — 4지표 전부 산출 가능"
-                  if ok_all else "⚠️ 일부 미지원 — 가용 지표만으로 분석(스펙 R1 합의대로)"))
+    fields = set(src.fetch_dataspec("fields"))
+    metrics = set(src.fetch_dataspec("metrics"))
+    if not fields and not metrics:
+        print("❌ dataspec 조회 실패 — 토큰/앱이름/네트워크 확인")
+        return 1
+    print("🔍 Actuals 소재 단위 지원 검증:")
+    print(f"   ad_creative (groupBy): {'✅' if 'ad_creative' in fields else '❌ 미지원'}")
+    print("   품질지표 메트릭 매핑:")
+    ok_all = "ad_creative" in fields
+    for quality, mkey in src.metrics_map.items():
+        if not mkey:
+            print(f"     {quality:12} (생략 설정)")
+            continue
+        present = mkey in metrics
+        print(f"     {quality:12} → {mkey:34} {'✅' if present else '⚠️ 미존재(앱별 custom?) → 0 처리'}")
+        if quality in ("cost", "installs", "retained_d1") and not present:
+            ok_all = False  # 핵심 지표 부재면 경고
+    print("\n" + ("✅ 소재 단위 4지표 산출 가능"
+                  if ok_all else "⚠️ 일부 핵심 메트릭/필드 부재 — 가용 지표만으로 분석"))
     return 0
 
 
@@ -68,10 +76,12 @@ def cmd_fetch(args) -> int:
     start = end - timedelta(days=args.days - 1)
     if args.dry_run:
         src = AirbridgeMmpSource(token="(dry)", app_name="(dry)", session=object())
-        print(f"🔍 [DRY-RUN] {start} ~ {end} 호출 바디:")
-        print("\n[Actuals]\n", json.dumps(src._actuals_body(start, end), ensure_ascii=False, indent=2))
-        print("\n[Revenue]\n", json.dumps(src._revenue_body(start, end), ensure_ascii=False, indent=2))
-        print("\n[Retention]\n", json.dumps(src._retention_body(start, end), ensure_ascii=False, indent=2))
+        body = {"from": start.isoformat(), "to": end.isoformat(),
+                "groupBys": ["ad_creative", "channel", "event_date"],
+                "metrics": src._query_metrics(), "filters": [], "sorts": []}
+        print(f"🔍 [DRY-RUN] Actuals 단일 쿼리 ({start} ~ {end}):")
+        print(json.dumps(body, ensure_ascii=False, indent=2))
+        print("제외 채널:", sorted(_exclude_channels()))
         print("\n✅ 실 호출 안 함.")
         return 0
 
