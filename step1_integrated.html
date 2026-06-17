@@ -668,6 +668,21 @@
     /* 결과표 MMP 컬럼 (col-pctile 토글 패턴 동일) */
     #resultTable:not(.show-mmp) .col-mmp { display: none; }
     .mmp-score-cell { display: inline-block; padding: 2px 9px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: help; white-space: nowrap; }
+    /* 분석 레이어 토글 */
+    .analysis-layer-bar { display: none; margin-top: 16px; margin-bottom: 4px; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .analysis-layer-bar.visible { display: flex; }
+    .layer-toggle-group { display: flex; border: 1.5px solid #d1d5db; border-radius: 8px; overflow: hidden; background: #f9fafb; }
+    .layer-toggle-btn { padding: 6px 18px; font-size: 13px; font-weight: 600; border: none; background: transparent; color: #6b7280; cursor: pointer; transition: background .15s, color .15s; white-space: nowrap; }
+    .layer-toggle-btn.active-ads  { background: #fee2e2; color: #991b1b; }
+    .layer-toggle-btn.active-mmp  { background: #ccfbf1; color: #0f766e; }
+    .layer-hint { font-size: 11.5px; color: #9ca3af; }
+    /* 레이어 활성 시 컬럼 강조 */
+    #resultTable.layer-ads-primary .col-mmp th,
+    #resultTable.layer-ads-primary .col-mmp td { opacity: .65; }
+    #resultTable.layer-mmp-primary th.col-mmp,
+    #resultTable.layer-mmp-primary td.col-mmp { opacity: 1; background: #f0fdfa !important; }
+    #resultTable.layer-mmp-primary th:is(:nth-child(7),:nth-child(8),:nth-child(9),:nth-child(10),:nth-child(11),:nth-child(12),:nth-child(13)),
+    #resultTable.layer-mmp-primary td:is(:nth-child(7),:nth-child(8),:nth-child(9),:nth-child(10),:nth-child(11),:nth-child(12),:nth-child(13)) { opacity: .55; }
     /* Stage 5-I QA: 모달 KPI 지표 테이블 (줄 글 행 → 그리드 카드) */
     .kpi-metric-grid {
       display: grid;
@@ -1377,6 +1392,15 @@
       <div id="campaignCompareContainer"></div>
 
       <!-- ⑥ 소재 상세 테이블 -->
+      <!-- Stage 8: 분석 레이어 선택 (Google Ads 기준 / MMP 품질 기준) -->
+      <div id="analysisLayerBar" class="analysis-layer-bar">
+        <span style="font-size:13px;font-weight:700;color:#374151;">📊 분석 레이어</span>
+        <div class="layer-toggle-group">
+          <button id="layerBtnAds" class="layer-toggle-btn active-ads" onclick="switchAnalysisLayer('ads')">Google Ads 기준</button>
+          <button id="layerBtnMmp" class="layer-toggle-btn" onclick="switchAnalysisLayer('mmp')">MMP 품질 기준</button>
+        </div>
+        <span id="layerHint" class="layer-hint">Google Ads 종합점수 기준으로 정렬 중</span>
+      </div>
       <!-- Stage 5-J: 풀 대비 백분위 정렬 드롭다운 (KPI 보유 소재 있을 때만 노출) -->
       <div id="resultSortBar" style="display:none;margin-top:18px;font-size:13px;color:#374151;">
         <label style="font-weight:600;margin-right:6px;">🔀 정렬 기준</label>
@@ -1881,6 +1905,33 @@ function mmpCellHtml(meta) {
   if (Array.isArray(m.mmp_channels) && m.mmp_channels.length) tip += ` · 채널 ${m.mmp_channels.join('/')}`;
   const style = MMP_GRADE_STYLE[qs.grade] || 'background:#f3f4f6;color:#374151;';
   return `<span class="mmp-score-cell" style="${style}" title="${escapeHtml(tip)}">${qs.total} ${escapeHtml(qs.grade)}</span>`;
+}
+
+// Stage 8: 분석 레이어 전환 — Google Ads 기준 / MMP 품질 기준
+window.currentAnalysisLayer = 'ads';  // 기본값
+
+function switchAnalysisLayer(layer) {
+  window.currentAnalysisLayer = layer;
+
+  const btnAds = document.getElementById('layerBtnAds');
+  const btnMmp = document.getElementById('layerBtnMmp');
+  const hint   = document.getElementById('layerHint');
+  const table  = document.getElementById('resultTable');
+  const sel    = document.getElementById('resultSortSelect');
+
+  if (btnAds) { btnAds.classList.toggle('active-ads', layer === 'ads'); btnAds.classList.remove('active-mmp'); }
+  if (btnMmp) { btnMmp.classList.toggle('active-mmp', layer === 'mmp'); btnMmp.classList.remove('active-ads'); }
+  if (table)  { table.classList.toggle('layer-ads-primary', layer === 'ads'); table.classList.toggle('layer-mmp-primary', layer === 'mmp'); }
+
+  if (layer === 'mmp') {
+    if (hint) hint.textContent = 'MMP 품질점수 기준으로 정렬 중 (非Google 매체)';
+    if (sel)  sel.value = 'mmpscore';
+    applyResultSort('mmpscore');
+  } else {
+    if (hint) hint.textContent = 'Google Ads 종합점수 기준으로 정렬 중';
+    if (sel)  sel.value = 'score';
+    applyResultSort('score');
+  }
 }
 
 // Stage 5-J: 결과 표를 정렬 기준으로 재정렬 후 행만 재렌더 (currentCreatives 를 in-place 정렬해
@@ -4212,6 +4263,20 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       if (_mmpOpt) _mmpOpt.style.display = hasMmp ? '' : 'none';
       const _sortSel = document.getElementById('resultSortSelect');
       if (_sortSel) _sortSel.value = 'score';
+      // Stage 8: 분석 레이어 바 — MMP 데이터 있을 때만 노출, 분석 실행 시 Google Ads 기준으로 초기화
+      const _layerBar = document.getElementById('analysisLayerBar');
+      if (_layerBar) _layerBar.classList.toggle('visible', hasMmp);
+      if (hasMmp) {
+        window.currentAnalysisLayer = 'ads';
+        const _bAds = document.getElementById('layerBtnAds');
+        const _bMmp = document.getElementById('layerBtnMmp');
+        const _hint = document.getElementById('layerHint');
+        const _tbl  = document.getElementById('resultTable');
+        if (_bAds) { _bAds.classList.add('active-ads'); _bAds.classList.remove('active-mmp'); }
+        if (_bMmp) { _bMmp.classList.remove('active-ads', 'active-mmp'); }
+        if (_hint) _hint.textContent = 'Google Ads 종합점수 기준으로 정렬 중';
+        if (_tbl)  { _tbl.classList.add('layer-ads-primary'); _tbl.classList.remove('layer-mmp-primary'); }
+      }
       // 5-J 후속: 헤더 클릭 정렬 부착(멱등) + 필터 변경 시 정렬 상태 초기화
       window._headerSort = null;
       attachHeaderSort();
