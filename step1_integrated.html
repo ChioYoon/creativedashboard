@@ -63,88 +63,114 @@
       color: var(--text-primary);
     }
     
-    /* 상단 고정 네비게이션 */
-    /* ── 글로벌 네비게이션 ── */
-    .top-nav {
-      position: sticky; top: 0; z-index: 1000;
-      background: linear-gradient(135deg, #E84855 0%, #FF6B6B 100%);
-      padding: 0 28px;
-      display: flex; align-items: center;
-      height: 52px;
-      box-shadow: 0 3px 12px rgba(232,72,85,.30);
+    /* ── Shell Layout ── */
+    .ds-topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      height: 44px;
+      background: var(--brand-primary);
+      display: flex; align-items: center; padding: 0 16px;
+      gap: 12px;
     }
-    .nav-logo {
+    .ds-topbar-logo {
       display: flex; align-items: center; gap: 8px;
-      font-size: 15px; font-weight: 700; color: white;
-      white-space: nowrap; margin-right: 4px; flex-shrink: 0;
+      color: var(--text-on-brand); font-size: 15px; font-weight: 700;
+      text-decoration: none; flex-shrink: 0;
     }
-    .nav-logo-icon { font-size: 18px; }
-    .nav-sep {
-      width: 1px; height: 24px; background: rgba(255,255,255,.28);
-      margin: 0 10px; flex-shrink: 0;
+    .ds-topbar-logo svg { width: 20px; height: 20px; }
+    .ds-topbar-title {
+      font-size: 12px; font-weight: 500;
+      color: rgba(255,255,255,.7); flex: 1;
     }
-    /* 페이지 내 스크롤 그룹 */
-    .nav-group {
-      display: flex; align-items: center; gap: 4px; flex: 1;
+    .ds-topbar-right { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+    .ds-topbar-icon-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: var(--radius-md);
+      background: rgba(255,255,255,.12); border: none; cursor: pointer;
+      color: var(--text-on-brand); transition: background var(--dur-fast);
     }
-    .nav-group-label {
-      font-size: 10px; font-weight: 700; letter-spacing: .04em;
-      color: rgba(255,255,255,.55); text-transform: uppercase;
-      padding: 2px 8px; border-radius: 4px;
-      background: rgba(255,255,255,.10);
-      white-space: nowrap; margin-right: 2px;
+    .ds-topbar-icon-btn:hover { background: rgba(255,255,255,.22); }
+
+    .ds-app-body {
+      display: flex;
+      height: calc(100vh - 44px);
+      margin-top: 44px;
+      overflow: hidden;
     }
-    .nav-btn {
-      padding: 6px 13px;
-      background: transparent;
-      color: rgba(255,255,255,.85);
-      border: 1px solid transparent;
-      border-radius: 7px;
-      font-size: 13px; font-weight: 500;
-      cursor: pointer; transition: all .18s;
-      white-space: nowrap; text-decoration: none;
-      display: inline-flex; align-items: center; gap: 5px;
+
+    /* ── Sidebar ── */
+    .ds-sidebar {
+      width: 240px; flex-shrink: 0;
+      background: var(--bg-base);
+      border-right: 1px solid var(--hairline-warm);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      transition: width var(--dur-base) var(--ease-standard);
     }
-    .nav-btn:hover {
-      background: rgba(255,255,255,.18);
-      border-color: rgba(255,255,255,.25);
-      color: white;
+    .ds-sidebar.collapsed { width: 40px; }
+    .ds-sidebar-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 12px; height: 40px; flex-shrink: 0;
+      border-bottom: 1px solid var(--hairline-warm);
     }
-    /* 현재 페이지 */
-    .nav-btn.active {
-      background: rgba(255,255,255,.22);
-      border-color: rgba(255,255,255,.40);
-      color: white; font-weight: 700;
+    .ds-sidebar-toggle {
+      display: flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; border-radius: var(--radius-sm);
+      background: none; border: none; cursor: pointer;
+      color: var(--text-secondary);
+      transition: background var(--dur-fast);
     }
-    /* 페이지 이동 버튼 (우측 고정) */
-    .nav-page-btns {
-      display: flex; align-items: center; gap: 6px;
-      margin-left: auto; flex-shrink: 0;
+    .ds-sidebar-toggle:hover { background: var(--surface-sink); }
+    .ds-sidebar.collapsed .ds-sidebar-label { display: none; }
+    .ds-sidebar-label { font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--text-secondary); }
+    .ds-sidebar-scroll { flex: 1; overflow-y: auto; overflow-x: hidden; }
+    .ds-sidebar-footer { padding: 12px; border-top: 1px solid var(--hairline-warm); flex-shrink: 0; }
+    .ds-sidebar.collapsed .ds-sidebar-section-body { display: none; }
+    .ds-sidebar.collapsed .ds-sidebar-footer-label { display: none; }
+
+    /* ── Main Content ── */
+    .ds-main {
+      flex: 1; overflow-y: auto;
+      display: flex; flex-direction: column;
+      background: var(--surface-soft);
+      min-width: 0;
     }
-    .nav-page-btn {
-      padding: 6px 14px;
-      background: rgba(255,255,255,.16);
-      color: white;
-      border: 1px solid rgba(255,255,255,.30);
-      border-radius: 7px;
-      font-size: 13px; font-weight: 600;
-      cursor: pointer; transition: all .18s;
-      white-space: nowrap; text-decoration: none;
-      display: inline-flex; align-items: center; gap: 5px;
+    .ds-main-toolbar {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 20px; flex-shrink: 0;
+      background: var(--bg-base);
+      border-bottom: 1px solid var(--hairline-warm);
+      min-height: 44px;
     }
-    .nav-page-btn:hover {
-      background: rgba(255,255,255,.28);
-      border-color: rgba(255,255,255,.50);
-      transform: translateY(-1px);
+    .ds-main-content { flex: 1; overflow-y: auto; padding: 20px; }
+
+    /* ── DS 버튼 ── */
+    .ds-btn-primary {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 10px 16px;
+      background: var(--brand-primary); color: var(--text-on-brand);
+      border: none; border-radius: var(--radius-md);
+      font-family: var(--font-kr); font-size: 14px; font-weight: 700;
+      cursor: pointer; transition: background var(--dur-fast);
     }
-    .nav-page-btn.highlight {
-      background: rgba(255,255,255,.28);
-      border-color: rgba(255,255,255,.55);
-      font-weight: 700;
+    .ds-btn-primary:hover { background: var(--brand-primary-hover); }
+    .ds-btn-secondary {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 8px 14px;
+      background: var(--bg-base); color: var(--brand-primary);
+      border: 1.5px solid var(--brand-primary); border-radius: var(--radius-md);
+      font-family: var(--font-kr); font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: background var(--dur-fast);
     }
-    .nav-page-btn.highlight:hover {
-      background: rgba(255,255,255,.40);
+    .ds-btn-secondary:hover { background: #fff1f1; }
+    .ds-btn-ghost {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 6px 12px;
+      background: none; color: var(--text-secondary);
+      border: none; border-radius: var(--radius-md);
+      font-family: var(--font-kr); font-size: 13px; font-weight: 500;
+      cursor: pointer; transition: background var(--dur-fast);
     }
+    .ds-btn-ghost:hover { background: var(--surface-sink); }
     
     /* 헤더 */
     .header {
@@ -1067,62 +1093,59 @@
       .stats-grid .stat-card:nth-child(5) {
         grid-column: span 1;
       }
-      .top-nav {
-        padding: 10px 15px;
-      }
-      .nav-btn {
-        padding: 6px 12px;
-        font-size: 12px;
-      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- 글로벌 네비게이션 -->
-    <nav class="top-nav">
-      <!-- 로고 -->
-      <a href="index.html" class="nav-logo" style="text-decoration:none;">
-        <span class="nav-logo-icon">📊</span>
-        <span>소재 분석</span>
+  <!-- ── Top Navigation Bar ── -->
+  <header class="ds-topbar">
+    <a href="index.html" class="ds-topbar-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+      <span>CLOOP</span>
+    </a>
+    <span class="ds-topbar-title">광고 소재 분석 대시보드</span>
+    <div class="ds-topbar-right">
+      <!-- 타이틀 셀렉터 -->
+      <select id="titleSelector"
+              onchange="onTitleSelectorChange(this.value)"
+              title="분석할 타이틀 선택"
+              style="padding:4px 10px;border:1.5px solid rgba(255,255,255,.35);border-radius:6px;
+                     background:rgba(255,255,255,.12);color:#fff;font-size:12px;font-weight:600;
+                     cursor:pointer;max-width:200px;">
+        <option value="">타이틀 선택 (직접 업로드)</option>
+      </select>
+      <button class="ds-topbar-icon-btn gai-nav-key-btn" onclick="openGeminiModal()" title="Gemini AI 분석 설정">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      </button>
+      <a class="ds-topbar-icon-btn" id="step2Link" href="step2_column_selector.html" title="Step 2 군집화">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
       </a>
-      <div class="nav-sep"></div>
-
-      <!-- Step 1 내 섹션 이동 -->
-      <div class="nav-group">
-        <span class="nav-group-label">Step 1</span>
-        <button class="nav-btn active" onclick="scrollToSection('upload')">업로드</button>
-        <button class="nav-btn" onclick="scrollToSection('scoring')">계산 기준</button>
-        <button class="nav-btn" onclick="scrollToSection('results')">분석 결과</button>
-        <button class="nav-btn" onclick="scrollToSection('fatigue')">피로도</button>
-        <button class="nav-btn" onclick="scrollToSection('chart')">차트</button>
-      </div>
-
-      <!-- 페이지 이동 (우측) -->
-      <div class="nav-page-btns">
-        <!-- v5.2 Stage 1: 타이틀 셀렉터 (백엔드 JSON 산출물 로드용) -->
-        <select id="titleSelector"
-                onchange="onTitleSelectorChange(this.value)"
-                title="분석할 타이틀 선택 (백엔드 산출 JSON 자동 로드)"
-                style="padding:7px 12px;border:1.5px solid rgba(255,255,255,.35);border-radius:6px;
-                       background:rgba(255,255,255,.12);color:#fff;font-size:12.5px;font-weight:600;
-                       cursor:pointer;max-width:240px;">
-          <option value="">📂 타이틀 선택 (직접 업로드)</option>
-        </select>
-        <button class="gai-nav-key-btn" onclick="openGeminiModal()" title="Gemini AI 분석 설정">
-          ✨ AI 설정
-        </button>
-        <a class="nav-page-btn highlight" id="step2Link" href="step2_column_selector.html">
-          Step 2 군집화 <span style="opacity:.7;">→</span>
-        </a>
-      </div>
-    </nav>
-    
-    <!-- 헤더 -->
-    <div class="header">
-      <h1>소재 성과 분석</h1>
-      <p>CSV 업로드 → 주요 지표 기반 성과 분석 → 피로도 분석까지 한 번에</p>
     </div>
+  </header>
+
+  <!-- ── App Body: Sidebar + Main ── -->
+  <div class="ds-app-body">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="ds-sidebar">
+      <div class="ds-sidebar-header">
+        <span class="ds-sidebar-label">메뉴</span>
+        <button class="ds-sidebar-toggle" onclick="toggleSidebar()" title="사이드바 접기/펼치기">
+          <svg id="sidebarToggleIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+      </div>
+      <div class="ds-sidebar-scroll" id="sidebarScroll">
+        <!-- Task 3에서 채움 -->
+      </div>
+      <div class="ds-sidebar-footer">
+        <button class="ds-btn-primary" style="width:100%;" onclick="calculateScores()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <span class="ds-sidebar-footer-label">점수 계산 실행</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="ds-main" id="mainContent">
     
     <!-- Section 1: 업로드 -->
     <section id="upload" class="section">
@@ -1623,8 +1646,9 @@
         <canvas id="rankChart"></canvas>
       </div>
     </section>
+    </main>
   </div>
-  
+
   <!-- ✨ Gemini API 키 설정 모달 (동적 삽입) -->
   <div id="geminiModalContainer"></div>
 
@@ -1656,6 +1680,16 @@
   
   <!-- JavaScript (인라인 통합 — CSP 우회) -->
   <script>
+/* ── UI: 사이드바 접기/펼치기 ── */
+function toggleSidebar() {
+  const sb = document.getElementById('sidebar');
+  const icon = document.getElementById('sidebarToggleIcon');
+  const isCollapsed = sb.classList.toggle('collapsed');
+  if (icon) {
+    icon.setAttribute('points', isCollapsed ? '9 18 15 12 9 6' : '15 18 9 12 15 6');
+  }
+}
+
 /* ============================================================
    pipeline-engine.js (인라인)
    ============================================================ */
