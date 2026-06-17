@@ -1683,17 +1683,20 @@
           <table id="fatigueTable" class="ds-table">
             <thead>
               <tr>
+                <th style="text-align:center;">썸네일</th>
                 <th>소재명</th>
                 <th>유형</th>
+                <th class="num has-tooltip" data-tip="기준 기간 노출 순위">기준 순위 <span class="th-info">?</span></th>
+                <th class="num has-tooltip" data-tip="비교 기간 노출 순위">비교 순위 <span class="th-info">?</span></th>
+                <th class="has-tooltip" data-tip="기준 대비 비교 기간의 순위 변동">순위 변동 <span class="th-info">?</span></th>
                 <th class="num has-tooltip" data-tip="기준 기간 평균 CPA">기준 CPA <span class="th-info">?</span></th>
                 <th class="num has-tooltip" data-tip="비교 기간 평균 CPA">비교 CPA <span class="th-info">?</span></th>
                 <th class="num has-tooltip" data-tip="(비교 CPA - 기준 CPA) / 기준 CPA × 100%">변화율 <span class="th-info">?</span></th>
-                <th>추이</th>
                 <th class="has-tooltip" data-tip="Fresh: &lt;10% / Stable: 10~30% / Warning: 30~60% / Tired: &gt;60%">피로도 <span class="th-info">?</span></th>
               </tr>
             </thead>
             <tbody id="fatigueTableBody">
-              <tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-secondary);">기간을 설정하고 적용 버튼을 클릭하세요</td></tr>
+              <tr><td colspan="10" style="text-align:center;padding:40px;color:var(--text-secondary);">기간을 설정하고 적용 버튼을 클릭하세요</td></tr>
             </tbody>
           </table>
         </div>
@@ -3723,8 +3726,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       if (document.getElementById('fatigue_type_VID').checked) types.push('VID');
       // TXT는 분석 대상이 아니므로 제외
       const count = types.length;
-      document.getElementById('fatigueTypeSelectedCount').textContent =
-        count > 0 ? `${count}개 선택됨` : '선택 없음';
+      const typeCountEl = document.getElementById('fatigueTypeSelectedCount');
+      if (typeCountEl) typeCountEl.textContent = count > 0 ? `${count}개 선택됨` : '선택 없음';
     }
 
     // 피로도 캠페인 필터 업데이트
@@ -3740,7 +3743,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const countText = checked.length === 0 ? '선택 없음' :
                         checked.length === checkboxes.length ? '전체 캠페인 선택됨' :
                         `${checked.length}개 캠페인 선택됨`;
-      document.getElementById('fatigueCampaignSelectedCount').textContent = countText;
+      const campCountEl = document.getElementById('fatigueCampaignSelectedCount');
+      if (campCountEl) campCountEl.textContent = countText;
     }
 
     // 피로도 전체 캠페인 선택/해제
@@ -5808,7 +5812,9 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
     
     // 피로도 차트 표시
     function displayFatigueChart(results) {
-      document.getElementById('chart').style.display = 'block';
+      const chartContainer = document.getElementById('chart');
+      if (!chartContainer) return;
+      chartContainer.style.display = 'block';
       
       // Top 10 추출
       const top10 = results
