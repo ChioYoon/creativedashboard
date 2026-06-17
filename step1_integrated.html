@@ -843,6 +843,23 @@
     #resultTable.layer-mmp-primary td.col-mmp { opacity: 1; background: #f0fdfa !important; }
     #resultTable.layer-mmp-primary th:is(:nth-child(7),:nth-child(8),:nth-child(9),:nth-child(10),:nth-child(11),:nth-child(12),:nth-child(13)),
     #resultTable.layer-mmp-primary td:is(:nth-child(7),:nth-child(8),:nth-child(9),:nth-child(10),:nth-child(11),:nth-child(12),:nth-child(13)) { opacity: .55; }
+    /* ── DS Table ── */
+    .ds-table { width: 100%; border-collapse: collapse; }
+    .ds-table thead th {
+      background: var(--surface-card);
+      padding: 7px 10px;
+      text-align: left;
+      font-size: 10px; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-default);
+      white-space: nowrap;
+    }
+    .ds-table thead th.num { text-align: right; }
+    .ds-table tbody tr { border-bottom: 1px solid var(--hairline-warm); }
+    .ds-table tbody tr:hover { background: var(--surface-soft); }
+    .ds-table tbody tr.rank-top { border-left: 3px solid var(--brand-primary); }
+    .ds-table td { padding: 7px 10px; vertical-align: middle; font-size: 13px; }
+    .ds-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
     /* Stage 5-I QA: 모달 KPI 지표 테이블 (줄 글 행 → 그리드 카드) */
     .kpi-metric-grid {
       display: grid;
@@ -1530,7 +1547,7 @@
 
         <!-- 소재 테이블 -->
         <div class="table-container">
-          <table id="resultTable">
+          <table id="resultTable" class="ds-table">
             <thead>
               <tr>
                 <th>미리보기</th>
@@ -4237,6 +4254,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
 
       creatives.forEach((c, index) => {
         const tr = document.createElement('tr');
+        if (index === 0) tr.classList.add('rank-top');
 
         // 미리보기: 이미지 URL 추출
         const imageUrl = c.meta?.['링크'] || c.이미지링크 || '';
@@ -4278,10 +4296,6 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td style="text-align: right;">₩${Math.round(c.CPA).toLocaleString()}</td>
           <td style="text-align: right;">${c.IPM.toFixed(2)}</td>
           <td style="text-align: right; font-weight: 600; color: #1f2937;">${c.매출 > 0 || c.비용 > 0 ? Math.round(c.ROAS * 100) + '%' : '—'}</td>
-          <td style="text-align: right; font-weight: 600;">${c.전환수점수.toFixed(1)}</td>
-          <td style="text-align: right; font-weight: 600;">${c.CPA점수.toFixed(1)}</td>
-          <td style="text-align: right; font-weight: 600;">${c.IPM점수.toFixed(1)}</td>
-          <td style="text-align: right; font-weight: 600;${c.ROAS점수 == null ? 'color:#9ca3af;' : ''}">${c.ROAS점수 == null ? '—' : c.ROAS점수.toFixed(1)}</td>
           <td style="text-align: right; font-weight: 700; color: #E84855; font-size: 16px;">${c.TotalScore.toFixed(1)}</td>
           <td><span class="badge grade-${c.등급}">${c.등급}</span></td>
           <td class="col-pctile" style="text-align:left;">${pctileCellHtml(c.meta && c.meta.kpi_percentiles)}</td>
