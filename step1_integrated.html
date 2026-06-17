@@ -1267,6 +1267,60 @@
       white-space: pre-wrap; max-width: 220px; pointer-events: none;
       box-shadow: var(--shadow-md);
     }
+
+    /* ── 전체 성과 요약 탭 ── */
+    .summary-block { margin-bottom: 28px; }
+    .summary-block-title {
+      font-size: 12px; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--text-secondary);
+      margin-bottom: 12px; padding-bottom: 6px;
+      border-bottom: 1px solid var(--hairline-warm);
+    }
+    /* 교차 성과 카드 */
+    .cross-perf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .cross-perf-card {
+      background: var(--bg-base); border: 1px solid var(--hairline-warm);
+      border-radius: var(--radius-lg); padding: 16px;
+    }
+    .cross-perf-card.excellent { border-top: 3px solid var(--brand-primary); }
+    .cross-perf-card.poor { border-top: 3px solid #9ca3af; }
+    .cross-perf-card-title { font-size: 12px; font-weight: 700; color: var(--text-secondary); margin-bottom: 10px; }
+    .cross-perf-item { display: flex; align-items: center; gap: 6px; padding: 5px 0; border-bottom: 1px solid var(--hairline-warm); font-size: 12px; }
+    .cross-perf-item:last-child { border-bottom: none; }
+    .cross-perf-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-primary); }
+    .cross-badge-ads { padding: 1px 7px; border-radius: var(--radius-full); font-size: 10px; font-weight: 700; background: #fee2e2; color: #991b1b; }
+    .cross-badge-mmp { padding: 1px 7px; border-radius: var(--radius-full); font-size: 10px; font-weight: 700; background: #ccfbf1; color: #115e59; }
+    /* AI 태그 */
+    .ai-tag-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .ai-tag-card { background: var(--bg-base); border: 1px solid var(--hairline-warm); border-radius: var(--radius-lg); padding: 14px; }
+    .ai-tag-card-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--text-secondary); margin-bottom: 10px; }
+    .ai-tag-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .ai-tag-chip {
+      padding: 4px 12px; border-radius: var(--radius-full);
+      font-size: 12px; font-weight: 600; cursor: pointer;
+      background: var(--surface-card); color: var(--text-primary);
+      border: 1px solid var(--hairline-warm);
+      transition: all var(--dur-fast); user-select: none;
+    }
+    .ai-tag-chip:hover { border-color: var(--text-primary); }
+    .ai-tag-chip.selected { background: var(--text-primary); color: var(--text-on-brand); border-color: var(--text-primary); }
+    /* 선택 태그 소재 리스트 패널 */
+    .ai-tag-panel {
+      display: none; margin-top: 16px; background: var(--bg-base);
+      border: 1px solid var(--hairline-warm); border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .ai-tag-panel.visible { display: block; }
+    .ai-tag-panel-header {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 14px; background: var(--surface-card);
+      border-bottom: 1px solid var(--hairline-warm);
+    }
+    .ai-tag-panel-title { font-size: 12px; font-weight: 700; color: var(--text-secondary); }
+    .ai-tag-panel-count { font-size: 12px; font-weight: 700; color: var(--text-primary); }
+    .ai-tag-panel-clear { margin-left: auto; font-size: 11px; font-weight: 600; color: var(--brand-primary); cursor: pointer; background: none; border: none; }
+    .ai-selected-badges { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+    .ai-selected-badge { padding: 2px 8px; border-radius: var(--radius-full); font-size: 10px; font-weight: 700; background: var(--text-primary); color: #fff; }
   </style>
 </head>
 <body>
@@ -1925,25 +1979,114 @@ function renderSignalDistribution(creatives) {
       </div>`;
   }
 
+  // 태그 칩 렌더
+  const makeChips = (arr, type) =>
+    arr.slice(0, 8).map(([label, cnt]) =>
+      `<span class="ai-tag-chip" data-tag="${escapeHtml(label)}" data-type="${type}"
+            onclick="toggleAiTag(this,'${type}')">${escapeHtml(label)} <span style="font-size:10px;opacity:.6;">${cnt}</span></span>`
+    ).join('');
+
   panel.innerHTML = `
-    <div class="signal-dist-grid">
-      <div class="signal-dist-card dist-strength">
-        <h4>💪 주요 강점 Top 5</h4>
-        <ul>${renderList(strengths, 5, true)}</ul>
+    <div class="summary-block">
+      <div class="summary-block-title">AI 태그</div>
+      <div class="ai-tag-grid">
+        <div class="ai-tag-card">
+          <div class="ai-tag-card-title">강점 태그</div>
+          <div class="ai-tag-chips">${makeChips(strengths, 'strength')}</div>
+        </div>
+        <div class="ai-tag-card">
+          <div class="ai-tag-card-title">약점 태그</div>
+          <div class="ai-tag-chips">${makeChips(weaknesses, 'weakness')}</div>
+        </div>
       </div>
-      <div class="signal-dist-card dist-weakness">
-        <h4>⚠️ 주요 약점 Top 5</h4>
-        <ul>${renderList(weaknesses, 5, true)}</ul>
+      <div id="aiTagPanel" class="ai-tag-panel">
+        <div class="ai-tag-panel-header">
+          <div class="ai-tag-panel-title">선택된 태그</div>
+          <div class="ai-selected-badges" id="aiSelectedBadges"></div>
+          <div class="ai-tag-panel-count" id="aiTagPanelCount"></div>
+          <button class="ai-tag-panel-clear" onclick="clearAllAiTags()">전체 해제</button>
+        </div>
+        <div id="aiTagCreativeList" style="padding:12px;"></div>
       </div>
-      <div class="signal-dist-card dist-testidea">
-        <h4>🚀 다음 제작 추천 Top 3</h4>
-        <ul>${renderList(testIdeas, 3, false)}</ul>
-      </div>
-    </div>
-    ${perfHtml}
-    ${mmpPerfHtml}
-  `;
+    </div>`;
   panel.style.display = 'block';
+}
+
+/* ── AI 태그 다중 선택 ── */
+window._selectedAiTags = new Set();
+
+function toggleAiTag(el, type) {
+  const tag = el.dataset.tag;
+  if (window._selectedAiTags.has(tag)) {
+    window._selectedAiTags.delete(tag);
+    el.classList.remove('selected');
+  } else {
+    window._selectedAiTags.add(tag);
+    el.classList.add('selected');
+  }
+  renderTagCreativeList(window.currentCreatives || []);
+}
+
+function clearAllAiTags() {
+  window._selectedAiTags.clear();
+  document.querySelectorAll('.ai-tag-chip.selected').forEach(el => el.classList.remove('selected'));
+  renderTagCreativeList([]);
+}
+
+function renderTagCreativeList(creatives) {
+  const panel = document.getElementById('aiTagPanel');
+  const listEl = document.getElementById('aiTagCreativeList');
+  const badgesEl = document.getElementById('aiSelectedBadges');
+  const countEl = document.getElementById('aiTagPanelCount');
+  if (!panel || !listEl) return;
+
+  const selected = [...window._selectedAiTags];
+  if (selected.length === 0) { panel.classList.remove('visible'); return; }
+
+  // 선택 태그 배지 갱신
+  if (badgesEl) {
+    badgesEl.innerHTML = selected.map(t =>
+      `<span class="ai-selected-badge">${escapeHtml(t)}</span>`
+    ).join('');
+  }
+
+  // 유니온 매칭
+  const matching = (creatives || []).filter(c => {
+    const tags = [
+      ...(c.meta?.strengths || []),
+      ...(c.meta?.weaknesses || []),
+      ...(c.meta?.test_ideas || [])
+    ];
+    return selected.some(t => tags.includes(t));
+  });
+
+  if (countEl) countEl.textContent = `${matching.length}개 소재`;
+
+  const rows = matching.map((c, i) => {
+    const name = c.key || c['소재명'] || '';
+    const type = c.유형 || '';
+    const adsScore = c.TotalScore?.toFixed(1) ?? '—';
+    const mmpScore = c.meta?.mmp_quality_score?.total?.toFixed(1) ?? '—';
+    const allTags = [
+      ...(c.meta?.strengths || []).map(t => ({ t, cls: 'cross-badge-ads' })),
+      ...(c.meta?.weaknesses || []).map(t => ({ t, cls: 'cross-badge-mmp' }))
+    ];
+    const matchedBadges = allTags
+      .filter(({ t }) => selected.includes(t))
+      .map(({ t, cls }) => `<span class="${cls}">${escapeHtml(t)}</span>`)
+      .join('');
+    return `<div class="cross-perf-item">
+      <span style="font-size:11px;color:var(--text-secondary);width:20px;text-align:right;">${i+1}</span>
+      <span class="cross-perf-name" title="${escapeHtml(name)}">${escapeHtml(name)}</span>
+      <span style="display:flex;gap:3px;flex-wrap:wrap;">${matchedBadges}</span>
+      <span style="font-size:11px;color:var(--text-secondary);">${escapeHtml(type)}</span>
+      <span class="cross-badge-ads">${adsScore}</span>
+      <span class="cross-badge-mmp">${mmpScore}</span>
+    </div>`;
+  }).join('') || '<div style="font-size:12px;color:var(--text-secondary);">매칭 소재 없음</div>';
+
+  listEl.innerHTML = rows;
+  panel.classList.add('visible');
 }
 
 // Stage 5-F-2 / 5-H v3: v2 구조화 신호(강점/약점/가설/변주 + one_line_insight)를 모달용 HTML로 렌더.
@@ -4447,7 +4590,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       updateSortIndicators();
 
       // ── 소재 유형별 요약 표 렌더링
-      renderTypeSummary(creatives);
+      renderTypeSummaryTable(creatives);
       // ── v5.1: 캠페인 비교 표 렌더링 (2개 이상 캠페인 시 자동)
       if (window._lastFilteredRows) {
         renderCampaignCompare(window._lastFilteredRows, creatives);
@@ -4461,6 +4604,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       } catch (e) {
         console.warn('[Stage 5-F-3] renderSignalDistribution 실패 (무시):', e);
       }
+
+      const crossData = computeCrossPerformance(creatives);
+      renderCrossPerformanceCards(crossData);
+      window._selectedAiTags = new Set();
 
       console.log('✅ 점수 결과 표시 완료');
     }
@@ -5033,6 +5180,128 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
                 ${totalRow}
               </tbody>
             </table>
+          </div>
+        </div>`;
+    }
+
+    /* ── 전체 성과 요약: 유형별 평균 ds-table ── */
+    function renderTypeSummaryTable(creatives) {
+      const container = document.getElementById('typeSummaryContainer');
+      if (!container) return;
+
+      const types = {};
+      (creatives || []).forEach(c => {
+        const t = c.유형 || 'ETC';
+        if (!types[t]) types[t] = { count: 0, convSum: 0, cpaSum: 0, ipmSum: 0, scoreSum: 0, mmpSum: 0, mmpCount: 0 };
+        types[t].count++;
+        types[t].convSum  += Number(c['전환'] || 0);
+        types[t].cpaSum   += Number(c['CPA']  || 0);
+        types[t].ipmSum   += Number(c['IPM']  || 0);
+        types[t].scoreSum += Number(c.TotalScore || 0);
+        const mmpScore = c.meta?.mmp_quality_score?.total;
+        if (mmpScore != null) { types[t].mmpSum += mmpScore; types[t].mmpCount++; }
+      });
+
+      const rows = Object.entries(types).map(([type, d]) => {
+        const n = d.count;
+        const avgMmp = d.mmpCount > 0 ? (d.mmpSum / d.mmpCount).toFixed(1) : '—';
+        return `<tr>
+          <td>${escapeHtml(type)}</td>
+          <td class="num">${n}</td>
+          <td class="num">${(d.convSum/n).toFixed(0)}</td>
+          <td class="num">${d.cpaSum > 0 ? '₩'+(d.cpaSum/n).toFixed(0) : '—'}</td>
+          <td class="num">${(d.ipmSum/n).toFixed(2)}</td>
+          <td class="num">${(d.scoreSum/n).toFixed(1)}</td>
+          <td class="num">${avgMmp}</td>
+        </tr>`;
+      }).join('');
+
+      container.innerHTML = `
+        <div class="summary-block">
+          <div class="summary-block-title">유형별 평균 성과</div>
+          <table class="ds-table">
+            <thead>
+              <tr>
+                <th>유형</th><th class="num">소재수</th>
+                <th class="num">평균 전환</th><th class="num">평균 CPA</th>
+                <th class="num">평균 IPM</th><th class="num">평균 총점</th>
+                <th class="num">MMP 품질</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>`;
+    }
+
+    /* ── 교차 성과: Ads 상위30% × MMP 상위30% ── */
+    function computeCrossPerformance(creatives) {
+      const withBoth = (creatives || []).filter(c =>
+        c.TotalScore != null && c.meta?.mmp_quality_score?.total != null
+      );
+      if (withBoth.length < 3) return null;
+
+      const n = withBoth.length;
+      const top30 = Math.ceil(n * 0.3);
+      const bottom30 = Math.ceil(n * 0.3);
+
+      const byAds = [...withBoth].sort((a, b) => b.TotalScore - a.TotalScore);
+      const byMmp = [...withBoth].sort((a, b) =>
+        b.meta.mmp_quality_score.total - a.meta.mmp_quality_score.total
+      );
+
+      const adsTopSet  = new Set(byAds.slice(0, top30).map(c => c.key || c['소재명']));
+      const adsBotSet  = new Set(byAds.slice(-bottom30).map(c => c.key || c['소재명']));
+      const mmpTopSet  = new Set(byMmp.slice(0, top30).map(c => c.key || c['소재명']));
+      const mmpBotSet  = new Set(byMmp.slice(-bottom30).map(c => c.key || c['소재명']));
+
+      const excellent = withBoth.filter(c => {
+        const k = c.key || c['소재명'];
+        return adsTopSet.has(k) && mmpTopSet.has(k);
+      }).sort((a, b) => b.TotalScore - a.TotalScore).slice(0, 5);
+
+      const poor = withBoth.filter(c => {
+        const k = c.key || c['소재명'];
+        return adsBotSet.has(k) && mmpBotSet.has(k);
+      }).sort((a, b) => a.TotalScore - b.TotalScore).slice(0, 5);
+
+      return { excellent, poor };
+    }
+
+    function renderCrossPerformanceCards(crossData) {
+      const container = document.getElementById('crossPerformanceContainer');
+      if (!container) return;
+      if (!crossData) { container.innerHTML = ''; return; }
+
+      const makeItem = c => {
+        const name = c.key || c['소재명'] || '';
+        const adsScore = c.TotalScore?.toFixed(1) ?? '—';
+        const mmpScore = c.meta?.mmp_quality_score?.total?.toFixed(1) ?? '—';
+        return `<div class="cross-perf-item">
+          <span class="cross-perf-name" title="${escapeHtml(name)}">${escapeHtml(name)}</span>
+          <span class="cross-badge-ads">${adsScore}</span>
+          <span class="cross-badge-mmp">${mmpScore}</span>
+        </div>`;
+      };
+
+      const exItems = crossData.excellent.length > 0
+        ? crossData.excellent.map(makeItem).join('')
+        : '<div style="font-size:12px;color:var(--text-secondary);padding:8px 0;">해당 소재 없음</div>';
+      const poItems = crossData.poor.length > 0
+        ? crossData.poor.map(makeItem).join('')
+        : '<div style="font-size:12px;color:var(--text-secondary);padding:8px 0;">해당 소재 없음</div>';
+
+      container.innerHTML = `
+        <div class="summary-block">
+          <div class="summary-block-title">Google Ads × MMP 교차 성과</div>
+          <div class="cross-perf-grid">
+            <div class="cross-perf-card excellent">
+              <div class="cross-perf-card-title">두 지표 모두 우수</div>
+              ${exItems}
+            </div>
+            <div class="cross-perf-card poor">
+              <div class="cross-perf-card-title">두 지표 모두 저조</div>
+              ${poItems}
+            </div>
           </div>
         </div>`;
     }
