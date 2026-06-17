@@ -82,8 +82,8 @@
 
 ## 5. ⚠️ Push 전 확정/조정 필요 항목
 
-1. **통화 라벨 (중요)**: MMP `cost_channel`은 **Facebook 계정 통화(USD로 확인)**인데, 대시보드 MMP 모달/표는 **₩(원)** 으로 표시 중. → **$ 로 수정**하거나 "매체 통화" 라벨로 변경 필요. (Google Ads 비용은 별도로 계정 통화 — 두 레이어 통화가 다를 수 있음을 명시)
-2. **D7 ROAS 해석**: "전체 ROAS"가 아니라 **설치 후 7일 내 조기 회수율**. 값이 매우 낮은 게 정상(LTV는 이후 누적). 라벨/툴팁에 "D7 누적" 명시 권장. 장기 ROAS가 필요하면 D30/D180 메트릭(custom_revenue_*)으로 확장 가능.
+1. ~~통화 라벨~~ → **✅ 처리됨 (2026-06-17, 커밋 80b84d5)**: MMP `cost_channel`(USD) → **원화 환산**. 환율 `titles.json _pipeline_airbridge_usd_to_krw`(pepp=1500) / `.env AIRBRIDGE_USD_TO_KRW`로 설정, 변경 시 재실행 반영. 비용·매출·CPI 변환, ROAS/IPM/잔존율은 비율이라 불변. 대시보드 ₩ 표기 + "USD×1,500 환산" 주석. `mmp_currency`/`mmp_fx_rate` 메타 저장.
+2. **D7 ROAS 해석** → **✅ 라벨 처리됨**: 모달에 "(D0~D7 누적)" 명시. "전체 ROAS"가 아니라 **설치 후 7일 내 조기 회수율**(LTV는 이후 누적, 값이 낮은 게 정상). 장기 ROAS 필요 시 D30/D180 메트릭(custom_revenue_*)으로 확장 가능.
 3. **D7 매출 메트릭이 앱별 custom**(`custom_revenue_j75a3l`): pepp 전용. 타 앱 연동 시 dataspec에서 해당 앱의 'Revenue - Sum - D7' key를 찾아 `.env AIRBRIDGE_REVENUE_D7_METRIC`로 교체.
 4. **Google "전환" 정의 확인**: 대시보드 전환/매출이 Google Ads 계정에서 어떤 전환 액션·가치인지 R팀 확인 권장(설치 전환인지 등).
 
