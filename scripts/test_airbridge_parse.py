@@ -26,4 +26,10 @@ assert d.creative_name == "260123_VID_A-AI-Pinball01A-FK_V_1080x1920_EN"
 assert d.channel == "facebook.business" and d.date == "2026-02-10"
 assert d.impressions == 5000 and d.clicks == 120 and d.cost == 719
 assert d.installs == 140 and d.retained_d1 == 9 and d.revenue_d7 == 4  # 3.8 반올림
+
+# 환율 변환(fx_rate): 비용·매출만 ×1500, 노출/설치/잔존은 불변
+rows_krw = parse_actuals_rows(RESULT, DEFAULT_METRICS, exclude_channels={"google.adwords", "unattributed"}, fx_rate=1500.0)
+k = rows_krw[0]
+assert k.cost == 719 * 1500 and k.revenue_d7 == round(3.8 * 1500)  # 1,078,500 / 5,700
+assert k.impressions == 5000 and k.installs == 140 and k.retained_d1 == 9  # 통화 무관 불변
 print("✅ test_airbridge_parse 통과")

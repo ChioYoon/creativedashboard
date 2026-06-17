@@ -105,10 +105,11 @@ def mmp_concept(name: str) -> str:
     return stem
 
 
-def inject_mmp_into_records(records, mmp_daily, source_name="airbridge"):
+def inject_mmp_into_records(records, mmp_daily, source_name="airbridge", currency=None, fx_rate=None):
     """CreativeMmpDaily 리스트를 소재명(concept)으로 join 하여 records 에 mmp_* 주입.
 
     소재명 매칭: Airbridge ad_creative == 파일명/소재명 컨벤션. concept(폴더명) 기준 join.
+    currency/fx_rate: 비용·매출 통화 메타(파이프라인에서 이미 변환 적용됨 — 표시용 라벨).
     """
     if not mmp_daily:
         return
@@ -125,6 +126,8 @@ def inject_mmp_into_records(records, mmp_daily, source_name="airbridge"):
         a = aggregate_rows_total(rows)
         q = compute_mmp_quality(a)
         r.mmp_source = source_name
+        r.mmp_currency = currency
+        r.mmp_fx_rate = fx_rate
         r.mmp_channels = sorted(a["channels"])
         r.mmp_d1_ipm = round(q["d1_ipm"], 3)
         r.mmp_d1_cpi = None if q["d1_cpi"] is None else round(q["d1_cpi"], 1)
@@ -265,7 +268,8 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         )
         airbridge_enabled = bool(title_override.get("_pipeline_airbridge_enabled", False))
         airbridge_exclude_channels = title_override.get("_pipeline_airbridge_exclude_channels",
-                                                        ["googleadwords", "Google Ads"])
+                                                        ["google.adwords"])
+        airbridge_usd_to_krw = float(title_override.get("_pipeline_airbridge_usd_to_krw", 0) or 0)
     else:
         # 단일 타이틀 모드: CLI 인자 + titles.json _pipeline_* (Stage 5-D) + .env fallback
         title = args.title or os.environ.get("CLOOP_TITLE_ID", "")
@@ -312,7 +316,8 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         )
         airbridge_enabled = bool(title_meta.get("_pipeline_airbridge_enabled", False))
         airbridge_exclude_channels = title_meta.get("_pipeline_airbridge_exclude_channels",
-                                                    ["googleadwords", "Google Ads"])
+                                                    ["google.adwords"])
+        airbridge_usd_to_krw = float(title_meta.get("_pipeline_airbridge_usd_to_krw", 0) or 0)
 
     if not title:
         sys.exit("❌ --title, --all-titles, 또는 .env CLOOP_TITLE_ID 가 필요합니다.")
@@ -351,6 +356,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         "kpi_enabled": kpi_enabled and not args.no_kpi,
         "airbridge_enabled": bool(airbridge_enabled),
         "airbridge_exclude_channels": airbridge_exclude_channels,
+        "airbridge_usd_to_krw": airbridge_usd_to_krw,
     }
 
 
@@ -538,15 +544,20 @@ def run(cfg: dict) -> dict:
             from .sources.airbridge import AirbridgeMmpSource
             from datetime import date as _date, timedelta as _td
             mmp_src = AirbridgeMmpSource.from_env()
+            # titles.json 환율(_pipeline_airbridge_usd_to_krw)이 있으면 .env 값보다 우선
+            if cfg.get("airbridge_usd_to_krw"):
+                mmp_src.usd_to_krw = cfg["airbridge_usd_to_krw"]
             _win = cfg.get("kpi_window_days") or cfg.get("google_ads_window_days") or 159
             _end = _date.today() - _td(days=1)
             _start = _end - _td(days=_win - 1)
             mmp_daily = mmp_src.fetch_mmp_window(
                 _start, _end, exclude_channels=set(cfg.get("airbridge_exclude_channels", [])))
             cfg["_mmp_daily"] = mmp_daily   # 레코드 생성 후 주입 (records 는 아래 루프에서 생성됨)
+            cfg["_mmp_currency"] = mmp_src.currency
+            cfg["_mmp_fx_rate"] = mmp_src.usd_to_krw
             mmp_status = "success"
             metrics["mmp_rows_fetched"] = len(mmp_daily)
-            print(f"   → Airbridge {len(mmp_daily)}행 fetch (非Google 매체)")
+            print(f"   → Airbridge {len(mmp_daily)}행 fetch (非Google 매체, 통화={mmp_src.currency} fx={mmp_src.usd_to_krw})")
         except FileNotFoundError:
             # 토큰 미설정(.env 에 AIRBRIDGE_* 없음) = 아직 7-A 미완 — 에러 아닌 건너뜀.
             # enabled=true 로 둬도 토큰 추가 전까지 nightly 메일이 깨끗하게 유지됨.
@@ -833,7 +844,8 @@ def run(cfg: dict) -> dict:
 
     # Stage 7: 페치해둔 MMP daily 를 records 에 주입 (소재명 join)
     if cfg.get("_mmp_daily"):
-        inject_mmp_into_records(records, cfg["_mmp_daily"], source_name="airbridge")
+        inject_mmp_into_records(records, cfg["_mmp_daily"], source_name="airbridge",
+                                currency=cfg.get("_mmp_currency"), fx_rate=cfg.get("_mmp_fx_rate"))
 
     # ── Stage 6: 점수 산출 (대시보드 calculateCreativeScores 와 동일 — pipeline/scoring.py) ──
     # 기본 가중치 25/25/25/25 + roas_mode=auto. compute_creative_scores 가 입력 dict 를

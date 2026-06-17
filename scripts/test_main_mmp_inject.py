@@ -34,8 +34,9 @@ assert sorted(r2.mmp_channels) == ["Meta", "TikTok"] and len(r2.mmp_daily) == 2
 recs3 = [CreativeRecord(creative_id="A-Character-Keyart01A-DA", 소재명="A-Character-Keyart01A-DA", 파일명="z.png", 유형="BNR")]
 daily3 = [CreativeMmpDaily(creative_name="251104_BNR_A-Character-Keyart01A-DA_ALL_Mixed_EN", date="2026-02-01",
                            channel="facebook.business", impressions=8000, clicks=50, cost=359, installs=33, retained_d1=7, revenue_d7=21)]
-inject_mmp_into_records(recs3, daily3, source_name="airbridge")
+inject_mmp_into_records(recs3, daily3, source_name="airbridge", currency="KRW", fx_rate=1500.0)
 r3 = recs3[0]
 assert r3.mmp_source == "airbridge" and r3.mmp_retained_d1 == 7, "Facebook _ALL_Mixed_ concept join 실패"
 assert "facebook.business" in r3.mmp_channels
+assert r3.mmp_currency == "KRW" and r3.mmp_fx_rate == 1500.0  # 통화 메타 기록
 print("✅ test_main_mmp_inject 통과")

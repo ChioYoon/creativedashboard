@@ -46,12 +46,13 @@ DEFAULT_EXCLUDE_CHANNELS = ["google.adwords", "unattributed", "appstore", "sns",
 
 
 def parse_actuals_rows(result: dict, metrics_map: dict, exclude_channels: set,
-                       default_date: str = "") -> list[CreativeMmpDaily]:
+                       default_date: str = "", fx_rate: float = 1.0) -> list[CreativeMmpDaily]:
     """Actuals SUCCESS 결과 → CreativeMmpDaily 리스트 (HTTP 무의존, 단위 테스트용).
 
     row = {"groupBys": [ad_creative, channel(, event_date)], "values": {metric_key: {"value": x}}}
     event_date 미포함 grouping(소재×채널 집계)이면 date 는 default_date(윈도우 종료일) 사용.
     ad_creative 가 빈 문자열(오가닉)이거나 channel 이 제외 목록이면 스킵.
+    fx_rate: 비용·매출에 곱할 환율(USD→KRW). 1.0 이면 변환 안 함. ROAS 는 비율이라 불변.
     """
     rows = (((result.get("actuals") or {}).get("data") or {}).get("rows")) or []
     out: list[CreativeMmpDaily] = []
@@ -76,10 +77,10 @@ def parse_actuals_rows(result: dict, metrics_map: dict, exclude_channels: set,
             creative_name=creative, date=dt, channel=channel,
             impressions=int(round(gv("impressions"))),
             clicks=int(round(gv("clicks"))),
-            cost=int(round(gv("cost"))),
+            cost=int(round(gv("cost") * fx_rate)),          # 통화 변환(USD→KRW)
             installs=int(round(gv("installs"))),
             retained_d1=int(round(gv("retained_d1"))),
-            revenue_d7=int(round(gv("revenue_d7"))),
+            revenue_d7=int(round(gv("revenue_d7") * fx_rate)),  # 통화 변환
         ))
     return out
 
@@ -88,15 +89,20 @@ class AirbridgeMmpSource:
     """Airbridge Actuals 단일 쿼리로 소재별 MMP 품질 데이터 수집. (KpiSource ABC 미상속 — 반환형 상이)"""
 
     def __init__(self, token: str, app_name: str, metrics_map: Optional[dict] = None,
-                 session=None, poll_interval_sec: float = 4.0, poll_timeout_sec: float = 300.0,
-                 request_timeout: float = 90.0):
+                 usd_to_krw: float = 1.0, session=None, poll_interval_sec: float = 4.0,
+                 poll_timeout_sec: float = 300.0, request_timeout: float = 90.0):
         self.token = token
         self.app_name = app_name
         self.metrics_map = dict(metrics_map) if metrics_map else dict(DEFAULT_METRICS)
+        self.usd_to_krw = float(usd_to_krw or 1.0)  # 비용·매출 통화 변환 환율(USD→KRW), 1.0=변환 안 함
         self.session = session or requests.Session()
         self.poll_interval_sec = poll_interval_sec
         self.poll_timeout_sec = poll_timeout_sec
         self.request_timeout = request_timeout
+
+    @property
+    def currency(self) -> str:
+        return "KRW" if self.usd_to_krw and self.usd_to_krw != 1.0 else "USD"
 
     @classmethod
     def from_env(cls) -> "AirbridgeMmpSource":
@@ -112,7 +118,11 @@ class AirbridgeMmpSource:
         rev = os.environ.get("AIRBRIDGE_REVENUE_D7_METRIC")
         if rev is not None:
             metrics["revenue_d7"] = rev.strip()
-        return cls(token=token, app_name=app, metrics_map=metrics)
+        try:
+            fx = float(os.environ.get("AIRBRIDGE_USD_TO_KRW", "1.0") or "1.0")
+        except ValueError:
+            fx = 1.0
+        return cls(token=token, app_name=app, metrics_map=metrics, usd_to_krw=fx)
 
     def source_name(self) -> str:
         return "airbridge"
@@ -203,7 +213,8 @@ class AirbridgeMmpSource:
         if pg.get("hasNext"):
             print(f"   [airbridge] ⚠️ 결과 {pg.get('totalCount')}행 중 100행만 수신(응답 cap) — "
                   f"소재×채널 100조합 초과. 일부 소재 누락 가능.", file=sys.stderr)
-        return parse_actuals_rows(result, self.metrics_map, exclude, default_date=end.isoformat())
+        return parse_actuals_rows(result, self.metrics_map, exclude,
+                                  default_date=end.isoformat(), fx_rate=self.usd_to_krw)
 
     def fetch_dataspec(self, kind: str) -> list[str]:
         """GET dataspec actual-report/{kind} → key 목록 (kind: 'metrics' | 'fields'). 7-A 검증용."""

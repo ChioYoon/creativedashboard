@@ -451,8 +451,10 @@ class CreativeRecord(BaseModel):
     mmp_quality_score: Optional[dict] = Field(None, description="4지표 rank 종합 {total,grade,rank,...} (phase-2)")
     mmp_installs: Optional[int] = None
     mmp_retained_d1: Optional[int] = None
-    mmp_cost: Optional[int] = None
-    mmp_revenue: Optional[int] = None  # D7 누적매출 합
+    mmp_cost: Optional[int] = None      # 비용 (mmp_currency 기준 — 환율 변환 후)
+    mmp_revenue: Optional[int] = None   # D7 누적매출 합 (mmp_currency 기준)
+    mmp_currency: Optional[str] = Field(None, description="비용/매출/CPI 표시 통화: 'KRW'(환율변환) | 'USD'(원천)")
+    mmp_fx_rate: Optional[float] = Field(None, description="적용 환율(USD→KRW). 1.0=변환 안 함")
     mmp_daily: list["CreativeMmpDaily"] = Field(default_factory=list, description="채널별·일별(sparkline)")
 
     class Config:

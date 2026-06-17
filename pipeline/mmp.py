@@ -90,7 +90,8 @@ def cmd_fetch(args) -> int:
     except Exception as e:
         print(f"❌ 초기화 실패: {e}")
         return 1
-    print(f"🔍 Airbridge fetch — app={src.app_name}, {start} ~ {end} (비-Google 매체)")
+    print(f"🔍 Airbridge fetch — app={src.app_name}, {start} ~ {end} (비-Google 매체) "
+          f"| 통화={src.currency} (USD→KRW fx={src.usd_to_krw})")
     daily = src.fetch_mmp_window(start, end, exclude_channels=_exclude_channels())
     if not daily:
         print("⚠️ 0행. 토큰/앱/기간/채널필터 확인 (pepp 가 非Google 집행 없었을 수 있음).")

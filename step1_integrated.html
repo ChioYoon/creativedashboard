@@ -1834,9 +1834,10 @@ const MMP_GRADE_STYLE = {
   '개선필요': 'background:#fee2e2;color:#991b1b;',
 };
 function mmpFmt(m) {
+  const cur = m.mmp_currency === 'USD' ? '$' : '₩';  // 파이프라인서 환율 변환됨(기본 KRW)
   return {
     ipm:  m.mmp_d1_ipm == null ? '—' : Number(m.mmp_d1_ipm).toFixed(2),
-    cpi:  m.mmp_d1_cpi == null ? '—' : '₩' + Math.round(m.mmp_d1_cpi).toLocaleString(),
+    cpi:  m.mmp_d1_cpi == null ? '—' : cur + Math.round(m.mmp_d1_cpi).toLocaleString(),
     roas: m.mmp_d7_roas == null ? '—' : Number(m.mmp_d7_roas).toFixed(2),
     ret:  m.mmp_d1_retention == null ? '—' : Number(m.mmp_d1_retention).toFixed(1) + '%',
   };
@@ -1851,6 +1852,9 @@ function buildMmpSectionHtml(creative) {
   const qs = m.mmp_quality_score;
   const scoreBadge = (qs && qs.total != null)
     ? `<span class="mmp-score-badge">품질점수 ${qs.total} · ${escapeHtml(qs.grade)} · #${qs.rank}</span>` : '';
+  // 환율 변환 주석 (KRW 로 변환된 경우만)
+  const fxNote = (m.mmp_currency === 'KRW' && m.mmp_fx_rate)
+    ? `<span class="mmp-fx-note">USD×${Number(m.mmp_fx_rate).toLocaleString()} 환산</span>` : '';
   const cell = (label, val) =>
     `<div class="mmp-metric-cell"><div class="mmp-metric-label">${label}</div><div class="mmp-metric-value">${val}</div></div>`;
   return `
@@ -1860,8 +1864,9 @@ function buildMmpSectionHtml(creative) {
         ${channels}${scoreBadge}
       </div>
       <div class="mmp-metric-grid">
-        ${cell('D1 IPM', f.ipm)}${cell('D1 CPI', f.cpi)}${cell('D7 ROAS', f.roas)}${cell('D1 잔존', f.ret)}
+        ${cell('D1 IPM', f.ipm)}${cell('D1 CPI', f.cpi)}${cell('D7 ROAS<br><span style="font-weight:500;font-size:10px;">(D0~D7 누적)</span>', f.roas)}${cell('D1 잔존', f.ret)}
       </div>
+      ${fxNote ? `<div style="margin-top:6px;font-size:11px;color:#0f766e;">${fxNote} · 비용/CPI 는 원화 환산값</div>` : ''}
     </div>`;
 }
 // 결과표 MMP 셀 — 품질점수 배지(등급색) + 4지표 native 툴팁. mmp 없으면 '—'.
