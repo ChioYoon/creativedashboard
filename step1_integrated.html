@@ -172,7 +172,113 @@
       cursor: pointer; transition: background var(--dur-fast);
     }
     .ds-btn-ghost:hover { background: var(--surface-sink); }
-    
+
+    /* ── Sidebar Accordion ── */
+    .sb-section { border-bottom: 1px solid var(--hairline-warm); }
+    .sb-section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 12px; cursor: pointer;
+      user-select: none; transition: background var(--dur-fast);
+    }
+    .sb-section-header:hover { background: var(--surface-soft); }
+    .sb-section-title {
+      font-size: 10px; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--text-secondary);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .sb-section-title svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .sb-chevron { width: 14px; height: 14px; color: var(--text-secondary); transition: transform var(--dur-fast); }
+    .sb-section.open .sb-chevron { transform: rotate(180deg); }
+    .sb-section-body { padding: 8px 12px 12px; }
+    .sb-section.closed .sb-section-body { display: none; }
+    /* icon-rail 접힘 시 섹션 헤더 아이콘만 */
+    .ds-sidebar.collapsed .sb-section-title span { display: none; }
+    .ds-sidebar.collapsed .sb-section-header { justify-content: center; padding: 10px 0; }
+    .ds-sidebar.collapsed .sb-chevron { display: none; }
+    .ds-sidebar.collapsed .sb-section-body { display: none !important; }
+
+    /* ── Sidebar Form Controls ── */
+    .sb-label {
+      display: block; font-size: 11px; font-weight: 600;
+      color: var(--text-secondary); letter-spacing: .02em;
+      text-transform: uppercase; margin-bottom: 6px; margin-top: 10px;
+    }
+    .sb-label:first-child { margin-top: 0; }
+    .sb-radio-group, .sb-chip-group { display: flex; flex-wrap: wrap; gap: 5px; }
+    .sb-radio-item {
+      display: flex; align-items: center; gap: 4px;
+      padding: 4px 10px; border: 1px solid var(--border-default);
+      border-radius: var(--radius-full); cursor: pointer;
+      font-size: 12px; font-weight: 500; color: var(--text-primary);
+      transition: all var(--dur-fast);
+    }
+    .sb-radio-item input[type="radio"],
+    .sb-radio-item input[type="checkbox"] { display: none; }
+    .sb-radio-item.selected {
+      background: var(--brand-primary); color: var(--text-on-brand);
+      border-color: var(--brand-primary);
+    }
+    .sb-input {
+      width: 100%; padding: 7px 10px;
+      border: 1px solid var(--border-default); border-radius: var(--radius-md);
+      font-family: var(--font-kr); font-size: 12px; color: var(--text-primary);
+      background: var(--bg-base); outline: none;
+      transition: border-color var(--dur-fast);
+    }
+    .sb-input:focus { border-color: var(--brand-primary); }
+    .sb-date-row { display: flex; align-items: center; gap: 6px; }
+    .sb-date-row .sb-input { flex: 1; }
+    .sb-date-sep { font-size: 11px; color: var(--text-secondary); flex-shrink: 0; }
+    /* 체크박스 그룹 (캠페인) */
+    .sb-checkbox-group {
+      max-height: 120px; overflow-y: auto;
+      border: 1px solid var(--border-default); border-radius: var(--radius-md);
+      padding: 4px 0; margin-top: 6px;
+    }
+    .sb-checkbox-item {
+      display: flex; align-items: center; gap: 6px;
+      padding: 3px 10px; font-size: 12px; cursor: pointer;
+    }
+    .sb-checkbox-item:hover { background: var(--surface-soft); }
+    .sb-checkbox-item input[type="checkbox"] { accent-color: var(--brand-primary); }
+    .sb-selected-count { font-size: 10px; color: var(--text-secondary); margin-top: 4px; }
+    /* 슬라이더 */
+    .sb-slider-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .sb-slider-label { font-size: 12px; color: var(--text-primary); width: 60px; flex-shrink: 0; }
+    .sb-slider { flex: 1; accent-color: var(--brand-primary); }
+    .sb-slider-val { font-size: 12px; font-weight: 700; color: var(--brand-primary); width: 36px; text-align: right; }
+    /* 토글 스위치 */
+    .sb-toggle-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 0; border-top: 1px solid var(--hairline-warm); margin-top: 8px;
+    }
+    .sb-toggle-label { font-size: 12px; color: var(--text-primary); flex: 1; }
+    .sb-toggle { position: relative; display: inline-block; width: 36px; height: 20px; }
+    .sb-toggle input { opacity: 0; width: 0; height: 0; }
+    .sb-toggle-track {
+      position: absolute; inset: 0; background: var(--border-default);
+      border-radius: var(--radius-full); cursor: pointer;
+      transition: background var(--dur-fast);
+    }
+    .sb-toggle input:checked + .sb-toggle-track { background: var(--brand-primary); }
+    .sb-toggle-track::after {
+      content: ''; position: absolute; top: 2px; left: 2px;
+      width: 16px; height: 16px; background: white;
+      border-radius: 50%; transition: transform var(--dur-fast);
+    }
+    .sb-toggle input:checked + .sb-toggle-track::after { transform: translateX(16px); }
+    /* ROAS 모드 칩 (single select) */
+    .sb-mode-chip {
+      padding: 4px 10px; border: 1px solid var(--border-default);
+      border-radius: var(--radius-full); font-size: 11px; font-weight: 600;
+      cursor: pointer; background: var(--bg-base); color: var(--text-primary);
+      transition: all var(--dur-fast);
+    }
+    .sb-mode-chip.active {
+      background: #fff1f1; color: var(--brand-primary);
+      border-color: var(--brand-primary);
+    }
+
     /* 헤더 */
     .header {
       background: linear-gradient(135deg, #E84855 0%, #FF6B6B 100%);
@@ -1135,7 +1241,166 @@
         </button>
       </div>
       <div class="ds-sidebar-scroll" id="sidebarScroll">
-        <!-- Task 3에서 채움 -->
+
+        <!-- [데이터] 섹션 -->
+        <div class="sb-section open" id="sbData">
+          <div class="sb-section-header" onclick="toggleSidebarSection('sbData')">
+            <span class="sb-section-title">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span>데이터</span>
+            </span>
+            <svg class="sb-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+          </div>
+          <div class="sb-section-body">
+            <!-- 업로드 탭 -->
+            <div style="display:flex;gap:0;margin-bottom:0;border-bottom:1px solid var(--hairline-warm);">
+              <button id="tabFile" onclick="switchUploadTab('file')"
+                style="padding:6px 12px;font-size:12px;font-weight:600;border:none;border-bottom:2px solid var(--brand-primary);background:var(--bg-base);color:var(--brand-primary);cursor:pointer;border-radius:4px 4px 0 0;">
+                파일 업로드
+              </button>
+              <button id="tabPaste" onclick="switchUploadTab('paste')"
+                style="padding:6px 12px;font-size:12px;font-weight:600;border:none;border-bottom:2px solid transparent;background:var(--surface-card);color:var(--text-secondary);cursor:pointer;border-radius:4px 4px 0 0;">
+                CSV 붙여넣기
+              </button>
+            </div>
+            <!-- 파일 업로드 -->
+            <div id="panelFile">
+              <div class="upload-area" id="uploadArea" style="position:relative;cursor:pointer;padding:20px 12px;border-radius:0 0 8px 8px;">
+                <input type="file" id="fileInput" accept=".csv"
+                       style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:10;" title="CSV">
+                <div style="pointer-events:none;text-align:center;">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="1.5" style="margin-bottom:6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  <div style="font-size:12px;font-weight:600;color:var(--text-primary);">CSV 파일 업로드</div>
+                  <div style="font-size:11px;color:var(--text-secondary);margin-top:2px;">클릭 또는 드래그</div>
+                </div>
+              </div>
+            </div>
+            <!-- CSV 붙여넣기 -->
+            <div id="panelPaste" style="display:none;">
+              <textarea id="csvPasteArea" placeholder="CSV 데이터를 붙여넣으세요..."
+                style="width:100%;height:80px;padding:8px;border:1px solid var(--border-default);
+                       border-radius:var(--radius-md);font-size:11px;resize:vertical;
+                       font-family:monospace;color:var(--text-primary);"></textarea>
+              <button class="ds-btn-primary" style="width:100%;margin-top:6px;padding:7px;" onclick="processPastedCSV()">불러오기</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- [필터] 섹션 -->
+        <div class="sb-section open" id="sbFilter">
+          <div class="sb-section-header" onclick="toggleSidebarSection('sbFilter')">
+            <span class="sb-section-title">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              <span>필터</span>
+            </span>
+            <svg class="sb-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+          </div>
+          <div class="sb-section-body">
+            <span class="sb-label">분석 기준</span>
+            <div class="sb-radio-group">
+              <label class="sb-radio-item selected" id="sbGroupByName" onclick="setSbRadio('groupBy','소재명')">
+                <input type="radio" name="groupBy" value="소재명" checked>소재명
+              </label>
+              <label class="sb-radio-item" id="sbGroupByFile" onclick="setSbRadio('groupBy','파일명')">
+                <input type="radio" name="groupBy" value="파일명">파일명
+              </label>
+            </div>
+
+            <span class="sb-label">소재 유형</span>
+            <div class="sb-chip-group">
+              <label class="sb-radio-item selected" id="sbChipBNR">
+                <input type="checkbox" id="type_BNR" value="BNR" checked onchange="updateTypeFilter();updateSbChips()">BNR
+              </label>
+              <label class="sb-radio-item selected" id="sbChipVID">
+                <input type="checkbox" id="type_VID" value="VID" checked onchange="updateTypeFilter();updateSbChips()">VID
+              </label>
+            </div>
+
+            <span class="sb-label">캠페인</span>
+            <input type="text" id="campaignSearchInput" class="sb-input" placeholder="캠페인 검색..." oninput="filterCampaignList()" style="margin-bottom:4px;">
+            <div class="sb-checkbox-group" id="campaignCheckboxGroup">
+              <div class="sb-checkbox-item">
+                <input type="checkbox" id="campaign_all" value="" checked onchange="toggleAllCampaigns(this)">
+                <label for="campaign_all" style="font-weight:700;font-size:12px;">전체 선택</label>
+              </div>
+            </div>
+            <div class="sb-selected-count" id="campaignSelectedCount">전체 캠페인 선택됨</div>
+
+            <span class="sb-label">날짜 범위</span>
+            <div class="sb-date-row">
+              <input type="date" id="startDate" class="sb-input">
+              <span class="sb-date-sep">~</span>
+              <input type="date" id="endDate" class="sb-input">
+            </div>
+
+            <!-- 저노출/저전환 소재 제외 토글 -->
+            <div class="sb-toggle-row">
+              <span class="sb-toggle-label">저노출·저전환 제외
+                <span style="font-size:10px;color:var(--text-secondary);display:block;">평균의 10% 미만 소재</span>
+              </span>
+              <label class="sb-toggle">
+                <input type="checkbox" id="lowExposureToggle" onchange="syncLowExposureToggle(this)">
+                <span class="sb-toggle-track"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- [가중치] 섹션 -->
+        <div class="sb-section open" id="sbWeight">
+          <div class="sb-section-header" onclick="toggleSidebarSection('sbWeight')">
+            <span class="sb-section-title">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              <span>가중치</span>
+            </span>
+            <svg class="sb-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+          </div>
+          <div class="sb-section-body">
+            <div class="sb-slider-row">
+              <span class="sb-slider-label">전환수</span>
+              <input type="range" class="sb-slider" id="conversionWeight" name="conversionWeight" min="0" max="100" value="25" oninput="updateWeightDisplay(this,'conversionWeightValue')">
+              <span class="sb-slider-val" id="conversionWeightValue">25%</span>
+            </div>
+            <div class="sb-slider-row">
+              <span class="sb-slider-label">CPA</span>
+              <input type="range" class="sb-slider" id="cpaWeight" name="cpaWeight" min="0" max="100" value="25" oninput="updateWeightDisplay(this,'cpaWeightValue')">
+              <span class="sb-slider-val" id="cpaWeightValue">25%</span>
+            </div>
+            <div class="sb-slider-row">
+              <span class="sb-slider-label">IPM</span>
+              <input type="range" class="sb-slider" id="ipmWeight" name="ipmWeight" min="0" max="100" value="25" oninput="updateWeightDisplay(this,'ipmWeightValue')">
+              <span class="sb-slider-val" id="ipmWeightValue">25%</span>
+            </div>
+            <div class="sb-slider-row">
+              <span class="sb-slider-label">ROAS</span>
+              <input type="range" class="sb-slider" id="roasWeight" name="roasWeight" min="0" max="100" value="25" oninput="updateWeightDisplay(this,'roasWeightValue')">
+              <span class="sb-slider-val" id="roasWeightValue">25%</span>
+            </div>
+            <!-- 기존 JS 호환: *Input / *Value 히든 요소 -->
+            <div style="display:none;">
+              <input type="number" id="conversionWeightInput" value="25">
+              <input type="number" id="cpaWeightInput" value="25">
+              <input type="number" id="ipmWeightInput" value="25">
+              <input type="number" id="roasWeightInput" value="25">
+            </div>
+
+            <span class="sb-label" style="margin-top:12px;">ROAS 모드</span>
+            <div class="sb-chip-group">
+              <span class="sb-mode-chip active" id="roasModeChipAuto" onclick="setSbRoasMode('auto')">자동</span>
+              <span class="sb-mode-chip" id="roasModeChipExclude" onclick="setSbRoasMode('exclude')">공정</span>
+              <span class="sb-mode-chip" id="roasModeChipStrict" onclick="setSbRoasMode('strict')">엄격</span>
+              <span class="sb-mode-chip" id="roasModeChipOff" onclick="setSbRoasMode('off')">제외</span>
+            </div>
+            <!-- 히든 라디오 — 기존 JS 호환 -->
+            <div style="display:none;">
+              <input type="radio" name="roasMode" value="auto" id="_roasModeAuto" checked>
+              <input type="radio" name="roasMode" value="exclude" id="_roasModeExclude">
+              <input type="radio" name="roasMode" value="strict" id="_roasModeStrict">
+              <input type="radio" name="roasMode" value="off" id="_roasModeOff">
+            </div>
+          </div>
+        </div>
+
       </div>
       <div class="ds-sidebar-footer">
         <button class="ds-btn-primary" style="width:100%;" onclick="calculateScores()" title="점수 계산 실행">
@@ -1148,222 +1413,11 @@
     <!-- Main Content -->
     <main class="ds-main" id="mainContent">
     
-    <!-- Section 1: 업로드 -->
-    <section id="upload" class="section">
-      <h2 class="section-title">📤 CSV 파일 업로드</h2>
-
-      <!-- 업로드 탭 -->
-      <div style="display:flex;gap:0;margin-bottom:0;border-bottom:2px solid #e5e7eb;">
-        <button id="tabFile" onclick="switchUploadTab('file')"
-          style="padding:10px 22px;font-size:14px;font-weight:600;border:none;border-bottom:3px solid #E84855;background:#fff;color:#E84855;cursor:pointer;margin-bottom:-2px;border-radius:8px 8px 0 0;">
-          📁 파일 업로드
-        </button>
-        <button id="tabPaste" onclick="switchUploadTab('paste')"
-          style="padding:10px 22px;font-size:14px;font-weight:600;border:none;border-bottom:3px solid transparent;background:#f8fafc;color:#6b7280;cursor:pointer;margin-bottom:-2px;border-radius:8px 8px 0 0;">
-          📋 CSV 직접 붙여넣기
-        </button>
-      </div>
-
-      <!-- 탭1: 파일 업로드 -->
-      <div id="panelFile">
-        <div class="upload-area" id="uploadArea" style="position:relative;cursor:pointer;border-top-left-radius:0;border-top-right-radius:0;">
-          <input type="file" id="fileInput" accept=".csv"
-                 style="position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:10;"
-                 title="CSV 파일을 선택하세요">
-          <div class="upload-icon" style="pointer-events:none;">📁</div>
-          <div class="upload-text" style="pointer-events:none;">CSV 파일을 드래그하거나 클릭하여 업로드하세요</div>
-          <div class="upload-hint" style="pointer-events:none;">권장 형식: 날짜, 캠페인, 소재명, 파일명, 전환, CPA, IPM, 매출(Revenue), 이미지링크 등</div>
-        </div>
-      </div>
-
-      <!-- 탭2: CSV 직접 붙여넣기 -->
-      <div id="panelPaste" style="display:none;">
-        <div style="background:#f8fafc;border:1.5px dashed #d1d5db;border-top:none;border-radius:0 0 12px 12px;padding:20px;">
-          <div style="font-size:13px;color:#6b7280;margin-bottom:10px;">
-            💡 Excel에서 복사(Ctrl+A → Ctrl+C)하거나 CSV 파일 내용을 그대로 붙여넣으세요.
-          </div>
-          <textarea id="csvPasteArea"
-            placeholder="여기에 CSV 내용을 붙여넣으세요&#10;&#10;예시:&#10;일,캠페인,소재명,유형,전환,비용,노출수,클릭수&#10;2026-05-01,CMP_A,banner_01.png,BNR,12,48000,25000,320"
-            style="width:100%;height:180px;padding:12px;font-size:12.5px;font-family:monospace;border:1.5px solid #d1d5db;border-radius:8px;resize:vertical;outline:none;color:#374151;background:#fff;"></textarea>
-          <div style="display:flex;gap:10px;margin-top:12px;align-items:center;">
-            <button onclick="processPastedCSV()"
-              style="padding:10px 28px;background:linear-gradient(135deg,#E84855,#ff6b6b);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(232,72,85,.25);">
-              ✅ 분석 시작
-            </button>
-            <button onclick="document.getElementById('csvPasteArea').value=''"
-              style="padding:10px 18px;background:#f3f4f6;color:#6b7280;border:none;border-radius:8px;font-size:13px;cursor:pointer;">
-              🗑️ 초기화
-            </button>
-            <span style="font-size:12px;color:#9ca3af;">탭(Tab) 구분자도 지원합니다</span>
-          </div>
-        </div>
-      </div>
-
-      <div id="uploadStatus" style="margin-top: 20px; padding: 15px; background: #f0f9ff; border-radius: 8px; display: none;">
-        <strong>✅ 업로드 완료</strong>
-        <div id="uploadInfo" style="margin-top: 10px; font-size: 14px; color: #374151;"></div>
-      </div>
-    </section>
-    
-    <!-- Section 2: 점수 계산 설정 -->
-    <section id="scoring" class="section">
-      <h2 class="section-title">📊 계산 기준 설정</h2>
-      
-      <div class="settings-grid">
-        <!-- 전환수 가중치 -->
-        <div class="setting-group">
-          <label class="setting-label">전환수 가중치</label>
-          <div class="slider-container">
-            <input type="range" class="slider" id="conversionWeight" min="0" max="100" value="25" step="1">
-            <input type="number" class="weight-input" id="conversionWeightInput" min="0" max="100" value="25" step="1">
-            <span class="slider-value" id="conversionWeightValue">25%</span>
-          </div>
-        </div>
-        
-        <!-- CPA 가중치 -->
-        <div class="setting-group">
-          <label class="setting-label">CPA 가중치 (역수)</label>
-          <div class="slider-container">
-            <input type="range" class="slider" id="cpaWeight" min="0" max="100" value="25" step="1">
-            <input type="number" class="weight-input" id="cpaWeightInput" min="0" max="100" value="25" step="1">
-            <span class="slider-value" id="cpaWeightValue">25%</span>
-          </div>
-        </div>
-        
-        <!-- IPM 가중치 -->
-        <div class="setting-group">
-          <label class="setting-label">IPM 가중치</label>
-          <div class="slider-container">
-            <input type="range" class="slider" id="ipmWeight" min="0" max="100" value="25" step="1">
-            <input type="number" class="weight-input" id="ipmWeightInput" min="0" max="100" value="25" step="1">
-            <span class="slider-value" id="ipmWeightValue">25%</span>
-          </div>
-        </div>
-        
-        <!-- ROAS 가중치 (NEW!) -->
-        <div class="setting-group">
-          <label class="setting-label">ROAS 가중치</label>
-          <div class="slider-container">
-            <input type="range" class="slider" id="roasWeight" min="0" max="100" value="25" step="1">
-            <input type="number" class="weight-input" id="roasWeightInput" min="0" max="100" value="25" step="1">
-            <span class="slider-value" id="roasWeightValue">25%</span>
-          </div>
-        </div>
-      </div>
-      
-      <div class="settings-grid filter-grid">
-        <!-- 분석 기준 -->
-        <div class="setting-group">
-          <label class="setting-label">분석 기준</label>
-          <div class="radio-group">
-            <label class="radio-item">
-              <input type="radio" name="groupBy" value="소재명" checked>
-              <span>소재명</span>
-            </label>
-            <label class="radio-item">
-              <input type="radio" name="groupBy" value="파일명">
-              <span>파일명</span>
-            </label>
-          </div>
-        </div>
-        
-        <!-- 소재 유형 필터 (체크박스) — TXT는 분석 제외, BNR/VID만 표시 -->
-        <div class="setting-group">
-          <label class="setting-label">소재 유형</label>
-          <div class="checkbox-group" style="max-height: 150px;">
-            <div class="checkbox-item">
-              <input type="checkbox" id="type_BNR" value="BNR" checked onchange="updateTypeFilter()">
-              <label for="type_BNR">BNR (이미지)</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="type_VID" value="VID" checked onchange="updateTypeFilter()">
-              <label for="type_VID">VID (비디오)</label>
-            </div>
-            <!-- TXT는 분석 대상이 아니므로 표시하지 않음 -->
-          </div>
-          <div class="selected-count" id="typeSelectedCount">2개 선택됨</div>
-        </div>
-        
-        <!-- 캠페인 필터 (검색 가능한 체크박스) -->
-        <div class="setting-group">
-          <label class="setting-label">캠페인 필터</label>
-          <input type="text" id="campaignSearchInput" class="search-input" placeholder="캠페인 검색..." oninput="filterCampaignList()">
-          <div class="checkbox-group" id="campaignCheckboxGroup">
-            <div class="checkbox-item">
-              <input type="checkbox" id="campaign_all" value="" checked onchange="toggleAllCampaigns(this)">
-              <label for="campaign_all"><strong>전체 선택</strong></label>
-            </div>
-          </div>
-          <div class="selected-count" id="campaignSelectedCount">전체 캠페인 선택됨</div>
-        </div>
-        
-        <!-- 날짜 범위 (통합) -->
-        <div class="setting-group">
-          <label class="setting-label">날짜 범위</label>
-          <div class="date-range-container">
-            <input type="date" id="startDate" class="setting-input">
-            <span class="date-separator">~</span>
-            <input type="date" id="endDate" class="setting-input">
-          </div>
-          <small style="color: #6b7280; font-size: 11px; margin-top: 5px; display: block;">시작 날짜와 종료 날짜를 선택하세요</small>
-        </div>
-      </div>
-      
-      <!-- ── ROAS 점수 계산 모드 (NEW v5.1) ────────────────────────── -->
-      <div style="background:#fef9f3;border:1.5px solid #fcd34d;border-radius:12px;padding:18px 20px;margin-top:10px;">
-        <div style="font-weight:700;color:#92400e;font-size:14px;margin-bottom:4px;display:flex;align-items:center;gap:6px;">
-          💰 ROAS 점수 계산 모드
-          <span style="font-size:11px;font-weight:400;color:#9ca3af;">(매출 데이터가 부분적으로만 있을 때 점수 왜곡 방지)</span>
-        </div>
-        <div style="font-size:12.5px;color:#6b7280;margin-bottom:12px;">
-          매출 데이터가 늦게 들어오는 환경에서 ROAS 점수 산출 방식을 선택합니다. 기본값은 <strong>"자동(권장)"</strong>입니다.
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;">
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px 14px;border:2px solid #fcd34d;border-radius:8px;font-size:13px;font-weight:600;background:#fffbeb;transition:all .15s;">
-            <input type="radio" name="roasMode" value="auto" checked> 🤖 자동 (매출 보유 30% 미만이면 자동 제외)
-          </label>
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px 14px;border:2px solid #e5e7eb;border-radius:8px;font-size:13px;font-weight:600;background:white;transition:all .15s;">
-            <input type="radio" name="roasMode" value="strict"> 📊 매출=0도 ROAS 0점 (엄격)
-          </label>
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px 14px;border:2px solid #e5e7eb;border-radius:8px;font-size:13px;font-weight:600;background:white;transition:all .15s;">
-            <input type="radio" name="roasMode" value="exclude"> 🎯 매출 보유 소재만 ROAS 평가 (공정)
-          </label>
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px 14px;border:2px solid #e5e7eb;border-radius:8px;font-size:13px;font-weight:600;background:white;transition:all .15s;">
-            <input type="radio" name="roasMode" value="off"> 🚫 ROAS 가중치 0% (완전 제외)
-          </label>
-        </div>
-      </div>
-
-      <!-- ── 저노출/저전환 소재 제외 필터 ────────────────────────── -->
-      <div style="background:#f8fafc;border:1.5px solid #e5e7eb;border-radius:12px;padding:18px 20px;margin-top:10px;">
-        <div style="font-weight:700;color:#374151;font-size:14px;margin-bottom:4px;display:flex;align-items:center;gap:6px;">
-          🚫 저노출/저전환 소재 제외
-          <span style="font-size:11px;font-weight:400;color:#9ca3af;">(설정된 소재유형·캠페인·날짜 범위 기준 평균 대비)</span>
-        </div>
-        <div style="font-size:12.5px;color:#6b7280;margin-bottom:12px;">
-          평균 노출수 <strong>OR</strong> 평균 전환수가 기준 미만인 소재를 분석에서 제외합니다.
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:8px;">
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px 14px;border:2px solid #e5e7eb;border-radius:8px;font-size:13px;font-weight:600;background:white;transition:all .15s;" id="thresh-label-0">
-            <input type="radio" name="thresholdFilter" value="0" checked onchange="updateThresholdLabel()"> 미적용
-          </label>
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px 14px;border:2px solid #e5e7eb;border-radius:8px;font-size:13px;font-weight:600;background:white;transition:all .15s;" id="thresh-label-10">
-            <input type="radio" name="thresholdFilter" value="10" onchange="updateThresholdLabel()"> 평균의 10% 미만 제외
-          </label>
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px 14px;border:2px solid #e5e7eb;border-radius:8px;font-size:13px;font-weight:600;background:white;transition:all .15s;" id="thresh-label-20">
-            <input type="radio" name="thresholdFilter" value="20" onchange="updateThresholdLabel()"> 평균의 20% 미만 제외
-          </label>
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:7px 14px;border:2px solid #e5e7eb;border-radius:8px;font-size:13px;font-weight:600;background:white;transition:all .15s;" id="thresh-label-30">
-            <input type="radio" name="thresholdFilter" value="30" onchange="updateThresholdLabel()"> 평균의 30% 미만 제외
-          </label>
-        </div>
-      </div>
-
-      <div style="display: flex; gap: 15px; margin-top: 30px;">
-        <button class="btn" onclick="calculateScores()">📊 점수 계산 실행</button>
-        <button class="btn btn-secondary" onclick="resetScoring()">🔄 설정 초기화</button>
-      </div>
-    </section>
+    <!-- 업로드 상태 표시 (사이드바 업로드 후 피드백) -->
+    <div id="uploadStatus" style="display:none;margin:12px 20px;padding:10px 14px;background:#f0f9ff;border-radius:8px;font-size:13px;">
+      <strong>✅ 업로드 완료</strong>
+      <div id="uploadInfo" style="margin-top:6px;font-size:12px;color:#374151;"></div>
+    </div>
     
     <!-- Section 3: 분석 결과 -->
     <section id="results" class="section" style="display: none;">
@@ -1690,6 +1744,59 @@ function toggleSidebar() {
     const poly = icon.querySelector('polyline');
     if (poly) poly.setAttribute('points', isCollapsed ? '9 18 15 12 9 6' : '15 18 9 12 15 6');
   }
+}
+
+/* ── 사이드바 아코디언 ── */
+function toggleSidebarSection(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('open');
+  el.classList.toggle('closed');
+}
+
+/* ── 사이드바 라디오 칩 ── */
+function setSbRadio(name, value) {
+  document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+    r.checked = r.value === value;
+  });
+  if (name === 'groupBy') {
+    document.getElementById('sbGroupByName').classList.toggle('selected', value === '소재명');
+    document.getElementById('sbGroupByFile').classList.toggle('selected', value === '파일명');
+  }
+}
+
+function updateSbChips() {
+  const bnr = document.getElementById('type_BNR');
+  const vid = document.getElementById('type_VID');
+  if (bnr) document.getElementById('sbChipBNR')?.classList.toggle('selected', bnr.checked);
+  if (vid) document.getElementById('sbChipVID')?.classList.toggle('selected', vid.checked);
+}
+
+/* ── 저노출 토글 → 기존 thresholdFilter 라디오 동기화 ── */
+function syncLowExposureToggle(cb) {
+  const val = cb.checked ? '10' : '0';
+  const radio = document.querySelector(`input[name="thresholdFilter"][value="${val}"]`);
+  if (radio) radio.checked = true;
+  if (typeof updateThresholdLabel === 'function') updateThresholdLabel();
+}
+
+/* ── ROAS 모드 칩 → 히든 라디오 동기화 ── */
+function setSbRoasMode(mode) {
+  ['auto','exclude','strict','off'].forEach(m => {
+    const chip = document.getElementById(`roasModeChip${m.charAt(0).toUpperCase()+m.slice(1)}`);
+    if (chip) chip.classList.toggle('active', m === mode);
+    const radio = document.getElementById(`_roasMode${m.charAt(0).toUpperCase()+m.slice(1)}`);
+    if (radio) radio.checked = m === mode;
+  });
+}
+
+/* ── 가중치 슬라이더 표시 업데이트 ── */
+function updateWeightDisplay(slider, valId) {
+  const el = document.getElementById(valId);
+  if (el) el.textContent = slider.value + '%';
+  // 히든 Input 동기화 (resetScoring 호환)
+  const inputEl = document.getElementById(slider.id + 'Input');
+  if (inputEl) inputEl.value = slider.value;
 }
 
 /* ============================================================
@@ -6166,5 +6273,21 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
     }
 
   </script>
+
+  <!-- 기존 JS 호환: 히든 필터 라디오 -->
+  <div style="display:none;">
+    <input type="radio" name="thresholdFilter" value="0" checked id="thresh-0" onchange="updateThresholdLabel()">
+    <input type="radio" name="thresholdFilter" value="10" id="thresh-10" onchange="updateThresholdLabel()">
+    <input type="radio" name="thresholdFilter" value="20" id="thresh-20" onchange="updateThresholdLabel()">
+    <input type="radio" name="thresholdFilter" value="30" id="thresh-30" onchange="updateThresholdLabel()">
+    <!-- thresh-label-* 요소 (updateThresholdLabel이 classList 조작) -->
+    <span id="thresh-label-0"></span>
+    <span id="thresh-label-10"></span>
+    <span id="thresh-label-20"></span>
+    <span id="thresh-label-30"></span>
+    <!-- 피로도 분석 기준 -->
+    <input type="radio" name="fatigueGroupBy" value="소재명" checked>
+    <input type="radio" name="fatigueGroupBy" value="파일명">
+  </div>
 </body>
 </html>
