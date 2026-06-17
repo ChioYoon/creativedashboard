@@ -93,6 +93,7 @@
     .ds-app-body {
       display: flex;
       height: calc(100vh - 44px);
+      height: calc(100dvh - 44px);
       margin-top: 44px;
       overflow: hidden;
     }
@@ -1137,7 +1138,7 @@
         <!-- Task 3에서 채움 -->
       </div>
       <div class="ds-sidebar-footer">
-        <button class="ds-btn-primary" style="width:100%;" onclick="calculateScores()">
+        <button class="ds-btn-primary" style="width:100%;" onclick="calculateScores()" title="점수 계산 실행">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           <span class="ds-sidebar-footer-label">점수 계산 실행</span>
         </button>
@@ -1686,7 +1687,8 @@ function toggleSidebar() {
   const icon = document.getElementById('sidebarToggleIcon');
   const isCollapsed = sb.classList.toggle('collapsed');
   if (icon) {
-    icon.setAttribute('points', isCollapsed ? '9 18 15 12 9 6' : '15 18 9 12 15 6');
+    const poly = icon.querySelector('polyline');
+    if (poly) poly.setAttribute('points', isCollapsed ? '9 18 15 12 9 6' : '15 18 9 12 15 6');
   }
 }
 
@@ -3117,14 +3119,9 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     // 섹션 스크롤
     function scrollToSection(sectionId) {
       const section = document.getElementById(sectionId);
-      if (section) {
-        const navHeight = 60; // 네비게이션 높이
-        const targetPosition = section.offsetTop - navHeight;
-        window.scrollTo({
-          top: targetPosition,
-          behavior: 'smooth'
-        });
-      }
+      const container = document.getElementById('mainContent');
+      if (!section || !container) return;
+      container.scrollTo({ top: section.offsetTop - 44, behavior: 'smooth' });
     }
     
     // CSV 파일 업로드 처리
