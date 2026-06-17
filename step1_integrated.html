@@ -3401,9 +3401,6 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           </button>
         `;
         
-        // 6. 피로도 섹션 활성화
-        document.getElementById('fatigue').style.display = 'block';
-        
         console.log('✅ CSV 처리 완료!');
         
       } catch (error) {
@@ -5546,9 +5543,11 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
       });
       
       console.log('✅ 피로도 결과 표시 완료');
-      
-      // 통계 섹션으로 스크롤
-      scrollToSection('statistics');
+
+      // 피로도 탭으로 전환
+      const mainTabBar = document.getElementById('mainTabBar');
+      if (mainTabBar) mainTabBar.style.display = 'flex';
+      switchMainTab('fatigue');
     }
     
     // 피로도 차트 표시
