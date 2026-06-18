@@ -241,7 +241,7 @@
     .sb-date-preset:hover:not(.active) { background: var(--surface-soft); }
     /* 체크박스 그룹 (캠페인) */
     .sb-checkbox-group {
-      max-height: 120px; overflow-y: auto;
+      max-height: 200px; overflow-y: auto;
       border: 1px solid var(--border-default); border-radius: var(--radius-md);
       padding: 4px 0; margin-top: 6px;
     }
@@ -3293,7 +3293,9 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             const maxDate = formatDate(dates[dates.length - 1]);
             dateRangeInfo = `${minDate} ~ ${maxDate}`;
             window._fullDateRange = { min: minDate, max: maxDate };
-            setDatePreset(window._currentDatePreset || '7d');
+            // JSON 데이터는 소재별 "일"이 운영 시작일이라 7d 프리셋이 선론칭 소재만 걸러냄
+            // → MMP·kpi_daily 소재가 모두 제외되는 문제를 막기 위해 "전체"로 기본 설정
+            setDatePreset('all');
             const midIndex = Math.floor(dates.length / 2);
             const midDate = formatDate(dates[midIndex]);
             document.getElementById('baselineStart').value = minDate;
