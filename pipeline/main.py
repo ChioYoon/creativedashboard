@@ -555,9 +555,13 @@ def run(cfg: dict) -> dict:
             cfg["_mmp_daily"] = mmp_daily   # 레코드 생성 후 주입 (records 는 아래 루프에서 생성됨)
             cfg["_mmp_currency"] = mmp_src.currency
             cfg["_mmp_fx_rate"] = mmp_src.usd_to_krw
-            mmp_status = "success"
+            mmp_status = "success_truncated" if mmp_src.last_fetch_truncated else "success"
             metrics["mmp_rows_fetched"] = len(mmp_daily)
-            print(f"   → Airbridge {len(mmp_daily)}행 fetch (非Google 매체, 통화={mmp_src.currency} fx={mmp_src.usd_to_krw})")
+            metrics["mmp_truncated"] = mmp_src.last_fetch_truncated
+            if mmp_src.last_fetch_truncated:
+                metrics["errors"].append("MMP fetch 100행 cap 초과 — 일부 소재 누락됨. groupBys 최적화 필요.")
+            print(f"   → Airbridge {len(mmp_daily)}행 fetch (非Google 매체, 통화={mmp_src.currency} fx={mmp_src.usd_to_krw})"
+                  + (" ⚠️ 100행 cap 초과, 소재 누락" if mmp_src.last_fetch_truncated else ""))
         except FileNotFoundError:
             # 토큰 미설정(.env 에 AIRBRIDGE_* 없음) = 아직 7-A 미완 — 에러 아닌 건너뜀.
             # enabled=true 로 둬도 토큰 추가 전까지 nightly 메일이 깨끗하게 유지됨.

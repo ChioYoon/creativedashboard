@@ -101,6 +101,7 @@ class AirbridgeMmpSource:
         self.poll_interval_sec = poll_interval_sec
         self.poll_timeout_sec = poll_timeout_sec
         self.request_timeout = request_timeout
+        self.last_fetch_truncated: bool = False  # 마지막 fetch에서 100행 cap 초과 여부
 
     @property
     def currency(self) -> str:
@@ -203,8 +204,9 @@ class AirbridgeMmpSource:
         non-Google + 유료 소재만(오가닉/제외채널/빈 ad_creative 스킵). 최대 400일.
         """
         exclude = set(exclude_channels) if exclude_channels else set(DEFAULT_EXCLUDE_CHANNELS)
-        # event_date 미포함 = 소재×채널 집계 → 행 수가 응답 cap(100) 아래로 유지됨.
-        # 4 품질지표는 소재별 합계라 일별 불필요(cohort 메트릭은 Airbridge가 이미 윈도우 집계).
+        # event_date 미포함 = 소재×채널×캠페인 집계. ⚠️ 응답 100행 cap:
+        # 소재×채널×캠페인 조합이 100 초과 시 이후 소재 누락(page/offset 미지원).
+        # 현재 pepp-us(소재30×채널1×캠페인5≈30행) 안전, 소재·캠페인 증가 시 재검토 필요.
         body = {
             "from": start.isoformat(), "to": end.isoformat(),
             "groupBys": ["ad_creative", "channel", "campaign"],
@@ -212,9 +214,10 @@ class AirbridgeMmpSource:
         }
         result = self._create_and_poll(body)
         pg = result.get("pagination") or {}
-        if pg.get("hasNext"):
+        self.last_fetch_truncated = bool(pg.get("hasNext"))
+        if self.last_fetch_truncated:
             print(f"   [airbridge] ⚠️ 결과 {pg.get('totalCount')}행 중 100행만 수신(응답 cap) — "
-                  f"소재×채널 100조합 초과. 일부 소재 누락 가능.", file=sys.stderr)
+                  f"소재×채널×캠페인 100조합 초과. 일부 소재 누락.", file=sys.stderr)
         return parse_actuals_rows(result, self.metrics_map, exclude,
                                   default_date=end.isoformat(), fx_rate=self.usd_to_krw)
 

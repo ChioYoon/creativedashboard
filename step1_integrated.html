@@ -539,6 +539,17 @@
     .checkbox-item:hover {
       background: #f3f4f6;
     }
+    .checkbox-group-label {
+      padding: 4px 8px 2px;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-muted, #9ca3af);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-top: 1px solid var(--border-default, #e5e7eb);
+      margin-top: 2px;
+    }
+    .checkbox-group-label:first-child { border-top: none; margin-top: 0; }
     .checkbox-item input[type="checkbox"] {
       width: 18px;
       height: 18px;
@@ -3658,17 +3669,37 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         container.appendChild(allItem);
       }
 
-      // 캠페인 목록 추가
-      campaigns.forEach((campaign, index) => {
+      // Google Ads / MMP 그룹 분리 — 평가 기준이 달라 동시 선택 불가
+      const gadsCamps = campaigns.filter(c => !c.startsWith('[MMP] '));
+      const mmpCamps  = campaigns.filter(c =>  c.startsWith('[MMP] '));
+
+      function addCampItem(campaign, id, group) {
         const item = document.createElement('div');
         item.className = 'checkbox-item';
         item.dataset.campaign = campaign.toLowerCase();
+        const label = group === 'mmp' ? campaign.replace('[MMP] ', '') : campaign;
         item.innerHTML = `
-          <input type="checkbox" id="campaign_${index}" value="${campaign}" checked onchange="updateCampaignFilter()">
-          <label for="campaign_${index}">${campaign}</label>
+          <input type="checkbox" id="${id}" value="${campaign}" checked
+            data-group="${group}" onchange="onCampaignCheckboxChange(this)">
+          <label for="${id}">${label}</label>
         `;
         container.appendChild(item);
-      });
+      }
+
+      if (gadsCamps.length > 0) {
+        const hdr = document.createElement('div');
+        hdr.className = 'checkbox-group-label';
+        hdr.textContent = 'Google Ads';
+        container.appendChild(hdr);
+        gadsCamps.forEach((c, i) => addCampItem(c, `campaign_g${i}`, 'gads'));
+      }
+      if (mmpCamps.length > 0) {
+        const hdr = document.createElement('div');
+        hdr.className = 'checkbox-group-label';
+        hdr.textContent = 'MMP (Airbridge)';
+        container.appendChild(hdr);
+        mmpCamps.forEach((c, i) => addCampItem(c, `campaign_m${i}`, 'mmp'));
+      }
 
       // 피로도 분석용 캠페인 필터 (체크박스)
       const fatigueContainer = document.getElementById('fatigueCampaignCheckboxGroup');
@@ -3686,16 +3717,36 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           `;
           fatigueContainer.appendChild(allItem);
         }
-        campaigns.forEach((campaign, index) => {
+        const fGads = campaigns.filter(c => !c.startsWith('[MMP] '));
+        const fMmp  = campaigns.filter(c =>  c.startsWith('[MMP] '));
+
+        function addFatigueCampItem(campaign, id, group) {
           const item = document.createElement('div');
           item.className = 'checkbox-item';
           item.dataset.campaign = campaign.toLowerCase();
+          const label = group === 'mmp' ? campaign.replace('[MMP] ', '') : campaign;
           item.innerHTML = `
-            <input type="checkbox" id="fatigue_campaign_${index}" value="${campaign}" checked onchange="updateFatigueCampaignFilter()">
-            <label for="fatigue_campaign_${index}">${campaign}</label>
+            <input type="checkbox" id="${id}" value="${campaign}" checked
+              data-group="${group}" onchange="onFatigueCampaignCheckboxChange(this)">
+            <label for="${id}">${label}</label>
           `;
           fatigueContainer.appendChild(item);
-        });
+        }
+
+        if (fGads.length > 0) {
+          const hdr = document.createElement('div');
+          hdr.className = 'checkbox-group-label';
+          hdr.textContent = 'Google Ads';
+          fatigueContainer.appendChild(hdr);
+          fGads.forEach((c, i) => addFatigueCampItem(c, `fatigue_campaign_g${i}`, 'gads'));
+        }
+        if (fMmp.length > 0) {
+          const hdr = document.createElement('div');
+          hdr.className = 'checkbox-group-label';
+          hdr.textContent = 'MMP (Airbridge)';
+          fatigueContainer.appendChild(hdr);
+          fMmp.forEach((c, i) => addFatigueCampItem(c, `fatigue_campaign_m${i}`, 'mmp'));
+        }
         updateFatigueCampaignFilter();
       }
       
@@ -3752,6 +3803,29 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       console.log(`🎯 캠페인 필터: ${currentCampaign ? (Array.isArray(currentCampaign) ? currentCampaign.join(', ') : currentCampaign) : '전체'}`);
     }
     
+    // 캠페인 그룹 상호배타 — Google Ads / MMP 동시 선택 불가 (평가 기준 상이)
+    function onCampaignCheckboxChange(cb) {
+      if (cb.checked) {
+        const container = document.getElementById('campaignCheckboxGroup');
+        const otherGroup = cb.dataset.group === 'gads' ? 'mmp' : 'gads';
+        container.querySelectorAll(`input[data-group="${otherGroup}"]`).forEach(other => {
+          other.checked = false;
+        });
+      }
+      updateCampaignFilter();
+    }
+
+    function onFatigueCampaignCheckboxChange(cb) {
+      if (cb.checked) {
+        const container = document.getElementById('fatigueCampaignCheckboxGroup');
+        const otherGroup = cb.dataset.group === 'gads' ? 'mmp' : 'gads';
+        container.querySelectorAll(`input[data-group="${otherGroup}"]`).forEach(other => {
+          other.checked = false;
+        });
+      }
+      updateFatigueCampaignFilter();
+    }
+
     // 전체 캠페인 선택/해제
     function toggleAllCampaigns(checkbox) {
       const container = document.getElementById('campaignCheckboxGroup');
@@ -4013,7 +4087,9 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             // 임계값 기준: 현재 필터(캠페인·유형·날짜) 적용 후 집계된 소재 기준 산출
             // Airbridge 전용 소재(kpi_daily 없음 & mmp_source 있음) → Facebook 규모 차이로 Google Ads 기준 임계값 면제
             // 선론칭·무데이터 소재(kpi_daily·mmp_source 모두 없음) → 평균 계산 제외, 임계값 판정 대상 유지(→ 제외됨)
+            // isMmpOnly: 2-0 블록의 hasMmp 조건과 일치 — mmp_daily 실데이터 있어야 면제 적용
             const isMmpOnly = c => c.meta && c.meta.mmp_source &&
+              Array.isArray(c.meta.mmp_daily) && c.meta.mmp_daily.length > 0 &&
               !(Array.isArray(c.meta.kpi_daily) && c.meta.kpi_daily.length > 0);
             const mmpOnlyCreatives = aggregated.filter(isMmpOnly);
             const checkCreatives   = aggregated.filter(c => !isMmpOnly(c));          // 판정 대상
