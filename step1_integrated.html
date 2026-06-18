@@ -3973,6 +3973,28 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           let aggregated = aggregateCreatives(filteredRows, currentGroupBy);
           console.log(`📊 집계 완료: ${aggregated.length}개 소재 (병합 매핑 ${Object.keys(window._creativeMergeMap||{}).length}건 적용)`);
 
+          // 2-0. Airbridge 전용 소재: mmp_daily 노출·클릭·비용을 상단 KPI에 반영
+          // Google Ads 미운영(kpi_daily 없음) + Airbridge 운영(mmp_source 있음) 소재만 대상
+          aggregated.forEach(c => {
+            const hasGads = c.meta && Array.isArray(c.meta.kpi_daily) && c.meta.kpi_daily.length > 0;
+            const hasMmp  = c.meta && c.meta.mmp_source && Array.isArray(c.meta.mmp_daily) && c.meta.mmp_daily.length > 0;
+            if (!hasGads && hasMmp && c.노출수 === 0) {
+              const mmpSum = c.meta.mmp_daily.reduce((s, m) => {
+                s.impressions += (m.impressions || 0);
+                s.clicks      += (m.clicks      || 0);
+                s.cost        += (m.cost        || 0);
+                return s;
+              }, { impressions: 0, clicks: 0, cost: 0 });
+              c.노출수 = mmpSum.impressions;
+              c.클릭수 = mmpSum.clicks;
+              c.비용   = mmpSum.cost;
+              c.CTR    = c.노출수 > 0 ? (c.클릭수 / c.노출수) * 100 : 0;
+              c.IPM    = c.노출수 > 0 ? (c.전환  / c.노출수) * 1000 : 0;
+              c.전환율 = c.노출수 > 0 ? (c.전환  / c.노출수) * 100 : 0;
+              c.CPA    = c.전환   > 0 ? c.비용   / c.전환  : 0;
+            }
+          });
+
           // 2-1. 저노출/저전환 임계값 필터 적용
           const thresholdPct = parseInt(document.querySelector('input[name="thresholdFilter"]:checked')?.value || '0');
           let excludedCreatives = [];
@@ -3980,9 +4002,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
 
           if (thresholdPct > 0 && aggregated.length > 0) {
             // 임계값 기준: 현재 필터(캠페인·유형·날짜) 적용 후 집계된 소재 기준 산출
-            // Airbridge 전용 소재(노출=전환=0 & mmp_source 있음) → 임계값 계산·필터 모두 제외(자동 통과)
-            // 선론칭·무데이터 소재(노출=전환=0 & mmp_source 없음) → 평균 계산 제외하되 임계값 판정 대상 유지(→ 제외됨)
-            const isMmpOnly = c => c.노출수 === 0 && c.전환 === 0 && c.meta && c.meta.mmp_source;
+            // Airbridge 전용 소재(kpi_daily 없음 & mmp_source 있음) → Facebook 규모 차이로 Google Ads 기준 임계값 면제
+            // 선론칭·무데이터 소재(kpi_daily·mmp_source 모두 없음) → 평균 계산 제외, 임계값 판정 대상 유지(→ 제외됨)
+            const isMmpOnly = c => c.meta && c.meta.mmp_source &&
+              !(Array.isArray(c.meta.kpi_daily) && c.meta.kpi_daily.length > 0);
             const mmpOnlyCreatives = aggregated.filter(isMmpOnly);
             const checkCreatives   = aggregated.filter(c => !isMmpOnly(c));          // 판정 대상
             const avgBase = checkCreatives.filter(c => c.노출수 > 0 || c.전환 > 0); // 평균 계산 기준(실집행분만)
