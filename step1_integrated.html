@@ -3979,8 +3979,9 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           let aggregated = aggregateCreatives(filteredRows, currentGroupBy);
           console.log(`📊 집계 완료: ${aggregated.length}개 소재 (병합 매핑 ${Object.keys(window._creativeMergeMap||{}).length}건 적용)`);
 
-          // 2-0. Airbridge 전용 소재: mmp_daily 노출·클릭·비용을 상단 KPI에 반영
+          // 2-0. Airbridge 전용 소재: mmp_daily 노출·클릭·비용·설치수를 상단 KPI에 반영
           // Google Ads 미운영(kpi_daily 없음) + Airbridge 운영(mmp_source 있음) 소재만 대상
+          // installs → 전환 으로 매핑(UA 캠페인 기준 설치=전환)
           aggregated.forEach(c => {
             const hasGads = c.meta && Array.isArray(c.meta.kpi_daily) && c.meta.kpi_daily.length > 0;
             const hasMmp  = c.meta && c.meta.mmp_source && Array.isArray(c.meta.mmp_daily) && c.meta.mmp_daily.length > 0;
@@ -3989,11 +3990,13 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
                 s.impressions += (m.impressions || 0);
                 s.clicks      += (m.clicks      || 0);
                 s.cost        += (m.cost        || 0);
+                s.installs    += (m.installs    || 0);
                 return s;
-              }, { impressions: 0, clicks: 0, cost: 0 });
+              }, { impressions: 0, clicks: 0, cost: 0, installs: 0 });
               c.노출수 = mmpSum.impressions;
               c.클릭수 = mmpSum.clicks;
               c.비용   = mmpSum.cost;
+              c.전환   = mmpSum.installs;
               c.CTR    = c.노출수 > 0 ? (c.클릭수 / c.노출수) * 100 : 0;
               c.IPM    = c.노출수 > 0 ? (c.전환  / c.노출수) * 1000 : 0;
               c.전환율 = c.노출수 > 0 ? (c.전환  / c.노출수) * 100 : 0;
