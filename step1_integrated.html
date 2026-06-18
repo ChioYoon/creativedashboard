@@ -205,6 +205,7 @@
     }
     .sb-label:first-child { margin-top: 0; }
     .sb-radio-group, .sb-chip-group { display: flex; flex-wrap: wrap; gap: 5px; }
+    .sb-chip-group .sb-radio-item { min-width: 44px; justify-content: center; }
     .sb-radio-item {
       display: flex; align-items: center; gap: 4px;
       padding: 4px 10px; border: 1px solid var(--border-default);
@@ -229,6 +230,15 @@
     .sb-date-row { display: flex; align-items: center; gap: 6px; }
     .sb-date-row .sb-input { flex: 1; }
     .sb-date-sep { font-size: 11px; color: var(--text-secondary); flex-shrink: 0; }
+    .sb-date-presets { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
+    .sb-date-preset {
+      padding: 3px 8px; border: 1px solid var(--border-default);
+      border-radius: var(--radius-full); font-size: 11px; font-weight: 500;
+      cursor: pointer; background: var(--bg-base); color: var(--text-primary);
+      transition: all var(--dur-fast);
+    }
+    .sb-date-preset.active { background: var(--brand-primary); color: #fff; border-color: var(--brand-primary); }
+    .sb-date-preset:hover:not(.active) { background: var(--surface-soft); }
     /* 체크박스 그룹 (캠페인) */
     .sb-checkbox-group {
       max-height: 120px; overflow-y: auto;
@@ -1332,15 +1342,6 @@
     </a>
     <span class="ds-topbar-title">광고 소재 분석 대시보드</span>
     <div class="ds-topbar-right">
-      <!-- 타이틀 셀렉터 -->
-      <select id="titleSelector"
-              onchange="onTitleSelectorChange(this.value)"
-              title="분석할 타이틀 선택"
-              style="padding:4px 10px;border:1.5px solid rgba(255,255,255,.35);border-radius:6px;
-                     background:rgba(255,255,255,.12);color:#fff;font-size:12px;font-weight:600;
-                     cursor:pointer;max-width:200px;">
-        <option value="">타이틀 선택 (직접 업로드)</option>
-      </select>
       <button class="ds-topbar-icon-btn gai-nav-key-btn" onclick="openGeminiModal()" title="Gemini AI 분석 설정">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       </button>
@@ -1372,16 +1373,33 @@
             <svg class="sb-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
           </div>
           <div class="sb-section-body">
-            <!-- 업로드 탭 -->
+            <!-- 업로드 탭 — 타이틀 선택 / 파일 업로드 / CSV 붙여넣기 -->
             <div style="display:flex;gap:0;margin-bottom:0;border-bottom:1px solid var(--hairline-warm);">
+              <button id="tabTitle" onclick="switchUploadTab('title')"
+                style="padding:5px 8px;font-size:11px;font-weight:600;border:none;border-bottom:2px solid var(--brand-primary);background:var(--bg-base);color:var(--brand-primary);cursor:pointer;border-radius:4px 4px 0 0;white-space:nowrap;">
+                타이틀 선택
+              </button>
               <button id="tabFile" onclick="switchUploadTab('file')"
-                style="padding:6px 12px;font-size:12px;font-weight:600;border:none;border-bottom:2px solid var(--brand-primary);background:var(--bg-base);color:var(--brand-primary);cursor:pointer;border-radius:4px 4px 0 0;">
+                style="padding:5px 8px;font-size:11px;font-weight:600;border:none;border-bottom:2px solid transparent;background:var(--surface-card);color:var(--text-secondary);cursor:pointer;border-radius:4px 4px 0 0;white-space:nowrap;">
                 파일 업로드
               </button>
               <button id="tabPaste" onclick="switchUploadTab('paste')"
-                style="padding:6px 12px;font-size:12px;font-weight:600;border:none;border-bottom:2px solid transparent;background:var(--surface-card);color:var(--text-secondary);cursor:pointer;border-radius:4px 4px 0 0;">
+                style="padding:5px 8px;font-size:11px;font-weight:600;border:none;border-bottom:2px solid transparent;background:var(--surface-card);color:var(--text-secondary);cursor:pointer;border-radius:4px 4px 0 0;white-space:nowrap;">
                 CSV 붙여넣기
               </button>
+            </div>
+            <!-- 타이틀 선택 -->
+            <div id="panelTitle">
+              <div style="padding:10px 0 4px;">
+                <select id="titleSelector"
+                        onchange="onTitleSelectorChange(this.value)"
+                        title="분석할 타이틀 선택"
+                        style="width:100%;padding:7px 10px;border:1px solid var(--border-default);
+                               border-radius:var(--radius-md);font-size:12px;font-weight:600;
+                               color:var(--text-primary);background:var(--bg-base);cursor:pointer;">
+                  <option value="">타이틀 선택...</option>
+                </select>
+              </div>
             </div>
             <!-- 파일 업로드 -->
             <div id="panelFile">
@@ -1447,10 +1465,20 @@
             <div class="sb-selected-count" id="campaignSelectedCount">전체 캠페인 선택됨</div>
 
             <span class="sb-label">날짜 범위</span>
-            <div class="sb-date-row">
-              <input type="date" id="startDate" class="sb-input">
-              <span class="sb-date-sep">~</span>
-              <input type="date" id="endDate" class="sb-input">
+            <div class="sb-date-presets">
+              <button class="sb-date-preset active" data-preset="7d" onclick="setDatePreset('7d')">최근 7일</button>
+              <button class="sb-date-preset" data-preset="14d" onclick="setDatePreset('14d')">14일</button>
+              <button class="sb-date-preset" data-preset="21d" onclick="setDatePreset('21d')">21일</button>
+              <button class="sb-date-preset" data-preset="28d" onclick="setDatePreset('28d')">28일</button>
+              <button class="sb-date-preset" data-preset="all" onclick="setDatePreset('all')">전체</button>
+              <button class="sb-date-preset" data-preset="custom" onclick="setDatePreset('custom')">직접</button>
+            </div>
+            <div id="dateCustomInputs" style="display:none;">
+              <div class="sb-date-row">
+                <input type="date" id="startDate" class="sb-input">
+                <span class="sb-date-sep">~</span>
+                <input type="date" id="endDate" class="sb-input">
+              </div>
             </div>
 
             <!-- 저노출/저전환 소재 제외 토글 -->
@@ -1459,7 +1487,7 @@
                 <span style="font-size:10px;color:var(--text-secondary);display:block;">평균의 10% 미만 소재</span>
               </span>
               <label class="sb-toggle">
-                <input type="checkbox" id="lowExposureToggle" onchange="syncLowExposureToggle(this)">
+                <input type="checkbox" id="lowExposureToggle" checked onchange="syncLowExposureToggle(this)">
                 <span class="sb-toggle-track"></span>
               </label>
             </div>
@@ -1506,10 +1534,10 @@
 
             <span class="sb-label" style="margin-top:12px;">ROAS 모드</span>
             <div class="sb-chip-group">
-              <span class="sb-mode-chip active" id="roasModeChipAuto" onclick="setSbRoasMode('auto')">자동</span>
-              <span class="sb-mode-chip" id="roasModeChipExclude" onclick="setSbRoasMode('exclude')">공정</span>
-              <span class="sb-mode-chip" id="roasModeChipStrict" onclick="setSbRoasMode('strict')">엄격</span>
-              <span class="sb-mode-chip" id="roasModeChipOff" onclick="setSbRoasMode('off')">제외</span>
+              <span class="sb-mode-chip active" id="roasModeChipAuto" onclick="setSbRoasMode('auto')" title="매출 데이터 비중에 따라 평가 방식 자동 결정 (30% 미만→공정, 이상→엄격, 없음→제외)">자동</span>
+              <span class="sb-mode-chip" id="roasModeChipExclude" onclick="setSbRoasMode('exclude')" title="매출 데이터가 있는 소재끼리만 ROAS 공정 비교 (매출 없는 소재는 ROAS 평가 제외)">공정</span>
+              <span class="sb-mode-chip" id="roasModeChipStrict" onclick="setSbRoasMode('strict')" title="매출=0 소재도 포함해 ROAS 엄격 적용 (매출 없는 소재에 불리)">엄격</span>
+              <span class="sb-mode-chip" id="roasModeChipOff" onclick="setSbRoasMode('off')" title="ROAS 지표 완전 제외 — 나머지 3개 지표(전환·CPA·IPM)로만 평가">제외</span>
             </div>
             <!-- 히든 라디오 — 기존 JS 호환 -->
             <div style="display:none;">
@@ -1523,9 +1551,9 @@
 
       </div>
       <div class="ds-sidebar-footer">
-        <button class="ds-btn-primary" style="width:100%;" onclick="calculateScores()" title="점수 계산 실행">
+        <button class="ds-btn-primary" style="width:100%;" onclick="calculateScores()" title="분석 실행">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          <span class="ds-sidebar-footer-label">점수 계산 실행</span>
+          <span class="ds-sidebar-footer-label">분석 실행</span>
         </button>
       </div>
     </aside>
@@ -2642,6 +2670,37 @@ function formatDate(date) {
   return y + '-' + m + '-' + d;
 }
 
+/* ── 날짜 프리셋 ── */
+window._fullDateRange = null;
+window._currentDatePreset = '7d';
+
+function setDatePreset(preset) {
+  window._currentDatePreset = preset;
+  document.querySelectorAll('.sb-date-preset').forEach(b => {
+    b.classList.toggle('active', b.dataset.preset === preset);
+  });
+  const customInputs = document.getElementById('dateCustomInputs');
+  if (customInputs) customInputs.style.display = preset === 'custom' ? 'block' : 'none';
+  if (preset === 'custom') return;
+  const range = window._fullDateRange;
+  if (!range || !range.max) return;
+  const endD = new Date(range.max + 'T00:00:00');
+  let startD;
+  if (preset === 'all') {
+    startD = new Date(range.min + 'T00:00:00');
+  } else {
+    const days = parseInt(preset); // '7d'→7, '14d'→14 등
+    startD = new Date(endD);
+    startD.setDate(startD.getDate() - days + 1);
+    const dataStart = new Date(range.min + 'T00:00:00');
+    if (startD < dataStart) startD = dataStart;
+  }
+  const startEl = document.getElementById('startDate');
+  const endEl = document.getElementById('endDate');
+  if (startEl) startEl.value = formatDate(startD);
+  if (endEl) endEl.value = formatDate(endD);
+}
+
 function filterByDateRange(rows, dateColumn, startDate, endDate) {
   if (!dateColumn) return rows;
   const start = startDate ? new Date(startDate) : null;
@@ -2686,22 +2745,35 @@ function aggregateCreativeData(rows, groupBy) {
     // Revenue 파싱 (쉼표 제거 보장)
     const rev   = parseFloat(String(row['Revenue'] || row['revenue'] || row['매출'] || '0').replace(/,/g,'')) || 0;
     if (!creativeMap.has(key)) {
+      const OBJ_META_KEYS = ['mmp_quality_score','kpi_percentiles','mmp_source',
+        'kpi_daily','kpi_window_start','kpi_window_end','hooking_strategy','USP',
+        'art_style','strengths','weaknesses','hypothesis','test_ideas',
+        'one_line_insight','marketer_insight','improvement_actions','kpi_reality_check',
+        'strength_evidence','weakness_evidence','creative_concept','사이즈','언어'];
       creativeMap.set(key, {
         소재명: row['소재명'] || '', 파일명: row['파일명'] || '',
         집계기준: key, 유형: row['유형'] || '',
         전환: conv, 비용: cost, 노출수: impr, 클릭수: click, 매출: rev,
         tags: {}, insights: {}, meta: {}
       });
+      // 알려진 객체/배열 메타 필드 직접 복사
+      OBJ_META_KEYS.forEach(f => {
+        if (row[f] != null) creativeMap.get(key).meta[f] = row[f];
+      });
+      // 문자열 필드 분류
       Object.keys(row).forEach(colKey => {
+        if (OBJ_META_KEYS.includes(colKey)) return;
         const val = row[colKey];
-        if (!val || val.trim() === '') return;
+        if (val == null) return;
+        const strVal = typeof val === 'string' ? val : String(val);
+        if (strVal.trim() === '') return;
         if (['소재명','파일명','유형','전환','비용','노출수','클릭수'].includes(colKey)) return;
         if (/^(일|날짜|캠페인|광고그룹|링크|통화|orientation)/.test(colKey)) {
-          creativeMap.get(key).meta[colKey] = val;
+          creativeMap.get(key).meta[colKey] = strVal;
         } else if (/insight|인사이트|memo|메모/i.test(colKey)) {
-          creativeMap.get(key).insights[colKey] = val;
+          creativeMap.get(key).insights[colKey] = strVal;
         } else {
-          creativeMap.get(key).tags[colKey] = val;
+          creativeMap.get(key).tags[colKey] = strVal;
         }
       });
     } else {
@@ -2844,18 +2916,16 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     // v1.7: 로딩 인디케이터 함수
     // ── 업로드 탭 전환
     function switchUploadTab(tab) {
-      const isFile = tab === 'file';
-      document.getElementById('panelFile').style.display  = isFile ? '' : 'none';
-      document.getElementById('panelPaste').style.display = isFile ? 'none' : '';
-
-      const tFile  = document.getElementById('tabFile');
-      const tPaste = document.getElementById('tabPaste');
-      tFile.style.borderBottomColor  = isFile  ? '#E84855' : 'transparent';
-      tFile.style.color              = isFile  ? '#E84855' : '#6b7280';
-      tFile.style.background         = isFile  ? '#fff'    : '#f8fafc';
-      tPaste.style.borderBottomColor = !isFile ? '#E84855' : 'transparent';
-      tPaste.style.color             = !isFile ? '#E84855' : '#6b7280';
-      tPaste.style.background        = !isFile ? '#fff'    : '#f8fafc';
+      ['title','file','paste'].forEach(t => {
+        const btn = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
+        const panel = document.getElementById('panel' + t.charAt(0).toUpperCase() + t.slice(1));
+        if (btn) {
+          btn.style.borderBottomColor = tab === t ? 'var(--brand-primary)' : 'transparent';
+          btn.style.color = tab === t ? 'var(--brand-primary)' : 'var(--text-secondary)';
+          btn.style.background = tab === t ? 'var(--bg-base)' : 'var(--surface-card)';
+        }
+        if (panel) panel.style.display = tab === t ? 'block' : 'none';
+      });
     }
 
     // ── CSV 붙여넣기 처리 (탭·쉼표 구분자 모두 지원)
@@ -3123,6 +3193,11 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       initializeEventListeners();
       // v5.2 Stage 1: 타이틀 셀렉터 초기화 + URL ?title 자동 로드
       initializeTitleSelector();
+      // switchUploadTab 'title' 기본 활성화
+      switchUploadTab('title');
+      // 저노출·저전환 토글 기본 On 상태 동기화
+      const lowToggle = document.getElementById('lowExposureToggle');
+      if (lowToggle && lowToggle.checked) syncLowExposureToggle(lowToggle);
     });
 
     // ──────────────────────────────────────────────
@@ -3217,8 +3292,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             const minDate = formatDate(dates[0]);
             const maxDate = formatDate(dates[dates.length - 1]);
             dateRangeInfo = `${minDate} ~ ${maxDate}`;
-            document.getElementById('startDate').value = minDate;
-            document.getElementById('endDate').value = maxDate;
+            window._fullDateRange = { min: minDate, max: maxDate };
+            setDatePreset(window._currentDatePreset || '7d');
             const midIndex = Math.floor(dates.length / 2);
             const midDate = formatDate(dates[midIndex]);
             document.getElementById('baselineStart').value = minDate;
@@ -3243,11 +3318,11 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <div style="padding: 10px 14px; background: #ecfdf5; border-left: 3px solid #10b981; border-radius: 6px; font-size: 12.5px; color: #065f46; margin-bottom: 12px;">
             ✅ 백엔드 산출 JSON 로드 완료 — Stage 1 검증 모드 (Stage 2부터 nightly 자동 갱신 예정)
           </div>
-          <button onclick="scrollToSection('scoring')"
+          <button onclick="calculateScores()"
                   style="width: 100%; padding: 12px; background: linear-gradient(135deg, #E84855 0%, #FF6B6B 100%);
                          color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;
                          font-size: 15px;">
-            📊 점수 계산 시작하기 →
+            분석 실행 →
           </button>
         `;
 
@@ -3459,15 +3534,11 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             const minDate = formatDate(dates[0]);
             const maxDate = formatDate(dates[dates.length - 1]);
             dateRangeInfo = `${minDate} ~ ${maxDate}`;
-            
+
             // 점수 계산용 날짜 설정
-            document.getElementById('startDate').value = minDate;
-            document.getElementById('endDate').value = maxDate;
-            document.getElementById('startDate').min = minDate;
-            document.getElementById('startDate').max = maxDate;
-            document.getElementById('endDate').min = minDate;
-            document.getElementById('endDate').max = maxDate;
-            
+            window._fullDateRange = { min: minDate, max: maxDate };
+            setDatePreset(window._currentDatePreset || '7d');
+
             // 피로도 분석 기간 자동 설정 (전반부/후반부)
             const midIndex = Math.floor(dates.length / 2);
             const midDate = formatDate(dates[midIndex]);
@@ -3527,16 +3598,14 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             </div>
           </div>
           
-          <button onclick="scrollToSection('scoring')" 
-                  style="width: 100%; padding: 12px; background: linear-gradient(135deg, #E84855 0%, #FF6B6B 100%); 
-                         color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; 
-                         font-size: 15px; transition: transform 0.2s;" 
-                  onmouseover="this.style.transform='translateY(-2px)'" 
-                  onmouseout="this.style.transform='translateY(0)'">
-            📊 점수 계산 시작하기 →
+          <button onclick="calculateScores()"
+                  style="width: 100%; padding: 12px; background: linear-gradient(135deg, #E84855 0%, #FF6B6B 100%);
+                         color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;
+                         font-size: 15px;">
+            분석 실행 →
           </button>
         `;
-        
+
         console.log('✅ CSV 처리 완료!');
         
       } catch (error) {
@@ -4428,6 +4497,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     }
 
     function displayScoringResults(creatives, filterSummary = [], excludeInfo = {}) {
+      // 분석 완료 후 업로드 상태 패널 숨기기
+      const uploadStatusEl = document.getElementById('uploadStatus');
+      if (uploadStatusEl) uploadStatusEl.style.display = 'none';
+
       // 탭 바 표시 + 소재 목록 탭으로 초기화
       const mainTabBar = document.getElementById('mainTabBar');
       if (mainTabBar) mainTabBar.style.display = 'flex';
@@ -4498,20 +4571,31 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         const reliability = evaluateReliability(creatives);
         const reliabilityHtml = buildReliabilityBadgeHtml(reliability);
 
+        const filterCount = filterSummary.length;
+        const relLabel = reliability ? reliability.label : '—';
         document.getElementById('filterSummarySlot').innerHTML = `
-          ${reliabilityHtml}
-          <div class="filter-summary" style="background:linear-gradient(135deg,rgba(232,72,85,.08),rgba(255,107,107,.08));
-               padding:15px;border-radius:10px;margin-bottom:20px;border-left:4px solid #E84855;">
-            <div style="font-weight:600;margin-bottom:10px;color:#1f2937;font-size:14px;">📌 적용된 필터 조건</div>
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;font-size:13px;">
-              ${filterSummary.map(item => `<div style="color:#4b5563;">• ${item}</div>`).join('')}
+          <details class="analysis-summary-details" style="margin-bottom:12px;border:1px solid var(--hairline-warm);border-radius:8px;overflow:hidden;">
+            <summary style="padding:8px 14px;cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;background:var(--surface-card);font-size:12px;color:var(--text-secondary);font-weight:600;user-select:none;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;"><polyline points="6 9 12 15 18 9"/></svg>
+              분석 신뢰도: <span style="color:${reliability?.color||'var(--text-primary)'};">${relLabel}</span>
+              &nbsp;·&nbsp; 필터 ${filterCount}개 적용
+            </summary>
+            <div style="padding:12px 14px;background:var(--bg-base);">
+              ${reliabilityHtml}
+              <div class="filter-summary" style="background:linear-gradient(135deg,rgba(232,72,85,.08),rgba(255,107,107,.08));
+                   padding:15px;border-radius:10px;margin-bottom:8px;border-left:4px solid #E84855;">
+                <div style="font-weight:600;margin-bottom:10px;color:#1f2937;font-size:14px;">📌 적용된 필터 조건</div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;font-size:13px;">
+                  ${filterSummary.map(item => `<div style="color:#4b5563;">• ${item}</div>`).join('')}
+                </div>
+                <div style="margin-top:10px;padding-top:10px;border-top:1px solid #e5e7eb;font-size:13px;color:#6b7280;">
+                  ${countLine}
+                </div>
+                ${roasNotice}
+                ${excludeDetailHtml}
+              </div>
             </div>
-            <div style="margin-top:10px;padding-top:10px;border-top:1px solid #e5e7eb;font-size:13px;color:#6b7280;">
-              ${countLine}
-            </div>
-            ${roasNotice}
-            ${excludeDetailHtml}
-          </div>`;
+          </details>`;
       }
       
       // v5.1: 위험 신호 자동 감지
