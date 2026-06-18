@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "title_id": "pepp-us",
-  "generated_at": "2026-06-18T12:22:54+09:00",
+  "generated_at": "2026-06-18T14:32:01+09:00",
   "pipeline_version": "stage2-mvp",
   "gemini_model": "gemini-2.5-flash",
   "creatives": [
@@ -70,7 +70,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:44+09:00",
+      "tagged_at": "2026-06-18T14:31:44+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-1000Sum01A-DA\\260616_BNR_A-AI-1000Sum01A-DA_L_1200x628_EN.png",
@@ -82,42 +82,20 @@
       "kpi_window_start": null,
       "kpi_window_end": null,
       "kpi_daily": [],
-      "mmp_source": "airbridge",
-      "mmp_channels": [
-        "facebook.business"
-      ],
-      "mmp_d1_ipm": 0.0,
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": 0.0,
-      "mmp_d1_retention": 0.0,
-      "mmp_quality_score": {
-        "total": 51.53,
-        "grade": "양호",
-        "rank": 21,
-        "ipm": 59.2,
-        "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
-      },
-      "mmp_installs": 0,
-      "mmp_retained_d1": 0,
-      "mmp_cost": 14985,
-      "mmp_revenue": 0,
-      "mmp_currency": "KRW",
-      "mmp_fx_rate": 1500.0,
-      "mmp_daily": [
-        {
-          "creative_name": "260616_BNR_A-AI-1000Sum01A-DA_ALL_Mixed_EN",
-          "date": "2026-06-17",
-          "channel": "facebook.business",
-          "impressions": 290,
-          "clicks": 7,
-          "cost": 14985,
-          "installs": 0,
-          "retained_d1": 0,
-          "revenue_d7": 0
-        }
-      ]
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-AI-1000Sum01B-DA",
@@ -182,7 +160,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:44+09:00",
+      "tagged_at": "2026-06-18T14:31:44+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-1000Sum01B-DA\\260616_BNR_A-AI-1000Sum01B-DA_L_1200x628_EN.png",
@@ -194,42 +172,20 @@
       "kpi_window_start": null,
       "kpi_window_end": null,
       "kpi_daily": [],
-      "mmp_source": "airbridge",
-      "mmp_channels": [
-        "facebook.business"
-      ],
-      "mmp_d1_ipm": 0.0,
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": 0.0,
-      "mmp_d1_retention": 0.0,
-      "mmp_quality_score": {
-        "total": 51.53,
-        "grade": "양호",
-        "rank": 22,
-        "ipm": 59.2,
-        "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
-      },
-      "mmp_installs": 0,
-      "mmp_retained_d1": 0,
-      "mmp_cost": 6930,
-      "mmp_revenue": 0,
-      "mmp_currency": "KRW",
-      "mmp_fx_rate": 1500.0,
-      "mmp_daily": [
-        {
-          "creative_name": "260616_BNR_A-AI-1000Sum01B-DA_ALL_Mixed_EN",
-          "date": "2026-06-17",
-          "channel": "facebook.business",
-          "impressions": 774,
-          "clicks": 19,
-          "cost": 6930,
-          "installs": 0,
-          "retained_d1": 0,
-          "revenue_d7": 0
-        }
-      ]
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-AI-Defeatmonster01A-DA",
@@ -298,7 +254,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:44+09:00",
+      "tagged_at": "2026-06-18T14:31:44+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-Defeatmonster01A-DA\\260429_BNR_A-AI-Defeatmonster01A-DA_L_1200x628_EN.png",
@@ -823,42 +779,20 @@
           "conversions_value": 0.0
         }
       ],
-      "mmp_source": "airbridge",
-      "mmp_channels": [
-        "facebook.business"
-      ],
-      "mmp_d1_ipm": 0.073,
-      "mmp_d1_cpi": 203362.5,
-      "mmp_d7_roas": 0.0,
-      "mmp_d1_retention": 25.0,
-      "mmp_quality_score": {
-        "total": 78.57,
-        "grade": "우수",
-        "rank": 14,
-        "ipm": 73.5,
-        "cpi": 69.4,
-        "roas": 87.8,
-        "retention": 83.7
-      },
-      "mmp_installs": 16,
-      "mmp_retained_d1": 4,
-      "mmp_cost": 813450,
-      "mmp_revenue": 0,
-      "mmp_currency": "KRW",
-      "mmp_fx_rate": 1500.0,
-      "mmp_daily": [
-        {
-          "creative_name": "260429_BNR_A-AI-Defeatmonster01A-DA_ALL_Mixed_EN",
-          "date": "2026-06-17",
-          "channel": "facebook.business",
-          "impressions": 54562,
-          "clicks": 531,
-          "cost": 813450,
-          "installs": 16,
-          "retained_d1": 4,
-          "revenue_d7": 0
-        }
-      ]
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-AI-Favoritehero01A-DA",
@@ -926,7 +860,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:44+09:00",
+      "tagged_at": "2026-06-18T14:31:44+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-Favoritehero01A-DA\\260429_BNR_A-AI-Favoritehero01A-DA_L_1200x628_EN.png",
@@ -1467,42 +1401,20 @@
           "conversions_value": 0.0
         }
       ],
-      "mmp_source": "airbridge",
-      "mmp_channels": [
-        "facebook.business"
-      ],
-      "mmp_d1_ipm": 0.019,
-      "mmp_d1_cpi": 53895.0,
-      "mmp_d7_roas": 0.0,
-      "mmp_d1_retention": 50.0,
-      "mmp_quality_score": {
-        "total": 85.2,
-        "grade": "최우수",
-        "rank": 7,
-        "ipm": 65.3,
-        "cpi": 89.8,
-        "roas": 87.8,
-        "retention": 98.0
-      },
-      "mmp_installs": 2,
-      "mmp_retained_d1": 1,
-      "mmp_cost": 53895,
-      "mmp_revenue": 0,
-      "mmp_currency": "KRW",
-      "mmp_fx_rate": 1500.0,
-      "mmp_daily": [
-        {
-          "creative_name": "260429_BNR_A-AI-Favoritehero01A-DA_ALL_Mixed_EN",
-          "date": "2026-06-17",
-          "channel": "facebook.business",
-          "impressions": 52213,
-          "clicks": 597,
-          "cost": 53895,
-          "installs": 2,
-          "retained_d1": 1,
-          "revenue_d7": 0
-        }
-      ]
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-AI-Favoritehero01B-DA",
@@ -1571,7 +1483,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:44+09:00",
+      "tagged_at": "2026-06-18T14:31:44+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-Favoritehero01B-DA\\260429_BNR_A-AI-Favoritehero01B-DA_L_1200x628_EN.png",
@@ -2080,42 +1992,20 @@
           "conversions_value": 0.0
         }
       ],
-      "mmp_source": "airbridge",
-      "mmp_channels": [
-        "facebook.business"
-      ],
-      "mmp_d1_ipm": 0.0,
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": 0.0,
-      "mmp_d1_retention": 0.0,
-      "mmp_quality_score": {
-        "total": 51.53,
-        "grade": "양호",
-        "rank": 23,
-        "ipm": 59.2,
-        "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
-      },
-      "mmp_installs": 1,
-      "mmp_retained_d1": 0,
-      "mmp_cost": 8265,
-      "mmp_revenue": 0,
-      "mmp_currency": "KRW",
-      "mmp_fx_rate": 1500.0,
-      "mmp_daily": [
-        {
-          "creative_name": "260429_BNR_A-AI-Favoritehero01B-DA_ALL_Mixed_EN",
-          "date": "2026-06-17",
-          "channel": "facebook.business",
-          "impressions": 705,
-          "clicks": 4,
-          "cost": 8265,
-          "installs": 1,
-          "retained_d1": 0,
-          "revenue_d7": 0
-        }
-      ]
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-AI-Treasure01A-DA",
@@ -2180,7 +2070,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:44+09:00",
+      "tagged_at": "2026-06-18T14:31:45+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-Treasure01A-DA\\260616_BNR_A-AI-Treasure01A-DA_L_1200x628_EN.png",
@@ -2192,42 +2082,20 @@
       "kpi_window_start": null,
       "kpi_window_end": null,
       "kpi_daily": [],
-      "mmp_source": "airbridge",
-      "mmp_channels": [
-        "facebook.business"
-      ],
-      "mmp_d1_ipm": 0.0,
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": 0.0,
-      "mmp_d1_retention": 0.0,
-      "mmp_quality_score": {
-        "total": 51.53,
-        "grade": "양호",
-        "rank": 24,
-        "ipm": 59.2,
-        "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
-      },
-      "mmp_installs": 0,
-      "mmp_retained_d1": 0,
-      "mmp_cost": 78405,
-      "mmp_revenue": 0,
-      "mmp_currency": "KRW",
-      "mmp_fx_rate": 1500.0,
-      "mmp_daily": [
-        {
-          "creative_name": "260616_BNR_A-AI-Treasure01A-DA_ALL_Mixed_EN",
-          "date": "2026-06-17",
-          "channel": "facebook.business",
-          "impressions": 50956,
-          "clicks": 369,
-          "cost": 78405,
-          "installs": 0,
-          "retained_d1": 0,
-          "revenue_d7": 0
-        }
-      ]
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-AI-Victory01A-DA",
@@ -2296,7 +2164,7 @@
         "roas": 90.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:44+09:00",
+      "tagged_at": "2026-06-18T14:31:45+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-Victory01A-DA\\260429_BNR_A-AI-Victory01A-DA_L_1200x628_EN.png",
@@ -2869,42 +2737,20 @@
           "conversions_value": 0.0
         }
       ],
-      "mmp_source": "airbridge",
-      "mmp_channels": [
-        "facebook.business"
-      ],
-      "mmp_d1_ipm": 0.01,
-      "mmp_d1_cpi": 102082.5,
-      "mmp_d7_roas": 0.0,
-      "mmp_d1_retention": 33.33,
-      "mmp_quality_score": {
-        "total": 78.06,
-        "grade": "우수",
-        "rank": 17,
-        "ipm": 63.3,
-        "cpi": 71.4,
-        "roas": 87.8,
-        "retention": 89.8
-      },
-      "mmp_installs": 6,
-      "mmp_retained_d1": 2,
-      "mmp_cost": 204165,
-      "mmp_revenue": 0,
-      "mmp_currency": "KRW",
-      "mmp_fx_rate": 1500.0,
-      "mmp_daily": [
-        {
-          "creative_name": "260429_BNR_A-AI-Victory01A-DA_ALL_Mixed_EN",
-          "date": "2026-06-17",
-          "channel": "facebook.business",
-          "impressions": 207656,
-          "clicks": 2890,
-          "cost": 204165,
-          "installs": 6,
-          "retained_d1": 2,
-          "revenue_d7": 0
-        }
-      ]
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Character-100usd01A-DA",
@@ -2973,7 +2819,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:45+09:00",
+      "tagged_at": "2026-06-18T14:31:45+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-100usd01A-DA\\260406_BNR_A-Character-100usd01A-DA_L_1200x628_EN.jpg",
@@ -5395,17 +5241,17 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 51.53,
+        "total": 51.61,
         "grade": "양호",
-        "rank": 25,
-        "ipm": 59.2,
+        "rank": 14,
+        "ipm": 58.1,
         "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
+        "roas": 90.3,
+        "retention": 58.1
       },
       "mmp_installs": 1,
       "mmp_retained_d1": 0,
-      "mmp_cost": 7800,
+      "mmp_cost": 7785,
       "mmp_revenue": 0,
       "mmp_currency": "KRW",
       "mmp_fx_rate": 1500.0,
@@ -5414,9 +5260,22 @@
           "creative_name": "260406_BNR_A-Character-100usd01A-DA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 644,
-          "clicks": 10,
-          "cost": 7800,
+          "campaign_name": "HQ_HQ_PH_PH-EN_FB_NU_iOS_INSTALL_260617",
+          "impressions": 442,
+          "clicks": 7,
+          "cost": 1665,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260406_BNR_A-Character-100usd01A-DA_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_US-EN_FB_NU_iOS_INSTALL_260617",
+          "impressions": 202,
+          "clicks": 3,
+          "cost": 6120,
           "installs": 1,
           "retained_d1": 0,
           "revenue_d7": 0
@@ -5490,7 +5349,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:45+09:00",
+      "tagged_at": "2026-06-18T14:31:45+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Adventure01A-DA\\251104_BNR_A-Character-Adventure01A-DA_L_1200x628_EN.jpg",
@@ -8096,13 +7955,13 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 18.52,
       "mmp_quality_score": {
-        "total": 78.57,
+        "total": 79.84,
         "grade": "우수",
-        "rank": 15,
-        "ipm": 81.6,
-        "cpi": 75.5,
-        "roas": 87.8,
-        "retention": 69.4
+        "rank": 10,
+        "ipm": 74.2,
+        "cpi": 80.6,
+        "roas": 90.3,
+        "retention": 74.2
       },
       "mmp_installs": 27,
       "mmp_retained_d1": 5,
@@ -8115,11 +7974,48 @@
           "creative_name": "251104_BNR_A-Character-Adventure01A-DA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 37002,
-          "clicks": 322,
-          "cost": 376770,
-          "installs": 27,
-          "retained_d1": 5,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 11905,
+          "clicks": 144,
+          "cost": 200865,
+          "installs": 11,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "251104_BNR_A-Character-Adventure01A-DA_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_PH-EN_FB_NU_iOS_INSTALL_260617",
+          "impressions": 5100,
+          "clicks": 56,
+          "cost": 6915,
+          "installs": 3,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "251104_BNR_A-Character-Adventure01A-DA_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_US-EN_FB_NU_iOS_INSTALL_260617",
+          "impressions": 1477,
+          "clicks": 25,
+          "cost": 35235,
+          "installs": 1,
+          "retained_d1": 1,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "251104_BNR_A-Character-Adventure01A-DA_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 18520,
+          "clicks": 98,
+          "cost": 133755,
+          "installs": 12,
+          "retained_d1": 4,
           "revenue_d7": 0
         }
       ]
@@ -8191,7 +8087,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:45+09:00",
+      "tagged_at": "2026-06-18T14:31:45+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Adventure02A-DA\\EN\\251111_BNR_A-Character-Adventure02A-DA_L_1200x628_EN.jpg",
@@ -10949,13 +10845,13 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 51.53,
+        "total": 51.61,
         "grade": "양호",
-        "rank": 26,
-        "ipm": 59.2,
+        "rank": 15,
+        "ipm": 58.1,
         "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
+        "roas": 90.3,
+        "retention": 58.1
       },
       "mmp_installs": 6,
       "mmp_retained_d1": 0,
@@ -10968,10 +10864,23 @@
           "creative_name": "251111_BNR_A-Character-Adventure02A-DA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 8983,
-          "clicks": 82,
-          "cost": 102705,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 3726,
+          "clicks": 57,
+          "cost": 78075,
           "installs": 6,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "251111_BNR_A-Character-Adventure02A-DA_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 5257,
+          "clicks": 25,
+          "cost": 24615,
+          "installs": 0,
           "retained_d1": 0,
           "revenue_d7": 0
         },
@@ -10979,9 +10888,22 @@
           "creative_name": "260406_BNR_A-Character-Adventure02A-DA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 3479,
-          "clicks": 38,
-          "cost": 17655,
+          "campaign_name": "HQ_HQ_PH_PH-EN_FB_NU_iOS_INSTALL_260617",
+          "impressions": 2826,
+          "clicks": 28,
+          "cost": 3120,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260406_BNR_A-Character-Adventure02A-DA_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_US-EN_FB_NU_iOS_INSTALL_260617",
+          "impressions": 654,
+          "clicks": 10,
+          "cost": 14550,
           "installs": 0,
           "retained_d1": 0,
           "revenue_d7": 0
@@ -11055,7 +10977,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:45+09:00",
+      "tagged_at": "2026-06-18T14:31:45+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Adventure03A-DA\\EN\\251118_BNR_A-Character-Adventure03A-DA_L_1200x628_EN.jpg",
@@ -12593,13 +12515,13 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 51.53,
+        "total": 51.61,
         "grade": "양호",
-        "rank": 27,
-        "ipm": 59.2,
+        "rank": 16,
+        "ipm": 58.1,
         "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
+        "roas": 90.3,
+        "retention": 58.1
       },
       "mmp_installs": 1,
       "mmp_retained_d1": 0,
@@ -12612,10 +12534,23 @@
           "creative_name": "251118_BNR_A-Character-Adventure03A-DA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 3774,
-          "clicks": 11,
-          "cost": 22575,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 3443,
+          "clicks": 8,
+          "cost": 13350,
           "installs": 1,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "251118_BNR_A-Character-Adventure03A-DA_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 331,
+          "clicks": 3,
+          "cost": 9225,
+          "installs": 0,
           "retained_d1": 0,
           "revenue_d7": 0
         }
@@ -12682,7 +12617,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:45+09:00",
+      "tagged_at": "2026-06-18T14:31:45+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Adventure04A-DA\\260406_BNR_A-Character-Adventure04A-DA_L_1200x628_EN.jpg",
@@ -15127,42 +15062,20 @@
           "conversions_value": 0.0
         }
       ],
-      "mmp_source": "airbridge",
-      "mmp_channels": [
-        "facebook.business"
-      ],
-      "mmp_d1_ipm": 0.488,
-      "mmp_d1_cpi": 16192.5,
-      "mmp_d7_roas": 0.0,
-      "mmp_d1_retention": 50.0,
-      "mmp_quality_score": {
-        "total": 94.39,
-        "grade": "최우수",
-        "rank": 3,
-        "ipm": 93.9,
-        "cpi": 98.0,
-        "roas": 87.8,
-        "retention": 98.0
-      },
-      "mmp_installs": 4,
-      "mmp_retained_d1": 2,
-      "mmp_cost": 32385,
-      "mmp_revenue": 0,
-      "mmp_currency": "KRW",
-      "mmp_fx_rate": 1500.0,
-      "mmp_daily": [
-        {
-          "creative_name": "260406_BNR_A-Character-Adventure04A-DA_ALL_Mixed_EN",
-          "date": "2026-06-17",
-          "channel": "facebook.business",
-          "impressions": 4095,
-          "clicks": 79,
-          "cost": 32385,
-          "installs": 4,
-          "retained_d1": 2,
-          "revenue_d7": 0
-        }
-      ]
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Character-Adventure05A-DA",
@@ -15225,7 +15138,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:45+09:00",
+      "tagged_at": "2026-06-18T14:31:45+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Adventure05A-DA\\260406_BNR_A-Character-Adventure05A-DA_L_1200x628_EN.jpg",
@@ -17622,42 +17535,20 @@
           "conversions_value": 0.0
         }
       ],
-      "mmp_source": "airbridge",
-      "mmp_channels": [
-        "facebook.business"
-      ],
-      "mmp_d1_ipm": 0.0,
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": 0.0,
-      "mmp_d1_retention": 0.0,
-      "mmp_quality_score": {
-        "total": 51.53,
-        "grade": "양호",
-        "rank": 28,
-        "ipm": 59.2,
-        "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
-      },
-      "mmp_installs": 0,
-      "mmp_retained_d1": 0,
-      "mmp_cost": 7695,
-      "mmp_revenue": 0,
-      "mmp_currency": "KRW",
-      "mmp_fx_rate": 1500.0,
-      "mmp_daily": [
-        {
-          "creative_name": "260406_BNR_A-Character-Adventure05A-DA_ALL_Mixed_EN",
-          "date": "2026-06-17",
-          "channel": "facebook.business",
-          "impressions": 1270,
-          "clicks": 10,
-          "cost": 7695,
-          "installs": 0,
-          "retained_d1": 0,
-          "revenue_d7": 0
-        }
-      ]
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Character-Collection01A-DA",
@@ -17726,7 +17617,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:45+09:00",
+      "tagged_at": "2026-06-18T14:31:45+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Collection01A-DA\\EN\\251118_BNR_A-Character-Collection01A-DA_L_1200x628_EN.jpg",
@@ -18991,22 +18882,22 @@
       "mmp_channels": [
         "facebook.business"
       ],
-      "mmp_d1_ipm": 0.086,
-      "mmp_d1_cpi": 96690.0,
+      "mmp_d1_ipm": 0.106,
+      "mmp_d1_cpi": 85417.5,
       "mmp_d7_roas": 0.0,
-      "mmp_d1_retention": 25.0,
+      "mmp_d1_retention": 28.57,
       "mmp_quality_score": {
-        "total": 80.61,
+        "total": 82.26,
         "grade": "최우수",
-        "rank": 13,
-        "ipm": 77.6,
-        "cpi": 73.5,
-        "roas": 87.8,
-        "retention": 83.7
+        "rank": 8,
+        "ipm": 71.0,
+        "cpi": 74.2,
+        "roas": 90.3,
+        "retention": 93.5
       },
-      "mmp_installs": 8,
+      "mmp_installs": 7,
       "mmp_retained_d1": 2,
-      "mmp_cost": 193380,
+      "mmp_cost": 170835,
       "mmp_revenue": 0,
       "mmp_currency": "KRW",
       "mmp_fx_rate": 1500.0,
@@ -19015,22 +18906,24 @@
           "creative_name": "251118_BNR_A-Character-Collection01A-DA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 18912,
-          "clicks": 108,
-          "cost": 170835,
-          "installs": 7,
-          "retained_d1": 2,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 5671,
+          "clicks": 52,
+          "cost": 95340,
+          "installs": 3,
+          "retained_d1": 1,
           "revenue_d7": 0
         },
         {
-          "creative_name": "260406_BNR_A-Character-Collection01A-DA_ALL_Mixed_EN",
+          "creative_name": "251118_BNR_A-Character-Collection01A-DA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 4312,
-          "clicks": 27,
-          "cost": 22545,
-          "installs": 1,
-          "retained_d1": 0,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 13241,
+          "clicks": 56,
+          "cost": 75495,
+          "installs": 4,
+          "retained_d1": 1,
           "revenue_d7": 0
         }
       ]
@@ -19102,7 +18995,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:45+09:00",
+      "tagged_at": "2026-06-18T14:31:45+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Comics01A-DA\\260406_BNR_A-Character-Comics01A-DA_L_1200x628_EN.jpg",
@@ -21563,42 +21456,20 @@
           "conversions_value": 0.0
         }
       ],
-      "mmp_source": "airbridge",
-      "mmp_channels": [
-        "facebook.business"
-      ],
-      "mmp_d1_ipm": 0.0,
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": 0.0,
-      "mmp_d1_retention": 0.0,
-      "mmp_quality_score": {
-        "total": 51.53,
-        "grade": "양호",
-        "rank": 29,
-        "ipm": 59.2,
-        "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
-      },
-      "mmp_installs": 1,
-      "mmp_retained_d1": 0,
-      "mmp_cost": 33420,
-      "mmp_revenue": 0,
-      "mmp_currency": "KRW",
-      "mmp_fx_rate": 1500.0,
-      "mmp_daily": [
-        {
-          "creative_name": "260406_BNR_A-Character-Comics01A-DA_ALL_Mixed_EN",
-          "date": "2026-06-17",
-          "channel": "facebook.business",
-          "impressions": 1837,
-          "clicks": 21,
-          "cost": 33420,
-          "installs": 1,
-          "retained_d1": 0,
-          "revenue_d7": 0
-        }
-      ]
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Character-Keyart01A-DA",
@@ -21665,7 +21536,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:45+09:00",
+      "tagged_at": "2026-06-18T14:31:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Keyart01A-DA\\251104_BNR_A-Character-Keyart01A-DA_L_1200x628_EN.png",
@@ -23675,22 +23546,22 @@
       "mmp_channels": [
         "facebook.business"
       ],
-      "mmp_d1_ipm": 0.185,
-      "mmp_d1_cpi": 64866.7,
-      "mmp_d7_roas": 0.0537,
-      "mmp_d1_retention": 21.43,
+      "mmp_d1_ipm": 0.174,
+      "mmp_d1_cpi": 77010.0,
+      "mmp_d7_roas": 0.0581,
+      "mmp_d1_retention": 21.21,
       "mmp_quality_score": {
-        "total": 84.69,
+        "total": 83.06,
         "grade": "최우수",
-        "rank": 8,
-        "ipm": 85.7,
-        "cpi": 81.6,
-        "roas": 95.9,
-        "retention": 75.5
+        "rank": 6,
+        "ipm": 80.6,
+        "cpi": 77.4,
+        "roas": 96.8,
+        "retention": 77.4
       },
-      "mmp_installs": 42,
-      "mmp_retained_d1": 9,
-      "mmp_cost": 583800,
+      "mmp_installs": 33,
+      "mmp_retained_d1": 7,
+      "mmp_cost": 539070,
       "mmp_revenue": 31335,
       "mmp_currency": "KRW",
       "mmp_fx_rate": 1500.0,
@@ -23699,22 +23570,24 @@
           "creative_name": "251104_BNR_A-Character-Keyart01A-DA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 40295,
-          "clicks": 378,
-          "cost": 539070,
-          "installs": 33,
-          "retained_d1": 7,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 29438,
+          "clicks": 287,
+          "cost": 429840,
+          "installs": 27,
+          "retained_d1": 3,
           "revenue_d7": 31335
         },
         {
-          "creative_name": "260428_BNR_A-Character-Keyart01A-DA_ALL_Mixed_EN",
+          "creative_name": "251104_BNR_A-Character-Keyart01A-DA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 8431,
-          "clicks": 124,
-          "cost": 44730,
-          "installs": 9,
-          "retained_d1": 2,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 10857,
+          "clicks": 91,
+          "cost": 109230,
+          "installs": 6,
+          "retained_d1": 4,
           "revenue_d7": 0
         }
       ]
@@ -23784,7 +23657,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:45+09:00",
+      "tagged_at": "2026-06-18T14:31:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Keyart02A-DA\\251104_BNR_L-Character-Keyart02A-DA_L_1200x628_EN.png",
@@ -25778,22 +25651,22 @@
       "mmp_channels": [
         "facebook.business"
       ],
-      "mmp_d1_ipm": 0.139,
-      "mmp_d1_cpi": 71018.3,
-      "mmp_d7_roas": 0.0044,
-      "mmp_d1_retention": 19.15,
+      "mmp_d1_ipm": 0.102,
+      "mmp_d1_cpi": 88837.5,
+      "mmp_d7_roas": 0.0053,
+      "mmp_d1_retention": 14.63,
       "mmp_quality_score": {
-        "total": 81.12,
-        "grade": "최우수",
-        "rank": 12,
-        "ipm": 83.7,
-        "cpi": 79.6,
-        "roas": 89.8,
-        "retention": 71.4
+        "total": 74.19,
+        "grade": "우수",
+        "rank": 11,
+        "ipm": 67.7,
+        "cpi": 67.7,
+        "roas": 93.5,
+        "retention": 67.7
       },
-      "mmp_installs": 47,
-      "mmp_retained_d1": 9,
-      "mmp_cost": 639165,
+      "mmp_installs": 41,
+      "mmp_retained_d1": 6,
+      "mmp_cost": 533025,
       "mmp_revenue": 2835,
       "mmp_currency": "KRW",
       "mmp_fx_rate": 1500.0,
@@ -25802,22 +25675,24 @@
           "creative_name": "251104_BNR_A-Character-Keyart02A-DA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 58594,
-          "clicks": 486,
-          "cost": 533025,
-          "installs": 41,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 49103,
+          "clicks": 335,
+          "cost": 360255,
+          "installs": 32,
           "retained_d1": 6,
           "revenue_d7": 2835
         },
         {
-          "creative_name": "260428_BNR_A-Character-Keyart02A-DA_ALL_Mixed_EN",
+          "creative_name": "251104_BNR_A-Character-Keyart02A-DA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 6225,
-          "clicks": 99,
-          "cost": 106140,
-          "installs": 6,
-          "retained_d1": 3,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 9491,
+          "clicks": 151,
+          "cost": 172770,
+          "installs": 9,
+          "retained_d1": 0,
           "revenue_d7": 0
         }
       ]
@@ -25889,7 +25764,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:45+09:00",
+      "tagged_at": "2026-06-18T14:31:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Life01A-DA\\251104_BNR_A-Character-Life01A-DA_L_1200x628_EN.jpg",
@@ -28590,23 +28465,23 @@
       "mmp_channels": [
         "facebook.business"
       ],
-      "mmp_d1_ipm": 0.122,
-      "mmp_d1_cpi": 62335.7,
-      "mmp_d7_roas": 0.0137,
-      "mmp_d1_retention": 17.95,
+      "mmp_d1_ipm": 0.144,
+      "mmp_d1_cpi": 73803.0,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 15.62,
       "mmp_quality_score": {
-        "total": 81.63,
+        "total": 81.45,
         "grade": "최우수",
-        "rank": 11,
-        "ipm": 79.6,
-        "cpi": 85.7,
-        "roas": 93.9,
-        "retention": 67.3
+        "rank": 9,
+        "ipm": 77.4,
+        "cpi": 87.1,
+        "roas": 90.3,
+        "retention": 71.0
       },
-      "mmp_installs": 39,
-      "mmp_retained_d1": 7,
-      "mmp_cost": 436350,
-      "mmp_revenue": 5985,
+      "mmp_installs": 32,
+      "mmp_retained_d1": 5,
+      "mmp_cost": 369015,
+      "mmp_revenue": 0,
       "mmp_currency": "KRW",
       "mmp_fx_rate": 1500.0,
       "mmp_daily": [
@@ -28614,23 +28489,25 @@
           "creative_name": "251104_BNR_A-Character-Life01A-DA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 34702,
-          "clicks": 278,
-          "cost": 369015,
-          "installs": 32,
-          "retained_d1": 5,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 9208,
+          "clicks": 103,
+          "cost": 170280,
+          "installs": 12,
+          "retained_d1": 0,
           "revenue_d7": 0
         },
         {
-          "creative_name": "260406_BNR_A-Character-Life01A-DA_ALL_Mixed_EN",
+          "creative_name": "251104_BNR_A-Character-Life01A-DA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 22843,
-          "clicks": 222,
-          "cost": 67335,
-          "installs": 7,
-          "retained_d1": 2,
-          "revenue_d7": 5985
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 25494,
+          "clicks": 175,
+          "cost": 198735,
+          "installs": 20,
+          "retained_d1": 5,
+          "revenue_d7": 0
         }
       ]
     },
@@ -28703,7 +28580,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:45+09:00",
+      "tagged_at": "2026-06-18T14:31:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Life02A-DA\\260406_BNR_A-Character-Life02A-DA_L_1200x628_EN.jpg",
@@ -30732,7 +30609,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:45+09:00",
+      "tagged_at": "2026-06-18T14:31:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Event-Rowena01A-DA\\260616_BNR_A-Event-Rowena01A-DA_L_1200x628_EN.jpg",
@@ -30744,42 +30621,20 @@
       "kpi_window_start": null,
       "kpi_window_end": null,
       "kpi_daily": [],
-      "mmp_source": "airbridge",
-      "mmp_channels": [
-        "facebook.business"
-      ],
-      "mmp_d1_ipm": 0.0,
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": 0.0,
-      "mmp_d1_retention": 0.0,
-      "mmp_quality_score": {
-        "total": 51.53,
-        "grade": "양호",
-        "rank": 30,
-        "ipm": 59.2,
-        "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
-      },
-      "mmp_installs": 0,
-      "mmp_retained_d1": 0,
-      "mmp_cost": 3765,
-      "mmp_revenue": 0,
-      "mmp_currency": "KRW",
-      "mmp_fx_rate": 1500.0,
-      "mmp_daily": [
-        {
-          "creative_name": "260616_BNR_A-Event-Rowena01A-DA_ALL_Mixed_EN",
-          "date": "2026-06-17",
-          "channel": "facebook.business",
-          "impressions": 2457,
-          "clicks": 28,
-          "cost": 3765,
-          "installs": 0,
-          "retained_d1": 0,
-          "revenue_d7": 0
-        }
-      ]
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Mob-Adventure01A-DA",
@@ -30848,7 +30703,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:45+09:00",
+      "tagged_at": "2026-06-18T14:31:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Mob-Adventure01A-DA\\EN\\251111_BNR_A-Mob-Adventure01A-DA_L_1200x628_EN.jpg",
@@ -33526,17 +33381,17 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 51.53,
+        "total": 51.61,
         "grade": "양호",
-        "rank": 31,
-        "ipm": 59.2,
+        "rank": 17,
+        "ipm": 58.1,
         "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
+        "roas": 90.3,
+        "retention": 58.1
       },
       "mmp_installs": 1,
       "mmp_retained_d1": 0,
-      "mmp_cost": 46215,
+      "mmp_cost": 26115,
       "mmp_revenue": 0,
       "mmp_currency": "KRW",
       "mmp_fx_rate": 1500.0,
@@ -33545,20 +33400,22 @@
           "creative_name": "251111_BNR_A-Mob-Adventure01A-DA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 4963,
-          "clicks": 27,
-          "cost": 26130,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 4636,
+          "clicks": 22,
+          "cost": 21510,
           "installs": 1,
           "retained_d1": 0,
           "revenue_d7": 0
         },
         {
-          "creative_name": "260406_BNR_A-Mob-Adventure01A-DA_ALL_Mixed_EN",
+          "creative_name": "251111_BNR_A-Mob-Adventure01A-DA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 1989,
-          "clicks": 22,
-          "cost": 20085,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 327,
+          "clicks": 5,
+          "cost": 4605,
           "installs": 0,
           "retained_d1": 0,
           "revenue_d7": 0
@@ -33626,7 +33483,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:45+09:00",
+      "tagged_at": "2026-06-18T14:31:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Mob-Adventure02A-DA\\260406_BNR_A-Mob-Adventure02A-DA_L_1200x628_EN.jpg",
@@ -36143,42 +36000,20 @@
           "conversions_value": 0.0
         }
       ],
-      "mmp_source": "airbridge",
-      "mmp_channels": [
-        "facebook.business"
-      ],
-      "mmp_d1_ipm": 0.0,
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": 0.0,
-      "mmp_d1_retention": 0.0,
-      "mmp_quality_score": {
-        "total": 51.53,
-        "grade": "양호",
-        "rank": 32,
-        "ipm": 59.2,
-        "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
-      },
-      "mmp_installs": 0,
-      "mmp_retained_d1": 0,
-      "mmp_cost": 3360,
-      "mmp_revenue": 0,
-      "mmp_currency": "KRW",
-      "mmp_fx_rate": 1500.0,
-      "mmp_daily": [
-        {
-          "creative_name": "260406_BNR_A-Mob-Adventure02A-DA_ALL_Mixed_EN",
-          "date": "2026-06-17",
-          "channel": "facebook.business",
-          "impressions": 2435,
-          "clicks": 25,
-          "cost": 3360,
-          "installs": 0,
-          "retained_d1": 0,
-          "revenue_d7": 0
-        }
-      ]
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "L-Character-Reward01A-DA",
@@ -36247,7 +36082,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:45+09:00",
+      "tagged_at": "2026-06-18T14:31:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\L-Character-Reward01A-DA\\EN\\251211_BNR_L-Character-Reward01A-DA_L_1200x628_EN.jpg",
@@ -36513,13 +36348,13 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 51.53,
+        "total": 51.61,
         "grade": "양호",
-        "rank": 33,
-        "ipm": 59.2,
+        "rank": 18,
+        "ipm": 58.1,
         "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
+        "roas": 90.3,
+        "retention": 58.1
       },
       "mmp_installs": 5,
       "mmp_retained_d1": 0,
@@ -36532,10 +36367,23 @@
           "creative_name": "251211_BNR_L-Character-Reward01A-DA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 6340,
-          "clicks": 48,
-          "cost": 69870,
-          "installs": 5,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 1205,
+          "clicks": 13,
+          "cost": 38595,
+          "installs": 2,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "251211_BNR_L-Character-Reward01A-DA_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 5135,
+          "clicks": 35,
+          "cost": 31275,
+          "installs": 3,
           "retained_d1": 0,
           "revenue_d7": 0
         }
@@ -36604,7 +36452,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:45+09:00",
+      "tagged_at": "2026-06-18T14:31:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\CPP\\EN\\251118_BNR_P-DA-Character-100usd01_1290x2796_EN.jpg",
@@ -36694,7 +36542,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:45+09:00",
+      "tagged_at": "2026-06-18T14:31:47+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-100usd01\\EN\\251118_BNR_P-DA-Character-100usd01_L_1200x628_EN.jpg",
@@ -36786,7 +36634,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:45+09:00",
+      "tagged_at": "2026-06-18T14:31:47+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-illust01\\251104_BNR_P-DA-Character-illust01_L_1200x628_EN.png",
@@ -36874,7 +36722,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:46+09:00",
+      "tagged_at": "2026-06-18T14:31:47+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-illust02\\251104_BNR_P-DA-Character-illust02_L_1200x628_EN.png",
@@ -36964,7 +36812,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:46+09:00",
+      "tagged_at": "2026-06-18T14:31:47+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-SD01\\251104_BNR_P-DA-Character-SD01_L_1200x628_EN.jpg",
@@ -37054,7 +36902,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:46+09:00",
+      "tagged_at": "2026-06-18T14:31:47+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-SD02\\251104_BNR_P-DA-Character-SD02_L_1200x628_EN.jpg",
@@ -37144,7 +36992,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:46+09:00",
+      "tagged_at": "2026-06-18T14:31:47+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-Slogan01\\EN\\251118_BNR_P-DA-Character-Slogan01_L_1200x628_EN.jpg",
@@ -37238,7 +37086,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:46+09:00",
+      "tagged_at": "2026-06-18T14:31:47+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-Slogan02\\EN\\251118_BNR_P-DA-Character-Slogan02_L_1200x628_EN.jpg",
@@ -37332,7 +37180,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:46+09:00",
+      "tagged_at": "2026-06-18T14:31:47+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Slogan-Aya01\\EN\\251111_BNR_P-DA-Slogan-Aya_L_1200x628_EN.jpg",
@@ -37426,7 +37274,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:46+09:00",
+      "tagged_at": "2026-06-18T14:31:48+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Slogan-Goblin01\\EN\\251111_BNR_P-DA-Slogan-Goblin_L_1200x628_EN.jpg",
@@ -37523,7 +37371,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:46+09:00",
+      "tagged_at": "2026-06-18T14:31:48+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\선론칭\\L-Mob-Adventure01A-UA\\EN\\251211_VID_L-Mob-Adventure01A-UA_L_1920x1080_EN.mp4",
@@ -37705,22 +37553,22 @@
       "mmp_channels": [
         "facebook.business"
       ],
-      "mmp_d1_ipm": 0.061,
-      "mmp_d1_cpi": 250425.0,
+      "mmp_d1_ipm": 0.088,
+      "mmp_d1_cpi": 208230.0,
       "mmp_d7_roas": 0.0,
-      "mmp_d1_retention": 6.67,
+      "mmp_d1_retention": 7.69,
       "mmp_quality_score": {
-        "total": 70.92,
+        "total": 70.97,
         "grade": "우수",
-        "rank": 19,
-        "ipm": 69.4,
-        "cpi": 65.3,
-        "roas": 87.8,
-        "retention": 61.2
+        "rank": 12,
+        "ipm": 64.5,
+        "cpi": 64.5,
+        "roas": 90.3,
+        "retention": 64.5
       },
-      "mmp_installs": 15,
+      "mmp_installs": 13,
       "mmp_retained_d1": 1,
-      "mmp_cost": 250425,
+      "mmp_cost": 208230,
       "mmp_revenue": 0,
       "mmp_currency": "KRW",
       "mmp_fx_rate": 1500.0,
@@ -37729,21 +37577,23 @@
           "creative_name": "251211_VID_L-Mob-Adventure01A-UA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 11375,
-          "clicks": 112,
-          "cost": 208230,
-          "installs": 13,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 5508,
+          "clicks": 40,
+          "cost": 109575,
+          "installs": 4,
           "retained_d1": 1,
           "revenue_d7": 0
         },
         {
-          "creative_name": "260406_VID_L-Mob-Adventure01A-UA_ALL_Mixed_EN",
+          "creative_name": "251211_VID_L-Mob-Adventure01A-UA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 4941,
-          "clicks": 158,
-          "cost": 42195,
-          "installs": 2,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 5867,
+          "clicks": 72,
+          "cost": 98655,
+          "installs": 9,
           "retained_d1": 0,
           "revenue_d7": 0
         }
@@ -37810,7 +37660,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:46+09:00",
+      "tagged_at": "2026-06-18T14:31:48+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection01A-UA\\251104_VID_A-Character-Collection01A-UA_L_1920x1080_EN.mp4",
@@ -40701,13 +40551,13 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 51.53,
+        "total": 51.61,
         "grade": "양호",
-        "rank": 34,
-        "ipm": 59.2,
+        "rank": 19,
+        "ipm": 58.1,
         "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
+        "roas": 90.3,
+        "retention": 58.1
       },
       "mmp_installs": 6,
       "mmp_retained_d1": 0,
@@ -40720,10 +40570,23 @@
           "creative_name": "251104_VID_A-Character-Collection01A-UA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 3846,
-          "clicks": 24,
-          "cost": 103155,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 3268,
+          "clicks": 22,
+          "cost": 91710,
           "installs": 6,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "251104_VID_A-Character-Collection01A-UA_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 578,
+          "clicks": 2,
+          "cost": 11445,
+          "installs": 0,
           "retained_d1": 0,
           "revenue_d7": 0
         }
@@ -40790,7 +40653,7 @@
         "roas": 91.67
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:46+09:00",
+      "tagged_at": "2026-06-18T14:31:49+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection01B-UA\\EN\\251204_VID_A-Character-Collection01B-UA_L_1920x1080_EN.mp4",
@@ -46852,17 +46715,17 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 51.53,
+        "total": 51.61,
         "grade": "양호",
-        "rank": 35,
-        "ipm": 59.2,
+        "rank": 20,
+        "ipm": 58.1,
         "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
+        "roas": 90.3,
+        "retention": 58.1
       },
       "mmp_installs": 2,
       "mmp_retained_d1": 0,
-      "mmp_cost": 29910,
+      "mmp_cost": 25815,
       "mmp_revenue": 0,
       "mmp_currency": "KRW",
       "mmp_fx_rate": 1500.0,
@@ -46871,21 +46734,23 @@
           "creative_name": "251204_VID_A-Character-Collection01B-UA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 1281,
-          "clicks": 15,
-          "cost": 25800,
-          "installs": 2,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 400,
+          "clicks": 5,
+          "cost": 6975,
+          "installs": 0,
           "retained_d1": 0,
           "revenue_d7": 0
         },
         {
-          "creative_name": "260406_VID_A-Character-Collection01B-UA_ALL_Mixed_EN",
+          "creative_name": "251204_VID_A-Character-Collection01B-UA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 334,
-          "clicks": 4,
-          "cost": 4110,
-          "installs": 0,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 881,
+          "clicks": 10,
+          "cost": 18840,
+          "installs": 2,
           "retained_d1": 0,
           "revenue_d7": 0
         }
@@ -46954,7 +46819,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:47+09:00",
+      "tagged_at": "2026-06-18T14:31:49+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection02A-PV\\EN\\251211_VID_A-Character-Collection02A-PV_L_1920x1080_EN.mp4",
@@ -46979,17 +46844,17 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 51.53,
+        "total": 51.61,
         "grade": "양호",
-        "rank": 36,
-        "ipm": 59.2,
+        "rank": 21,
+        "ipm": 58.1,
         "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
+        "roas": 90.3,
+        "retention": 58.1
       },
       "mmp_installs": 2,
       "mmp_retained_d1": 0,
-      "mmp_cost": 54180,
+      "mmp_cost": 54165,
       "mmp_revenue": 0,
       "mmp_currency": "KRW",
       "mmp_fx_rate": 1500.0,
@@ -46998,10 +46863,23 @@
           "creative_name": "251211_VID_A-Character-Collection02A-PV_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 2029,
-          "clicks": 30,
-          "cost": 54180,
-          "installs": 2,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 831,
+          "clicks": 12,
+          "cost": 15930,
+          "installs": 1,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "251211_VID_A-Character-Collection02A-PV_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 1198,
+          "clicks": 18,
+          "cost": 38235,
+          "installs": 1,
           "retained_d1": 0,
           "revenue_d7": 0
         }
@@ -47066,7 +46944,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:47+09:00",
+      "tagged_at": "2026-06-18T14:31:50+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection02A-UA\\260123_VID_A-Character-Collection02A-UA_L_1920x1080_EN.mp4",
@@ -47086,17 +46964,17 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 51.53,
+        "total": 51.61,
         "grade": "양호",
-        "rank": 37,
-        "ipm": 59.2,
+        "rank": 22,
+        "ipm": 58.1,
         "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
+        "roas": 90.3,
+        "retention": 58.1
       },
       "mmp_installs": 1,
       "mmp_retained_d1": 0,
-      "mmp_cost": 31695,
+      "mmp_cost": 31680,
       "mmp_revenue": 0,
       "mmp_currency": "KRW",
       "mmp_fx_rate": 1500.0,
@@ -47105,9 +46983,22 @@
           "creative_name": "260123_VID_A-Character-Collection02A-UA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 1294,
-          "clicks": 9,
-          "cost": 31695,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 239,
+          "clicks": 2,
+          "cost": 3450,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260123_VID_A-Character-Collection02A-UA_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 1055,
+          "clicks": 7,
+          "cost": 28230,
           "installs": 1,
           "retained_d1": 0,
           "revenue_d7": 0
@@ -47177,7 +47068,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:47+09:00",
+      "tagged_at": "2026-06-18T14:31:50+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection02B-UA\\260123_VID_A-Character-Collection02B-UA_L_1920x1080_EN.mp4",
@@ -47197,13 +47088,13 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 51.53,
+        "total": 51.61,
         "grade": "양호",
-        "rank": 38,
-        "ipm": 59.2,
+        "rank": 23,
+        "ipm": 58.1,
         "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
+        "roas": 90.3,
+        "retention": 58.1
       },
       "mmp_installs": 0,
       "mmp_retained_d1": 0,
@@ -47216,9 +47107,22 @@
           "creative_name": "260123_VID_A-Character-Collection02B-UA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 520,
-          "clicks": 3,
-          "cost": 11130,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 200,
+          "clicks": 2,
+          "cost": 5190,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260123_VID_A-Character-Collection02B-UA_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 320,
+          "clicks": 1,
+          "cost": 5940,
           "installs": 0,
           "retained_d1": 0,
           "revenue_d7": 0
@@ -47288,7 +47192,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:48+09:00",
+      "tagged_at": "2026-06-18T14:31:50+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection02C-UA\\260123_VID_A-Character-Collection02C-UA_L_1920x1080_EN.mp4",
@@ -47308,17 +47212,17 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 51.53,
+        "total": 51.61,
         "grade": "양호",
-        "rank": 39,
-        "ipm": 59.2,
+        "rank": 24,
+        "ipm": 58.1,
         "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
+        "roas": 90.3,
+        "retention": 58.1
       },
       "mmp_installs": 2,
       "mmp_retained_d1": 0,
-      "mmp_cost": 42090,
+      "mmp_cost": 42105,
       "mmp_revenue": 0,
       "mmp_currency": "KRW",
       "mmp_fx_rate": 1500.0,
@@ -47327,10 +47231,23 @@
           "creative_name": "260123_VID_A-Character-Collection02C-UA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 1647,
-          "clicks": 12,
-          "cost": 42090,
-          "installs": 2,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 583,
+          "clicks": 2,
+          "cost": 17520,
+          "installs": 1,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260123_VID_A-Character-Collection02C-UA_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 1064,
+          "clicks": 10,
+          "cost": 24585,
+          "installs": 1,
           "retained_d1": 0,
           "revenue_d7": 0
         }
@@ -47399,7 +47316,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:48+09:00",
+      "tagged_at": "2026-06-18T14:31:51+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection02D-UA\\260123_VID_A-Character-Collection02D-UA_L_1920x1080_EN.mp4",
@@ -47419,13 +47336,13 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 51.53,
+        "total": 51.61,
         "grade": "양호",
-        "rank": 40,
-        "ipm": 59.2,
+        "rank": 25,
+        "ipm": 58.1,
         "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
+        "roas": 90.3,
+        "retention": 58.1
       },
       "mmp_installs": 0,
       "mmp_retained_d1": 0,
@@ -47438,9 +47355,22 @@
           "creative_name": "260123_VID_A-Character-Collection02D-UA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 821,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 718,
           "clicks": 6,
-          "cost": 16110,
+          "cost": 14820,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260123_VID_A-Character-Collection02D-UA_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 103,
+          "clicks": 0,
+          "cost": 1290,
           "installs": 0,
           "retained_d1": 0,
           "revenue_d7": 0
@@ -47510,7 +47440,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:48+09:00",
+      "tagged_at": "2026-06-18T14:31:51+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection03A-PV\\260123_VID_A-Character-Collection03A-PV_L_1920x1080_EN.mp4",
@@ -47530,13 +47460,13 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 51.53,
+        "total": 51.61,
         "grade": "양호",
-        "rank": 41,
-        "ipm": 59.2,
+        "rank": 26,
+        "ipm": 58.1,
         "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
+        "roas": 90.3,
+        "retention": 58.1
       },
       "mmp_installs": 0,
       "mmp_retained_d1": 0,
@@ -47549,9 +47479,22 @@
           "creative_name": "260123_VID_A-Character-Collection03A-PV_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 626,
-          "clicks": 10,
-          "cost": 15330,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 414,
+          "clicks": 6,
+          "cost": 9795,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260123_VID_A-Character-Collection03A-PV_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 212,
+          "clicks": 4,
+          "cost": 5535,
           "installs": 0,
           "retained_d1": 0,
           "revenue_d7": 0
@@ -47621,7 +47564,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:49+09:00",
+      "tagged_at": "2026-06-18T14:31:52+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection03B-PV\\260123_VID_A-Character-Collection03B-PV_L_1920x1080_EN.mp4",
@@ -47641,13 +47584,13 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 51.53,
+        "total": 51.61,
         "grade": "양호",
-        "rank": 42,
-        "ipm": 59.2,
+        "rank": 27,
+        "ipm": 58.1,
         "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
+        "roas": 90.3,
+        "retention": 58.1
       },
       "mmp_installs": 0,
       "mmp_retained_d1": 0,
@@ -47660,9 +47603,22 @@
           "creative_name": "260123_VID_A-Character-Collection03B-PV_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 1164,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 168,
+          "clicks": 0,
+          "cost": 7350,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260123_VID_A-Character-Collection03B-PV_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 996,
           "clicks": 18,
-          "cost": 31185,
+          "cost": 23835,
           "installs": 0,
           "retained_d1": 0,
           "revenue_d7": 0
@@ -47732,7 +47688,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:49+09:00",
+      "tagged_at": "2026-06-18T14:31:53+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection03C-PV\\260123_VID_A-Character-Collection03C-PV_L_1920x1080_EN.mp4",
@@ -47748,21 +47704,21 @@
         "facebook.business"
       ],
       "mmp_d1_ipm": 0.516,
-      "mmp_d1_cpi": 53325.0,
+      "mmp_d1_cpi": 53310.0,
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 33.33,
       "mmp_quality_score": {
-        "total": 91.33,
+        "total": 95.16,
         "grade": "최우수",
-        "rank": 4,
-        "ipm": 95.9,
-        "cpi": 91.8,
-        "roas": 87.8,
-        "retention": 89.8
+        "rank": 2,
+        "ipm": 96.8,
+        "cpi": 96.8,
+        "roas": 90.3,
+        "retention": 96.8
       },
       "mmp_installs": 3,
       "mmp_retained_d1": 1,
-      "mmp_cost": 53325,
+      "mmp_cost": 53310,
       "mmp_revenue": 0,
       "mmp_currency": "KRW",
       "mmp_fx_rate": 1500.0,
@@ -47771,11 +47727,24 @@
           "creative_name": "260123_VID_A-Character-Collection03C-PV_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 1937,
-          "clicks": 40,
-          "cost": 53325,
-          "installs": 3,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 782,
+          "clicks": 21,
+          "cost": 15855,
+          "installs": 2,
           "retained_d1": 1,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260123_VID_A-Character-Collection03C-PV_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 1155,
+          "clicks": 19,
+          "cost": 37455,
+          "installs": 1,
+          "retained_d1": 0,
           "revenue_d7": 0
         }
       ]
@@ -47845,7 +47814,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:49+09:00",
+      "tagged_at": "2026-06-18T14:31:53+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection03D-PV\\260123_VID_A-Character-Collection03D-PV_L_1920x1080_EN.mp4",
@@ -47865,17 +47834,17 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 51.53,
+        "total": 51.61,
         "grade": "양호",
-        "rank": 43,
-        "ipm": 59.2,
+        "rank": 28,
+        "ipm": 58.1,
         "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
+        "roas": 90.3,
+        "retention": 58.1
       },
       "mmp_installs": 2,
       "mmp_retained_d1": 0,
-      "mmp_cost": 54825,
+      "mmp_cost": 54810,
       "mmp_revenue": 0,
       "mmp_currency": "KRW",
       "mmp_fx_rate": 1500.0,
@@ -47884,10 +47853,23 @@
           "creative_name": "260123_VID_A-Character-Collection03D-PV_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 1800,
-          "clicks": 31,
-          "cost": 54825,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 1028,
+          "clicks": 18,
+          "cost": 37200,
           "installs": 2,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260123_VID_A-Character-Collection03D-PV_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 772,
+          "clicks": 13,
+          "cost": 17610,
+          "installs": 0,
           "retained_d1": 0,
           "revenue_d7": 0
         }
@@ -47954,7 +47936,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:50+09:00",
+      "tagged_at": "2026-06-18T14:31:54+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection04A-UA\\260616_VID_A-Character-Collection04A-UA_L_1920x1080_EN.mp4",
@@ -47965,42 +47947,20 @@
       "kpi_window_start": null,
       "kpi_window_end": null,
       "kpi_daily": [],
-      "mmp_source": "airbridge",
-      "mmp_channels": [
-        "facebook.business"
-      ],
-      "mmp_d1_ipm": 0.0,
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": 0.0,
-      "mmp_d1_retention": 0.0,
-      "mmp_quality_score": {
-        "total": 51.53,
-        "grade": "양호",
-        "rank": 44,
-        "ipm": 59.2,
-        "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
-      },
-      "mmp_installs": 0,
-      "mmp_retained_d1": 0,
-      "mmp_cost": 5460,
-      "mmp_revenue": 0,
-      "mmp_currency": "KRW",
-      "mmp_fx_rate": 1500.0,
-      "mmp_daily": [
-        {
-          "creative_name": "260616_VID_A-Character-Collection04A-UA_ALL_Mixed_EN",
-          "date": "2026-06-17",
-          "channel": "facebook.business",
-          "impressions": 1096,
-          "clicks": 26,
-          "cost": 5460,
-          "installs": 0,
-          "retained_d1": 0,
-          "revenue_d7": 0
-        }
-      ]
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Character-Collection04B-UA",
@@ -48063,7 +48023,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:50+09:00",
+      "tagged_at": "2026-06-18T14:31:54+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection04B-UA\\260616_VID_A-Character-Collection04B-UA_L_1920x1080_EN.mp4",
@@ -48074,42 +48034,20 @@
       "kpi_window_start": null,
       "kpi_window_end": null,
       "kpi_daily": [],
-      "mmp_source": "airbridge",
-      "mmp_channels": [
-        "facebook.business"
-      ],
-      "mmp_d1_ipm": 0.0,
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": 0.0,
-      "mmp_d1_retention": 0.0,
-      "mmp_quality_score": {
-        "total": 51.53,
-        "grade": "양호",
-        "rank": 45,
-        "ipm": 59.2,
-        "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
-      },
-      "mmp_installs": 0,
-      "mmp_retained_d1": 0,
-      "mmp_cost": 9015,
-      "mmp_revenue": 0,
-      "mmp_currency": "KRW",
-      "mmp_fx_rate": 1500.0,
-      "mmp_daily": [
-        {
-          "creative_name": "260616_VID_A-Character-Collection04B-UA_ALL_Mixed_EN",
-          "date": "2026-06-17",
-          "channel": "facebook.business",
-          "impressions": 186,
-          "clicks": 5,
-          "cost": 9015,
-          "installs": 0,
-          "retained_d1": 0,
-          "revenue_d7": 0
-        }
-      ]
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Character-Combat01A-UA",
@@ -48178,7 +48116,7 @@
         "roas": 98.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:50+09:00",
+      "tagged_at": "2026-06-18T14:31:54+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Combat01A-UA\\260123_VID_A-Character-Combat01A-UA_L_1920x1080_EN.mp4",
@@ -54251,22 +54189,22 @@
       "mmp_channels": [
         "facebook.business"
       ],
-      "mmp_d1_ipm": 0.073,
-      "mmp_d1_cpi": 50442.9,
+      "mmp_d1_ipm": 0.249,
+      "mmp_d1_cpi": 85537.5,
       "mmp_d7_roas": 0.0,
-      "mmp_d1_retention": 33.33,
+      "mmp_d1_retention": 22.22,
       "mmp_quality_score": {
-        "total": 86.22,
+        "total": 83.06,
         "grade": "최우수",
-        "rank": 6,
-        "ipm": 73.5,
-        "cpi": 93.9,
-        "roas": 87.8,
-        "retention": 89.8
+        "rank": 7,
+        "ipm": 87.1,
+        "cpi": 71.0,
+        "roas": 90.3,
+        "retention": 83.9
       },
-      "mmp_installs": 21,
-      "mmp_retained_d1": 7,
-      "mmp_cost": 353100,
+      "mmp_installs": 9,
+      "mmp_retained_d1": 2,
+      "mmp_cost": 171075,
       "mmp_revenue": 0,
       "mmp_currency": "KRW",
       "mmp_fx_rate": 1500.0,
@@ -54275,22 +54213,24 @@
           "creative_name": "260123_VID_A-Character-Combat01A-UA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 8023,
-          "clicks": 97,
-          "cost": 171075,
-          "installs": 9,
-          "retained_d1": 2,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 2094,
+          "clicks": 34,
+          "cost": 66975,
+          "installs": 0,
+          "retained_d1": 0,
           "revenue_d7": 0
         },
         {
-          "creative_name": "260406_VID_A-Character-Combat01A-UA_ALL_Mixed_EN",
+          "creative_name": "260123_VID_A-Character-Combat01A-UA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 87238,
-          "clicks": 2415,
-          "cost": 182025,
-          "installs": 12,
-          "retained_d1": 5,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 5929,
+          "clicks": 63,
+          "cost": 104100,
+          "installs": 9,
+          "retained_d1": 2,
           "revenue_d7": 0
         }
       ]
@@ -54362,7 +54302,7 @@
         "roas": 95.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:51+09:00",
+      "tagged_at": "2026-06-18T14:31:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Combat01B-UA\\EN\\251204_VID_A-Character-Combat01B-UA_L_1920x1080_EN.mp4",
@@ -60432,22 +60372,22 @@
       "mmp_channels": [
         "facebook.business"
       ],
-      "mmp_d1_ipm": 0.556,
-      "mmp_d1_cpi": 39969.0,
-      "mmp_d7_roas": 0.0995,
-      "mmp_d1_retention": 38.46,
+      "mmp_d1_ipm": 0.586,
+      "mmp_d1_cpi": 38424.0,
+      "mmp_d7_roas": 0.1035,
+      "mmp_d1_retention": 41.67,
       "mmp_quality_score": {
-        "total": 95.92,
+        "total": 100.0,
         "grade": "최우수",
-        "rank": 2,
-        "ipm": 98.0,
-        "cpi": 95.9,
-        "roas": 98.0,
-        "retention": 91.8
+        "rank": 1,
+        "ipm": 100.0,
+        "cpi": 100.0,
+        "roas": 100.0,
+        "retention": 100.0
       },
-      "mmp_installs": 13,
+      "mmp_installs": 12,
       "mmp_retained_d1": 5,
-      "mmp_cost": 199845,
+      "mmp_cost": 192120,
       "mmp_revenue": 19875,
       "mmp_currency": "KRW",
       "mmp_fx_rate": 1500.0,
@@ -60456,23 +60396,25 @@
           "creative_name": "251204_VID_A-Character-Combat01B-UA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 8528,
-          "clicks": 82,
-          "cost": 192120,
-          "installs": 12,
-          "retained_d1": 5,
-          "revenue_d7": 19875
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 3201,
+          "clicks": 40,
+          "cost": 74070,
+          "installs": 4,
+          "retained_d1": 2,
+          "revenue_d7": 0
         },
         {
-          "creative_name": "260406_VID_A-Character-Combat01B-UA_ALL_Mixed_EN",
+          "creative_name": "251204_VID_A-Character-Combat01B-UA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 457,
-          "clicks": 10,
-          "cost": 7725,
-          "installs": 1,
-          "retained_d1": 0,
-          "revenue_d7": 0
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 5327,
+          "clicks": 42,
+          "cost": 118050,
+          "installs": 8,
+          "retained_d1": 3,
+          "revenue_d7": 19875
         }
       ]
     },
@@ -60537,7 +60479,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:51+09:00",
+      "tagged_at": "2026-06-18T14:31:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Combat02A-UA\\260616_VID_A-Character-Combat02A-UA_L_1920x1080_EN.mp4",
@@ -60548,42 +60490,20 @@
       "kpi_window_start": null,
       "kpi_window_end": null,
       "kpi_daily": [],
-      "mmp_source": "airbridge",
-      "mmp_channels": [
-        "facebook.business"
-      ],
-      "mmp_d1_ipm": 0.0,
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": 0.0,
-      "mmp_d1_retention": 0.0,
-      "mmp_quality_score": {
-        "total": 51.53,
-        "grade": "양호",
-        "rank": 46,
-        "ipm": 59.2,
-        "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
-      },
-      "mmp_installs": 0,
-      "mmp_retained_d1": 0,
-      "mmp_cost": 5055,
-      "mmp_revenue": 0,
-      "mmp_currency": "KRW",
-      "mmp_fx_rate": 1500.0,
-      "mmp_daily": [
-        {
-          "creative_name": "260616_VID_A-Character-Combat02A-UA_ALL_Mixed_EN",
-          "date": "2026-06-17",
-          "channel": "facebook.business",
-          "impressions": 143,
-          "clicks": 3,
-          "cost": 5055,
-          "installs": 0,
-          "retained_d1": 0,
-          "revenue_d7": 0
-        }
-      ]
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Character-Combat02B-UA",
@@ -60646,7 +60566,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:51+09:00",
+      "tagged_at": "2026-06-18T14:31:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Combat02B-UA\\260616_VID_A-Character-Combat02B-UA_L_1920x1080_EN.mp4",
@@ -60657,42 +60577,20 @@
       "kpi_window_start": null,
       "kpi_window_end": null,
       "kpi_daily": [],
-      "mmp_source": "airbridge",
-      "mmp_channels": [
-        "facebook.business"
-      ],
-      "mmp_d1_ipm": 6.369,
-      "mmp_d1_cpi": 6885.0,
-      "mmp_d7_roas": 5.8736,
-      "mmp_d1_retention": 100.0,
-      "mmp_quality_score": {
-        "total": 100.0,
-        "grade": "최우수",
-        "rank": 1,
-        "ipm": 100.0,
-        "cpi": 100.0,
-        "roas": 100.0,
-        "retention": 100.0
-      },
-      "mmp_installs": 1,
-      "mmp_retained_d1": 1,
-      "mmp_cost": 6885,
-      "mmp_revenue": 40440,
-      "mmp_currency": "KRW",
-      "mmp_fx_rate": 1500.0,
-      "mmp_daily": [
-        {
-          "creative_name": "260616_VID_A-Character-Combat02B-UA_ALL_Mixed_EN",
-          "date": "2026-06-17",
-          "channel": "facebook.business",
-          "impressions": 157,
-          "clicks": 5,
-          "cost": 6885,
-          "installs": 1,
-          "retained_d1": 1,
-          "revenue_d7": 40440
-        }
-      ]
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Hooking-minigame01A-FK",
@@ -60758,7 +60656,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:51+09:00",
+      "tagged_at": "2026-06-18T14:31:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-minigame01A-FK\\EN\\251125_VID_A-Hooking-minigame01A-FK_L_1920x1080_EN.mp4",
@@ -61022,13 +60920,13 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 23.08,
       "mmp_quality_score": {
-        "total": 82.65,
+        "total": 86.29,
         "grade": "최우수",
-        "rank": 10,
-        "ipm": 87.8,
-        "cpi": 77.6,
-        "roas": 87.8,
-        "retention": 77.6
+        "rank": 5,
+        "ipm": 83.9,
+        "cpi": 83.9,
+        "roas": 90.3,
+        "retention": 87.1
       },
       "mmp_installs": 13,
       "mmp_retained_d1": 3,
@@ -61041,11 +60939,36 @@
           "creative_name": "251125_VID_A-Hooking-minigame01A-FK_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 12509,
-          "clicks": 119,
-          "cost": 223110,
-          "installs": 13,
-          "retained_d1": 3,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_251211",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 1,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "251125_VID_A-Hooking-minigame01A-FK_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 3931,
+          "clicks": 52,
+          "cost": 94710,
+          "installs": 7,
+          "retained_d1": 2,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "251125_VID_A-Hooking-minigame01A-FK_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 8578,
+          "clicks": 67,
+          "cost": 128400,
+          "installs": 5,
+          "retained_d1": 1,
           "revenue_d7": 0
         }
       ]
@@ -61113,7 +61036,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:52+09:00",
+      "tagged_at": "2026-06-18T14:31:57+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-minigame02A-FK\\260123_VID_A-Hooking-minigame02A-FK_L_1920x1080_EN.mp4",
@@ -61133,13 +61056,13 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 51.53,
+        "total": 51.61,
         "grade": "양호",
-        "rank": 47,
-        "ipm": 59.2,
+        "rank": 29,
+        "ipm": 58.1,
         "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
+        "roas": 90.3,
+        "retention": 58.1
       },
       "mmp_installs": 1,
       "mmp_retained_d1": 0,
@@ -61152,10 +61075,23 @@
           "creative_name": "260123_VID_A-Hooking-minigame02A-FK_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 2336,
-          "clicks": 18,
-          "cost": 46845,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 1607,
+          "clicks": 12,
+          "cost": 26490,
           "installs": 1,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260123_VID_A-Hooking-minigame02A-FK_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 729,
+          "clicks": 6,
+          "cost": 20355,
+          "installs": 0,
           "retained_d1": 0,
           "revenue_d7": 0
         }
@@ -61222,7 +61158,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:52+09:00",
+      "tagged_at": "2026-06-18T14:31:57+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-minigame02B-FK\\260123_VID_A-Hooking-minigame02B-FK_L_1920x1080_EN.mp4",
@@ -61242,13 +61178,13 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 25.0,
       "mmp_quality_score": {
-        "total": 87.76,
+        "total": 91.94,
         "grade": "최우수",
-        "rank": 5,
-        "ipm": 91.8,
-        "cpi": 87.8,
-        "roas": 87.8,
-        "retention": 83.7
+        "rank": 3,
+        "ipm": 93.5,
+        "cpi": 93.5,
+        "roas": 90.3,
+        "retention": 90.3
       },
       "mmp_installs": 8,
       "mmp_retained_d1": 2,
@@ -61261,11 +61197,24 @@
           "creative_name": "260123_VID_A-Hooking-minigame02B-FK_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 4939,
-          "clicks": 57,
-          "cost": 113805,
-          "installs": 8,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 1425,
+          "clicks": 29,
+          "cost": 38505,
+          "installs": 4,
           "retained_d1": 2,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260123_VID_A-Hooking-minigame02B-FK_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 3514,
+          "clicks": 28,
+          "cost": 75300,
+          "installs": 4,
+          "retained_d1": 0,
           "revenue_d7": 0
         }
       ]
@@ -61333,7 +61282,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:53+09:00",
+      "tagged_at": "2026-06-18T14:31:58+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-minigame02C-FK\\260123_VID_A-Hooking-minigame02C-FK_L_1920x1080_EN.mp4",
@@ -61353,13 +61302,13 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 7.69,
       "mmp_quality_score": {
-        "total": 73.47,
+        "total": 69.35,
         "grade": "우수",
-        "rank": 18,
-        "ipm": 75.5,
-        "cpi": 67.3,
-        "roas": 87.8,
-        "retention": 63.3
+        "rank": 13,
+        "ipm": 61.3,
+        "cpi": 61.3,
+        "roas": 90.3,
+        "retention": 64.5
       },
       "mmp_installs": 13,
       "mmp_retained_d1": 1,
@@ -61372,11 +61321,24 @@
           "creative_name": "260123_VID_A-Hooking-minigame02C-FK_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 12833,
-          "clicks": 196,
-          "cost": 242235,
-          "installs": 13,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 12488,
+          "clicks": 193,
+          "cost": 234045,
+          "installs": 12,
           "retained_d1": 1,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260123_VID_A-Hooking-minigame02C-FK_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 345,
+          "clicks": 3,
+          "cost": 8190,
+          "installs": 1,
+          "retained_d1": 0,
           "revenue_d7": 0
         }
       ]
@@ -61441,7 +61403,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:53+09:00",
+      "tagged_at": "2026-06-18T14:31:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-minigame02D-FK\\260123_VID_A-Hooking-minigame02D-FK_L_1920x1080_EN.mp4",
@@ -61461,13 +61423,13 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 21.43,
       "mmp_quality_score": {
-        "total": 84.18,
+        "total": 87.9,
         "grade": "최우수",
-        "rank": 9,
-        "ipm": 89.8,
-        "cpi": 83.7,
-        "roas": 87.8,
-        "retention": 75.5
+        "rank": 4,
+        "ipm": 90.3,
+        "cpi": 90.3,
+        "roas": 90.3,
+        "retention": 80.6
       },
       "mmp_installs": 14,
       "mmp_retained_d1": 3,
@@ -61480,10 +61442,23 @@
           "creative_name": "260123_VID_A-Hooking-minigame02D-FK_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 7584,
-          "clicks": 140,
-          "cost": 188295,
-          "installs": 14,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 1778,
+          "clicks": 20,
+          "cost": 41880,
+          "installs": 2,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260123_VID_A-Hooking-minigame02D-FK_ALL_Mixed_EN",
+          "date": "2026-06-17",
+          "channel": "facebook.business",
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 5806,
+          "clicks": 120,
+          "cost": 146415,
+          "installs": 12,
           "retained_d1": 3,
           "revenue_d7": 0
         }
@@ -61556,7 +61531,7 @@
         "roas": 93.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:53+09:00",
+      "tagged_at": "2026-06-18T14:31:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-Reward02A-FK\\EN\\251211_VID_A-Hooking-Reward02A-FK_L_1920x1080_EN.mp4",
@@ -66221,23 +66196,23 @@
       "mmp_channels": [
         "facebook.business"
       ],
-      "mmp_d1_ipm": 0.003,
-      "mmp_d1_cpi": 459105.0,
-      "mmp_d7_roas": 0.0129,
-      "mmp_d1_retention": 12.5,
+      "mmp_d1_ipm": 0.0,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 70.41,
-        "grade": "우수",
-        "rank": 20,
-        "ipm": 61.2,
-        "cpi": 63.3,
-        "roas": 91.8,
-        "retention": 65.3
+        "total": 51.61,
+        "grade": "양호",
+        "rank": 30,
+        "ipm": 58.1,
+        "cpi": 0.0,
+        "roas": 90.3,
+        "retention": 58.1
       },
-      "mmp_installs": 8,
-      "mmp_retained_d1": 1,
-      "mmp_cost": 459105,
-      "mmp_revenue": 5940,
+      "mmp_installs": 0,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 20655,
+      "mmp_revenue": 0,
       "mmp_currency": "KRW",
       "mmp_fx_rate": 1500.0,
       "mmp_daily": [
@@ -66245,23 +66220,25 @@
           "creative_name": "251211_VID_A-Hooking-Reward02A-FK_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 710,
-          "clicks": 13,
-          "cost": 20640,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 440,
+          "clicks": 9,
+          "cost": 13665,
           "installs": 0,
           "retained_d1": 0,
           "revenue_d7": 0
         },
         {
-          "creative_name": "260406_VID_A-Hooking-Reward02A-FK_ALL_Mixed_EN",
+          "creative_name": "251211_VID_A-Hooking-Reward02A-FK_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 307160,
-          "clicks": 6605,
-          "cost": 438465,
-          "installs": 8,
-          "retained_d1": 1,
-          "revenue_d7": 5940
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 270,
+          "clicks": 4,
+          "cost": 6990,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
         }
       ]
     },
@@ -66326,7 +66303,7 @@
         "roas": 96.67
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:54+09:00",
+      "tagged_at": "2026-06-18T14:32:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-Reward03A-UA\\EN\\251211_VID_A-Hooking-Reward03A-UA_L_1920x1080_EN.mp4",
@@ -70851,17 +70828,17 @@
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 51.53,
+        "total": 51.61,
         "grade": "양호",
-        "rank": 48,
-        "ipm": 59.2,
+        "rank": 31,
+        "ipm": 58.1,
         "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
+        "roas": 90.3,
+        "retention": 58.1
       },
       "mmp_installs": 0,
       "mmp_retained_d1": 0,
-      "mmp_cost": 10605,
+      "mmp_cost": 8835,
       "mmp_revenue": 0,
       "mmp_currency": "KRW",
       "mmp_fx_rate": 1500.0,
@@ -70870,20 +70847,22 @@
           "creative_name": "251211_VID_A-Hooking-Reward03A-UA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 415,
-          "clicks": 10,
-          "cost": 8835,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122",
+          "impressions": 147,
+          "clicks": 0,
+          "cost": 3120,
           "installs": 0,
           "retained_d1": 0,
           "revenue_d7": 0
         },
         {
-          "creative_name": "260406_VID_A-Hooking-Reward03A-UA_ALL_Mixed_EN",
+          "creative_name": "251211_VID_A-Hooking-Reward03A-UA_ALL_Mixed_EN",
           "date": "2026-06-17",
           "channel": "facebook.business",
-          "impressions": 94,
-          "clicks": 18,
-          "cost": 1770,
+          "campaign_name": "HQ_HQ_PH_CA-EN_FB_NU_AD_INSTALL_260122",
+          "impressions": 268,
+          "clicks": 10,
+          "cost": 5715,
           "installs": 0,
           "retained_d1": 0,
           "revenue_d7": 0
@@ -70951,7 +70930,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:54+09:00",
+      "tagged_at": "2026-06-18T14:32:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Testimonial-US01A-UA\\260616_VID_A-Testimonial-US01A-UA_L_1920x1080_EN.mp4",
@@ -70962,42 +70941,20 @@
       "kpi_window_start": null,
       "kpi_window_end": null,
       "kpi_daily": [],
-      "mmp_source": "airbridge",
-      "mmp_channels": [
-        "facebook.business"
-      ],
-      "mmp_d1_ipm": 0.0,
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": 0.0,
-      "mmp_d1_retention": 0.0,
-      "mmp_quality_score": {
-        "total": 51.53,
-        "grade": "양호",
-        "rank": 49,
-        "ipm": 59.2,
-        "cpi": 0.0,
-        "roas": 87.8,
-        "retention": 59.2
-      },
-      "mmp_installs": 1,
-      "mmp_retained_d1": 0,
-      "mmp_cost": 7800,
-      "mmp_revenue": 0,
-      "mmp_currency": "KRW",
-      "mmp_fx_rate": 1500.0,
-      "mmp_daily": [
-        {
-          "creative_name": "260616_VID_A-Testimonial-US01A-UA_ALL_Mixed_EN",
-          "date": "2026-06-17",
-          "channel": "facebook.business",
-          "impressions": 856,
-          "clicks": 4,
-          "cost": 7800,
-          "installs": 1,
-          "retained_d1": 0,
-          "revenue_d7": 0
-        }
-      ]
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     },
     {
       "creative_id": "A-Testimonial-US01B-UA",
@@ -71060,7 +71017,7 @@
         "roas": 88.33
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-18T12:22:54+09:00",
+      "tagged_at": "2026-06-18T14:32:01+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Testimonial-US01B-UA\\260616_VID_A-Testimonial-US01B-UA_L_1920x1080_EN.mp4",
@@ -71071,42 +71028,20 @@
       "kpi_window_start": null,
       "kpi_window_end": null,
       "kpi_daily": [],
-      "mmp_source": "airbridge",
-      "mmp_channels": [
-        "facebook.business"
-      ],
-      "mmp_d1_ipm": 0.055,
-      "mmp_d1_cpi": 692175.0,
-      "mmp_d7_roas": 0.0,
-      "mmp_d1_retention": 50.0,
-      "mmp_quality_score": {
-        "total": 78.57,
-        "grade": "우수",
-        "rank": 16,
-        "ipm": 67.3,
-        "cpi": 61.2,
-        "roas": 87.8,
-        "retention": 98.0
-      },
-      "mmp_installs": 2,
-      "mmp_retained_d1": 1,
-      "mmp_cost": 692175,
-      "mmp_revenue": 0,
-      "mmp_currency": "KRW",
-      "mmp_fx_rate": 1500.0,
-      "mmp_daily": [
-        {
-          "creative_name": "260616_VID_A-Testimonial-US01B-UA_ALL_Mixed_EN",
-          "date": "2026-06-17",
-          "channel": "facebook.business",
-          "impressions": 18087,
-          "clicks": 1402,
-          "cost": 692175,
-          "installs": 2,
-          "retained_d1": 1,
-          "revenue_d7": 0
-        }
-      ]
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     }
   ],
   "metrics": {
@@ -71115,7 +71050,7 @@
     "cache_hits": 60,
     "cache_misses": 0,
     "failures": 0,
-    "duration_sec": 10.5,
+    "duration_sec": 17.2,
     "prompt_version": "v3.3-2026.06.13-character-split-single",
     "fallback_used": false,
     "score_summary": {

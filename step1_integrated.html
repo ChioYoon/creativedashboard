@@ -3627,9 +3627,12 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         if (Array.isArray(row.kpi_daily)) {
           row.kpi_daily.forEach(k => { if (k.campaign_name) campaigns.add(k.campaign_name); });
         }
-        // MMP(Airbridge) 채널도 캠페인 필터에 추가 — "[MMP] " 접두어로 구분
+        // MMP(Airbridge) 캠페인명 추가 — "[MMP] " 접두어로 구분 (campaign_name 우선, 없으면 channel)
         if (Array.isArray(row.mmp_daily)) {
-          row.mmp_daily.forEach(m => { if (m.channel) campaigns.add('[MMP] ' + m.channel); });
+          row.mmp_daily.forEach(m => {
+            const label = m.campaign_name || m.channel;
+            if (label) campaigns.add('[MMP] ' + label);
+          });
         }
       });
       return Array.from(campaigns).sort();
@@ -3918,12 +3921,15 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             }
 
             if (mmpChannels.length > 0) {
-              // MMP(Airbridge) 채널 선택 — 해당 채널 mmp_daily 보유 소재만 표시, KPI 유지
+              // MMP(Airbridge) 캠페인 선택 — campaign_name 매칭 우선, 없으면 channel 매칭
               const beforeMmp = filteredRows.length;
               filteredRows = filteredRows.filter(row =>
-                Array.isArray(row.mmp_daily) && row.mmp_daily.some(m => mmpChannels.includes(m.channel))
+                Array.isArray(row.mmp_daily) && row.mmp_daily.some(m => {
+                  const label = m.campaign_name || m.channel;
+                  return mmpChannels.includes(label);
+                })
               );
-              filterSummary.push(`MMP 채널: ${mmpChannels.join(', ')} (${filteredRows.length}개 소재)`);
+              filterSummary.push(`MMP 캠페인: ${mmpChannels.join(', ')} (${filteredRows.length}개 소재)`);
               console.log(`🎯 MMP 채널 필터: ${mmpChannels.join(', ')} → ${filteredRows.length}개 (${beforeMmp - filteredRows.length}개 제외)`);
               window._campaignKpiSwapActive = false;
             }

@@ -472,6 +472,7 @@ class CreativeMmpDaily(BaseModel):
     creative_name: str
     date: str
     channel: str                  # 비-Google 매체명 (Meta/TikTok/ASA 등)
+    campaign_name: str = ""       # Airbridge campaign 필드 (groupBys에 "campaign" 추가 후 채워짐)
     impressions: int = 0
     clicks: int = 0
     cost: int = 0                 # 정수 화폐단위(KRW)

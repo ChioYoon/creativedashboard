@@ -61,7 +61,9 @@ def parse_actuals_rows(result: dict, metrics_map: dict, exclude_channels: set,
         if len(gb) < 2:
             continue
         creative, channel = gb[0], gb[1]
-        dt = gb[2] if len(gb) > 2 else default_date
+        # groupBys: ["ad_creative", "channel", "campaign"] → gb[2] = campaign_name
+        campaign_name = gb[2] if len(gb) > 2 else ""
+        dt = default_date  # event_date는 groupBys에 포함 안 함 — 윈도우 종료일 사용
         if not creative or channel in exclude_channels:
             continue
         vals = row.get("values") or {}
@@ -74,7 +76,7 @@ def parse_actuals_rows(result: dict, metrics_map: dict, exclude_channels: set,
             return float(cell.get("value", 0) or 0)
 
         out.append(CreativeMmpDaily(
-            creative_name=creative, date=dt, channel=channel,
+            creative_name=creative, date=dt, channel=channel, campaign_name=campaign_name,
             impressions=int(round(gv("impressions"))),
             clicks=int(round(gv("clicks"))),
             cost=int(round(gv("cost") * fx_rate)),          # 통화 변환(USD→KRW)
@@ -205,7 +207,7 @@ class AirbridgeMmpSource:
         # 4 품질지표는 소재별 합계라 일별 불필요(cohort 메트릭은 Airbridge가 이미 윈도우 집계).
         body = {
             "from": start.isoformat(), "to": end.isoformat(),
-            "groupBys": ["ad_creative", "channel"],
+            "groupBys": ["ad_creative", "channel", "campaign"],
             "metrics": self._query_metrics(), "filters": [], "sorts": [],
         }
         result = self._create_and_poll(body)
