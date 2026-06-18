@@ -3979,17 +3979,20 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           let excludedByImp = 0, excludedByConv = 0;
 
           if (thresholdPct > 0 && aggregated.length > 0) {
-            // Airbridge 전용 소재(Google Ads 데이터 없고 MMP 보유)는 임계값 계산 및 필터 대상에서 제외
-            // → 6/17 집행 시작 소재처럼 노출수=0이지만 MMP 품질점수가 있는 소재를 보존
-            const kpiCreatives = aggregated.filter(c => c.노출수 > 0 || c.전환 > 0);
-            const mmpOnlyCreatives = aggregated.filter(c => c.노출수 === 0 && c.전환 === 0 && c.meta && c.meta.mmp_source);
-            const avgImp  = kpiCreatives.length ? kpiCreatives.reduce((s, c) => s + c.노출수, 0) / kpiCreatives.length : 0;
-            const avgConv = kpiCreatives.length ? kpiCreatives.reduce((s, c) => s + c.전환,   0) / kpiCreatives.length : 0;
+            // 임계값 기준: 현재 필터(캠페인·유형·날짜) 적용 후 집계된 소재 기준 산출
+            // Airbridge 전용 소재(노출=전환=0 & mmp_source 있음) → 임계값 계산·필터 모두 제외(자동 통과)
+            // 선론칭·무데이터 소재(노출=전환=0 & mmp_source 없음) → 평균 계산 제외하되 임계값 판정 대상 유지(→ 제외됨)
+            const isMmpOnly = c => c.노출수 === 0 && c.전환 === 0 && c.meta && c.meta.mmp_source;
+            const mmpOnlyCreatives = aggregated.filter(isMmpOnly);
+            const checkCreatives   = aggregated.filter(c => !isMmpOnly(c));          // 판정 대상
+            const avgBase = checkCreatives.filter(c => c.노출수 > 0 || c.전환 > 0); // 평균 계산 기준(실집행분만)
+            const avgImp  = avgBase.length ? avgBase.reduce((s, c) => s + c.노출수, 0) / avgBase.length : 0;
+            const avgConv = avgBase.length ? avgBase.reduce((s, c) => s + c.전환,   0) / avgBase.length : 0;
             const impThresh  = avgImp  * (thresholdPct / 100);
             const convThresh = avgConv * (thresholdPct / 100);
 
             const passed = [...mmpOnlyCreatives], excluded = [];
-            kpiCreatives.forEach(c => {
+            checkCreatives.forEach(c => {
               const failImp  = impThresh  > 0 && c.노출수 < impThresh;
               const failConv = convThresh > 0 && c.전환   < convThresh;
               if (failImp || failConv) {
@@ -4004,7 +4007,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             excludedCreatives = excluded;
             aggregated = passed;
 
-            console.log(`🚫 임계값(${thresholdPct}%) 필터: 제외 ${excluded.length}개 / 유지 ${passed.length}개 (MMP 전용 ${mmpOnlyCreatives.length}개 면제)`);
+            console.log(`🚫 임계값(${thresholdPct}%) 필터: 기준=${avgBase.length}개 소재 평균 | 제외 ${excluded.length}개 / 유지 ${passed.length}개 (MMP 전용 ${mmpOnlyCreatives.length}개 면제)`);
             filterSummary.push(`저노출/저전환 ${thresholdPct}% 미만 제외: -${excluded.length}개 (MMP 전용 ${mmpOnlyCreatives.length}개 면제)`);
           }
           
