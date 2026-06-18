@@ -3627,6 +3627,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         if (Array.isArray(row.kpi_daily)) {
           row.kpi_daily.forEach(k => { if (k.campaign_name) campaigns.add(k.campaign_name); });
         }
+        // MMP(Airbridge) 채널도 캠페인 필터에 추가 — "[MMP] " 접두어로 구분
+        if (Array.isArray(row.mmp_daily)) {
+          row.mmp_daily.forEach(m => { if (m.channel) campaigns.add('[MMP] ' + m.channel); });
+        }
       });
       return Array.from(campaigns).sort();
     }
@@ -3871,13 +3875,18 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           //   rawData 원본은 비파괴 — 필터 해제 시 즉시 원복.
           if (currentCampaign) {
             const selectedCampaigns = Array.isArray(currentCampaign) ? currentCampaign : [currentCampaign];
+            // [MMP] 접두어 캠페인(Airbridge 채널)과 Google Ads 캠페인 분리
+            const mmpChannels  = selectedCampaigns.filter(c => c.startsWith('[MMP] ')).map(c => c.replace('[MMP] ', ''));
+            const gadsCampaigns = selectedCampaigns.filter(c => !c.startsWith('[MMP] '));
             const isJsonKpiMode = filteredRows.some(row => Array.isArray(row.kpi_daily) && row.kpi_daily.length);
-            if (isJsonKpiMode) {
+
+            if (gadsCampaigns.length > 0 && isJsonKpiMode) {
+              // Google Ads 캠페인 선택 — KPI 교체 모드
               const beforeCount = filteredRows.length;
               filteredRows = filteredRows.map(row => {
-                if (!Array.isArray(row.kpi_daily) || !row.kpi_daily.length) return null; // KPI 이력 없는 소재 — 캠페인 기준 보기에서 제외
-                const matched = row.kpi_daily.filter(k => selectedCampaigns.includes(k.campaign_name));
-                if (!matched.length) return null; // 선택 캠페인에서 미운영 → 제외
+                if (!Array.isArray(row.kpi_daily) || !row.kpi_daily.length) return null;
+                const matched = row.kpi_daily.filter(k => gadsCampaigns.includes(k.campaign_name));
+                if (!matched.length) return null;
                 const agg = matched.reduce((s, k) => {
                   s.전환 += (k.conversions || 0);
                   s.비용 += (k.cost || 0);
@@ -3896,18 +3905,31 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
                 };
               }).filter(Boolean);
               const excludedCount = beforeCount - filteredRows.length;
-              window._campaignKpiSwapActive = true; // 표시용 플래그 (필터 요약/배지)
+              window._campaignKpiSwapActive = true;
               filterSummary.push(
-                `캠페인: ${selectedCampaigns.join(', ')} — KPI·점수 캠페인 기준 재계산` +
+                `캠페인: ${gadsCampaigns.join(', ')} — KPI·점수 캠페인 기준 재계산` +
                 (excludedCount ? ` (미운영 ${excludedCount}개 제외)` : '')
               );
-              console.log(`🎯 캠페인 필터(JSON·KPI 교체): ${selectedCampaigns.join(', ')} → ${filteredRows.length}개 행 (미운영 ${excludedCount}개 제외)`);
-            } else {
+              console.log(`🎯 Google Ads 캠페인 필터: ${gadsCampaigns.join(', ')} → ${filteredRows.length}개`);
+            } else if (gadsCampaigns.length > 0) {
               window._campaignKpiSwapActive = false;
-              // CSV 모드 — 기존 row 제외 필터 그대로
-              filteredRows = filteredRows.filter(row => selectedCampaigns.includes(row['캠페인']));
-              filterSummary.push(`캠페인: ${selectedCampaigns.join(', ')}`);
-              console.log(`🎯 캠페인 필터: ${selectedCampaigns.join(', ')} → ${filteredRows.length}개 행`);
+              filteredRows = filteredRows.filter(row => gadsCampaigns.includes(row['캠페인']));
+              filterSummary.push(`캠페인: ${gadsCampaigns.join(', ')}`);
+            }
+
+            if (mmpChannels.length > 0) {
+              // MMP(Airbridge) 채널 선택 — 해당 채널 mmp_daily 보유 소재만 표시, KPI 유지
+              const beforeMmp = filteredRows.length;
+              filteredRows = filteredRows.filter(row =>
+                Array.isArray(row.mmp_daily) && row.mmp_daily.some(m => mmpChannels.includes(m.channel))
+              );
+              filterSummary.push(`MMP 채널: ${mmpChannels.join(', ')} (${filteredRows.length}개 소재)`);
+              console.log(`🎯 MMP 채널 필터: ${mmpChannels.join(', ')} → ${filteredRows.length}개 (${beforeMmp - filteredRows.length}개 제외)`);
+              window._campaignKpiSwapActive = false;
+            }
+
+            if (gadsCampaigns.length === 0 && mmpChannels.length === 0) {
+              window._campaignKpiSwapActive = false;
             }
           } else {
             window._campaignKpiSwapActive = false;
@@ -3957,15 +3979,19 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           let excludedByImp = 0, excludedByConv = 0;
 
           if (thresholdPct > 0 && aggregated.length > 0) {
-            const avgImp  = aggregated.reduce((s, c) => s + c.노출수, 0) / aggregated.length;
-            const avgConv = aggregated.reduce((s, c) => s + c.전환,   0) / aggregated.length;
+            // Airbridge 전용 소재(Google Ads 데이터 없고 MMP 보유)는 임계값 계산 및 필터 대상에서 제외
+            // → 6/17 집행 시작 소재처럼 노출수=0이지만 MMP 품질점수가 있는 소재를 보존
+            const kpiCreatives = aggregated.filter(c => c.노출수 > 0 || c.전환 > 0);
+            const mmpOnlyCreatives = aggregated.filter(c => c.노출수 === 0 && c.전환 === 0 && c.meta && c.meta.mmp_source);
+            const avgImp  = kpiCreatives.length ? kpiCreatives.reduce((s, c) => s + c.노출수, 0) / kpiCreatives.length : 0;
+            const avgConv = kpiCreatives.length ? kpiCreatives.reduce((s, c) => s + c.전환,   0) / kpiCreatives.length : 0;
             const impThresh  = avgImp  * (thresholdPct / 100);
             const convThresh = avgConv * (thresholdPct / 100);
 
-            const passed = [], excluded = [];
-            aggregated.forEach(c => {
-              const failImp  = c.노출수 < impThresh;
-              const failConv = c.전환   < convThresh;
+            const passed = [...mmpOnlyCreatives], excluded = [];
+            kpiCreatives.forEach(c => {
+              const failImp  = impThresh  > 0 && c.노출수 < impThresh;
+              const failConv = convThresh > 0 && c.전환   < convThresh;
               if (failImp || failConv) {
                 c._excludeReason = [];
                 if (failImp)  { c._excludeReason.push(`노출 ${c.노출수.toLocaleString()} < 기준 ${Math.round(impThresh).toLocaleString()}`); excludedByImp++; }
@@ -3978,8 +4004,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             excludedCreatives = excluded;
             aggregated = passed;
 
-            console.log(`🚫 임계값(${thresholdPct}%) 필터: 제외 ${excluded.length}개 / 유지 ${passed.length}개`);
-            filterSummary.push(`저노출/저전환 ${thresholdPct}% 미만 제외: -${excluded.length}개`);
+            console.log(`🚫 임계값(${thresholdPct}%) 필터: 제외 ${excluded.length}개 / 유지 ${passed.length}개 (MMP 전용 ${mmpOnlyCreatives.length}개 면제)`);
+            filterSummary.push(`저노출/저전환 ${thresholdPct}% 미만 제외: -${excluded.length}개 (MMP 전용 ${mmpOnlyCreatives.length}개 면제)`);
           }
           
           // 3. 점수 계산
