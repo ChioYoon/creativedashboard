@@ -2287,11 +2287,73 @@ function creativeLayerView(c) {
     s1: c.전환수점수, s2: c.CPA점수, s3: c.IPM점수, s4: c.ROAS점수,
   };
 }
+// MMP 4지표(전환=installs↑·D1 CPI↓·D1 IPM↑·D7 ROAS↑)를 rank 점수화 → 항목 순서대로 점수 배열 반환.
+// 파이프라인 compute_mmp_quality_scores 동일(균등 25%·None→0·등급컷). 2-0b·피로도 공용. items 는 내부 필드 추가됨.
+function scoreMmpItems(items) {
+  const n = items.length; if (!n) return [];
+  const r = (v, d) => { const p = Math.pow(10, d); return Math.round(v * p) / p; };
+  items.forEach(it => it._s = {});
+  const assignRankTies = (ordered, val) => { let rank = 1, prev = null; ordered.forEach((it, k) => { const v = val(it); if (!(prev !== null && Math.abs(v - prev) < 0.0001)) rank = k + 1; it._rk = rank; prev = v; }); };
+  const rankScore = (field, higher) => {
+    const val = it => { const v = it[field]; return v == null ? (higher ? -Infinity : Infinity) : v; };
+    const ordered = [...items].sort((a, b) => higher ? (val(b) - val(a)) : (val(a) - val(b)));
+    assignRankTies(ordered, val);
+    ordered.forEach(it => { it._s[field] = (it[field] == null) ? 0 : ((n - it._rk + 1) / n) * 100; });
+  };
+  rankScore('installs', true); rankScore('d1_cpi', false); rankScore('d1_ipm', true); rankScore('d7_roas', true);
+  items.forEach(it => it._total = (it._s.installs + it._s.d1_cpi + it._s.d1_ipm + it._s.d7_roas) / 4);
+  const ranked = [...items].sort((a, b) => b._total - a._total);
+  const rankMap = new Map(); ranked.forEach((it, i) => rankMap.set(it, i + 1));
+  return items.map(it => {
+    const t = it._total;
+    const grade = t >= 80 ? '최우수' : t >= 60 ? '우수' : t >= 40 ? '양호' : t >= 20 ? '보통' : '개선필요';
+    return { total: r(t, 2), grade, rank: rankMap.get(it), conv: r(it._s.installs, 1), cpi: r(it._s.d1_cpi, 1), ipm: r(it._s.d1_ipm, 1), roas: r(it._s.d7_roas, 1) };
+  });
+}
+
 // 활성 레이어 컬럼 라벨 (export 공용)
 function layerLabels() {
   return (window.currentAnalysisLayer || 'ads') === 'mmp'
     ? { tag: 'MMP 품질 기준', m2: 'D1 CPI', m3: 'D1 IPM', m4: 'D7 ROAS', score: '품질점수', s2: 'D1 CPI점수', s3: 'D1 IPM점수', s4: 'D7 ROAS점수' }
     : { tag: 'Google Ads 기준', m2: 'CPA', m3: 'IPM', m4: 'ROAS', score: '총점', s2: 'CPA점수', s3: 'IPM점수', s4: 'ROAS점수' };
+}
+
+// 피로도용 기간별 점수: 실적일(kpi_daily/mmp_daily)을 [winStart,winEnd]로 잘라 활성 레이어 점수 산출.
+//   ads = calculateCreativeScores(Google Ads), mmp = scoreMmpItems(품질). 신규 객체 반환(원본 비변경).
+function buildFatiguePeriodScores(creatives, winStart, winEnd, layer, weights) {
+  const inWin = d => d && d >= winStart && d <= winEnd;
+  if (layer === 'mmp') {
+    const items = [];
+    (creatives || []).forEach(c => {
+      const md = (c.meta && c.meta.mmp_source && Array.isArray(c.meta.mmp_daily)) ? c.meta.mmp_daily : [];
+      if (!md.length) return;
+      const a = md.reduce((s, x) => { if (!inWin(x.date)) return s; s.imp += x.impressions||0; s.cost += x.cost||0; s.inst += x.installs||0; s.ret += x.retained_d1||0; s.rev += x.revenue_d7||0; return s; }, { imp:0, cost:0, inst:0, ret:0, rev:0 });
+      if (a.imp <= 0 && a.inst <= 0) return;
+      const d1_cpi = a.ret > 0 ? a.cost / a.ret : null;
+      const d1_ipm = a.imp > 0 ? a.ret / a.imp * 1000 : 0;
+      const d7_roas = a.cost > 0 ? a.rev / a.cost : null;
+      items.push({ key: c.key, 유형: c.유형, 이미지링크: c.이미지링크, meta: c.meta, 전환: a.inst, CPA: (d1_cpi == null ? 0 : d1_cpi), installs: a.inst, d1_cpi, d1_ipm, d7_roas });
+    });
+    const scores = scoreMmpItems(items);
+    items.forEach((it, i) => { it.TotalScore = scores[i].total; it.등급 = scores[i].grade; });
+    const ranked = [...items].sort((a, b) => b.TotalScore - a.TotalScore);
+    ranked.forEach((it, i) => it.Rank = i + 1);
+    return items;
+  }
+  const objs = [];
+  (creatives || []).forEach(c => {
+    const kd = (c.meta && Array.isArray(c.meta.kpi_daily)) ? c.meta.kpi_daily : [];
+    if (!kd.length) return;
+    const a = kd.reduce((s, k) => { if (!inWin(k.date)) return s; s.imp += k.impressions||0; s.clk += k.clicks||0; s.cost += k.cost||0; s.conv += k.conversions||0; s.rev += k.conversions_value||0; return s; }, { imp:0, clk:0, cost:0, conv:0, rev:0 });
+    if (a.imp <= 0 && a.conv <= 0) return;
+    const o = { key: c.key, 유형: c.유형, 이미지링크: c.이미지링크, meta: c.meta, 전환: Math.round(a.conv), 비용: Math.round(a.cost), 노출수: a.imp, 클릭수: a.clk, 매출: Math.round(a.rev) };
+    o.CTR = o.노출수 > 0 ? o.클릭수 / o.노출수 * 100 : 0;
+    o.IPM = o.노출수 > 0 ? o.전환 / o.노출수 * 1000 : 0;
+    o.CPA = o.전환 > 0 ? o.비용 / o.전환 : 0;
+    o.ROAS = o.비용 > 0 ? o.매출 / o.비용 : 0;
+    objs.push(o);
+  });
+  return calculateCreativeScores(objs, weights.conv, weights.cpa, weights.ipm, weights.roas);
 }
 
 // 스코어카드(최고/평균/최우수/개선필요)를 활성 레이어 점수·등급 기준으로 갱신
@@ -3433,14 +3495,15 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
               window._fullDateRange = { min: minDate, max: maxDate };
               setDatePreset('all');
             }
-            const midIndex = Math.floor(dates.length / 2);
-            const midDate = formatDate(dates[midIndex]);
-            document.getElementById('baselineStart').value = minDate;
-            document.getElementById('baselineEnd').value = midDate;
-            const nextDay = new Date(dates[midIndex]);
-            nextDay.setDate(nextDay.getDate() + 1);
-            document.getElementById('comparisonStart').value = formatDate(nextDay);
-            document.getElementById('comparisonEnd').value = maxDate;
+            // 피로도 기준/비교 기본 기간 = 실적일 범위(없으면 런칭일) 절반 분할 — 일별 실적과 겹치도록
+            const _fr = (perf.min && perf.max) ? perf : { min: minDate, max: maxDate };
+            const _fs = new Date(_fr.min + 'T00:00:00'), _fe = new Date(_fr.max + 'T00:00:00');
+            const _mid = new Date((_fs.getTime() + _fe.getTime()) / 2);
+            const _next = new Date(_mid); _next.setDate(_next.getDate() + 1);
+            document.getElementById('baselineStart').value = _fr.min;
+            document.getElementById('baselineEnd').value = formatDate(_mid);
+            document.getElementById('comparisonStart').value = formatDate(_next);
+            document.getElementById('comparisonEnd').value = _fr.max;
           }
         }
 
@@ -4293,34 +4356,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
 
             const n = mmpItems.length;
             if (n > 0) {
-              // 동점 처리 rank (파이프라인 _assign_rank_with_ties 동일: 0.0001 이내 동값=동순위)
-              const assignRankTies = (ordered, val) => {
-                let rank = 1, prev = null;
-                ordered.forEach((it, idx) => {
-                  const v = val(it);
-                  if (!(prev !== null && Math.abs(v - prev) < 0.0001)) rank = idx + 1;
-                  it._rk = rank; prev = v;
-                });
-              };
-              const rankScore = (field, higher) => {
-                const val = it => { const v = it[field]; return v == null ? (higher ? -Infinity : Infinity) : v; };
-                const ordered = [...mmpItems].sort((a, b) => higher ? (val(b) - val(a)) : (val(a) - val(b)));
-                assignRankTies(ordered, val);
-                ordered.forEach(it => { it['_s_' + field] = (it[field] == null) ? 0 : ((n - it._rk + 1) / n) * 100; });
-              };
-              rankScore('installs', true); rankScore('d1_cpi', false);
-              rankScore('d1_ipm', true); rankScore('d7_roas', true);
-              mmpItems.forEach(it => it._total = (it._s_installs + it._s_d1_cpi + it._s_d1_ipm + it._s_d7_roas) / 4);
-              const ranked = [...mmpItems].sort((a, b) => b._total - a._total);
-              ranked.forEach((it, i) => {
-                const t = it._total;
-                const grade = t >= 80 ? '최우수' : t >= 60 ? '우수' : t >= 40 ? '양호' : t >= 20 ? '보통' : '개선필요';
-                it.c.meta.mmp_quality_score = {
-                  total: r(t, 2), grade, rank: i + 1,
-                  conv: r(it._s_installs, 1), cpi: r(it._s_d1_cpi, 1),
-                  ipm: r(it._s_d1_ipm, 1), roas: r(it._s_d7_roas, 1),
-                };
-              });
+              const scores = scoreMmpItems(mmpItems);          // 공용 스코어러 (파이프라인 동일)
+              mmpItems.forEach((it, i) => { it.c.meta.mmp_quality_score = scores[i]; });
               console.log(`🎯 MMP 품질점수 ${n}개 소재 기간 재계산 (${win ? win.start + '~' + win.end : '전체'})`);
             }
           }
@@ -6090,28 +6127,21 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
         return;
       }
       
-      // 2. 기준/비교 기간 데이터 분리 (v5.1: 유사 소재명 병합 매핑 적용)
+      // 2. 활성 레이어 기준 실적일 윈도우링 — 런칭일이 아닌 일별 실적(kpi_daily/mmp_daily)을 기간으로 잘라
+      //    기간별 점수 산출. 전체 일별 배열을 한 번 집계(meta) 후 buildFatiguePeriodScores 가 기간별로 슬라이스.
       filteredRows = applySimilarMergeMap(filteredRows, window._creativeMergeMap, fatigueGroupBy);
-      const baselineRows = filterByDateRange(filteredRows, dateColumn, baseStart, baseEnd);
-      const comparisonRows = filterByDateRange(filteredRows, dateColumn, compStart, compEnd);
-      
-      console.log(`📅 기준 기간: ${baselineRows.length}개 행`);
-      console.log(`📅 비교 기간: ${comparisonRows.length}개 행`);
-      
-      // 3. 집계
-      const baselineAgg = aggregateCreatives(baselineRows, fatigueGroupBy);
-      const comparisonAgg = aggregateCreatives(comparisonRows, fatigueGroupBy);
-      
-      // v1.7: Total Score 계산 및 순위 부여
+      const allAgg = aggregateCreatives(filteredRows, fatigueGroupBy);
+      const fatigueLayer = window.currentAnalysisLayer || 'ads';
+
       const convWeight = parseInt(document.getElementById('conversionWeight').value) / 100;
       const cpaWeight = parseInt(document.getElementById('cpaWeight').value) / 100;
       const ipmWeight = parseInt(document.getElementById('ipmWeight').value) / 100;
       const roasWeight = parseInt(document.getElementById('roasWeight').value) / 100;
-      
-      // 기준 기간 Total Score 계산
-      const baselineScored = calculateCreativeScores(baselineAgg, convWeight, cpaWeight, ipmWeight, roasWeight);
-      // 비교 기간 Total Score 계산
-      const comparisonScored = calculateCreativeScores(comparisonAgg, convWeight, cpaWeight, ipmWeight, roasWeight);
+      const fatigueWeights = { conv: convWeight, cpa: cpaWeight, ipm: ipmWeight, roas: roasWeight };
+
+      const baselineScored = buildFatiguePeriodScores(allAgg, baseStart, baseEnd, fatigueLayer, fatigueWeights);
+      const comparisonScored = buildFatiguePeriodScores(allAgg, compStart, compEnd, fatigueLayer, fatigueWeights);
+      console.log(`📅 피로도(${fatigueLayer === 'mmp' ? 'MMP 품질' : 'Google Ads'} · 실적일): 기준 ${baselineScored.length}개 / 비교 ${comparisonScored.length}개`);
       
       // 4. 비교 분석 (v1.7: Total Score 기준 순위, CPA 기준 피로도)
       const results = compareFatigue(baselineScored, comparisonScored);
