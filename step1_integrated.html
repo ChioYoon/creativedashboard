@@ -2272,6 +2272,7 @@ function creativeLayerView(c) {
       isMmp: true, hasData: !!(q && q.total != null),
       전환: m.mmp_installs ?? null, 비용: m.mmp_cost ?? null, 노출수: m.mmp_impressions ?? null,
       클릭수: m.mmp_clicks ?? null, base: m.mmp_retained_d1 ?? 0, 매출: m.mmp_revenue ?? 0,
+      CTR: (m.mmp_impressions > 0) ? (m.mmp_clicks || 0) / m.mmp_impressions * 100 : 0,
       CPA: m.mmp_d1_cpi ?? null, IPM: m.mmp_d1_ipm ?? null, ROAS: m.mmp_d7_roas ?? null,
       score: q?.total ?? null, grade: q?.grade ?? null,
       s1: q?.conv ?? null, s2: q?.cpi ?? null, s3: q?.ipm ?? null, s4: q?.roas ?? null,
@@ -2281,7 +2282,7 @@ function creativeLayerView(c) {
   return {
     isMmp: false, hasData: has,
     전환: c.전환, 비용: c.비용, 노출수: c.노출수, 클릭수: c.클릭수, base: c.전환, 매출: c.매출,
-    CPA: c.CPA, IPM: c.IPM, ROAS: c.ROAS,
+    CTR: c.CTR, CPA: c.CPA, IPM: c.IPM, ROAS: c.ROAS,
     score: has ? c.TotalScore : null, grade: has ? c.등급 : null,
     s1: c.전환수점수, s2: c.CPA점수, s3: c.IPM점수, s4: c.ROAS점수,
   };
@@ -2347,6 +2348,10 @@ function switchAnalysisLayer(layer) {
   }
 
   updateStatCards(layer);
+  // 위험신호도 활성 레이어 지표 기준으로 재계산 (renderResultTableRows 가 window._riskSignals 읽음 → 정렬 전 갱신)
+  if (window.currentCreatives && typeof detectRiskSignals === 'function') {
+    window._riskSignals = detectRiskSignals(window.currentCreatives);
+  }
   // 전체 성과 요약의 유형별 평균도 활성 레이어 기준으로 재렌더 (전환·CPA·IPM·ROAS·점수 전환)
   if (window.currentCreatives && typeof renderTypeSummaryTable === 'function') {
     renderTypeSummaryTable(window.currentCreatives);
@@ -4778,54 +4783,43 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     // - CTR 상위 30% 인데 IPM 하위 30% (LP/타겟 미스매치)
     function detectRiskSignals(creatives) {
       if (creatives.length < 3) return {};
-      const valid = creatives.filter(c => c.전환 > 0);
-      const avgCPA = valid.length > 0 ? valid.reduce((s,c)=>s+c.CPA,0)/valid.length : 0;
+      // 활성 레이어 지표 기준 (MMP 레이어면 D1 CPI·D1 IPM·설치). 해당 매체 데이터 있는 소재만 대상.
+      const isMmp = (window.currentAnalysisLayer || 'ads') === 'mmp';
+      const lab = isMmp ? { cpa: 'D1 CPI', conv: '설치', ipm: 'D1 IPM' } : { cpa: 'CPA', conv: '전환', ipm: 'IPM' };
+      const vs = creatives.map(c => ({ c, v: creativeLayerView(c) })).filter(x => x.v.hasData);
+      if (vs.length < 3) return {};
 
-      // CTR Rank, IPM Rank (높을수록 좋음, 동률 무시 단순 계산)
-      const ctrSorted = [...creatives].sort((a,b)=>b.CTR-a.CTR);
-      const ipmSorted = [...creatives].sort((a,b)=>b.IPM-a.IPM);
-      const n = creatives.length;
-      const ctrTopThresh = ctrSorted[Math.floor(n*0.3)]?.CTR ?? 0;
-      const ipmBotThresh = ipmSorted[Math.floor(n*0.7)]?.IPM ?? 0;
+      const valid = vs.filter(x => (x.v.전환 || 0) > 0 && x.v.CPA != null);
+      const avgCPA = valid.length > 0 ? valid.reduce((s,x)=>s+x.v.CPA,0)/valid.length : 0;
+      const n = vs.length;
+      const ctrSorted = [...vs].sort((a,b)=>(b.v.CTR||0)-(a.v.CTR||0));
+      const ipmSorted = [...vs].sort((a,b)=>(b.v.IPM||0)-(a.v.IPM||0));
+      const ctrTopThresh = ctrSorted[Math.floor(n*0.3)]?.v.CTR ?? 0;
+      const ipmBotThresh = ipmSorted[Math.floor(n*0.7)]?.v.IPM ?? 0;
 
       const signals = {};
-      creatives.forEach(c => {
+      vs.forEach(({ c, v }) => {
         const sigs = [];
-        // 1. CPA 이상치
-        if (avgCPA > 0 && c.CPA > 0 && c.CPA >= avgCPA * 3) {
-          sigs.push({
-            icon: '🚨',
-            color: '#dc2626',
-            label: 'CPA 이상치',
-            detail: `CPA ₩${Math.round(c.CPA).toLocaleString()} — 평균 ₩${Math.round(avgCPA).toLocaleString()}의 ${(c.CPA/avgCPA).toFixed(1)}배`
-          });
+        const 노출 = v.노출수 || 0, 전환 = v.전환 || 0, CTR = v.CTR || 0, IPM = v.IPM || 0;
+        // 1. CPA(D1 CPI) 이상치
+        if (avgCPA > 0 && v.CPA > 0 && v.CPA >= avgCPA * 3) {
+          sigs.push({ icon: '🚨', color: '#dc2626', label: `${lab.cpa} 이상치`,
+            detail: `${lab.cpa} ₩${Math.round(v.CPA).toLocaleString()} — 평균 ₩${Math.round(avgCPA).toLocaleString()}의 ${(v.CPA/avgCPA).toFixed(1)}배` });
         }
-        // 2. 노출 많은데 전환 없음
-        if (c.노출수 >= 1000 && c.전환 === 0) {
-          sigs.push({
-            icon: '⚠️',
-            color: '#d97706',
-            label: '학습 부진',
-            detail: `노출 ${c.노출수.toLocaleString()}회 대비 전환 0건 — 타겟 또는 LP 점검 필요`
-          });
+        // 2. 노출 많은데 전환(설치) 없음
+        if (노출 >= 1000 && 전환 === 0) {
+          sigs.push({ icon: '⚠️', color: '#d97706', label: '학습 부진',
+            detail: `노출 ${노출.toLocaleString()}회 대비 ${lab.conv} 0건 — 타겟 또는 LP 점검 필요` });
         }
         // 3. CTR 상위 / IPM 하위 (LP 미스매치)
-        if (c.CTR >= ctrTopThresh && c.노출수 >= 500 && c.IPM <= ipmBotThresh && c.IPM > 0) {
-          sigs.push({
-            icon: '[공정]',
-            color: '#7c3aed',
-            label: 'LP 미스매치 의심',
-            detail: `클릭은 잘 나오지만(CTR ${c.CTR.toFixed(2)}%) 전환 효율 저조(IPM ${c.IPM.toFixed(2)}) — 랜딩 페이지 점검 권장`
-          });
+        if (CTR >= ctrTopThresh && 노출 >= 500 && IPM <= ipmBotThresh && IPM > 0) {
+          sigs.push({ icon: '[공정]', color: '#7c3aed', label: 'LP 미스매치 의심',
+            detail: `클릭은 잘 나오지만(CTR ${CTR.toFixed(2)}%) ${lab.ipm} 저조(${IPM.toFixed(2)}) — 랜딩 페이지 점검 권장` });
         }
         // 4. 노출 < 500 (학습 단계)
-        if (c.노출수 > 0 && c.노출수 < 500) {
-          sigs.push({
-            icon: '🌱',
-            color: '#0ea5e9',
-            label: '학습 단계',
-            detail: `노출 ${c.노출수.toLocaleString()}회 — 표본 부족, 판단 보류 권장`
-          });
+        if (노출 > 0 && 노출 < 500) {
+          sigs.push({ icon: '🌱', color: '#0ea5e9', label: '학습 단계',
+            detail: `노출 ${노출.toLocaleString()}회 — 표본 부족, 판단 보류 권장` });
         }
         if (sigs.length > 0) signals[c.key] = sigs;
       });
@@ -6862,7 +6856,14 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
         // ─── 소재 수 결정 ────────────────────────────────────────────
         // 무료: 경량화가 핵심 → 최대 3개
         // 유료: 원문 데이터 포함 → 최대 5개
-        const sorted   = [...data].sort((a, b) => (b.TotalScore || 0) - (a.TotalScore || 0));
+        // 활성 레이어 점수 기준 상·하위 선별 (MMP 레이어면 품질점수). 해당 매체 데이터 없는 소재 제외.
+        const _scoreOf = c => creativeLayerView(c).score;
+        const sorted   = [...data].filter(c => _scoreOf(c) != null).sort((a, b) => _scoreOf(b) - _scoreOf(a));
+        if (sorted.length === 0) {
+          const layerName = (window.currentAnalysisLayer === 'mmp') ? 'MMP 품질' : 'Google Ads';
+          box.innerHTML = buildGeminiBox('', 'error', `현재 '${layerName}' 레이어에 점수 산출 가능한 소재가 없습니다. 레이어를 전환하거나 기간을 조정하세요.`);
+          return;
+        }
         const maxItems = isPaid ? 5 : 3;
         const topN     = Math.min(maxItems, Math.max(1, Math.ceil(sorted.length / 3)));
         const highPerf = sorted.slice(0, topN);
