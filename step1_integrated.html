@@ -2078,7 +2078,8 @@ function renderTagCreativeList(creatives) {
   const rows = matching.map((c, i) => {
     const name = c.key || c['소재명'] || '';
     const type = c.유형 || '';
-    const adsScore = c.TotalScore?.toFixed(1) ?? '—';
+    // Google Ads 윈도우 활동 없으면 종합점수 변별 불가 → '—' (다른 표·교차성과와 동일 기준)
+    const adsScore = (c._ads && c._ads.imp > 0) ? c.TotalScore.toFixed(1) : '—';
     const mmpScore = c.meta?.mmp_quality_score?.total?.toFixed(1) ?? '—';
     const allTags = [
       ...(c.meta?.strengths || []).map(t => ({ t, cls: 'cross-badge-ads' })),
@@ -6528,8 +6529,10 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
           ${insightBlocks}
           <div class="kpi-metric-grid">
             <div class="kpi-metric-cell kpi-metric-cell-score">
-              <div class="kpi-metric-label">Total Score</div>
-              <div class="kpi-metric-value"><strong style="font-size: 17px; color: #E84855;">${(creative.TotalScore ?? 0).toFixed(1)}</strong> <span class="kpi-metric-sub">${creative.등급 || '미평가'}</span></div>
+              <div class="kpi-metric-label">종합점수 (Google Ads)</div>
+              <div class="kpi-metric-value">${(creative._ads && creative._ads.imp > 0)
+                ? `<strong style="font-size: 17px; color: #E84855;">${creative.TotalScore.toFixed(1)}</strong> <span class="kpi-metric-sub">${creative.등급 || '미평가'}</span>`
+                : `<strong style="font-size: 17px; color: #9ca3af;">—</strong> <span class="kpi-metric-sub">Google Ads 데이터 없음</span>`}</div>
             </div>
             <div class="kpi-metric-cell">
               <div class="kpi-metric-label">전환</div>
