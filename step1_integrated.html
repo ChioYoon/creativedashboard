@@ -2264,17 +2264,19 @@ function setLayerHeaders(layer) {
 // 스코어카드(최고/평균/최우수/개선필요)를 활성 레이어 점수·등급 기준으로 갱신
 function updateStatCards(layer) {
   const cs = window.currentCreatives || [];
-  const scoreOf = c => layer === 'mmp'
-    ? (c.meta && c.meta.mmp_quality_score ? c.meta.mmp_quality_score.total : null)
-    : c.TotalScore;
-  const gradeOf = c => layer === 'mmp'
-    ? (c.meta && c.meta.mmp_quality_score ? c.meta.mmp_quality_score.grade : null)
-    : c.등급;
+  // 그 레이어에 실데이터 있는 소재만 점수·등급 집계 (Google Ads 미집행 33.3 등 변별불가 값 제외)
+  const hasData = c => layer === 'mmp'
+    ? !!(c.meta && c.meta.mmp_quality_score && c.meta.mmp_quality_score.total != null)
+    : !!(c._ads && c._ads.imp > 0);
+  const scoreOf = c => !hasData(c) ? null
+    : (layer === 'mmp' ? c.meta.mmp_quality_score.total : c.TotalScore);
+  const gradeOf = c => !hasData(c) ? null
+    : (layer === 'mmp' ? c.meta.mmp_quality_score.grade : c.등급);
   const scored = cs.map(scoreOf).filter(v => v != null);
   const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
   set('statTotal', cs.length);
-  set('statMax', scored.length ? Math.max(...scored).toFixed(1) : '0');
-  set('statAvg', scored.length ? (scored.reduce((s, v) => s + v, 0) / scored.length).toFixed(1) : '0');
+  set('statMax', scored.length ? Math.max(...scored).toFixed(1) : '—');
+  set('statAvg', scored.length ? (scored.reduce((s, v) => s + v, 0) / scored.length).toFixed(1) : '—');
   set('statExcellent', cs.filter(c => gradeOf(c) === '최우수').length);
   set('statPoor', cs.filter(c => gradeOf(c) === '개선필요').length);
 }
@@ -2322,7 +2324,9 @@ function applyResultSort(key) {
   if (!cs || !cs.length) return;
   window._headerSort = null;  // 드롭다운 정렬 사용 → 헤더 정렬 표시 해제
   if (key === 'score') {
-    cs.sort((a, b) => (b.TotalScore || 0) - (a.TotalScore || 0));
+    // Google Ads 활동 없는 소재(종합점수 변별 불가)는 최하단으로
+    const sv = c => (c._ads && c._ads.imp > 0) ? (c.TotalScore || 0) : -1;
+    cs.sort((a, b) => sv(b) - sv(a));
   } else if (key === 'mmpscore') {
     // Stage 7-C: MMP 품질점수 내림차순. 점수 없는 소재는 최하단.
     const mv = (c) => {
@@ -4847,12 +4851,14 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           scoreCell = has ? q.total.toFixed(1) : dash;
           gradeCell = has ? `<span class="badge grade-${q.grade}">${q.grade}</span>` : dash;
         } else {
+          // Google Ads 윈도우 활동 없으면(노출 0) 종합점수는 변별 불가 → 총점·등급 '—'
+          const hasAds = c._ads && c._ads.imp > 0;
           m1 = c.전환.toLocaleString();
           m2 = '₩' + Math.round(c.CPA).toLocaleString();
           m3 = c.IPM.toFixed(2);
           m4 = (c.매출 > 0 || c.비용 > 0) ? Math.round(c.ROAS * 100) + '%' : dash;
-          scoreCell = c.TotalScore.toFixed(1);
-          gradeCell = `<span class="badge grade-${c.등급}">${c.등급}</span>`;
+          scoreCell = hasAds ? c.TotalScore.toFixed(1) : dash;
+          gradeCell = hasAds ? `<span class="badge grade-${c.등급}">${c.등급}</span>` : dash;
         }
 
         tr.innerHTML = `
@@ -5668,10 +5674,12 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
 
     /* ── 교차 성과: Ads 상위30% × MMP 상위30% ── */
     function computeCrossPerformance(creatives) {
+      const hasMmpAny = (creatives || []).some(c => c.meta?.mmp_quality_score?.total != null);
+      // 교차 = 같은 소재가 Google Ads·MMP 양쪽에 실데이터 보유해야 의미. 33.3(미집행) 같은 변별불가 값 제외.
       const withBoth = (creatives || []).filter(c =>
-        c.TotalScore != null && c.meta?.mmp_quality_score?.total != null
+        (c._ads && c._ads.imp > 0) && c.meta?.mmp_quality_score?.total != null
       );
-      if (withBoth.length < 3) return null;
+      if (withBoth.length < 3) return { insufficient: true, hasMmp: hasMmpAny };
 
       const n = withBoth.length;
       const top30 = Math.ceil(n * 0.3);
@@ -5704,6 +5712,18 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
       const container = document.getElementById('crossPerformanceContainer');
       if (!container) return;
       if (!crossData) { container.innerHTML = ''; return; }
+      // 교차 분석 불가(한쪽 매체 데이터 없음) — MMP 데이터라도 있으면 안내, 둘 다 없으면 숨김
+      if (crossData.insufficient) {
+        container.innerHTML = crossData.hasMmp ? `
+          <div class="summary-block">
+            <div class="summary-block-title">Google Ads × MMP 교차 성과</div>
+            <div style="font-size:13px;color:var(--text-secondary);padding:12px 2px;line-height:1.6;">
+              선택 기간에 <strong>Google Ads·MMP 양쪽 데이터를 모두 가진 소재</strong>가 부족해 교차 분석을 표시할 수 없습니다.<br>
+              (Google Ads 미집행 기간에는 분석 레이어를 <strong>MMP 품질 기준</strong>으로 보세요.)
+            </div>
+          </div>` : '';
+        return;
+      }
 
       const makeItem = c => {
         const name = c.key || c['소재명'] || '';
