@@ -3973,8 +3973,9 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           // 필터 조건 수집 (v1.7: 요약 표시용)
           let filterSummary = [];
 
-          // 2-0 블록(MMP 윈도우 합산)에 넘길 활성 필터 상태 — 매 실행 초기화
+          // 2-0 블록(일별 윈도우 합산)에 넘길 활성 필터 상태 — 매 실행 초기화
           let activeMmpCampaigns = null;   // 선택된 MMP 캠페인 라벨 배열 (없으면 전체)
+          let activeGadsCampaigns = null;  // 선택된 Google Ads 캠페인 배열 (없으면 전체)
           let activeDateWindow = null;     // {start,end} 실적일 윈도우 (없으면 전체)
 
           // 캠페인 필터 (다중 선택 지원)
@@ -4017,6 +4018,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
               }).filter(Boolean);
               const excludedCount = beforeCount - filteredRows.length;
               window._campaignKpiSwapActive = true;
+              // 선택 Google Ads 캠페인을 2-0 블록에 전달 → 윈도우 합산도 해당 캠페인만 (KPI 교체는 2-0서 일자창 적용해 재산출)
+              activeGadsCampaigns = gadsCampaigns;
               filterSummary.push(
                 `캠페인: ${gadsCampaigns.join(', ')} — KPI·점수 캠페인 기준 재계산` +
                 (excludedCount ? ` (미운영 ${excludedCount}개 제외)` : '')
@@ -4024,6 +4027,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
               console.log(`🎯 Google Ads 캠페인 필터: ${gadsCampaigns.join(', ')} → ${filteredRows.length}개`);
             } else if (gadsCampaigns.length > 0) {
               window._campaignKpiSwapActive = false;
+              activeGadsCampaigns = gadsCampaigns;
               filteredRows = filteredRows.filter(row => gadsCampaigns.includes(row['캠페인']));
               filterSummary.push(`캠페인: ${gadsCampaigns.join(', ')}`);
             }
@@ -4097,38 +4101,52 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           let aggregated = aggregateCreatives(filteredRows, currentGroupBy);
           console.log(`📊 집계 완료: ${aggregated.length}개 소재 (병합 매핑 ${Object.keys(window._creativeMergeMap||{}).length}건 적용)`);
 
-          // 2-0. Airbridge 전용 소재: 선택 기간·캠페인 내 mmp_daily 를 상단 KPI 로 집계
-          // Google Ads 미운영(kpi_daily 없음) + Airbridge 운영(mmp_source 있음) 소재만 대상
-          // installs → 전환 으로 매핑(UA 캠페인 기준 설치=전환)
-          // activeDateWindow / activeMmpCampaigns 가 있으면 그 범위 행만 합산 (필터-데이터 정합).
-          // ISO(YYYY-MM-DD) 문자열 비교가 곧 날짜 비교.
+          // 2-0. 선택 기간(activeDateWindow)·캠페인 내에서 각 소재 KPI 를 일별 배열로 재계산.
+          //   Google Ads(kpi_daily) + MMP(mmp_daily, installs→전환) 윈도우 합산.
+          //   매체별 집행 시기가 다르면(예: Google 과거 / MMP 최근) 기간 선택이 곧 매체 선택이 됨.
+          //   캠페인 그룹은 상호배타(전체=둘 다 합산 / Google Ads만 / MMP만). ISO 문자열 비교=날짜 비교.
+          //   _winGadsImp/_winMmpImp 는 코호트 판정용 윈도우 내 매체별 노출량.
           {
-            const win = activeDateWindow;          // {start,end} 또는 null(전체 기간)
-            const camps = activeMmpCampaigns;      // 선택 캠페인 라벨 배열 또는 null(전체)
-            const inWin  = (m) => !win   || (m.date && m.date >= win.start && m.date <= win.end);
-            const inCamp = (m) => !camps || camps.includes(m.campaign_name || m.channel);
+            const win = activeDateWindow;            // {start,end} 또는 null(전체 기간)
+            const gcamps = activeGadsCampaigns;      // 선택 Google Ads 캠페인 (없으면 전체)
+            const mcamps = activeMmpCampaigns;       // 선택 MMP 캠페인 (없으면 전체)
+            const gadsMode = !!gcamps, mmpMode = !!mcamps;   // 상호배타: 한쪽 선택 시 다른 매체 제외
+            const useGads = !mmpMode, useMmp = !gadsMode;
+            const inWin   = (d) => !win || (d && d >= win.start && d <= win.end);
             aggregated.forEach(c => {
-              const hasGads = c.meta && Array.isArray(c.meta.kpi_daily) && c.meta.kpi_daily.length > 0;
-              const hasMmp  = c.meta && c.meta.mmp_source && Array.isArray(c.meta.mmp_daily) && c.meta.mmp_daily.length > 0;
-              if (!hasGads && hasMmp) {
-                const mmpSum = c.meta.mmp_daily.reduce((s, m) => {
-                  if (!inWin(m) || !inCamp(m)) return s;
-                  s.impressions += (m.impressions || 0);
-                  s.clicks      += (m.clicks      || 0);
-                  s.cost        += (m.cost        || 0);
-                  s.installs    += (m.installs    || 0);
-                  return s;
-                }, { impressions: 0, clicks: 0, cost: 0, installs: 0 });
-                c.노출수 = mmpSum.impressions;
-                c.클릭수 = mmpSum.clicks;
-                c.비용   = mmpSum.cost;
-                c.전환   = mmpSum.installs;
-                c.CTR    = c.노출수 > 0 ? (c.클릭수 / c.노출수) * 100 : 0;
-                c.IPM    = c.노출수 > 0 ? (c.전환  / c.노출수) * 1000 : 0;
-                c.전환율 = c.노출수 > 0 ? (c.전환  / c.노출수) * 100 : 0;
-                c.CPA    = c.전환   > 0 ? c.비용   / c.전환  : 0;
-                c.매출   = c.매출 || 0;  // MMP 매출은 별도(mmp_revenue) — 상단 ROAS 는 0 유지
+              const kd = (c.meta && Array.isArray(c.meta.kpi_daily)) ? c.meta.kpi_daily : [];
+              const md = (c.meta && c.meta.mmp_source && Array.isArray(c.meta.mmp_daily)) ? c.meta.mmp_daily : [];
+              if (!kd.length && !md.length) {
+                // 일별 배열 없는 소재(탑레벨 KPI 그대로) — 코호트는 데이터 유무로
+                c._winGadsImp = c.노출수 || 0; c._winMmpImp = 0;
+                return;
               }
+              // Google Ads 윈도우 합산 (mmp 캠페인 선택 시 제외)
+              const g = useGads ? kd.reduce((a, k) => {
+                if (!inWin(k.date)) return a;
+                if (gcamps && !gcamps.includes(k.campaign_name)) return a;
+                a.imp += k.impressions||0; a.clk += k.clicks||0; a.cost += k.cost||0;
+                a.conv += k.conversions||0; a.rev += k.conversions_value||0; return a;
+              }, {imp:0,clk:0,cost:0,conv:0,rev:0}) : {imp:0,clk:0,cost:0,conv:0,rev:0};
+              // MMP 윈도우 합산 (installs→전환, gads 캠페인 선택 시 제외)
+              const m = useMmp ? md.reduce((a, x) => {
+                if (!inWin(x.date)) return a;
+                if (mcamps && !mcamps.includes(x.campaign_name || x.channel)) return a;
+                a.imp += x.impressions||0; a.clk += x.clicks||0; a.cost += x.cost||0;
+                a.conv += x.installs||0; return a;
+              }, {imp:0,clk:0,cost:0,conv:0}) : {imp:0,clk:0,cost:0,conv:0};
+
+              c.노출수 = g.imp + m.imp;
+              c.클릭수 = g.clk + m.clk;
+              c.비용   = Math.round(g.cost + m.cost);
+              c.전환   = Math.round(g.conv + m.conv);
+              c.매출   = Math.round(g.rev);   // MMP 매출은 별도(mmp_revenue) — 상단 ROAS 는 Google Ads 매출 기준
+              c.CTR    = c.노출수 > 0 ? (c.클릭수 / c.노출수) * 100 : 0;
+              c.IPM    = c.노출수 > 0 ? (c.전환  / c.노출수) * 1000 : 0;
+              c.전환율 = c.노출수 > 0 ? (c.전환  / c.노출수) * 100 : 0;
+              c.CPA    = c.전환   > 0 ? c.비용   / c.전환  : 0;
+              c.ROAS   = c.비용   > 0 ? c.매출   / c.비용  : 0;
+              c._winGadsImp = g.imp; c._winMmpImp = m.imp;
             });
           }
 
@@ -4140,16 +4158,14 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           if (thresholdPct > 0 && aggregated.length > 0) {
             // 코호트별 자체 평균 임계값: Google Ads 와 MMP 는 매체 규모가 달라 한 평균으로 묶으면
             // 부당 판정 → 각 코호트(소속 소재끼리)의 자체 평균 대비 저노출·저전환을 제외.
-            // 평균·판정은 현재 필터(캠페인·유형·실적일 윈도우) 적용 후 집계값(c.노출수/c.전환) 기준 —
-            // 즉 '적용된 필터에 따른 데이터'로 계산됨.
-            const hasGadsData = c => c.meta && Array.isArray(c.meta.kpi_daily) && c.meta.kpi_daily.length > 0;
-            const hasMmpData  = c => c.meta && c.meta.mmp_source &&
-              Array.isArray(c.meta.mmp_daily) && c.meta.mmp_daily.length > 0;
-            // 소스 자체가 없고 KPI 도 0 = 미집행/선론칭 → 분석 불가, 항상 제외
-            const isNoData = c => !hasGadsData(c) && !hasMmpData(c) &&
-              (c.노출수 || 0) === 0 && (c.전환 || 0) === 0;
-            const cohortOf = c =>
-              (hasMmpData(c) && !hasGadsData(c)) ? 'mmp' : (isNoData(c) ? 'none' : 'ads');
+            // 코호트 판정은 '선택 기간 내 실제 매체 활동'(_winGadsImp/_winMmpImp) 기준 —
+            // 과거 Google Ads + 최근 MMP 처럼 시기가 다르면 기간에 따라 코호트가 바뀜.
+            // 윈도우 내 활동이 전혀 없으면(둘 다 0) 미집행 → 항상 제외.
+            const cohortOf = c => {
+              const g = c._winGadsImp || 0, m = c._winMmpImp || 0;
+              if (g === 0 && m === 0 && (c.노출수 || 0) === 0 && (c.전환 || 0) === 0) return 'none';
+              return (m > g) ? 'mmp' : 'ads';   // 윈도우 내 노출 우세 매체로 분류
+            };
 
             const groups = { ads: [], mmp: [], none: [] };
             aggregated.forEach(c => groups[cohortOf(c)].push(c));
