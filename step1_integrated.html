@@ -2262,6 +2262,37 @@ function setLayerHeaders(layer) {
   }
 }
 
+// 활성 레이어 기준 소재 1건의 표시값 묶음 (표·export·브리프 공용). 데이터 소스 완전 분리.
+//   ads = 순수 Google Ads / mmp = 순수 MMP. base = CPA·IPM 분모/분자(ads:전환, mmp:D1 잔존수).
+function creativeLayerView(c) {
+  const isMmp = (window.currentAnalysisLayer || 'ads') === 'mmp';
+  if (isMmp) {
+    const m = c.meta || {}; const q = m.mmp_quality_score;
+    return {
+      isMmp: true, hasData: !!(q && q.total != null),
+      전환: m.mmp_installs ?? null, 비용: m.mmp_cost ?? null, 노출수: m.mmp_impressions ?? null,
+      클릭수: m.mmp_clicks ?? null, base: m.mmp_retained_d1 ?? 0, 매출: m.mmp_revenue ?? 0,
+      CPA: m.mmp_d1_cpi ?? null, IPM: m.mmp_d1_ipm ?? null, ROAS: m.mmp_d7_roas ?? null,
+      score: q?.total ?? null, grade: q?.grade ?? null,
+      s1: q?.conv ?? null, s2: q?.cpi ?? null, s3: q?.ipm ?? null, s4: q?.roas ?? null,
+    };
+  }
+  const has = !!(c._ads && c._ads.imp > 0);
+  return {
+    isMmp: false, hasData: has,
+    전환: c.전환, 비용: c.비용, 노출수: c.노출수, 클릭수: c.클릭수, base: c.전환, 매출: c.매출,
+    CPA: c.CPA, IPM: c.IPM, ROAS: c.ROAS,
+    score: has ? c.TotalScore : null, grade: has ? c.등급 : null,
+    s1: c.전환수점수, s2: c.CPA점수, s3: c.IPM점수, s4: c.ROAS점수,
+  };
+}
+// 활성 레이어 컬럼 라벨 (export 공용)
+function layerLabels() {
+  return (window.currentAnalysisLayer || 'ads') === 'mmp'
+    ? { tag: 'MMP 품질 기준', m2: 'D1 CPI', m3: 'D1 IPM', m4: 'D7 ROAS', score: '품질점수', s2: 'D1 CPI점수', s3: 'D1 IPM점수', s4: 'D7 ROAS점수' }
+    : { tag: 'Google Ads 기준', m2: 'CPA', m3: 'IPM', m4: 'ROAS', score: '총점', s2: 'CPA점수', s3: 'IPM점수', s4: 'ROAS점수' };
+}
+
 // 스코어카드(최고/평균/최우수/개선필요)를 활성 레이어 점수·등급 기준으로 갱신
 function updateStatCards(layer) {
   const cs = window.currentCreatives || [];
@@ -4228,12 +4259,12 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
               if (!md.length) return;
               const a = md.reduce((s, x) => {
                 if (!inWinM(x) || !inCampM(x)) return s;
-                s.impressions += (x.impressions || 0); s.cost += (x.cost || 0);
+                s.impressions += (x.impressions || 0); s.clicks += (x.clicks || 0); s.cost += (x.cost || 0);
                 s.installs += (x.installs || 0); s.retained_d1 += (x.retained_d1 || 0);
                 s.revenue_d7 += (x.revenue_d7 || 0);
                 if (x.channel) s.channels.add(x.channel);
                 return s;
-              }, { impressions: 0, cost: 0, installs: 0, retained_d1: 0, revenue_d7: 0, channels: new Set() });
+              }, { impressions: 0, clicks: 0, cost: 0, installs: 0, retained_d1: 0, revenue_d7: 0, channels: new Set() });
 
               if (a.impressions <= 0 && a.installs <= 0) {   // 윈도우 내 MMP 활동 없음 → 품질점수 없음
                 c.meta.mmp_quality_score = null;
@@ -4249,7 +4280,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
               c.meta.mmp_d7_roas = d7_roas == null ? null : r(d7_roas, 4);
               c.meta.mmp_d1_retention = r(d1_ret, 2);
               c.meta.mmp_installs = a.installs; c.meta.mmp_retained_d1 = a.retained_d1;
-              c.meta.mmp_impressions = a.impressions;
+              c.meta.mmp_impressions = a.impressions; c.meta.mmp_clicks = a.clicks;
               c.meta.mmp_cost = a.cost; c.meta.mmp_revenue = a.revenue_d7;
               c.meta.mmp_channels = Array.from(a.channels).sort();
               mmpItems.push({ c, installs: a.installs, d1_ipm, d1_cpi, d1_ret, d7_roas });
@@ -5106,39 +5137,48 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         'VID': 'background:#ede9fe;color:#6d28d9;'
       };
 
-      /* ── 통계 ── */
+      /* ── 활성 레이어(Google Ads / MMP) 기준 추출 ── */
+      const LBL = layerLabels();
+      const isMmpLayer = (window.currentAnalysisLayer || 'ads') === 'mmp';
+      const views = creatives.map(c => ({ c, v: creativeLayerView(c) }));
+      const showPctile = hasPctile && !isMmpLayer;   // 성과 백분위는 Google Ads 전용
+
+      /* ── 통계 (해당 매체 실데이터 보유 소재만) ── */
       const totalN    = creatives.length;
-      const maxScore  = creatives[0]?.TotalScore.toFixed(1) || 0;
-      const avgScore  = totalN > 0 ? (creatives.reduce((s,c)=>s+c.TotalScore,0)/totalN).toFixed(1) : 0;
-      const excellent = creatives.filter(c=>c.등급==='최우수').length;
-      const poor      = creatives.filter(c=>c.등급==='개선필요').length;
+      const scoredV   = views.filter(x => x.v.hasData && x.v.score != null);
+      const maxScore  = scoredV.length ? Math.max(...scoredV.map(x => x.v.score)).toFixed(1) : '—';
+      const avgScore  = scoredV.length ? (scoredV.reduce((s,x)=>s+x.v.score,0)/scoredV.length).toFixed(1) : '—';
+      const excellent = scoredV.filter(x => x.v.grade === '최우수').length;
+      const poor      = scoredV.filter(x => x.v.grade === '개선필요').length;
 
       /* ── 필터 조건 요약 추출 ── */
       const fsEl = document.querySelector('#filterSummarySlot .filter-summary');
       const filterHtml = fsEl ? fsEl.outerHTML : '';
 
-      /* ── 유형별 요약 ── */
+      /* ── 유형별 요약 (활성 레이어 블렌디드 · 해당 매체 실데이터 보유 소재만) ── */
       const typeMap = {};
-      creatives.forEach(c => {
+      views.forEach(({ c, v }) => {
         const t = c.유형 || '기타';
-        if (!typeMap[t]) typeMap[t] = { count:0, 전환합:0, 비용합:0, 노출합:0, 매출합:0, 클릭합:0, 점수합:0 };
-        const m = typeMap[t];
-        m.count++; m.전환합+=c.전환||0; m.비용합+=c.비용||0;
-        m.노출합+=c.노출수||0; m.매출합+=c.매출||0; m.클릭합+=c.클릭수||0; m.점수합+=c.TotalScore||0;
+        if (!typeMap[t]) typeMap[t] = { count:0, dataN:0, 전환합:0, 비용합:0, 노출합:0, 매출합:0, 클릭합:0, base합:0, 점수합:0 };
+        const m = typeMap[t]; m.count++;
+        if (!v.hasData) return;                         // 해당 매체 데이터 없으면 평균서 제외
+        m.dataN++;
+        m.전환합+=v.전환||0; m.비용합+=v.비용||0; m.노출합+=v.노출수||0;
+        m.매출합+=v.매출||0; m.클릭합+=v.클릭수||0; m.base합+=v.base||0; m.점수합+=v.score||0;
       });
       const types = Object.keys(typeMap).sort();
-      const totM  = { count:0, 전환합:0, 비용합:0, 노출합:0, 매출합:0, 클릭합:0, 점수합:0 };
+      const totM  = { count:0, dataN:0, 전환합:0, 비용합:0, 노출합:0, 매출합:0, 클릭합:0, base합:0, 점수합:0 };
       types.forEach(t => {
         const m=typeMap[t];
-        totM.count+=m.count; totM.전환합+=m.전환합; totM.비용합+=m.비용합;
-        totM.노출합+=m.노출합; totM.매출합+=m.매출합; totM.클릭합+=m.클릭합; totM.점수합+=m.점수합;
+        totM.count+=m.count; totM.dataN+=m.dataN; totM.전환합+=m.전환합; totM.비용합+=m.비용합;
+        totM.노출합+=m.노출합; totM.매출합+=m.매출합; totM.클릭합+=m.클릭합; totM.base합+=m.base합; totM.점수합+=m.점수합;
       });
-      const calcM = m => ({
-        wCPA:  m.전환합>0 ? m.비용합/m.전환합 : null,
+      const calcM = m => ({                              // CPA/IPM 분모·분자 = base (ads:전환, mmp:D1 잔존수)
+        wCPA:  m.base합>0 ? m.비용합/m.base합 : null,
         wROAS: m.비용합>0 ? m.매출합/m.비용합 : null,
-        IPM:   m.노출합>0 ? (m.전환합/m.노출합)*1000 : null,
+        IPM:   m.노출합>0 ? (m.base합/m.노출합)*1000 : null,
         CTR:   m.노출합>0 ? (m.클릭합/m.노출합)*100  : null,
-        avg:   m.count>0  ? m.점수합/m.count : 0
+        avg:   m.dataN>0  ? m.점수합/m.dataN : null
       });
       const mkTypeBadge = t => {
         const s = typeStyle[t] || 'background:#f3f4f6;color:#374151;';
@@ -5154,7 +5194,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td style="text-align:right;padding:7px 8px;">${fi(met.IPM)}</td>
           <td style="text-align:right;padding:7px 8px;">${fct(met.CTR)}</td>
           <td style="text-align:right;padding:7px 8px;">${fr(met.wROAS)}</td>
-          <td style="text-align:right;padding:7px 8px;color:#E84855;font-weight:700;">${met.avg.toFixed(1)}</td>
+          <td style="text-align:right;padding:7px 8px;color:#E84855;font-weight:700;">${met.avg==null?'—':met.avg.toFixed(1)}</td>
         </tr>`;
       }).join('') + (()=>{const tm=calcM(totM);return `<tr style="background:#f0f4ff;font-weight:700;border-top:2px solid #d1d5db;">
           <td style="text-align:center;padding:7px 8px;">합계/전체평균</td>
@@ -5164,25 +5204,25 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td style="text-align:right;padding:7px 8px;">${fi(tm.IPM)}</td>
           <td style="text-align:right;padding:7px 8px;">${fct(tm.CTR)}</td>
           <td style="text-align:right;padding:7px 8px;">${fr(tm.wROAS)}</td>
-          <td style="text-align:right;padding:7px 8px;color:#E84855;font-weight:700;">${tm.avg.toFixed(1)}</td>
+          <td style="text-align:right;padding:7px 8px;color:#E84855;font-weight:700;">${tm.avg==null?'—':tm.avg.toFixed(1)}</td>
         </tr>`;})() : '';
 
       const typeSummaryBlock = types.length >= 2 ? `
         <div style="margin:20px 0 14px;border:1.5px solid #e5e7eb;border-radius:14px;overflow:hidden;">
           <div style="padding:11px 18px;background:linear-gradient(135deg,#1e3a5f,#2563eb);color:#fff;">
-            <div style="font-weight:700;font-size:14px;">📊 소재 유형별 성과 요약</div>
-            <div style="font-size:11px;opacity:.8;margin-top:2px;">CPA·ROAS는 가중평균 기준</div>
+            <div style="font-weight:700;font-size:14px;">📊 소재 유형별 성과 요약 · ${LBL.tag}</div>
+            <div style="font-size:11px;opacity:.8;margin-top:2px;">${LBL.m2}·ROAS는 가중평균 · 해당 매체 데이터 보유 소재만</div>
           </div>
           <table style="width:100%;border-collapse:collapse;font-size:12.5px;">
             <thead><tr style="background:#f8fafc;border-bottom:2px solid #e5e7eb;">
               <th style="padding:8px;text-align:center;color:#6b7280;">유형</th>
               <th style="padding:8px;text-align:right;color:#6b7280;">소재수</th>
               <th style="padding:8px;text-align:right;color:#6b7280;">전환수</th>
-              <th style="padding:8px;text-align:right;color:#6b7280;">CPA(가중)</th>
-              <th style="padding:8px;text-align:right;color:#6b7280;">IPM</th>
+              <th style="padding:8px;text-align:right;color:#6b7280;">${LBL.m2}(가중)</th>
+              <th style="padding:8px;text-align:right;color:#6b7280;">${LBL.m3}</th>
               <th style="padding:8px;text-align:right;color:#6b7280;">CTR</th>
-              <th style="padding:8px;text-align:right;color:#6b7280;">ROAS(가중)</th>
-              <th style="padding:8px;text-align:right;color:#6b7280;">평균점수</th>
+              <th style="padding:8px;text-align:right;color:#6b7280;">${LBL.m4}(가중)</th>
+              <th style="padding:8px;text-align:right;color:#6b7280;">평균 ${LBL.score}</th>
             </tr></thead>
             <tbody>${typeRows}</tbody>
           </table>
@@ -5219,10 +5259,15 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           previewCell = `<div style="width:80px;height:54px;background:#f3f4f6;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#d1d5db;">📷</div>`;
         }
 
-        const gs  = gradeStyle[c.등급] || 'background:#f3f4f6;color:#374151;';
+        const v   = creativeLayerView(c);
+        const gs  = gradeStyle[v.grade] || 'background:#f3f4f6;color:#374151;';
         const ts  = typeStyle[c.유형] || 'background:#f3f4f6;color:#374151;';
         const bg  = i % 2 === 1 ? 'background:#fafafa;' : '';
-        const ctr = c.노출수 > 0 ? ((c.클릭수||0) / c.노출수 * 100).toFixed(2) + '%' : '—';
+        const num = (x, d=0) => (x == null) ? '—' : Number(x).toLocaleString(undefined,{maximumFractionDigits:d});
+        const won = (x) => (x == null) ? '—' : '₩' + Math.round(x).toLocaleString();
+        const sc  = (x) => (x == null) ? '<span style="color:#9ca3af;">—</span>' : Number(x).toFixed(1);
+        const ctr = (v.노출수 > 0 && v.클릭수 != null) ? (v.클릭수 / v.노출수 * 100).toFixed(2) + '%' : '—';
+        const roas = (v.ROAS == null) ? '—' : Math.round(v.ROAS * 100) + '%';
 
         return `<tr style="border-bottom:1px solid #f0f0f0;${bg}">
           <td style="padding:8px;text-align:center;vertical-align:middle;">${previewCell}</td>
@@ -5232,23 +5277,23 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td style="padding:8px;text-align:center;vertical-align:middle;">
             <span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;${ts}">${c.유형}</span>
           </td>
-          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12.5px;">${c.전환.toLocaleString()}</td>
-          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12.5px;">₩${Math.round(c.비용||0).toLocaleString()}</td>
-          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12.5px;">${(c.노출수||0).toLocaleString()}</td>
-          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12.5px;">${(c.클릭수||0).toLocaleString()}</td>
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12.5px;">${num(v.전환)}</td>
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12.5px;">${won(v.비용)}</td>
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12.5px;">${num(v.노출수)}</td>
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12.5px;">${num(v.클릭수)}</td>
           <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12.5px;">${ctr}</td>
-          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12.5px;">₩${Math.round(c.CPA).toLocaleString()}</td>
-          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12.5px;">${c.IPM.toFixed(2)}</td>
-          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12.5px;font-weight:600;">${c.매출>0||c.비용>0 ? Math.round(c.ROAS*100)+'%' : '—'}</td>
-          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;">${c.전환수점수.toFixed(1)}</td>
-          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;">${c.CPA점수.toFixed(1)}</td>
-          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;">${c.IPM점수.toFixed(1)}</td>
-          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;${c.ROAS점수 == null ? 'color:#9ca3af;' : ''}">${c.ROAS점수 == null ? '—' : c.ROAS점수.toFixed(1)}</td>
-          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:14px;font-weight:800;color:#E84855;">${c.TotalScore.toFixed(1)}</td>
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12.5px;">${won(v.CPA)}</td>
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12.5px;">${v.IPM==null?'—':Number(v.IPM).toFixed(2)}</td>
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12.5px;font-weight:600;">${roas}</td>
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;">${sc(v.s1)}</td>
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;">${sc(v.s2)}</td>
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;">${sc(v.s3)}</td>
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;">${sc(v.s4)}</td>
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:14px;font-weight:800;color:#E84855;">${v.score==null?'<span style="color:#9ca3af;">—</span>':v.score.toFixed(1)}</td>
           <td style="padding:8px;text-align:center;vertical-align:middle;">
-            <span style="display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;${gs}">${c.등급}</span>
+            ${v.grade ? `<span style="display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;${gs}">${v.grade}</span>` : '<span style="color:#9ca3af;">—</span>'}
           </td>
-          ${hasPctile ? `<td style="padding:8px;vertical-align:middle;">${pctileCell(c.meta?.kpi_percentiles)}</td>` : ''}
+          ${showPctile ? `<td style="padding:8px;vertical-align:middle;">${pctileCell(c.meta?.kpi_percentiles)}</td>` : ''}
         </tr>`;
       }).join('');
 
@@ -5286,8 +5331,8 @@ img { display:block; }
 </head>
 <body>
 <div class="wrap">
-  <h1>📋 소재 성과 분석 결과</h1>
-  <div class="meta">추출일시: ${exportedAt} &nbsp;|&nbsp; Com2uS R팀 소재 분석 대시보드</div>
+  <h1>📋 소재 성과 분석 결과 <span style="font-size:14px;font-weight:600;color:#E84855;">· ${LBL.tag}</span></h1>
+  <div class="meta">추출일시: ${exportedAt} &nbsp;|&nbsp; ${LBL.tag} (해당 매체 실데이터 보유 소재만) &nbsp;|&nbsp; Com2uS R팀 소재 분석 대시보드</div>
 
   <!-- 스코어 카드 5개 -->
   <div class="stats-grid">
@@ -5318,16 +5363,16 @@ img { display:block; }
           <th style="text-align:right;">노출수</th>
           <th style="text-align:right;">클릭수</th>
           <th style="text-align:right;">CTR</th>
-          <th style="text-align:right;">CPA</th>
-          <th style="text-align:right;">IPM</th>
-          <th style="text-align:right;">ROAS</th>
+          <th style="text-align:right;">${LBL.m2}</th>
+          <th style="text-align:right;">${LBL.m3}</th>
+          <th style="text-align:right;">${LBL.m4}</th>
           <th style="text-align:right;">전환점수</th>
-          <th style="text-align:right;">CPA점수</th>
-          <th style="text-align:right;">IPM점수</th>
-          <th style="text-align:right;">ROAS점수</th>
-          <th style="text-align:right;">총점</th>
+          <th style="text-align:right;">${LBL.s2}</th>
+          <th style="text-align:right;">${LBL.s3}</th>
+          <th style="text-align:right;">${LBL.s4}</th>
+          <th style="text-align:right;">${LBL.score}</th>
           <th style="text-align:center;">등급</th>
-          ${hasPctile ? '<th style="text-align:left;min-width:120px;">성과 백분위</th>' : ''}
+          ${showPctile ? '<th style="text-align:left;min-width:120px;">성과 백분위</th>' : ''}
         </tr></thead>
         <tbody>${detailRows}</tbody>
       </table>
@@ -5368,12 +5413,16 @@ img { display:block; }
       const titleName = document.getElementById('titleSelector')?.selectedOptions?.[0]?.textContent?.trim() || '';
 
       const meta = (c, f) => Array.isArray(c.meta?.[f]) ? c.meta[f] : [];
-      const sorted = [...cs].sort((a, b) => (b.TotalScore || 0) - (a.TotalScore || 0));
-      const n = sorted.length;
-      const half = Math.max(1, Math.round(n / 2));
+      // 활성 레이어(Google Ads / MMP) 점수 기준으로 우수·저성과 구분
+      const LBL = layerLabels();
+      const scoreOf = c => creativeLayerView(c).score;
+      const scoredCs = cs.filter(c => scoreOf(c) != null);   // 해당 매체 실데이터 있는 소재만 순위
+      const sorted = [...scoredCs].sort((a, b) => scoreOf(b) - scoreOf(a));
+      const n = cs.length;
+      const half = Math.max(1, Math.round(sorted.length / 2));
       const winners = sorted.slice(0, half);
       const losers = sorted.slice(-half);
-      const avgScore = (cs.reduce((s, c) => s + (c.TotalScore || 0), 0) / n).toFixed(1);
+      const avgScore = scoredCs.length ? (scoredCs.reduce((s, c) => s + scoreOf(c), 0) / scoredCs.length).toFixed(1) : '—';
 
       const freq = (arr, f) => { const m = new Map(); arr.forEach(c => meta(c, f).forEach(s => m.set(s, (m.get(s) || 0) + 1))); return m; };
       const wStr = freq(winners, 'strengths'), lStr = freq(losers, 'strengths');
@@ -5392,7 +5441,7 @@ img { display:block; }
       for (const c of winners) { const a = meta(c, 'improvement_actions'); if (a[0]) actionSamples.push(a[0]); if (actionSamples.length >= 4) break; }
       // 벤치마크 우수 소재 Top 3
       const bench = winners.slice(0, 3).map(c => ({
-        name: c.key, score: (c.TotalScore || 0).toFixed(1), grade: c.등급 || '', type: c.유형 || '',
+        name: c.key, score: (scoreOf(c) ?? 0).toFixed(1), grade: creativeLayerView(c).grade || '', type: c.유형 || '',
         strength: meta(c, 'strengths')[0] || '', evidence: meta(c, 'strength_evidence')[0] || '',
         oneLine: c.meta?.one_line_insight || ''
       }));
@@ -5463,7 +5512,7 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
 @media(max-width:680px){.two{grid-template-columns:1fr;}}
 @media print{body{background:#fff;}}
 </style></head><body><div class="wrap">
-  <div class="head"><h1>소재 제작 브리프</h1><div class="sub">${esc(titleName)} · 분석 ${n}개 소재 · ${exportedAt}</div></div>
+  <div class="head"><h1>소재 제작 브리프</h1><div class="sub">${esc(titleName)} · ${LBL.tag} · 분석 ${n}개 소재 · ${exportedAt}</div></div>
   <div class="kpis">
     <div class="kpi"><div class="v">${n}</div><div class="l">분석 소재</div></div>
     <div class="kpi"><div class="v">${avgScore}</div><div class="l">평균 점수</div></div>
