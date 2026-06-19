@@ -49,8 +49,9 @@ def parse_actuals_rows(result: dict, metrics_map: dict, exclude_channels: set,
                        default_date: str = "", fx_rate: float = 1.0) -> list[CreativeMmpDaily]:
     """Actuals SUCCESS 결과 → CreativeMmpDaily 리스트 (HTTP 무의존, 단위 테스트용).
 
-    row = {"groupBys": [ad_creative, channel(, event_date)], "values": {metric_key: {"value": x}}}
-    event_date 미포함 grouping(소재×채널 집계)이면 date 는 default_date(윈도우 종료일) 사용.
+    row = {"groupBys": [ad_creative, channel, campaign, event_date], "values": {metric_key: {"value": x}}}
+    groupBys 순서: gb[0]=ad_creative, gb[1]=channel, gb[2]=campaign, gb[3]=event_date(일자별).
+    event_date 미포함(레거시 소재×채널×캠페인 집계)이면 date 는 default_date(윈도우 종료일) 사용.
     ad_creative 가 빈 문자열(오가닉)이거나 channel 이 제외 목록이면 스킵.
     fx_rate: 비용·매출에 곱할 환율(USD→KRW). 1.0 이면 변환 안 함. ROAS 는 비율이라 불변.
     """
@@ -61,9 +62,9 @@ def parse_actuals_rows(result: dict, metrics_map: dict, exclude_channels: set,
         if len(gb) < 2:
             continue
         creative, channel = gb[0], gb[1]
-        # groupBys: ["ad_creative", "channel", "campaign"] → gb[2] = campaign_name
+        # groupBys: ["ad_creative", "channel", "campaign", "event_date"]
         campaign_name = gb[2] if len(gb) > 2 else ""
-        dt = default_date  # event_date는 groupBys에 포함 안 함 — 윈도우 종료일 사용
+        dt = gb[3] if len(gb) > 3 else default_date  # event_date 있으면 일자별, 없으면 윈도우 종료일
         if not creative or channel in exclude_channels:
             continue
         vals = row.get("values") or {}
@@ -145,26 +146,37 @@ class AirbridgeMmpSource:
                 seen.add(m); out.append(m)
         return out
 
-    def _create_and_poll(self, body: dict) -> dict:
-        """POST actuals/query → task.taskId → GET 폴링 → SUCCESS payload."""
-        url = self._actuals_url()
+    def _create_task(self, body: dict) -> str:
+        """POST actuals/query → task.taskId 반환."""
         try:
-            resp = self.session.post(url, json=body, headers=self._headers(), timeout=self.request_timeout)
+            resp = self.session.post(self._actuals_url(), json=body, headers=self._headers(), timeout=self.request_timeout)
             resp.raise_for_status()
         except Exception as e:
             self._raise_classified(e, resp_obj=locals().get("resp"))
         task_id = (resp.json().get("task") or {}).get("taskId")
         if not task_id:
             raise RuntimeError(f"Airbridge 응답에 task.taskId 없음: {resp.json()}")
+        return task_id
 
+    def _get_page(self, task_id: str, skip: int = 0, size: int = 100) -> dict:
+        """GET actuals/query/{task_id}?skip&size → payload (폴링·페이지네이션 공용).
+
+        skip/size 로 100행씩 페이징. 미지정 시 Airbridge 기본(skip=0, size=100).
+        """
+        url = f"{self._actuals_url()}/{task_id}"
+        params = {"skip": skip, "size": size, "viewFormat": "false"}
+        try:
+            g = self.session.get(url, headers=self._headers(), params=params, timeout=self.request_timeout)
+            g.raise_for_status()
+        except Exception as e:
+            self._raise_classified(e, resp_obj=locals().get("g"))
+        return g.json()
+
+    def _poll_until_success(self, task_id: str) -> dict:
+        """GET 첫 페이지(skip=0)를 SUCCESS 까지 폴링 → 페이지 0 payload."""
         waited = 0.0
         while waited <= self.poll_timeout_sec:
-            try:
-                g = self.session.get(f"{url}/{task_id}", headers=self._headers(), timeout=self.request_timeout)
-                g.raise_for_status()
-            except Exception as e:
-                self._raise_classified(e, resp_obj=locals().get("g"))
-            payload = g.json()
+            payload = self._get_page(task_id, skip=0)
             status = (payload.get("task") or {}).get("status", "")
             if status == "SUCCESS":
                 return payload
@@ -173,6 +185,10 @@ class AirbridgeMmpSource:
             time.sleep(self.poll_interval_sec)
             waited += self.poll_interval_sec
         raise RuntimeError(f"Airbridge 폴링 타임아웃 ({self.poll_timeout_sec}s)")
+
+    def _create_and_poll(self, body: dict) -> dict:
+        """POST → 폴링 → 첫 페이지 SUCCESS payload (단일 페이지용 — auth_check 등)."""
+        return self._poll_until_success(self._create_task(body))
 
     @staticmethod
     def _raise_classified(e: Exception, resp_obj=None):
@@ -199,27 +215,43 @@ class AirbridgeMmpSource:
 
     def fetch_mmp_window(self, start: date, end: date,
                          exclude_channels: Optional[set] = None) -> list[CreativeMmpDaily]:
-        """기간 내 ad_creative×channel×date Actuals 단일 쿼리 → CreativeMmpDaily 리스트.
+        """기간 내 ad_creative×channel×campaign×event_date Actuals → CreativeMmpDaily 리스트.
 
         non-Google + 유료 소재만(오가닉/제외채널/빈 ad_creative 스킵). 최대 400일.
+        event_date 를 groupBys 에 포함 → 일자별 분해. skip/size=100 페이지네이션으로
+        100행 응답 cap 우회(보고서당 최대 10,000행 — 초과 시 last_fetch_truncated=True).
         """
         exclude = set(exclude_channels) if exclude_channels else set(DEFAULT_EXCLUDE_CHANNELS)
-        # event_date 미포함 = 소재×채널×캠페인 집계. ⚠️ 응답 100행 cap:
-        # 소재×채널×캠페인 조합이 100 초과 시 이후 소재 누락(page/offset 미지원).
-        # 현재 pepp-us(소재30×채널1×캠페인5≈30행) 안전, 소재·캠페인 증가 시 재검토 필요.
         body = {
             "from": start.isoformat(), "to": end.isoformat(),
-            "groupBys": ["ad_creative", "channel", "campaign"],
+            "groupBys": ["ad_creative", "channel", "campaign", "event_date"],
             "metrics": self._query_metrics(), "filters": [], "sorts": [],
         }
-        result = self._create_and_poll(body)
-        pg = result.get("pagination") or {}
-        self.last_fetch_truncated = bool(pg.get("hasNext"))
+        task_id = self._create_task(body)
+        page = self._poll_until_success(task_id)  # 페이지 0 (skip=0)
+
+        out: list[CreativeMmpDaily] = []
+        PAGE_SIZE = 100
+        MAX_PAGES = 100  # 10,000행 / 100 안전상한 (Airbridge 보고서 상한과 일치)
+        skip = 0
+        pages = 0
+        end_iso = end.isoformat()
+        while True:
+            out += parse_actuals_rows(page, self.metrics_map, exclude,
+                                      default_date=end_iso, fx_rate=self.usd_to_krw)
+            pages += 1
+            pg = page.get("pagination") or {}
+            if not pg.get("hasNext") or pages >= MAX_PAGES:
+                break
+            skip += PAGE_SIZE
+            page = self._get_page(task_id, skip=skip, size=PAGE_SIZE)
+
+        pg = page.get("pagination") or {}
+        self.last_fetch_truncated = bool(pg.get("hasNext"))  # MAX_PAGES(=1만행) 도달 시에만
         if self.last_fetch_truncated:
-            print(f"   [airbridge] ⚠️ 결과 {pg.get('totalCount')}행 중 100행만 수신(응답 cap) — "
-                  f"소재×채널×캠페인 100조합 초과. 일부 소재 누락.", file=sys.stderr)
-        return parse_actuals_rows(result, self.metrics_map, exclude,
-                                  default_date=end.isoformat(), fx_rate=self.usd_to_krw)
+            print(f"   [airbridge] ⚠️ 결과 {pg.get('totalCount')}행 중 {pages * PAGE_SIZE}행만 수신 "
+                  f"(10,000행 상한 도달) — Raw Data Export 필요.", file=sys.stderr)
+        return out
 
     def fetch_dataspec(self, kind: str) -> list[str]:
         """GET dataspec actual-report/{kind} → key 목록 (kind: 'metrics' | 'fields'). 7-A 검증용."""
