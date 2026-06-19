@@ -2253,12 +2253,20 @@ function switchAnalysisLayer(layer) {
   if (btnMmp) { btnMmp.classList.toggle('active-mmp', layer === 'mmp'); btnMmp.classList.remove('active-ads'); }
   if (table)  { table.classList.toggle('layer-ads-primary', layer === 'ads'); table.classList.toggle('layer-mmp-primary', layer === 'mmp'); }
 
+  // 기간 라벨 (현재 선택 날짜) — 두 점수의 기준 기간을 캡션에 명시
+  const _s = document.getElementById('startDate'), _e = document.getElementById('endDate');
+  const periodTxt = (_s && _e && _s.value && _e.value) ? `${_s.value}~${_e.value}` : '전체 기간';
+
   if (layer === 'mmp') {
-    if (hint) hint.textContent = 'MMP 품질점수 기준으로 정렬 중 (非Google 매체)';
+    // MMP 품질 = 설치 후 질(잔존·매출). Google Ads 종합점수와 4지표·분모가 다름.
+    if (hint) hint.innerHTML = `<strong>MMP 품질점수</strong> 기준 정렬 — 설치 후 질 · ` +
+      `D1 IPM · D1 CPI · D7 ROAS · D1 잔존율 <span style="opacity:.7;">(분모=D1 잔존수)</span> · ${periodTxt} · 코호트 상대순위`;
     if (sel)  sel.value = 'mmpscore';
     applyResultSort('mmpscore');
   } else {
-    if (hint) hint.textContent = 'Google Ads 종합점수 기준으로 정렬 중';
+    // "Google Ads 기준"은 표준 종합점수(획득 효율). 데이터에 Google Ads 없으면 로드된 KPI(예: MMP)로 산출됨.
+    if (hint) hint.innerHTML = `<strong>Google Ads 종합점수</strong> 기준 정렬 — 획득 효율 · ` +
+      `전환수 · CPA · IPM · ROAS <span style="opacity:.7;">(분모=설치)</span> · ${periodTxt} · 현재 집합 상대순위`;
     if (sel)  sel.value = 'score';
     applyResultSort('score');
   }
@@ -4148,6 +4156,83 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
               c.ROAS   = c.비용   > 0 ? c.매출   / c.비용  : 0;
               c._winGadsImp = g.imp; c._winMmpImp = m.imp;
             });
+          }
+
+          // 2-0b. MMP 품질점수를 선택 기간(activeDateWindow)·캠페인으로 재계산.
+          //   파이프라인 mmp_metrics.compute_mmp_quality + compute_mmp_quality_scores 와 동일 방식:
+          //   4지표(D1 IPM↑·D1 CPI↓·D7 ROAS↑·D1 잔존율↑) 각 코호트 rank 점수(균등 25%, None→0), 평균=total.
+          //   윈도우 내 MMP 활동(노출·설치) 없으면 품질점수 null(표·정렬서 '—'·최하단). 전체기간이면 파이프라인값 재현.
+          {
+            const win = activeDateWindow;
+            const mcamps = activeMmpCampaigns;
+            const inWinM = (x) => !win || (x.date && x.date >= win.start && x.date <= win.end);
+            const inCampM = (x) => !mcamps || mcamps.includes(x.campaign_name || x.channel);
+            const r = (v, d) => { const p = Math.pow(10, d); return Math.round(v * p) / p; };
+
+            const mmpItems = [];
+            aggregated.forEach(c => {
+              const md = (c.meta && c.meta.mmp_source && Array.isArray(c.meta.mmp_daily)) ? c.meta.mmp_daily : [];
+              if (!md.length) return;
+              const a = md.reduce((s, x) => {
+                if (!inWinM(x) || !inCampM(x)) return s;
+                s.impressions += (x.impressions || 0); s.cost += (x.cost || 0);
+                s.installs += (x.installs || 0); s.retained_d1 += (x.retained_d1 || 0);
+                s.revenue_d7 += (x.revenue_d7 || 0);
+                if (x.channel) s.channels.add(x.channel);
+                return s;
+              }, { impressions: 0, cost: 0, installs: 0, retained_d1: 0, revenue_d7: 0, channels: new Set() });
+
+              if (a.impressions <= 0 && a.installs <= 0) {   // 윈도우 내 MMP 활동 없음 → 품질점수 없음
+                c.meta.mmp_quality_score = null;
+                return;
+              }
+              const d1_ipm = a.impressions > 0 ? (a.retained_d1 / a.impressions) * 1000 : 0;
+              const d1_cpi = a.retained_d1 > 0 ? (a.cost / a.retained_d1) : null;   // 잔존0 → None
+              const d1_ret = a.installs > 0 ? (a.retained_d1 / a.installs) * 100 : 0;
+              const d7_roas = a.cost > 0 ? (a.revenue_d7 / a.cost) : null;          // 비용0 → None
+              // 표시용 메타 갱신(모달·표·배지가 읽는 필드) — 원본 rawData 아닌 per-run meta 객체만 교체
+              c.meta.mmp_d1_ipm = r(d1_ipm, 3);
+              c.meta.mmp_d1_cpi = d1_cpi == null ? null : r(d1_cpi, 1);
+              c.meta.mmp_d7_roas = d7_roas == null ? null : r(d7_roas, 4);
+              c.meta.mmp_d1_retention = r(d1_ret, 2);
+              c.meta.mmp_installs = a.installs; c.meta.mmp_retained_d1 = a.retained_d1;
+              c.meta.mmp_cost = a.cost; c.meta.mmp_revenue = a.revenue_d7;
+              c.meta.mmp_channels = Array.from(a.channels).sort();
+              mmpItems.push({ c, d1_ipm, d1_cpi, d1_ret, d7_roas });
+            });
+
+            const n = mmpItems.length;
+            if (n > 0) {
+              // 동점 처리 rank (파이프라인 _assign_rank_with_ties 동일: 0.0001 이내 동값=동순위)
+              const assignRankTies = (ordered, val) => {
+                let rank = 1, prev = null;
+                ordered.forEach((it, idx) => {
+                  const v = val(it);
+                  if (!(prev !== null && Math.abs(v - prev) < 0.0001)) rank = idx + 1;
+                  it._rk = rank; prev = v;
+                });
+              };
+              const rankScore = (field, higher) => {
+                const val = it => { const v = it[field]; return v == null ? (higher ? -Infinity : Infinity) : v; };
+                const ordered = [...mmpItems].sort((a, b) => higher ? (val(b) - val(a)) : (val(a) - val(b)));
+                assignRankTies(ordered, val);
+                ordered.forEach(it => { it['_s_' + field] = (it[field] == null) ? 0 : ((n - it._rk + 1) / n) * 100; });
+              };
+              rankScore('d1_ipm', true); rankScore('d1_cpi', false);
+              rankScore('d7_roas', true); rankScore('d1_ret', true);
+              mmpItems.forEach(it => it._total = (it._s_d1_ipm + it._s_d1_cpi + it._s_d7_roas + it._s_d1_ret) / 4);
+              const ranked = [...mmpItems].sort((a, b) => b._total - a._total);
+              ranked.forEach((it, i) => {
+                const t = it._total;
+                const grade = t >= 80 ? '최우수' : t >= 60 ? '우수' : t >= 40 ? '양호' : t >= 20 ? '보통' : '개선필요';
+                it.c.meta.mmp_quality_score = {
+                  total: r(t, 2), grade, rank: i + 1,
+                  ipm: r(it._s_d1_ipm, 1), cpi: r(it._s_d1_cpi, 1),
+                  roas: r(it._s_d7_roas, 1), retention: r(it._s_d1_ret, 1),
+                };
+              });
+              console.log(`🎯 MMP 품질점수 ${n}개 소재 기간 재계산 (${win ? win.start + '~' + win.end : '전체'})`);
+            }
           }
 
           // 2-1. 저노출/저전환 임계값 필터 적용
