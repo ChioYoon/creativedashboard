@@ -2332,7 +2332,9 @@ function buildFatiguePeriodScores(creatives, winStart, winEnd, layer, weights) {
       const d1_cpi = a.ret > 0 ? a.cost / a.ret : null;
       const d1_ipm = a.imp > 0 ? a.ret / a.imp * 1000 : 0;
       const d7_roas = a.cost > 0 ? a.rev / a.cost : null;
-      items.push({ key: c.key, 유형: c.유형, 이미지링크: c.이미지링크, meta: c.meta, 전환: a.inst, CPA: (d1_cpi == null ? 0 : d1_cpi), installs: a.inst, d1_cpi, d1_ipm, d7_roas });
+      // 피로도 CPA(=D1 CPI): D1 잔존 0 이면 비용/설치(install CPI)로 폴백 — 0(=최저=신선) 오분류 방지
+      const fatigueCpa = (d1_cpi != null) ? d1_cpi : (a.inst > 0 ? a.cost / a.inst : 0);
+      items.push({ key: c.key, 유형: c.유형, 이미지링크: c.이미지링크, meta: c.meta, 전환: a.inst, CPA: fatigueCpa, installs: a.inst, d1_cpi, d1_ipm, d7_roas });
     });
     const scores = scoreMmpItems(items);
     items.forEach((it, i) => { it.TotalScore = scores[i].total; it.등급 = scores[i].grade; });
@@ -2459,8 +2461,17 @@ function sortByColumn(field, type) {
     ? (st.dir === 'desc' ? 'asc' : 'desc')
     : (type === 'str' ? 'asc' : 'desc');
   window._headerSort = { field, dir };
+  // 레이어 인식: MMP 레이어에선 지표·총점 헤더 정렬도 MMP 값(creativeLayerView) 기준 (표시값과 일치)
+  const LAYER_FIELDS = { '전환': '전환', 'CPA': 'CPA', 'IPM': 'IPM', 'ROAS': 'ROAS', 'TotalScore': 'score' };
+  const rawVal = (c) => {
+    if ((window.currentAnalysisLayer || 'ads') === 'mmp' && Object.prototype.hasOwnProperty.call(LAYER_FIELDS, field)) {
+      const lv = creativeLayerView(c);
+      return field === 'TotalScore' ? lv.score : lv[LAYER_FIELDS[field]];
+    }
+    return c[field];
+  };
   const val = (c) => {
-    const v = c[field];
+    const v = rawVal(c);
     if (type === 'str') return (v == null ? '' : String(v));
     return (v == null || isNaN(v)) ? -Infinity : Number(v);
   };
@@ -4334,8 +4345,11 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
                 return s;
               }, { impressions: 0, clicks: 0, cost: 0, installs: 0, retained_d1: 0, revenue_d7: 0, channels: new Set() });
 
-              if (a.impressions <= 0 && a.installs <= 0) {   // 윈도우 내 MMP 활동 없음 → 품질점수 없음
+              if (a.impressions <= 0 && a.installs <= 0) {   // 윈도우 내 MMP 활동 없음 → 품질점수·표시지표 모두 초기화
                 c.meta.mmp_quality_score = null;
+                c.meta.mmp_d1_ipm = null; c.meta.mmp_d1_cpi = null; c.meta.mmp_d7_roas = null; c.meta.mmp_d1_retention = null;
+                c.meta.mmp_installs = 0; c.meta.mmp_retained_d1 = 0; c.meta.mmp_impressions = 0; c.meta.mmp_clicks = 0;
+                c.meta.mmp_cost = 0; c.meta.mmp_revenue = 0;
                 return;
               }
               const d1_ipm = a.impressions > 0 ? (a.retained_d1 / a.impressions) * 1000 : 0;
