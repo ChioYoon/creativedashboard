@@ -2315,6 +2315,10 @@ function switchAnalysisLayer(layer) {
   }
 
   updateStatCards(layer);
+  // 전체 성과 요약의 유형별 평균도 활성 레이어 기준으로 재렌더 (전환·CPA·IPM·ROAS·점수 전환)
+  if (window.currentCreatives && typeof renderTypeSummaryTable === 'function') {
+    renderTypeSummaryTable(window.currentCreatives);
+  }
 }
 
 // Stage 5-J: 결과 표를 정렬 기준으로 재정렬 후 행만 재렌더 (currentCreatives 를 in-place 정렬해
@@ -4244,6 +4248,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
               c.meta.mmp_d7_roas = d7_roas == null ? null : r(d7_roas, 4);
               c.meta.mmp_d1_retention = r(d1_ret, 2);
               c.meta.mmp_installs = a.installs; c.meta.mmp_retained_d1 = a.retained_d1;
+              c.meta.mmp_impressions = a.impressions;
               c.meta.mmp_cost = a.cost; c.meta.mmp_revenue = a.revenue_d7;
               c.meta.mmp_channels = Array.from(a.channels).sort();
               mmpItems.push({ c, installs: a.installs, d1_ipm, d1_cpi, d1_ret, d7_roas });
@@ -5627,44 +5632,68 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
     function renderTypeSummaryTable(creatives) {
       const container = document.getElementById('typeSummaryContainer');
       if (!container) return;
+      const isMmp = (window.currentAnalysisLayer || 'ads') === 'mmp';
 
+      // 유형별로 활성 레이어의 실데이터 보유 소재만 합산(블렌디드 평균). 데이터 없는 매체 값(33.3 등) 제외.
       const types = {};
       (creatives || []).forEach(c => {
         const t = c.유형 || '기타';
-        if (!types[t]) types[t] = { count: 0, convSum: 0, costSum: 0, ipmSum: 0, scoreSum: 0, mmpSum: 0, mmpCount: 0 };
-        types[t].count++;
-        types[t].convSum  += Number(c['전환'] || 0);
-        types[t].costSum  += Number(c['비용'] || 0);
-        types[t].ipmSum   += Number(c['IPM']  || 0);
-        types[t].scoreSum += Number(c.TotalScore || 0);
-        const mmpScore = c.meta?.mmp_quality_score?.total;
-        if (mmpScore != null) { types[t].mmpSum += mmpScore; types[t].mmpCount++; }
+        if (!types[t]) types[t] = { count: 0, dataN: 0, conv: 0, cost: 0, imp: 0, rev: 0, base: 0, scoreSum: 0 };
+        const T = types[t]; T.count++;
+        if (isMmp) {
+          const q = c.meta?.mmp_quality_score;
+          if (!(q && q.total != null)) return;          // MMP 실데이터 없으면 평균서 제외
+          T.dataN++;
+          T.conv += Number(c.meta.mmp_installs || 0);
+          T.cost += Number(c.meta.mmp_cost || 0);
+          T.imp  += Number(c.meta.mmp_impressions || 0);
+          T.rev  += Number(c.meta.mmp_revenue || 0);
+          T.base += Number(c.meta.mmp_retained_d1 || 0);  // CPI·IPM 분모 = D1 잔존수
+          T.scoreSum += q.total;
+        } else {
+          if (!(c._ads && c._ads.imp > 0)) return;       // Google Ads 실데이터 없으면 평균서 제외
+          T.dataN++;
+          T.conv += Number(c.전환 || 0);
+          T.cost += Number(c.비용 || 0);
+          T.imp  += Number(c.노출수 || 0);
+          T.rev  += Number(c.매출 || 0);
+          T.base += Number(c.전환 || 0);                  // CPA 분모 = 전환(설치)
+          T.scoreSum += Number(c.TotalScore || 0);
+        }
       });
 
+      const dash = '—';
       const rows = Object.entries(types).map(([type, d]) => {
-        const n = d.count;
-        const avgMmp = d.mmpCount > 0 ? (d.mmpSum / d.mmpCount).toFixed(1) : '—';
+        const has = d.dataN > 0;
+        const avgConv = has ? Math.round(d.conv / d.dataN).toLocaleString() : dash;
+        const cpa  = has && d.base > 0 ? '₩' + Math.round(d.cost / d.base).toLocaleString() : dash;  // ads:비용/전환 mmp:비용/D1잔존
+        const ipm  = has && d.imp  > 0 ? (d.base / d.imp * 1000).toFixed(2) : dash;                   // ads:전환/노출 mmp:D1잔존/노출
+        const roas = has && d.cost > 0 ? Math.round(d.rev / d.cost * 100) + '%' : dash;
+        const score = has ? (d.scoreSum / d.dataN).toFixed(1) : dash;
         return `<tr>
           <td>${escapeHtml(type)}</td>
-          <td class="num">${n}</td>
-          <td class="num">${(d.convSum/n).toFixed(0)}</td>
-          <td class="num">${d.costSum > 0 && d.convSum > 0 ? '₩'+Math.round(d.costSum/d.convSum).toLocaleString() : '—'}</td>
-          <td class="num">${(d.ipmSum/n).toFixed(2)}</td>
-          <td class="num">${(d.scoreSum/n).toFixed(1)}</td>
-          <td class="num">${avgMmp}</td>
+          <td class="num">${d.count}</td>
+          <td class="num">${avgConv}</td>
+          <td class="num">${cpa}</td>
+          <td class="num">${ipm}</td>
+          <td class="num">${roas}</td>
+          <td class="num">${score}</td>
         </tr>`;
       }).join('');
 
+      const h = isMmp
+        ? { m2: 'D1 CPI', m3: 'D1 IPM', m4: 'D7 ROAS', sc: '품질점수', tag: 'MMP 품질 기준' }
+        : { m2: 'CPA', m3: 'IPM', m4: 'ROAS', sc: '총점', tag: 'Google Ads 기준' };
       container.innerHTML = `
         <div class="summary-block">
-          <div class="summary-block-title">유형별 평균 성과</div>
+          <div class="summary-block-title">유형별 평균 성과 <span style="font-weight:500;font-size:11px;color:var(--text-secondary);">· ${h.tag} (해당 매체 데이터 보유 소재만)</span></div>
           <table class="ds-table">
             <thead>
               <tr>
                 <th>유형</th><th class="num">소재수</th>
-                <th class="num">평균 전환</th><th class="num">평균 CPA</th>
-                <th class="num">평균 IPM</th><th class="num">평균 총점</th>
-                <th class="num">MMP 품질</th>
+                <th class="num">평균 전환</th><th class="num">평균 ${h.m2}</th>
+                <th class="num">평균 ${h.m3}</th><th class="num">평균 ${h.m4}</th>
+                <th class="num">평균 ${h.sc}</th>
               </tr>
             </thead>
             <tbody>${rows}</tbody>
