@@ -139,10 +139,10 @@ def inject_mmp_into_records(records, mmp_daily, source_name="airbridge", currenc
         r.mmp_revenue = a["revenue_d7"]
         r.mmp_daily = rows
 
-    # phase-2: 4지표 보유 소재들로 품질 종합점수 산출 후 주입
+    # phase-2: 4지표 보유 소재들로 품질 종합점수 산출 후 주입 (대시보드 동일: 전환·D1 CPI·D1 IPM·D7 ROAS)
     scored_metrics = {
-        r.creative_id: {"d1_ipm": r.mmp_d1_ipm, "d1_cpi": r.mmp_d1_cpi,
-                        "d7_roas": r.mmp_d7_roas, "d1_retention": r.mmp_d1_retention}
+        r.creative_id: {"installs": r.mmp_installs, "d1_cpi": r.mmp_d1_cpi,
+                        "d1_ipm": r.mmp_d1_ipm, "d7_roas": r.mmp_d7_roas}
         for r in records if r.mmp_source
     }
     if scored_metrics:
