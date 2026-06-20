@@ -5471,9 +5471,9 @@ img { display:block; }
       const scoredCs = cs.filter(c => scoreOf(c) != null);   // 해당 매체 실데이터 있는 소재만 순위
       const sorted = [...scoredCs].sort((a, b) => scoreOf(b) - scoreOf(a));
       const n = cs.length;
-      const half = Math.max(1, Math.round(sorted.length / 2));
+      const half = Math.floor(sorted.length / 2);   // 홀수 n: 중앙 소재는 양쪽서 제외(중복 방지). 짝수 n은 기존과 동일.
       const winners = sorted.slice(0, half);
-      const losers = sorted.slice(-half);
+      const losers = half > 0 ? sorted.slice(sorted.length - half) : [];   // slice(-0)=전체 반환 함정 회피
       const avgScore = scoredCs.length ? (scoredCs.reduce((s, c) => s + scoreOf(c), 0) / scoredCs.length).toFixed(1) : '—';
 
       const freq = (arr, f) => { const m = new Map(); arr.forEach(c => meta(c, f).forEach(s => m.set(s, (m.get(s) || 0) + 1))); return m; };
