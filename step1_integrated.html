@@ -2287,6 +2287,37 @@ function creativeLayerView(c) {
     s1: c.전환수점수, s2: c.CPA점수, s3: c.IPM점수, s4: c.ROAS점수,
   };
 }
+// 일별 배열을 기간·캠페인으로 잘라 합산 — 2-0·2-0b·피로도 공용.
+//   win = {start,end} (ISO 문자열) 또는 null(전체). gcamps/mcamps = 캠페인 배열 또는 null(전체).
+function aggGadsWindow(kpiDaily, win, gcamps) {
+  const inWin = d => !win || (d && d >= win.start && d <= win.end);
+  return (Array.isArray(kpiDaily) ? kpiDaily : []).reduce((a, k) => {
+    if (!inWin(k.date)) return a;
+    if (gcamps && !gcamps.includes(k.campaign_name)) return a;
+    a.imp += k.impressions || 0; a.clk += k.clicks || 0; a.cost += k.cost || 0;
+    a.conv += k.conversions || 0; a.rev += k.conversions_value || 0; return a;
+  }, { imp: 0, clk: 0, cost: 0, conv: 0, rev: 0 });
+}
+function aggMmpWindow(mmpDaily, win, mcamps) {
+  const inWin = d => !win || (d && d >= win.start && d <= win.end);
+  const inCamp = x => !mcamps || mcamps.includes(x.campaign_name || x.channel);
+  return (Array.isArray(mmpDaily) ? mmpDaily : []).reduce((a, x) => {
+    if (!inWin(x.date) || !inCamp(x)) return a;
+    a.imp += x.impressions || 0; a.clk += x.clicks || 0; a.cost += x.cost || 0;
+    a.installs += x.installs || 0; a.retained_d1 += x.retained_d1 || 0; a.revenue_d7 += x.revenue_d7 || 0;
+    if (x.channel) a.channels.add(x.channel); return a;
+  }, { imp: 0, clk: 0, cost: 0, installs: 0, retained_d1: 0, revenue_d7: 0, channels: new Set() });
+}
+// MMP 윈도우 집계 → 4 품질지표 (파이프라인 compute_mmp_quality 동일: 잔존0→cpi null, 비용0→roas null)
+function mmpQualityMetrics(a) {
+  return {
+    d1_ipm: a.imp > 0 ? (a.retained_d1 / a.imp) * 1000 : 0,
+    d1_cpi: a.retained_d1 > 0 ? (a.cost / a.retained_d1) : null,
+    d1_ret: a.installs > 0 ? (a.retained_d1 / a.installs) * 100 : 0,
+    d7_roas: a.cost > 0 ? (a.revenue_d7 / a.cost) : null,
+  };
+}
+
 // MMP 4지표(전환=installs↑·D1 CPI↓·D1 IPM↑·D7 ROAS↑)를 rank 점수화 → 항목 순서대로 점수 배열 반환.
 // 파이프라인 compute_mmp_quality_scores 동일(균등 25%·None→0·등급컷). 2-0b·피로도 공용. items 는 내부 필드 추가됨.
 function scoreMmpItems(items) {
@@ -2321,20 +2352,18 @@ function layerLabels() {
 // 피로도용 기간별 점수: 실적일(kpi_daily/mmp_daily)을 [winStart,winEnd]로 잘라 활성 레이어 점수 산출.
 //   ads = calculateCreativeScores(Google Ads), mmp = scoreMmpItems(품질). 신규 객체 반환(원본 비변경).
 function buildFatiguePeriodScores(creatives, winStart, winEnd, layer, weights) {
-  const inWin = d => d && d >= winStart && d <= winEnd;
+  const win = { start: winStart, end: winEnd };
   if (layer === 'mmp') {
     const items = [];
     (creatives || []).forEach(c => {
       const md = (c.meta && c.meta.mmp_source && Array.isArray(c.meta.mmp_daily)) ? c.meta.mmp_daily : [];
       if (!md.length) return;
-      const a = md.reduce((s, x) => { if (!inWin(x.date)) return s; s.imp += x.impressions||0; s.cost += x.cost||0; s.inst += x.installs||0; s.ret += x.retained_d1||0; s.rev += x.revenue_d7||0; return s; }, { imp:0, cost:0, inst:0, ret:0, rev:0 });
-      if (a.imp <= 0 && a.inst <= 0) return;
-      const d1_cpi = a.ret > 0 ? a.cost / a.ret : null;
-      const d1_ipm = a.imp > 0 ? a.ret / a.imp * 1000 : 0;
-      const d7_roas = a.cost > 0 ? a.rev / a.cost : null;
+      const a = aggMmpWindow(md, win, null);
+      if (a.imp <= 0 && a.installs <= 0) return;
+      const { d1_ipm, d1_cpi, d7_roas } = mmpQualityMetrics(a);
       // 피로도 CPA(=D1 CPI): D1 잔존 0 이면 비용/설치(install CPI)로 폴백 — 0(=최저=신선) 오분류 방지
-      const fatigueCpa = (d1_cpi != null) ? d1_cpi : (a.inst > 0 ? a.cost / a.inst : 0);
-      items.push({ key: c.key, 유형: c.유형, 이미지링크: c.이미지링크, meta: c.meta, 전환: a.inst, CPA: fatigueCpa, installs: a.inst, d1_cpi, d1_ipm, d7_roas });
+      const fatigueCpa = (d1_cpi != null) ? d1_cpi : (a.installs > 0 ? a.cost / a.installs : 0);
+      items.push({ key: c.key, 유형: c.유형, 이미지링크: c.이미지링크, meta: c.meta, 전환: a.installs, CPA: fatigueCpa, installs: a.installs, d1_cpi, d1_ipm, d7_roas });
     });
     const scores = scoreMmpItems(items);
     items.forEach((it, i) => { it.TotalScore = scores[i].total; it.등급 = scores[i].grade; });
@@ -2346,7 +2375,7 @@ function buildFatiguePeriodScores(creatives, winStart, winEnd, layer, weights) {
   (creatives || []).forEach(c => {
     const kd = (c.meta && Array.isArray(c.meta.kpi_daily)) ? c.meta.kpi_daily : [];
     if (!kd.length) return;
-    const a = kd.reduce((s, k) => { if (!inWin(k.date)) return s; s.imp += k.impressions||0; s.clk += k.clicks||0; s.cost += k.cost||0; s.conv += k.conversions||0; s.rev += k.conversions_value||0; return s; }, { imp:0, clk:0, cost:0, conv:0, rev:0 });
+    const a = aggGadsWindow(kd, win, null);
     if (a.imp <= 0 && a.conv <= 0) return;
     const o = { key: c.key, 유형: c.유형, 이미지링크: c.이미지링크, meta: c.meta, 전환: Math.round(a.conv), 비용: Math.round(a.cost), 노출수: a.imp, 클릭수: a.clk, 매출: Math.round(a.rev) };
     o.CTR = o.노출수 > 0 ? o.클릭수 / o.노출수 * 100 : 0;
@@ -4279,32 +4308,23 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             const win = activeDateWindow;            // {start,end} 또는 null(전체 기간)
             const gcamps = activeGadsCampaigns;      // 선택 Google Ads 캠페인 (없으면 전체)
             const mcamps = activeMmpCampaigns;       // 선택 MMP 캠페인 (없으면 전체)
-            const inWin   = (d) => !win || (d && d >= win.start && d <= win.end);
             aggregated.forEach(c => {
               const kd = (c.meta && Array.isArray(c.meta.kpi_daily)) ? c.meta.kpi_daily : [];
-              const md = (c.meta && c.meta.mmp_source && Array.isArray(c.meta.mmp_daily)) ? c.meta.mmp_daily : [];
-              // MMP 윈도우 내 노출·설치 (코호트·기본 레이어 판정용 — KPI 값은 2-0b/meta 사용)
-              const m = md.reduce((a, x) => {
-                if (!inWin(x.date)) return a;
-                if (mcamps && !mcamps.includes(x.campaign_name || x.channel)) return a;
-                a.imp += x.impressions||0; a.conv += x.installs||0; return a;
-              }, {imp:0, conv:0});
+              const hasMmp = c.meta && c.meta.mmp_source && Array.isArray(c.meta.mmp_daily);
+              const md = hasMmp ? c.meta.mmp_daily : [];
+              // MMP 윈도우 합산 (코호트·기본 레이어 판정용 — 표시 KPI 값은 2-0b/meta 사용)
+              const m = aggMmpWindow(md, win, mcamps);
 
               if (!kd.length) {
                 // Google Ads 일별 없음 → 상단 KPI 0 (MMP 전용 소재는 MMP 레이어에서 표시)
                 if (md.length) { c.노출수 = 0; c.클릭수 = 0; c.비용 = 0; c.전환 = 0; c.매출 = 0;
                   c.CTR = 0; c.IPM = 0; c.전환율 = 0; c.CPA = 0; c.ROAS = 0; }
                 c._ads = { imp: c.노출수 || 0, conv: c.전환 || 0 };  // 일별 배열 없는 타이틀은 탑레벨 유지
-                c._mmp = { imp: m.imp, conv: m.conv };
+                c._mmp = { imp: m.imp, conv: m.installs };
                 return;
               }
               // Google Ads 윈도우 합산 (선택 캠페인만)
-              const g = kd.reduce((a, k) => {
-                if (!inWin(k.date)) return a;
-                if (gcamps && !gcamps.includes(k.campaign_name)) return a;
-                a.imp += k.impressions||0; a.clk += k.clicks||0; a.cost += k.cost||0;
-                a.conv += k.conversions||0; a.rev += k.conversions_value||0; return a;
-              }, {imp:0,clk:0,cost:0,conv:0,rev:0});
+              const g = aggGadsWindow(kd, win, gcamps);
 
               c.노출수 = g.imp;
               c.클릭수 = g.clk;
@@ -4317,7 +4337,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
               c.CPA    = c.전환   > 0 ? c.비용   / c.전환  : 0;
               c.ROAS   = c.비용   > 0 ? c.매출   / c.비용  : 0;
               c._ads = { imp: g.imp, conv: Math.round(g.conv) };
-              c._mmp = { imp: m.imp, conv: m.conv };
+              c._mmp = { imp: m.imp, conv: m.installs };
             });
           }
 
@@ -4328,41 +4348,29 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           {
             const win = activeDateWindow;
             const mcamps = activeMmpCampaigns;
-            const inWinM = (x) => !win || (x.date && x.date >= win.start && x.date <= win.end);
-            const inCampM = (x) => !mcamps || mcamps.includes(x.campaign_name || x.channel);
             const r = (v, d) => { const p = Math.pow(10, d); return Math.round(v * p) / p; };
 
             const mmpItems = [];
             aggregated.forEach(c => {
               const md = (c.meta && c.meta.mmp_source && Array.isArray(c.meta.mmp_daily)) ? c.meta.mmp_daily : [];
               if (!md.length) return;
-              const a = md.reduce((s, x) => {
-                if (!inWinM(x) || !inCampM(x)) return s;
-                s.impressions += (x.impressions || 0); s.clicks += (x.clicks || 0); s.cost += (x.cost || 0);
-                s.installs += (x.installs || 0); s.retained_d1 += (x.retained_d1 || 0);
-                s.revenue_d7 += (x.revenue_d7 || 0);
-                if (x.channel) s.channels.add(x.channel);
-                return s;
-              }, { impressions: 0, clicks: 0, cost: 0, installs: 0, retained_d1: 0, revenue_d7: 0, channels: new Set() });
+              const a = aggMmpWindow(md, win, mcamps);
 
-              if (a.impressions <= 0 && a.installs <= 0) {   // 윈도우 내 MMP 활동 없음 → 품질점수·표시지표 모두 초기화
+              if (a.imp <= 0 && a.installs <= 0) {   // 윈도우 내 MMP 활동 없음 → 품질점수·표시지표 모두 초기화
                 c.meta.mmp_quality_score = null;
                 c.meta.mmp_d1_ipm = null; c.meta.mmp_d1_cpi = null; c.meta.mmp_d7_roas = null; c.meta.mmp_d1_retention = null;
                 c.meta.mmp_installs = 0; c.meta.mmp_retained_d1 = 0; c.meta.mmp_impressions = 0; c.meta.mmp_clicks = 0;
                 c.meta.mmp_cost = 0; c.meta.mmp_revenue = 0;
                 return;
               }
-              const d1_ipm = a.impressions > 0 ? (a.retained_d1 / a.impressions) * 1000 : 0;
-              const d1_cpi = a.retained_d1 > 0 ? (a.cost / a.retained_d1) : null;   // 잔존0 → None
-              const d1_ret = a.installs > 0 ? (a.retained_d1 / a.installs) * 100 : 0;
-              const d7_roas = a.cost > 0 ? (a.revenue_d7 / a.cost) : null;          // 비용0 → None
+              const { d1_ipm, d1_cpi, d1_ret, d7_roas } = mmpQualityMetrics(a);
               // 표시용 메타 갱신(모달·표·배지가 읽는 필드) — 원본 rawData 아닌 per-run meta 객체만 교체
               c.meta.mmp_d1_ipm = r(d1_ipm, 3);
               c.meta.mmp_d1_cpi = d1_cpi == null ? null : r(d1_cpi, 1);
               c.meta.mmp_d7_roas = d7_roas == null ? null : r(d7_roas, 4);
               c.meta.mmp_d1_retention = r(d1_ret, 2);
               c.meta.mmp_installs = a.installs; c.meta.mmp_retained_d1 = a.retained_d1;
-              c.meta.mmp_impressions = a.impressions; c.meta.mmp_clicks = a.clicks;
+              c.meta.mmp_impressions = a.imp; c.meta.mmp_clicks = a.clk;
               c.meta.mmp_cost = a.cost; c.meta.mmp_revenue = a.revenue_d7;
               c.meta.mmp_channels = Array.from(a.channels).sort();
               mmpItems.push({ c, installs: a.installs, d1_ipm, d1_cpi, d1_ret, d7_roas });
