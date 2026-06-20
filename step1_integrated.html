@@ -2349,6 +2349,34 @@ function layerLabels() {
     : { tag: 'Google Ads 기준', m2: 'CPA', m3: 'IPM', m4: 'ROAS', score: '총점', s2: 'CPA점수', s3: 'IPM점수', s4: 'ROAS점수' };
 }
 
+// 유형별 활성-레이어 블렌디드 집계 — renderTypeSummaryTable·exportResultHTML 공용. creativeLayerView 기반(해당 매체 실데이터 보유 소재만).
+function aggregateTypeMetrics(creatives) {
+  const types = {};
+  (creatives || []).forEach(c => {
+    const t = c.유형 || '기타';
+    if (!types[t]) types[t] = { count: 0, dataN: 0, conv: 0, cost: 0, imp: 0, rev: 0, clk: 0, base: 0, scoreSum: 0 };
+    const T = types[t]; T.count++;
+    const v = creativeLayerView(c);
+    if (!v.hasData) return;
+    T.dataN++;
+    T.conv += Number(v.전환 || 0); T.cost += Number(v.비용 || 0); T.imp += Number(v.노출수 || 0);
+    T.rev += Number(v.매출 || 0); T.clk += Number(v.클릭수 || 0); T.base += Number(v.base || 0);
+    T.scoreSum += Number(v.score || 0);
+  });
+  return types;
+}
+// 유형 합계 → 블렌디드 지표 (base 분모 규칙 1곳: ads=전환 / mmp=D1 잔존수). 값 없으면 null.
+function typeBlended(d) {
+  return {
+    avgConv: d.dataN > 0 ? d.conv / d.dataN : null,
+    cpa:  d.base > 0 ? d.cost / d.base : null,
+    ipm:  d.imp  > 0 ? (d.base / d.imp) * 1000 : null,
+    ctr:  d.imp  > 0 ? (d.clk / d.imp) * 100 : null,
+    roas: d.cost > 0 ? d.rev / d.cost : null,
+    avg:  d.dataN > 0 ? d.scoreSum / d.dataN : null,
+  };
+}
+
 // 피로도용 기간별 점수: 실적일(kpi_daily/mmp_daily)을 [winStart,winEnd]로 잘라 활성 레이어 점수 산출.
 //   ads = calculateCreativeScores(Google Ads), mmp = scoreMmpItems(품질). 신규 객체 반환(원본 비변경).
 function buildFatiguePeriodScores(creatives, winStart, winEnd, layer, weights) {
@@ -5194,55 +5222,38 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const fsEl = document.querySelector('#filterSummarySlot .filter-summary');
       const filterHtml = fsEl ? fsEl.outerHTML : '';
 
-      /* ── 유형별 요약 (활성 레이어 블렌디드 · 해당 매체 실데이터 보유 소재만) ── */
-      const typeMap = {};
-      views.forEach(({ c, v }) => {
-        const t = c.유형 || '기타';
-        if (!typeMap[t]) typeMap[t] = { count:0, dataN:0, 전환합:0, 비용합:0, 노출합:0, 매출합:0, 클릭합:0, base합:0, 점수합:0 };
-        const m = typeMap[t]; m.count++;
-        if (!v.hasData) return;                         // 해당 매체 데이터 없으면 평균서 제외
-        m.dataN++;
-        m.전환합+=v.전환||0; m.비용합+=v.비용||0; m.노출합+=v.노출수||0;
-        m.매출합+=v.매출||0; m.클릭합+=v.클릭수||0; m.base합+=v.base||0; m.점수합+=v.score||0;
-      });
-      const types = Object.keys(typeMap).sort();
-      const totM  = { count:0, dataN:0, 전환합:0, 비용합:0, 노출합:0, 매출합:0, 클릭합:0, base합:0, 점수합:0 };
-      types.forEach(t => {
-        const m=typeMap[t];
-        totM.count+=m.count; totM.dataN+=m.dataN; totM.전환합+=m.전환합; totM.비용합+=m.비용합;
-        totM.노출합+=m.노출합; totM.매출합+=m.매출합; totM.클릭합+=m.클릭합; totM.base합+=m.base합; totM.점수합+=m.점수합;
-      });
-      const calcM = m => ({                              // CPA/IPM 분모·분자 = base (ads:전환, mmp:D1 잔존수)
-        wCPA:  m.base합>0 ? m.비용합/m.base합 : null,
-        wROAS: m.비용합>0 ? m.매출합/m.비용합 : null,
-        IPM:   m.노출합>0 ? (m.base합/m.노출합)*1000 : null,
-        CTR:   m.노출합>0 ? (m.클릭합/m.노출합)*100  : null,
-        avg:   m.dataN>0  ? m.점수합/m.dataN : null
-      });
+      /* ── 유형별 요약 (활성 레이어 블렌디드 · 공용 aggregateTypeMetrics — 대시보드 유형요약과 동일 산식) ── */
+      const typeAgg = aggregateTypeMetrics(creatives);
+      const types = Object.keys(typeAgg).sort();
+      const totM  = types.reduce((s, t) => {
+        const m = typeAgg[t];
+        s.count+=m.count; s.dataN+=m.dataN; s.conv+=m.conv; s.cost+=m.cost; s.imp+=m.imp;
+        s.rev+=m.rev; s.clk+=m.clk; s.base+=m.base; s.scoreSum+=m.scoreSum; return s;
+      }, { count:0, dataN:0, conv:0, cost:0, imp:0, rev:0, clk:0, base:0, scoreSum:0 });
       const mkTypeBadge = t => {
         const s = typeStyle[t] || 'background:#f3f4f6;color:#374151;';
         return `<span style="display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;${s}">${t}</span>`;
       };
       const typeRows = types.length >= 2 ? types.map(t=>{
-        const met=calcM(typeMap[t]);
+        const m=typeAgg[t]; const met=typeBlended(m);
         return `<tr>
           <td style="text-align:center;padding:7px 8px;">${mkTypeBadge(t)}</td>
-          <td style="text-align:right;padding:7px 8px;">${typeMap[t].count}</td>
-          <td style="text-align:right;padding:7px 8px;">${typeMap[t].전환합.toLocaleString()}</td>
-          <td style="text-align:right;padding:7px 8px;">${fc(met.wCPA)}</td>
-          <td style="text-align:right;padding:7px 8px;">${fi(met.IPM)}</td>
-          <td style="text-align:right;padding:7px 8px;">${fct(met.CTR)}</td>
-          <td style="text-align:right;padding:7px 8px;">${fr(met.wROAS)}</td>
+          <td style="text-align:right;padding:7px 8px;">${m.count}</td>
+          <td style="text-align:right;padding:7px 8px;">${m.conv.toLocaleString()}</td>
+          <td style="text-align:right;padding:7px 8px;">${fc(met.cpa)}</td>
+          <td style="text-align:right;padding:7px 8px;">${fi(met.ipm)}</td>
+          <td style="text-align:right;padding:7px 8px;">${fct(met.ctr)}</td>
+          <td style="text-align:right;padding:7px 8px;">${fr(met.roas)}</td>
           <td style="text-align:right;padding:7px 8px;color:#E84855;font-weight:700;">${met.avg==null?'—':met.avg.toFixed(1)}</td>
         </tr>`;
-      }).join('') + (()=>{const tm=calcM(totM);return `<tr style="background:#f0f4ff;font-weight:700;border-top:2px solid #d1d5db;">
+      }).join('') + (()=>{const tm=typeBlended(totM);return `<tr style="background:#f0f4ff;font-weight:700;border-top:2px solid #d1d5db;">
           <td style="text-align:center;padding:7px 8px;">합계/전체평균</td>
           <td style="text-align:right;padding:7px 8px;">${totM.count}</td>
-          <td style="text-align:right;padding:7px 8px;">${totM.전환합.toLocaleString()}</td>
-          <td style="text-align:right;padding:7px 8px;">${fc(tm.wCPA)}</td>
-          <td style="text-align:right;padding:7px 8px;">${fi(tm.IPM)}</td>
-          <td style="text-align:right;padding:7px 8px;">${fct(tm.CTR)}</td>
-          <td style="text-align:right;padding:7px 8px;">${fr(tm.wROAS)}</td>
+          <td style="text-align:right;padding:7px 8px;">${totM.conv.toLocaleString()}</td>
+          <td style="text-align:right;padding:7px 8px;">${fc(tm.cpa)}</td>
+          <td style="text-align:right;padding:7px 8px;">${fi(tm.ipm)}</td>
+          <td style="text-align:right;padding:7px 8px;">${fct(tm.ctr)}</td>
+          <td style="text-align:right;padding:7px 8px;">${fr(tm.roas)}</td>
           <td style="text-align:right;padding:7px 8px;color:#E84855;font-weight:700;">${tm.avg==null?'—':tm.avg.toFixed(1)}</td>
         </tr>`;})() : '';
 
@@ -5723,42 +5734,17 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
       if (!container) return;
       const isMmp = (window.currentAnalysisLayer || 'ads') === 'mmp';
 
-      // 유형별로 활성 레이어의 실데이터 보유 소재만 합산(블렌디드 평균). 데이터 없는 매체 값(33.3 등) 제외.
-      const types = {};
-      (creatives || []).forEach(c => {
-        const t = c.유형 || '기타';
-        if (!types[t]) types[t] = { count: 0, dataN: 0, conv: 0, cost: 0, imp: 0, rev: 0, base: 0, scoreSum: 0 };
-        const T = types[t]; T.count++;
-        if (isMmp) {
-          const q = c.meta?.mmp_quality_score;
-          if (!(q && q.total != null)) return;          // MMP 실데이터 없으면 평균서 제외
-          T.dataN++;
-          T.conv += Number(c.meta.mmp_installs || 0);
-          T.cost += Number(c.meta.mmp_cost || 0);
-          T.imp  += Number(c.meta.mmp_impressions || 0);
-          T.rev  += Number(c.meta.mmp_revenue || 0);
-          T.base += Number(c.meta.mmp_retained_d1 || 0);  // CPI·IPM 분모 = D1 잔존수
-          T.scoreSum += q.total;
-        } else {
-          if (!(c._ads && c._ads.imp > 0)) return;       // Google Ads 실데이터 없으면 평균서 제외
-          T.dataN++;
-          T.conv += Number(c.전환 || 0);
-          T.cost += Number(c.비용 || 0);
-          T.imp  += Number(c.노출수 || 0);
-          T.rev  += Number(c.매출 || 0);
-          T.base += Number(c.전환 || 0);                  // CPA 분모 = 전환(설치)
-          T.scoreSum += Number(c.TotalScore || 0);
-        }
-      });
+      // 유형별 활성-레이어 블렌디드 집계 (공용 aggregateTypeMetrics — 해당 매체 실데이터 보유 소재만)
+      const types = aggregateTypeMetrics(creatives);
 
       const dash = '—';
       const rows = Object.entries(types).map(([type, d]) => {
-        const has = d.dataN > 0;
-        const avgConv = has ? Math.round(d.conv / d.dataN).toLocaleString() : dash;
-        const cpa  = has && d.base > 0 ? '₩' + Math.round(d.cost / d.base).toLocaleString() : dash;  // ads:비용/전환 mmp:비용/D1잔존
-        const ipm  = has && d.imp  > 0 ? (d.base / d.imp * 1000).toFixed(2) : dash;                   // ads:전환/노출 mmp:D1잔존/노출
-        const roas = has && d.cost > 0 ? Math.round(d.rev / d.cost * 100) + '%' : dash;
-        const score = has ? (d.scoreSum / d.dataN).toFixed(1) : dash;
+        const b = typeBlended(d);
+        const avgConv = b.avgConv == null ? dash : Math.round(b.avgConv).toLocaleString();
+        const cpa  = b.cpa  == null ? dash : '₩' + Math.round(b.cpa).toLocaleString();   // ads:비용/전환 mmp:비용/D1잔존
+        const ipm  = b.ipm  == null ? dash : b.ipm.toFixed(2);                            // ads:전환/노출 mmp:D1잔존/노출
+        const roas = b.roas == null ? dash : Math.round(b.roas * 100) + '%';
+        const score = b.avg == null ? dash : b.avg.toFixed(1);
         return `<tr>
           <td>${escapeHtml(type)}</td>
           <td class="num">${d.count}</td>
