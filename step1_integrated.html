@@ -2217,7 +2217,7 @@ function buildMmpSectionHtml(creative) {
         ${channels}${scoreBadge}
       </div>
       <div class="mmp-metric-grid">
-        ${cell('D1 IPM', f.ipm)}${cell('D1 CPI', f.cpi)}${cell('D7 ROAS<br><span style="font-weight:500;font-size:10px;">(D0~D7 누적)</span>', f.roas)}${cell('D1 잔존', f.ret)}
+        ${cell('D1 IPM', f.ipm)}${cell('D1 CPI', f.cpi)}${cell('D7 ROAS<br><span style="font-weight:500;font-size:10px;">(D0~D7 누적 · 조기 회수율)</span>', f.roas)}${cell('D1 잔존', f.ret)}
       </div>
       ${fxNote ? `<div style="margin-top:6px;font-size:11px;color:#0f766e;">${fxNote} · 비용/CPI 는 원화 환산값</div>` : ''}
     </div>`;
@@ -2342,7 +2342,7 @@ function layerLabels() {
     ? { tag: 'MMP 품질 기준', m1: '전환', m2: 'D1 CPI', m3: 'D1 IPM', m4: 'D7 ROAS', score: '품질점수',
         s2: 'D1 CPI점수', s3: 'D1 IPM점수', s4: 'D7 ROAS점수',
         tip1: 'MMP 설치수 (installs)', tip2: '비용 ÷ D1 잔존수 · 낮을수록 효율적',
-        tip3: '(D1 잔존수 ÷ 노출) × 1,000 · 높을수록 우수', tip4: '(D0~D7 누적매출 ÷ 비용) × 100% · 데이터 없으면 —',
+        tip3: '(D1 잔존수 ÷ 노출) × 1,000 · 높을수록 우수', tip4: '(D0~D7 누적매출 ÷ 비용) × 100% · 설치 후 7일 내 조기 회수율(전체 ROAS 아님) · 데이터 없으면 —',
         tipScore: '전환·D1 CPI·D1 IPM·D7 ROAS 점수의 가중 합산 (MMP)' }
     : { tag: 'Google Ads 기준', m1: '전환', m2: 'CPA', m3: 'IPM', m4: 'ROAS', score: '총점',
         s2: 'CPA점수', s3: 'IPM점수', s4: 'ROAS점수',
