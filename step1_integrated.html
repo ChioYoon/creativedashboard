@@ -4980,18 +4980,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       // 전역 변수에 저장 (모달에서 사용)
       window.currentCreatives = creatives;
 
-      // ① 통계 계산
+      // ① 통계용 total (스코어카드 5종은 아래 switchAnalysisLayer→updateStatCards 가 활성 레이어 기준으로 세팅)
       const total = creatives.length;
-      const maxScore = creatives[0]?.TotalScore.toFixed(1) || 0;
-      const avgScore = total > 0 ? (creatives.reduce((s, c) => s + c.TotalScore, 0) / total).toFixed(1) : 0;
-      const excellent = creatives.filter(c => c.등급 === '최우수').length;
-      const poor      = creatives.filter(c => c.등급 === '개선필요').length;
-
-      document.getElementById('statTotal').textContent     = total;
-      document.getElementById('statMax').textContent       = maxScore;
-      document.getElementById('statAvg').textContent       = avgScore;
-      document.getElementById('statExcellent').textContent = excellent;
-      document.getElementById('statPoor').textContent      = poor;
 
       // ② 필터 조건 요약 → filterSummarySlot에 삽입 (순서: 스코어카드 바로 아래)
       {
@@ -5069,9 +5059,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           </details>`;
       }
       
-      // v5.1: 위험 신호 자동 감지
-      const riskSignals = detectRiskSignals(creatives);
-      window._riskSignals = riskSignals; // 외부 접근용
+      // 위험 신호는 아래 switchAnalysisLayer 가 활성 레이어 기준으로 window._riskSignals 에 산출 (중복 제거)
 
       // v5.1: 일별 sparkline 데이터
       const sparkRows = window._lastFilteredRows
@@ -5108,10 +5096,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const gAdsActive = creatives.some(c => c._ads && c._ads.imp > 0);
       const mmpActive  = creatives.some(c => c._mmp && c._mmp.imp > 0);
       const defaultLayer = (hasMmp && !gAdsActive && mmpActive) ? 'mmp' : 'ads';
-      switchAnalysisLayer(defaultLayer);   // 헤더·셀·총점·등급·정렬·통계를 레이어 기준으로 렌더
+      switchAnalysisLayer(defaultLayer);   // 헤더·셀·총점·등급·정렬·통계·위험신호·유형요약을 레이어 기준으로 렌더
 
-      // ── 소재 유형별 요약 표 렌더링
-      renderTypeSummaryTable(creatives);
       // ── v5.1: 캠페인 비교 표 렌더링 (2개 이상 캠페인 시 자동)
       if (window._lastFilteredRows) {
         renderCampaignCompare(window._lastFilteredRows, creatives);
