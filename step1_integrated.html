@@ -1938,60 +1938,6 @@ function renderSignalDistribution(creatives) {
       return `<li><span>${escapeHtml(label)}</span><span><span class="dist-count">${cnt}건</span>${pctHtml}</span></li>`;
     }).join('') || '<li style="color:#9ca3af;">(데이터 없음)</li>';
 
-  // perfHtml / mmpPerfHtml: 백분위 분포 — 향후 교차 성과 탭으로 이동 예정
-  // Stage 5-J: 풀 대비 성과 — CTR 백분위 기준 상·하위 소재 랭킹 (KPI 보유 소재 4개 이상일 때만)
-  const withPctile = (creatives || []).filter(
-    (c) => c && c.meta && c.meta.kpi_percentiles && c.meta.kpi_percentiles.ctr != null
-  );
-  let perfHtml = '';
-  if (withPctile.length >= 4) {
-    const sorted = withPctile.slice().sort(
-      (a, b) => b.meta.kpi_percentiles.ctr - a.meta.kpi_percentiles.ctr
-    );
-    const top = sorted.slice(0, 3);
-    const bottom = sorted.slice(-3).reverse();
-    const item = (c) =>
-      `<li><span>${escapeHtml(c.key || c.소재명 || '')}</span>${pctBadgeHtml(c.meta.kpi_percentiles.ctr)}</li>`;
-    perfHtml = `
-      <div class="signal-perf-block">
-        <div class="signal-perf-card">
-          <h4>🎯 CTR 풀 상위 (후킹 우수)</h4>
-          <ul>${top.map(item).join('')}</ul>
-        </div>
-        <div class="signal-perf-card">
-          <h4>🐢 CTR 풀 하위 (후킹 약함)</h4>
-          <ul>${bottom.map(item).join('')}</ul>
-        </div>
-      </div>`;
-  }
-
-  // Stage 7-C: MMP 품질점수 기준 상·하위 소재 랭킹 (mmp 품질점수 보유 4건 이상일 때만)
-  const withMmp = (creatives || []).filter(
-    (c) => c && c.meta && c.meta.mmp_source && c.meta.mmp_quality_score && c.meta.mmp_quality_score.total != null
-  );
-  let mmpPerfHtml = '';
-  if (withMmp.length >= 4) {
-    const sortedM = withMmp.slice().sort(
-      (a, b) => b.meta.mmp_quality_score.total - a.meta.mmp_quality_score.total
-    );
-    const itemM = (c) => {
-      const qs = c.meta.mmp_quality_score;
-      const style = MMP_GRADE_STYLE[qs.grade] || 'background:#f3f4f6;color:#374151;';
-      return `<li><span>${escapeHtml(c.key || c.소재명 || '')}</span><span class="mmp-score-cell" style="${style}">${qs.total} ${escapeHtml(qs.grade)}</span></li>`;
-    };
-    mmpPerfHtml = `
-      <div class="signal-perf-block">
-        <div class="signal-perf-card">
-          <h4>🏆 MMP 품질 상위 (非Google 매체)</h4>
-          <ul>${sortedM.slice(0, 3).map(itemM).join('')}</ul>
-        </div>
-        <div class="signal-perf-card">
-          <h4>🔻 MMP 품질 하위 (非Google 매체)</h4>
-          <ul>${sortedM.slice(-3).reverse().map(itemM).join('')}</ul>
-        </div>
-      </div>`;
-  }
-
   // 태그 칩 렌더
   const makeChips = (arr, type) =>
     arr.slice(0, 8).map(([label, cnt]) =>
@@ -5151,7 +5097,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       }
 
       const crossData = computeCrossPerformance(creatives);
-      renderCrossPerformanceCards(crossData);
+      renderCrossPerformanceCards(crossData, creatives);
       window._selectedAiTags = new Set();
 
       console.log('✅ 점수 결과 표시 완료');
@@ -5683,13 +5629,63 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
       return { excellent, poor };
     }
 
-    function renderCrossPerformanceCards(crossData) {
+    // 풀 성과 랭킹 블록 (교차 성과 영역) — CTR 풀 백분위 상·하위(Google Ads) + MMP 품질 상·하위(非Google).
+    // 각 블록은 해당 데이터 4건 이상일 때만. (구 renderSignalDistribution 死계산을 이관)
+    function buildPerfRankingBlocks(creatives) {
+      let blocks = '';
+      const withPctile = (creatives || []).filter(
+        (c) => c && c.meta && c.meta.kpi_percentiles && c.meta.kpi_percentiles.ctr != null
+      );
+      if (withPctile.length >= 4) {
+        const sorted = withPctile.slice().sort((a, b) => b.meta.kpi_percentiles.ctr - a.meta.kpi_percentiles.ctr);
+        const top = sorted.slice(0, 3);
+        const bottom = sorted.slice(-3).reverse();
+        const item = (c) => `<li><span>${escapeHtml(c.key || c.소재명 || '')}</span>${pctBadgeHtml(c.meta.kpi_percentiles.ctr)}</li>`;
+        blocks += `
+          <div class="signal-perf-block">
+            <div class="signal-perf-card">
+              <h4>🎯 CTR 풀 상위 (후킹 우수)</h4>
+              <ul>${top.map(item).join('')}</ul>
+            </div>
+            <div class="signal-perf-card">
+              <h4>🐢 CTR 풀 하위 (후킹 약함)</h4>
+              <ul>${bottom.map(item).join('')}</ul>
+            </div>
+          </div>`;
+      }
+      const withMmp = (creatives || []).filter(
+        (c) => c && c.meta && c.meta.mmp_source && c.meta.mmp_quality_score && c.meta.mmp_quality_score.total != null
+      );
+      if (withMmp.length >= 4) {
+        const sortedM = withMmp.slice().sort((a, b) => b.meta.mmp_quality_score.total - a.meta.mmp_quality_score.total);
+        const itemM = (c) => {
+          const qs = c.meta.mmp_quality_score;
+          const style = MMP_GRADE_STYLE[qs.grade] || 'background:#f3f4f6;color:#374151;';
+          return `<li><span>${escapeHtml(c.key || c.소재명 || '')}</span><span class="mmp-score-cell" style="${style}">${qs.total} ${escapeHtml(qs.grade)}</span></li>`;
+        };
+        blocks += `
+          <div class="signal-perf-block">
+            <div class="signal-perf-card">
+              <h4>🏆 MMP 품질 상위 (非Google 매체)</h4>
+              <ul>${sortedM.slice(0, 3).map(itemM).join('')}</ul>
+            </div>
+            <div class="signal-perf-card">
+              <h4>🔻 MMP 품질 하위 (非Google 매체)</h4>
+              <ul>${sortedM.slice(-3).reverse().map(itemM).join('')}</ul>
+            </div>
+          </div>`;
+      }
+      return blocks ? `<div class="summary-block"><div class="summary-block-title">성과 랭킹 (풀 상·하위)</div>${blocks}</div>` : '';
+    }
+
+    function renderCrossPerformanceCards(crossData, creatives) {
       const container = document.getElementById('crossPerformanceContainer');
       if (!container) return;
-      if (!crossData) { container.innerHTML = ''; return; }
-      // 교차 분석 불가(한쪽 매체 데이터 없음) — MMP 데이터라도 있으면 안내, 둘 다 없으면 숨김
-      if (crossData.insufficient) {
-        container.innerHTML = crossData.hasMmp ? `
+      const perfHtml = buildPerfRankingBlocks(creatives || window.currentCreatives || []);
+      let crossHtml = '';
+      if (crossData && crossData.insufficient) {
+        // 교차 분석 불가(한쪽 매체 데이터 없음) — MMP 데이터라도 있으면 안내
+        crossHtml = crossData.hasMmp ? `
           <div class="summary-block">
             <div class="summary-block-title">Google Ads × MMP 교차 성과</div>
             <div style="font-size:13px;color:var(--text-secondary);padding:12px 2px;line-height:1.6;">
@@ -5697,41 +5693,39 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
               (Google Ads 미집행 기간에는 분석 레이어를 <strong>MMP 품질 기준</strong>으로 보세요.)
             </div>
           </div>` : '';
-        return;
+      } else if (crossData) {
+        const makeItem = c => {
+          const name = c.key || c['소재명'] || '';
+          const adsScore = c.TotalScore?.toFixed(1) ?? '—';
+          const mmpScore = c.meta?.mmp_quality_score?.total?.toFixed(1) ?? '—';
+          return `<div class="cross-perf-item">
+            <span class="cross-perf-name" title="${escapeHtml(name)}">${escapeHtml(name)}</span>
+            <span class="cross-badge-ads">${adsScore}</span>
+            <span class="cross-badge-mmp">${mmpScore}</span>
+          </div>`;
+        };
+        const exItems = crossData.excellent.length > 0
+          ? crossData.excellent.map(makeItem).join('')
+          : '<div style="font-size:12px;color:var(--text-secondary);padding:8px 0;">해당 소재 없음</div>';
+        const poItems = crossData.poor.length > 0
+          ? crossData.poor.map(makeItem).join('')
+          : '<div style="font-size:12px;color:var(--text-secondary);padding:8px 0;">해당 소재 없음</div>';
+        crossHtml = `
+          <div class="summary-block">
+            <div class="summary-block-title">Google Ads × MMP 교차 성과</div>
+            <div class="cross-perf-grid">
+              <div class="cross-perf-card excellent">
+                <div class="cross-perf-card-title">두 지표 모두 우수</div>
+                ${exItems}
+              </div>
+              <div class="cross-perf-card poor">
+                <div class="cross-perf-card-title">두 지표 모두 저조</div>
+                ${poItems}
+              </div>
+            </div>
+          </div>`;
       }
-
-      const makeItem = c => {
-        const name = c.key || c['소재명'] || '';
-        const adsScore = c.TotalScore?.toFixed(1) ?? '—';
-        const mmpScore = c.meta?.mmp_quality_score?.total?.toFixed(1) ?? '—';
-        return `<div class="cross-perf-item">
-          <span class="cross-perf-name" title="${escapeHtml(name)}">${escapeHtml(name)}</span>
-          <span class="cross-badge-ads">${adsScore}</span>
-          <span class="cross-badge-mmp">${mmpScore}</span>
-        </div>`;
-      };
-
-      const exItems = crossData.excellent.length > 0
-        ? crossData.excellent.map(makeItem).join('')
-        : '<div style="font-size:12px;color:var(--text-secondary);padding:8px 0;">해당 소재 없음</div>';
-      const poItems = crossData.poor.length > 0
-        ? crossData.poor.map(makeItem).join('')
-        : '<div style="font-size:12px;color:var(--text-secondary);padding:8px 0;">해당 소재 없음</div>';
-
-      container.innerHTML = `
-        <div class="summary-block">
-          <div class="summary-block-title">Google Ads × MMP 교차 성과</div>
-          <div class="cross-perf-grid">
-            <div class="cross-perf-card excellent">
-              <div class="cross-perf-card-title">두 지표 모두 우수</div>
-              ${exItems}
-            </div>
-            <div class="cross-perf-card poor">
-              <div class="cross-perf-card-title">두 지표 모두 저조</div>
-              ${poItems}
-            </div>
-          </div>
-        </div>`;
+      container.innerHTML = crossHtml + perfHtml;
     }
 
     // ──────────────────────────────────────────────
