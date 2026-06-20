@@ -102,7 +102,7 @@ class AirbridgeMmpSource:
         self.poll_interval_sec = poll_interval_sec
         self.poll_timeout_sec = poll_timeout_sec
         self.request_timeout = request_timeout
-        self.last_fetch_truncated: bool = False  # 마지막 fetch에서 100행 cap 초과 여부
+        self.last_fetch_truncated: bool = False  # 마지막 fetch에서 10,000행(MAX_PAGES) 상한 도달 여부
 
     @property
     def currency(self) -> str:
