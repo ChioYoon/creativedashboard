@@ -1331,7 +1331,14 @@ const PERF_COLS = new Set([
   '언어','language','lang','지역','region','국가','country','시기',
   '통화 코드','통화코드','통화','currency','revenue','매출',
   '파일명','filename','file_name','remark','비고','note',
-  '유형 (BNR/VID)','text_analysis_extracted_copy','title_specific_special_note'
+  '유형 (BNR/VID)','text_analysis_extracted_copy','title_specific_special_note',
+  // 파이프라인 JSON 내부 필드(군집 태그 아님) — 자동 로드 시 컬럼 잡음 억제
+  'creative_id','creative_concept','scores','tagged_at','gemini_model','source_files',
+  'one_line_insight','strength_evidence','weakness_evidence','improvement_actions','creator_intent',
+  'strengths','weaknesses','hypothesis','test_ideas',
+  'kpi_reality_check','kpi_percentiles','kpi_source','kpi_window_start','kpi_window_end','kpi_daily',
+  'mmp_source','mmp_channels','mmp_d1_ipm','mmp_d1_cpi','mmp_d7_roas','mmp_d1_retention',
+  'mmp_quality_score','mmp_installs','mmp_retained_d1','mmp_cost','mmp_revenue','mmp_currency','mmp_fx_rate','mmp_daily'
 ]);
 
 const INSIGHT_PATTERNS = [
@@ -1400,6 +1407,45 @@ function handleFile(file) {
     }
   };
   reader.readAsText(file, 'UTF-8');
+}
+
+/* ═══════════════════════════════════════════════
+   파이프라인 JSON 자동 로드 (재업로드 제거) — CSV 경로와 동일 하류
+═══════════════════════════════════════════════ */
+function ingestPipelineRows(columns, rows, titleId) {
+  csvData = { headers: columns, rows: rows };
+  uploadZone.classList.add('uploaded');
+  const ic = uploadZone.querySelector('.upload-icon i'); if (ic) ic.className = 'fas fa-check-circle';
+  const h3 = uploadZone.querySelector('h3'); if (h3) h3.textContent = '파이프라인 데이터 로드 완료';
+  const infoBar = document.getElementById('uploadInfoBar'); if (infoBar) infoBar.classList.add('show');
+  const fn = document.getElementById('uploadFileName'); if (fn) fn.textContent = `파이프라인: ${titleId}`;
+  const bnrVidCount = rows.filter(row => { const t = (row['유형'] || row['앱 확장 소재 유형'] || '').toUpperCase().trim(); return t === 'BNR' || t === 'VID'; }).length;
+  const txtCount = rows.length - bnrVidCount;
+  const fm = document.getElementById('uploadFileMeta');
+  if (fm) fm.textContent = txtCount > 0
+    ? `전체 ${rows.length}행 (BNR/VID ${bnrVidCount}개 · TXT ${txtCount}개 제외) · ${columns.length}개 컬럼 · 파이프라인 자동 로드`
+    : `${rows.length}행 · ${columns.length}개 컬럼 · 파이프라인 자동 로드`;
+  classifyAndRender(csvData);
+}
+
+// ?title= 있으면 파이프라인 JSON 자동 로드. 성공 true / 미지정·실패 false(→ CSV 업로드 폴백)
+async function loadFromPipeline() {
+  if (!window.DataSource) return false;
+  const tid = window.DataSource.readTitleFromUrl();
+  if (!tid) return false;
+  try {
+    const manifest = await window.DataSource.loadTitleManifest();
+    const entry = (manifest || []).find(t => t.id === tid);
+    if (!entry || !entry.json_url) return false;
+    const { normalized } = await window.DataSource.loadCreativeData('json-url', { url: entry.json_url, titleId: tid });
+    if (!normalized || !normalized.rows || !normalized.rows.length) return false;
+    ingestPipelineRows(normalized.columns, normalized.rows, tid);
+    showToast(`✅ 파이프라인 데이터 자동 로드: ${tid} (${normalized.rows.length}개 소재)`, 'success');
+    return true;
+  } catch (e) {
+    console.warn('[step2] 파이프라인 자동 로드 실패, CSV 폴백:', e.message);
+    return false;
+  }
 }
 
 /* ═══════════════════════════════════════════════
@@ -2146,6 +2192,8 @@ function showToast(msg, type = '') {
     } catch (e) {}
   }
   updateSummaryMode();
+  // 파이프라인 JSON 자동 로드(?title=) — 실패/미지정 시 CSV 업로드 UI 유지
+  loadFromPipeline();
 })();
 
 /* ═══════════════════════════════════════════════
