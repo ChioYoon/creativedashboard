@@ -79,8 +79,34 @@
           tipScore: '전환수·CPA·IPM·ROAS 점수의 가중치 합산 (Google Ads)' };
   }
 
+  // 활성 레이어 기준 소재 1건의 표시값 묶음 (표·export·브리프·군집 공용). 데이터 소스 완전 분리.
+  //   ads = 순수 Google Ads / mmp = 순수 MMP. base = CPA·IPM 분모/분자(ads:전환, mmp:D1 잔존수).
+  function creativeLayerView(c) {
+    const isMmp = (window.currentAnalysisLayer || 'ads') === 'mmp';
+    if (isMmp) {
+      const m = c.meta || {}; const q = m.mmp_quality_score;
+      return {
+        isMmp: true, hasData: !!(q && q.total != null),
+        전환: m.mmp_installs ?? null, 비용: m.mmp_cost ?? null, 노출수: m.mmp_impressions ?? null,
+        클릭수: m.mmp_clicks ?? null, base: m.mmp_retained_d1 ?? 0, 매출: m.mmp_revenue ?? 0,
+        CTR: (m.mmp_impressions > 0) ? (m.mmp_clicks || 0) / m.mmp_impressions * 100 : 0,
+        CPA: m.mmp_d1_cpi ?? null, IPM: m.mmp_d1_ipm ?? null, ROAS: m.mmp_d7_roas ?? null,
+        score: q?.total ?? null, grade: q?.grade ?? null,
+        s1: q?.conv ?? null, s2: q?.cpi ?? null, s3: q?.ipm ?? null, s4: q?.roas ?? null,
+      };
+    }
+    const has = !!(c._ads && c._ads.imp > 0);
+    return {
+      isMmp: false, hasData: has,
+      전환: c.전환, 비용: c.비용, 노출수: c.노출수, 클릭수: c.클릭수, base: c.전환, 매출: c.매출,
+      CTR: c.CTR, CPA: c.CPA, IPM: c.IPM, ROAS: c.ROAS,
+      score: has ? c.TotalScore : null, grade: has ? c.등급 : null,
+      s1: c.전환수점수, s2: c.CPA점수, s3: c.IPM점수, s4: c.ROAS점수,
+    };
+  }
+
   // ── 노출: window 전역(인라인 bare 참조 호환) + 네임스페이스 ──
-  const _exports = { pctBadgeHtml, MMP_GRADE_STYLE, mmpQualityMetrics, scoreMmpItems, layerLabels };
+  const _exports = { pctBadgeHtml, MMP_GRADE_STYLE, mmpQualityMetrics, scoreMmpItems, layerLabels, creativeLayerView };
   Object.assign(window, _exports);
   window.LayerMetrics = Object.assign(window.LayerMetrics || {}, _exports);
 })();
