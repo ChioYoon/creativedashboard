@@ -627,6 +627,7 @@
     .ai-key-badge.unset { background:var(--orange-pale); color:var(--orange); }
   </style>
   <link rel="stylesheet" href="css/gemini-ui.css">
+  <script src="js/layer-metrics.js"></script>
   <script src="js/data-source.js"></script>
   <script src="js/gemini-api.js"></script>
 </head>
@@ -1019,6 +1020,7 @@ let allRows        = [];     // 매핑 테이블용 전체 행
 let sortCol        = 'score';
 let sortDir        = 'desc';
 let showTopOnly    = false;
+window.currentAnalysisLayer = window.currentAnalysisLayer || 'ads';  // 분석 레이어(Google Ads / MMP) — T5 토글
 
 const CLUSTER_COLORS = [
   '#E84855','#3182CE','#38A169','#D4A017','#6B46C1',
