@@ -831,6 +831,11 @@
                 style="margin-left:8px;font-size:12px;background:var(--purple-pale);
                        color:var(--purple);padding:3px 10px;border-radius:10px;font-weight:700;">
           </span>
+          <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+            <button id="clLayerAds" onclick="setClusterLayer('ads')" style="padding:5px 12px;border-radius:8px;border:1px solid var(--gray-line,#ddd);font-weight:700;font-size:12px;cursor:pointer;background:var(--red);color:#fff;">Google Ads</button>
+            <button id="clLayerMmp" onclick="setClusterLayer('mmp')" style="padding:5px 12px;border-radius:8px;border:1px solid var(--gray-line,#ddd);font-weight:700;font-size:12px;cursor:pointer;background:var(--gray-bg,#f3f4f6);color:var(--mid,#555);">MMP 품질</button>
+            <span style="font-size:11px;color:var(--gray-text);">전체 기간 기준</span>
+          </div>
         </div>
         <div class="section-body">
           <div class="cluster-grid" id="clusterGrid"></div>
@@ -1786,6 +1791,56 @@ function updateLoadingMsg(msg) {
 }
 
 /* ══════════════════════════════════════════════════════════════
+   분석 레이어 토글 (Google Ads / MMP) — 군집(태그 기반)은 불변,
+   군집 내 성과 점수·등급·지표만 활성 레이어로 전환 (전체 기간 기준).
+   ads = 클러스터링 자체 산출 점수 / mmp = 파이프라인 사전계산 품질점수(최상위 필드).
+══════════════════════════════════════════════════════════════ */
+function _materialLayerVals(m, layer) {
+  if (layer === 'mmp') {
+    const r = m.row || m._firstRow || {};   // cluster material 은 원본 행을 m.row 에 보관
+    const qs = r.mmp_quality_score;
+    return { score: (qs && qs.total != null) ? qs.total : 0,
+             전환: r.mmp_installs ?? 0, CPA: r.mmp_d1_cpi ?? 0, IPM: r.mmp_d1_ipm ?? 0, ROAS: r.mmp_d7_roas ?? 0 };
+  }
+  const a = m._ads || {};
+  return { score: a.score ?? 0, 전환: a.전환 ?? 0, CPA: a.CPA ?? 0, IPM: a.IPM ?? 0, ROAS: a.ROAS ?? 0 };
+}
+function applyLayerToMaterials(clusters, layer) {
+  (clusters || []).forEach(cl => {
+    cl.materials.forEach(m => {
+      if (!m._ads) m._ads = { score: m.score, 전환: m.전환, CPA: m.CPA, IPM: m.IPM, ROAS: m.ROAS };  // ads 원본 1회 캐시
+      const v = _materialLayerVals(m, layer);
+      m.score = v.score; m.전환 = v.전환; m.CPA = v.CPA; m.IPM = v.IPM; m.ROAS = v.ROAS;
+    });
+    const scores = cl.materials.map(m => m.score || 0);
+    cl._scores = scores;
+    const avg = scores.length ? scores.reduce((a,b)=>a+b,0)/scores.length : 0;
+    cl.avgScore = Math.round(avg*10)/10;
+    cl.maxScore = scores.length ? Math.round(Math.max(...scores)*10)/10 : 0;
+    cl.minScore = scores.length ? Math.round(Math.min(...scores)*10)/10 : 0;
+    cl.grade = calcGrade(avg);
+    cl.top3 = [...cl.materials].sort((a,b)=>(b.score||0)-(a.score||0)).slice(0,3);
+  });
+}
+function setClusterLayer(layer) {
+  window.currentAnalysisLayer = layer;
+  const ba = document.getElementById('clLayerAds'), bm = document.getElementById('clLayerMmp');
+  if (ba && bm) {
+    const base = 'padding:5px 12px;border-radius:8px;border:1px solid var(--gray-line,#ddd);font-weight:700;font-size:12px;cursor:pointer;';
+    const on = 'background:var(--red);color:#fff;', off = 'background:var(--gray-bg,#f3f4f6);color:var(--mid,#555);';
+    ba.style.cssText = base + (layer==='ads'?on:off);
+    bm.style.cssText = base + (layer==='mmp'?on:off);
+  }
+  if (clusterResults && clusterResults.clusters) {
+    applyLayerToMaterials(clusterResults.clusters, layer);
+    renderKPIStrip(clusterResults.clusters);
+    renderClusterCards(clusterResults.clusters);
+    renderCharts(clusterResults.clusters);
+    renderMappingTable(clusterResults.clusters);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
    결과 렌더링
 ══════════════════════════════════════════════════════════════ */
 function renderResults(data) {
@@ -1793,6 +1848,9 @@ function renderResults(data) {
 
   document.getElementById('resultArea').classList.add('show');
   document.getElementById('clusterCountBadge').textContent = `총 ${clusters.length}개 군집`;
+
+  // 활성 레이어(기본 ads) 성과 적용 — ads 원본 캐시 + 군집 통계 산출
+  applyLayerToMaterials(clusters, window.currentAnalysisLayer || 'ads');
 
   renderKPIStrip(clusters);
   renderClusterCards(clusters);
@@ -2205,16 +2263,17 @@ function buildMappingTable(rows) {
   });
 
   // 헤더 컬럼 정의
+  const _L = (window.LayerMetrics && window.LayerMetrics.layerLabels) ? window.LayerMetrics.layerLabels() : { score:'종합점수', m2:'CPA', m3:'IPM', m4:'ROAS' };
   const cols = [
     { key:'_preview',    label:'',          sortable:false },
     { key:'name',        label:'소재명',    sortable:true  },
     { key:'type',        label:'유형',      sortable:true  },
-    { key:'score',       label:'종합점수',  sortable:true  },
+    { key:'score',       label:_L.score,    sortable:true  },
     { key:'grade',       label:'등급',      sortable:true  },
     { key:'전환',        label:'전환수',    sortable:true  },
-    { key:'CPA',         label:'CPA',       sortable:true  },
-    { key:'IPM',         label:'IPM',       sortable:true  },
-    { key:'ROAS',        label:'ROAS',      sortable:true  },
+    { key:'CPA',         label:_L.m2,       sortable:true  },
+    { key:'IPM',         label:_L.m3,       sortable:true  },
+    { key:'ROAS',        label:_L.m4,       sortable:true  },
     { key:'dayCount',    label:'집계일수',  sortable:true  },
     { key:'clusterName', label:'군집',      sortable:true  },
     { key:'topTags',     label:'주요 태그',    sortable:false },
