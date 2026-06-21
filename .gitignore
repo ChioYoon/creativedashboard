@@ -45,3 +45,9 @@ tmp/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Com2uS DS v2 원본 패키지(대용량) — 벤더분만 assets/ds 에 커밋
+/Com2uS Design System_v2.zip
+/_design_system_temp/
+/_ds_read/
+/.superpowers/

@@ -1,0 +1,340 @@
+/* ============================================================
+   Com2uS Design System — Colors & Type Foundations
+   Source: Com2uS Brand Guidelines (©2025)
+   [공식 규정] = official spec   ·   [확장 권장] = recommended extension
+   ============================================================ */
+
+/* ---- Fonts ----
+   기본 서체는 "Noto Sans KR" (Google Fonts) — Latin + Hangul 모두 커버.
+   Pretendard는 self-hosted 폴백으로 유지(오프라인/CDN 미연결 시 동일 톤 보장).
+   (Jungka, the originally-specified EN display face, is not licensed/available.)
+*/
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+/* ===== Pretendard — self-hosted fallback font (uploaded) ===== */
+@font-face {
+  font-family: "Pretendard";
+  src: url("fonts/PretendardVariable.woff2") format("woff2-variations"),
+       url("fonts/PretendardVariable.woff2") format("woff2");
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+}
+/* Static-weight fallbacks for engines without variable-font support */
+@font-face { font-family: "Pretendard"; src: url("fonts/Pretendard-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Pretendard"; src: url("fonts/Pretendard-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Pretendard"; src: url("fonts/Pretendard-SemiBold.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Pretendard"; src: url("fonts/Pretendard-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Pretendard"; src: url("fonts/Pretendard-ExtraBold.woff2") format("woff2"); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Pretendard"; src: url("fonts/Pretendard-Black.woff2") format("woff2"); font-weight: 900; font-style: normal; font-display: swap; }
+
+:root {
+  /* ===== Brand — [공식 규정] ===== */
+  --color-primary: #DC2828;   /* COM2US Red — PANTONE 2347 C */
+  --color-white:   #FFFFFF;
+  --color-black:   #000000;
+
+  /* ===== Red Ramp — [공식 규정] ===== */
+  --red-100: #DC2828;
+  --red-200: #A51E1E;
+  --red-300: #891110;
+  --red-400: #6C1214;
+  --red-500: #40100F;
+  --red-600: #240A00;
+
+  /* ===== Neutral Ramp (Mono) — [공식 규정] ===== */
+  --gray-00: #FFFFFF;
+  --gray-05: #E5E5E5;
+  --gray-10: #CCCCCC;
+  --gray-20: #B2B2B2;
+  --gray-30: #999999;
+  --gray-40: #808080;
+  --gray-50: #666666;
+  --gray-60: #4C4C4C;
+  --gray-70: #333333;
+  --gray-80: #191919;
+  --gray-90: #000000;
+
+  /* ===== Semantic — [확장 권장] ===== */
+  --brand-primary:        var(--red-100);
+  --brand-primary-hover:  var(--red-200);
+  --brand-primary-active: var(--red-300);
+
+  --text-primary:    var(--gray-80);   /* #191919 body */
+  --text-secondary:  var(--gray-50);   /* #666666 supporting */
+  --text-disabled:   var(--gray-20);   /* #B2B2B2 */
+  --text-on-brand:   var(--gray-00);   /* white on red */
+
+  --bg-base:    var(--gray-00);  /* #FFFFFF */
+  --bg-subtle:  var(--gray-05);  /* #E5E5E5 divider surface */
+  --bg-inverse: var(--gray-90);  /* #000000 */
+
+  --border-default: var(--gray-10);  /* #CCCCCC */
+  --state-error:    var(--red-100);  /* same as brand — disambiguate by context */
+
+  /* ===== Warm-neutral surface tier — [확장 권장 · Pinterest-inspired] =====
+     COM2US Red(#DC2828)는 따뜻한 계열의 레드이므로, 콘텐츠(키 아트·갤러리)가
+     주인공인 화면에서는 차가운 순수 그레이 대신 미세하게 따뜻한 뉴트럴 면을
+     배경으로 써서 이미지가 더 자연스럽게 어우러지도록 합니다. 브랜드 크롬
+     (스타크 화이트/블랙)은 그대로 유지하고, 이 톤은 '디스커버리/갤러리 모드'에만
+     선택적으로 적용합니다. 경계·텍스트는 공식 Neutral ramp를 계속 사용합니다. */
+  --surface-soft:  #FAF9F7;  /* 페이지 워시 (warm off-white) */
+  --surface-card:  #F4F2EF;  /* 콘텐츠 카드·핀 타일 바탕 (warm cream) */
+  --surface-sink:  #ECEAE6;  /* 한 단계 깊은 구분 면 */
+  --surface-dark:  var(--gray-80);  /* #191919 다크 콘텐츠 면 */
+  --hairline-warm: #E4E1DC;  /* 따뜻한 면 위의 1px 구분선 */
+
+  /* ===== Focus ring — [확장 권장] =====
+     접근성용 더블 링: 흰 갭 + 브랜드 레드 외곽선 (Pinterest의 더블링 포커스를
+     블루 대신 COM2US Red로 재해석). box-shadow로 적용. */
+  --focus-ring: 0 0 0 2px var(--bg-base), 0 0 0 4px var(--brand-primary);
+
+  /* ===== Typography families — Noto Sans KR everywhere (Pretendard fallback) ===== */
+  --font-en: "Noto Sans KR", "Pretendard", system-ui, sans-serif;          /* EN / display */
+  --font-kr: "Noto Sans KR", "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; /* KR / body */
+  --font-base: var(--font-kr);
+
+  /* ===== Type scale (px) — [확장 권장], 8px base ===== */
+  --fs-display: 48px; --lh-display: 56px;
+  --fs-h1: 36px;      --lh-h1: 44px;
+  --fs-h2: 28px;      --lh-h2: 36px;
+  --fs-h3: 22px;      --lh-h3: 30px;
+  --fs-body-l: 18px;  --lh-body-l: 28px;
+  --fs-body: 16px;    --lh-body: 26px;
+  --fs-caption: 14px; --lh-caption: 20px;
+  --fs-label: 12px;   --lh-label: 16px;
+
+  --fw-regular: 400; /* @kind font */
+  --fw-medium: 500; /* @kind font */
+  --fw-bold: 700; /* @kind font */
+  --fw-black: 900; /* @kind font */
+
+  /* ===== Spacing (8px base) — [확장 권장] ===== */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px;
+
+  /* ===== Radius — [확장 권장] ===== */
+  --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px; --radius-full: 9999px;
+  --radius-pill: 9999px;  /* alias — 캡슐형 버튼·칩·검색바 (Pinterest-inspired) */
+
+  /* ===== Elevation — [확장 권장] (mono shadows, no color tint) ===== */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.08);
+  --shadow-md: 0 2px 8px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+  --shadow-lg: 0 8px 28px rgba(0,0,0,.12), 0 2px 8px rgba(0,0,0,.06);
+  --shadow-modal: 0 16px 48px rgba(0,0,0,.18);  /* 모달 전용 앰비언트 */
+
+  /* ===== Layout — [확장 권장] ===== */
+  --container-max: 1280px;
+  --grid-gutter: 24px;
+  --grid-gutter-tight: 8px;  /* 마소너리/갤러리 그리드 (이미지가 맞닿는 밀도) */
+  --section-rhythm: 64px;    /* 주요 콘텐츠 블록 간 수직 간격 */
+
+  /* ===== Motion — [확장 권장] ===== */
+  --ease-standard: cubic-bezier(.2, 0, 0, 1); /* @kind other */
+  --ease-out: cubic-bezier(.16, 1, .3, 1); /* @kind other */
+  --dur-fast: 120ms; /* @kind other */
+  --dur-base: 200ms; /* @kind other */
+  --dur-slow: 320ms; /* @kind other */
+}
+
+/* ============================================================
+   Semantic element styles — apply on top of the tokens above
+   ============================================================ */
+
+.ds-display {
+  font-family: var(--font-en);
+  font-weight: var(--fw-black);
+  font-size: var(--fs-display); line-height: var(--lh-display);
+  letter-spacing: -0.02em; color: var(--text-primary);
+}
+.ds-h1 {
+  font-family: var(--font-en);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-h1); line-height: var(--lh-h1);
+  letter-spacing: -0.015em; color: var(--text-primary);
+}
+.ds-h2 {
+  font-family: var(--font-en);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-h2); line-height: var(--lh-h2);
+  letter-spacing: -0.01em; color: var(--text-primary);
+}
+.ds-h3 {
+  font-family: var(--font-en);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-h3); line-height: var(--lh-h3);
+  color: var(--text-primary);
+}
+.ds-body-l {
+  font-family: var(--font-base);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-body-l); line-height: var(--lh-body-l);
+  color: var(--text-primary);
+}
+.ds-body {
+  font-family: var(--font-base);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-body); line-height: var(--lh-body);
+  color: var(--text-primary);
+}
+.ds-caption {
+  font-family: var(--font-base);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-caption); line-height: var(--lh-caption);
+  color: var(--text-secondary);
+}
+.ds-label {
+  font-family: var(--font-en);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-label); line-height: var(--lh-label);
+  letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   Pinterest-inspired patterns — [확장 권장]
+   캡슐(pill) 액션, 콘텐츠 카드, 이미지 오버레이 칩, 마소너리 그리드.
+   브랜드 식별은 COM2US Red 유지, 콘텐츠 면은 warm-neutral.
+   ============================================================ */
+
+/* Pill button — 캡슐형 액션. 기본 버튼(.ds-btn, radius-md)과 공존하는 변형.
+   디스커버리/소셜 맥락(태그, 팔로우, 필터)에 사용. */
+.ds-pill {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: var(--font-en); font-weight: var(--fw-bold);
+  font-size: 14px; line-height: 1;
+  height: 40px; padding: 0 18px;
+  border: none; border-radius: var(--radius-pill);
+  cursor: pointer; transition: background var(--dur-base) var(--ease-standard), color var(--dur-base);
+}
+.ds-pill--primary { background: var(--brand-primary); color: var(--text-on-brand); }
+.ds-pill--primary:hover { background: var(--brand-primary-hover); }
+.ds-pill--primary:active { background: var(--brand-primary-active); }
+.ds-pill--secondary { background: var(--surface-sink); color: var(--text-primary); }
+.ds-pill--secondary:hover { background: var(--surface-card); }
+.ds-pill--ghost { background: transparent; color: var(--text-primary); }
+.ds-pill--ghost:hover { color: var(--brand-primary); }
+/* Filter chip — 선택 시 완전 반전 (Pinterest filter-chip 패턴, 모노) */
+.ds-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-en); font-weight: var(--fw-medium); font-size: 13px;
+  height: 36px; padding: 0 16px;
+  background: var(--surface-card); color: var(--text-primary);
+  border: 1px solid var(--hairline-warm); border-radius: var(--radius-pill);
+  cursor: pointer; transition: background var(--dur-base), color var(--dur-base), border-color var(--dur-base);
+}
+.ds-chip:hover { border-color: var(--gray-30); }
+.ds-chip--active { background: var(--text-primary); color: var(--bg-base); border-color: var(--text-primary); }
+
+/* Search bar — pill, warm fill, focus flips to white + red ring */
+.ds-search {
+  display: flex; align-items: center; gap: 10px;
+  height: 48px; padding: 0 18px;
+  background: var(--surface-card); border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-base); font-size: 15px; color: var(--text-primary);
+  transition: background var(--dur-base), box-shadow var(--dur-base);
+}
+.ds-search:focus-within { background: var(--bg-base); box-shadow: var(--focus-ring); }
+
+/* Content card — full-bleed image is the card; no internal padding.
+   Flat (no shadow); depth comes from the imagery. radius-lg corners. */
+.ds-content-card {
+  position: relative; overflow: hidden;
+  background: var(--surface-card);
+  border-radius: var(--radius-lg);
+  break-inside: avoid; /* masonry */
+}
+.ds-content-card__media { display: block; width: 100%; height: auto; }
+.ds-content-card__caption {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px;
+}
+
+/* Overlay pill — 이미지 모서리에 앉는 라벨 칩 (white fill, ink text) */
+.ds-overlay-pill {
+  position: absolute;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-en); font-weight: var(--fw-bold); font-size: 12px;
+  padding: 6px 12px;
+  background: var(--bg-base); color: var(--text-primary);
+  border-radius: var(--radius-pill);
+}
+.ds-overlay-pill--brand { background: var(--brand-primary); color: var(--text-on-brand); }
+
+/* Masonry / gallery grid — column-based, tight 8px gutters so imagery touches */
+.ds-masonry {
+  column-gap: var(--grid-gutter-tight);
+  columns: 4;
+}
+.ds-masonry > * { margin-bottom: var(--grid-gutter-tight); }
+@media (max-width: 1024px) { .ds-masonry { columns: 3; } }
+@media (max-width: 768px)  { .ds-masonry { columns: 2; } }
+@media (max-width: 480px)  { .ds-masonry { columns: 1; } }
+
+/* ============================================================
+   Data Table — [확장 권장 · Notion-inspired, Com2uS-skinned]
+   Notion의 조용한 표 구조(서브틀 헤더 면 + eyebrow 대문자 헤더 + 헤어라인
+   행 구분 + 넉넉한 셀 패딩)를 차용하되, 액센트는 COM2US Red로 재정의.
+   구조는 Notion, 색·서체는 컴투스(모노 + Red, Pretendard).
+   ============================================================ */
+.ds-table { width: 100%; border-collapse: collapse; font-family: var(--font-base); }
+.ds-table th {
+  font-family: var(--font-en); font-weight: var(--fw-medium);
+  font-size: 12px; line-height: 1.33; letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--text-secondary); text-align: left;
+  padding: 12px 16px; background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-default); white-space: nowrap;
+}
+.ds-table td {
+  font-size: 15px; line-height: 1.4; color: var(--text-primary);
+  padding: 14px 16px; border-bottom: 1px solid var(--border-default); vertical-align: middle;
+}
+.ds-table tbody tr:last-child td { border-bottom: none; }
+.ds-table tbody tr { transition: background var(--dur-fast); }
+.ds-table tbody tr:hover { background: var(--surface-soft); }
+.ds-table .num, .ds-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.ds-table .ds-cell-strong { font-weight: var(--fw-bold); }
+.ds-table .ds-cell-key { font-weight: var(--fw-bold); color: var(--brand-primary); font-variant-numeric: tabular-nums; } /* 핵심 수치 강조 */
+/* 활성/선택 행 — 좌측 Red 인디케이터 (Notion의 primary active를 Red로) */
+.ds-table tr.is-active { background: var(--surface-soft); }
+.ds-table tr.is-active td:first-child { box-shadow: inset 3px 0 0 var(--brand-primary); }
+/* 카드형 래퍼: 둥근 모서리 + 1px 테두리 */
+.ds-table-card { border: 1px solid var(--border-default); border-radius: var(--radius-lg); overflow: hidden; background: var(--bg-base); }
+.ds-table-card .ds-table th:first-child { padding-left: 20px; }
+.ds-table-card .ds-table td:first-child { padding-left: 20px; }
+/* 정렬 표시기 (활성 헤더는 Red) */
+.ds-sort { display: inline-flex; align-items: center; gap: 5px; }
+.ds-sort--active { color: var(--brand-primary); }
+/* 셀 안 상태 칩 */
+.ds-status { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-en); font-weight: var(--fw-bold); font-size: 11px; padding: 3px 10px; border-radius: var(--radius-full); }
+.ds-status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.ds-status--live { color: var(--brand-primary); background: rgba(220,40,40,.10); }
+.ds-status--done { color: var(--gray-60); background: var(--bg-subtle); }
+.ds-status--soon { color: var(--gray-50); background: transparent; border: 1px solid var(--border-default); }
+
+/* ============================================================
+   Product Selector — [확장 권장 · Notion-inspired, Com2uS-skinned]
+   Notion의 "What's Included" 요약 카드(이미지 웰 + 라인아이템 리스트)를
+   '이미지 + 계획/결과' 장표용으로 재구성. 합계/핵심 결과 행은 Red 강조.
+   ============================================================ */
+.ds-selector {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch;
+  background: var(--surface); border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg); padding: 24px;
+}
+.ds-selector__media { border-radius: var(--radius-md); overflow: hidden; position: relative; min-height: 220px; background: var(--surface-card); }
+.ds-selector__media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.ds-selector__panel { display: flex; flex-direction: column; }
+.ds-selector__row { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 13px 0; border-bottom: 1px solid var(--border-default); }
+.ds-selector__row:first-of-type { padding-top: 4px; }
+.ds-selector__row:last-of-type { border-bottom: none; }
+.ds-selector__label { font-family: var(--font-base); font-size: 15px; color: var(--text-primary); display: flex; align-items: center; gap: 9px; }
+.ds-selector__check { flex: none; width: 17px; height: 17px; display: inline-flex; }
+.ds-selector__check svg { width: 100%; height: 100%; display: block; }
+.ds-selector__val { font-family: var(--font-en); font-weight: var(--fw-medium); font-size: 15px; color: var(--text-secondary); font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* 합계/핵심 결과 행 — Red 강조 */
+.ds-selector__total { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-top: 16px; padding-top: 16px; border-top: 2px solid var(--text-primary); }
+.ds-selector__total .ds-selector__label { font-family: var(--font-en); font-weight: var(--fw-bold); font-size: 16px; }
+.ds-selector__total .ds-selector__val { font-family: var(--font-en); font-weight: var(--fw-black); font-size: 26px; color: var(--brand-primary); letter-spacing: -0.02em; }
+@media (max-width: 768px) { .ds-selector { grid-template-columns: 1fr; } }
