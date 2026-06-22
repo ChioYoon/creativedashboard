@@ -961,9 +961,48 @@
     <!-- ── 좌측: 설정 패널 ── -->
     <div class="left-panel">
 
-      <!-- ① CSV 업로드 -->
-      <div class="section-title"><i class="fas fa-upload"></i> CSV 업로드</div>
-      <div class="section-desc">소재 분석 데이터가 담긴 CSV 파일을 업로드하세요. 컬럼이 자동으로 분류됩니다.</div>
+      <!-- ⓪ 파이프라인 데이터 (F2 타이틀 선택기) -->
+      <div class="section-title"><i class="fas fa-database"></i> 파이프라인 데이터</div>
+      <div class="section-desc">타이틀을 선택하면 수집된 소재가 바로 로드됩니다 (Step1 없이 군집화 가능). 또는 아래에서 CSV 업로드.</div>
+      <select id="titleSelect" onchange="onTitleSelect(this.value)"
+        style="width:100%;padding:9px 12px;border:1.5px solid var(--gray-line);border-radius:8px;font-size:13px;font-weight:600;color:var(--dark);background:var(--white);margin-bottom:14px;cursor:pointer;">
+        <option value="">타이틀을 선택하세요…</option>
+      </select>
+
+      <!-- F1 군집화 대상 필터 (파이프라인 로드 시 표시) -->
+      <div id="pipelineFilters" style="display:none;background:var(--gray-bg);border:1px solid var(--gray-line);border-radius:var(--radius-md);padding:14px;margin-bottom:14px;">
+        <div style="font-size:12px;font-weight:700;color:var(--mid);margin-bottom:10px;">
+          <i class="fas fa-filter" style="color:var(--red);margin-right:5px;"></i>군집화 대상 필터
+          <span style="font-weight:500;color:var(--gray-text);font-size:11px;">· 전체 기간 지표 기준, 조건에 맞는 소재만</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;">
+          <div>
+            <div style="font-size:11px;color:var(--gray-text);margin-bottom:5px;">소재 유형</div>
+            <label style="font-size:12px;margin-right:10px;cursor:pointer;"><input type="checkbox" id="filterTypeBNR" checked> BNR</label>
+            <label style="font-size:12px;cursor:pointer;"><input type="checkbox" id="filterTypeVID" checked> VID</label>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--gray-text);margin-bottom:5px;">날짜 범위 (활동일)</div>
+            <input type="date" id="filterDateStart" style="font-size:12px;padding:4px 6px;border:1px solid var(--gray-line);border-radius:6px;">
+            <span style="color:var(--gray-text);">~</span>
+            <input type="date" id="filterDateEnd" style="font-size:12px;padding:4px 6px;border:1px solid var(--gray-line);border-radius:6px;">
+          </div>
+          <div style="flex:1;min-width:170px;">
+            <div style="font-size:11px;color:var(--gray-text);margin-bottom:5px;">캠페인 <span style="color:var(--gray-text);">(Ctrl/⌘+클릭 다중, 미선택=전체)</span></div>
+            <select id="filterCampaign" multiple size="3" style="width:100%;font-size:11px;padding:4px;border:1px solid var(--gray-line);border-radius:6px;"></select>
+          </div>
+          <div>
+            <button onclick="applyPipelineFilters()" style="padding:7px 14px;font-size:12px;font-weight:700;background:var(--red);color:#fff;border:none;border-radius:8px;cursor:pointer;"><i class="fas fa-filter"></i> 필터 적용</button>
+            <div id="filterCountInfo" style="font-size:11px;color:var(--gray-text);margin-top:5px;text-align:center;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <!-- ① CSV 업로드 (대체) -->
+      <div class="section-title"><i class="fas fa-upload"></i> CSV 업로드 <span style="font-size:12px;font-weight:500;color:var(--gray-text);">(대체 입력)</span></div>
+      <div class="section-desc">파이프라인 타이틀이 없을 때 CSV 파일을 업로드하세요. 컬럼이 자동으로 분류됩니다.</div>
 
       <div class="upload-zone" id="uploadZone">
         <input type="file" id="csvFile" accept=".csv">
@@ -1424,6 +1463,8 @@ function handleFile(file) {
    파이프라인 JSON 자동 로드 (재업로드 제거) — CSV 경로와 동일 하류
 ═══════════════════════════════════════════════ */
 function ingestPipelineRows(columns, rows, titleId) {
+  window.__allColumns = columns;        // F1: 필터 마스터(원본 전체)
+  window.__allRows = rows.slice();
   csvData = { headers: columns, rows: rows };
   uploadZone.classList.add('uploaded');
   const ic = uploadZone.querySelector('.upload-icon i'); if (ic) ic.className = 'fas fa-check-circle';
@@ -1436,14 +1477,14 @@ function ingestPipelineRows(columns, rows, titleId) {
   if (fm) fm.textContent = txtCount > 0
     ? `전체 ${rows.length}행 (BNR/VID ${bnrVidCount}개 · TXT ${txtCount}개 제외) · ${columns.length}개 컬럼 · 파이프라인 자동 로드`
     : `${rows.length}행 · ${columns.length}개 컬럼 · 파이프라인 자동 로드`;
+  populatePipelineFilters(rows);   // F1: 필터 컨트롤 채우기·표시
   classifyAndRender(csvData);
 }
 
-// ?title= 있으면 파이프라인 JSON 자동 로드. 성공 true / 미지정·실패 false(→ CSV 업로드 폴백)
-async function loadFromPipeline() {
-  if (!window.DataSource) return false;
-  const tid = window.DataSource.readTitleFromUrl();
-  if (!tid) return false;
+// 타이틀 ID 로 파이프라인 JSON 로드 (F2 셀렉터·?title= 자동로드 공용)
+async function loadTitleById(tid) {
+  if (!window.DataSource || !tid) return false;
+  window.DataSource.setActiveTitleId(tid);
   try {
     const manifest = await window.DataSource.loadTitleManifest();
     const entry = (manifest || []).find(t => t.id === tid);
@@ -1451,12 +1492,102 @@ async function loadFromPipeline() {
     const { normalized } = await window.DataSource.loadCreativeData('json-url', { url: entry.json_url, titleId: tid });
     if (!normalized || !normalized.rows || !normalized.rows.length) return false;
     ingestPipelineRows(normalized.columns, normalized.rows, tid);
-    showToast(`✅ 파이프라인 데이터 자동 로드: ${tid} (${normalized.rows.length}개 소재)`, 'success');
+    showToast(`✅ ${entry.name || tid} 로드 (${normalized.rows.length}개 소재)`, 'success');
     return true;
   } catch (e) {
-    console.warn('[step2] 파이프라인 자동 로드 실패, CSV 폴백:', e.message);
+    console.warn('[step2] 파이프라인 로드 실패:', e.message);
+    showToast('파이프라인 로드 실패: ' + e.message, 'error');
     return false;
   }
+}
+
+// ?title= 있으면 자동 로드. 미지정·실패 시 false(→ CSV 업로드 폴백)
+async function loadFromPipeline() {
+  const tid = window.DataSource && window.DataSource.readTitleFromUrl();
+  if (!tid) return false;
+  return await loadTitleById(tid);
+}
+
+// F2: 타이틀 셀렉터 변경 — Step1 없이 바로 선택해 로드
+function onTitleSelect(tid) { if (tid) loadTitleById(tid); }
+
+// F2: 타이틀 셀렉터 옵션 채우기 (titles.json manifest)
+async function populateTitleSelect() {
+  if (!window.DataSource) return;
+  const sel = document.getElementById('titleSelect'); if (!sel) return;
+  try {
+    const manifest = await window.DataSource.loadTitleManifest();
+    const active = window.DataSource.readTitleFromUrl();
+    (manifest || []).filter(t => t.json_url).forEach(t => {
+      const o = document.createElement('option');
+      o.value = t.id; o.textContent = t.name || t.id;
+      if (t.id === active) o.selected = true;
+      sel.appendChild(o);
+    });
+  } catch (e) { console.warn('[step2] 타이틀 목록 로드 실패:', e.message); }
+}
+
+/* ─────────── F1: 군집화 대상 필터 (유형·캠페인·날짜, 전체기간 지표·inclusion) ─────────── */
+// 소재가 집행된 캠페인 집합 (kpi_daily=Google Ads / mmp_daily=비-Google)
+function creativeCampaigns(row) {
+  const out = new Set();
+  (row.kpi_daily || []).forEach(r => { if (r.campaign_name) out.add(r.campaign_name); });
+  (row.mmp_daily || []).forEach(r => { const c = r.campaign_name || r.channel; if (c) out.add(c); });
+  return out;
+}
+// 소재의 활동 일자 배열
+function creativeDates(row) {
+  const ds = [];
+  (row.kpi_daily || []).concat(row.mmp_daily || []).forEach(r => { if (r.date) ds.push(r.date); });
+  return ds;
+}
+// 로드 직후 필터 컨트롤 채우기 (캠페인 옵션·날짜 범위·유형 기본 체크)
+function populatePipelineFilters(rows) {
+  const camps = new Set(); let dmin = null, dmax = null;
+  (rows || []).forEach(r => {
+    creativeCampaigns(r).forEach(c => camps.add(c));
+    creativeDates(r).forEach(dt => { if (!dmin || dt < dmin) dmin = dt; if (!dmax || dt > dmax) dmax = dt; });
+  });
+  const csel = document.getElementById('filterCampaign');
+  if (csel) csel.innerHTML = [...camps].sort().map(c => `<option value="${escHtml(c)}">${escHtml(c)}</option>`).join('');
+  const ds = document.getElementById('filterDateStart'), de = document.getElementById('filterDateEnd');
+  if (ds) { ds.value = dmin || ''; if (dmin) ds.min = dmin; if (dmax) ds.max = dmax; }
+  if (de) { de.value = dmax || ''; if (dmin) de.min = dmin; if (dmax) de.max = dmax; }
+  const b = document.getElementById('filterTypeBNR'), v = document.getElementById('filterTypeVID');
+  if (b) b.checked = true; if (v) v.checked = true;
+  const fp = document.getElementById('pipelineFilters'); if (fp) fp.style.display = 'block';
+  updateFilterCount((rows || []).length, (rows || []).length);
+}
+function updateFilterCount(n, total) {
+  const el = document.getElementById('filterCountInfo');
+  if (el) el.textContent = `${n} / ${total}개 소재 대상`;
+}
+// 필터 적용 — 마스터(__allRows)에서 부분집합 추출 → csvData 갱신 → 재분류
+function applyPipelineFilters() {
+  if (!window.__allRows) return;
+  const types = [];
+  if (document.getElementById('filterTypeBNR')?.checked) types.push('BNR');
+  if (document.getElementById('filterTypeVID')?.checked) types.push('VID');
+  const csel = document.getElementById('filterCampaign');
+  const selCamps = csel ? [...csel.selectedOptions].map(o => o.value) : [];
+  const campFilterOn = selCamps.length > 0;  // 미선택 = 전체
+  const dstart = (document.getElementById('filterDateStart') || {}).value || '';
+  const dend = (document.getElementById('filterDateEnd') || {}).value || '';
+  const filtered = window.__allRows.filter(r => {
+    const t = (r['유형'] || r['앱 확장 소재 유형'] || '').toUpperCase().trim();
+    if (types.length && !types.includes(t)) return false;
+    if (campFilterOn) { const cc = creativeCampaigns(r); if (![...cc].some(c => selCamps.includes(c))) return false; }
+    if (dstart || dend) {
+      const dates = creativeDates(r);
+      if (dates.length) { const inRange = dates.some(dt => (!dstart || dt >= dstart) && (!dend || dt <= dend)); if (!inRange) return false; }
+    }
+    return true;
+  });
+  if (!filtered.length) { showToast('필터 결과가 0건입니다. 조건을 완화하세요.', 'error'); return; }
+  csvData = { headers: window.__allColumns, rows: filtered };
+  classifyAndRender(csvData);
+  updateFilterCount(filtered.length, window.__allRows.length);
+  showToast(`필터 적용: ${filtered.length}/${window.__allRows.length}개 소재로 군집화`, 'info');
 }
 
 /* ═══════════════════════════════════════════════
@@ -2203,7 +2334,8 @@ function showToast(msg, type = '') {
     } catch (e) {}
   }
   updateSummaryMode();
-  // 파이프라인 JSON 자동 로드(?title=) — 실패/미지정 시 CSV 업로드 UI 유지
+  // F2: 타이틀 셀렉터 채우기 + ?title= 자동 로드(없으면 CSV 업로드 UI 유지)
+  populateTitleSelect();
   loadFromPipeline();
 })();
 
