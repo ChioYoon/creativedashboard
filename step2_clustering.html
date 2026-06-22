@@ -1795,49 +1795,71 @@ function applyLayerToMaterials(clusters, layer) {
     cl.top3 = [...cl.materials].sort((a,b)=>(b.score||0)-(a.score||0)).slice(0,3);
   });
 }
-function setClusterLayer(layer) {
+// R2-C: 활성 레이어 성과로 군집 내 ±1.5σ 이상치를 고성과/저성과 하위군집으로 분리.
+//   base(태그 군집)는 보존하고, 레이어 토글마다 base 에서 다시 분리(성과는 레이어별).
+function buildLayeredClusters(baseClusters, layer) {
+  applyLayerToMaterials(baseClusters, layer);   // 활성 레이어 점수 반영(material.score)
+  const MIN_SPLIT = 2, Z = 1.0;   // ±1σ 밖을 고/저성과로 분리(1.5σ는 분산 넓은 데이터서 거의 안 갈림)
+  const raw = []; let nid = 0;
+  (baseClusters || []).forEach(bc => {
+    const mats = bc.materials || [];
+    const tags = bc.tags || [];
+    if (bc.id === -1) { raw.push({ id: -1, tags, materials: mats, _scores: mats.map(m => m.score || 0) }); return; }
+    const valid = mats.filter(m => (m.score || 0) > 0);   // 데이터 없는(점수 0, 예: MMP 미집행) 소재는 정제서 제외
+    const zeros = mats.filter(m => !((m.score || 0) > 0));
+    if (valid.length < 6) { raw.push({ id: nid++, tags, materials: mats, _scores: mats.map(m => m.score || 0) }); return; }
+    const sc = valid.map(m => m.score);
+    const mean = sc.reduce((a, b) => a + b, 0) / sc.length;
+    const std = Math.sqrt(sc.reduce((s, v) => s + (v - mean) ** 2, 0) / sc.length);
+    if (!std) { raw.push({ id: nid++, tags, materials: mats, _scores: mats.map(m => m.score || 0) }); return; }
+    const zf = m => (m.score - mean) / std;
+    let high = valid.filter(m => zf(m) > Z), low = valid.filter(m => zf(m) < -Z),
+        core = valid.filter(m => Math.abs(zf(m)) <= Z).concat(zeros);   // 코어 + 데이터없음 소재
+    const extra = [];
+    if (high.length >= MIN_SPLIT) extra.push(['hi', high]); else core = core.concat(high);
+    if (low.length >= MIN_SPLIT) extra.push(['lo', low]); else core = core.concat(low);
+    raw.push({ id: nid++, tags, materials: core, _scores: core.map(m => m.score || 0), _perfSplit: 'core' });
+    extra.forEach(([k, ms]) => raw.push({ id: nid++, tags, materials: ms, _scores: ms.map(m => m.score || 0), _perfSplit: k }));
+  });
+  const en = enrichClusters(raw, (clusterResults && clusterResults.weightMap) || {});
+  en.forEach(c => {
+    if (c._perfSplit === 'hi') c.name = '★ 고성과 · ' + c.name;
+    else if (c._perfSplit === 'lo') c.name = '▽ 저성과 · ' + c.name;
+  });
+  return en;
+}
+// 활성 레이어로 성과 정제 + 전체 재렌더 (초기 렌더·레이어 토글 공용)
+function applyLayerAndRender(layer) {
+  if (!clusterResults || !clusterResults.baseClusters) return;
   window.currentAnalysisLayer = layer;
   const ba = document.getElementById('clLayerAds'), bm = document.getElementById('clLayerMmp');
   if (ba && bm) {
     const base = 'padding:5px 12px;border-radius:8px;border:1px solid var(--gray-line,#ddd);font-weight:700;font-size:12px;cursor:pointer;';
     const on = 'background:var(--red);color:#fff;', off = 'background:var(--gray-bg,#f3f4f6);color:var(--mid,#555);';
-    ba.style.cssText = base + (layer==='ads'?on:off);
-    bm.style.cssText = base + (layer==='mmp'?on:off);
+    ba.style.cssText = base + (layer === 'ads' ? on : off);
+    bm.style.cssText = base + (layer === 'mmp' ? on : off);
   }
-  if (clusterResults && clusterResults.clusters) {
-    applyLayerToMaterials(clusterResults.clusters, layer);
-    renderKPIStrip(clusterResults.clusters);
-    renderQualityCard(clusterResults.clusters);     // R2-B: 품질 신뢰도 레이어 반영
-    renderClusterCards(clusterResults.clusters);
-    renderCharts(clusterResults.clusters);
-    renderMappingTable(clusterResults.clusters);
-    renderTagImpact(clusterResults);                                  // R2-A: 히트맵 레이어 반영
-    renderInsights(clusterResults.clusters, clusterResults);          // R2-A: 인사이트·승리공식 레이어 반영
-  }
+  clusterResults.clusters = buildLayeredClusters(clusterResults.baseClusters, layer);
+  const c = clusterResults.clusters;
+  const badge = document.getElementById('clusterCountBadge'); if (badge) badge.textContent = `총 ${c.length}개 군집`;
+  renderKPIStrip(c);
+  renderQualityCard(c);                       // R2-B
+  renderClusterCards(c);
+  renderCharts(c);
+  renderMappingTable(c);
+  renderTagImpact(clusterResults);            // R2-A
+  renderInsights(c, clusterResults);          // R2-A
 }
+function setClusterLayer(layer) { applyLayerAndRender(layer); }
 
 /* ══════════════════════════════════════════════════════════════
    결과 렌더링
 ══════════════════════════════════════════════════════════════ */
 function renderResults(data) {
-  const { clusters } = data;
-
+  clusterResults.baseClusters = data.clusters;   // R2-C: 태그 군집(정제 전) 보존 — 토글마다 성과 정제 재계산
   document.getElementById('resultArea').classList.add('show');
-  document.getElementById('clusterCountBadge').textContent = `총 ${clusters.length}개 군집`;
-
-  // 활성 레이어(기본 ads) 성과 적용 — ads 원본 캐시 + 군집 통계 산출
-  applyLayerToMaterials(clusters, window.currentAnalysisLayer || 'ads');
-
-  renderKPIStrip(clusters);
-  renderQualityCard(clusters);     // R2-B: 군집 품질 신뢰도
-  renderClusterCards(clusters);
-  renderCharts(clusters);
-  renderTagImpact(data);
-  renderInsights(clusters, data);
-  renderMappingTable(clusters);
-
-  // 스크롤
-  document.getElementById('resultArea').scrollIntoView({ behavior:'smooth', block:'start' });
+  applyLayerAndRender(window.currentAnalysisLayer || 'ads');   // 성과 정제 + 전체 렌더
+  document.getElementById('resultArea').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 /* ── KPI 스트립 ── */
