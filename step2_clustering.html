@@ -1809,6 +1809,8 @@ function setClusterLayer(layer) {
     renderClusterCards(clusterResults.clusters);
     renderCharts(clusterResults.clusters);
     renderMappingTable(clusterResults.clusters);
+    renderTagImpact(clusterResults);                                  // R2-A: 히트맵 레이어 반영
+    renderInsights(clusterResults.clusters, clusterResults);          // R2-A: 인사이트·승리공식 레이어 반영
   }
 }
 
@@ -2107,6 +2109,55 @@ function renderTagImpact(data) {
 }
 
 /* ── 자동 인사이트 ── */
+// R2-A: 승리공식/중단패턴 — 소재 단위 상·하위 25% 태그 lift. {winners,losers,n,k}.
+function buildPatternInsights(clusters) {
+  const mats = (clusters || []).flatMap(c => c.materials || []);
+  const n = mats.length;
+  if (n < 4) return { winners: [], losers: [], n, k: 0 };
+  const sorted = [...mats].sort((a, b) => (b.score || 0) - (a.score || 0));
+  let k = Math.max(2, Math.ceil(n * 0.25));
+  if (k > Math.floor(n / 2)) k = Math.floor(n / 2);   // 상·하위 겹침 방지
+  const winners = sorted.slice(0, k), losers = sorted.slice(n - k);
+  const tagsOf = m => Array.isArray(m.tags) ? m.tags : [];
+  const cand = new Set();
+  winners.concat(losers).forEach(m => tagsOf(m).forEach(t => cand.add(t)));
+  const rows = [];
+  cand.forEach(t => {
+    const topN = winners.filter(m => tagsOf(m).includes(t)).length;
+    const botN = losers.filter(m => tagsOf(m).includes(t)).length;
+    if (topN < 2 && botN < 2) return;   // 최소 지지(상위 또는 하위 2건 이상)
+    const topR = topN / k, botR = botN / k;
+    rows.push({ tag: t, lift: topR - botR, topPct: Math.round(topR * 100), botPct: Math.round(botR * 100), topN, botN });
+  });
+  return {
+    winners: rows.filter(r => r.lift > 0).sort((a, b) => b.lift - a.lift || b.topPct - a.topPct).slice(0, 5),
+    losers:  rows.filter(r => r.lift < 0).sort((a, b) => a.lift - b.lift || b.botPct - a.botPct).slice(0, 5),
+    n, k,
+  };
+}
+// R2-A: 승리공식/중단패턴 블록 HTML (insightGrid 상단 전용 카드)
+function buildPatternInsightsHtml(clusters) {
+  const pat = buildPatternInsights(clusters);
+  if (!pat.winners.length && !pat.losers.length) return '';
+  const layerLbl = (window.currentAnalysisLayer || 'ads') === 'mmp' ? 'MMP 품질' : 'Google Ads';
+  const liftRow = (r, win) => `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px dashed var(--gray-line);">
+      <span style="flex:1;font-size:12.5px;font-weight:600;color:var(--dark);">${escHtml(r.tag)}</span>
+      <span style="font-size:10.5px;color:var(--gray-text);white-space:nowrap;">상위 ${r.topPct}% · 하위 ${r.botPct}%</span>
+      <span style="font-size:12px;font-weight:800;min-width:46px;text-align:right;color:${win ? '#059669' : 'var(--red)'};">${r.lift > 0 ? '+' : ''}${Math.round(r.lift * 100)}%p</span>
+    </div>`;
+  const col = (title, rows, win, empty) => `<div style="flex:1;min-width:220px;">
+      <div style="font-size:12px;font-weight:700;color:var(--mid);margin-bottom:6px;">${title}</div>
+      ${rows.length ? rows.map(r => liftRow(r, win)).join('') : `<div style="font-size:11px;color:var(--gray-text);padding:6px 0;">${empty}</div>`}
+    </div>`;
+  return `<div class="insight-card win fade-in" style="grid-column:1/-1;">
+      <div class="ic-header"><span class="ic-icon">🎯</span><span class="ic-title">승리공식 · 중단패턴 <span style="font-weight:500;font-size:11px;color:var(--gray-text);">상·하위 25% 소재 태그 lift · ${layerLbl} 기준</span></span></div>
+      <div class="ic-body" style="display:flex;gap:24px;flex-wrap:wrap;">
+        ${col('🏆 승리공식 (상위에서 더 흔한 태그)', pat.winners, true, '뚜렷한 승리 태그 없음')}
+        ${col('⛔ 중단패턴 (하위에서 더 흔한 태그)', pat.losers, false, '뚜렷한 저성과 태그 없음')}
+      </div>
+    </div>`;
+}
+
 function renderInsights(clusters, data) {
   const insights = [];
   const sorted = [...clusters].sort((a,b)=>b.avgScore-a.avgScore);
@@ -2188,7 +2239,7 @@ function renderInsights(clusters, data) {
     });
   }
 
-  document.getElementById('insightGrid').innerHTML = insights.map((ins,i) => `
+  document.getElementById('insightGrid').innerHTML = buildPatternInsightsHtml(clusters) + insights.map((ins,i) =>`
     <div class="insight-card ${ins.type} fade-in" style="animation-delay:${i*0.1}s;">
       <div class="ic-header">
         <span class="ic-icon">${ins.icon}</span>
