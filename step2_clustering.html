@@ -10,9 +10,10 @@
     /* ═══════════ 리셋 & 변수 ═══════════ */
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     :root {
-      --red:#E84855; --red-light:#FF6B6B; --red-pale:#FFF0F1; --red-mid:#FFCED1;
-      --gray-bg:#F7F8FA; --gray-line:#E8EBF0; --gray-text:#8A94A6;
-      --dark:#1A202C; --mid:#4A5568; --white:#FFFFFF;
+      /* T6: Com2uS DS v2 토큰 리맵 (변수명 유지·값만 DS 토큰, 폴백 포함) — 색·폰트 step1 일치 */
+      --red:var(--brand-primary,#DC2828); --red-light:var(--red-200,#A51E1E); --red-pale:#FFF0F1; --red-mid:#FFCED1;
+      --gray-bg:var(--surface-soft,#FAF9F7); --gray-line:var(--gray-05,#E5E5E5); --gray-text:var(--text-secondary,#666666);
+      --dark:var(--text-primary,#191919); --mid:var(--gray-60,#4C4C4C); --white:var(--gray-00,#FFFFFF);
       --green:#38A169; --green-pale:#F0FFF4; --green-mid:#C6F6D5;
       --orange:#DD6B20; --orange-pale:#FFFAF0; --orange-mid:#FEEBC8;
       --blue:#3182CE; --blue-pale:#EBF8FF; --blue-mid:#BEE3F8;
@@ -25,7 +26,7 @@
       --transition:all .2s ease;
     }
     body {
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans KR',sans-serif;
+      font-family:var(--font-base,"Noto Sans KR","Pretendard",-apple-system,sans-serif);
       background:linear-gradient(135deg,var(--red) 0%,var(--red-light) 100%);
       min-height:100vh; padding:20px; color:var(--dark);
     }
@@ -626,6 +627,7 @@
     .ai-key-badge.set   { background:var(--green-pale); color:var(--green); }
     .ai-key-badge.unset { background:var(--orange-pale); color:var(--orange); }
   </style>
+  <link rel="stylesheet" href="assets/ds/colors_and_type.css">
   <link rel="stylesheet" href="css/gemini-ui.css">
   <script src="js/layer-metrics.js"></script>
   <script src="js/data-source.js"></script>

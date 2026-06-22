@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Step 2: 군집화 컬럼 설정 - Com2uS R팀</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/ds/colors_and_type.css">
   <style>
     /* ═══════════════════════════════════════════
        기본 리셋 & 변수
@@ -12,16 +13,17 @@
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --red:       #E84855;
-      --red-light: #FF6B6B;
+      /* T6: Com2uS DS v2 토큰 리맵 (변수명 유지·값만 DS 토큰, 폴백 포함) */
+      --red:       var(--brand-primary,#DC2828);
+      --red-light: var(--red-200,#A51E1E);
       --red-pale:  #FFF0F1;
       --red-mid:   #FFCED1;
-      --gray-bg:   #F7F8FA;
-      --gray-line: #E8EBF0;
-      --gray-text: #8A94A6;
-      --dark:      #1A202C;
-      --mid:       #4A5568;
-      --white:     #FFFFFF;
+      --gray-bg:   var(--surface-soft,#FAF9F7);
+      --gray-line: var(--gray-05,#E5E5E5);
+      --gray-text: var(--text-secondary,#666666);
+      --dark:      var(--text-primary,#191919);
+      --mid:       var(--gray-60,#4C4C4C);
+      --white:     var(--gray-00,#FFFFFF);
       --green:     #38A169;
       --orange:    #DD6B20;
       --blue:      #3182CE;
@@ -35,7 +37,7 @@
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+      font-family: var(--font-base, "Noto Sans KR", "Pretendard", -apple-system, sans-serif);
       background: linear-gradient(135deg, var(--red) 0%, var(--red-light) 100%);
       min-height: 100vh;
       padding: 20px;
