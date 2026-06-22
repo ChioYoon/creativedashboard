@@ -1330,6 +1330,23 @@ function normalizeTag(raw) {
   return TAG_SYNONYMS[trimmed] || trimmed;
 }
 
+// 태그 값 분리 — 구분자는 ; | 와 '괄호 밖' 쉼표만. '/'는 개념 내부 구분(예: "혜택형(무료뽑기/보상)",
+// "전략/경쟁형(상성/조합)")이라 분할하지 않는다. 괄호 안 구분자도 보존(잘린 조각 방지).
+function splitTagValue(val) {
+  const out = []; let buf = '', depth = 0;
+  for (let i = 0; i < val.length; i++) {
+    const ch = val[i];
+    if (ch === '(' || ch === '（' || ch === '[' || ch === '{') depth++;
+    else if (ch === ')' || ch === '）' || ch === ']' || ch === '}') depth = Math.max(0, depth - 1);
+    if ((ch === ';' || ch === '；' || ch === '|') || (ch === ',' && depth === 0)) {
+      if (buf.trim()) out.push(buf.trim());
+      buf = '';
+    } else buf += ch;
+  }
+  if (buf.trim()) out.push(buf.trim());
+  return out;
+}
+
 /* ── Phase 1: IQR 기반 노이즈 필터 (소규모 적응형) ── */
 function iqrNoiseFilter(tagFreqs, rows) {
   const freqs = Object.values(tagFreqs);
@@ -1479,7 +1496,7 @@ function assignMaterialsToClusters(scoredMats, tagGroups, tagCols, weightMap, in
       const val = (srcRow[col.col] || '').trim();
       if (!val || val === '-') return;
       // 콤마·슬래시·세미콜론 등으로 분리 + ★ 태그 정규화 적용
-      val.split(/[,\/|；;]/).map(v => normalizeTag(v)).filter(v => v && v.length < 60).forEach(v => {
+      splitTagValue(val).map(v => normalizeTag(v)).filter(v => v && v.length < 60).forEach(v => {
         matTags[v] = (matTags[v] || 0) + (col.weight / 100);
       });
     });
@@ -1697,7 +1714,7 @@ async function runClustering() {
         const val = (srcRow[col.col] || '').trim();
         if (!val || val === '-') return;
         // ★ 태그 정규화(동의어 통합) 후 분리
-        val.split(/[,\/|；;]/).map(v => normalizeTag(v)).filter(v => v && v.length < 60).forEach(v => {
+        splitTagValue(val).map(v => normalizeTag(v)).filter(v => v && v.length < 60).forEach(v => {
           tagFreqs[v]  = (tagFreqs[v]  || 0) + 1;
           weightMap[v] = Math.max(weightMap[v] || 0, col.weight || 40);
           rowTags.push(v);
