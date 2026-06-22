@@ -822,6 +822,9 @@
       <!-- KPI 스트립 -->
       <div class="kpi-strip" id="kpiStrip"></div>
 
+      <!-- R2-B: 군집 품질 신뢰도 카드 -->
+      <div id="qualityCard" style="margin-bottom:14px;"></div>
+
       <!-- 군집 카드 -->
       <div class="section">
         <div class="section-head">
@@ -1804,6 +1807,7 @@ function setClusterLayer(layer) {
   if (clusterResults && clusterResults.clusters) {
     applyLayerToMaterials(clusterResults.clusters, layer);
     renderKPIStrip(clusterResults.clusters);
+    renderQualityCard(clusterResults.clusters);     // R2-B: 품질 신뢰도 레이어 반영
     renderClusterCards(clusterResults.clusters);
     renderCharts(clusterResults.clusters);
     renderMappingTable(clusterResults.clusters);
@@ -1825,6 +1829,7 @@ function renderResults(data) {
   applyLayerToMaterials(clusters, window.currentAnalysisLayer || 'ads');
 
   renderKPIStrip(clusters);
+  renderQualityCard(clusters);     // R2-B: 군집 품질 신뢰도
   renderClusterCards(clusters);
   renderCharts(clusters);
   renderTagImpact(data);
@@ -2107,6 +2112,75 @@ function renderTagImpact(data) {
 }
 
 /* ── 자동 인사이트 ── */
+// R2-B: 군집 품질 신뢰도 — 실루엣(태그 Jaccard 거리)+성과분리+크기균형+태그일관성 → 0~100·S/A/B/C.
+function computeClusterQuality(clusters) {
+  const real = (clusters || []).filter(c => c.id !== -1);   // '기타' 제외
+  const mats = real.flatMap(c => c.materials.map(m => ({ m, cid: c.id })));
+  const n = mats.length;
+  if (n < 4 || real.length < 2) return null;
+  const tagSet = m => new Set(Array.isArray(m.tags) ? m.tags : []);
+  const jac = (A, B) => { if (!A.size && !B.size) return 0; let i = 0; A.forEach(x => { if (B.has(x)) i++; }); const u = A.size + B.size - i; return u ? i / u : 0; };
+  const dist = (a, b) => 1 - jac(tagSet(a), tagSet(b));
+  // 실루엣
+  let sSum = 0;
+  mats.forEach(({ m, cid }) => {
+    const same = mats.filter(x => x.cid === cid && x.m !== m);
+    const a = same.length ? same.reduce((s, x) => s + dist(m, x.m), 0) / same.length : 0;
+    let b = Infinity;
+    real.forEach(c => { if (c.id === cid || !c.materials.length) return; const md = c.materials.reduce((s, x) => s + dist(m, x), 0) / c.materials.length; if (md < b) b = md; });
+    if (b === Infinity) b = 0;
+    sSum += (Math.max(a, b) > 0) ? (b - a) / Math.max(a, b) : 0;
+  });
+  const silPct = Math.round(((sSum / n) + 1) / 2 * 100);   // -1..1 → 0..100
+  // 성과 분리도(군집 avgScore 표준편차, 레이어 의존)
+  const avgs = real.map(c => c.avgScore || 0);
+  const mean = avgs.reduce((a, b) => a + b, 0) / avgs.length;
+  const std = Math.sqrt(avgs.reduce((s, v) => s + (v - mean) ** 2, 0) / avgs.length);
+  const perfSep = Math.round(Math.min(100, std * 3));
+  // 크기 균형(1 - 지니)
+  const sizes = real.map(c => c.materials.length).sort((a, b) => a - b);
+  const tot = sizes.reduce((a, b) => a + b, 0);
+  let gn = 0; sizes.forEach((v, i) => { gn += (2 * (i + 1) - sizes.length - 1) * v; });
+  const gini = tot ? gn / (sizes.length * tot) : 0;
+  const sizeBalance = Math.round((1 - Math.abs(gini)) * 100);
+  // 태그 일관성(군집별 최빈 태그 보유율 평균)
+  let consSum = 0;
+  real.forEach(c => {
+    const cnt = {}; c.materials.forEach(m => tagSet(m).forEach(t => { cnt[t] = (cnt[t] || 0) + 1; }));
+    const top = Object.values(cnt).length ? Math.max(...Object.values(cnt)) : 0;
+    consSum += c.materials.length ? top / c.materials.length : 0;
+  });
+  const tagConsistency = Math.round((consSum / real.length) * 100);
+  const overall = Math.round((silPct + perfSep + sizeBalance + tagConsistency) / 4);
+  const grade = overall >= 85 ? 'S' : overall >= 70 ? 'A' : overall >= 55 ? 'B' : 'C';
+  return { silPct, perfSep, sizeBalance, tagConsistency, overall, grade, n, clusterN: real.length };
+}
+function renderQualityCard(clusters) {
+  const el = document.getElementById('qualityCard'); if (!el) return;
+  const q = computeClusterQuality(clusters);
+  if (!q) { el.innerHTML = ''; return; }
+  const gColor = { S: '#9B2C2C', A: '#059669', B: '#2563eb', C: '#dc2626' }[q.grade] || '#666';
+  const interp = q.overall >= 70 ? '군집이 뚜렷합니다 — 결과 신뢰도 양호'
+    : q.overall >= 55 ? '일부 군집이 불명확 — 참고용으로 활용'
+    : '군집 변별이 약함 — 소재가 동질적이거나 태그 보강이 필요';
+  const bar = (label, v) => `<div style="flex:1;min-width:118px;">
+      <div style="font-size:10.5px;color:var(--gray-text);margin-bottom:3px;">${label} <b style="color:var(--dark);">${v}</b></div>
+      <div style="height:6px;background:var(--gray-line);border-radius:3px;overflow:hidden;"><div style="height:100%;width:${v}%;background:${gColor};border-radius:3px;"></div></div>
+    </div>`;
+  el.innerHTML = `<div style="background:var(--white);border:1px solid var(--gray-line);border-radius:var(--radius-md);padding:14px 18px;box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:18px;flex-wrap:wrap;">
+      <div style="text-align:center;min-width:86px;">
+        <div style="font-size:34px;font-weight:800;color:${gColor};line-height:1;">${q.grade}</div>
+        <div style="font-size:11px;color:var(--gray-text);margin-top:2px;">신뢰도 ${q.overall}점</div>
+      </div>
+      <div style="flex:1;min-width:260px;">
+        <div style="font-size:12.5px;font-weight:700;color:var(--mid);margin-bottom:8px;"><i class="fas fa-shield-halved" style="color:var(--red);margin-right:5px;"></i>군집 품질 신뢰도 <span style="font-weight:500;font-size:11px;color:var(--gray-text);">— ${interp}</span></div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;">
+          ${bar('태그 분리도(실루엣)', q.silPct)}${bar('성과 분리도', q.perfSep)}${bar('크기 균형', q.sizeBalance)}${bar('태그 일관성', q.tagConsistency)}
+        </div>
+      </div>
+    </div>`;
+}
+
 // R2-A: 승리공식/중단패턴 — 소재 단위 상·하위 25% 태그 lift. {winners,losers,n,k}.
 function buildPatternInsights(clusters) {
   const mats = (clusters || []).flatMap(c => c.materials || []);
