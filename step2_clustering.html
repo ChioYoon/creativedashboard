@@ -1308,31 +1308,29 @@ function iqrNoiseFilter(tagFreqs, rows) {
   const n = rows.length;
 
   // ★ 소규모 적응형 파라미터
-  //   n≤30: 최소 출현 1회, 상한 비율 비활성화, IQR fence ×3.0
-  //   n>30: 기존 설정 유지
-  const minFreq    = n <= 30 ? 1 : 2;
-  const upperRatio = n <= 30 ? 1.0 : 0.80;  // 1.0 = 상한 비율 필터 비활성화
-  const iqrMult    = n <= 30 ? 3.0 : 1.5;   // 소규모일 때 IQR fence 완화
+  const minFreq  = n <= 30 ? 1 : 2;
+  const hubRatio = 0.70;                     // ★ 과빈도 허브 태그(70%+ 보유)는 비변별 → 모든 n 에서 항상 제외. 더 낮추면 변별 태그까지 제거돼 '기타' 증가(데이터가 동질적이면 한 지배 군집은 불가피)
+  const iqrMult  = n <= 30 ? 3.0 : 1.5;      // 소규모일 때 IQR fence 완화
 
   freqs.sort((a, b) => a - b);
   const q1 = freqs[Math.floor(freqs.length * 0.25)];
   const q3 = freqs[Math.floor(freqs.length * 0.75)];
   const iqr = q3 - q1;
   const upperFence = q3 + iqr * iqrMult;
+  const isHub = cnt => cnt > n * hubRatio;   // 허브 태그 판정(모든 군집을 연결해 1개로 붕괴시키는 원흉)
 
   const noiseSet = new Set();
   for (const [tag, cnt] of Object.entries(tagFreqs)) {
-    if (cnt < minFreq || (upperRatio < 1.0 && cnt > n * upperRatio) || cnt > upperFence) {
-      noiseSet.add(tag);
-    }
+    if (cnt < minFreq || isHub(cnt) || cnt > upperFence) noiseSet.add(tag);
   }
 
-  // ★ 필터 후 유효 태그가 10개 미만이면 노이즈 필터 완전 비활성화
+  // ★ 가드: 비-허브 유효 태그가 5개 미만일 때만 저빈도·IQR 노이즈 복원. 허브 태그는 가드와 무관하게 계속 제외.
+  //   (R15-1 로 태그가 ~12개로 정리되며 기존 '<10 전체 비활성화' 가드가 허브 필터까지 무력화하던 문제 정정)
   const remaining = Object.keys(tagFreqs).filter(t => !noiseSet.has(t)).length;
-  if (remaining < 10) {
+  if (remaining < 5) {
     noiseSet.clear();
     for (const [tag, cnt] of Object.entries(tagFreqs)) {
-      if (cnt < 1) noiseSet.add(tag);
+      if (isHub(cnt) || cnt < 1) noiseSet.add(tag);
     }
   }
 
