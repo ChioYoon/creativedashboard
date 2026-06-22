@@ -876,54 +876,7 @@
         </div>
       </div>
 
-      <!-- ✨ Gemini AI 인사이트 허브 -->
-      <div class="ai-hub-section" id="aiHubSection">
-        <div class="ai-hub-head">
-          <i class="fas fa-robot" style="font-size:20px;color:rgba(255,255,255,.9);"></i>
-          <h3>✨ Gemini AI 군집 인사이트</h3>
-          <span class="ai-hub-badge">Gemini 2.5 Flash</span>
-        </div>
-
-        <!-- 블록 버튼 -->
-        <div class="ai-block-btns">
-          <button class="ai-block-btn btn-gold gai-trigger-btn" id="aiBlockA"
-                  onclick="runClusteringAI('A')" disabled>
-            <i class="fas fa-trophy"></i> 승리 공식 분석
-          </button>
-          <button class="ai-block-btn btn-blue gai-trigger-btn" id="aiBlockB"
-                  onclick="runClusteringAI('B')" disabled>
-            <i class="fas fa-microscope"></i> 군집별 심층 분석
-          </button>
-          <button class="ai-block-btn btn-green gai-trigger-btn" id="aiBlockC"
-                  onclick="runClusteringAI('C')" disabled>
-            <i class="fas fa-comment-dots"></i> 소재별 AI 코멘트
-          </button>
-          <button class="ai-block-btn btn-purple gai-trigger-btn" id="aiBlockAll"
-                  onclick="runClusteringAI('all')" disabled
-                  style="margin-left:auto;">
-            <i class="fas fa-magic"></i> 전체 실행
-          </button>
-        </div>
-
-        <!-- 결과 탭 바 -->
-        <div class="ai-tab-bar" id="aiTabBar" style="display:none;">
-          <div class="ai-tab active" id="tab-A" onclick="switchAiTab('A')">🏆 승리 공식</div>
-          <div class="ai-tab" id="tab-B" onclick="switchAiTab('B')">🔬 심층 분석</div>
-          <div class="ai-tab" id="tab-C" onclick="switchAiTab('C')">📋 소재 코멘트</div>
-        </div>
-
-        <!-- 결과 패널 -->
-        <div class="ai-tab-panel active" id="panel-A"></div>
-        <div class="ai-tab-panel" id="panel-B"></div>
-        <div class="ai-tab-panel" id="panel-C"></div>
-
-        <!-- 상태 바 -->
-        <div class="ai-status-bar" id="aiStatusBar">
-          <div class="ai-status-dot idle" id="aiStatusDot"></div>
-          <span id="aiStatusText">군집화 실행 후 AI 분석 버튼을 클릭하세요</span>
-          <span class="ai-key-badge unset" id="aiKeyBadge">🔑 API 키 확인 중...</span>
-        </div>
-      </div>
+      <!-- Gemini AI 허브 제거 (R15-2): 규칙기반 인사이트·태그 히트맵·매핑 테이블로 충분 -->
 
       <!-- 자동 인사이트 (Rule-based, 유지) -->
       <div class="section">
@@ -1877,9 +1830,6 @@ function renderResults(data) {
   renderTagImpact(data);
   renderInsights(clusters, data);
   renderMappingTable(clusters);
-
-  // ✨ Gemini AI 허브 초기화 (군집화 완료 후)
-  initAiHub();
 
   // 스크롤
   document.getElementById('resultArea').scrollIntoView({ behavior:'smooth', block:'start' });
