@@ -1642,7 +1642,7 @@ function classifyAndRender(data) {
 
     // 카테고리 분류
     const cat = detectCategory(col);
-    const defaultWeight = Math.max(70, getDefaultWeight(col));  // R15-3: 축소된 태그는 모두 기본 고중요도(사용자 조정 가능)
+    const defaultWeight = getDefaultWeight(col);  // R15-3 정정: 균일 고가중치는 허브 태그로 군집을 붕괴시킴 → 차등 기본값 유지(사용자 수동 조정)
     // ★ PRIMARY_COLS에 포함되면 기본 선택 / Concept은 태그 컬럼이지만 기본 미선택
     const isPrimary    = PRIMARY_COLS.has(col);
     const isConceptCol = (col === 'Concept' || colLower === 'concept');
