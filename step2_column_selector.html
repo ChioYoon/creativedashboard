@@ -1023,6 +1023,11 @@
       <!-- ③ 군집화 모드 선택 -->
       <div class="section-title"><i class="fas fa-th-large"></i> 군집화 모드</div>
       <div class="section-desc">소재를 어떤 기준으로 묶을지 선택하세요. 모드에 따라 태그와 성과의 영향도가 달라집니다.</div>
+      <div style="font-size:11.5px;color:var(--gray-text);background:var(--gray-bg);border-left:3px solid var(--red);padding:9px 11px;border-radius:6px;margin-bottom:12px;line-height:1.65;">
+        <i class="fas fa-circle-info" style="color:var(--red);margin-right:4px;"></i>
+        <b>'성과 우선'</b>은 <b>이미 나뉜 군집을 성과로 정제·정렬</b>할 때 성과를 얼마나 반영할지입니다. 위쪽 컬럼의 <b>'군집화 제외'</b>는 그 컬럼을 <b>묶는 기준(태그)</b>으로 쓰지 않는다는 뜻으로, <b>서로 다른 축</b>입니다(태그=무엇으로 묶나 / 성과가중=성과를 얼마나 반영하나).
+        <span style="color:var(--mid);">※ 성과 기반 정제는 v4.0에서 강화 예정이라 현재는 효과가 제한적입니다.</span>
+      </div>
 
       <div class="mode-grid">
         <div class="mode-card selected" data-mode="tag" onclick="selectMode('tag', this)">
@@ -1102,6 +1107,7 @@
           <div>
             <label style="font-size:12px;color:var(--gray-text);display:block;margin-bottom:4px;">
               최소 군집 크기 <span style="color:var(--red);">*</span>
+              <i class="fas fa-circle-info" title="한 군집으로 인정할 최소 소재 수. 이보다 작은 군집은 '기타 소재'로 병합됩니다." style="margin-left:3px;color:var(--gray-text);cursor:help;font-size:11px;"></i>
             </label>
             <div style="display:flex;align-items:center;gap:6px;">
               <input type="number" id="minClusterSize" value="3" min="2" max="20"
@@ -1112,6 +1118,7 @@
           <div>
             <label style="font-size:12px;color:var(--gray-text);display:block;margin-bottom:4px;">
               최소 지지율
+              <i class="fas fa-circle-info" title="태그가 군집을 대표하려면 군집 내에서 가져야 할 최소 보유 비율. 높일수록 군집 기준이 엄격해집니다." style="margin-left:3px;color:var(--gray-text);cursor:help;font-size:11px;"></i>
             </label>
             <div style="display:flex;align-items:center;gap:6px;">
               <input type="number" id="minSupport" value="30" min="10" max="80" step="5"
@@ -1122,6 +1129,7 @@
           <div>
             <label style="font-size:12px;color:var(--gray-text);display:block;margin-bottom:4px;">
               목표 최소 군집 수
+              <i class="fas fa-circle-info" title="결과 군집이 이 수보다 적으면 임계값을 자동 완화해 더 잘게 나눕니다." style="margin-left:3px;color:var(--gray-text);cursor:help;font-size:11px;"></i>
             </label>
             <div style="display:flex;align-items:center;gap:6px;">
               <input type="number" id="minClusters" value="3" min="2" max="15"
@@ -1132,6 +1140,7 @@
           <div>
             <label style="font-size:12px;color:var(--gray-text);display:block;margin-bottom:4px;">
               목표 최대 군집 수
+              <i class="fas fa-circle-info" title="결과 군집이 이 수를 넘지 않도록 제한합니다(너무 잘게 쪼개지는 것 방지)." style="margin-left:3px;color:var(--gray-text);cursor:help;font-size:11px;"></i>
             </label>
             <div style="display:flex;align-items:center;gap:6px;">
               <input type="number" id="maxClusters" value="10" min="3" max="20"
@@ -1502,7 +1511,7 @@ function classifyAndRender(data) {
 
     // 카테고리 분류
     const cat = detectCategory(col);
-    const defaultWeight = getDefaultWeight(col);
+    const defaultWeight = Math.max(70, getDefaultWeight(col));  // R15-3: 축소된 태그는 모두 기본 고중요도(사용자 조정 가능)
     // ★ PRIMARY_COLS에 포함되면 기본 선택 / Concept은 태그 컬럼이지만 기본 미선택
     const isPrimary    = PRIMARY_COLS.has(col);
     const isConceptCol = (col === 'Concept' || colLower === 'concept');
