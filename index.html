@@ -3,11 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>소재 분석 대시보드 — Com2uS R Marketing Team</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23DC2828' stroke-width='2'%3E%3Cpath d='M3 3v18h18'/%3E%3Cpath d='m19 9-5 5-4-4-3 3'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/cl-shell.css">
   <script defer src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
   <style>
     /* ── Com2uS Design System tokens ── */
@@ -90,7 +94,7 @@
 
     /* ── Page body ── */
     .page-body {
-      margin-top: 44px;
+      margin-top: 0;
       min-height: calc(100vh - 44px);
     }
 
@@ -349,19 +353,17 @@
 <body>
 
   <!-- Topbar -->
-  <header class="topbar">
-    <a href="index.html" class="topbar-logo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>
-      </svg>
-      소재 분석 대시보드
+  <header class="cl-topbar">
+    <a href="index.html" class="cl-brand">
+      <img src="assets/com2us/logo-primary-red.png" alt="Com2uS" class="cl-brand-logo">
+      <span class="cl-brand-divider"></span>
+      <span class="cl-brand-title">소재 분석 대시보드</span>
     </a>
-    <span class="topbar-sub">Com2uS R Marketing Team</span>
-    <nav class="topbar-nav">
-      <a href="step1_integrated.html">Step 1 소재 분석</a>
-      <a href="step2_column_selector.html">Step 2 군집화</a>
-      <a href="사용안내서_인쇄용.html" target="_blank">사용 안내서</a>
-      <span class="version-badge">v2.0</span>
+    <nav class="cl-nav">
+      <a href="index.html" class="cl-nav-link active">홈</a>
+      <a href="step1_integrated.html" class="cl-nav-link">Step 1 소재 분석</a>
+      <a href="step2_column_selector.html" class="cl-nav-link">Step 2 군집화</a>
+      <a href="사용안내서_인쇄용.html" target="_blank" class="cl-nav-link">사용 안내서</a>
     </nav>
   </header>
 

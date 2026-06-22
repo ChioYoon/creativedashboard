@@ -3,9 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Step 2: 군집화 컬럼 설정 - Com2uS R팀</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
   <link rel="stylesheet" href="assets/ds/colors_and_type.css">
+  <link rel="stylesheet" href="assets/cl-shell.css">
   <style>
     /* ═══════════════════════════════════════════
        기본 리셋 & 변수
@@ -38,22 +42,22 @@
 
     body {
       font-family: var(--font-base, "Noto Sans KR", "Pretendard", -apple-system, sans-serif);
-      background: linear-gradient(135deg, var(--red) 0%, var(--red-light) 100%);
+      background: var(--surface-soft, #FAF9F7);
       min-height: 100vh;
-      padding: 20px;
-      color: var(--dark);
+      padding: 0;
+      color: var(--text-primary, #191919);
     }
 
     /* ═══════════════════════════════════════════
        레이아웃 컨테이너
     ═══════════════════════════════════════════ */
     .page-wrap {
-      max-width: 1400px;
-      margin: 0 auto;
-      background: var(--white);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-lg);
-      overflow: hidden;
+      max-width: none;
+      margin: 0;
+      background: transparent;
+      border-radius: 0;
+      box-shadow: none;
+      overflow: visible;
     }
 
     /* ═══════════════════════════════════════════
@@ -141,67 +145,52 @@
        헤더
     ═══════════════════════════════════════════ */
     .page-header {
-      background: linear-gradient(135deg, var(--red) 0%, var(--red-light) 100%);
-      color: white;
-      padding: 44px 40px 40px;
-      position: relative;
-      overflow: hidden;
-    }
-    .page-header::after {
-      content: '';
-      position: absolute;
-      right: -40px; bottom: -40px;
-      width: 220px; height: 220px;
-      border-radius: 50%;
-      background: rgba(255,255,255,.08);
-    }
-    .page-header::before {
-      content: '';
-      position: absolute;
-      right: 80px; bottom: 10px;
-      width: 130px; height: 130px;
-      border-radius: 50%;
-      background: rgba(255,255,255,.05);
+      background: #fff;
+      color: var(--text-primary, #191919);
+      padding: 28px 40px 24px;
+      border-bottom: 1px solid var(--border-default, #ccc);
     }
     .header-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(255,255,255,.2);
-      border: 1px solid rgba(255,255,255,.3);
+      background: rgba(220,40,40,.10);
+      color: var(--brand-primary, #DC2828);
+      border: 1px solid rgba(220,40,40,.20);
       border-radius: 20px;
       padding: 5px 12px;
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
       margin-bottom: 14px;
     }
-    .page-header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
-    .page-header p  { font-size: 15px; opacity: .88; line-height: 1.6; max-width: 580px; }
+    .page-header h1 { font-size: 26px; font-weight: 800; margin-bottom: 8px; color: var(--text-primary, #191919); }
+    .page-header p  { font-size: 14px; color: var(--text-secondary, #666); line-height: 1.6; max-width: 580px; }
     .header-steps {
       display: flex;
       gap: 8px;
-      margin-top: 22px;
+      margin-top: 20px;
       flex-wrap: wrap;
     }
     .hstep {
       display: flex;
       align-items: center;
       gap: 6px;
-      background: rgba(255,255,255,.15);
+      background: var(--bg-subtle, #e5e5e5);
+      color: var(--text-secondary, #666);
       border-radius: 20px;
       padding: 5px 12px;
       font-size: 12px;
       font-weight: 600;
     }
-    .hstep.current { background: rgba(255,255,255,.92); color: var(--red); }
+    .hstep.current { background: rgba(220,40,40,.10); color: var(--brand-primary, #DC2828); }
     .hstep-num {
       width: 18px; height: 18px;
       border-radius: 50%;
-      background: rgba(255,255,255,.3);
+      background: rgba(0,0,0,.10); color: var(--text-secondary, #666);
       display: flex; align-items: center; justify-content: center;
       font-size: 10px; font-weight: 700;
     }
-    .hstep.current .hstep-num { background: var(--red); color: white; }
+    .hstep.current .hstep-num { background: var(--brand-primary, #DC2828); color: white; }
 
     /* ═══════════════════════════════════════════
        메인 레이아웃 (2컬럼)
@@ -908,38 +897,20 @@
 
 <!-- ════ 상단 네비게이션 ════ -->
 <div class="page-wrap">
-  <nav class="top-nav">
-    <!-- 로고 -->
-    <a href="index.html" class="nav-logo">
-      <i class="fas fa-chart-bar"></i>
-      <span>소재 분석</span>
+  <header class="cl-topbar">
+    <a href="index.html" class="cl-brand">
+      <img src="assets/com2us/logo-primary-red.png" alt="Com2uS" class="cl-brand-logo">
+      <span class="cl-brand-divider"></span>
+      <span class="cl-brand-title">소재 분석 대시보드</span>
     </a>
-    <div class="nav-sep"></div>
-
-    <!-- Step 2 내 섹션 이동 -->
-    <div class="nav-group">
-      <span class="nav-group-label">Step 2</span>
-      <button class="nav-btn active" onclick="document.getElementById('uploadZone').scrollIntoView({behavior:'smooth'})">
-        <i class="fas fa-upload"></i> CSV 업로드
-      </button>
-      <button class="nav-btn" onclick="document.getElementById('categoryContainer').scrollIntoView({behavior:'smooth'})">
-        <i class="fas fa-sliders-h"></i> 컬럼 설정
-      </button>
-      <button class="nav-btn" onclick="document.getElementById('summaryPanel').scrollIntoView({behavior:'smooth'})">
-        <i class="fas fa-check-square"></i> 선택 확인
-      </button>
-    </div>
-
-    <!-- 페이지 이동 (우측) -->
-    <div class="nav-page-btns">
-      <a class="nav-page-btn" href="step1_integrated.html">
-        <i class="fas fa-arrow-left"></i> Step 1
-      </a>
-      <a class="nav-page-btn highlight" href="step2_clustering.html">
-        군집화 실행 <i class="fas fa-arrow-right"></i>
-      </a>
-    </div>
-  </nav>
+    <nav class="cl-nav">
+      <a href="index.html" class="cl-nav-link">홈</a>
+      <a href="step1_integrated.html" class="cl-nav-link">Step 1 소재 분석</a>
+      <a href="step2_column_selector.html" class="cl-nav-link active">Step 2 군집화</a>
+      <a href="사용안내서_인쇄용.html" target="_blank" class="cl-nav-link">사용 안내서</a>
+      <a class="cl-nav-cta" href="step2_clustering.html">군집화 실행 →</a>
+    </nav>
+  </header>
 
   <!-- ════ 헤더 ════ -->
   <div class="page-header">

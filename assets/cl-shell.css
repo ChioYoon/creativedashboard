@@ -1,0 +1,70 @@
+/* ============================================================
+   CLOOP — Unified shell header (Main · Step1 · Step2)
+   Com2uS DS v2 표준 화이트 크롬. 4개 페이지(index · step1 ·
+   step2_column_selector · step2_clustering) 공통 헤더.
+   Self-contained: colors_and_type.css 토큰이 있으면 사용하고,
+   없으면 DS 동일값 폴백으로 동일하게 렌더한다.
+   ============================================================ */
+
+.cl-topbar {
+  position: sticky; top: 0; z-index: 1000;
+  display: flex; align-items: center; gap: 18px;
+  height: 56px; padding: 0 24px; box-sizing: border-box;
+  background: var(--bg-base, #FFFFFF);
+  border-bottom: 1px solid var(--border-default, #CCCCCC);
+  font-family: var(--font-base, "Noto Sans KR", "Pretendard", system-ui, sans-serif);
+}
+
+/* ── 브랜드 (좌) — Com2uS 워드마크 + 제품명 ── */
+.cl-brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; flex-shrink: 0; }
+.cl-brand-logo { height: 24px; width: auto; display: block; }
+.cl-brand-divider { width: 1px; height: 18px; background: var(--border-default, #CCCCCC); }
+.cl-brand-title {
+  font-weight: 700; font-size: 15px; letter-spacing: -0.01em;
+  color: var(--text-primary, #191919); white-space: nowrap;
+}
+
+/* ── 내비 (우) ── */
+.cl-nav { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+.cl-nav-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 14px; font-weight: 500; line-height: 1; white-space: nowrap;
+  color: var(--text-secondary, #666666); text-decoration: none;
+  padding: 9px 14px; border-radius: 9999px; border: 1px solid transparent;
+  transition: background .12s, color .12s;
+}
+.cl-nav-link:hover { background: var(--bg-subtle, #E5E5E5); color: var(--text-primary, #191919); }
+.cl-nav-link.active {
+  background: rgba(220, 40, 40, .10);
+  color: var(--brand-primary, #DC2828); font-weight: 700;
+}
+
+/* ── 아이콘 액션 (예: Gemini 설정) ── */
+.cl-nav-action {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; margin-left: 6px; flex-shrink: 0;
+  color: var(--text-secondary, #666666); background: transparent;
+  border: 1px solid var(--border-default, #CCCCCC); border-radius: 8px;
+  cursor: pointer; transition: background .12s, color .12s, border-color .12s;
+}
+.cl-nav-action:hover { background: var(--bg-subtle, #E5E5E5); color: var(--brand-primary, #DC2828); border-color: var(--brand-primary, #DC2828); }
+.cl-nav-action svg { width: 17px; height: 17px; }
+
+/* ── 주요 전진 CTA (예: 군집화 실행) ── */
+.cl-nav-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-left: 8px; flex-shrink: 0;
+  font-size: 14px; font-weight: 700; white-space: nowrap;
+  color: var(--text-on-brand, #FFFFFF); text-decoration: none;
+  background: var(--brand-primary, #DC2828);
+  padding: 9px 16px; border-radius: 9999px; border: none; cursor: pointer;
+  transition: background .12s;
+}
+.cl-nav-cta:hover { background: var(--brand-primary-hover, #A51E1E); }
+
+@media (max-width: 760px) {
+  .cl-topbar { gap: 10px; padding: 0 14px; height: 52px; }
+  .cl-brand-title, .cl-brand-divider { display: none; }
+  .cl-nav-link { padding: 7px 10px; font-size: 13px; }
+  .cl-nav-cta { padding: 7px 12px; font-size: 13px; }
+}

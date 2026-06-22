@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Step 1: 소재 분석 & 점수 계산 - Com2uS R팀</title>
   <!-- favicon: 인라인 data URI 로 404 회피 (콘솔 노이즈 제거) -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23DC2828' stroke-width='2'%3E%3Cpath d='M3 3v18h18'/%3E%3Cpath d='m19 9-5 5-4-4-3 3'/%3E%3C/svg%3E">
@@ -10,6 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/cl-shell.css">
   <!-- Lucide icons -->
   <script defer src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 
@@ -93,9 +97,9 @@
 
     .ds-app-body {
       display: flex;
-      height: calc(100vh - 44px);
-      height: calc(100dvh - 44px);
-      margin-top: 44px;
+      height: calc(100vh - 56px);
+      height: calc(100dvh - 56px);
+      margin-top: 0;
       overflow: hidden;
     }
 
@@ -1345,20 +1349,21 @@
 </head>
 <body>
   <!-- ── Top Navigation Bar ── -->
-  <header class="ds-topbar">
-    <a href="index.html" class="ds-topbar-logo">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
-      <span>CLOOP</span>
+  <header class="cl-topbar">
+    <a href="index.html" class="cl-brand">
+      <img src="assets/com2us/logo-primary-red.png" alt="Com2uS" class="cl-brand-logo">
+      <span class="cl-brand-divider"></span>
+      <span class="cl-brand-title">소재 분석 대시보드</span>
     </a>
-    <span class="ds-topbar-title">광고 소재 분석 대시보드</span>
-    <div class="ds-topbar-right">
-      <button class="ds-topbar-icon-btn gai-nav-key-btn" onclick="openGeminiModal()" title="Gemini AI 분석 설정">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    <nav class="cl-nav">
+      <a href="index.html" class="cl-nav-link">홈</a>
+      <a href="step1_integrated.html" class="cl-nav-link active">Step 1 소재 분석</a>
+      <a href="step2_column_selector.html" class="cl-nav-link" id="step2Link">Step 2 군집화</a>
+      <a href="사용안내서_인쇄용.html" target="_blank" class="cl-nav-link">사용 안내서</a>
+      <button class="cl-nav-action" onclick="openGeminiModal()" title="Gemini AI 분석 설정">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </button>
-      <a class="ds-topbar-icon-btn" id="step2Link" href="step2_column_selector.html" title="Step 2 군집화">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-      </a>
-    </div>
+    </nav>
   </header>
 
   <!-- ── App Body: Sidebar + Main ── -->

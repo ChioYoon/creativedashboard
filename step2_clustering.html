@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Step 2: 군집화 실행 & 결과 - Com2uS R팀</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
@@ -27,12 +30,12 @@
     }
     body {
       font-family:var(--font-base,"Noto Sans KR","Pretendard",-apple-system,sans-serif);
-      background:linear-gradient(135deg,var(--red) 0%,var(--red-light) 100%);
-      min-height:100vh; padding:20px; color:var(--dark);
+      background:var(--surface-soft,#FAF9F7);
+      min-height:100vh; padding:0; color:var(--text-primary,#191919);
     }
     .page-wrap {
-      max-width:1400px; margin:0 auto; background:var(--white);
-      border-radius:var(--radius-lg); box-shadow:var(--shadow-lg); overflow:hidden;
+      max-width:none; margin:0; background:transparent;
+      border-radius:0; box-shadow:none; overflow:visible;
     }
 
     /* ═══════════ 상단 네비 ═══════════ */
@@ -117,14 +120,15 @@
 
     /* ═══════════ 페이지 헤더 ═══════════ */
     .page-header {
-      background:linear-gradient(135deg,var(--red) 0%,var(--red-light) 100%);
-      padding:32px 40px; color:#fff;
+      background:#fff;
+      padding:28px 40px 24px; color:var(--text-primary,#191919);
+      border-bottom:1px solid var(--border-default,#ccc);
     }
-    .page-header h1 { font-size:26px; font-weight:800; margin-bottom:6px; }
-    .page-header p  { font-size:14px; opacity:.85; }
+    .page-header h1 { font-size:26px; font-weight:800; margin-bottom:6px; color:var(--text-primary,#191919); }
+    .page-header p  { font-size:14px; color:var(--text-secondary,#666); }
     .header-meta { display:flex; gap:16px; margin-top:14px; flex-wrap:wrap; }
     .meta-pill {
-      background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.28);
+      background:var(--bg-subtle,#e5e5e5); border:1px solid var(--border-default,#ccc); color:var(--text-secondary,#666);
       border-radius:20px; padding:4px 14px; font-size:12px; font-weight:600;
       display:inline-flex; align-items:center; gap:6px;
     }
@@ -628,6 +632,7 @@
     .ai-key-badge.unset { background:var(--orange-pale); color:var(--orange); }
   </style>
   <link rel="stylesheet" href="assets/ds/colors_and_type.css">
+  <link rel="stylesheet" href="assets/cl-shell.css">
   <link rel="stylesheet" href="css/gemini-ui.css">
   <script src="js/layer-metrics.js"></script>
   <script src="js/data-source.js"></script>
@@ -688,42 +693,19 @@
 <div class="page-wrap">
 
   <!-- ════ 네비 ════ -->
-  <nav class="top-nav">
-    <!-- 로고 -->
-    <a href="index.html" class="nav-logo">
-      <i class="fas fa-chart-bar"></i>
-      <span>소재 분석</span>
+  <header class="cl-topbar">
+    <a href="index.html" class="cl-brand">
+      <img src="assets/com2us/logo-primary-red.png" alt="Com2uS" class="cl-brand-logo">
+      <span class="cl-brand-divider"></span>
+      <span class="cl-brand-title">소재 분석 대시보드</span>
     </a>
-    <div class="nav-sep"></div>
-
-    <!-- Step 2 결과 내 섹션 이동 -->
-    <div class="nav-group">
-      <span class="nav-group-label">Step 2</span>
-      <button class="nav-btn active" onclick="document.getElementById('configSummarySection').scrollIntoView({behavior:'smooth'})">
-        <i class="fas fa-cog"></i> 설정 확인
-      </button>
-      <button class="nav-btn" onclick="document.getElementById('resultArea').scrollIntoView({behavior:'smooth'})">
-        <i class="fas fa-layer-group"></i> 군집 결과
-      </button>
-      <button class="nav-btn" onclick="document.getElementById('mappingTable').scrollIntoView({behavior:'smooth'})">
-        <i class="fas fa-table"></i> 소재 매핑
-      </button>
-    </div>
-
-    <!-- 페이지 이동 (우측) -->
-    <div class="nav-page-btns">
-      <button class="nav-page-btn" onclick="openGeminiModal()" id="navAiSetBtn"
-              style="background:rgba(167,139,250,.25);border-color:rgba(167,139,250,.5);">
-        <i class="fas fa-robot"></i> ✨ AI 설정
-      </button>
-      <a class="nav-page-btn" href="step2_column_selector.html">
-        <i class="fas fa-arrow-left"></i> 컬럼 설정
-      </a>
-      <a class="nav-page-btn" href="step1_integrated.html">
-        <i class="fas fa-arrow-left"></i> Step 1
-      </a>
-    </div>
-  </nav>
+    <nav class="cl-nav">
+      <a href="index.html" class="cl-nav-link">홈</a>
+      <a href="step1_integrated.html" class="cl-nav-link">Step 1 소재 분석</a>
+      <a href="step2_column_selector.html" class="cl-nav-link active">Step 2 군집화</a>
+      <a href="사용안내서_인쇄용.html" target="_blank" class="cl-nav-link">사용 안내서</a>
+    </nav>
+  </header>
   <!-- Gemini 모달 컨테이너 -->
   <div id="geminiModalContainer"></div>
 
