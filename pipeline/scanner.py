@@ -176,6 +176,7 @@ def scan_creative_folders(
 def scan_by_filename(
     root: Path,
     types: Iterable[str] = ("BNR", "VID"),
+    exclude_dir_keywords: Iterable[str] = ("미사용",),
 ) -> list[CreativeCandidate]:
     """파일명 규칙 기반 스캔 — 폴더 중첩 구조에 무관 (펩과 다른 레이아웃 지원).
 
@@ -185,16 +186,21 @@ def scan_by_filename(
     - type 은 파일명에서 추출 (폴더명 무관).
     - phase(차수)는 루트 직속 폴더명에서 추론 (메타 용도).
     - 파일명 규칙 미매칭 파일(템플릿·작업본 등)은 자동 제외.
+    - exclude_dir_keywords: 경로(폴더명)에 이 키워드가 포함되면 스킵
+      (예: "카툰 소재(미사용)" → '미사용' 매칭으로 제외).
     """
     if not root.exists():
         raise FileNotFoundError(f"소재 루트 폴더가 없습니다: {root}")
 
     types_up = {t.upper() for t in types}
+    exclude_kw = tuple(exclude_dir_keywords or ())
     groups: dict[str, list[Path]] = {}
     meta_by_name: dict[str, dict] = {}
     for p in sorted(root.rglob("*")):
         if not (p.is_file() and p.suffix.lower() in MEDIA_EXTS):
             continue
+        if any(kw in part for part in p.parts for kw in exclude_kw):
+            continue  # '미사용' 등 제외 키워드 포함 폴더 스킵
         meta = parse_filename(p.name)
         if not meta or meta["type"].upper() not in types_up:
             continue
