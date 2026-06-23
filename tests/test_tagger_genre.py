@@ -56,3 +56,28 @@ def test_prompt_version_default_arg():
 
 def test_prompt_version_unknown_genre_falls_back():
     assert prompt_version("unknown_xyz") == prompt_version(DEFAULT_GENRE)
+
+
+import tempfile
+import os
+from pathlib import Path
+from pipeline.main import _load_game_context
+
+
+def test_load_game_context_returns_content(tmp_path):
+    md = tmp_path / "ctx.md"
+    md.write_text("# 테스트 게임\n장르: RPG", encoding="utf-8")
+    result = _load_game_context("ctx.md", tmp_path)
+    assert "테스트 게임" in result
+
+
+def test_load_game_context_missing_file_returns_empty(tmp_path, capsys):
+    result = _load_game_context("nonexistent.md", tmp_path)
+    assert result == ""
+    captured = capsys.readouterr()
+    assert "WARNING" in captured.out
+
+
+def test_load_game_context_empty_path_returns_empty(tmp_path):
+    result = _load_game_context("", tmp_path)
+    assert result == ""

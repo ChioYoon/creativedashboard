@@ -44,13 +44,27 @@ from .mmp_metrics import aggregate_rows_total, compute_mmp_quality
 from .scanner import scan_creative_folders, scan_by_filename, summarize
 from .schemas import CreativeDataset, CreativeRecord
 from .scoring import compute_creative_scores
-from .tagger import GeminiTagger, prompt_version
+from .tagger import GeminiTagger, prompt_version, DEFAULT_GENRE
 
 # Asia/Seoul timezone
 KST = timezone(timedelta(hours=9))
 
 # titles.json 위치 (프로젝트 루트 기준)
 TITLES_JSON_PATH = Path("js/titles.json")
+
+# 프로젝트 루트 (pipeline/../ = cloop_dashboard/)
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+
+
+def _load_game_context(rel_path: str, repo_root: Path) -> str:
+    """게임 컨텍스트 MD 로드. 경로 없거나 파일 없으면 빈 문자열 (graceful)."""
+    if not rel_path:
+        return ""
+    full = repo_root / rel_path
+    if not full.exists():
+        print(f"[WARNING] _pipeline_game_context_file 없음: {full}")
+        return ""
+    return full.read_text(encoding="utf-8")
 
 
 # ─────────────────────────────────────────────────────────────
@@ -258,6 +272,8 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         types = title_override.get("_pipeline_types", ["BNR", "VID"])
         scan_mode = title_override.get("_pipeline_scan_mode", "foldered")
         prompt_version_pin = title_override.get("_pipeline_prompt_version_pin", "")
+        genre = title_override.get("_pipeline_genre", DEFAULT_GENRE)
+        game_context_file = title_override.get("_pipeline_game_context_file", "")
         # Stage 5 KPI 매핑 (titles.json _pipeline_google_ads_*)
         google_ads_customer_id = title_override.get("_pipeline_google_ads_customer_id", "")
         google_ads_campaign_filter = title_override.get("_pipeline_google_ads_campaign_filter", [])
@@ -289,6 +305,8 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         types = args.type or title_meta.get("_pipeline_types", ["BNR", "VID"])
         scan_mode = title_meta.get("_pipeline_scan_mode", "foldered")
         prompt_version_pin = title_meta.get("_pipeline_prompt_version_pin", "")
+        genre = title_meta.get("_pipeline_genre", DEFAULT_GENRE)
+        game_context_file = title_meta.get("_pipeline_game_context_file", "")
 
         # Stage 5 KPI: titles.json 우선, .env fallback
         google_ads_customer_id = (
@@ -343,6 +361,8 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         "types": types,
         "scan_mode": scan_mode,
         "prompt_version_pin": prompt_version_pin,
+        "genre": genre,
+        "game_context_file": game_context_file,
         "pilot": args.pilot,
         "limit": args.limit,
         "no_cache": args.no_cache,
@@ -440,12 +460,14 @@ def run(cfg: dict) -> dict:
     # ── 2) 캐시·태거 준비 ──
     cache = TagCache(cfg["cache_dir"], cfg["title"])
     tagger = GeminiTagger(api_key=cfg["api_key"], model=cfg["model"])
+    genre = cfg.get("genre", DEFAULT_GENRE)
+    game_ctx = _load_game_context(cfg.get("game_context_file", ""), _REPO_ROOT)
     # ① 파일럿: 캐시 버전에 '-pilot' 접미 (production 캐시 미오염)
     # ② 타이틀 핀: _pipeline_prompt_version_pin 이 있으면 글로벌 bump 무시 (재태깅 격리)
     if cfg.get("pilot"):
-        pversion = prompt_version() + "-pilot"
+        pversion = prompt_version(genre) + "-pilot"
     else:
-        pversion = cfg.get("prompt_version_pin") or prompt_version()
+        pversion = cfg.get("prompt_version_pin") or prompt_version(genre)
     fallback_model = "gemini-2.5-flash-lite"
 
     # ── 2-Stage5) KPI batch fetch (kpi_enabled=true 일 때만) ──
@@ -661,20 +683,27 @@ def run(cfg: dict) -> dict:
         print(f"   📊 2.7) 풀 컨텍스트 산출: 백분위 풀 {len(pool)}개 소재 (노출≥{POOL_IMP_THRESHOLD})")
 
     def build_extra_context(creative_name):
-        """소재별 동적 컨텍스트 (pool_context + 이 소재 실제 성과)."""
+        """소재별 동적 컨텍스트 (게임 컨텍스트 + pool_context + 이 소재 실제 성과)."""
         v = per_creative_kpi.get(creative_name)
         if not v:
-            return (pool_context + "\n[이 소재의 실제 성과] 광고 집행 이력 없음 — 시각 분석만 수행").strip()
-        p = creative_percentiles.get(creative_name, {})
-        # pct = 풀에서 이긴 비율(높을수록 우수). 절반 기준 상위/하위로 명확히 표현.
-        def _top(pct):
-            if pct is None:
-                return "?"
-            return f"상위 {max(1, 100 - pct)}%" if pct >= 50 else f"하위 {max(1, pct)}%"
-        parts = [f"CTR {v['ctr']:.1f}% ({_top(p.get('ctr'))})", f"CVR {v['cvr']:.2f}% ({_top(p.get('cvr'))})"]
-        if v["cpa"] is not None:
-            parts.append(f"CPA {round(v['cpa']):,}원 ({_top(p.get('cpa'))})")
-        return (pool_context + "\n[이 소재의 실제 성과] " + ", ".join(parts)).strip()
+            kpi_ctx = (pool_context + "\n[이 소재의 실제 성과] 광고 집행 이력 없음 — 시각 분석만 수행").strip()
+        else:
+            p = creative_percentiles.get(creative_name, {})
+            # pct = 풀에서 이긴 비율(높을수록 우수). 절반 기준 상위/하위로 명확히 표현.
+            def _top(pct):
+                if pct is None:
+                    return "?"
+                return f"상위 {max(1, 100 - pct)}%" if pct >= 50 else f"하위 {max(1, pct)}%"
+            parts = [f"CTR {v['ctr']:.1f}% ({_top(p.get('ctr'))})", f"CVR {v['cvr']:.2f}% ({_top(p.get('cvr'))})"]
+            if v["cpa"] is not None:
+                parts.append(f"CPA {round(v['cpa']):,}원 ({_top(p.get('cpa'))})")
+            kpi_ctx = (pool_context + "\n[이 소재의 실제 성과] " + ", ".join(parts)).strip()
+        # 게임 컨텍스트 prepend
+        if not game_ctx:
+            return kpi_ctx
+        if not kpi_ctx:
+            return f"[게임 컨텍스트]\n{game_ctx}"
+        return f"[게임 컨텍스트]\n{game_ctx}\n\n{kpi_ctx}"
 
     # ── 3) 폴더별 태깅 루프 ──
     records: list[CreativeRecord] = []
@@ -704,7 +733,7 @@ def run(cfg: dict) -> dict:
                 continue
             try:
                 # Stage 5-I: 풀 분포 + 이 소재 실제 KPI 백분위를 동적 컨텍스트로 주입
-                tag = tagger.tag_creative(rep, extra_context=build_extra_context(c.creative_name))
+                tag = tagger.tag_creative(rep, extra_context=build_extra_context(c.creative_name), genre=genre)
                 tag_dict = tag.model_dump()
                 cache.put(sha, pversion, tag_dict)
                 cache.save()
@@ -734,7 +763,7 @@ def run(cfg: dict) -> dict:
                     daily_quota_exhausted = False
                     # 같은 소재 재시도 (Stage 5-I: 동일 컨텍스트 주입)
                     try:
-                        tag = tagger.tag_creative(rep, extra_context=build_extra_context(c.creative_name))
+                        tag = tagger.tag_creative(rep, extra_context=build_extra_context(c.creative_name), genre=genre)
                         tag_dict = tag.model_dump()
                         cache.put(sha, pversion, tag_dict)
                         cache.save()
