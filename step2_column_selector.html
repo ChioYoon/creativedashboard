@@ -891,7 +891,7 @@
     }
   </style>
   <!-- v5.2 Stage 1: 데이터 소스 추상화 (DataSource.getActiveTitleId, getSessionKey) -->
-  <script src="js/data-source.js"></script>
+  <script src="js/data-source.js?v=20260623a"></script>
 </head>
 <body>
 
@@ -1041,7 +1041,6 @@
 
       <div class="mode-grid">
         <div class="mode-card selected" data-mode="tag" onclick="selectMode('tag', this)">
-          <div class="mode-icon">🏷️</div>
           <div class="mode-name">태그 우선</div>
           <div class="mode-desc">크리에이티브 전략·컨셉 기준. 어떤 패턴이 잘 되는가.</div>
           <div class="mode-ratio">
@@ -1054,7 +1053,6 @@
           </div>
         </div>
         <div class="mode-card" data-mode="perf" onclick="selectMode('perf', this)">
-          <div class="mode-icon">📊</div>
           <div class="mode-name">성과 우선</div>
           <div class="mode-desc">성과 수준 기준. 얼마나 잘 되는가로 그룹화.</div>
           <div class="mode-ratio">
@@ -1067,7 +1065,6 @@
           </div>
         </div>
         <div class="mode-card" data-mode="custom" onclick="selectMode('custom', this)">
-          <div class="mode-icon">⚙️</div>
           <div class="mode-name">비율 직접 설정</div>
           <div class="mode-desc">태그와 성과 반영 비율을 슬라이더로 직접 조정.</div>
           <div class="mode-ratio" id="customModeBar">
@@ -1087,12 +1084,12 @@
         <div class="pw-val-box" style="justify-content:center;gap:24px;margin-bottom:14px;">
           <div class="pw-val-item">
             <div class="pw-val-num tag-color" id="tagRatioNum">50</div>
-            <div class="pw-val-lbl">🏷️ 태그 비율(%)</div>
+            <div class="pw-val-lbl">태그 비율(%)</div>
           </div>
           <div style="font-size:22px;color:var(--gray-line);align-self:center;">:</div>
           <div class="pw-val-item">
             <div class="pw-val-num perf-color" id="perfRatioNum">50</div>
-            <div class="pw-val-lbl">📊 성과 비율(%)</div>
+            <div class="pw-val-lbl">성과 비율(%)</div>
           </div>
         </div>
         <div class="pw-bar-wrap">

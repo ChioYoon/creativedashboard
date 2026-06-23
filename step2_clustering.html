@@ -634,8 +634,8 @@
   <link rel="stylesheet" href="assets/ds/colors_and_type.css">
   <link rel="stylesheet" href="assets/cl-shell.css">
   <link rel="stylesheet" href="css/gemini-ui.css">
-  <script src="js/layer-metrics.js"></script>
-  <script src="js/data-source.js"></script>
+  <script src="js/layer-metrics.js?v=20260623a"></script>
+  <script src="js/data-source.js?v=20260623a"></script>
   <script src="js/gemini-api.js"></script>
 </head>
 <body>
@@ -652,15 +652,15 @@
     </div>
     <div class="pm-media" id="pm-media"></div>
     <div class="pm-section">
-      <div class="pm-section-title">📊 성과 KPI</div>
+      <div class="pm-section-title">성과 KPI</div>
       <div class="pm-kpi-grid" id="pm-kpi"></div>
     </div>
     <div class="pm-section">
-      <div class="pm-section-title">🏷 주요 태그</div>
+      <div class="pm-section-title">주요 태그</div>
       <div class="pm-tags" id="pm-tags"></div>
     </div>
     <div class="pm-section">
-      <div class="pm-section-title">💬 마케터 인사이트</div>
+      <div class="pm-section-title">마케터 인사이트</div>
       <div id="pm-insight"></div>
     </div>
     <div id="pm-link-area"></div>
@@ -1853,27 +1853,22 @@ function renderKPIStrip(clusters) {
 
   document.getElementById('kpiStrip').innerHTML = `
     <div class="kpi-card" style="background:var(--red-pale);border-color:var(--red-mid);">
-      <div class="kpi-icon">🏘️</div>
       <div class="kpi-value" style="color:var(--red);">${clusters.length}</div>
       <div class="kpi-label">발견 군집 수</div>
     </div>
     <div class="kpi-card" style="background:var(--blue-pale);border-color:var(--blue-mid);">
-      <div class="kpi-icon">📊</div>
       <div class="kpi-value" style="color:var(--blue);">${allMats.length}</div>
       <div class="kpi-label">분석 소재 수</div>
     </div>
     <div class="kpi-card" style="background:var(--purple-pale);border-color:var(--purple-mid);">
-      <div class="kpi-icon">⭐</div>
       <div class="kpi-value" style="color:var(--purple);">${avgScore}</div>
       <div class="kpi-label">전체 평균 점수</div>
     </div>
     <div class="kpi-card" style="background:var(--green-pale);border-color:var(--green-mid);">
-      <div class="kpi-icon">🏆</div>
       <div class="kpi-value" style="color:var(--green);">${sGrade}</div>
       <div class="kpi-label">우수 군집 (S/A)</div>
     </div>
     <div class="kpi-card" style="background:var(--gold-pale);border-color:#FFD700;">
-      <div class="kpi-icon">👑</div>
       <div class="kpi-value" style="color:var(--gold);font-size:15px;">${topCluster ? escHtml(topCluster.name.substring(0,15)) : '-'}</div>
       <div class="kpi-label">최고 성과 군집</div>
     </div>

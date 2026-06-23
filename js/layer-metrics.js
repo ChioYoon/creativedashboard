@@ -67,11 +67,11 @@
   //   m1~m4/score=컬럼 라벨, tip1~tip4/tipScore=헤더 툴팁, s2~s4=export 점수 라벨, tag=레이어 배지.
   function layerLabels() {
     return (window.currentAnalysisLayer || 'ads') === 'mmp'
-      ? { tag: 'MMP 품질 기준', m1: '전환', m2: 'D1 CPI', m3: 'D1 IPM', m4: 'D7 ROAS', score: '품질점수',
+      ? { tag: 'MMP 품질 기준', m1: '전환', m2: 'CPA', m3: 'IPM', m4: 'D7 ROAS', score: '품질점수',
           s2: 'D1 CPI점수', s3: 'D1 IPM점수', s4: 'D7 ROAS점수',
-          tip1: 'MMP 설치수 (installs)', tip2: '비용 ÷ D1 잔존수 · 낮을수록 효율적',
-          tip3: '(D1 잔존수 ÷ 노출) × 1,000 · 높을수록 우수', tip4: '(D0~D7 누적매출 ÷ 비용) × 100% · 설치 후 7일 내 조기 회수율(전체 ROAS 아님) · 데이터 없으면 —',
-          tipScore: '전환·D1 CPI·D1 IPM·D7 ROAS 점수의 가중 합산 (MMP)' }
+          tip1: 'MMP 설치수 (installs)', tip2: '비용 ÷ 설치 · 낮을수록 효율적 (install 기준)',
+          tip3: '(설치 ÷ 노출) × 1,000 · 높을수록 우수 (install 기준)', tip4: '(D0~D7 누적매출 ÷ 비용) × 100% · 설치 후 7일 내 조기 회수율(전체 ROAS 아님) · 데이터 없으면 —',
+          tipScore: '품질점수 = D1 코호트 기준(D1 CPI·D1 IPM·D7 ROAS·전환) · 표시 CPA/IPM은 install 기준' }
       : { tag: 'Google Ads 기준', m1: '전환', m2: 'CPA', m3: 'IPM', m4: 'ROAS', score: '총점',
           s2: 'CPA점수', s3: 'IPM점수', s4: 'ROAS점수',
           tip1: '설치 또는 목표 행동 완료 횟수', tip2: '비용 ÷ 전환수 · 낮을수록 효율적',
@@ -88,9 +88,12 @@
       return {
         isMmp: true, hasData: !!(q && q.total != null),
         전환: m.mmp_installs ?? null, 비용: m.mmp_cost ?? null, 노출수: m.mmp_impressions ?? null,
-        클릭수: m.mmp_clicks ?? null, base: m.mmp_retained_d1 ?? 0, 매출: m.mmp_revenue ?? 0,
+        클릭수: m.mmp_clicks ?? null, base: m.mmp_installs ?? 0, 매출: m.mmp_revenue ?? 0,
         CTR: (m.mmp_impressions > 0) ? (m.mmp_clicks || 0) / m.mmp_impressions * 100 : 0,
-        CPA: m.mmp_d1_cpi ?? null, IPM: m.mmp_d1_ipm ?? null, ROAS: m.mmp_d7_roas ?? null,
+        // B: MMP 표시 지표를 Google Ads 동일 산식(설치 기준)으로 — CPA=비용/설치, IPM=설치/노출×1000. ROAS=D7 LTV. (품질점수는 D1 기준 유지)
+        CPA: (m.mmp_installs > 0) ? (m.mmp_cost || 0) / m.mmp_installs : null,
+        IPM: (m.mmp_impressions > 0) ? (m.mmp_installs || 0) / m.mmp_impressions * 1000 : null,
+        ROAS: m.mmp_d7_roas ?? null,
         score: q?.total ?? null, grade: q?.grade ?? null,
         s1: q?.conv ?? null, s2: q?.cpi ?? null, s3: q?.ipm ?? null, s4: q?.roas ?? null,
       };

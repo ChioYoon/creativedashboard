@@ -13,15 +13,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/cl-shell.css">
+  <link rel="stylesheet" href="assets/cl-shell.css?v=20260623a">
   <!-- Lucide icons -->
   <script defer src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
   <!-- 데이터 소스 추상화 (v5.2 Stage 1) — CSV/JSON 단일 진입점, 타이틀 격리 -->
-  <script src="js/layer-metrics.js"></script>
-  <script src="js/data-source.js"></script>
+  <script src="js/layer-metrics.js?v=20260623a"></script>
+  <script src="js/data-source.js?v=20260623a"></script>
   <!-- Gemini AI 공통 모듈 -->
   <link rel="stylesheet" href="css/gemini-ui.css">
   <script src="js/gemini-api.js"></script>
@@ -817,6 +817,50 @@
       color: #1d4ed8;
       margin-right: 4px;
     }
+    /* 소재 상세 모달 — 병합 인사이트 블록 (DS 중립, 단일 강조) */
+    .signal-insight {
+      margin-top: 14px;
+      padding: 12px 14px;
+      background: var(--surface-soft, #faf9f7);
+      border-left: 3px solid var(--brand-primary, #DC2828);
+      border-radius: 6px;
+      line-height: 1.6;
+    }
+    .signal-insight-key {
+      display: block;
+      font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+      color: var(--brand-primary, #DC2828); margin-bottom: 6px;
+    }
+    .signal-insight-lead { font-size: 13.5px; font-weight: 600; color: var(--text-primary, #191919); margin-bottom: 6px; }
+    .signal-insight-body { font-size: 12.5px; color: var(--text-secondary, #666); }
+    /* 소재 상세 모달 — 레이어 블록 제목 + 비활성 레이어 접기 */
+    .modal-block-title { font-size: 12px; font-weight: 700; color: var(--text-secondary, #666); margin: 14px 0 6px; letter-spacing: .02em; }
+    .modal-collapse { margin-top: 12px; border-top: 1px solid var(--hairline-warm, #e4e1dc); padding-top: 6px; }
+    .modal-collapse > summary { cursor: pointer; font-size: 12px; font-weight: 600; color: var(--text-secondary, #666); list-style: none; padding: 4px 0; user-select: none; }
+    .modal-collapse > summary::-webkit-details-marker { display: none; }
+    .modal-collapse > summary:hover { color: var(--brand-primary, #DC2828); }
+    .modal-collapse > summary::before { content: '▸ '; }
+    .modal-collapse[open] > summary::before { content: '▾ '; }
+    /* 소재 상세 모달 — 파일명 접기(기본 접힘) */
+    .file-collapse > summary { cursor: pointer; font-size: 12.5px; font-weight: 700; color: var(--text-secondary, #666); list-style: none; user-select: none; }
+    .file-collapse > summary::-webkit-details-marker { display: none; }
+    .file-collapse > summary::before { content: '▸ '; }
+    .file-collapse[open] > summary::before { content: '▾ '; }
+    .file-collapse > summary:hover { color: var(--brand-primary, #DC2828); }
+    .file-collapse .file-list { display: flex; flex-direction: column; gap: 2px; margin-top: 5px; font-size: 12.5px; color: var(--text-primary, #191919); }
+    /* 소재 목록 — 통합 액션 툴바 */
+    .result-toolbar { align-items: center; gap: 12px; flex-wrap: wrap; margin: 4px 0 14px; }
+    .result-toolbar .rt-left { display: flex; align-items: center; gap: 8px; }
+    .result-toolbar .rt-right { display: flex; align-items: center; gap: 8px; margin-left: auto; flex-wrap: wrap; }
+    .rt-sort-label { font-size: 13px; font-weight: 600; color: var(--text-secondary, #666); }
+    .rt-select { padding: 7px 10px; border: 1px solid var(--border-default, #ccc); border-radius: var(--radius-md, 8px); font-size: 13px; background: var(--bg-base, #fff); color: var(--text-primary, #191919); font-weight: 600; cursor: pointer; }
+    .rt-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; font-size: 13px; font-weight: 600; border: 1px solid var(--border-default, #ccc); border-radius: var(--radius-md, 8px); background: var(--bg-base, #fff); color: var(--text-primary, #191919); cursor: pointer; transition: background .12s, border-color .12s, color .12s; white-space: nowrap; }
+    .rt-btn:hover { background: var(--bg-subtle, #e5e5e5); border-color: var(--gray-30, #999); }
+    .rt-btn svg { width: 14px; height: 14px; }
+    .rt-btn-ai { background: rgba(220,40,40,.08); border-color: rgba(220,40,40,.30); color: var(--brand-primary, #DC2828); }
+    .rt-btn-ai:hover { background: rgba(220,40,40,.14); border-color: var(--brand-primary, #DC2828); color: var(--brand-primary, #DC2828); }
+    .rt-key-status { font-size: 11px; color: var(--text-secondary, #999); white-space: nowrap; }
+    @media (max-width: 720px) { .result-toolbar .rt-right { margin-left: 0; width: 100%; } }
     .pctile-badge {
       display: inline-block;
       padding: 1px 7px;
@@ -884,6 +928,9 @@
     .ds-table tbody tr.rank-top { border-left: 3px solid var(--brand-primary); }
     .ds-table td { padding: 7px 10px; vertical-align: middle; font-size: 13px; }
     .ds-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    /* B: 분석 테이블 컬럼 확장 — 가로 스크롤 */
+    .table-container { overflow-x: auto; }
+    #resultTable { min-width: 1180px; }
     /* Stage 5-I QA: 모달 KPI 지표 테이블 (줄 글 행 → 그리드 카드) */
     .kpi-metric-grid {
       display: grid;
@@ -944,6 +991,16 @@
     .signal-evidence.evidence-strength { border-left-color: #86efac; }
     .signal-evidence.evidence-weakness { border-left-color: #fcd34d; }
     .signal-evidence.evidence-testidea { border-left-color: #c4b5fd; }
+    /* C-ⓐ 신호칩 재디자인 — 카테고리 좌측 보더 + 잉크 카드 (펄 칩 대체) */
+    .signal-group2 { margin-top: 14px; }
+    .signal-group2-label { font-size: 12px; font-weight: 700; color: var(--text-secondary, #666); margin-bottom: 6px; letter-spacing: .02em; }
+    .signal-card { border-left: 3px solid var(--border-default, #ccc); background: var(--surface-soft, #faf9f7); border-radius: 0 6px 6px 0; padding: 8px 12px; margin-bottom: 6px; }
+    .signal-card-title { font-size: 13px; font-weight: 700; color: var(--text-primary, #191919); line-height: 1.4; }
+    .signal-card-ev { font-size: 12px; color: var(--text-secondary, #666); line-height: 1.55; margin-top: 4px; }
+    .signal-card.signal-card-strength { border-left-color: #16a34a; }
+    .signal-card.signal-card-weakness { border-left-color: #d97706; }
+    .signal-card.signal-card-hypothesis { border-left-color: #2563eb; }
+    .signal-card.signal-card-testidea { border-left-color: #6b7280; }
     /* Stage 5-F-3: stats-grid 직후 분포 패널 (강점·약점·추천 변주 Top N) */
     .signal-dist-grid {
       display: grid;
@@ -1613,34 +1670,35 @@
         <!-- 필터 요약 슬롯 -->
         <div id="filterSummarySlot"></div>
 
-        <!-- AI 인사이트 버튼 -->
-        <div class="gai-section-action">
-          <button class="gai-trigger-btn" onclick="runScoringAIInsight()">
-            <span class="gai-btn-icon">AI 인사이트 생성</span>
-          </button>
-          <span class="gai-key-status" style="font-size:11.5px;font-weight:600;margin-left:auto;"></span>
+        <!-- 통합 액션 툴바 (결과 있을 때 노출) -->
+        <div id="resultToolbar" class="result-toolbar" style="display:none;">
+          <div class="rt-left">
+            <label class="rt-sort-label">정렬</label>
+            <select id="resultSortSelect" onchange="applyResultSort(this.value)" class="rt-select">
+              <option value="score">종합 점수 (기본)</option>
+              <option value="ctr">CTR 풀 백분위 높은 순</option>
+              <option value="cvr">CVR 풀 백분위 높은 순</option>
+              <option value="cpa">CPA 풀 백분위 높은 순</option>
+              <option id="resultSortMmpOpt" value="mmpscore" style="display:none;">MMP 품질점수 높은 순</option>
+            </select>
+          </div>
+          <div class="rt-right">
+            <button class="rt-btn rt-btn-ai" onclick="runScoringAIInsight()">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .962 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.582a.5.5 0 0 1 0 .962L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.962 0z"/></svg>
+              AI 인사이트 생성
+            </button>
+            <span class="gai-key-status rt-key-status"></span>
+            <button class="rt-btn" onclick="exportResultHTML()">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              HTML 추출
+            </button>
+            <button class="rt-btn" onclick="exportCreativeBrief()">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              제작 브리프 추출
+            </button>
+          </div>
         </div>
         <div id="scoringAIBox"></div>
-
-        <!-- 정렬 바 -->
-        <div id="resultSortBar" style="display:none;margin:0 0 12px;font-size:13px;color:var(--text-primary);">
-          <label style="font-weight:600;margin-right:6px;">정렬</label>
-          <select id="resultSortSelect" onchange="applyResultSort(this.value)" style="padding:5px 10px;border:1px solid var(--border-default);border-radius:var(--radius-md);font-size:13px;background:var(--bg-base);color:var(--text-primary);font-weight:600;">
-            <option value="score">종합 점수 (기본)</option>
-            <option value="ctr">CTR 풀 백분위 높은 순</option>
-            <option value="cvr">CVR 풀 백분위 높은 순</option>
-            <option value="cpa">CPA 풀 백분위 높은 순</option>
-            <option id="resultSortMmpOpt" value="mmpscore" style="display:none;">MMP 품질점수 높은 순</option>
-          </select>
-          <!-- 내보내기 버튼 -->
-          <button class="ds-btn-secondary" style="margin-left:12px;" onclick="exportResultHTML()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            HTML 추출
-          </button>
-        </div>
-        <div id="exportBtnContainer" style="display:none;">
-          <button class="ds-btn-secondary" onclick="exportCreativeBrief()">제작 브리프 추출</button>
-        </div>
 
         <!-- 소재 테이블 -->
         <div class="table-container">
@@ -1654,6 +1712,11 @@
                 <th id="thM2" class="has-tooltip" data-tip="비용 ÷ 전환수 · 낮을수록 효율적">CPA <span class="th-info">?</span></th>
                 <th id="thM3" class="has-tooltip" data-tip="(전환수 ÷ 노출수) × 1,000 · 높을수록 우수">IPM <span class="th-info">?</span></th>
                 <th id="thM4" class="has-tooltip" data-tip="(매출 ÷ 비용) × 100% · Revenue 컬럼 없으면 —">ROAS <span class="th-info">?</span></th>
+                <th class="num has-tooltip" data-tip="매출 · Google Ads=Revenue / MMP=D7 LTV(D0~D7 누적)">매출 <span class="th-info">?</span></th>
+                <th class="num has-tooltip" data-tip="광고 비용">비용 <span class="th-info">?</span></th>
+                <th class="num has-tooltip" data-tip="노출수">노출수 <span class="th-info">?</span></th>
+                <th class="num has-tooltip" data-tip="클릭수">클릭수 <span class="th-info">?</span></th>
+                <th class="num has-tooltip" data-tip="클릭수 ÷ 노출수 × 100%">CTR <span class="th-info">?</span></th>
                 <th id="thScore" class="has-tooltip" data-tip="전환수·CPA·IPM·ROAS 점수의 가중치 합산">총점 <span class="th-info">?</span></th>
                 <th class="has-tooltip" data-tip="총점 기준 등급 · 최우수≥80 / 우수≥60 / 양호≥40">등급 <span class="th-info">?</span></th>
                 <th class="col-pctile has-tooltip" data-tip="풀 대비 백분위 · CTR/CVR/CPA · Google Ads KPI 보유 소재">성과 <span class="th-info">?</span></th>
@@ -1662,7 +1725,7 @@
               </tr>
             </thead>
             <tbody id="tableBody">
-              <tr><td colspan="12" style="text-align:center;padding:40px;color:var(--text-secondary);">점수 계산을 실행하세요</td></tr>
+              <tr><td colspan="17" style="text-align:center;padding:40px;color:var(--text-secondary);">점수 계산을 실행하세요</td></tr>
             </tbody>
           </table>
         </div>
@@ -2061,34 +2124,25 @@ function renderTagCreativeList(creatives) {
 function buildSignalChipsHtml(creative) {
   const meta = (creative && creative.meta) || {};
   const groups = [
-    { label: '💪 강점',       items: meta.strengths,  cls: 'signal-chip-strength',   evCls: 'evidence-strength', evidences: meta.strength_evidence },
-    { label: '⚠️ 약점',       items: meta.weaknesses, cls: 'signal-chip-weakness',   evCls: 'evidence-weakness', evidences: meta.weakness_evidence },
-    { label: '🎯 가설',       items: meta.hypothesis, cls: 'signal-chip-hypothesis', evCls: null,                evidences: null },
-    { label: '💡 차주 변주',  items: meta.test_ideas, cls: 'signal-chip-testidea',   evCls: 'evidence-testidea', evidences: meta.improvement_actions, evPrefix: '→ ' },
+    { label: '강점',       items: meta.strengths,  cls: 'signal-chip-strength',   evCls: 'evidence-strength', evidences: meta.strength_evidence },
+    { label: '약점',       items: meta.weaknesses, cls: 'signal-chip-weakness',   evCls: 'evidence-weakness', evidences: meta.weakness_evidence },
+    { label: '가설',       items: meta.hypothesis, cls: 'signal-chip-hypothesis', evCls: null,                evidences: null },
+    { label: '차주 변주',  items: meta.test_ideas, cls: 'signal-chip-testidea',   evCls: 'evidence-testidea', evidences: meta.improvement_actions, evPrefix: '→ ' },
   ];
-  const sections = groups
+  // C-ⓐ: 카테고리별 좌측 보더 색 + 잉크 텍스트 카드 (펄 칩 → 절제, 스캔성 유지)
+  const cardCls = { 'signal-chip-strength':'signal-card-strength', 'signal-chip-weakness':'signal-card-weakness', 'signal-chip-hypothesis':'signal-card-hypothesis', 'signal-chip-testidea':'signal-card-testidea' };
+  return groups
     .filter((g) => Array.isArray(g.items) && g.items.length)
     .map((g) => {
-      const hasEvidence = Array.isArray(g.evidences) && g.evidences.some((e) => e && e.trim());
-      if (!hasEvidence) {
-        // 구 JSON (v2) 또는 가설 그룹 — 칩만 가로 나열 (기존 5-F-2 형태)
-        const chips = g.items.map((it) =>
-          `<span class="signal-chip ${g.cls}">${escapeHtml(it)}</span>`
-        ).join('');
-        return `<div class="signal-group"><span class="signal-group-label">${g.label}</span>${chips}</div>`;
-      }
-      // 5-H v3: 칩 + 근거 페어 세로 리스트
-      const rows = g.items.map((it, idx) => {
+      const cls = cardCls[g.cls] || '';
+      const cards = g.items.map((it, idx) => {
         const ev = ((g.evidences && g.evidences[idx]) || '').trim();
-        const evHtml = ev
-          ? `<div class="signal-evidence ${g.evCls}">${escapeHtml((g.evPrefix || '') + ev)}</div>`
-          : '';
-        return `<div class="signal-pair"><span class="signal-chip ${g.cls}">${escapeHtml(it)}</span>${evHtml}</div>`;
+        const evHtml = ev ? `<div class="signal-card-ev">${escapeHtml((g.evPrefix || '') + ev)}</div>` : '';
+        return `<div class="signal-card ${cls}"><div class="signal-card-title">${escapeHtml(it)}</div>${evHtml}</div>`;
       }).join('');
-      return `<div class="signal-group signal-group-vertical"><span class="signal-group-label">${g.label}</span>${rows}</div>`;
+      return `<div class="signal-group2"><div class="signal-group2-label">${g.label}</div>${cards}</div>`;
     })
     .join('');
-  return sections;
 }
 
 // Stage 5-I QA: '🔑 한 줄'과 '💡 마케터 인사이트'(alias 라 동일 내용 중복 출력) 통합.
@@ -2098,15 +2152,12 @@ function buildSignalChipsHtml(creative) {
 function buildInsightBlocksHtml(creative) {
   const meta = (creative && creative.meta) || {};
   const insight = ((meta.one_line_insight || meta.marketer_insight) || '').trim();
-  const insightHtml = insight
-    ? `<div class="signal-oneline"><span class="signal-oneline-key">💡 한 줄 인사이트</span>${escapeHtml(insight)}</div>`
-    : '';
-  // 실제 KPI 정합성 해석 (KPI 있을 때만)
   const reality = (meta.kpi_reality_check || '').trim();
-  const realityHtml = reality
-    ? `<div class="signal-reality"><span class="signal-reality-key">📊 데이터 체크</span>${escapeHtml(reality)}</div>`
-    : '';
-  return insightHtml + realityHtml;
+  if (!insight && !reality) return '';
+  // 2-ⓒ: '한 줄 인사이트' + '데이터 체크' 를 단일 블록으로 병합
+  const lead = insight ? `<div class="signal-insight-lead">${escapeHtml(insight)}</div>` : '';
+  const body = reality ? `<div class="signal-insight-body">${escapeHtml(reality)}</div>` : '';
+  return `<div class="signal-insight"><span class="signal-insight-key">인사이트</span>${lead}${body}</div>`;
 }
 
 // pctBadgeHtml → js/layer-metrics.js (공용 모듈)
@@ -2129,35 +2180,62 @@ function mmpFmt(m) {
   return {
     ipm:  m.mmp_d1_ipm == null ? '—' : Number(m.mmp_d1_ipm).toFixed(2),
     cpi:  m.mmp_d1_cpi == null ? '—' : cur + Math.round(m.mmp_d1_cpi).toLocaleString(),
-    roas: m.mmp_d7_roas == null ? '—' : Number(m.mmp_d7_roas).toFixed(2),
+    roas: m.mmp_d7_roas == null ? '—' : Math.round(Number(m.mmp_d7_roas) * 100) + '%',
     ret:  m.mmp_d1_retention == null ? '—' : Number(m.mmp_d1_retention).toFixed(1) + '%',
   };
 }
-// 모달 '🎯 소재 품질(MMP)' 섹션 — 4지표 그리드 + 채널 배지 + 품질점수.
+// A: MMP install 기준 표준 지표 (Google Ads 동일 산식) — CPA=비용/설치, IPM=설치/노출×1000, ROAS=LTV매출/비용.
+function mmpStdMetrics(m) {
+  const inst = Number(m.mmp_installs) || 0, cost = Number(m.mmp_cost) || 0,
+        imp = Number(m.mmp_impressions) || 0, clk = Number(m.mmp_clicks) || 0,
+        rev = Number(m.mmp_revenue) || 0;
+  return { inst, cost, imp, clk, rev,
+    cpa: inst > 0 ? cost / inst : null,
+    ipm: imp > 0 ? inst / imp * 1000 : null,
+    roas: cost > 0 ? rev / cost : null,
+    ctr: imp > 0 ? clk / imp * 100 : null };
+}
+// 모달 소재 품질(MMP) 섹션 — Google Ads 동일 산식(설치 기준) 10카드 + D1 품질지표 참조.
 function buildMmpSectionHtml(creative) {
   const m = (creative && creative.meta) || {};
   if (!m.mmp_source) return '';
+  const s = mmpStdMetrics(m);
   const f = mmpFmt(m);
+  const qs = m.mmp_quality_score;
+  const cur = m.mmp_currency === 'USD' ? '$' : '₩';
+  const won = (v) => cur + Math.round(v).toLocaleString();
   const channels = (Array.isArray(m.mmp_channels) ? m.mmp_channels : [])
     .map((c) => `<span class="mmp-channel-badge">${escapeHtml(c)}</span>`).join('');
-  const qs = m.mmp_quality_score;
   const scoreBadge = (qs && qs.total != null)
     ? `<span class="mmp-score-badge">품질점수 ${qs.total} · ${escapeHtml(qs.grade)} · #${qs.rank}</span>` : '';
-  // 환율 변환 주석 (KRW 로 변환된 경우만)
-  const fxNote = (m.mmp_currency === 'KRW' && m.mmp_fx_rate)
-    ? `<span class="mmp-fx-note">USD×${Number(m.mmp_fx_rate).toLocaleString()} 환산</span>` : '';
   const cell = (label, val) =>
-    `<div class="mmp-metric-cell"><div class="mmp-metric-label">${label}</div><div class="mmp-metric-value">${val}</div></div>`;
+    `<div class="kpi-metric-cell"><div class="kpi-metric-label">${label}</div><div class="kpi-metric-value">${val}</div></div>`;
+  const fxNote = (m.mmp_currency === 'KRW' && m.mmp_fx_rate)
+    ? ` · USD×${Number(m.mmp_fx_rate).toLocaleString()} 환산(비용·CPA·매출 원화)` : '';
   return `
     <div class="mmp-section">
       <div class="mmp-head">
-        <span class="mmp-head-title">🎯 소재 품질 (MMP · 非Google 매체)</span>
+        <span class="mmp-head-title">소재 품질 (MMP · 非Google 매체)</span>
         ${channels}${scoreBadge}
       </div>
-      <div class="mmp-metric-grid">
-        ${cell('D1 IPM', f.ipm)}${cell('D1 CPI', f.cpi)}${cell('D7 ROAS<br><span style="font-weight:500;font-size:10px;">(D0~D7 누적 · 조기 회수율)</span>', f.roas)}${cell('D1 잔존', f.ret)}
+      <div class="kpi-metric-grid">
+        <div class="kpi-metric-cell kpi-metric-cell-score">
+          <div class="kpi-metric-label">종합점수 (MMP 품질)</div>
+          <div class="kpi-metric-value">${(qs && qs.total != null)
+            ? `<strong style="font-size:17px;color:var(--brand-primary,#DC2828);">${qs.total}</strong> <span class="kpi-metric-sub">${escapeHtml(qs.grade || '')}</span>`
+            : '—'}</div>
+        </div>
+        ${cell('전환 (설치)', s.inst.toLocaleString())}
+        ${cell('CPA', s.cpa != null ? won(s.cpa) : '—')}
+        ${cell('IPM', s.ipm != null ? s.ipm.toFixed(2) : '—')}
+        ${cell('ROAS (D7 LTV)', s.roas != null ? Math.round(s.roas * 100) + '%' : '—')}
+        ${cell('매출 (D7 LTV)', won(s.rev))}
+        ${cell('비용', won(s.cost))}
+        ${cell('노출수', s.imp.toLocaleString())}
+        ${cell('클릭수', s.clk.toLocaleString())}
+        ${cell('CTR', s.ctr != null ? s.ctr.toFixed(2) + '%' : '—')}
       </div>
-      ${fxNote ? `<div style="margin-top:6px;font-size:11px;color:#0f766e;">${fxNote} · 비용/CPI 는 원화 환산값</div>` : ''}
+      <div style="margin-top:8px;font-size:11px;color:#0f766e;">품질지표(D1 기준): D1 CPI ${f.cpi} · D1 IPM ${f.ipm} · D7 ROAS ${f.roas} · D1 잔존 ${f.ret}${fxNote}</div>
     </div>`;
 }
 // 결과표 MMP 셀 — 품질점수 배지(등급색) + 4지표 native 툴팁. mmp 없으면 '—'.
@@ -2880,9 +2958,10 @@ function aggregateCreativeData(rows, groupBy) {
         'strength_evidence','weakness_evidence','creative_concept','사이즈','언어',
         'mmp_daily','mmp_channels','mmp_d1_ipm','mmp_d1_cpi','mmp_d7_roas',
         'mmp_d1_retention','mmp_installs','mmp_retained_d1','mmp_cost','mmp_revenue',
-        'mmp_currency','mmp_fx_rate'];
+        'mmp_currency','mmp_fx_rate','source_files'];
       creativeMap.set(key, {
         소재명: row['소재명'] || '', 파일명: row['파일명'] || '',
+        파일명들: ((row['파일명'] || '').trim()) ? [(row['파일명']).trim()] : [],
         집계기준: key, 유형: row['유형'] || '',
         전환: conv, 비용: cost, 노출수: impr, 클릭수: click, 매출: rev,
         tags: {}, insights: {}, meta: {}
@@ -2910,6 +2989,8 @@ function aggregateCreativeData(rows, groupBy) {
     } else {
       const c = creativeMap.get(key);
       c.전환 += conv; c.비용 += cost; c.노출수 += impr; c.클릭수 += click; c.매출 += rev;
+      const _fn = (row['파일명'] || '').trim();
+      if (_fn && !c.파일명들.includes(_fn)) c.파일명들.push(_fn);
     }
   });
   const aggregated = Array.from(creativeMap.values()).map(c => {
@@ -3347,7 +3428,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         manifest.forEach(t => {
           const opt = document.createElement('option');
           opt.value = t.id;
-          opt.textContent = `🎯 ${t.name}`;
+          opt.textContent = t.name;
           opt.dataset.jsonUrl = t.json_url || '';
           selector.appendChild(opt);
         });
@@ -4829,26 +4910,33 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         // 레이어별 4지표·총점·등급 (데이터 소스 분리: ads=순수 Google Ads / mmp=순수 MMP)
         const layer = window.currentAnalysisLayer || 'ads';
         const dash = '<span style="color:#d1d5db;">—</span>';
-        let m1, m2, m3, m4, scoreCell, gradeCell;
+        let m1, m2, m3, m4, scoreCell, gradeCell, mRev, mCost, mImp, mClk, mCtr;
+        const won = (v) => '₩' + Math.round(v || 0).toLocaleString();
+        const numv = (v) => Number(v || 0).toLocaleString();
         if (layer === 'mmp') {
           const m = c.meta || {};
           const q = m.mmp_quality_score;
           const has = q && q.total != null;
-          m1 = (m.mmp_installs != null) ? Number(m.mmp_installs).toLocaleString() : dash;
-          m2 = (m.mmp_d1_cpi != null) ? '₩' + Math.round(m.mmp_d1_cpi).toLocaleString() : dash;
-          m3 = (m.mmp_d1_ipm != null) ? Number(m.mmp_d1_ipm).toFixed(2) : dash;
-          m4 = (m.mmp_d7_roas != null) ? Math.round(m.mmp_d7_roas * 100) + '%' : dash;
+          const s = mmpStdMetrics(m);   // B: install 기준 (CPA=비용/설치, IPM=설치/노출×1000)
+          m1 = (m.mmp_installs != null) ? numv(m.mmp_installs) : dash;
+          m2 = (s.cpa != null) ? won(s.cpa) : dash;
+          m3 = (s.ipm != null) ? s.ipm.toFixed(2) : dash;
+          m4 = (s.roas != null) ? Math.round(s.roas * 100) + '%' : dash;
           scoreCell = has ? q.total.toFixed(1) : dash;
           gradeCell = has ? `<span class="badge grade-${q.grade}">${q.grade}</span>` : dash;
+          mRev = won(s.rev); mCost = won(s.cost); mImp = numv(s.imp); mClk = numv(s.clk);
+          mCtr = (s.ctr != null) ? s.ctr.toFixed(2) + '%' : dash;
         } else {
           // Google Ads 윈도우 활동 없으면(노출 0) 종합점수는 변별 불가 → 총점·등급 '—'
           const hasAds = c._ads && c._ads.imp > 0;
           m1 = c.전환.toLocaleString();
-          m2 = '₩' + Math.round(c.CPA).toLocaleString();
+          m2 = won(c.CPA);
           m3 = c.IPM.toFixed(2);
           m4 = (c.매출 > 0 || c.비용 > 0) ? Math.round(c.ROAS * 100) + '%' : dash;
           scoreCell = hasAds ? c.TotalScore.toFixed(1) : dash;
           gradeCell = hasAds ? `<span class="badge grade-${c.등급}">${c.등급}</span>` : dash;
+          mRev = won(c.매출); mCost = won(c.비용); mImp = numv(c.노출수); mClk = numv(c.클릭수);
+          mCtr = (c.CTR != null) ? c.CTR.toFixed(2) + '%' : dash;
         }
 
         tr.innerHTML = `
@@ -4864,6 +4952,11 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td style="text-align: right;">${m2}</td>
           <td style="text-align: right;">${m3}</td>
           <td style="text-align: right; font-weight: 600; color: #1f2937;">${m4}</td>
+          <td style="text-align: right;">${mRev}</td>
+          <td style="text-align: right;">${mCost}</td>
+          <td style="text-align: right;">${mImp}</td>
+          <td style="text-align: right;">${mClk}</td>
+          <td style="text-align: right;">${mCtr}</td>
           <td style="text-align: right; font-weight: 700; color: #E84855; font-size: 16px;">${scoreCell}</td>
           <td>${gradeCell}</td>
           <td class="col-pctile" style="text-align:left;">${pctileCellHtml(c.meta && c.meta.kpi_percentiles)}</td>
@@ -4989,8 +5082,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         _tableEl.classList.toggle('show-pctile', hasPctile);
         _tableEl.classList.toggle('show-mmp', hasMmp);
       }
-      const _sortBar = document.getElementById('resultSortBar');
-      if (_sortBar) _sortBar.style.display = (hasPctile || hasMmp) ? 'block' : 'none';
+      const _toolbar = document.getElementById('resultToolbar');
+      if (_toolbar) _toolbar.style.display = 'flex';
       const _mmpOpt = document.getElementById('resultSortMmpOpt');
       if (_mmpOpt) _mmpOpt.style.display = hasMmp ? '' : 'none';
 
@@ -5010,8 +5103,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       if (window._lastFilteredRows) {
         renderCampaignCompare(window._lastFilteredRows, creatives);
       }
-      // ── 결과 추출 버튼 표시
-      document.getElementById('exportBtnContainer').style.display = 'block';
+      // ── 정렬·AI·내보내기는 #resultToolbar 로 통합 (위에서 노출)
 
       // Stage 5-F-3: v2 신호 분포 패널 갱신 (캠페인/유형 필터 변경 시마다 자동 호출)
       try {
@@ -5116,9 +5208,9 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td style="text-align:right;padding:7px 8px;">${fi(met.ipm)}</td>
           <td style="text-align:right;padding:7px 8px;">${fct(met.ctr)}</td>
           <td style="text-align:right;padding:7px 8px;">${fr(met.roas)}</td>
-          <td style="text-align:right;padding:7px 8px;color:#E84855;font-weight:700;">${met.avg==null?'—':met.avg.toFixed(1)}</td>
+          <td style="text-align:right;padding:7px 8px;color:#DC2828;font-weight:700;">${met.avg==null?'—':met.avg.toFixed(1)}</td>
         </tr>`;
-      }).join('') + (()=>{const tm=typeBlended(totM);return `<tr style="background:#f0f4ff;font-weight:700;border-top:2px solid #d1d5db;">
+      }).join('') + (()=>{const tm=typeBlended(totM);return `<tr style="background:#F4F2EF;font-weight:700;border-top:2px solid #CCCCCC;">
           <td style="text-align:center;padding:7px 8px;">합계/전체평균</td>
           <td style="text-align:right;padding:7px 8px;">${totM.count}</td>
           <td style="text-align:right;padding:7px 8px;">${totM.conv.toLocaleString()}</td>
@@ -5126,14 +5218,14 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td style="text-align:right;padding:7px 8px;">${fi(tm.ipm)}</td>
           <td style="text-align:right;padding:7px 8px;">${fct(tm.ctr)}</td>
           <td style="text-align:right;padding:7px 8px;">${fr(tm.roas)}</td>
-          <td style="text-align:right;padding:7px 8px;color:#E84855;font-weight:700;">${tm.avg==null?'—':tm.avg.toFixed(1)}</td>
+          <td style="text-align:right;padding:7px 8px;color:#DC2828;font-weight:700;">${tm.avg==null?'—':tm.avg.toFixed(1)}</td>
         </tr>`;})() : '';
 
       const typeSummaryBlock = types.length >= 2 ? `
-        <div style="margin:20px 0 14px;border:1.5px solid #e5e7eb;border-radius:14px;overflow:hidden;">
-          <div style="padding:11px 18px;background:linear-gradient(135deg,#1e3a5f,#2563eb);color:#fff;">
-            <div style="font-weight:700;font-size:14px;">📊 소재 유형별 성과 요약 · ${LBL.tag}</div>
-            <div style="font-size:11px;opacity:.8;margin-top:2px;">${LBL.m2}·ROAS는 가중평균 · 해당 매체 데이터 보유 소재만</div>
+        <div style="margin:20px 0 14px;border:1px solid #E5E5E5;border-radius:14px;overflow:hidden;">
+          <div style="padding:11px 18px;background:#F4F2EF;border-bottom:1px solid #CCCCCC;">
+            <div style="font-weight:700;font-size:14px;color:#191919;">소재 유형별 성과 요약 · ${LBL.tag}</div>
+            <div style="font-size:11px;color:#666666;margin-top:2px;">${LBL.m2}·ROAS는 가중평균 · 해당 매체 데이터 보유 소재만</div>
           </div>
           <table style="width:100%;border-collapse:collapse;font-size:12.5px;">
             <thead><tr style="background:#f8fafc;border-bottom:2px solid #e5e7eb;">
@@ -5162,7 +5254,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           if (hasImg) {
             // 영상 링크가 있으면 썸네일+플레이 오버레이
             previewCell = `<div style="position:relative;width:80px;height:54px;display:inline-block;cursor:pointer;" onclick="window.open('${imageUrl}','_blank')">
-              <img src="${imageUrl}" style="width:80px;height:54px;object-fit:cover;border-radius:6px;" onerror="this.parentNode.innerHTML='<div style=\\'width:80px;height:54px;background:#ede9fe;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:20px;\\'>🎬</div>'">
+              <img src="${imageUrl}" style="width:80px;height:54px;object-fit:cover;border-radius:6px;" onerror="this.parentNode.innerHTML='<div style=\\'width:80px;height:54px;background:#F4F2EF;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#666;\\'>VID</div>'">
               <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
                 <div style="width:26px;height:26px;background:rgba(0,0,0,.55);border-radius:50%;display:flex;align-items:center;justify-content:center;">
                   <span style="color:#fff;font-size:12px;margin-left:2px;">▶</span>
@@ -5170,15 +5262,15 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
               </div>
             </div>`;
           } else {
-            previewCell = `<div style="width:80px;height:54px;background:#ede9fe;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:default;">🎬</div>`;
+            previewCell = `<div style="width:80px;height:54px;background:#F4F2EF;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#666;cursor:default;">VID</div>`;
           }
         } else if (hasImg) {
           previewCell = `<a href="${imageUrl}" target="_blank" title="원본 이미지 열기">
             <img src="${imageUrl}" style="width:80px;height:54px;object-fit:cover;border-radius:6px;display:block;"
-                 onerror="this.parentNode.innerHTML='<div style=\\'width:80px;height:54px;background:#dbeafe;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:22px;\\'>🖼️</div>'">
+                 onerror="this.parentNode.innerHTML='<div style=\\'width:80px;height:54px;background:#F4F2EF;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#999;\\'>IMG</div>'">
           </a>`;
         } else {
-          previewCell = `<div style="width:80px;height:54px;background:#f3f4f6;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#d1d5db;">📷</div>`;
+          previewCell = `<div style="width:80px;height:54px;background:#F4F2EF;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#999;">—</div>`;
         }
 
         const v   = creativeLayerView(c);
@@ -5207,11 +5299,12 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12.5px;">${won(v.CPA)}</td>
           <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12.5px;">${v.IPM==null?'—':Number(v.IPM).toFixed(2)}</td>
           <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12.5px;font-weight:600;">${roas}</td>
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12.5px;">${won(v.매출)}</td>
           <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;">${sc(v.s1)}</td>
           <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;">${sc(v.s2)}</td>
           <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;">${sc(v.s3)}</td>
           <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;">${sc(v.s4)}</td>
-          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:14px;font-weight:800;color:#E84855;">${v.score==null?'<span style="color:#9ca3af;">—</span>':v.score.toFixed(1)}</td>
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:14px;font-weight:800;color:#DC2828;">${v.score==null?'<span style="color:#9ca3af;">—</span>':v.score.toFixed(1)}</td>
           <td style="padding:8px;text-align:center;vertical-align:middle;">
             ${v.grade ? `<span style="display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;${gs}">${v.grade}</span>` : '<span style="color:#9ca3af;">—</span>'}
           </td>
@@ -5228,33 +5321,35 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
 <title>소재 성과 분석 결과 — ${exportedAt}</title>
 <style>
 * { box-sizing:border-box; margin:0; padding:0; }
-body { font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
-       background:#f8fafc; color:#1f2937; font-size:14px; }
+body { font-family:'Noto Sans KR','Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+       background:#FAF9F7; color:#191919; font-size:14px; }
 .wrap { max-width:1400px; margin:0 auto; padding:32px 24px; }
-h1 { font-size:22px; font-weight:800; color:#1e3a5f; margin-bottom:4px; }
-.meta { font-size:12px; color:#9ca3af; margin-bottom:22px; }
+.brand-eyebrow { font-size:13px; font-weight:800; color:#DC2828; letter-spacing:.02em; margin-bottom:4px; }
+h1 { font-size:22px; font-weight:800; color:#191919; margin-bottom:4px; letter-spacing:-.01em; }
+.meta { font-size:12px; color:#666666; margin-bottom:22px; }
 .stats-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-bottom:20px; }
-.stat-card { border-radius:12px; padding:16px 18px; text-align:center; color:#fff; }
-.stat-card-main { background:linear-gradient(135deg,#E84855,#ff6b6b); }
-.stat-card-poor { background:linear-gradient(135deg,#475569,#64748b); }
-.stat-label { font-size:12px; opacity:.9; margin-bottom:6px; }
-.stat-value { font-size:28px; font-weight:800; }
-.stat-sub   { font-size:11px; opacity:.75; margin-top:3px; }
+.stat-card { border:1px solid #E5E5E5; border-radius:12px; padding:16px 18px; text-align:center; background:#fff; }
+.stat-label { font-size:12px; color:#666666; margin-bottom:6px; font-weight:600; }
+.stat-value { font-size:28px; font-weight:800; color:#191919; }
+.stat-card-main .stat-value { color:#DC2828; }
+.stat-card-poor .stat-value { color:#666666; }
+.stat-sub   { font-size:11px; color:#999999; margin-top:3px; }
 table { width:100%; border-collapse:collapse; font-size:12.5px; }
-thead tr { background:#f8fafc; border-bottom:2px solid #e5e7eb; }
-th { padding:9px 8px; color:#6b7280; font-weight:600; white-space:nowrap; }
-.detail-wrap { background:#fff; border:1.5px solid #e5e7eb; border-radius:14px; overflow:hidden; margin-top:16px; }
-.detail-header { padding:12px 18px; background:linear-gradient(135deg,#E84855,#ff6b6b); color:#fff; font-weight:700; font-size:15px; }
-.footer { margin-top:32px; text-align:center; font-size:11.5px; color:#9ca3af;
-          border-top:1px solid #e5e7eb; padding-top:16px; }
+thead tr { background:#F4F2EF; border-bottom:1px solid #CCCCCC; }
+th { padding:9px 8px; color:#666666; font-weight:600; white-space:nowrap; }
+.detail-wrap { background:#fff; border:1px solid #E5E5E5; border-radius:14px; overflow:hidden; margin-top:16px; }
+.detail-header { padding:12px 18px; background:#fff; border-bottom:1px solid #E5E5E5; color:#191919; font-weight:700; font-size:15px; }
+.footer { margin-top:32px; text-align:center; font-size:11.5px; color:#999999;
+          border-top:1px solid #E5E5E5; padding-top:16px; }
 img { display:block; }
 @media print { body{background:#fff;} .wrap{padding:16px;} }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>📋 소재 성과 분석 결과 <span style="font-size:14px;font-weight:600;color:#E84855;">· ${LBL.tag}</span></h1>
-  <div class="meta">추출일시: ${exportedAt} &nbsp;|&nbsp; ${LBL.tag} (해당 매체 실데이터 보유 소재만) &nbsp;|&nbsp; Com2uS R팀 소재 분석 대시보드</div>
+  <div class="brand-eyebrow">Com2uS · 소재 분석 대시보드</div>
+  <h1>소재 성과 분석 결과 <span style="font-size:14px;font-weight:600;color:#DC2828;">· ${LBL.tag}</span></h1>
+  <div class="meta">추출일시: ${exportedAt} &nbsp;|&nbsp; ${LBL.tag} (해당 매체 실데이터 보유 소재만) &nbsp;|&nbsp; 내부 참고용</div>
 
   <!-- 스코어 카드 5개 -->
   <div class="stats-grid">
@@ -5273,7 +5368,7 @@ img { display:block; }
 
   <!-- 소재 상세 테이블 -->
   <div class="detail-wrap">
-    <div class="detail-header">📑 소재별 점수 상세 (미리보기 포함)</div>
+    <div class="detail-header">소재별 점수 상세 (미리보기 포함)</div>
     <div style="overflow-x:auto;">
       <table>
         <thead><tr>
@@ -5288,6 +5383,7 @@ img { display:block; }
           <th style="text-align:right;">${LBL.m2}</th>
           <th style="text-align:right;">${LBL.m3}</th>
           <th style="text-align:right;">${LBL.m4}</th>
+          <th style="text-align:right;">매출</th>
           <th style="text-align:right;">전환점수</th>
           <th style="text-align:right;">${LBL.s2}</th>
           <th style="text-align:right;">${LBL.s3}</th>
@@ -5316,7 +5412,7 @@ img { display:block; }
       a.href = url; a.download = fileName;
       document.body.appendChild(a); a.click();
       setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
-      console.log('✅ HTML 추출 완료: ' + fileName);
+      console.log('HTML 추출 완료: ' + fileName);
     }
 
     // ──────────────────────────────────────────────
@@ -5341,99 +5437,106 @@ img { display:block; }
       const scoredCs = cs.filter(c => scoreOf(c) != null);   // 해당 매체 실데이터 있는 소재만 순위
       const sorted = [...scoredCs].sort((a, b) => scoreOf(b) - scoreOf(a));
       const n = cs.length;
-      const half = Math.floor(sorted.length / 2);   // 홀수 n: 중앙 소재는 양쪽서 제외(중복 방지). 짝수 n은 기존과 동일.
+      const half = Math.floor(sorted.length / 2);   // 홀수 n: 중앙 소재는 양쪽서 제외(중복 방지)
       const winners = sorted.slice(0, half);
-      const losers = half > 0 ? sorted.slice(sorted.length - half) : [];   // slice(-0)=전체 반환 함정 회피
+      const losers = half > 0 ? sorted.slice(sorted.length - half) : [];
       const avgScore = scoredCs.length ? (scoredCs.reduce((s, c) => s + scoreOf(c), 0) / scoredCs.length).toFixed(1) : '—';
 
+      // 공통 신호 요약 — 유지할 강점(우수군 차별 우위) / 피할 약점(저성과 공통)
       const freq = (arr, f) => { const m = new Map(); arr.forEach(c => meta(c, f).forEach(s => m.set(s, (m.get(s) || 0) + 1))); return m; };
       const wStr = freq(winners, 'strengths'), lStr = freq(losers, 'strengths');
-      // 재현할 강점: 우수군 빈도 높고, 우수군 비중이 저성과군보다 높은 것(차별 우위)
       const reproduce = [...wStr.keys()].map(s => {
-        const wr = wStr.get(s) / winners.length, lr = (lStr.get(s) || 0) / losers.length;
-        return { s, w: wStr.get(s), wr, lift: wr - lr };
-      }).sort((a, b) => b.lift - a.lift || b.w - a.w).slice(0, 5);
-      // 피할 약점: 저성과군에 흔한 약점
+        const wr = wStr.get(s) / (winners.length || 1), lr = (lStr.get(s) || 0) / (losers.length || 1);
+        return { s, w: wStr.get(s), lift: wr - lr };
+      }).sort((a, b) => b.lift - a.lift || b.w - a.w).slice(0, 4);
       const lWeak = freq(losers, 'weaknesses');
-      const avoid = [...lWeak.entries()].map(([s, c]) => ({ s, c })).sort((a, b) => b.c - a.c).slice(0, 5);
-      // 다음 제작 추천: 전체 변주 빈도 Top + 우수군 구체 실행안 샘플
-      const allTest = freq(cs, 'test_ideas');
-      const recommend = [...allTest.entries()].map(([s, c]) => ({ s, c })).sort((a, b) => b.c - a.c).slice(0, 5);
-      const actionSamples = [];
-      for (const c of winners) { const a = meta(c, 'improvement_actions'); if (a[0]) actionSamples.push(a[0]); if (actionSamples.length >= 4) break; }
-      // 벤치마크 우수 소재 Top 3
-      const bench = winners.slice(0, 3).map(c => ({
-        name: c.key, score: (scoreOf(c) ?? 0).toFixed(1), grade: creativeLayerView(c).grade || '', type: c.유형 || '',
-        strength: meta(c, 'strengths')[0] || '', evidence: meta(c, 'strength_evidence')[0] || '',
-        oneLine: c.meta?.one_line_insight || ''
-      }));
-      // CTR 풀 상위 (KPI 보유 시)
-      const withCtr = cs.filter(c => c.meta?.kpi_percentiles?.ctr != null)
-        .sort((a, b) => b.meta.kpi_percentiles.ctr - a.meta.kpi_percentiles.ctr);
-      const ctrTop = withCtr.slice(0, 3);
+      const avoid = [...lWeak.entries()].map(([s, c]) => ({ s, c })).sort((a, b) => b.c - a.c).slice(0, 4);
+      const reproduceHtml = reproduce.length ? reproduce.map(r => `<span class="tag tag-good">${esc(r.s)}</span>`).join('') : '<span class="none">AI 태그 데이터 없음</span>';
+      const avoidHtml = avoid.length ? avoid.map(a => `<span class="tag tag-bad">${esc(a.s)}</span>`).join('') : '<span class="none">두드러진 공통 약점 없음 — 양호</span>';
 
-      const reproduceHtml = reproduce.length ? reproduce.map(r =>
-        `<li><strong>${esc(r.s)}</strong> <span class="cnt">우수 ${r.w}건 (${Math.round(r.wr*100)}%)</span>${r.lift>0.05?'<span class="diff">차별 우위</span>':''}</li>`).join('') : '<li class="none">AI 태그 데이터 없음</li>';
-      const avoidHtml = avoid.length ? avoid.map(a =>
-        `<li><strong>${esc(a.s)}</strong> <span class="cnt">저성과 ${a.c}건</span></li>`).join('') : '<li class="none">두드러진 공통 약점 없음 — 양호</li>';
-      const recHtml = recommend.length ? recommend.map(r =>
-        `<li><strong>${esc(r.s)}</strong> <span class="cnt">${r.c}건 추천</span></li>`).join('') : '<li class="none">데이터 없음</li>';
-      const actHtml = actionSamples.length ? `<div class="acts"><div class="acts-h">우수 소재의 구체 실행안 (참고)</div><ul>${actionSamples.map(a=>`<li>${esc(a)}</li>`).join('')}</ul></div>` : '';
-      const benchHtml = bench.map((b, i) => `
-        <div class="bench-card">
-          <div class="bench-rank">#${i+1}</div>
-          <div class="bench-body">
-            <div class="bench-name">${esc(b.name)} <span class="bench-meta">${esc(b.type)} · ${b.score}점 · ${esc(b.grade)}</span></div>
-            ${b.strength ? `<div class="bench-str">💪 ${esc(b.strength)}</div>` : ''}
-            ${b.evidence ? `<div class="bench-ev">${esc(b.evidence)}</div>` : ''}
-            ${b.oneLine ? `<div class="bench-one">🔑 ${esc(b.oneLine)}</div>` : ''}
+      // 썸네일 (이미지/영상 · 폴백)
+      const thumb = (c) => {
+        const u = c.meta?.['링크'] || c.이미지링크 || c.meta?.['image_url'] || '';
+        const isVid = (c.유형 || '').toUpperCase() === 'VID';
+        const ok = u && u.startsWith('http');
+        if (ok) {
+          const play = isVid ? `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:24px;height:24px;background:rgba(0,0,0,.55);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;">▶</div></div>` : '';
+          return `<div style="position:relative;width:96px;height:64px;flex:none;"><img src="${u}" style="width:96px;height:64px;object-fit:cover;border-radius:8px;display:block;" onerror="this.style.display='none'">${play}</div>`;
+        }
+        return `<div style="width:96px;height:64px;background:#F4F2EF;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#999;">${isVid ? 'VID' : 'IMG'}</div>`;
+      };
+
+      // 우수 소재 + 추가 실험 제안 카드 — "이 소재가 [강점]으로 잘 됐으니, [요소]를 더해 A/B 테스트"
+      const winnerCards = winners.slice(0, 5).map(c => {
+        const v = creativeLayerView(c);
+        const strength = meta(c, 'strengths')[0] || c.meta?.hooking_strategy || '';
+        const ev = meta(c, 'strength_evidence')[0] || '';
+        const add = meta(c, 'improvement_actions')[0] || meta(c, 'test_ideas')[0] || '';
+        return `
+        <div class="cre-card">
+          ${thumb(c)}
+          <div class="cre-body">
+            <div class="cre-name">${esc(c.key)} <span class="cre-meta">${esc(c.유형 || '')} · ${(v.score ?? 0).toFixed(1)}점 · ${esc(v.grade || '')}</span></div>
+            ${strength ? `<div class="cre-good"><b>잘된 점</b> ${esc(strength)}${ev ? ` <span class="cre-ev">— ${esc(ev)}</span>` : ''}</div>` : ''}
+            ${add ? `<div class="cre-add"><b>추가 실험</b> ${esc(add)} <span class="abt">A/B 테스트</span></div>` : '<div class="cre-add" style="color:#999;"><b>추가 실험</b> AI 변주 제안 없음 — 강점 유지하며 신규 후킹 시도</div>'}
           </div>
-        </div>`).join('');
-      const ctrHtml = ctrTop.length ? `
-  <div class="sec">
-    <div class="sec-h"><span class="sec-ic">🎯</span>실제 후킹 우수 (CTR 풀 상위)</div>
-    <ul class="lst">${ctrTop.map(c=>`<li><strong>${esc(c.key)}</strong> <span class="cnt">CTR 상위 ${Math.max(1,100-c.meta.kpi_percentiles.ctr)}%</span></li>`).join('')}</ul>
-  </div>` : '';
+        </div>`;
+      }).join('') || '<div style="color:#999;">우수 소재 데이터가 없습니다.</div>';
+
+      // 저효율 소재 카드 — 피할 패턴 (최저부터)
+      const loserCards = losers.slice().reverse().slice(0, 5).map(c => {
+        const v = creativeLayerView(c);
+        const weak = meta(c, 'weaknesses')[0] || '';
+        const wev = meta(c, 'weakness_evidence')[0] || '';
+        return `
+        <div class="cre-card">
+          ${thumb(c)}
+          <div class="cre-body">
+            <div class="cre-name">${esc(c.key)} <span class="cre-meta">${esc(c.유형 || '')} · ${(v.score ?? 0).toFixed(1)}점 · ${esc(v.grade || '')}</span></div>
+            ${weak ? `<div class="cre-bad"><b>약점</b> ${esc(weak)}${wev ? ` <span class="cre-ev">— ${esc(wev)}</span>` : ''}</div>` : '<div class="cre-bad" style="color:#999;">두드러진 약점 태그 없음</div>'}
+          </div>
+        </div>`;
+      }).join('') || '<div style="color:#999;">저효율 소재 데이터가 없습니다.</div>';
 
       const html = `<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>소재 제작 브리프 — ${exportedAt}</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#f4f2ef;color:#191919;font-size:14px;line-height:1.6;}
+body{font-family:'Noto Sans KR','Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#FAF9F7;color:#191919;font-size:14px;line-height:1.6;}
 .wrap{max-width:920px;margin:0 auto;padding:32px 24px;}
-.head{border-left:6px solid #DC2828;padding:4px 0 4px 16px;margin-bottom:8px;}
-h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
+.brand{font-size:13px;font-weight:800;color:#DC2828;letter-spacing:.02em;margin-bottom:4px;}
+.head{border-left:4px solid #DC2828;padding:2px 0 2px 14px;margin-bottom:8px;}
+h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
 .sub{font-size:13px;color:#666;margin-top:4px;}
 .kpis{display:flex;gap:16px;margin:18px 0 24px;flex-wrap:wrap;}
-.kpi{background:#fff;border:1px solid #e5e5e5;border-radius:10px;padding:12px 18px;}
+.kpi{background:#fff;border:1px solid #E5E5E5;border-radius:10px;padding:12px 18px;}
 .kpi .v{font-size:22px;font-weight:800;color:#DC2828;}
 .kpi .l{font-size:11px;color:#999;letter-spacing:.04em;text-transform:uppercase;font-weight:600;}
-.sec{background:#fff;border:1px solid #e5e5e5;border-radius:14px;padding:18px 22px;margin-bottom:16px;}
-.sec-h{font-size:16px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
-.sec-ic{font-size:18px;}
-.lst{list-style:none;}
-.lst li{padding:8px 0;border-bottom:1px solid #f0eee9;font-size:14px;}
-.lst li:last-child{border-bottom:none;}
-.lst .cnt{font-size:12px;color:#999;margin-left:8px;}
-.lst .diff{font-size:11px;font-weight:700;color:#166534;background:#dcfce7;padding:1px 7px;border-radius:9px;margin-left:8px;}
-.lst .none{color:#999;}
-.acts{margin-top:12px;background:#faf9f7;border-radius:8px;padding:12px 14px;}
-.acts-h{font-size:12px;font-weight:700;color:#666;margin-bottom:6px;}
-.acts ul{margin:0 0 0 18px;font-size:13px;color:#333;}
-.acts li{margin-bottom:4px;}
-.bench-card{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid #f0eee9;}
-.bench-card:last-child{border-bottom:none;}
-.bench-rank{font-size:20px;font-weight:900;color:#DC2828;min-width:34px;}
-.bench-name{font-weight:700;font-size:14px;}
-.bench-meta{font-size:11px;color:#999;font-weight:500;margin-left:6px;}
-.bench-str{font-size:13px;font-weight:600;margin-top:5px;}
-.bench-ev{font-size:12.5px;color:#555;margin-top:3px;padding-left:10px;border-left:2px solid #e4e1dc;}
-.bench-one{font-size:12.5px;color:#1d4ed8;margin-top:5px;}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.footer{margin-top:26px;text-align:center;font-size:11.5px;color:#999;border-top:1px solid #e5e5e5;padding-top:14px;}
-@media(max-width:680px){.two{grid-template-columns:1fr;}}
+.sec{background:#fff;border:1px solid #E5E5E5;border-radius:14px;padding:18px 22px;margin-bottom:16px;}
+.sec-h{font-size:16px;font-weight:800;color:#191919;margin-bottom:4px;}
+.sec-d{font-size:12px;color:#999;margin-bottom:14px;}
+.summary{display:flex;gap:24px;flex-wrap:wrap;}
+.summary .col{flex:1;min-width:220px;}
+.summary .lbl{font-size:12px;font-weight:700;color:#666;margin-bottom:8px;}
+.tag{display:inline-block;font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:8px;margin:0 6px 6px 0;}
+.tag-good{background:#f0fdf4;color:#166534;border-left:3px solid #16a34a;}
+.tag-bad{background:#fffbeb;color:#92400e;border-left:3px solid #d97706;}
+.none{color:#999;font-size:13px;}
+.cre-card{display:flex;gap:14px;padding:13px 0;border-bottom:1px solid #f0eee9;align-items:flex-start;}
+.cre-card:last-child{border-bottom:none;}
+.cre-body{flex:1;min-width:0;}
+.cre-name{font-weight:700;font-size:14px;word-break:break-all;}
+.cre-meta{font-size:11px;color:#999;font-weight:500;margin-left:6px;}
+.cre-good,.cre-add,.cre-bad{font-size:13px;margin-top:6px;}
+.cre-good b{color:#16a34a;margin-right:5px;}
+.cre-bad b{color:#d97706;margin-right:5px;}
+.cre-add b{color:#DC2828;margin-right:5px;}
+.cre-ev{color:#888;font-size:12px;}
+.abt{display:inline-block;font-size:10px;font-weight:700;color:#DC2828;background:#fdecec;padding:1px 7px;border-radius:8px;margin-left:4px;}
+.footer{margin-top:26px;text-align:center;font-size:11.5px;color:#999;border-top:1px solid #E5E5E5;padding-top:14px;}
 @media print{body{background:#fff;}}
 </style></head><body><div class="wrap">
+  <div class="brand">Com2uS · 소재 분석 대시보드</div>
   <div class="head"><h1>소재 제작 브리프</h1><div class="sub">${esc(titleName)} · ${LBL.tag} · 분석 ${n}개 소재 · ${exportedAt}</div></div>
   <div class="kpis">
     <div class="kpi"><div class="v">${n}</div><div class="l">분석 소재</div></div>
@@ -5441,24 +5544,22 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
     <div class="kpi"><div class="v">${winners.length}</div><div class="l">우수군(상위 절반)</div></div>
   </div>
   <div class="sec">
-    <div class="sec-h"><span class="sec-ic">✅</span>재현할 강점 <span style="font-size:12px;color:#999;font-weight:500;">— 우수 소재에서 두드러진 요소</span></div>
-    <ul class="lst">${reproduceHtml}</ul>
-  </div>
-  <div class="two">
-    <div class="sec">
-      <div class="sec-h"><span class="sec-ic">⛔</span>피할 약점 <span style="font-size:11px;color:#999;font-weight:500;">— 저성과 소재 공통</span></div>
-      <ul class="lst">${avoidHtml}</ul>
-    </div>
-    <div class="sec">
-      <div class="sec-h"><span class="sec-ic">🚀</span>다음 제작 추천</div>
-      <ul class="lst">${recHtml}</ul>
-      ${actHtml}
+    <div class="sec-h">공통 신호 요약</div>
+    <div class="sec-d">우수 소재에서 두드러진 강점 · 저효율 소재 공통 약점</div>
+    <div class="summary">
+      <div class="col"><div class="lbl">유지할 강점</div>${reproduceHtml}</div>
+      <div class="col"><div class="lbl">피할 약점</div>${avoidHtml}</div>
     </div>
   </div>
-  ${ctrHtml}
   <div class="sec">
-    <div class="sec-h"><span class="sec-ic">🏆</span>벤치마크 소재 <span style="font-size:12px;color:#999;font-weight:500;">— 이 방향으로 제작</span></div>
-    ${benchHtml || '<div style="color:#999;">AI 태그 데이터 없음</div>'}
+    <div class="sec-h">우수 소재 + 추가 실험 제안</div>
+    <div class="sec-d">잘된 소재의 강점은 유지하고, 아래 '추가 실험' 요소를 더해 A/B 테스트하세요.</div>
+    ${winnerCards}
+  </div>
+  <div class="sec">
+    <div class="sec-h">저효율 소재 — 피할 패턴</div>
+    <div class="sec-d">아래 약점이 반복되지 않도록 주의하세요.</div>
+    ${loserCards}
   </div>
   <div class="footer">Com2uS R팀 소재 분석 대시보드 자동 생성 · 디자이너 전달용 · ${exportedAt}</div>
 </div></body></html>`;
@@ -5469,7 +5570,7 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
       a.href = url; a.download = fileName;
       document.body.appendChild(a); a.click();
       setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
-      console.log('✅ 제작 브리프 추출 완료: ' + fileName);
+      console.log('제작 브리프 추출 완료: ' + fileName);
     }
 
     /* ── 전체 성과 요약: 유형별 평균 ds-table ── */
@@ -5568,11 +5669,11 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
         blocks += `
           <div class="signal-perf-block">
             <div class="signal-perf-card">
-              <h4>🎯 CTR 풀 상위 (후킹 우수)</h4>
+              <h4>CTR 풀 상위 (후킹 우수)</h4>
               <ul>${top.map(item).join('')}</ul>
             </div>
             <div class="signal-perf-card">
-              <h4>🐢 CTR 풀 하위 (후킹 약함)</h4>
+              <h4>CTR 풀 하위 (후킹 약함)</h4>
               <ul>${bottom.map(item).join('')}</ul>
             </div>
           </div>`;
@@ -5590,11 +5691,11 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
         blocks += `
           <div class="signal-perf-block">
             <div class="signal-perf-card">
-              <h4>🏆 MMP 품질 상위 (非Google 매체)</h4>
+              <h4>MMP 품질 상위 (非Google 매체)</h4>
               <ul>${sortedM.slice(0, 3).map(itemM).join('')}</ul>
             </div>
             <div class="signal-perf-card">
-              <h4>🔻 MMP 품질 하위 (非Google 매체)</h4>
+              <h4>MMP 품질 하위 (非Google 매체)</h4>
               <ul>${sortedM.slice(-3).reverse().map(itemM).join('')}</ul>
             </div>
           </div>`;
@@ -6357,6 +6458,42 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
       // Stage 5-F-2: v2 구조화 신호 칩 (강점/약점/가설/변주)
       const signalsBlock = buildSignalChipsHtml(creative);
 
+      // 폴리싱: 활성 레이어 기준 지표 배치(비활성 레이어 접기) + 매출/ROAS 무데이터 시 숨김
+      const _noRev = (creative.매출 ?? 0) <= 0;
+      const adsGridHtml = `
+          <div class="kpi-metric-grid">
+            <div class="kpi-metric-cell kpi-metric-cell-score">
+              <div class="kpi-metric-label">종합점수 (Google Ads)</div>
+              <div class="kpi-metric-value">${(creative._ads && creative._ads.imp > 0)
+                ? `<strong style="font-size:17px;color:var(--brand-primary,#DC2828);">${creative.TotalScore.toFixed(1)}</strong> <span class="kpi-metric-sub">${creative.등급 || '미평가'}</span>`
+                : `<strong style="font-size:17px;color:#9ca3af;">—</strong> <span class="kpi-metric-sub">Google Ads 데이터 없음</span>`}</div>
+            </div>
+            <div class="kpi-metric-cell"><div class="kpi-metric-label">전환</div><div class="kpi-metric-value">${(creative.전환 ?? 0).toLocaleString()}</div></div>
+            <div class="kpi-metric-cell"><div class="kpi-metric-label">CPA</div><div class="kpi-metric-value">₩${Math.round(creative.CPA ?? 0).toLocaleString()}${pctBadgeHtml(creative.meta?.kpi_percentiles?.cpa)}</div></div>
+            <div class="kpi-metric-cell"><div class="kpi-metric-label">IPM</div><div class="kpi-metric-value">${(creative.IPM ?? 0).toFixed(2)}</div></div>
+            ${_noRev ? '' : `<div class="kpi-metric-cell"><div class="kpi-metric-label">ROAS</div><div class="kpi-metric-value">${Math.round((creative.ROAS ?? 0) * 100)}%</div></div>`}
+            ${_noRev ? '' : `<div class="kpi-metric-cell"><div class="kpi-metric-label">매출 (Revenue)</div><div class="kpi-metric-value">₩${(creative.매출 ?? 0).toLocaleString()}</div></div>`}
+            <div class="kpi-metric-cell"><div class="kpi-metric-label">비용</div><div class="kpi-metric-value">₩${(creative.비용 ?? 0).toLocaleString()}</div></div>
+            <div class="kpi-metric-cell"><div class="kpi-metric-label">노출수</div><div class="kpi-metric-value">${(creative.노출수 ?? 0).toLocaleString()}</div></div>
+            <div class="kpi-metric-cell"><div class="kpi-metric-label">클릭수</div><div class="kpi-metric-value">${(creative.클릭수 ?? 0).toLocaleString()}</div></div>
+            <div class="kpi-metric-cell"><div class="kpi-metric-label">CTR</div><div class="kpi-metric-value">${(creative.CTR ?? 0).toFixed(2)}%${pctBadgeHtml(creative.meta?.kpi_percentiles?.ctr)}</div></div>
+          </div>`;
+      const _mmpHtml = buildMmpSectionHtml(creative);
+      const _layer = window.currentAnalysisLayer || 'ads';
+      const _adsTitled = `<div class="modal-block-title">Google Ads 성과</div>${adsGridHtml}`;
+      const _wrapDet = (inner, label) => `<details class="modal-collapse"><summary>${label}</summary>${inner}</details>`;
+      const metricsHtml = (_layer === 'mmp' && _mmpHtml)
+        ? _mmpHtml + _wrapDet(_adsTitled, 'Google Ads 성과 보기')
+        : _adsTitled + (_mmpHtml ? _wrapDet(_mmpHtml, '소재 품질 (MMP) 보기') : '');
+      // ③ 소재명에 속한 모든 파일명 — source_files(전 변형) 우선, 없으면 집계 파일명/단일
+      const _srcFiles = (creative.meta && Array.isArray(creative.meta.source_files)) ? creative.meta.source_files : [];
+      const _fileList = _srcFiles.length
+        ? [...new Set(_srcFiles.map(p => String(p).split(/[\\/]/).pop()).filter(Boolean))].sort()
+        : ((creative.파일명들 && creative.파일명들.length) ? creative.파일명들 : (creative.파일명 ? [creative.파일명] : []));
+      const _fileHtml = !_fileList.length ? '-'
+        : (_fileList.length === 1 ? escapeHtml(_fileList[0])
+        : `<details class="file-collapse"><summary>총 ${_fileList.length}개</summary><div class="file-list">${_fileList.map(f => `<span>${escapeHtml(f)}</span>`).join('')}</div></details>`);
+
       // 모달 정보
       content += `
         <div class="modal-info">
@@ -6371,68 +6508,24 @@ h1{font-size:26px;font-weight:900;letter-spacing:-.02em;}
           </div>
           <div class="modal-info-row">
             <div class="modal-info-label">파일명</div>
-            <div class="modal-info-value">${creative.파일명 || '-'}</div>
+            <div class="modal-info-value">${_fileHtml}</div>
           </div>
           <div class="modal-info-row">
             <div class="modal-info-label">유형</div>
-            <div class="modal-info-value"><strong style="color: ${creative.유형 === 'VID' ? '#8b5cf6' : '#f59e0b'};">${creative.유형}</strong> ${isVideo ? '(동영상)' : '(이미지)'}</div>
+            <div class="modal-info-value"><strong>${creative.유형}</strong> ${isVideo ? '(동영상)' : '(이미지)'}</div>
           </div>
           ${(creative.meta?.creator_intent || '').trim() ? `
           <div class="modal-info-row">
-            <div class="modal-info-label">🎬 제작 의도(추론)</div>
-            <div class="modal-info-value" style="font-style: italic; color: #6d28d9;">${escapeHtml(creative.meta.creator_intent.trim())}</div>
+            <div class="modal-info-label">제작 의도(추론)</div>
+            <div class="modal-info-value" style="font-style: italic; color: var(--text-secondary, #666);">${escapeHtml(creative.meta.creator_intent.trim())}</div>
           </div>` : ''}
           ${insightBlocks}
-          <div class="kpi-metric-grid">
-            <div class="kpi-metric-cell kpi-metric-cell-score">
-              <div class="kpi-metric-label">종합점수 (Google Ads)</div>
-              <div class="kpi-metric-value">${(creative._ads && creative._ads.imp > 0)
-                ? `<strong style="font-size: 17px; color: #E84855;">${creative.TotalScore.toFixed(1)}</strong> <span class="kpi-metric-sub">${creative.등급 || '미평가'}</span>`
-                : `<strong style="font-size: 17px; color: #9ca3af;">—</strong> <span class="kpi-metric-sub">Google Ads 데이터 없음</span>`}</div>
-            </div>
-            <div class="kpi-metric-cell">
-              <div class="kpi-metric-label">전환</div>
-              <div class="kpi-metric-value">${(creative.전환 ?? 0).toLocaleString()}</div>
-            </div>
-            <div class="kpi-metric-cell">
-              <div class="kpi-metric-label">CPA</div>
-              <div class="kpi-metric-value">₩${Math.round(creative.CPA ?? 0).toLocaleString()}${pctBadgeHtml(creative.meta?.kpi_percentiles?.cpa)}</div>
-            </div>
-            <div class="kpi-metric-cell">
-              <div class="kpi-metric-label">IPM</div>
-              <div class="kpi-metric-value">${(creative.IPM ?? 0).toFixed(2)}</div>
-            </div>
-            <div class="kpi-metric-cell">
-              <div class="kpi-metric-label">ROAS</div>
-              <div class="kpi-metric-value" style="color: ${(creative.ROAS ?? 0) > 1 ? '#10b981' : '#ef4444'};">${(creative.ROAS ?? 0).toFixed(2)}</div>
-            </div>
-            <div class="kpi-metric-cell">
-              <div class="kpi-metric-label">매출 (Revenue)</div>
-              <div class="kpi-metric-value">₩${(creative.매출 ?? 0).toLocaleString()}</div>
-            </div>
-            <div class="kpi-metric-cell">
-              <div class="kpi-metric-label">비용</div>
-              <div class="kpi-metric-value">₩${(creative.비용 ?? 0).toLocaleString()}</div>
-            </div>
-            <div class="kpi-metric-cell">
-              <div class="kpi-metric-label">노출수</div>
-              <div class="kpi-metric-value">${(creative.노출수 ?? 0).toLocaleString()}</div>
-            </div>
-            <div class="kpi-metric-cell">
-              <div class="kpi-metric-label">클릭수</div>
-              <div class="kpi-metric-value">${(creative.클릭수 ?? 0).toLocaleString()}</div>
-            </div>
-            <div class="kpi-metric-cell">
-              <div class="kpi-metric-label">CTR</div>
-              <div class="kpi-metric-value">${(creative.CTR ?? 0).toFixed(2)}%${pctBadgeHtml(creative.meta?.kpi_percentiles?.ctr)}</div>
-            </div>
-          </div>
-          ${buildMmpSectionHtml(creative)}
+          ${metricsHtml}
           ${signalsBlock}
           ${hasUrl ? `
           <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e5e7eb;">
             <a href="${contentUrl}" target="_blank" style="color: #E84855; text-decoration: none; font-weight: 600;">
-              🔗 원본 링크 열기
+              원본 링크 열기
             </a>
           </div>` : ''}
         </div>
