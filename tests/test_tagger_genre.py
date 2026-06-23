@@ -1,5 +1,7 @@
 """tagger.py 장르별 프롬프트 시스템 단위 테스트."""
 import pytest
+from pathlib import Path
+from pipeline.main import _load_game_context
 from pipeline.tagger import (
     get_system_instruction,
     prompt_version,
@@ -56,12 +58,6 @@ def test_prompt_version_default_arg():
 
 def test_prompt_version_unknown_genre_falls_back():
     assert prompt_version("unknown_xyz") == prompt_version(DEFAULT_GENRE)
-
-
-import tempfile
-import os
-from pathlib import Path
-from pipeline.main import _load_game_context
 
 
 def test_load_game_context_returns_content(tmp_path):
