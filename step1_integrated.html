@@ -1178,28 +1178,30 @@
     }
     .modal-info {
       margin-top: 20px;
-      padding: 25px;
-      background: #f9fafb;
+      padding: 22px 24px;
+      background: var(--surface-soft, #faf9f7);
       border-radius: 12px;
     }
     .modal-info h3 {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
-      color: #1a1a1a;
-      margin-bottom: 20px;
+      color: var(--text-primary, #191919);
+      margin-bottom: 16px;
     }
     .modal-info-row {
       display: flex;
-      margin: 12px 0;
-      font-size: 15px;
+      margin: 9px 0;
+      font-size: 14px;
+      line-height: 1.5;
     }
     .modal-info-label {
       font-weight: 600;
-      color: #6b7280;
-      min-width: 140px;
+      color: var(--text-secondary, #666);
+      min-width: 110px;
+      font-size: 13px;
     }
     .modal-info-value {
-      color: #1f2937;
+      color: var(--text-primary, #191919);
       flex: 1;
       font-weight: 500;
     }
@@ -1368,7 +1370,10 @@
     .cross-perf-card-title { font-size: 12px; font-weight: 700; color: var(--text-secondary); margin-bottom: 10px; }
     .cross-perf-item { display: flex; align-items: center; gap: 6px; padding: 5px 0; border-bottom: 1px solid var(--hairline-warm); font-size: 12px; }
     .cross-perf-item:last-child { border-bottom: none; }
-    .cross-perf-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-primary); }
+    .cross-perf-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-primary); cursor: pointer; }
+    /* 전체 성과 요약 — 소재명 클릭 시 상세 모달 */
+    .clickable-name { cursor: pointer; }
+    .cross-perf-name:hover, .clickable-name:hover { color: var(--brand-primary, #DC2828); text-decoration: underline; }
     .cross-badge-ads { padding: 1px 7px; border-radius: var(--radius-full); font-size: 10px; font-weight: 700; background: #fee2e2; color: #991b1b; }
     .cross-badge-mmp { padding: 1px 7px; border-radius: var(--radius-full); font-size: 10px; font-weight: 700; background: #ccfbf1; color: #115e59; }
     /* AI 태그 */
@@ -5665,7 +5670,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         const sorted = withPctile.slice().sort((a, b) => b.meta.kpi_percentiles.ctr - a.meta.kpi_percentiles.ctr);
         const top = sorted.slice(0, 3);
         const bottom = sorted.slice(-3).reverse();
-        const item = (c) => `<li><span>${escapeHtml(c.key || c.소재명 || '')}</span>${pctBadgeHtml(c.meta.kpi_percentiles.ctr)}</li>`;
+        const item = (c) => `<li><span class="clickable-name" data-name="${escapeHtml(c.key || c.소재명 || '')}">${escapeHtml(c.key || c.소재명 || '')}</span>${pctBadgeHtml(c.meta.kpi_percentiles.ctr)}</li>`;
         blocks += `
           <div class="signal-perf-block">
             <div class="signal-perf-card">
@@ -5686,7 +5691,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         const itemM = (c) => {
           const qs = c.meta.mmp_quality_score;
           const style = MMP_GRADE_STYLE[qs.grade] || 'background:#f3f4f6;color:#374151;';
-          return `<li><span>${escapeHtml(c.key || c.소재명 || '')}</span><span class="mmp-score-cell" style="${style}">${qs.total} ${escapeHtml(qs.grade)}</span></li>`;
+          return `<li><span class="clickable-name" data-name="${escapeHtml(c.key || c.소재명 || '')}">${escapeHtml(c.key || c.소재명 || '')}</span><span class="mmp-score-cell" style="${style}">${qs.total} ${escapeHtml(qs.grade)}</span></li>`;
         };
         blocks += `
           <div class="signal-perf-block">
@@ -6416,6 +6421,19 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
     // 모달 열기 (점수 계산)
     // 모달 열기 (개선된 버전 - test_step1_scoring.html 기반)
     // v5.2.1: 링크 없는 소재도 메타·인사이트만 표시하도록 보강 (Stage 2 백엔드 데이터 호환)
+    // 전체 성과 요약 등에서 소재명 클릭 → 상세 모달 (이름으로 currentCreatives 인덱스 조회)
+    function openModalByName(name) {
+      if (!name) return;
+      const cs = window.currentCreatives || [];
+      const idx = cs.findIndex(c => (c.key || c.소재명) === name);
+      if (idx >= 0) openPreviewModal(idx);
+    }
+    document.addEventListener('click', (e) => {
+      const el = e.target.closest('.clickable-name, .cross-perf-name');
+      if (!el) return;
+      openModalByName(el.dataset.name || el.getAttribute('title') || el.textContent.trim());
+    });
+
     function openPreviewModal(index) {
       if (!window.currentCreatives || !window.currentCreatives[index]) {
         alert('소재 정보를 찾을 수 없습니다.');
