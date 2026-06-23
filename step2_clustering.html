@@ -1015,7 +1015,8 @@ function loadSession() {
     renderConfigSummary();
     document.getElementById('noDataMsg').style.display = 'none';
     document.getElementById('runBtn').disabled = false;
-    showToast(`✅ 설정 불러오기 완료 (BNR/VID ${bnrVidCount}개${txtCount > 0 ? ` · TXT ${txtCount}개 제외` : ''})`, 'success');
+    // 컬럼 선택 완료 상태로 진입 → 바로 실행
+    runClustering();
 
   } catch (e) {
     document.getElementById('noDataMsg').style.display = 'block';
