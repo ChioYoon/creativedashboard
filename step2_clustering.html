@@ -1564,6 +1564,40 @@ function enrichClusters(clusters, weightMap) {
   }).sort((a,b) => b.avgScore - a.avgScore);
 }
 
+/* ── ⓐ 최소 군집 크기 적용: 크기 미만(materials < minSize) 군집을 가장 유사한(태그 Jaccard) 큰 군집에 흡수.
+   '기타'(id -1, 미매칭 catch-all)는 흡수 대상·흡수처 모두 제외하고 그대로 유지. ── */
+function mergeSmallClusters(clusters, minSize) {
+  if (!minSize || minSize < 2) return clusters;
+  const misc    = clusters.filter(c => c.id === -1);
+  const regular = clusters.filter(c => c.id !== -1);
+  const small   = regular.filter(c => c.materials.length < minSize);
+  if (!small.length) return clusters;
+  let targets = regular.filter(c => c.materials.length >= minSize);
+  if (!targets.length) {
+    // 최소 크기를 충족하는 군집이 없으면 가장 큰 군집을 흡수처로
+    const largest = regular.slice().sort((a, b) => b.materials.length - a.materials.length)[0];
+    targets = largest ? [largest] : [];
+  }
+  if (!targets.length) return clusters;   // 흡수 불가 — 그대로
+  const setOf = c => new Set(c.tags || []);
+  const jaccard = (a, b) => {
+    const A = setOf(a), B = setOf(b);
+    if (!A.size || !B.size) return 0;
+    let inter = 0; A.forEach(t => { if (B.has(t)) inter++; });
+    return inter / (A.size + B.size - inter);
+  };
+  small.forEach(sc => {
+    if (targets.includes(sc)) return;   // 흡수처(largest)면 건너뜀
+    let best = targets[0], bestJ = -Infinity;
+    targets.forEach(tc => { const j = jaccard(sc, tc); if (j > bestJ) { bestJ = j; best = tc; } });
+    best.materials.push(...sc.materials);
+    best._scores.push(...sc._scores);
+    (sc.tags || []).forEach(t => { if (!best.tags.includes(t)) best.tags.push(t); });
+  });
+  // 흡수처 + 기타만 유지 (흡수된 작은 군집 제거)
+  return [...targets, ...misc];
+}
+
 /* ── 메인 실행 함수 ── */
 async function runClustering() {
   if (!csvData || !sessionConfig) {
@@ -1692,7 +1726,11 @@ async function runClustering() {
     const rawClusters = assignMaterialsToClusters(
       scoredMaterials, tagGroups, tagCols, weightMap, insightCols, perfWeight
     );
-    const enriched = enrichClusters(rawClusters, weightMap);
+    // ⓐ 최소 군집 크기 적용 — 크기 미만 군집을 가장 유사한 큰 군집에 흡수 ('기타'는 유지)
+    const minClusterSize = Math.max(2, parseInt(params.minCluster) || 3);
+    const mergedClusters = mergeSmallClusters(rawClusters, minClusterSize);
+    console.log(`[군집화] 최소 군집 크기 ${minClusterSize} 적용: ${rawClusters.length}개 → ${mergedClusters.length}개 군집`);
+    const enriched = enrichClusters(mergedClusters, weightMap);
     await sleep(300);
 
     // ━━━ Phase 4: 인사이트 도출 ━━━
