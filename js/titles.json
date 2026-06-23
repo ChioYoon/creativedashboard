@@ -15,7 +15,9 @@
     "_pipeline_kpi_enabled": true,
     "_pipeline_airbridge_enabled": true,
     "_pipeline_airbridge_exclude_channels": ["google.adwords", "unattributed", "appstore", "sns", "airbridge_sdk_test"],
-    "_pipeline_airbridge_usd_to_krw": 1500
+    "_pipeline_airbridge_usd_to_krw": 1500,
+    "_pipeline_genre": "character_collection_rpg",
+    "_pipeline_game_context_file": "pipeline/game_context/pepp-us.md"
   },
   {
     "id": "tougenanki",
@@ -27,7 +29,9 @@
     "_pipeline_types": ["BNR", "VID"],
     "_pipeline_enabled": true,
     "_pipeline_kpi_enabled": false,
-    "_pipeline_prompt_version_pin": "v3.3-2026.06.13-character-split-single"
+    "_pipeline_prompt_version_pin": "v3.3-2026.06.13-character-split-single",
+    "_pipeline_genre": "martial_arts_action_rpg",
+    "_pipeline_game_context_file": "pipeline/game_context/tougenanki.md"
   },
   {
     "id": "sample",
