@@ -761,8 +761,8 @@
       </div>
     </div>
 
-    <!-- ── [1] 설정 요약 ── -->
-    <div class="section" id="configSummarySection">
+    <!-- ── [1] 설정 요약 ── (auto-run 이후 불필요, 숨김) -->
+    <div class="section" id="configSummarySection" style="display:none">
       <div class="section-head">
         <div class="section-icon" style="background:var(--blue);">
           <i class="fas fa-cog"></i>
@@ -787,8 +787,8 @@
       </div>
     </div>
 
-    <!-- ── [2] 군집화 실행 ── -->
-    <div class="run-area">
+    <!-- ── [2] 군집화 실행 ── (auto-run 이후 불필요, 숨김) -->
+    <div class="run-area" style="display:none">
       <div class="run-info">
         <h4><i class="fas fa-sitemap" style="color:var(--red);"></i> 하이브리드 군집화 v4.0 실행</h4>
         <p>IQR 기반 노이즈 필터 → Union-Find 태그 클러스터링 → 성과 기반 정제 → 자동 인사이트 도출</p>
@@ -1012,10 +1012,8 @@ function loadSession() {
     }).length;
     const txtCount = csvData.rows.length - bnrVidCount;
 
-    renderConfigSummary();
     document.getElementById('noDataMsg').style.display = 'none';
     document.getElementById('runBtn').disabled = false;
-    // 컬럼 선택 완료 상태로 진입 → 바로 실행
     runClustering();
 
   } catch (e) {
