@@ -13,15 +13,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/cl-shell.css?v=20260623a">
+  <link rel="stylesheet" href="assets/cl-shell.css?v=20260623b">
   <!-- Lucide icons -->
   <script defer src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
 
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
   <!-- 데이터 소스 추상화 (v5.2 Stage 1) — CSV/JSON 단일 진입점, 타이틀 격리 -->
-  <script src="js/layer-metrics.js?v=20260623a"></script>
-  <script src="js/data-source.js?v=20260623a"></script>
+  <script src="js/layer-metrics.js?v=20260623b"></script>
+  <script src="js/data-source.js?v=20260623b"></script>
   <!-- Gemini AI 공통 모듈 -->
   <link rel="stylesheet" href="css/gemini-ui.css">
   <script src="js/gemini-api.js"></script>
@@ -3503,7 +3503,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     async function loadTitleFromJson(titleEntry) {
       if (!window.DataSource) return;
       try {
-        showLoadingIndicator(`🔄 ${titleEntry.id} 데이터 로딩 중...`);
+        showLoadingIndicator(`${titleEntry.id} 데이터 로딩 중...`);
         const { normalized, sourceMeta } = await window.DataSource.loadCreativeData('json-url', {
           url: titleEntry.json_url,
           titleId: titleEntry.id,
@@ -3550,17 +3550,24 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         }
 
         // 업로드 상태 표시 (JSON 모드)
+        const _hasKpi = rawData.some(r => (r['전환'] || 0) > 0 || (r['kpi_daily'] || []).length > 0);
+        const _hasMmp = rawData.some(r => r['mmp_installs'] != null && r['mmp_installs'] > 0);
+        const _kpiNoticeHtml = (!_hasKpi && !_hasMmp) ?
+          `<div style="padding: 10px 14px; background: #fff7ed; border-left: 3px solid #f59e0b; border-radius: 6px; font-size: 12.5px; color: #92400e; margin-bottom: 12px;">
+            KPI 미연동 — 소재 시각 분석(Gemini 태깅)만 제공됩니다. 광고 집행 후 운영 지표가 표시됩니다.
+          </div>` : '';
         document.getElementById('uploadStatus').style.display = 'block';
         document.getElementById('uploadInfo').innerHTML = `
           <div style="margin-bottom: 15px;">
-            <div style="margin-bottom: 8px;">🎯 타이틀: <strong>${sourceMeta.title_id}</strong></div>
-            <div style="margin-bottom: 8px;">📊 데이터: <strong>${rawData.length}</strong>개 소재</div>
-            <div style="margin-bottom: 8px;">🎯 캠페인: <strong>${campaigns.length}</strong>개</div>
-            <div style="margin-bottom: 8px;">📅 날짜 범위: <strong>${dateRangeInfo}</strong></div>
-            <div style="margin-bottom: 8px;">🔄 생성 시각: <strong>${sourceMeta.row_count}개 · ${normalized._meta?.generated_at || '미상'}</strong></div>
+            <div style="margin-bottom: 8px;">타이틀: <strong>${sourceMeta.title_id}</strong></div>
+            <div style="margin-bottom: 8px;">데이터: <strong>${rawData.length}</strong>개 소재</div>
+            <div style="margin-bottom: 8px;">캠페인: <strong>${campaigns.length}</strong>개</div>
+            <div style="margin-bottom: 8px;">날짜 범위: <strong>${dateRangeInfo}</strong></div>
+            <div style="margin-bottom: 8px;">생성 시각: <strong>${normalized._meta?.generated_at || '미상'}</strong></div>
           </div>
+          ${_kpiNoticeHtml}
           <div style="padding: 10px 14px; background: #ecfdf5; border-left: 3px solid #10b981; border-radius: 6px; font-size: 12.5px; color: #065f46; margin-bottom: 12px;">
-            ✅ 백엔드 산출 JSON 로드 완료 — Stage 1 검증 모드 (Stage 2부터 nightly 자동 갱신 예정)
+            백엔드 산출 JSON 로드 완료
           </div>
           <button onclick="calculateScores()"
                   style="width: 100%; padding: 12px; background: linear-gradient(135deg, #E84855 0%, #FF6B6B 100%);
@@ -3806,14 +3813,14 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         
         document.getElementById('uploadInfo').innerHTML = `
           <div style="margin-bottom: 15px;">
-            <div style="margin-bottom: 8px;">📁 파일명: <strong>${fileName}</strong></div>
-            <div style="margin-bottom: 8px;">📊 데이터: <strong>${rawData.length}</strong>개 행, <strong>${normalizedData.columns.length}</strong>개 컬럼</div>
-            <div style="margin-bottom: 8px;">🎯 캠페인: <strong>${campaigns.length}</strong>개</div>
-            <div style="margin-bottom: 8px;">📅 날짜 범위: <strong>${dateRangeInfo}</strong></div>
+            <div style="margin-bottom: 8px;">파일명: <strong>${fileName}</strong></div>
+            <div style="margin-bottom: 8px;">데이터: <strong>${rawData.length}</strong>개 행, <strong>${normalizedData.columns.length}</strong>개 컬럼</div>
+            <div style="margin-bottom: 8px;">캠페인: <strong>${campaigns.length}</strong>개</div>
+            <div style="margin-bottom: 8px;">날짜 범위: <strong>${dateRangeInfo}</strong></div>
           </div>
-          
+
           <div style="padding: 12px; background: #f3f4f6; border-radius: 8px; margin-bottom: 15px;">
-            <div style="font-weight: 600; margin-bottom: 8px; color: #1f2937;">✅ 주요 컬럼 매핑 상태</div>
+            <div style="font-weight: 600; margin-bottom: 8px; color: #1f2937;">주요 컬럼 매핑 상태</div>
             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; font-size: 13px;">
               <div>• 소재명: <span style="color: ${normalizedData.columns.includes('소재명') ? '#10b981' : '#ef4444'}; font-weight: 600;">${normalizedData.columns.includes('소재명') ? '✓ 감지됨' : '❌ 없음'}</span></div>
               <div>• 전환: <span style="color: ${normalizedData.columns.includes('전환') ? '#10b981' : '#ef4444'}; font-weight: 600;">${normalizedData.columns.includes('전환') ? '✓ 감지됨' : '❌ 없음'}</span></div>
