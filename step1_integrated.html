@@ -1374,6 +1374,11 @@
     /* 전체 성과 요약 — 소재명 클릭 시 상세 모달 */
     .clickable-name { cursor: pointer; }
     .cross-perf-name:hover, .clickable-name:hover { color: var(--brand-primary, #DC2828); text-decoration: underline; }
+    /* 피로도 — 기간 비교 프리셋 칩 */
+    .fatigue-period-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--text-secondary, #666); }
+    .fatigue-preset { font-size: 12px; font-weight: 600; padding: 6px 12px; border: 1px solid var(--border-default, #ccc); border-radius: 9999px; background: var(--bg-base, #fff); color: var(--text-secondary, #666); cursor: pointer; transition: background .12s, color .12s, border-color .12s; white-space: nowrap; }
+    .fatigue-preset:hover { border-color: var(--gray-30, #999); color: var(--text-primary, #191919); }
+    .fatigue-preset.active { background: rgba(220,40,40,.10); border-color: rgba(220,40,40,.30); color: var(--brand-primary, #DC2828); font-weight: 700; }
     .cross-badge-ads { padding: 1px 7px; border-radius: var(--radius-full); font-size: 10px; font-weight: 700; background: #fee2e2; color: #991b1b; }
     .cross-badge-mmp { padding: 1px 7px; border-radius: var(--radius-full); font-size: 10px; font-weight: 700; background: #ccfbf1; color: #115e59; }
     /* AI 태그 */
@@ -1771,22 +1776,33 @@
           </label>
         </div>
 
-        <!-- 기간 설정 바 -->
-        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:12px;padding:14px 0;border-bottom:1px solid var(--hairline-warm);margin-bottom:16px;">
-          <div style="display:flex;align-items:center;gap:6px;">
-            <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-secondary);">기준 기간</span>
-            <input type="date" id="baselineStart" class="sb-input" style="width:130px;">
-            <span style="font-size:11px;color:var(--text-secondary);">~</span>
-            <input type="date" id="baselineEnd" class="sb-input" style="width:130px;">
+        <!-- 기간 비교 설정 -->
+        <div style="padding:14px 0 0;">
+          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+            <span class="fatigue-period-label">비교 기준</span>
+            <button type="button" class="fatigue-preset active" data-days="7" onclick="applyFatiguePreset(7)">최근 7일 ↔ 이전 7일</button>
+            <button type="button" class="fatigue-preset" data-days="14" onclick="applyFatiguePreset(14)">14일 ↔ 14일</button>
+            <button type="button" class="fatigue-preset" data-days="30" onclick="applyFatiguePreset(30)">30일 ↔ 30일</button>
+            <button type="button" class="fatigue-preset" data-days="0" onclick="markFatiguePreset(0)">직접 설정</button>
           </div>
-          <div style="display:flex;align-items:center;gap:6px;">
-            <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-secondary);">비교 기간</span>
-            <input type="date" id="comparisonStart" class="sb-input" style="width:130px;">
-            <span style="font-size:11px;color:var(--text-secondary);">~</span>
-            <input type="date" id="comparisonEnd" class="sb-input" style="width:130px;">
+          <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding-bottom:8px;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="fatigue-period-label">기준(이전)</span>
+              <input type="date" id="baselineStart" class="sb-input" style="width:130px;" onchange="markFatiguePreset(0)">
+              <span style="font-size:11px;color:var(--text-secondary);">~</span>
+              <input type="date" id="baselineEnd" class="sb-input" style="width:130px;" onchange="markFatiguePreset(0)">
+            </div>
+            <span style="font-size:18px;color:var(--brand-primary);font-weight:700;line-height:1;">→</span>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="fatigue-period-label">비교(최근)</span>
+              <input type="date" id="comparisonStart" class="sb-input" style="width:130px;" onchange="markFatiguePreset(0)">
+              <span style="font-size:11px;color:var(--text-secondary);">~</span>
+              <input type="date" id="comparisonEnd" class="sb-input" style="width:130px;" onchange="markFatiguePreset(0)">
+            </div>
+            <button class="ds-btn-primary" onclick="runFatigueAnalysis()" style="padding:8px 20px;font-size:13px;">적용</button>
+            <button class="ds-btn-ghost" onclick="resetFatigue()">초기화</button>
           </div>
-          <button class="ds-btn-primary" onclick="runFatigueAnalysis()" style="padding:8px 20px;font-size:13px;">적용</button>
-          <button class="ds-btn-ghost" onclick="resetFatigue()">초기화</button>
+          <div style="font-size:11.5px;color:var(--text-secondary);padding-bottom:14px;border-bottom:1px solid var(--hairline-warm);margin-bottom:16px;">비교 기간(최근)이 기준 기간(이전)보다 나빠지면 피로도가 높습니다.</div>
         </div>
 
         <!-- 피로도 테이블 -->
@@ -1939,6 +1955,12 @@ function switchMainTab(tab) {
     const el = document.getElementById(id);
     if (el) el.classList.toggle('hidden', key !== tab);
   });
+  // 피로도 탭 진입 시 현재 기간으로 자동 적용 (빈 화면 방지)
+  // ⚠️ displayFatigueResults 가 switchMainTab('fatigue') 를 재호출 → 재진입 가드 필수(무한 재귀 방지)
+  if (tab === 'fatigue' && (window.currentCreatives || []).length && !window._fatigueAutoGuard) {
+    window._fatigueAutoGuard = true;
+    try { runFatigueAnalysis(); } catch (e) {} finally { window._fatigueAutoGuard = false; }
+  }
 }
 
 /* ============================================================
@@ -3521,15 +3543,9 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
               window._fullDateRange = { min: minDate, max: maxDate };
               setDatePreset('all');
             }
-            // 피로도 기준/비교 기본 기간 = 실적일 범위(없으면 런칭일) 절반 분할 — 일별 실적과 겹치도록
+            // 피로도 기본 기간 — 비교=최근 7일, 기준=이전 7일 (실적일 범위 기준)
             const _fr = (perf.min && perf.max) ? perf : { min: minDate, max: maxDate };
-            const _fs = new Date(_fr.min + 'T00:00:00'), _fe = new Date(_fr.max + 'T00:00:00');
-            const _mid = new Date((_fs.getTime() + _fe.getTime()) / 2);
-            const _next = new Date(_mid); _next.setDate(_next.getDate() + 1);
-            document.getElementById('baselineStart').value = _fr.min;
-            document.getElementById('baselineEnd').value = formatDate(_mid);
-            document.getElementById('comparisonStart').value = formatDate(_next);
-            document.getElementById('comparisonEnd').value = _fr.max;
+            setFatigueDefaultPeriods(_fr.min, _fr.max);
           }
         }
 
@@ -3767,30 +3783,12 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             window._fullDateRange = { min: minDate, max: maxDate };
             setDatePreset(window._currentDatePreset || '7d');
 
-            // 피로도 분석 기간 자동 설정 (전반부/후반부)
-            const midIndex = Math.floor(dates.length / 2);
-            const midDate = formatDate(dates[midIndex]);
-            
-            document.getElementById('baselineStart').value = minDate;
-            document.getElementById('baselineEnd').value = midDate;
-            document.getElementById('baselineStart').min = minDate;
-            document.getElementById('baselineStart').max = maxDate;
-            document.getElementById('baselineEnd').min = minDate;
-            document.getElementById('baselineEnd').max = maxDate;
-            
-            const nextDay = new Date(dates[midIndex]);
-            nextDay.setDate(nextDay.getDate() + 1);
-            const nextDayStr = formatDate(nextDay);
-            
-            document.getElementById('comparisonStart').value = nextDayStr;
-            document.getElementById('comparisonEnd').value = maxDate;
-            document.getElementById('comparisonStart').min = minDate;
-            document.getElementById('comparisonStart').max = maxDate;
-            document.getElementById('comparisonEnd').min = minDate;
-            document.getElementById('comparisonEnd').max = maxDate;
-            
-            console.log(`✅ 날짜 범위: ${minDate} ~ ${maxDate}`);
-            console.log(`✅ 피로도 분석: 기준(${minDate}~${midDate}), 비교(${nextDayStr}~${maxDate})`);
+            // 피로도 기본 기간 — 비교=최근 7일, 기준=이전 7일
+            ['baselineStart','baselineEnd','comparisonStart','comparisonEnd'].forEach(id => {
+              const el = document.getElementById(id); if (el) { el.min = minDate; el.max = maxDate; }
+            });
+            setFatigueDefaultPeriods(minDate, maxDate);
+            console.log(`날짜 범위: ${minDate} ~ ${maxDate}`);
           } else {
             console.log('⚠️ 유효한 날짜 데이터 없음');
           }
@@ -5925,6 +5923,43 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
     }
     
     // 피로도 분석 실행
+    // 피로도 기간 — N일 윈도우: 비교=최근 N일, 기준=이전 N일 (실적일 범위 기준, min 으로 클램프)
+    function setFatiguePeriodsByDays(minStr, maxStr, days) {
+      const fr = window._fullDateRange || {};
+      minStr = minStr || fr.min; maxStr = maxStr || fr.max;
+      if (!minStr || !maxStr) return;
+      days = days || 7;
+      const DAY = 86400000;
+      const minD = new Date(minStr + 'T00:00:00');
+      const maxD = new Date(maxStr + 'T00:00:00');
+      const clamp = d => (d < minD ? minD : d);
+      const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+      set('comparisonEnd',   maxStr);                                                              // 최근 N일 끝
+      set('comparisonStart', formatDate(clamp(new Date(maxD.getTime() - (days - 1) * DAY))));      // 최근 N일 시작
+      set('baselineEnd',     formatDate(clamp(new Date(maxD.getTime() - days * DAY))));            // 이전 N일 끝
+      set('baselineStart',   formatDate(clamp(new Date(maxD.getTime() - (2 * days - 1) * DAY))));  // 이전 N일 시작
+    }
+    // 프리셋 칩 활성 표시 (days=0 → '직접 설정')
+    function markFatiguePreset(days) {
+      document.querySelectorAll('.fatigue-preset').forEach(b => b.classList.toggle('active', +b.dataset.days === days));
+    }
+    // 프리셋 클릭 → 기간 설정 + 자동 적용
+    function applyFatiguePreset(days) {
+      const fr = window._fullDateRange || {};
+      if (!fr.min || !fr.max) return;
+      setFatiguePeriodsByDays(fr.min, fr.max, days);
+      markFatiguePreset(days);
+      runFatigueAnalysis();
+    }
+    // 기본(데이터 로드·초기화 시): 최근 7일 ↔ 이전 7일
+    function setFatigueDefaultPeriods(minStr, maxStr) {
+      const fr = window._fullDateRange || {};
+      minStr = minStr || fr.min; maxStr = maxStr || fr.max;
+      if (!minStr || !maxStr) return;
+      setFatiguePeriodsByDays(minStr, maxStr, 7);
+      markFatiguePreset(7);
+    }
+
     function runFatigueAnalysis() {
       if (rawData.length === 0) {
         alert('⚠️ 먼저 CSV 파일을 업로드하세요.');
@@ -6387,34 +6422,9 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         const fatigueSearch = document.getElementById('fatigueCampaignSearchInput');
         if (fatigueSearch) { fatigueSearch.value = ''; filterFatigueCampaignList(); }
 
-        // 날짜 범위 재설정
-        const dateColumn = detectDateColumn(normalizedData.columns);
-        if (dateColumn && rawData.length > 0) {
-          const dates = rawData
-            .map(row => row[dateColumn])
-            .filter(d => d)
-            .map(d => parseDate(d))
-            .filter(d => d)
-            .sort((a, b) => a - b);
-          
-          if (dates.length > 0) {
-            const minDate = formatDate(dates[0]);
-            const maxDate = formatDate(dates[dates.length - 1]);
-            const midIndex = Math.floor(dates.length / 2);
-            const midDate = formatDate(dates[midIndex]);
-            
-            document.getElementById('baselineStart').value = minDate;
-            document.getElementById('baselineEnd').value = midDate;
-            
-            const nextDay = new Date(dates[midIndex]);
-            nextDay.setDate(nextDay.getDate() + 1);
-            const nextDayStr = formatDate(nextDay);
-            
-            document.getElementById('comparisonStart').value = nextDayStr;
-            document.getElementById('comparisonEnd').value = maxDate;
-          }
-        }
-        console.log('🔄 피로도 분석 설정 초기화 완료');
+        // 날짜 범위 재설정 — 비교=최근 7일, 기준=이전 7일 (실적일 범위 기준)
+        setFatigueDefaultPeriods();
+        console.log('피로도 분석 설정 초기화 완료');
       }
     }
     
