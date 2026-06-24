@@ -3568,6 +3568,15 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         // 업로드 상태 표시 (JSON 모드)
         const _hasKpi = rawData.some(r => (r['전환'] || 0) > 0 || (r['kpi_daily'] || []).length > 0);
         const _hasMmp = rawData.some(r => r['mmp_installs'] != null && r['mmp_installs'] > 0);
+        // KPI 미연동 타이틀(미집행 소재만): '저노출·저전환 제외' 토글을 자동으로 꺼서
+        // 시각 분석 소재가 분석 실행 시 바로 표시되도록 함 (안 끄면 미집행으로 전량 제외됨)
+        if (!_hasKpi && !_hasMmp) {
+          const _lowToggle = document.getElementById('lowExposureToggle');
+          if (_lowToggle && _lowToggle.checked) {
+            _lowToggle.checked = false;
+            if (typeof syncLowExposureToggle === 'function') syncLowExposureToggle(_lowToggle);
+          }
+        }
         const _kpiNoticeHtml = (!_hasKpi && !_hasMmp) ?
           `<div style="padding: 10px 14px; background: #fff7ed; border-left: 3px solid #f59e0b; border-radius: 6px; font-size: 12.5px; color: #92400e; margin-bottom: 12px;">
             KPI 미연동 — 소재 시각 분석(Gemini 태깅)만 제공됩니다. 광고 집행 후 운영 지표가 표시됩니다.
