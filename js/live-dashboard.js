@@ -60,6 +60,8 @@
   };
 
   // ── 필터 바 UI 주입 ─────────────────────────────────────────
+  const MINI_BTN = 'cursor:pointer;font-size:11px;font-weight:600;padding:2px 8px;border:1px solid #e5e7eb;border-radius:6px;background:#fff;margin-left:4px;';
+  const DATE_INP = 'font-size:12px;padding:3px 6px;border:1px solid #e5e7eb;border-radius:6px;';
   LIVE.buildFilters = function () {
     const ds = LIVE.allDailies();
     const countries = [...new Set(ds.map(d => d.country))].sort();
@@ -67,6 +69,7 @@
     const camps = [...new Set(ds.map(d => d.campaign_name).filter(Boolean))].sort();
     const dates = ds.map(d => d.date).filter(Boolean).sort();
     LIVE.state._maxDate = dates[dates.length - 1] || '';
+    LIVE.state._minDate = dates[0] || '';
     LIVE.state.filters = { start:'', end:'', countries:new Set(), oses:new Set(), campaigns:new Set() };
     const host = el('liveFilterDynamic');
     if (!ds.length) { host.innerHTML = '<span style="font-size:12px;color:#9ca3af;">운영 데이터 없음 — 필터 비활성 (아래 소재 목록은 전체 표시)</span>'; return; }
@@ -75,22 +78,49 @@
     const checks = (name, arr) => arr.map(v =>
       `<label style="font-size:12px;display:inline-flex;gap:4px;align-items:center;margin-right:8px;"><input type="checkbox" data-filter="${name}" value="${v}">${v}</label>`).join('');
     host.innerHTML =
-      `<div class="live-filter-group"><label>기간</label><div>${presetBtns}</div></div>` +
+      `<div class="live-filter-group"><label>기간</label><div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">${presetBtns}` +
+        `<span style="margin-left:6px;"><input type="date" id="liveDateStart" style="${DATE_INP}"> ~ <input type="date" id="liveDateEnd" style="${DATE_INP}"></span></div></div>` +
       `<div class="live-filter-group"><label>국가</label><div>${checks('countries', countries)}</div></div>` +
       `<div class="live-filter-group"><label>OS</label><div>${checks('oses', oses)}</div></div>` +
-      `<div class="live-filter-group" style="max-width:340px;"><label>캠페인</label><div style="max-height:64px;overflow:auto;">${checks('campaigns', camps)}</div></div>`;
+      `<div class="live-filter-group" style="max-width:360px;"><label>캠페인` +
+        `<input type="text" id="liveCampSearch" placeholder="검색…" style="font-size:11px;padding:2px 6px;border:1px solid #e5e7eb;border-radius:6px;margin-left:6px;width:90px;">` +
+        `<button type="button" data-camp-all="1" style="${MINI_BTN}">전체선택</button><button type="button" data-camp-all="0" style="${MINI_BTN}">해제</button></label>` +
+        `<div id="liveCampList" style="max-height:80px;overflow:auto;">${checks('campaigns', camps)}</div></div>`;
+
+    // 체크박스
     host.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.addEventListener('change', () => {
       const set = LIVE.state.filters[cb.dataset.filter];
       cb.checked ? set.add(cb.value) : set.delete(cb.value);
       LIVE.render();
     }));
+    // 기간 프리셋
+    const clearPreset = () => host.querySelectorAll('button[data-days]').forEach(x => x.classList.remove('active'));
     host.querySelectorAll('button[data-days]').forEach(b => b.addEventListener('click', () => {
-      host.querySelectorAll('button[data-days]').forEach(x => x.classList.remove('active'));
-      b.classList.add('active');
+      clearPreset(); b.classList.add('active');
       const n = +b.dataset.days;
       if (!n || !LIVE.state._maxDate) { LIVE.state.filters.start=''; LIVE.state.filters.end=''; }
       else { const end = LIVE.state._maxDate; const d = new Date(end); d.setDate(d.getDate()-(n-1));
         LIVE.state.filters.start = d.toISOString().slice(0,10); LIVE.state.filters.end = end; }
+      el('liveDateStart').value = LIVE.state.filters.start;
+      el('liveDateEnd').value = LIVE.state.filters.end;
+      LIVE.render();
+    }));
+    // 기간 직접 입력
+    el('liveDateStart').addEventListener('change', e => { clearPreset(); LIVE.state.filters.start = e.target.value; LIVE.render(); });
+    el('liveDateEnd').addEventListener('change', e => { clearPreset(); LIVE.state.filters.end = e.target.value; LIVE.render(); });
+    // 캠페인 검색
+    el('liveCampSearch').addEventListener('input', e => {
+      const q = e.target.value.toLowerCase();
+      el('liveCampList').querySelectorAll('label').forEach(lbl => { lbl.style.display = lbl.textContent.toLowerCase().includes(q) ? '' : 'none'; });
+    });
+    // 캠페인 전체선택/해제 (검색으로 보이는 항목만)
+    host.querySelectorAll('button[data-camp-all]').forEach(b => b.addEventListener('click', () => {
+      const select = b.dataset.campAll === '1';
+      el('liveCampList').querySelectorAll('label').forEach(lbl => {
+        if (lbl.style.display === 'none') return;
+        const cb = lbl.querySelector('input'); cb.checked = select;
+        select ? LIVE.state.filters.campaigns.add(cb.value) : LIVE.state.filters.campaigns.delete(cb.value);
+      });
       LIVE.render();
     }));
   };
@@ -293,6 +323,13 @@
     wireToolbar();
     el('liveModalClose').addEventListener('click', () => el('liveModal').classList.remove('active'));
     el('liveModal').addEventListener('click', e => { if (e.target.id === 'liveModal') el('liveModal').classList.remove('active'); });
+    // 필터 접기/펼치기
+    el('liveFilterToggle').addEventListener('click', () => {
+      const body = el('liveFilterDynamic');
+      const hidden = body.style.display === 'none';
+      body.style.display = hidden ? 'flex' : 'none';
+      el('liveFilterToggle').textContent = hidden ? '필터 접기 ▲' : '필터 펼치기 ▼';
+    });
   }
 
   LIVE.loadTitle = async function (titleId) {
