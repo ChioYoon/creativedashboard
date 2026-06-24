@@ -151,8 +151,91 @@
     el('liveTopN').addEventListener('change', e => { LIVE.topN = +e.target.value; LIVE.renderChart(); });
   }
 
-  // Task 4에서 구현 (현재 stub)
-  LIVE.renderGrid = LIVE.renderGrid || function () {};
+  // ── 분석 모달 순수 헬퍼 (step1 미변경 — 복제) ───────────────
+  function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+  function buildInsightBlocksHtml(creative) {
+    const meta = (creative && creative.meta) || {};
+    const insight = ((meta.one_line_insight || meta.marketer_insight) || '').trim();
+    const reality = (meta.kpi_reality_check || '').trim();
+    if (!insight && !reality) return '';
+    const lead = insight ? `<div style="font-weight:600;margin:4px 0;">${escapeHtml(insight)}</div>` : '';
+    const body = reality ? `<div style="color:#555;font-size:13px;">${escapeHtml(reality)}</div>` : '';
+    return `<div style="border-left:3px solid var(--brand-primary,#DC2828);padding:8px 12px;background:#FAF9F7;border-radius:6px;margin:10px 0;"><span style="font-size:11px;font-weight:700;color:var(--brand-primary,#DC2828);">인사이트</span>${lead}${body}</div>`;
+  }
+
+  function buildSignalChipsHtml(creative) {
+    const meta = (creative && creative.meta) || {};
+    const groups = [
+      { label:'강점', items:meta.strengths,  ev:meta.strength_evidence, color:'#16a34a' },
+      { label:'약점', items:meta.weaknesses, ev:meta.weakness_evidence, color:'#d97706' },
+      { label:'가설', items:meta.hypothesis, ev:null,                   color:'#2563eb' },
+      { label:'차주 변주', items:meta.test_ideas, ev:meta.improvement_actions, color:'#6b7280', pfx:'→ ' },
+    ];
+    return groups.filter(g => Array.isArray(g.items) && g.items.length).map(g => {
+      const cards = g.items.map((it, i) => {
+        const e = ((g.ev && g.ev[i]) || '').trim();
+        const eh = e ? `<div style="font-size:12px;color:#555;margin-top:2px;">${escapeHtml((g.pfx||'')+e)}</div>` : '';
+        return `<div style="border-left:3px solid ${g.color};padding:6px 10px;margin:4px 0;background:#fff;"><div style="font-size:12.5px;font-weight:600;">${escapeHtml(it)}</div>${eh}</div>`;
+      }).join('');
+      return `<div style="margin:8px 0;"><div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:2px;">${g.label}</div>${cards}</div>`;
+    }).join('');
+  }
+
+  // ── 미리보기 셀 (Drive 폴백) ────────────────────────────────
+  function livePreviewHtml(c) {
+    const url = c['링크'] || c.이미지링크 || '';
+    const isVideo = (c.유형 || '').toUpperCase() === 'VID';
+    const hasImg = url && url.startsWith('http') && !isVideo;   // 영상 링크는 유튜브 URL이라 <img> 부적합
+    if (hasImg) return `<img src="${url}" alt="" style="width:100%;height:100%;object-fit:cover;">`;
+    if (LIVE.state.driveFolderUrl) {
+      const safe = LIVE.state.driveFolderUrl.replace(/'/g, "\\'");
+      return `<button type="button" onclick="event.stopPropagation();window.open('${safe}','_blank','noopener')" title="공유 드라이브 폴더에서 소재 찾기" style="cursor:pointer;font-size:11px;font-weight:600;color:#666;background:#F4F2EF;border:1px solid #e5e0d8;border-radius:6px;padding:6px 8px;">📁 Drive</button>`;
+    }
+    return `<span style="color:#9ca3af;font-size:22px;">${isVideo ? '▶' : '📷'}</span>`;
+  }
+
+  // ── 소재 그리드 (전체 소재, 노출 무관) ─────────────────────
+  LIVE.renderGrid = function () {
+    const agg = LIVE.aggregate(LIVE.applyFilters());   // 필터 기간 획득 배지
+    const acqOf = c => (agg.perCreative.get(c) || { acq:0 }).acq;
+    const list = [...LIVE.state.creatives].sort((a, b) => acqOf(b) - acqOf(a));
+    const grid = el('liveGrid');
+    if (!list.length) { grid.innerHTML = '<div class="live-empty">이 타이틀에 소재가 없습니다.</div>'; return; }
+    grid.innerHTML = list.map((c, i) => {
+      const acq = acqOf(c);
+      const badge = LIVE.state.hasKpi ? `<div class="live-card-badge">획득 ${acq.toLocaleString()}</div>` : '';
+      return `<div class="live-card" data-idx="${i}"><div class="live-card-preview">${livePreviewHtml(c)}</div><div class="live-card-body"><div class="live-card-name">${escapeHtml(c.소재명 || c.creative_id || '')}</div>${badge}</div></div>`;
+    }).join('');
+    LIVE._gridList = list;
+    grid.querySelectorAll('.live-card').forEach(card => card.addEventListener('click', () => {
+      LIVE.openModal(LIVE._gridList[+card.dataset.idx]);
+    }));
+  };
+
+  // ── 분석 모달 ───────────────────────────────────────────────
+  LIVE.openModal = function (c) {
+    if (!c) return;
+    const url = c['링크'] || c.이미지링크 || '';
+    const hasUrl = url && url.startsWith('http');
+    const isVideo = (c.유형 || '').toUpperCase() === 'VID';
+    let preview;
+    if (hasUrl && !isVideo) preview = `<img src="${url}" style="max-width:100%;border-radius:10px;" alt="">`;
+    else if (hasUrl && isVideo) preview = `<div style="text-align:center;"><a href="${url}" target="_blank" rel="noopener" style="display:inline-block;padding:12px 20px;background:#111;color:#fff;border-radius:8px;font-weight:700;text-decoration:none;">▶ 영상 열기</a></div>`;
+    else {
+      const drive = LIVE.state.driveFolderUrl
+        ? `<div style="margin-top:16px;"><button type="button" onclick="window.open('${LIVE.state.driveFolderUrl.replace(/'/g,"\\'")}','_blank','noopener')" style="cursor:pointer;padding:10px 18px;background:#E84855;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;">📁 Google Drive 폴더에서 소재 찾기</button></div>` : '';
+      preview = `<div style="padding:28px;background:#f9fafb;border:1.5px dashed #d1d5db;border-radius:12px;text-align:center;color:#6b7280;"><div style="font-size:40px;">${isVideo ? '▶' : '📂'}</div><div style="font-size:13px;font-weight:600;color:#374151;margin-top:8px;">미리보기 링크 없음</div><div style="font-size:11px;font-family:monospace;color:#9ca3af;margin-top:6px;">${escapeHtml(c.파일명 || '-')}</div>${drive}</div>`;
+    }
+    const w = { meta: c };   // 복제 헬퍼는 creative.meta.* 를 읽음
+    const intent = (c.creator_intent || '').trim();
+    const intentHtml = intent ? `<div style="font-style:italic;color:#666;margin:8px 0;">${escapeHtml(intent)}</div>` : '';
+    el('liveModalBody').innerHTML =
+      preview +
+      `<h3 style="margin:16px 0 6px;font-size:16px;">${escapeHtml(c.소재명 || '')} <span style="font-size:12px;color:#9ca3af;">(${escapeHtml(c.유형 || '')})</span></h3>` +
+      intentHtml + buildInsightBlocksHtml(w) + buildSignalChipsHtml(w);
+    el('liveModal').classList.add('active');
+  };
 
   async function init() {
     // 타이틀 매니페스트 → 셀렉터
@@ -171,6 +254,8 @@
                 : (sel.options[0] && sel.options[0].value) || '';
     if (start) { sel.value = start; await LIVE.loadTitle(start); }
     wireToolbar();
+    el('liveModalClose').addEventListener('click', () => el('liveModal').classList.remove('active'));
+    el('liveModal').addEventListener('click', e => { if (e.target.id === 'liveModal') el('liveModal').classList.remove('active'); });
   }
 
   LIVE.loadTitle = async function (titleId) {
