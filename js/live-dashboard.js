@@ -95,6 +95,65 @@
     }));
   };
 
+  // ── 통합 일별 집계 ──────────────────────────────────────────
+  LIVE.aggregate = function (dailies) {
+    const perCreative = new Map();   // creative → {impr,acq,cost, byDate:Map}
+    const dateSet = new Set();
+    for (const d of dailies) {
+      dateSet.add(d.date);
+      let e = perCreative.get(d.creative);
+      if (!e) { e = { impr:0, acq:0, cost:0, byDate:new Map() }; perCreative.set(d.creative, e); }
+      e.impr += d.impr; e.acq += d.acq; e.cost += d.cost;
+      let bd = e.byDate.get(d.date);
+      if (!bd) { bd = { impr:0, acq:0, cost:0 }; e.byDate.set(d.date, bd); }
+      bd.impr += d.impr; bd.acq += d.acq; bd.cost += d.cost;
+    }
+    return { perCreative, dates: [...dateSet].sort() };
+  };
+  // 지표값 (CPI=cost/acq, 획득 0이면 null=gap)
+  LIVE.metricVal = function (cell, metric) {
+    if (!cell) return null;
+    if (metric === 'impr') return cell.impr;
+    if (metric === 'acq') return cell.acq;
+    return cell.acq > 0 ? cell.cost / cell.acq : null;   // cpi
+  };
+
+  // ── Top N 추이 그래프 ───────────────────────────────────────
+  const CHART_COLORS = ['#DC2828','#2563eb','#16a34a','#d97706','#7c3aed','#0891b2','#db2777','#65a30d','#ea580c','#4f46e5'];
+  LIVE.renderChart = function () {
+    const agg = LIVE.aggregate(LIVE.applyFilters());
+    const area = el('liveChartArea');
+    if (!agg.dates.length) { area.innerHTML = '<div class="live-empty">선택한 필터에 해당하는 추이 데이터가 없습니다.</div>'; LIVE.chart = null; return; }
+    if (!area.querySelector('canvas')) area.innerHTML = '<canvas id="liveChart"></canvas>';
+    // 획득 상위 Top N
+    const top = [...agg.perCreative.entries()].sort((a,b) => b[1].acq - a[1].acq).slice(0, LIVE.topN);
+    const datasets = top.map(([c, e], i) => ({
+      label: c.소재명 || c.creative_id || ('소재'+i),
+      data: agg.dates.map(dt => LIVE.metricVal(e.byDate.get(dt), LIVE.metric)),
+      borderColor: CHART_COLORS[i % CHART_COLORS.length], backgroundColor: 'transparent',
+      spanGaps: true, tension: 0.25, pointRadius: 2,
+    }));
+    if (LIVE.chart) LIVE.chart.destroy();
+    LIVE.chart = new Chart(el('liveChart').getContext('2d'), {
+      type: 'line',
+      data: { labels: agg.dates, datasets },
+      options: { responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ position:'bottom', labels:{ boxWidth:12, font:{ size:11 } } } },
+        scales:{ y:{ beginAtZero:true } } },
+    });
+  };
+
+  function wireToolbar() {
+    document.querySelectorAll('.live-metric-btn[data-metric]').forEach(b => b.addEventListener('click', () => {
+      document.querySelectorAll('.live-metric-btn[data-metric]').forEach(x => x.classList.remove('active'));
+      b.classList.add('active'); LIVE.metric = b.dataset.metric; LIVE.renderChart();
+    }));
+    el('liveTopN').addEventListener('change', e => { LIVE.topN = +e.target.value; LIVE.renderChart(); });
+  }
+
+  // Task 4에서 구현 (현재 stub)
+  LIVE.renderGrid = LIVE.renderGrid || function () {};
+
   async function init() {
     // 타이틀 매니페스트 → 셀렉터
     LIVE.state.manifest = await window.DataSource.loadTitleManifest();
@@ -111,6 +170,7 @@
     const start = (urlTitle && LIVE.state.manifest.some(t => t.id === urlTitle)) ? urlTitle
                 : (sel.options[0] && sel.options[0].value) || '';
     if (start) { sel.value = start; await LIVE.loadTitle(start); }
+    wireToolbar();
   }
 
   LIVE.loadTitle = async function (titleId) {
@@ -130,13 +190,12 @@
   };
 
   LIVE.render = function () {
-    // Task 2~4에서 확장. 현재: KPI 미연동 시 그래프 영역 안내.
-    const chartArea = el('liveChartArea');
     if (!LIVE.state.hasKpi) {
-      chartArea.innerHTML = '<div class="live-empty">이 타이틀은 운영(KPI) 데이터가 없어 추이를 표시할 수 없습니다. 아래 소재 목록과 분석은 확인할 수 있습니다.</div>';
+      el('liveChartArea').innerHTML = '<div class="live-empty">이 타이틀은 운영(KPI) 데이터가 없어 추이를 표시할 수 없습니다. 아래 소재 목록과 분석은 확인할 수 있습니다.</div>';
     } else {
-      chartArea.innerHTML = '<canvas id="liveChart"></canvas>';
+      LIVE.renderChart();
     }
+    LIVE.renderGrid();
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
