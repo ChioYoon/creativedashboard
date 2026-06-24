@@ -3425,6 +3425,18 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     
     // 전역 변수: 현재 표시 중인 소재 목록 (모달용)
     window.currentCreatives = [];
+
+    // 미리보기 폴백: 현재 타이틀의 Drive 공유 폴더 URL (없으면 '') + 매니페스트 원본
+    window.currentDriveFolderUrl = '';
+    window.__titleManifest = [];
+
+    // 미리보기 폴백 버튼 HTML — currentDriveFolderUrl 있으면 "📁 Drive" 버튼, 없으면 ''
+    function driveFolderButtonHtml() {
+      const url = window.currentDriveFolderUrl || '';
+      if (!url) return '';
+      const safe = url.replace(/'/g, "\\'");
+      return `<button type="button" onclick="window.open('${safe}','_blank','noopener')" title="공유 드라이브 폴더에서 이 소재를 찾아보세요" style="cursor:pointer;font-size:11px;font-weight:600;color:#666;background:#F4F2EF;border:1px solid #e5e0d8;border-radius:6px;padding:6px 8px;display:inline-flex;align-items:center;gap:3px;white-space:nowrap;">📁 Drive</button>`;
+    }
     
     // 페이지 로드
     window.addEventListener('DOMContentLoaded', function() {
@@ -3451,6 +3463,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
 
       try {
         const manifest = await window.DataSource.loadTitleManifest();
+        window.__titleManifest = manifest;
         // 옵션 채우기 (기본 "직접 업로드" 옵션 유지 후 append)
         manifest.forEach(t => {
           const opt = document.createElement('option');
@@ -3487,6 +3500,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       if (!value) {
         // "직접 업로드" 선택 → 활성 타이틀 해제, URL 정리
         window.DataSource.setActiveTitleId('');
+        window.currentDriveFolderUrl = '';
         updateStep2Link();
         return;
       }
@@ -3502,6 +3516,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
 
     async function loadTitleFromJson(titleEntry) {
       if (!window.DataSource) return;
+      const _meta = (window.__titleManifest || []).find(t => t.id === titleEntry.id);
+      window.currentDriveFolderUrl = (_meta && _meta.drive_folder_url) || '';
       try {
         showLoadingIndicator(`${titleEntry.id} 데이터 로딩 중...`);
         const { normalized, sourceMeta } = await window.DataSource.loadCreativeData('json-url', {
