@@ -3430,12 +3430,14 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     window.currentDriveFolderUrl = '';
     window.__titleManifest = [];
 
-    // 미리보기 폴백 버튼 HTML — currentDriveFolderUrl 있으면 "📁 Drive" 버튼, 없으면 ''
-    function driveFolderButtonHtml() {
+    // 미리보기 폴백 버튼 HTML — currentDriveFolderUrl 있으면 Drive 폴더 버튼, 없으면 ''
+    // (미리보기 링크 없는 소재의 분석 모달 내 미리보기 영역에서 사용)
+    function driveFolderButtonHtml(label) {
       const url = window.currentDriveFolderUrl || '';
       if (!url) return '';
       const safe = url.replace(/'/g, "\\'");
-      return `<button type="button" onclick="window.open('${safe}','_blank','noopener')" title="공유 드라이브 폴더에서 이 소재를 찾아보세요" style="cursor:pointer;font-size:11px;font-weight:600;color:#666;background:#F4F2EF;border:1px solid #e5e0d8;border-radius:6px;padding:6px 8px;display:inline-flex;align-items:center;gap:3px;white-space:nowrap;">📁 Drive</button>`;
+      const text = label || '📁 Drive 폴더 열기';
+      return `<button type="button" onclick="window.open('${safe}','_blank','noopener')" title="공유 드라이브 폴더에서 이 소재를 찾아보세요" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:10px 18px;background:#E84855;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;">${text}</button>`;
     }
     
     // 페이지 로드
@@ -4928,15 +4930,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
 
         // 썸네일 HTML 생성
         let previewHtml = '';
-        const driveBtn = driveFolderButtonHtml();
-        if (isVideo && hasImage) {
+        if (isVideo) {
           previewHtml = `<div class="preview-video" onclick="openPreviewModal(${index})"></div>`;
         } else if (hasImage) {
           previewHtml = `<img src="${imageUrl}" class="preview-thumbnail" onclick="openPreviewModal(${index})" alt="미리보기">`;
-        } else if (driveBtn) {
-          previewHtml = driveBtn;
-        } else if (isVideo) {
-          previewHtml = `<div class="preview-video" onclick="openPreviewModal(${index})"></div>`;
         } else {
           previewHtml = `<span class="preview-placeholder-clickable" onclick="openPreviewModal(${index})" title="소재 상세 정보 보기" style="cursor:pointer; color:#9ca3af; font-size:24px; display:inline-block; padding:8px 12px; border:1.5px dashed #d1d5db; border-radius:8px; transition:all .15s;" onmouseover="this.style.background='#fef2f2'; this.style.borderColor='#E84855';" onmouseout="this.style.background=''; this.style.borderColor='#d1d5db';">📷</span>`;
         }
@@ -5290,10 +5287,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
 
         // 미리보기 셀
         let previewCell = '';
-        const driveBtn = driveFolderButtonHtml();
-        if (isVideo && hasImg) {
-          // 영상 링크가 있으면 썸네일+플레이 오버레이
-          previewCell = `<div style="position:relative;width:80px;height:54px;display:inline-block;cursor:pointer;" onclick="window.open('${imageUrl}','_blank')">
+        if (isVideo) {
+          if (hasImg) {
+            // 영상 링크가 있으면 썸네일+플레이 오버레이
+            previewCell = `<div style="position:relative;width:80px;height:54px;display:inline-block;cursor:pointer;" onclick="window.open('${imageUrl}','_blank')">
               <img src="${imageUrl}" style="width:80px;height:54px;object-fit:cover;border-radius:6px;" onerror="this.parentNode.innerHTML='<div style=\\'width:80px;height:54px;background:#F4F2EF;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#666;\\'>VID</div>'">
               <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
                 <div style="width:26px;height:26px;background:rgba(0,0,0,.55);border-radius:50%;display:flex;align-items:center;justify-content:center;">
@@ -5301,15 +5298,14 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
                 </div>
               </div>
             </div>`;
+          } else {
+            previewCell = `<div style="width:80px;height:54px;background:#F4F2EF;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#666;cursor:default;">VID</div>`;
+          }
         } else if (hasImg) {
           previewCell = `<a href="${imageUrl}" target="_blank" title="원본 이미지 열기">
             <img src="${imageUrl}" style="width:80px;height:54px;object-fit:cover;border-radius:6px;display:block;"
                  onerror="this.parentNode.innerHTML='<div style=\\'width:80px;height:54px;background:#F4F2EF;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#999;\\'>IMG</div>'">
           </a>`;
-        } else if (driveBtn) {
-          previewCell = driveBtn;
-        } else if (isVideo) {
-          previewCell = `<div style="width:80px;height:54px;background:#F4F2EF;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#666;cursor:default;">VID</div>`;
         } else {
           previewCell = `<div style="width:80px;height:54px;background:#F4F2EF;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#999;">—</div>`;
         }
@@ -6283,18 +6279,12 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         
         // 썸네일 HTML 생성
         let previewHtml = '';
-        const driveBtn = driveFolderButtonHtml();
-        if (isVideo && hasImage) {
-          // 동영상(링크 있음): 플레이 버튼 표시
+        if (isVideo) {
+          // 동영상: 플레이 버튼 표시
           previewHtml = `<div class="preview-video" onclick="showFatigueModal('${r.key.replace(/'/g, "\\'")}', '${r.유형}', '${imageUrl.replace(/'/g, "\\'")}', ${r.baselineCPA}, ${r.comparisonCPA})"></div>`;
         } else if (hasImage) {
           // 이미지: 실제 이미지 표시
           previewHtml = `<img src="${imageUrl}" class="preview-thumbnail" onclick="showFatigueModal('${r.key.replace(/'/g, "\\'")}', '${r.유형}', '${imageUrl.replace(/'/g, "\\'")}', ${r.baselineCPA}, ${r.comparisonCPA})" alt="미리보기">`;
-        } else if (driveBtn) {
-          previewHtml = driveBtn;
-        } else if (isVideo) {
-          // 동영상(링크 없음): 플레이 버튼 표시
-          previewHtml = `<div class="preview-video" onclick="showFatigueModal('${r.key.replace(/'/g, "\\'")}', '${r.유형}', '${imageUrl.replace(/'/g, "\\'")}', ${r.baselineCPA}, ${r.comparisonCPA})"></div>`;
         } else {
           // 없음: 플레이스홀더
           previewHtml = '<span style="color: #9ca3af; font-size: 24px;">📷</span>';
@@ -6507,6 +6497,8 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
 
       // v5.2.1: 미리보기 URL이 없으면 안내 박스 (백엔드 산출 JSON은 링크 없을 수 있음)
       if (!hasUrl) {
+        // 현재 타이틀에 Drive 공유 폴더 링크가 있으면 미리보기 영역에 폴더 버튼 배치
+        const _driveBtn = driveFolderButtonHtml('📁 Google Drive 폴더에서 소재 찾기');
         content = `<div style="width:100%;max-width:600px;padding:36px 24px;background:#f9fafb;border:1.5px dashed #d1d5db;border-radius:12px;text-align:center;color:#6b7280;">
           <div style="font-size:48px;margin-bottom:12px;">📂</div>
           <div style="font-size:14px;font-weight:600;color:#374151;margin-bottom:6px;">미리보기 링크 없음</div>
@@ -6515,6 +6507,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
             로컬 파일 경로만 보유 (GDrive sync 폴더 내).<br>
             <span style="display:inline-block;margin-top:8px;font-family:monospace;font-size:11px;color:#9ca3af;">파일명: ${creative.파일명 || creative.meta?.['파일명'] || '-'}</span>
           </div>
+          ${_driveBtn ? `<div style="margin-top:18px;">${_driveBtn}</div>` : ''}
         </div>`;
       } else if (isVideo) {
         // v5.1.1: YouTube 임베드 + 오류 153 fallback UI (헬퍼 사용)
