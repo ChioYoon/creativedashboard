@@ -29,8 +29,7 @@
     "_pipeline_types": ["BNR", "VID"],
     "_pipeline_enabled": true,
     "_pipeline_kpi_enabled": false,
-    "_pipeline_prompt_version_pin": "v3.3-2026.06.13-character-split-single",
-    "_pipeline_genre": "martial_arts_action_rpg",
+    "_pipeline_genre": "dark_fantasy_card_rpg",
     "_pipeline_game_context_file": "pipeline/game_context/tougenanki.md"
   },
   {

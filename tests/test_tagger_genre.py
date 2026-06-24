@@ -16,7 +16,7 @@ def test_default_genre_constant():
 
 def test_genre_instructions_has_both_genres():
     assert "character_collection_rpg" in GENRE_INSTRUCTIONS
-    assert "martial_arts_action_rpg" in GENRE_INSTRUCTIONS
+    assert "dark_fantasy_card_rpg" in GENRE_INSTRUCTIONS
 
 
 def test_get_system_instruction_char_rpg():
@@ -26,11 +26,11 @@ def test_get_system_instruction_char_rpg():
     assert "다수 캐릭터 라인업" in instr or "SD/귀여운" in instr
 
 
-def test_get_system_instruction_martial_arts():
-    instr = get_system_instruction("martial_arts_action_rpg")
+def test_get_system_instruction_dark_fantasy():
+    instr = get_system_instruction("dark_fantasy_card_rpg")
     assert isinstance(instr, str) and len(instr) > 100
-    # 무협 가이드 포함 확인
-    assert "무공" in instr or "무협" in instr or "세계관" in instr
+    # 도원암귀 전용 가이드 포함 확인
+    assert "인페르노 스킬" in instr or "다크 판타지" in instr or "카드 배틀" in instr
 
 
 def test_get_system_instruction_unknown_falls_back_to_default():
@@ -41,14 +41,14 @@ def test_get_system_instruction_unknown_falls_back_to_default():
 
 def test_prompt_version_includes_genre_suffix():
     v_char = prompt_version("character_collection_rpg")
-    v_martial = prompt_version("martial_arts_action_rpg")
+    v_dark = prompt_version("dark_fantasy_card_rpg")
     assert v_char.endswith("-char-rpg")
-    assert v_martial.endswith("-martial-v1")
+    assert v_dark.endswith("-darkfantasy-v1")
 
 
 def test_prompt_version_different_per_genre():
     """캐시 격리 보장 — 두 버전 문자열이 달라야 함."""
-    assert prompt_version("character_collection_rpg") != prompt_version("martial_arts_action_rpg")
+    assert prompt_version("character_collection_rpg") != prompt_version("dark_fantasy_card_rpg")
 
 
 def test_prompt_version_default_arg():
