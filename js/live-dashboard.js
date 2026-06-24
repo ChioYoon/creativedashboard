@@ -157,19 +157,27 @@
     if (!area.querySelector('canvas')) area.innerHTML = '<canvas id="liveChart"></canvas>';
     // 획득 상위 Top N
     const top = [...agg.perCreative.entries()].sort((a,b) => b[1].acq - a[1].acq).slice(0, LIVE.topN);
-    const datasets = top.map(([c, e], i) => ({
-      label: c.소재명 || c.creative_id || ('소재'+i),
-      data: agg.dates.map(dt => LIVE.metricVal(e.byDate.get(dt), LIVE.metric)),
-      borderColor: CHART_COLORS[i % CHART_COLORS.length], backgroundColor: 'transparent',
-      spanGaps: true, tension: 0.25, pointRadius: 2,
-    }));
+    const stacked = LIVE.metric !== 'cpi';   // 노출·획득은 누적, CPI(비율)는 중첩만
+    const datasets = top.map(([c, e], i) => {
+      const col = CHART_COLORS[i % CHART_COLORS.length];
+      return {
+        label: c.소재명 || c.creative_id || ('소재'+i),
+        data: agg.dates.map(dt => {
+          const v = LIVE.metricVal(e.byDate.get(dt), LIVE.metric);
+          return (stacked && v == null) ? 0 : v;   // 누적은 결측=0
+        }),
+        borderColor: col, backgroundColor: col + '55',
+        fill: true, tension: 0.25, pointRadius: 1, spanGaps: !stacked,
+      };
+    });
     if (LIVE.chart) LIVE.chart.destroy();
     LIVE.chart = new Chart(el('liveChart').getContext('2d'), {
       type: 'line',
       data: { labels: agg.dates, datasets },
       options: { responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{ position:'bottom', labels:{ boxWidth:12, font:{ size:11 } } } },
-        scales:{ y:{ beginAtZero:true } } },
+        plugins:{ legend:{ position:'bottom', labels:{ boxWidth:12, font:{ size:11 } } },
+          tooltip:{ mode:'index', intersect:false } },
+        scales:{ y:{ beginAtZero:true, stacked }, x:{ stacked } } },
     });
   };
 
