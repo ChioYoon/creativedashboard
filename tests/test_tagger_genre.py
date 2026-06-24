@@ -39,10 +39,15 @@ def test_get_system_instruction_unknown_falls_back_to_default():
     assert instr_unknown == instr_default
 
 
-def test_prompt_version_includes_genre_suffix():
-    v_char = prompt_version("character_collection_rpg")
+def test_prompt_version_char_rpg_is_base_version():
+    # 펩(character_collection_rpg)은 기존 BASE 버전 그대로 — suffix 없음.
+    # (suffix 추가 시 캐시 전체 무효화 → 무료 quota로 재태깅 불가 → 출력 붕괴)
+    from pipeline.tagger import BASE_PROMPT_VERSION
+    assert prompt_version("character_collection_rpg") == BASE_PROMPT_VERSION
+
+
+def test_prompt_version_dark_fantasy_suffix():
     v_dark = prompt_version("dark_fantasy_card_rpg")
-    assert v_char.endswith("-char-rpg")
     assert v_dark.endswith("-darkfantasy-v1")
 
 

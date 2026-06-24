@@ -270,8 +270,11 @@ SYSTEM_INSTRUCTION_DARK_FANTASY_CARD_RPG = """
 """.strip()
 
 # 장르별 (instruction, cache_version_suffix) 매핑
+# ⚠️ character_collection_rpg(펩의 원래 베이스)는 suffix="" — 기존 BASE 버전 캐시를
+#    그대로 재사용해야 함(suffix 추가 시 전체 캐시 무효화 → 무료 quota RPD 한도로
+#    재태깅 불가 → 출력 붕괴). 신규 장르만 suffix로 캐시 격리.
 GENRE_INSTRUCTIONS: dict[str, tuple[str, str]] = {
-    "character_collection_rpg":   (SYSTEM_INSTRUCTION_CHARACTER_RPG, "char-rpg"),
+    "character_collection_rpg":   (SYSTEM_INSTRUCTION_CHARACTER_RPG, ""),
     "dark_fantasy_card_rpg":      (SYSTEM_INSTRUCTION_DARK_FANTASY_CARD_RPG, "darkfantasy-v1"),
 }
 DEFAULT_GENRE = "character_collection_rpg"
@@ -415,10 +418,10 @@ class GeminiTagger:
 
 def prompt_version(genre: str = DEFAULT_GENRE) -> str:
     """장르별 프롬프트 버전 식별자 (캐시 키에 사용).
-    장르마다 다른 suffix → 캐시 자동 격리 (cache.py 변경 불필요).
+    suffix 있으면 장르별 캐시 격리, 빈 suffix면 BASE 버전 그대로(기존 캐시 재사용).
     """
     _, suffix = GENRE_INSTRUCTIONS.get(genre, GENRE_INSTRUCTIONS[DEFAULT_GENRE])
-    return f"{BASE_PROMPT_VERSION}-{suffix}"
+    return f"{BASE_PROMPT_VERSION}-{suffix}" if suffix else BASE_PROMPT_VERSION
 
 
 def system_instruction() -> str:
