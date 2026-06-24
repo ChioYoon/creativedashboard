@@ -338,6 +338,14 @@
       body.style.display = hidden ? 'flex' : 'none';
       el('liveFilterToggle').textContent = hidden ? '필터 접기 ▲' : '필터 펼치기 ▼';
     });
+    // 추이 그래프 접기/펼치기
+    el('liveChartToggle').addEventListener('click', () => {
+      const area = el('liveChartArea'), ctrls = el('liveChartControls');
+      const hidden = area.style.display === 'none';
+      area.style.display = hidden ? '' : 'none';
+      ctrls.style.display = hidden ? 'inline-flex' : 'none';
+      el('liveChartToggle').textContent = hidden ? '접기 ▲' : '펼치기 ▼';
+    });
   }
 
   LIVE.loadTitle = async function (titleId) {

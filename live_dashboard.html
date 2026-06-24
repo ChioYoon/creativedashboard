@@ -71,10 +71,13 @@
       <div class="live-chart-toolbar" id="liveChartToolbar">
         <strong style="font-size:13px;">주요 소재 추이 (획득 상위)</strong>
         <span style="flex:1;"></span>
-        <button class="live-metric-btn active" data-metric="impr">노출</button>
-        <button class="live-metric-btn" data-metric="acq">획득</button>
-        <button class="live-metric-btn" data-metric="cpi">CPI</button>
-        <label style="font-size:12px; margin-left:8px;">Top <select id="liveTopN"><option>5</option><option selected>7</option><option>10</option></select></label>
+        <span id="liveChartControls" style="display:inline-flex; gap:8px; align-items:center;">
+          <button class="live-metric-btn active" data-metric="impr">노출</button>
+          <button class="live-metric-btn" data-metric="acq">획득</button>
+          <button class="live-metric-btn" data-metric="cpi">CPI</button>
+          <label style="font-size:12px;">Top <select id="liveTopN"><option>5</option><option selected>7</option><option>10</option></select></label>
+        </span>
+        <button id="liveChartToggle" class="live-metric-btn" type="button" style="margin-left:8px;">접기 ▲</button>
       </div>
       <div id="liveChartArea"><canvas id="liveChart"></canvas></div>
     </div>
