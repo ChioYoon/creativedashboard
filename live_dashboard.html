@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
+  <title>라이브 대시보드 - Com2uS R팀</title>
+  <link rel="stylesheet" href="assets/cl-shell.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+  <style>
+    /* 페이지 전용 — DS 토큰 사용. 풀블리드 surface 배경 */
+    body { margin:0; background: var(--surface-soft, #FAF9F7); font-family: var(--font-base, 'Noto Sans KR', 'Pretendard', sans-serif); color: var(--text-primary, #1f2937); }
+    .live-body { max-width: 1280px; margin: 0 auto; padding: 20px; }
+    .live-filters { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; background:#fff; border:1px solid var(--border-default,#e5e7eb); border-radius:10px; padding:14px 16px; margin-bottom:16px; }
+    .live-filter-group { display:flex; flex-direction:column; gap:4px; font-size:12px; }
+    .live-filter-group label { font-weight:600; color: var(--text-secondary,#6b7280); }
+    .live-filter-group select { padding:6px 10px; border:1px solid var(--border-default,#e5e7eb); border-radius:8px; font-size:13px; }
+    .live-chart-card { background:#fff; border:1px solid var(--border-default,#e5e7eb); border-radius:10px; padding:16px; margin-bottom:16px; min-height:280px; }
+    .live-chart-toolbar { display:flex; gap:8px; align-items:center; margin-bottom:12px; flex-wrap:wrap; }
+    .live-metric-btn { cursor:pointer; padding:6px 14px; border:1px solid var(--border-default,#e5e7eb); border-radius:20px; background:#fff; font-size:12px; font-weight:600; }
+    .live-metric-btn.active { background: var(--brand-primary,#DC2828); color:#fff; border-color: var(--brand-primary,#DC2828); }
+    .live-empty { padding:48px 24px; text-align:center; color:#9ca3af; font-size:13px; }
+    #liveChartArea { position:relative; height:300px; }
+    .live-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap:14px; }
+    .live-card { background:#fff; border:1px solid var(--border-default,#e5e7eb); border-radius:10px; overflow:hidden; cursor:pointer; transition:box-shadow .15s; }
+    .live-card:hover { box-shadow:0 4px 14px rgba(0,0,0,.08); }
+    .live-card-preview { width:100%; aspect-ratio:16/10; background:#F4F2EF; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .live-card-preview img { width:100%; height:100%; object-fit:cover; }
+    .live-card-body { padding:8px 10px; }
+    .live-card-name { font-size:12px; font-weight:600; word-break:break-all; line-height:1.35; }
+    .live-card-badge { font-size:11px; color: var(--text-secondary,#6b7280); margin-top:4px; }
+    /* 모달 */
+    .live-modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:1000; align-items:flex-start; justify-content:center; overflow:auto; padding:40px 16px; }
+    .live-modal.active { display:flex; }
+    .live-modal-box { background:#fff; border-radius:14px; max-width:680px; width:100%; padding:24px; position:relative; }
+    .live-modal-close { position:absolute; top:14px; right:16px; cursor:pointer; font-size:22px; color:#9ca3af; background:none; border:none; }
+  </style>
+</head>
+<body>
+  <header class="cl-topbar">
+    <a href="index.html" class="cl-brand">
+      <img src="assets/com2us/logo-primary-red.png" alt="Com2uS" class="cl-brand-logo">
+      <span class="cl-brand-divider"></span>
+      <span class="cl-brand-title">소재 분석 대시보드</span>
+    </a>
+    <nav class="cl-nav">
+      <a href="index.html" class="cl-nav-link">홈</a>
+      <a href="step1_integrated.html" class="cl-nav-link">Step 1 소재 분석</a>
+      <a href="step2_column_selector.html" class="cl-nav-link">Step 2 군집화</a>
+      <a href="live_dashboard.html" class="cl-nav-link active">라이브 대시보드</a>
+      <a href="사용안내서_인쇄용.html" target="_blank" class="cl-nav-link">사용 안내서</a>
+    </nav>
+  </header>
+
+  <div class="live-body">
+    <div class="live-filters" id="liveFilters">
+      <div class="live-filter-group">
+        <label>타이틀</label>
+        <select id="liveTitleSelect"></select>
+      </div>
+      <!-- 기간·국가·OS·캠페인 필터는 JS가 주입 -->
+      <div id="liveFilterDynamic" style="display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end;"></div>
+    </div>
+
+    <div class="live-chart-card">
+      <div class="live-chart-toolbar" id="liveChartToolbar">
+        <strong style="font-size:13px;">주요 소재 추이 (획득 상위)</strong>
+        <span style="flex:1;"></span>
+        <button class="live-metric-btn active" data-metric="impr">노출</button>
+        <button class="live-metric-btn" data-metric="acq">획득</button>
+        <button class="live-metric-btn" data-metric="cpi">CPI</button>
+        <label style="font-size:12px; margin-left:8px;">Top <select id="liveTopN"><option>5</option><option selected>7</option><option>10</option></select></label>
+      </div>
+      <div id="liveChartArea"><canvas id="liveChart"></canvas></div>
+    </div>
+
+    <div class="live-grid" id="liveGrid"></div>
+  </div>
+
+  <div class="live-modal" id="liveModal"><div class="live-modal-box"><button class="live-modal-close" id="liveModalClose">✕</button><div id="liveModalBody"></div></div></div>
+
+  <script src="js/data-source.js?v=20260624a"></script>
+  <script src="js/layer-metrics.js?v=20260624a"></script>
+  <script src="js/live-dashboard.js?v=20260624a"></script>
+</body>
+</html>
