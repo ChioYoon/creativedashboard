@@ -182,12 +182,44 @@
     }).join('');
   }
 
-  // ── 미리보기 셀 (Drive 폴백) ────────────────────────────────
+  // ── YouTube 헬퍼 (step1과 동일 — 복제) ──────────────────────
+  function extractYouTubeId(url) {
+    if (!url) return null;
+    const patterns = [
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+      /^([a-zA-Z0-9_-]{11})$/,
+    ];
+    for (const p of patterns) { const m = url.match(p); if (m && m[1]) return m[1]; }
+    return null;
+  }
+  function buildYouTubeEmbedHtml(videoId) {
+    if (!videoId) return '<p style="color:#ef4444;font-weight:600;">⚠️ 유효하지 않은 YouTube URL입니다.</p>';
+    const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
+    const origin = encodeURIComponent(location.origin || 'https://chioyoon.github.io');
+    const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1&fs=1&origin=${origin}`;
+    return `<div style="position:relative;width:100%;max-width:640px;margin:0 auto;">
+      <iframe width="640" height="360" src="${embedUrl}" title="YouTube 영상 미리보기" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" style="border-radius:12px;display:block;width:100%;height:auto;aspect-ratio:16/9;"></iframe>
+      <div style="margin-top:8px;text-align:right;"><a href="${watchUrl}" target="_blank" rel="noopener" style="font-size:12px;color:#FF0000;font-weight:700;text-decoration:none;">▶ YouTube에서 열기</a></div>
+    </div>`;
+  }
+
+  // ── 미리보기 셀 ─────────────────────────────────────────────
+  // 우선순위: 이미지 링크 → 유튜브 영상(썸네일+재생) → (둘 다 없을 때만) Drive
   function livePreviewHtml(c) {
     const url = c['링크'] || c.이미지링크 || '';
     const isVideo = (c.유형 || '').toUpperCase() === 'VID';
-    const hasImg = url && url.startsWith('http') && !isVideo;   // 영상 링크는 유튜브 URL이라 <img> 부적합
-    if (hasImg) return `<img src="${url}" alt="" style="width:100%;height:100%;object-fit:cover;">`;
+    const hasUrl = url && url.startsWith('http');
+    if (hasUrl && !isVideo) return `<img src="${url}" alt="" style="width:100%;height:100%;object-fit:cover;">`;
+    if (hasUrl && isVideo) {
+      const yid = extractYouTubeId(url);
+      if (yid) {
+        return `<div style="position:relative;width:100%;height:100%;"><img src="https://img.youtube.com/vi/${yid}/hqdefault.jpg" alt="" style="width:100%;height:100%;object-fit:cover;"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:38px;height:38px;background:rgba(0,0,0,.6);border-radius:50%;display:flex;align-items:center;justify-content:center;"><span style="color:#fff;font-size:16px;margin-left:3px;">▶</span></div></div></div>`;
+      }
+      return `<span style="color:#9ca3af;font-size:22px;">▶</span>`;   // 영상 링크 있으나 임베드 불가 — 클릭 시 모달서 열기
+    }
+    // 유튜브·이미지 링크 모두 없을 때만 Drive
     if (LIVE.state.driveFolderUrl) {
       const safe = LIVE.state.driveFolderUrl.replace(/'/g, "\\'");
       return `<button type="button" onclick="event.stopPropagation();window.open('${safe}','_blank','noopener')" title="공유 드라이브 폴더에서 소재 찾기" style="cursor:pointer;font-size:11px;font-weight:600;color:#666;background:#F4F2EF;border:1px solid #e5e0d8;border-radius:6px;padding:6px 8px;">📁 Drive</button>`;
@@ -221,11 +253,16 @@
     const isVideo = (c.유형 || '').toUpperCase() === 'VID';
     let preview;
     if (hasUrl && !isVideo) preview = `<img src="${url}" style="max-width:100%;border-radius:10px;" alt="">`;
-    else if (hasUrl && isVideo) preview = `<div style="text-align:center;"><a href="${url}" target="_blank" rel="noopener" style="display:inline-block;padding:12px 20px;background:#111;color:#fff;border-radius:8px;font-weight:700;text-decoration:none;">▶ 영상 열기</a></div>`;
+    else if (hasUrl && isVideo) {
+      const yid = extractYouTubeId(url);
+      preview = yid ? buildYouTubeEmbedHtml(yid)
+        : `<div style="text-align:center;"><a href="${url}" target="_blank" rel="noopener" style="display:inline-block;padding:12px 20px;background:#111;color:#fff;border-radius:8px;font-weight:700;text-decoration:none;">▶ 영상 열기</a></div>`;
+    }
     else {
+      // 유튜브·이미지 링크 모두 없을 때만 Drive
       const drive = LIVE.state.driveFolderUrl
         ? `<div style="margin-top:16px;"><button type="button" onclick="window.open('${LIVE.state.driveFolderUrl.replace(/'/g,"\\'")}','_blank','noopener')" style="cursor:pointer;padding:10px 18px;background:#E84855;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;">📁 Google Drive 폴더에서 소재 찾기</button></div>` : '';
-      preview = `<div style="padding:28px;background:#f9fafb;border:1.5px dashed #d1d5db;border-radius:12px;text-align:center;color:#6b7280;"><div style="font-size:40px;">${isVideo ? '▶' : '📂'}</div><div style="font-size:13px;font-weight:600;color:#374151;margin-top:8px;">미리보기 링크 없음</div><div style="font-size:11px;font-family:monospace;color:#9ca3af;margin-top:6px;">${escapeHtml(c.파일명 || '-')}</div>${drive}</div>`;
+      preview = `<div style="padding:28px;background:#f9fafb;border:1.5px dashed #d1d5db;border-radius:12px;text-align:center;color:#6b7280;"><div style="font-size:40px;">📂</div><div style="font-size:13px;font-weight:600;color:#374151;margin-top:8px;">미리보기 링크 없음</div><div style="font-size:11px;font-family:monospace;color:#9ca3af;margin-top:6px;">${escapeHtml(c.파일명 || '-')}</div>${drive}</div>`;
     }
     const w = { meta: c };   // 복제 헬퍼는 creative.meta.* 를 읽음
     const intent = (c.creator_intent || '').trim();
