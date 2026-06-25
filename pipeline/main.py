@@ -945,7 +945,7 @@ def run(cfg: dict) -> dict:
 
     # Stage 7: 페치해둔 MMP daily 를 records 에 주입 (소재명 join)
     if cfg.get("_mmp_daily"):
-        inject_mmp_into_records(records, cfg["_mmp_daily"], source_name="airbridge",
+        inject_mmp_into_records(records, cfg["_mmp_daily"], source_name=cfg.get("_mmp_provider") or "airbridge",
                                 currency=cfg.get("_mmp_currency"), fx_rate=cfg.get("_mmp_fx_rate"))
 
     # ── Stage 6: 점수 산출 (대시보드 calculateCreativeScores 와 동일 — pipeline/scoring.py) ──

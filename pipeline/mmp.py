@@ -107,7 +107,9 @@ def cmd_fetch(args) -> int:
         q = compute_mmp_quality(a)
         cpi = f"{q['d1_cpi']:.0f}" if q["d1_cpi"] is not None else "—"
         roas = f"{q['d7_roas']:.2f}" if q["d7_roas"] is not None else "—"
-        print(f"{name[:42]:<44}|{a['retained_d1']:>7,}|{q['d1_ipm']:>7.2f}|{cpi:>9}|{roas:>7}|{q['d1_retention']:>7.1f}")
+        ipm = f"{q['d1_ipm']:.2f}" if q["d1_ipm"] is not None else "—"
+        ret = f"{q['d1_retention']:.1f}" if q["d1_retention"] is not None else "—"
+        print(f"{name[:42]:<44}|{a['retained_d1']:>7,}|{ipm:>7}|{cpi:>9}|{roas:>7}|{ret:>7}")
     print("\n✅ 검증 완료. main.py 통합 시 같은 값이 public/data/{title}.json 의 mmp_* 에 주입됩니다.")
     return 0
 
