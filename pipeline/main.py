@@ -709,8 +709,15 @@ def run(cfg: dict) -> dict:
     records: list[CreativeRecord] = []
     hits, misses, failures = 0, 0, 0
     skipped_quota = 0  # quota 소진으로 이번 실행에서 건너뛴 캐시 미스 항목 (다음 실행 시 자동 재시도)
+    carried_forward = 0  # quota 소진 시 이전 버전 태그를 유지(carry-forward)한 소재 수
     started_at = time.time()
     daily_quota_exhausted = False  # 한 번 발생하면 같은 모델로 더 시도 불필요
+
+    def _carry_forward(_sha: str):
+        """현재 버전 태깅 불가(quota/실패) 시 이전 버전 태그가 있으면 그 tag_dict 반환.
+        없으면 None. → 이전 태그 있는 소재는 출력에서 드롭되지 않음(대시보드 보존)."""
+        _fb = cache.get_any(_sha, exclude_version=pversion)
+        return _fb[0] if _fb is not None else None
 
     print(f"\n🚀 2) Gemini 태깅 시작 (프롬프트: {pversion}, 모델: {cfg['model']}) ...")
     for c in tqdm(candidates, desc="태깅", unit="소재"):
@@ -729,63 +736,87 @@ def run(cfg: dict) -> dict:
             # 캐시 미스 항목만 건너뜀 — 순서상 뒤에 있는 캐시 히트 record 가
             # 산출 JSON 에서 통째로 누락되던 퇴보(31→20건) 방지.
             if daily_quota_exhausted:
-                skipped_quota += 1
-                continue
-            try:
-                # Stage 5-I: 풀 분포 + 이 소재 실제 KPI 백분위를 동적 컨텍스트로 주입
-                tag = tagger.tag_creative(rep, extra_context=build_extra_context(c.creative_name), genre=genre)
-                tag_dict = tag.model_dump()
-                cache.put(sha, pversion, tag_dict)
-                cache.save()
-                misses += 1
-            except Exception as e:
-                err_msg = str(e)
-                # ── quota 한도 도달 시 flash-lite 폴백 (Stage 4 신규) ──
-                is_quota_exhausted = (
-                    "GenerateRequestsPerDayPer" in err_msg
-                    or ("429" in err_msg and "quota" in err_msg.lower())
-                )
-                if (
-                    is_quota_exhausted
-                    and not cfg["no_fallback"]
-                    and not metrics["fallback_used"]
-                ):
-                    tqdm.write(
-                        f"   [폴백] {cfg['model']} quota 한도 → "
-                        f"{fallback_model} 으로 전환하여 재시도"
-                    )
-                    cfg["model"] = fallback_model
-                    _carry_usage = dict(tagger.usage)  # 1차 태거 토큰 실측 이어받기
-                    tagger = GeminiTagger(api_key=cfg["api_key"], model=fallback_model)
-                    for _k, _v in _carry_usage.items():
-                        tagger.usage[_k] += _v
-                    metrics["fallback_used"] = True
-                    daily_quota_exhausted = False
-                    # 같은 소재 재시도 (Stage 5-I: 동일 컨텍스트 주입)
-                    try:
-                        tag = tagger.tag_creative(rep, extra_context=build_extra_context(c.creative_name), genre=genre)
-                        tag_dict = tag.model_dump()
-                        cache.put(sha, pversion, tag_dict)
-                        cache.save()
-                        misses += 1
-                    except Exception as e2:
-                        tqdm.write(f"   [실패] {c.creative_name} (폴백 후): {e2}")
-                        failures += 1
-                        continue
-                elif is_quota_exhausted and metrics["fallback_used"]:
-                    # 폴백 모델도 한도 도달 — 이후 Gemini 호출은 스킵하되
-                    # 캐시 히트 항목은 계속 처리 (break 금지: 산출 JSON 퇴보 방지)
-                    tqdm.write(
-                        f"   [quota] {c.creative_name}: 폴백 모델 quota도 한도 도달 — "
-                        f"이후 신규 태깅은 건너뛰고 캐시 항목만 처리"
-                    )
-                    skipped_quota += 1
-                    daily_quota_exhausted = True
-                    continue
+                # carry-forward: 현재 버전 미태깅이라도 이전 버전 태그가 있으면 유지(드롭 방지)
+                cf = _carry_forward(sha)
+                if cf is not None:
+                    tag_dict = cf
+                    carried_forward += 1
                 else:
-                    tqdm.write(f"   [실패] {c.creative_name}: {e}")
-                    failures += 1
+                    skipped_quota += 1
                     continue
+            else:
+                try:
+                    # Stage 5-I: 풀 분포 + 이 소재 실제 KPI 백분위를 동적 컨텍스트로 주입
+                    tag = tagger.tag_creative(rep, extra_context=build_extra_context(c.creative_name), genre=genre)
+                    tag_dict = tag.model_dump()
+                    cache.put(sha, pversion, tag_dict)
+                    cache.save()
+                    misses += 1
+                except Exception as e:
+                    err_msg = str(e)
+                    # ── quota 한도 도달 시 flash-lite 폴백 (Stage 4 신규) ──
+                    is_quota_exhausted = (
+                        "GenerateRequestsPerDayPer" in err_msg
+                        or ("429" in err_msg and "quota" in err_msg.lower())
+                    )
+                    if (
+                        is_quota_exhausted
+                        and not cfg["no_fallback"]
+                        and not metrics["fallback_used"]
+                    ):
+                        tqdm.write(
+                            f"   [폴백] {cfg['model']} quota 한도 → "
+                            f"{fallback_model} 으로 전환하여 재시도"
+                        )
+                        cfg["model"] = fallback_model
+                        _carry_usage = dict(tagger.usage)  # 1차 태거 토큰 실측 이어받기
+                        tagger = GeminiTagger(api_key=cfg["api_key"], model=fallback_model)
+                        for _k, _v in _carry_usage.items():
+                            tagger.usage[_k] += _v
+                        metrics["fallback_used"] = True
+                        daily_quota_exhausted = False
+                        # 같은 소재 재시도 (Stage 5-I: 동일 컨텍스트 주입)
+                        try:
+                            tag = tagger.tag_creative(rep, extra_context=build_extra_context(c.creative_name), genre=genre)
+                            tag_dict = tag.model_dump()
+                            cache.put(sha, pversion, tag_dict)
+                            cache.save()
+                            misses += 1
+                        except Exception as e2:
+                            cf = _carry_forward(sha)
+                            if cf is not None:
+                                tqdm.write(f"   [carry-forward] {c.creative_name}: 폴백 후 실패 → 이전 태그 유지 ({e2})")
+                                tag_dict = cf
+                                carried_forward += 1
+                            else:
+                                tqdm.write(f"   [실패] {c.creative_name} (폴백 후): {e2}")
+                                failures += 1
+                                continue
+                    elif is_quota_exhausted and metrics["fallback_used"]:
+                        # 폴백 모델도 한도 도달 — 이후 Gemini 호출은 스킵하되
+                        # 캐시 히트/이전 태그(carry-forward)는 계속 처리 (퇴보 방지)
+                        tqdm.write(
+                            f"   [quota] {c.creative_name}: 폴백 모델 quota도 한도 도달 — "
+                            f"이후 신규 태깅은 건너뛰고 캐시/이전 태그만 처리"
+                        )
+                        daily_quota_exhausted = True
+                        cf = _carry_forward(sha)
+                        if cf is not None:
+                            tag_dict = cf
+                            carried_forward += 1
+                        else:
+                            skipped_quota += 1
+                            continue
+                    else:
+                        cf = _carry_forward(sha)
+                        if cf is not None:
+                            tqdm.write(f"   [carry-forward] {c.creative_name}: 태깅 실패 → 이전 태그 유지 ({e})")
+                            tag_dict = cf
+                            carried_forward += 1
+                        else:
+                            tqdm.write(f"   [실패] {c.creative_name}: {e}")
+                            failures += 1
+                            continue
 
         meta = c.parsed_meta
 
@@ -928,6 +959,7 @@ def run(cfg: dict) -> dict:
             "duration_sec": round(duration, 1),
             "prompt_version": pversion,
             "fallback_used": metrics["fallback_used"],
+            "carried_forward": carried_forward,
             "score_summary": score_summary,  # Stage 6: 기본 가중치 점수 요약
         },
     )
@@ -948,6 +980,8 @@ def run(cfg: dict) -> dict:
     print(f"   실패:          {failures}")
     if skipped_quota:
         print(f"   quota 보류:    {skipped_quota} (다음 실행/nightly 에서 자동 재시도)")
+    if carried_forward:
+        print(f"   carry-forward: {carried_forward}건 (이전 버전 태그 유지 — 재태깅 수렴 중)")
     if metrics["fallback_used"]:
         print(f"   폴백 사용:     ✅ {fallback_model}")
     u = tagger.usage
