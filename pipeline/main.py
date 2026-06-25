@@ -67,6 +67,32 @@ def _load_game_context(rel_path: str, repo_root: Path) -> str:
     return full.read_text(encoding="utf-8")
 
 
+def make_mmp_source(cfg: dict):
+    """cfg['mmp_provider'](또는 airbridge_enabled 폴백)로 메인 MMP 소스 선택.
+
+    Returns: (source, provider). 미설정이면 (None, "").
+    """
+    provider = (cfg.get("mmp_provider") or "").strip().lower()
+    if not provider:
+        provider = "airbridge" if cfg.get("airbridge_enabled") else ""
+    if provider == "appsflyer":
+        from .sources.appsflyer import AppsFlyerMmpSource
+        src = AppsFlyerMmpSource.from_env(
+            app_id=cfg.get("appsflyer_app_id") or "",
+            usd_to_krw=cfg.get("airbridge_usd_to_krw") or 1.0,
+            exclude_media_sources=set(cfg["appsflyer_exclude_media_sources"])
+            if cfg.get("appsflyer_exclude_media_sources") else None,
+        )
+        return src, provider
+    if provider == "airbridge":
+        from .sources.airbridge import AirbridgeMmpSource
+        src = AirbridgeMmpSource.from_env()
+        if cfg.get("airbridge_usd_to_krw"):
+            src.usd_to_krw = cfg["airbridge_usd_to_krw"]
+        return src, provider
+    return None, ""
+
+
 # ─────────────────────────────────────────────────────────────
 # Stage 5-D: 파일명 → 소재명(concept) 정규화
 # ─────────────────────────────────────────────────────────────
@@ -287,6 +313,9 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         airbridge_exclude_channels = title_override.get("_pipeline_airbridge_exclude_channels",
                                                         ["google.adwords"])
         airbridge_usd_to_krw = float(title_override.get("_pipeline_airbridge_usd_to_krw", 0) or 0)
+        mmp_provider = title_override.get("_pipeline_mmp_provider", "")
+        appsflyer_app_id = title_override.get("_pipeline_appsflyer_app_id", "")
+        appsflyer_exclude = title_override.get("_pipeline_appsflyer_exclude_media_sources", [])
     else:
         # 단일 타이틀 모드: CLI 인자 + titles.json _pipeline_* (Stage 5-D) + .env fallback
         title = args.title or os.environ.get("CLOOP_TITLE_ID", "")
@@ -338,6 +367,9 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         airbridge_exclude_channels = title_meta.get("_pipeline_airbridge_exclude_channels",
                                                     ["google.adwords"])
         airbridge_usd_to_krw = float(title_meta.get("_pipeline_airbridge_usd_to_krw", 0) or 0)
+        mmp_provider = title_meta.get("_pipeline_mmp_provider", "")
+        appsflyer_app_id = title_meta.get("_pipeline_appsflyer_app_id", "")
+        appsflyer_exclude = title_meta.get("_pipeline_appsflyer_exclude_media_sources", [])
 
     if not title:
         sys.exit("❌ --title, --all-titles, 또는 .env CLOOP_TITLE_ID 가 필요합니다.")
@@ -380,6 +412,9 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         "airbridge_enabled": bool(airbridge_enabled),
         "airbridge_exclude_channels": airbridge_exclude_channels,
         "airbridge_usd_to_krw": airbridge_usd_to_krw,
+        "mmp_provider": mmp_provider,
+        "appsflyer_app_id": appsflyer_app_id,
+        "appsflyer_exclude_media_sources": appsflyer_exclude,
     }
 
 
@@ -564,35 +599,32 @@ def run(cfg: dict) -> dict:
             print("\n💰 KPI fetch: customer_id 미설정으로 건너뜀")
     metrics["kpi_status"] = kpi_status
 
-    # ── 2.6) Stage 7: Airbridge MMP 페치 (非Google 매체 품질 레이어) ──
+    # ── 2.6) Stage 7: MMP 페치 (Airbridge | AppsFlyer — 메인 프로바이더) ──
     mmp_status = "skipped"
-    if cfg.get("airbridge_enabled"):
+    mmp_src, mmp_provider = make_mmp_source(cfg)
+    if mmp_src is not None:
         try:
-            from .sources.airbridge import AirbridgeMmpSource
-            mmp_src = AirbridgeMmpSource.from_env()
-            # titles.json 환율(_pipeline_airbridge_usd_to_krw)이 있으면 .env 값보다 우선
-            if cfg.get("airbridge_usd_to_krw"):
-                mmp_src.usd_to_krw = cfg["airbridge_usd_to_krw"]
             from .sources.google_ads import resolve_window as _resolve_window
             _start, _end = _resolve_window(
                 cfg.get("kpi_window_days") or 159, cfg.get("kpi_start_date") or None
             )
-            mmp_daily = mmp_src.fetch_mmp_window(
-                _start, _end, exclude_channels=set(cfg.get("airbridge_exclude_channels", [])))
-            cfg["_mmp_daily"] = mmp_daily   # 레코드 생성 후 주입 (records 는 아래 루프에서 생성됨)
+            # airbridge 는 채널 제외셋을 명시 전달, appsflyer 는 소스 내부 기본 제외셋 사용
+            _exclude = set(cfg.get("airbridge_exclude_channels", [])) if mmp_provider == "airbridge" else None
+            mmp_daily = mmp_src.fetch_mmp_window(_start, _end, exclude_channels=_exclude)
+            cfg["_mmp_daily"] = mmp_daily
             cfg["_mmp_currency"] = mmp_src.currency
             cfg["_mmp_fx_rate"] = mmp_src.usd_to_krw
+            cfg["_mmp_provider"] = mmp_provider
             mmp_status = "success_truncated" if mmp_src.last_fetch_truncated else "success"
             metrics["mmp_rows_fetched"] = len(mmp_daily)
             metrics["mmp_truncated"] = mmp_src.last_fetch_truncated
+            metrics["mmp_provider"] = mmp_provider
             if mmp_src.last_fetch_truncated:
-                metrics["errors"].append("MMP fetch 10,000행 상한 도달 — 일부 소재 누락됨. Raw Data Export 필요.")
-            print(f"   → Airbridge {len(mmp_daily)}행 fetch (非Google 매체, 통화={mmp_src.currency} fx={mmp_src.usd_to_krw})"
-                  + (" ⚠️ 10,000행 상한 도달, 소재 누락" if mmp_src.last_fetch_truncated else ""))
+                metrics["errors"].append("MMP fetch 상한 도달 — 일부 소재 누락됨.")
+            print(f"   → {mmp_provider} {len(mmp_daily)}행 fetch (非Google 매체, "
+                  f"통화={mmp_src.currency} fx={mmp_src.usd_to_krw})")
         except FileNotFoundError:
-            # 토큰 미설정(.env 에 AIRBRIDGE_* 없음) = 아직 7-A 미완 — 에러 아닌 건너뜀.
-            # enabled=true 로 둬도 토큰 추가 전까지 nightly 메일이 깨끗하게 유지됨.
-            print("   💠 MMP: AIRBRIDGE_API_TOKEN 미설정 → 건너뜀 (7-A 토큰 발급 후 자동 활성)")
+            print(f"   💠 MMP({mmp_provider}): 토큰/앱ID 미설정 → 건너뜀")
             mmp_status = "skipped"
         except Exception as e:
             err_type = type(e).__name__
