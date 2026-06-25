@@ -90,10 +90,14 @@ def _map_row(row: dict, repo_root: Path) -> dict:
             t["_pipeline_google_ads_campaign_filter"] = []
         mmp = (row.get("MMP 종류") or "").strip().lower()
         if mmp == "airbridge":
+            t["_pipeline_mmp_provider"] = "airbridge"
             t["_pipeline_airbridge_enabled"] = True
             t["_pipeline_airbridge_exclude_channels"] = list(_DEF_AB_EXCLUDE)
             t["_pipeline_airbridge_usd_to_krw"] = _DEF_USD_KRW
-        # AppsFlyer: 소스 미구현 — 종류 보존만(범위 밖)
+        elif mmp == "appsflyer":
+            t["_pipeline_mmp_provider"] = "appsflyer"
+            t["_pipeline_appsflyer_app_id"] = (row.get("MMP 앱 식별자") or "").strip()
+            t["_pipeline_airbridge_usd_to_krw"] = _DEF_USD_KRW  # MMP fx(USD→KRW) 공용
     return t
 
 

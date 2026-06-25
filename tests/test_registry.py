@@ -128,3 +128,24 @@ def test_build_empty_keeps_existing(tmp_path):
     s = registry.build_titles_json(xlsx, out_path=out, overrides_path=tmp_path/"ov.json", repo_root=tmp_path)
     assert s["status"] == "empty_kept_existing"
     assert _read_json(out) == [{"id":"orig"}]
+
+def test_map_row_appsflyer_provider(tmp_path):
+    from pipeline.registry import _map_row
+    row = {
+        "타이틀 ID": "gd-global", "타이틀명": "갓앤데몬", "로컬 스캔 경로": "G:\\x",
+        "광고 성과 연동": "Y", "MMP 종류": "appsflyer",
+        "MMP 앱 식별자": "com.com2us.gd.android.google.global.normal",
+    }
+    t = _map_row(row, tmp_path)
+    assert t["_pipeline_mmp_provider"] == "appsflyer"
+    assert t["_pipeline_appsflyer_app_id"] == "com.com2us.gd.android.google.global.normal"
+    assert t["_pipeline_airbridge_usd_to_krw"] == 1500
+
+
+def test_map_row_airbridge_sets_provider(tmp_path):
+    from pipeline.registry import _map_row
+    row = {"타이틀 ID": "pepp-us", "타이틀명": "펩", "로컬 스캔 경로": "G:\\x",
+           "광고 성과 연동": "Y", "MMP 종류": "airbridge"}
+    t = _map_row(row, tmp_path)
+    assert t["_pipeline_mmp_provider"] == "airbridge"
+    assert t["_pipeline_airbridge_enabled"] is True
