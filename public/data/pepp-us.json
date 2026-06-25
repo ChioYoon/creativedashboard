@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
   "title_id": "pepp-us",
-  "generated_at": "2026-06-25T23:50:08+09:00",
+  "generated_at": "2026-06-26T01:33:06+09:00",
   "pipeline_version": "stage2-mvp",
-  "gemini_model": "gemini-2.5-flash-lite",
+  "gemini_model": "gemini-2.5-flash",
   "creatives": [
     {
       "creative_id": "A-AI-1000Sum01A-DA",
@@ -70,7 +70,7 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:16+09:00",
+      "tagged_at": "2026-06-26T01:32:52+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-1000Sum01A-DA\\260616_BNR_A-AI-1000Sum01A-DA_L_1200x628_EN.png",
@@ -243,7 +243,7 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:16+09:00",
+      "tagged_at": "2026-06-26T01:32:52+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-1000Sum01B-DA\\260616_BNR_A-AI-1000Sum01B-DA_L_1200x628_EN.png",
@@ -266,7 +266,7 @@
       "mmp_quality_score": {
         "total": 30.36,
         "grade": "보통",
-        "rank": 50,
+        "rank": 47,
         "conv": 12.5,
         "cpi": 0.0,
         "ipm": 39.3,
@@ -404,7 +404,7 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:16+09:00",
+      "tagged_at": "2026-06-26T01:32:53+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "03. AI 활용 소재\\A-AI-Cinematic01A-DA\\260123_BNR_A-AI-Cinematic01A-DA_L_1200x628_EN.jpg",
@@ -618,41 +618,38 @@
       "USP": "혜택형(무료뽑기/보상)",
       "art_style": "2.5D 피규어 입체 화풍",
       "strengths": [
-        "SD/귀여운 캐릭터 연출",
         "보상 약속 명확",
-        "다수 캐릭터 라인업"
+        "SD/귀여운 캐릭터 연출",
+        "게임플레이 자체 매력"
       ],
       "weaknesses": [
-        "초반 3초 안에 가치 전달 실패",
-        "행동 유도 약함/부재",
-        "장르/게임성 불분명"
+        "후킹 식상/평이",
+        "행동 유도 약함/부재"
       ],
       "hypothesis": [
-        "낮은 전환 위험 — 행동 유도 약함"
+        "낮은 전환 위험 — 행동 유도 약함",
+        "피로도 빠를 위험 — 변주 필요"
       ],
       "test_ideas": [
         "명시적 CTA 추가",
-        "15초 컷 테스트",
-        "카피 1줄로 축약"
+        "다른 core_usp 각도 변주"
       ],
-      "one_line_insight": "귀여운 캐릭터와 보상으로 후킹을 시도하나, 장르 인지와 행동 유도가 약함 — 초반 3초 내 게임 핵심 가치를 명확히 전달하고 엔드카드에 보상 연계 CTA를 강화하여 전환율을 개선",
+      "one_line_insight": "초반 클로 머신 후킹과 보상 약속은 명확하나 CTR이 낮고 전환 유도가 약함 — 엔드카드에 보상 연계 CTA를 추가하고, 후킹 방식을 다변화하여 클릭과 전환을 개선",
       "strength_evidence": [
-        "0-4초 클로 머신 속 캐릭터들이 아기자기한 외형과 함께 \"pick me!\" 등 대사를 통해 귀여움을 어필하며 시선을 사로잡음.",
-        "5-6초 화면 중앙에 'SR CHARACTER + $100 BONUS REWARDS NOW' 문구가 크게 강조되어 시청자에게 명확한 혜택을 약속함.",
-        "8-9초 팀 편성 화면에서 다양한 등급과 외형의 캐릭터들이 그리드 형태로 제시되어 수집 욕구를 자극함."
+        "0:05-0:07에 'CLAIM YOUR SR CHARACTER + $100 BONUS REWARDS NOW' 문구가 중앙에 크게 노출되어 시청자에게 명확한 보상을 약속한다.",
+        "0:00-0:04 클로 머신 속 캐릭터들이 아기자기하고 귀여운 모습으로 'pick me' 등 말풍선과 함께 등장하여 시선을 사로잡는다.",
+        "0:12-0:15에 3분할 화면으로 실제 전투 장면이 빠르게 전환되며 다양한 스킬 이펙트와 전투 시스템을 보여줘 게임성을 인지시킨다."
       ],
       "weakness_evidence": [
-        "0-3초 클로 머신 연출은 흥미를 유발하나, 게임의 핵심 가치나 장르를 즉시 파악하기 어려워 시청자의 이탈 위험이 높음.",
-        "엔드카드(16-20초)에 'DOWNLOAD NOW' 문구만 존재하며, 보상과 연계된 구체적인 행동 유도 메시지가 없어 전환율이 낮을 수 있음.",
-        "12-15초 게임플레이 화면이 짧은 컷으로 빠르게 전환되어 방치형 RPG의 핵심 재미 요소나 조작 방식을 명확히 인지하기 어려움."
+        "초반 클로 머신 연출은 캐릭터 수집 게임에서 흔히 사용되는 방식이며, 실제 CTR 1.3%로 풀 하위 6%에 머물러 후킹이 클릭으로 이어지지 못하고 있다.",
+        "0:16 엔드카드에서 'DOWNLOAD NOW' 문구만 있을 뿐, 보상과 연계된 구체적인 행동 유도 버튼이나 문구가 없어 전환 유도가 약하다."
       ],
       "improvement_actions": [
-        "엔드카드(16-20초)에 'DOWNLOAD NOW' 문구와 함께 'SR 캐릭터 + $100 보상 받기' 문구를 추가하여 전환을 유도.",
-        "초반 클로 머신 연출을 3초 이내로 축약하고, 혜택 제시와 핵심 게임플레이를 15초 안에 보여주는 버전 제작.",
-        "12-15초 게임플레이 화면에 '한 손으로 즐기는 방치형 RPG' 등 장르를 명확히 설명하는 1줄 카피를 추가."
+        "엔드카드 0:16에 'DOWNLOAD NOW' 문구와 함께 'SR 캐릭터 + $100 보상 받기' 버튼을 추가하여 전환율을 높인다.",
+        "초반 클로 머신 연출 대신, 0:08 팀 편성 화면에서 'MEET THE CUTEST HERO' 문구를 강조하여 캐릭터 수집의 매력을 전면에 내세운다."
       ],
-      "creator_intent": "귀여운 캐릭터와 보상으로 유저의 호기심을 자극하고, 실제 게임플레이를 통해 어드벤처 RPG의 재미를 보여주려는 의도",
-      "kpi_reality_check": "캐릭터 외형과 보상으로 높은 CTR을 기대했으나, 실제 CTR 1.3% (하위 9%), CVR 0.13% (하위 6%)로 매우 저조함 — 초반 후킹과 가치 전달이 클릭 및 전환으로 이어지지 않아 소재의 전반적인 메시지 구조를 재설계하고 CTA를 강화할 필요",
+      "creator_intent": "캐릭터 수집의 재미와 보상 혜택을 전면에 내세워 신규 유저의 유입을 유도하려는 의도",
+      "kpi_reality_check": "캐릭터 수집과 보상으로 높은 CTR을 기대했으나 실제 CTR 1.3%로 풀 하위 6%, CVR 0.13%로 풀 하위 11%를 기록 — 후킹이 클릭으로 이어지지 않고 전환도 저조하므로, 초반 후킹 방식과 엔드카드 CTA를 전면 재검토 필요",
       "kpi_percentiles": {
         "ctr": 6,
         "cvr": 11,
@@ -668,14 +665,14 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:56+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:53+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "03. AI 활용 소재\\A-AI-Clawmachine01A-FK\\260123_VID_A-AI-Clawmachine01A-FK_V_1080x1920_EN.mp4"
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "260123_VID_A-AI-Clawmachine01A-FK_V_1080x1920_EN",
@@ -971,8 +968,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:56+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:53+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-Defeatmonster01A-DA\\260429_BNR_A-AI-Defeatmonster01A-DA_L_1200x628_EN.png",
         "01. BNR\\선론칭\\A-AI-Defeatmonster01A-DA\\260429_BNR_A-AI-Defeatmonster01A-DA_S_1200x1200_EN.png",
@@ -981,7 +978,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "260429_BNR_A-AI-Defeatmonster01A-DA_V_1200x1500_EN.png",
@@ -1502,7 +1499,7 @@
       ],
       "mmp_d1_ipm": 0.049,
       "mmp_d1_cpi": 191319.6,
-      "mmp_d7_roas": 0.0913,
+      "mmp_d7_roas": 0.0924,
       "mmp_d1_retention": 23.93,
       "mmp_quality_score": {
         "total": 73.66,
@@ -1516,7 +1513,7 @@
       "mmp_installs": 234,
       "mmp_retained_d1": 56,
       "mmp_cost": 10713900,
-      "mmp_revenue": 978465,
+      "mmp_revenue": 990450,
       "mmp_currency": "KRW",
       "mmp_fx_rate": 1500.0,
       "mmp_daily": [
@@ -1614,7 +1611,7 @@
           "cost": 3982470,
           "installs": 56,
           "retained_d1": 12,
-          "revenue_d7": 842235
+          "revenue_d7": 854220
         }
       ]
     },
@@ -1684,8 +1681,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:56+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:53+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-Favoritehero01A-DA\\260429_BNR_A-AI-Favoritehero01A-DA_L_1200x628_EN.png",
         "01. BNR\\선론칭\\A-AI-Favoritehero01A-DA\\260429_BNR_A-AI-Favoritehero01A-DA_S_1200x1200_EN.png",
@@ -1694,7 +1691,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "260429_BNR_A-AI-Favoritehero01A-DA_L_1200x628_EN.png",
@@ -2378,8 +2375,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:57+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:53+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-Favoritehero01B-DA\\260429_BNR_A-AI-Favoritehero01B-DA_L_1200x628_EN.png",
         "01. BNR\\선론칭\\A-AI-Favoritehero01B-DA\\260429_BNR_A-AI-Favoritehero01B-DA_S_1200x1200_EN.png",
@@ -2388,7 +2385,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "260429_BNR_A-AI-Favoritehero01B-DA_L_1200x628_EN.png",
@@ -2898,7 +2895,7 @@
       "mmp_quality_score": {
         "total": 32.59,
         "grade": "보통",
-        "rank": 45,
+        "rank": 43,
         "conv": 21.4,
         "cpi": 0.0,
         "ipm": 39.3,
@@ -3048,8 +3045,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:57+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:53+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "03. AI 활용 소재\\A-AI-Figure01A-DA\\260123_BNR_A-AI-Figure01A-DA_L_1200x628_EN.png",
         "03. AI 활용 소재\\A-AI-Figure01A-DA\\260123_BNR_A-AI-Figure01A-DA_S_1200x1200_EN.png",
@@ -3289,14 +3286,14 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:57+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:53+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "03. AI 활용 소재\\A-AI-Lego01A-FK\\260123_VID_A-AI-Lego01A-FK_L_1920x1080_EN.mp4"
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "260123_VID_A-AI-Lego01A-FK_L_1920x1080_EN",
@@ -3592,14 +3589,14 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:57+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:53+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "03. AI 활용 소재\\A-AI-Pinball01A-FK\\260123_VID_A-AI-Pinball01A-FK_V_1080x1920_EN.mp4"
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "260123_VID_A-AI-Pinball01A-FK_V_1080x1920_EN",
@@ -3915,8 +3912,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:57+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:54+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "03. AI 활용 소재\\A-AI-Pixel01A A-AI-Pixel01B\\260123_BNR_A-AI-Pixel01A-DA_L_1200x628_EN.png",
         "03. AI 활용 소재\\A-AI-Pixel01A A-AI-Pixel01B\\260123_BNR_A-AI-Pixel01A-DA_S_1200x1200_EN.png",
@@ -4003,8 +4000,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:57+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:54+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "03. AI 활용 소재\\A-AI-Pixel01A A-AI-Pixel01B\\260123_BNR_A-AI-Pixel01B-DA_L_1200x628_EN.png",
         "03. AI 활용 소재\\A-AI-Pixel01A A-AI-Pixel01B\\260123_BNR_A-AI-Pixel01B-DA_S_1200x1200_EN.png",
@@ -4250,8 +4247,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:57+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:54+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "03. AI 활용 소재\\A-AI-TCG01A-DA\\260123_BNR_A-AI-TCG01A-DA_L_1200x628_EN.jpg",
         "03. AI 활용 소재\\A-AI-TCG01A-DA\\260123_BNR_A-AI-TCG01A-DA_S_1200x1200_EN.jpg",
@@ -4471,8 +4468,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:57+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:54+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-Treasure01A-DA\\260616_BNR_A-AI-Treasure01A-DA_L_1200x628_EN.png",
         "01. BNR\\선론칭\\A-AI-Treasure01A-DA\\260616_BNR_A-AI-Treasure01A-DA_S_1200x1200_EN.png",
@@ -4494,7 +4491,7 @@
       "mmp_quality_score": {
         "total": 59.38,
         "grade": "양호",
-        "rank": 29,
+        "rank": 28,
         "conv": 75.0,
         "cpi": 51.8,
         "ipm": 41.1,
@@ -4696,8 +4693,8 @@
         "roas": 90.41
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:57+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:54+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-AI-Victory01A-DA\\260429_BNR_A-AI-Victory01A-DA_L_1200x628_EN.png",
         "01. BNR\\선론칭\\A-AI-Victory01A-DA\\260429_BNR_A-AI-Victory01A-DA_S_1200x1200_EN.png",
@@ -4706,7 +4703,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "260429_BNR_A-AI-Victory01A-DA_V_1200x1500_EN.png",
@@ -5470,8 +5467,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:57+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:54+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-100usd01A-DA\\260406_BNR_A-Character-100usd01A-DA_L_1200x628_EN.jpg",
         "01. BNR\\선론칭\\A-Character-100usd01A-DA\\260406_BNR_A-Character-100usd01A-DA_S_1200x1200_EN.jpg",
@@ -5480,7 +5477,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-100usd01A-DA_L_1200x628_EN.jpg",
@@ -7894,7 +7891,7 @@
       "mmp_quality_score": {
         "total": 32.59,
         "grade": "보통",
-        "rank": 46,
+        "rank": 44,
         "conv": 21.4,
         "cpi": 0.0,
         "ipm": 39.3,
@@ -8048,8 +8045,8 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:58+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:54+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Adventure01A-DA\\251104_BNR_A-Character-Adventure01A-DA_L_1200x628_EN.jpg",
         "01. BNR\\선론칭\\A-Character-Adventure01A-DA\\251104_BNR_A-Character-Adventure01A-DA_S_1200x1200_EN.jpg",
@@ -8058,7 +8055,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "251104_BNR_A-Character-Adventure01A-DA_L_1200x628_EN.jpg",
@@ -14370,8 +14367,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:58+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:54+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Adventure02A-DA\\EN\\251111_BNR_A-Character-Adventure02A-DA_L_1200x628_EN.jpg",
         "01. BNR\\선론칭\\A-Character-Adventure02A-DA\\EN\\251111_BNR_A-Character-Adventure02A-DA_S_1200x1200_EN.jpg",
@@ -14404,7 +14401,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "251111_BNR_A-Character-Adventure02A-DA_V_1200x1500_EN.jpg",
@@ -19282,7 +19279,7 @@
       "mmp_quality_score": {
         "total": 55.36,
         "grade": "양호",
-        "rank": 35,
+        "rank": 34,
         "conv": 67.9,
         "cpi": 41.1,
         "ipm": 42.9,
@@ -20048,8 +20045,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:58+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:54+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Adventure03A-DA\\EN\\251118_BNR_A-Character-Adventure03A-DA_L_1200x628_EN.jpg",
         "01. BNR\\선론칭\\A-Character-Adventure03A-DA\\EN\\251118_BNR_A-Character-Adventure03A-DA_S_1200x1200_EN.jpg",
@@ -20070,7 +20067,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "251118_BNR_A-Character-Adventure03A-DA_S_1200x1200_EN.jpg",
@@ -23324,8 +23321,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:58+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:54+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Adventure04A-DA\\260406_BNR_A-Character-Adventure04A-DA_L_1200x628_EN.jpg",
         "01. BNR\\선론칭\\A-Character-Adventure04A-DA\\260406_BNR_A-Character-Adventure04A-DA_S_1200x1200_EN.jpg",
@@ -23334,7 +23331,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-Adventure04A-DA_L_1200x628_EN.jpg",
@@ -25928,8 +25925,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:58+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:54+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Adventure05A-DA\\260406_BNR_A-Character-Adventure05A-DA_L_1200x628_EN.jpg",
         "01. BNR\\선론칭\\A-Character-Adventure05A-DA\\260406_BNR_A-Character-Adventure05A-DA_S_1200x1200_EN.jpg",
@@ -25938,7 +25935,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-Adventure05A-DA_V_1200x1500_EN.jpg",
@@ -28336,7 +28333,7 @@
       "mmp_quality_score": {
         "total": 30.36,
         "grade": "보통",
-        "rank": 51,
+        "rank": 48,
         "conv": 12.5,
         "cpi": 0.0,
         "ipm": 39.3,
@@ -28490,8 +28487,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:58+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:54+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Collection01A-DA\\EN\\251118_BNR_A-Character-Collection01A-DA_L_1200x628_EN.jpg",
         "01. BNR\\선론칭\\A-Character-Collection01A-DA\\EN\\251118_BNR_A-Character-Collection01A-DA_S_1200x1200_EN.jpg",
@@ -28504,7 +28501,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "251118_BNR_A-Character-Collection01A-DA_L_1200x628_EN.jpg",
@@ -30934,7 +30931,7 @@
       "mmp_quality_score": {
         "total": 57.14,
         "grade": "양호",
-        "rank": 31,
+        "rank": 30,
         "conv": 60.7,
         "cpi": 44.6,
         "ipm": 53.6,
@@ -31646,8 +31643,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:58+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:54+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection01A-UA\\251104_VID_A-Character-Collection01A-UA_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Character-Collection01A-UA\\251104_VID_A-Character-Collection01A-UA_S_1080x1080_EN.mp4",
@@ -31656,7 +31653,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "251104_VID_A-Character-Collection01A-UA_L_1920x1080_EN",
@@ -39290,8 +39287,8 @@
         "roas": 91.78
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:58+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:55+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection01B-UA\\EN\\251204_VID_A-Character-Collection01B-UA_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Character-Collection01B-UA\\EN\\251204_VID_A-Character-Collection01B-UA_S_1080x1080_EN.mp4",
@@ -39303,7 +39300,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "251204_VID_A-Character-Collection01B-UA_S_1080x1080_EN",
@@ -46231,8 +46228,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:59+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:55+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection02A-PV\\EN\\251211_VID_A-Character-Collection02A-PV_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Character-Collection02A-PV\\EN\\251211_VID_A-Character-Collection02A-PV_S_1080x1080_EN.mp4",
@@ -46572,8 +46569,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:59+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:55+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection02A-UA\\260123_VID_A-Character-Collection02A-UA_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Character-Collection02A-UA\\260123_VID_A-Character-Collection02A-UA_S_1080x1080_EN.mp4",
@@ -46587,17 +46584,17 @@
       "mmp_channels": [
         "facebook.business"
       ],
-      "mmp_d1_ipm": 0.0,
+      "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 32.59,
+        "total": 22.77,
         "grade": "보통",
-        "rank": 47,
+        "rank": 52,
         "conv": 21.4,
         "cpi": 0.0,
-        "ipm": 39.3,
+        "ipm": 0.0,
         "roas": 69.6
       },
       "mmp_installs": 1,
@@ -46756,8 +46753,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:59+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:56+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection02B-UA\\260123_VID_A-Character-Collection02B-UA_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Character-Collection02B-UA\\260123_VID_A-Character-Collection02B-UA_S_1080x1080_EN.mp4",
@@ -46771,17 +46768,17 @@
       "mmp_channels": [
         "facebook.business"
       ],
-      "mmp_d1_ipm": 0.0,
+      "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 30.36,
+        "total": 20.54,
         "grade": "보통",
-        "rank": 52,
+        "rank": 53,
         "conv": 12.5,
         "cpi": 0.0,
-        "ipm": 39.3,
+        "ipm": 0.0,
         "roas": 69.6
       },
       "mmp_installs": 0,
@@ -46952,8 +46949,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:49:59+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:56+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection02C-UA\\260123_VID_A-Character-Collection02C-UA_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Character-Collection02C-UA\\260123_VID_A-Character-Collection02C-UA_S_1080x1080_EN.mp4",
@@ -46967,17 +46964,17 @@
       "mmp_channels": [
         "facebook.business"
       ],
-      "mmp_d1_ipm": 0.0,
+      "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 35.27,
+        "total": 25.45,
         "grade": "보통",
-        "rank": 41,
+        "rank": 50,
         "conv": 32.1,
         "cpi": 0.0,
-        "ipm": 39.3,
+        "ipm": 0.0,
         "roas": 69.6
       },
       "mmp_installs": 2,
@@ -47160,8 +47157,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:00+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:56+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection02D-UA\\260123_VID_A-Character-Collection02D-UA_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Character-Collection02D-UA\\260123_VID_A-Character-Collection02D-UA_S_1080x1080_EN.mp4",
@@ -47175,17 +47172,17 @@
       "mmp_channels": [
         "facebook.business"
       ],
-      "mmp_d1_ipm": 0.0,
+      "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 30.36,
+        "total": 20.54,
         "grade": "보통",
-        "rank": 53,
+        "rank": 54,
         "conv": 12.5,
         "cpi": 0.0,
-        "ipm": 39.3,
+        "ipm": 0.0,
         "roas": 69.6
       },
       "mmp_installs": 0,
@@ -47344,8 +47341,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:00+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:57+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection03A-PV\\260123_VID_A-Character-Collection03A-PV_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Character-Collection03A-PV\\260123_VID_A-Character-Collection03A-PV_S_1080x1080_EN.mp4",
@@ -47359,17 +47356,17 @@
       "mmp_channels": [
         "facebook.business"
       ],
-      "mmp_d1_ipm": 0.0,
+      "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 30.36,
+        "total": 20.54,
         "grade": "보통",
-        "rank": 54,
+        "rank": 55,
         "conv": 12.5,
         "cpi": 0.0,
-        "ipm": 39.3,
+        "ipm": 0.0,
         "roas": 69.6
       },
       "mmp_installs": 0,
@@ -47540,8 +47537,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:01+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:57+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection03B-PV\\260123_VID_A-Character-Collection03B-PV_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Character-Collection03B-PV\\260123_VID_A-Character-Collection03B-PV_S_1080x1080_EN.mp4",
@@ -47555,17 +47552,17 @@
       "mmp_channels": [
         "facebook.business"
       ],
-      "mmp_d1_ipm": 0.0,
+      "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 30.36,
+        "total": 20.54,
         "grade": "보통",
-        "rank": 55,
+        "rank": 56,
         "conv": 12.5,
         "cpi": 0.0,
-        "ipm": 39.3,
+        "ipm": 0.0,
         "roas": 69.6
       },
       "mmp_installs": 0,
@@ -47736,8 +47733,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:01+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:58+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection03C-PV\\260123_VID_A-Character-Collection03C-PV_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Character-Collection03C-PV\\260123_VID_A-Character-Collection03C-PV_S_1080x1080_EN.mp4",
@@ -47751,17 +47748,17 @@
       "mmp_channels": [
         "facebook.business"
       ],
-      "mmp_d1_ipm": 0.0,
+      "mmp_d1_ipm": null,
       "mmp_d1_cpi": 53340.0,
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 33.33,
       "mmp_quality_score": {
-        "total": 61.16,
-        "grade": "우수",
-        "rank": 28,
+        "total": 51.34,
+        "grade": "양호",
+        "rank": 35,
         "conv": 39.3,
         "cpi": 96.4,
-        "ipm": 39.3,
+        "ipm": 0.0,
         "roas": 69.6
       },
       "mmp_installs": 3,
@@ -47946,8 +47943,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:01+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:58+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection03D-PV\\260123_VID_A-Character-Collection03D-PV_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Character-Collection03D-PV\\260123_VID_A-Character-Collection03D-PV_S_1080x1080_EN.mp4",
@@ -47961,17 +47958,17 @@
       "mmp_channels": [
         "facebook.business"
       ],
-      "mmp_d1_ipm": 0.0,
+      "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
       "mmp_d7_roas": 0.0,
       "mmp_d1_retention": 0.0,
       "mmp_quality_score": {
-        "total": 35.27,
+        "total": 25.45,
         "grade": "보통",
-        "rank": 42,
+        "rank": 51,
         "conv": 32.1,
         "cpi": 0.0,
-        "ipm": 39.3,
+        "ipm": 0.0,
         "roas": 69.6
       },
       "mmp_installs": 2,
@@ -48140,8 +48137,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:02+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:58+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection04A-UA\\260616_VID_A-Character-Collection04A-UA_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Character-Collection04A-UA\\260616_VID_A-Character-Collection04A-UA_S_1080x1080_EN.mp4",
@@ -48162,7 +48159,7 @@
       "mmp_quality_score": {
         "total": 35.27,
         "grade": "보통",
-        "rank": 43,
+        "rank": 41,
         "conv": 32.1,
         "cpi": 0.0,
         "ipm": 39.3,
@@ -48310,8 +48307,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:02+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:59+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection04B-UA\\260616_VID_A-Character-Collection04B-UA_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Character-Collection04B-UA\\260616_VID_A-Character-Collection04B-UA_S_1080x1080_EN.mp4",
@@ -48332,7 +48329,7 @@
       "mmp_quality_score": {
         "total": 35.27,
         "grade": "보통",
-        "rank": 44,
+        "rank": 42,
         "conv": 32.1,
         "cpi": 0.0,
         "ipm": 39.3,
@@ -48498,8 +48495,8 @@
         "roas": 94.52
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:02+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:59+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Combat01A-UA\\260123_VID_A-Character-Combat01A-UA_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Character-Combat01A-UA\\260123_VID_A-Character-Combat01A-UA_S_1080x1080_EN.mp4",
@@ -48516,7 +48513,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "260120_VID_A-Character-Combat01A-UA_L_1920x1080_EN",
@@ -59472,8 +59469,8 @@
         "roas": 95.89
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:02+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:32:59+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Combat01B-UA\\EN\\251204_VID_A-Character-Combat01B-UA_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Character-Combat01B-UA\\EN\\251204_VID_A-Character-Combat01B-UA_S_1080x1080_EN.mp4",
@@ -59487,7 +59484,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "251204_VID_A-Character-Combat01B-UA_V_1080x1920_EN",
@@ -66501,8 +66498,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:03+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:00+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Combat02A-UA\\260616_VID_A-Character-Combat02A-UA_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Character-Combat02A-UA\\260616_VID_A-Character-Combat02A-UA_S_1080x1080_EN.mp4",
@@ -66695,8 +66692,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:03+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:00+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Combat02B-UA\\260616_VID_A-Character-Combat02B-UA_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Character-Combat02B-UA\\260616_VID_A-Character-Combat02B-UA_S_1080x1080_EN.mp4",
@@ -66883,8 +66880,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:03+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:00+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Comics01A-DA\\260406_BNR_A-Character-Comics01A-DA_L_1200x628_EN.jpg",
         "01. BNR\\선론칭\\A-Character-Comics01A-DA\\260406_BNR_A-Character-Comics01A-DA_S_1200x1200_EN.jpg",
@@ -66893,7 +66890,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-Comics01A-DA_L_1200x628_EN.jpg",
@@ -69495,8 +69492,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:03+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:00+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Keyart01A-DA\\251104_BNR_A-Character-Keyart01A-DA_L_1200x628_EN.png",
         "01. BNR\\선론칭\\A-Character-Keyart01A-DA\\251104_BNR_A-Character-Keyart01A-DA_S_1200x1200_EN.png",
@@ -69522,7 +69519,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-Keyart01A-DA_S_1200x1200_EN.jpg",
@@ -72342,8 +72339,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:03+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:00+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Keyart02A-DA\\260406\\260406_BNR_A-Character-Keyart02A-DA_L_1200x628_EN.jpg",
         "01. BNR\\선론칭\\A-Character-Keyart02A-DA\\260406\\260406_BNR_A-Character-Keyart02A-DA_S_1200x1200_EN.jpg",
@@ -72373,7 +72370,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-Keyart02A-DA_L_1200x628_EN.jpg",
@@ -75249,8 +75246,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:03+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:00+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Life01A-DA\\251104_BNR_A-Character-Life01A-DA_L_1200x628_EN.jpg",
         "01. BNR\\선론칭\\A-Character-Life01A-DA\\251104_BNR_A-Character-Life01A-DA_S_1200x1200_EN.jpg",
@@ -75271,7 +75268,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "251104_BNR_A-Character-Life01A-DA_S_1200x1200_EN.jpg",
@@ -81025,8 +81022,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:03+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:00+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Life02A-DA\\260406_BNR_A-Character-Life02A-DA_L_1200x628_EN.jpg",
         "01. BNR\\선론칭\\A-Character-Life02A-DA\\260406_BNR_A-Character-Life02A-DA_S_1200x1200_EN.jpg",
@@ -81035,7 +81032,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Character-Life02A-DA_L_1200x628_EN.jpg",
@@ -83054,8 +83051,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:03+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:00+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Collection01A-DA\\EN\\260406\\260406_BNR_A-Charater-Collection01A-DA_L_1200x628_EN.jpg",
         "01. BNR\\선론칭\\A-Character-Collection01A-DA\\EN\\260406\\260406_BNR_A-Charater-Collection01A-DA_S_1200x1200_EN.jpg",
@@ -83072,7 +83069,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Charater-Collection01A-DA_S_1200x1200_EN.jpg",
@@ -84007,15 +84004,15 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:04+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:01+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection01A-UA\\260406\\260406_VID_A-Charater-Collection01A-UA_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Character-Collection01A-UA\\260406\\260406_VID_A-Charater-Collection01A-UA_V_1080x1920_EN.mp4"
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "260406_VID_A-Charater-Collection01A-UA_L_1920x1080_EN",
@@ -85406,8 +85403,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:04+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:01+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Character-Collection01B-UA\\EN\\260406\\260406_VID_A-Charater-Collection01B-UA_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Character-Collection01B-UA\\EN\\260406\\260406_VID_A-Charater-Collection01B-UA_V_1080x1920_EN.mp4"
@@ -85496,8 +85493,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:04+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:01+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Event-Rowena01A-DA\\260616_BNR_A-Event-Rowena01A-DA_L_1200x628_EN.jpg",
         "01. BNR\\선론칭\\A-Event-Rowena01A-DA\\260616_BNR_A-Event-Rowena01A-DA_S_1200x1200_EN.jpg",
@@ -85519,7 +85516,7 @@
       "mmp_quality_score": {
         "total": 30.36,
         "grade": "보통",
-        "rank": 56,
+        "rank": 49,
         "conv": 12.5,
         "cpi": 0.0,
         "ipm": 39.3,
@@ -85625,8 +85622,8 @@
         "roas": 97.26
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:04+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:01+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-Reward02A-FK\\EN\\251211_VID_A-Hooking-Reward02A-FK_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Hooking-Reward02A-FK\\EN\\251211_VID_A-Hooking-Reward02A-FK_S_1080x1080_EN.mp4",
@@ -85643,7 +85640,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "251211_VID_A-Hooking-Reward02A-FK_L_1920x1080_EN",
@@ -90393,7 +90390,7 @@
       "mmp_quality_score": {
         "total": 58.04,
         "grade": "양호",
-        "rank": 30,
+        "rank": 29,
         "conv": 64.3,
         "cpi": 48.2,
         "ipm": 44.6,
@@ -90769,8 +90766,8 @@
         "roas": 98.63
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:05+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:02+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-Reward03A-UA\\EN\\251211_VID_A-Hooking-Reward03A-UA_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Hooking-Reward03A-UA\\EN\\251211_VID_A-Hooking-Reward03A-UA_S_1080x1080_EN.mp4",
@@ -90786,7 +90783,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "260406_VID_A-Hooking-Reward03A-UA_S_1080x1080_EN",
@@ -95687,8 +95684,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:05+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:02+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-minigame01A-FK\\EN\\251125_VID_A-Hooking-minigame01A-FK_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Hooking-minigame01A-FK\\EN\\251125_VID_A-Hooking-minigame01A-FK_S_1080x1080_EN.mp4",
@@ -95699,7 +95696,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "251125_VID_A-Hooking-minigame01A-FK_L_1920x1080_EN",
@@ -97687,8 +97684,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:05+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:03+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-minigame02A-FK\\260123_VID_A-Hooking-minigame02A-FK_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Hooking-minigame02A-FK\\260123_VID_A-Hooking-minigame02A-FK_S_1080x1080_EN.mp4",
@@ -97709,7 +97706,7 @@
       "mmp_quality_score": {
         "total": 32.59,
         "grade": "보통",
-        "rank": 48,
+        "rank": 45,
         "conv": 21.4,
         "cpi": 0.0,
         "ipm": 39.3,
@@ -97905,8 +97902,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:06+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:03+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-minigame02B-FK\\260123_VID_A-Hooking-minigame02B-FK_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Hooking-minigame02B-FK\\260123_VID_A-Hooking-minigame02B-FK_S_1080x1080_EN.mp4",
@@ -98113,8 +98110,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:06+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:04+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-minigame02C-FK\\260123_VID_A-Hooking-minigame02C-FK_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Hooking-minigame02C-FK\\260123_VID_A-Hooking-minigame02C-FK_S_1080x1080_EN.mp4",
@@ -98135,7 +98132,7 @@
       "mmp_quality_score": {
         "total": 56.7,
         "grade": "양호",
-        "rank": 34,
+        "rank": 33,
         "conv": 55.4,
         "cpi": 42.9,
         "ipm": 58.9,
@@ -98342,8 +98339,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:07+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:04+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Hooking-minigame02D-FK\\260123_VID_A-Hooking-minigame02D-FK_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Hooking-minigame02D-FK\\260123_VID_A-Hooking-minigame02D-FK_S_1080x1080_EN.mp4",
@@ -98554,8 +98551,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:07+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:04+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Mob-Adventure01A-DA\\EN\\251111_BNR_A-Mob-Adventure01A-DA_L_1200x628_EN.jpg",
         "01. BNR\\선론칭\\A-Mob-Adventure01A-DA\\EN\\251111_BNR_A-Mob-Adventure01A-DA_S_1200x1200_EN.jpg",
@@ -98580,7 +98577,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "251111_BNR_A-Mob-Adventure01A-DA_L_1200x628_EN.jpg",
@@ -103490,7 +103487,7 @@
       "mmp_quality_score": {
         "total": 57.14,
         "grade": "양호",
-        "rank": 32,
+        "rank": 31,
         "conv": 53.6,
         "cpi": 53.6,
         "ipm": 51.8,
@@ -104232,8 +104229,8 @@
         "roas": 93.15
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:07+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:04+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\선론칭\\L-Mob-Adventure01A-UA\\EN\\260406\\260406_VID_A-Mob-Adventure01A-UA_L_1920x1080_EN.mp4",
         "02. VID\\선론칭\\L-Mob-Adventure01A-UA\\EN\\260406\\260406_VID_A-Mob-Adventure01A-UA_S_1080x1080_EN.mp4",
@@ -104241,7 +104238,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "260406_VID_A-Mob-Adventure01A-UA_L_1920x1080_EN",
@@ -110112,8 +110109,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:07+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:04+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Mob-Adventure02A-DA\\260406_BNR_A-Mob-Adventure02A-DA_L_1200x628_EN.jpg",
         "01. BNR\\선론칭\\A-Mob-Adventure02A-DA\\260406_BNR_A-Mob-Adventure02A-DA_S_1200x1200_EN.jpg",
@@ -110122,7 +110119,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "260406_BNR_A-Mob-Adventure02A-DA_L_1200x628_EN.jpg",
@@ -112780,8 +112777,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:07+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:05+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Testimonial-US01A-UA\\260616_VID_A-Testimonial-US01A-UA_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Testimonial-US01A-UA\\260616_VID_A-Testimonial-US01A-UA_S_1080x1080_EN.mp4",
@@ -112802,7 +112799,7 @@
       "mmp_quality_score": {
         "total": 32.59,
         "grade": "보통",
-        "rank": 49,
+        "rank": 46,
         "conv": 21.4,
         "cpi": 0.0,
         "ipm": 39.3,
@@ -112938,8 +112935,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:08+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:05+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\상시\\A-Testimonial-US01B-UA\\260616_VID_A-Testimonial-US01B-UA_L_1920x1080_EN.mp4",
         "02. VID\\상시\\A-Testimonial-US01B-UA\\260616_VID_A-Testimonial-US01B-UA_S_1080x1080_EN.mp4",
@@ -112960,7 +112957,7 @@
       "mmp_quality_score": {
         "total": 57.14,
         "grade": "양호",
-        "rank": 33,
+        "rank": 32,
         "conv": 62.5,
         "cpi": 39.3,
         "ipm": 57.1,
@@ -113112,8 +113109,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:08+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:05+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\A-Character-Keyart02A-DA\\251104_BNR_L-Character-Keyart02A-DA_L_1200x628_EN.png",
         "01. BNR\\선론칭\\A-Character-Keyart02A-DA\\251104_BNR_L-Character-Keyart02A-DA_S_1200x1200_EN.png",
@@ -113122,7 +113119,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "251104_BNR_L-Character-Keyart02A-DA_L_1200x628_EN.png",
@@ -115847,8 +115844,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:08+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:05+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\선론칭\\L-Character-Reward01A-DA\\EN\\251211_BNR_L-Character-Reward01A-DA_L_1200x628_EN.jpg",
         "01. BNR\\선론칭\\L-Character-Reward01A-DA\\EN\\251211_BNR_L-Character-Reward01A-DA_S_1200x1200_EN.jpg",
@@ -115861,7 +115858,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "251211_BNR_L-Character-Reward01A-DA_L_1200x628_EN.jpg",
@@ -116756,8 +116753,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:08+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:05+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "02. VID\\선론칭\\L-Mob-Adventure01A-UA\\EN\\251211_VID_L-Mob-Adventure01A-UA_L_1920x1080_EN.mp4",
         "02. VID\\선론칭\\L-Mob-Adventure01A-UA\\EN\\251211_VID_L-Mob-Adventure01A-UA_S_1080x1080_EN.mp4",
@@ -116768,7 +116765,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "251202_VID_L-Mob-Adventure01A-UA_V_1080x1920_EN",
@@ -117648,8 +117645,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:08+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:05+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-100usd01\\EN\\251118_BNR_P-DA-Character-100usd01_L_1200x628_EN.jpg",
         "01. BNR\\사전예약\\P-DA-Character-100usd01\\EN\\251118_BNR_P-DA-Character-100usd01_S_1200x1200_EN.jpg",
@@ -117661,7 +117658,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "251118_BNR_P-DA-Character-100usd01_L_1200x628_ES.jpg",
@@ -117902,8 +117899,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:08+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:05+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-SD01\\251104_BNR_P-DA-Character-SD01_L_1200x628_EN.jpg",
         "01. BNR\\사전예약\\P-DA-Character-SD01\\251104_BNR_P-DA-Character-SD01_S_1200x1200_EN.jpg",
@@ -117992,8 +117989,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:08+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:06+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-SD02\\251104_BNR_P-DA-Character-SD02_L_1200x628_EN.jpg",
         "01. BNR\\사전예약\\P-DA-Character-SD02\\251104_BNR_P-DA-Character-SD02_S_1200x1200_EN.jpg",
@@ -118082,8 +118079,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:08+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:06+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-Slogan01\\EN\\251118_BNR_P-DA-Character-Slogan01_L_1200x628_EN.jpg",
         "01. BNR\\사전예약\\P-DA-Character-Slogan01\\EN\\251118_BNR_P-DA-Character-Slogan01_S_1200x1200_EN.jpg",
@@ -118176,8 +118173,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:08+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:06+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-Slogan02\\EN\\251118_BNR_P-DA-Character-Slogan02_L_1200x628_EN.jpg",
         "01. BNR\\사전예약\\P-DA-Character-Slogan02\\EN\\251118_BNR_P-DA-Character-Slogan02_S_1200x1200_EN.jpg",
@@ -118268,8 +118265,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:08+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:06+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-illust01\\251104_BNR_P-DA-Character-illust01_L_1200x628_EN.png",
         "01. BNR\\사전예약\\P-DA-Character-illust01\\251104_BNR_P-DA-Character-illust01_S_1200x1200_EN.png",
@@ -118356,8 +118353,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:08+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:06+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-illust02\\251104_BNR_P-DA-Character-illust02_L_1200x628_EN.png",
         "01. BNR\\사전예약\\P-DA-Character-illust02\\251104_BNR_P-DA-Character-illust02_S_1200x1200_EN.png",
@@ -118452,14 +118449,14 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:08+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:06+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Character-100usd01\\EN\\251118_BNR_P-DA-Reward-100usd01_V_1080x1920_EN.jpg"
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-11-01",
-      "kpi_window_end": "2026-06-24",
+      "kpi_window_end": "2026-06-25",
       "kpi_daily": [
         {
           "creative_name": "251118_BNR_P-DA-Reward-100usd01_L_1200x628_EN.jpg",
@@ -119084,8 +119081,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:08+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:06+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Slogan-Aya01\\EN\\251111_BNR_P-DA-Slogan-Aya_L_1200x628_EN.jpg",
         "01. BNR\\사전예약\\P-DA-Slogan-Aya01\\EN\\251111_BNR_P-DA-Slogan-Aya_S_1200x1200_EN.jpg",
@@ -119178,8 +119175,8 @@
         "roas": 89.04
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-25T23:50:08+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-26T01:33:06+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "01. BNR\\사전예약\\P-DA-Slogan-Goblin01\\EN\\251111_BNR_P-DA-Slogan-Goblin_L_1200x628_EN.jpg",
         "01. BNR\\사전예약\\P-DA-Slogan-Goblin01\\EN\\251111_BNR_P-DA-Slogan-Goblin_S_1200x1200_EN.jpg",
@@ -119213,13 +119210,13 @@
   "metrics": {
     "scanned_folders": 73,
     "tagged_records": 73,
-    "cache_hits": 72,
+    "cache_hits": 73,
     "cache_misses": 0,
     "failures": 0,
-    "duration_sec": 52.7,
+    "duration_sec": 13.8,
     "prompt_version": "v3.3-2026.06.13-character-split-single",
-    "fallback_used": true,
-    "carried_forward": 1,
+    "fallback_used": false,
+    "carried_forward": 0,
     "score_summary": {
       "graded": 36,
       "grades": {
