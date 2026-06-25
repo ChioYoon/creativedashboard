@@ -402,3 +402,20 @@ def default_window(days: int = 28) -> tuple[date, date]:
     end = date.today() - timedelta(days=1)  # 어제까지 (오늘 데이터는 미확정)
     start = end - timedelta(days=days - 1)
     return start, end
+
+
+def resolve_window(
+    days: int, start_date_iso: str | None = None
+) -> tuple[date, date]:
+    """KPI 윈도우. 절대 시작일(start_date_iso)이 설정되고 상대 윈도우 시작보다
+    과거면 그 날짜로 **확장**(축소는 안 함). 종료일은 default_window 와 동일(어제).
+
+    상대 윈도우는 시간이 지나며 과거를 잃지만, 절대 시작일은 캠페인 시작부터
+    항상 수집(드리프트 없음).
+    """
+    start, end = default_window(days)
+    if start_date_iso:
+        abs_start = date.fromisoformat(start_date_iso)
+        if abs_start < start:
+            start = abs_start
+    return start, end

@@ -282,6 +282,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
             title_override.get("_pipeline_google_ads_window_days", default_kpi_window_days)
             or default_kpi_window_days
         )
+        google_ads_start_date = title_override.get("_pipeline_google_ads_start_date", "")
         airbridge_enabled = bool(title_override.get("_pipeline_airbridge_enabled", False))
         airbridge_exclude_channels = title_override.get("_pipeline_airbridge_exclude_channels",
                                                         ["google.adwords"])
@@ -332,6 +333,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
                 or default_kpi_window_days
             )
         )
+        google_ads_start_date = title_meta.get("_pipeline_google_ads_start_date", "")
         airbridge_enabled = bool(title_meta.get("_pipeline_airbridge_enabled", False))
         airbridge_exclude_channels = title_meta.get("_pipeline_airbridge_exclude_channels",
                                                     ["google.adwords"])
@@ -371,6 +373,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         # Stage 5: KPI 통합
         "no_kpi": args.no_kpi,
         "kpi_window_days": kpi_window_days,
+        "google_ads_start_date": google_ads_start_date,
         "google_ads_customer_id": google_ads_customer_id,
         "google_ads_campaign_filter": google_ads_campaign_filter,
         "kpi_enabled": kpi_enabled and not args.no_kpi,
@@ -477,11 +480,13 @@ def run(cfg: dict) -> dict:
     kpi_status = "skipped"
     if cfg.get("kpi_enabled") and cfg.get("google_ads_customer_id"):
         try:
-            from .sources.google_ads import GoogleAdsKpiSource, default_window
+            from .sources.google_ads import GoogleAdsKpiSource, resolve_window
             from .cache import KpiCache
 
             source = GoogleAdsKpiSource.from_env()
-            kpi_window_start, kpi_window_end = default_window(cfg["kpi_window_days"])
+            kpi_window_start, kpi_window_end = resolve_window(
+                cfg["kpi_window_days"], cfg.get("google_ads_start_date") or None
+            )
             candidate_concepts = {c.creative_name for c in full_candidates}  # 폴더명 = T열 concept (전체 기준 — 풀 백분위용)
             print(
                 f"\n💰 2.5) KPI fetch (Google Ads) — "
