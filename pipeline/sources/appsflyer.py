@@ -2,13 +2,14 @@
 """AppsFlyer MMP Source — Stage 7 (두 번째 MMP 프로바이더).
 
 Airbridge 와 동일 계약: fetch_mmp_window(start, end, exclude) -> list[CreativeMmpDaily].
-v1 데이터 = Master API(master-agg-data/v4, GET CSV) 단일 호출: af_ad×pid×c×date 로
-impressions·clicks·cost·installs·revenue. 날짜 범위 제한(~3개월) 회피 위해 ≤90일 청크.
-파서(extract_master/parse_master_rows)는 HTTP 무의존 — 단위테스트. 원시 CSV 헤더 매핑은
-라이브 검증(7-A 방식) 후 MASTER_HEADER_MAP·kpis 조정 가능.
+데이터 = Master API(master-agg-data/v4, GET CSV) 단일 호출: af_ad×pid×c×install_time 로
+impressions·clicks·cost·installs·revenue·retention_day_1(D1 잔존수). install_time=설치일별
+코호트 분해. 날짜 범위 제한(~3개월) 회피 위해 ≤90일 청크. 파서(extract_master/parse_master_rows)는
+HTTP 무의존 — 단위테스트. 라이브 검증 확정(2026-06-26 Starseed JP): 실제 CSV 헤더는
+Ad/Media Source/Campaign/Install Time/Impressions/Clicks/Installs/Cost/Revenue/Retention Day 1.
 
-⚠️ v1 graceful 한계(설계 합의): revenue 는 활동기준(코호트 D7 정밀화 후속),
-retained_d1=0(→ '—'; 잔존 KPI 라이브 검증 후 추가). 분모 가드가 비용/노출 결측을 '—'로.
+⚠️ 한계: revenue 는 LTV 누적(코호트 D7 정밀화는 후속) → revenue_d7 필드. 비용/노출 결측 행은
+분모 가드가 '—' 처리. currency=USD 고정 후 usd_to_krw 로 환산.
 """
 from __future__ import annotations
 
@@ -28,17 +29,19 @@ MASTER_BASE = "https://hq1.appsflyer.com/api/master-agg-data/v4/app"
 # Google + 오가닉/내부 제외 (AppsFlyer media_source id 체계)
 DEFAULT_EXCLUDE_MEDIA_SOURCES = {"googleadwords_int", "organic", "none", ""}
 
-# Master API CSV 헤더 → 정규화 키 (라이브 검증 시 여기만 조정). 소문자·strip 후 매칭.
+# Master API CSV 헤더 → 정규화 키 (라이브 검증 확정, 2026-06-26 Starseed JP). 소문자·strip 후 매칭.
+# 실제 헤더: Ad, Media Source, Campaign, Install Time, Impressions, Clicks, Installs, Cost, Revenue, Retention Day 1
 MASTER_HEADER_MAP = {
     "ad": "creative", "af_ad": "creative",
     "media source": "media_source", "pid": "media_source",
     "campaign": "campaign", "c": "campaign",
-    "date": "date",
+    "install time": "date", "date": "date",   # 날짜 grouping = install_time → 헤더 "Install Time"
     "impressions": "impressions",
     "clicks": "clicks",
     "installs": "installs",
     "cost": "cost", "total cost": "cost",
     "revenue": "revenue", "total revenue": "revenue",
+    "retention day 1": "retained_d1",          # retention_day_1 kpi = D1 잔존수(count)
 }
 
 
@@ -74,15 +77,16 @@ def extract_master(csv_text: str) -> list[dict]:
 
 
 def parse_master_rows(rows: list[dict], exclude: set, fx_rate: float = 1.0) -> list[CreativeMmpDaily]:
-    """정규화 dict 리스트 → CreativeMmpDaily. 빈 creative/제외 media_source skip.
+    """정규화 dict 리스트 → CreativeMmpDaily. 빈/None creative·제외 media_source skip.
 
-    cost·revenue 에 fx_rate(USD→KRW) 적용. retained_d1=0(v1). revenue → revenue_d7.
+    cost·revenue 에 fx_rate(USD→KRW) 적용. retained_d1 = Retention Day 1 kpi(count).
+    revenue 는 LTV 누적(D7 정밀화는 후속) → revenue_d7 필드.
     """
     out: list[CreativeMmpDaily] = []
     for r in rows:
         creative = (r.get("creative") or "").strip()
         ms = (r.get("media_source") or "").strip().lower()
-        if not creative or ms in exclude:
+        if not creative or creative.lower() == "none" or ms in exclude:
             continue
         out.append(CreativeMmpDaily(
             creative_name=creative,
@@ -93,7 +97,7 @@ def parse_master_rows(rows: list[dict], exclude: set, fx_rate: float = 1.0) -> l
             clicks=int(round(_num(r.get("clicks")))),
             cost=int(round(_num(r.get("cost")) * fx_rate)),
             installs=int(round(_num(r.get("installs")))),
-            retained_d1=0,
+            retained_d1=int(round(_num(r.get("retained_d1")))),
             revenue_d7=int(round(_num(r.get("revenue")) * fx_rate)),
         ))
     return out
@@ -150,9 +154,9 @@ class AppsFlyerMmpSource:
         url = f"{MASTER_BASE}/{self.app_id}"
         params = {
             "from": start.isoformat(), "to": end.isoformat(),
-            "groupings": "af_ad,pid,c,date",
-            # ⚠️ cost 가 calculated_kpis 여야 할 수 있음 — 라이브 검증(Task 5)에서 확정
-            "kpis": "impressions,clicks,installs,cost,revenue",
+            "groupings": "af_ad,pid,c,install_time",   # install_time = 설치일별 코호트 분해
+            "kpis": "impressions,clicks,installs,cost,revenue,retention_day_1",
+            "currency": "USD",                          # cost·revenue USD 고정 → usd_to_krw 로 환산
             "format": "csv",
         }
         resp = None

@@ -84,3 +84,36 @@ def test_from_env_missing_app_id_raises(monkeypatch):
     monkeypatch.setenv("APPSFLYER_API_TOKEN", "tok")
     with pytest.raises(FileNotFoundError):
         AppsFlyerMmpSource.from_env(app_id="")
+
+
+# ── 라이브 검증 확정 계약 (2026-06-26 Starseed JP): 실제 Master API CSV 헤더 ──
+
+def test_extract_master_real_headers_install_time_retention():
+    """실제 헤더 — Install Time→date, Retention Day 1→retained_d1 매핑."""
+    csv_text = ("Ad,Media Source,Campaign,Install Time,Impressions,Clicks,Installs,Cost,Revenue,Retention Day 1\n"
+                "250911_VID_X,Facebook Ads,camp,2026-06-07,0,0,1,0,5.99,1\n")
+    rows = extract_master(csv_text)
+    assert len(rows) == 1
+    r = rows[0]
+    assert r["date"] == "2026-06-07"          # Install Time
+    assert r["retained_d1"] == "1"            # Retention Day 1
+    assert r["installs"] == "1" and r["revenue"] == "5.99"
+
+
+def test_parse_master_populates_retained_d1():
+    """retention_day_1 kpi → retained_d1(count) 채워짐 (v1 의 하드코딩 0 아님)."""
+    rows = [{"creative": "A", "media_source": "facebook ads", "date": "2026-06-07",
+             "installs": "10", "retained_d1": "4", "revenue": "5.99"}]
+    out = parse_master_rows(rows, exclude=set())
+    assert out[0].retained_d1 == 4
+    assert out[0].installs == 10
+
+
+def test_parse_master_skips_none_creative():
+    """Ad='None'(오가닉/비소재 행)은 skip — 실제 응답에 'None' 문자열로 옴."""
+    rows = [
+        {"creative": "None", "media_source": "page", "date": "2026-06-07", "installs": "8"},
+        {"creative": "C", "media_source": "facebook", "date": "2026-06-07", "installs": "1"},
+    ]
+    out = parse_master_rows(rows, exclude=set())
+    assert [d.creative_name for d in out] == ["C"]
