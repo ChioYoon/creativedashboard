@@ -1055,6 +1055,18 @@ def main() -> None:
     load_dotenv()
     args = build_arg_parser().parse_args()
 
+    # 등록부(xlsx) → titles.json 자동 생성 (CLOOP_REGISTRY_XLSX 설정 시 opt-in)
+    _reg = os.environ.get("CLOOP_REGISTRY_XLSX", "").strip()
+    if _reg:
+        try:
+            from .registry import build_titles_json
+            _s = build_titles_json(_reg)
+            print(f"📋 등록부 → titles.json: {_s['status']} · 생성 {_s['generated']}개 · 스킵 {_s['skipped']}개")
+            for _w in _s.get("warnings", []):
+                print(f"   ⚠️  {_w}")
+        except Exception as _e:
+            print(f"⚠️  등록부 생성 실패(기존 titles.json 유지하고 계속): {_e}")
+
     try:
         if args.all_titles:
             batch_result = run_all_titles(args)

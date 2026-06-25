@@ -25,3 +25,6 @@ tqdm>=4.66.0,<5.0.0
 google-ads>=28.2.0,<32.0.0
 # OAuth flow helper (used only by scripts/setup-google-ads.ps1)
 google-auth-oauthlib>=1.2.0,<2.0.0
+
+# Stage 5-H: 등록부 xlsx 파싱 (registry.py)
+openpyxl>=3.1
