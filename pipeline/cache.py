@@ -70,6 +70,29 @@ class TagCache:
         """캐시 히트 시 저장된 dict 반환 (Pydantic.model_dump 결과). 미스 시 None."""
         return self._data.get(self.make_key(sha, prompt_version))
 
+    def get_any(
+        self, sha: str, exclude_version: Optional[str] = None
+    ) -> Optional[tuple[dict, str]]:
+        """같은 파일(sha)의 이전 버전 태그 폴백 (carry-forward 용).
+        non-pilot 버전 중 버전 문자열 lexical max(≈최신) 반환. 없으면 None.
+        """
+        prefix = f"{sha}::"
+        best_ver: Optional[str] = None
+        best_payload: Optional[dict] = None
+        for key, payload in self._data.items():
+            if not key.startswith(prefix):
+                continue
+            ver = key[len(prefix):]
+            if ver.endswith("-pilot"):
+                continue
+            if exclude_version is not None and ver == exclude_version:
+                continue
+            if best_ver is None or ver > best_ver:
+                best_ver, best_payload = ver, payload
+        if best_ver is None:
+            return None
+        return (best_payload, best_ver)
+
     def put(self, sha: str, prompt_version: str, payload: dict) -> None:
         self._data[self.make_key(sha, prompt_version)] = payload
 
