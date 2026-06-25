@@ -48,7 +48,7 @@ def aggregate_creative_mmp(daily: list) -> dict:
 
 
 def compute_mmp_quality(agg: dict) -> dict:
-    """한 소재의 집계 dict → 4 품질지표. 0 분모는 룰대로 0 또는 None."""
+    """한 소재의 집계 dict → 4 품질지표. 0 분모는 None (cost·impressions=0 → '—')."""
     impressions = agg.get("impressions", 0)
     cost = agg.get("cost", 0)
     installs = agg.get("installs", 0)
