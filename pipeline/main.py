@@ -282,7 +282,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
             title_override.get("_pipeline_google_ads_window_days", default_kpi_window_days)
             or default_kpi_window_days
         )
-        google_ads_start_date = title_override.get("_pipeline_google_ads_start_date", "")
+        kpi_start_date = title_override.get("_pipeline_kpi_start_date", "")
         airbridge_enabled = bool(title_override.get("_pipeline_airbridge_enabled", False))
         airbridge_exclude_channels = title_override.get("_pipeline_airbridge_exclude_channels",
                                                         ["google.adwords"])
@@ -333,7 +333,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
                 or default_kpi_window_days
             )
         )
-        google_ads_start_date = title_meta.get("_pipeline_google_ads_start_date", "")
+        kpi_start_date = title_meta.get("_pipeline_kpi_start_date", "")
         airbridge_enabled = bool(title_meta.get("_pipeline_airbridge_enabled", False))
         airbridge_exclude_channels = title_meta.get("_pipeline_airbridge_exclude_channels",
                                                     ["google.adwords"])
@@ -373,7 +373,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         # Stage 5: KPI 통합
         "no_kpi": args.no_kpi,
         "kpi_window_days": kpi_window_days,
-        "google_ads_start_date": google_ads_start_date,
+        "kpi_start_date": kpi_start_date,
         "google_ads_customer_id": google_ads_customer_id,
         "google_ads_campaign_filter": google_ads_campaign_filter,
         "kpi_enabled": kpi_enabled and not args.no_kpi,
@@ -485,7 +485,7 @@ def run(cfg: dict) -> dict:
 
             source = GoogleAdsKpiSource.from_env()
             kpi_window_start, kpi_window_end = resolve_window(
-                cfg["kpi_window_days"], cfg.get("google_ads_start_date") or None
+                cfg["kpi_window_days"], cfg.get("kpi_start_date") or None
             )
             candidate_concepts = {c.creative_name for c in full_candidates}  # 폴더명 = T열 concept (전체 기준 — 풀 백분위용)
             print(
@@ -569,14 +569,14 @@ def run(cfg: dict) -> dict:
     if cfg.get("airbridge_enabled"):
         try:
             from .sources.airbridge import AirbridgeMmpSource
-            from datetime import date as _date, timedelta as _td
             mmp_src = AirbridgeMmpSource.from_env()
             # titles.json 환율(_pipeline_airbridge_usd_to_krw)이 있으면 .env 값보다 우선
             if cfg.get("airbridge_usd_to_krw"):
                 mmp_src.usd_to_krw = cfg["airbridge_usd_to_krw"]
-            _win = cfg.get("kpi_window_days") or cfg.get("google_ads_window_days") or 159
-            _end = _date.today() - _td(days=1)
-            _start = _end - _td(days=_win - 1)
+            from .sources.google_ads import resolve_window as _resolve_window
+            _start, _end = _resolve_window(
+                cfg.get("kpi_window_days") or 159, cfg.get("kpi_start_date") or None
+            )
             mmp_daily = mmp_src.fetch_mmp_window(
                 _start, _end, exclude_channels=set(cfg.get("airbridge_exclude_channels", [])))
             cfg["_mmp_daily"] = mmp_daily   # 레코드 생성 후 주입 (records 는 아래 루프에서 생성됨)
