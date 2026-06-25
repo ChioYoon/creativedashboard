@@ -55,8 +55,8 @@ def compute_mmp_quality(agg: dict) -> dict:
     retained_d1 = agg.get("retained_d1", 0)
     revenue_d7 = agg.get("revenue_d7", 0)
 
-    d1_ipm = (retained_d1 / impressions) * 1000 if impressions > 0 else 0.0
-    d1_cpi: Optional[float] = (cost / retained_d1) if retained_d1 > 0 else None
+    d1_ipm: Optional[float] = (retained_d1 / impressions) * 1000 if impressions > 0 else None
+    d1_cpi: Optional[float] = (cost / retained_d1) if (retained_d1 > 0 and cost > 0) else None
     d1_retention = (retained_d1 / installs) * 100 if installs > 0 else 0.0
     d7_roas: Optional[float] = (revenue_d7 / cost) if cost > 0 else None
 

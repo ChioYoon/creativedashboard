@@ -32,8 +32,8 @@
   // MMP 윈도우 집계 → 4 품질지표 (파이프라인 compute_mmp_quality 동일: 잔존0→cpi null, 비용0→roas null)
   function mmpQualityMetrics(a) {
     return {
-      d1_ipm: a.imp > 0 ? (a.retained_d1 / a.imp) * 1000 : 0,
-      d1_cpi: a.retained_d1 > 0 ? (a.cost / a.retained_d1) : null,
+      d1_ipm: a.imp > 0 ? (a.retained_d1 / a.imp) * 1000 : null,
+      d1_cpi: (a.retained_d1 > 0 && a.cost > 0) ? (a.cost / a.retained_d1) : null,
       d1_ret: a.installs > 0 ? (a.retained_d1 / a.installs) * 100 : 0,
       d7_roas: a.cost > 0 ? (a.revenue_d7 / a.cost) : null,
     };
@@ -91,7 +91,7 @@
         클릭수: m.mmp_clicks ?? null, base: m.mmp_installs ?? 0, 매출: m.mmp_revenue ?? 0,
         CTR: (m.mmp_impressions > 0) ? (m.mmp_clicks || 0) / m.mmp_impressions * 100 : 0,
         // B: MMP 표시 지표를 Google Ads 동일 산식(설치 기준)으로 — CPA=비용/설치, IPM=설치/노출×1000. ROAS=D7 LTV. (품질점수는 D1 기준 유지)
-        CPA: (m.mmp_installs > 0) ? (m.mmp_cost || 0) / m.mmp_installs : null,
+        CPA: (m.mmp_cost > 0 && m.mmp_installs > 0) ? m.mmp_cost / m.mmp_installs : null,
         IPM: (m.mmp_impressions > 0) ? (m.mmp_installs || 0) / m.mmp_impressions * 1000 : null,
         ROAS: m.mmp_d7_roas ?? null,
         score: q?.total ?? null, grade: q?.grade ?? null,
