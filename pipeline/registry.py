@@ -95,3 +95,64 @@ def _map_row(row: dict, repo_root: Path) -> dict:
             t["_pipeline_airbridge_usd_to_krw"] = _DEF_USD_KRW
         # AppsFlyer: 소스 미구현 — 종류 보존만(범위 밖)
     return t
+
+
+def _load_overrides(p: Path) -> dict:
+    if not p.exists():
+        return {}
+    try:
+        d = json.loads(p.read_text(encoding="utf-8"))
+        return d if isinstance(d, dict) else {}
+    except Exception as e:
+        print(f"[등록부] overrides 읽기 실패(무시): {e}")
+        return {}
+
+
+def _existing_sample(out: Path) -> dict | None:
+    if not out.exists():
+        return None
+    try:
+        data = json.loads(out.read_text(encoding="utf-8"))
+        return next((t for t in data if t.get("id") == "sample"), None)
+    except Exception:
+        return None
+
+
+def _atomic_write_json(out: Path, data: list) -> None:
+    out.parent.mkdir(parents=True, exist_ok=True)
+    tmp = out.with_suffix(out.suffix + ".tmp")
+    tmp.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    os.replace(tmp, out)
+
+
+def build_titles_json(registry_xlsx_path, out_path="js/titles.json",
+                      overrides_path="js/titles_overrides.json", repo_root=None) -> dict:
+    repo_root = Path(repo_root) if repo_root else Path.cwd()
+    out = Path(out_path)
+    rows = _read_rows(registry_xlsx_path)
+    if rows is None:
+        return {"status": "skipped_no_registry", "generated": 0, "skipped": 0, "warnings": []}
+    titles: list[dict] = []
+    skipped = 0
+    warnings: list[str] = []
+    for row in rows:
+        if not _active(row):
+            skipped += 1
+            continue
+        err = _row_error(row)
+        if err:
+            skipped += 1
+            warnings.append(err)
+            print(f"[등록부] {err}")
+            continue
+        titles.append(_map_row(row, repo_root))
+    ov = _load_overrides(Path(overrides_path))
+    for t in titles:
+        if t["id"] in ov and isinstance(ov[t["id"]], dict):
+            t.update(ov[t["id"]])
+    if not titles:
+        return {"status": "empty_kept_existing", "generated": 0, "skipped": skipped, "warnings": warnings}
+    sample = _existing_sample(out)
+    result = titles + ([sample] if sample else [])
+    _atomic_write_json(out, result)
+    return {"status": "ok", "generated": len(titles), "skipped": skipped, "warnings": warnings}

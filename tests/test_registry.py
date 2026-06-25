@@ -77,3 +77,54 @@ def test_map_row_game_context_when_file_exists(tmp_path):
     assert t["_pipeline_game_context_file"] == "pipeline/game_context/hasctx.md"
     row2 = dict(zip(HEADERS, _row(tid="noctx")))
     assert "_pipeline_game_context_file" not in registry._map_row(row2, tmp_path)
+
+
+def _read_json(p):
+    return json.loads(Path(p).read_text(encoding="utf-8"))
+
+def test_build_only_active_rows(tmp_path):
+    xlsx = _make_xlsx(tmp_path/"r.xlsx", [
+        _row(tid="a", name="A", root="G:\\a", active="Y"),
+        _row(tid="b", name="B", root="G:\\b", active="N"),      # 비활성
+        _row(tid="",  name="C", root="G:\\c", active="Y"),       # ID 누락
+    ])
+    out = tmp_path/"titles.json"
+    s = registry.build_titles_json(xlsx, out_path=out, overrides_path=tmp_path/"ov.json", repo_root=tmp_path)
+    assert s["status"] == "ok"
+    assert s["generated"] == 1
+    assert s["skipped"] == 2
+    data = _read_json(out)
+    assert [t["id"] for t in data] == ["a"]
+
+def test_build_overrides_merge(tmp_path):
+    xlsx = _make_xlsx(tmp_path/"r.xlsx", [_row(tid="t", name="T", root="G:\\t", active="Y")])
+    ov = tmp_path/"ov.json"
+    ov.write_text(json.dumps({"t": {"_pipeline_prompt_version_pin": "v9", "_pipeline_google_ads_window_days": 159}}), encoding="utf-8")
+    out = tmp_path/"titles.json"
+    registry.build_titles_json(xlsx, out_path=out, overrides_path=ov, repo_root=tmp_path)
+    t = _read_json(out)[0]
+    assert t["_pipeline_prompt_version_pin"] == "v9"
+    assert t["_pipeline_google_ads_window_days"] == 159
+
+def test_build_preserves_sample(tmp_path):
+    out = tmp_path/"titles.json"
+    out.write_text(json.dumps([{"id":"sample","_pipeline_enabled":False}], ensure_ascii=False), encoding="utf-8")
+    xlsx = _make_xlsx(tmp_path/"r.xlsx", [_row(tid="a", name="A", root="G:\\a", active="Y")])
+    registry.build_titles_json(xlsx, out_path=out, overrides_path=tmp_path/"ov.json", repo_root=tmp_path)
+    data = _read_json(out)
+    assert {t["id"] for t in data} == {"a", "sample"}
+
+def test_build_missing_registry_keeps_existing(tmp_path):
+    out = tmp_path/"titles.json"
+    out.write_text(json.dumps([{"id":"orig"}], ensure_ascii=False), encoding="utf-8")
+    s = registry.build_titles_json(tmp_path/"nope.xlsx", out_path=out, overrides_path=tmp_path/"ov.json", repo_root=tmp_path)
+    assert s["status"] == "skipped_no_registry"
+    assert _read_json(out) == [{"id":"orig"}]   # 기존 보존
+
+def test_build_empty_keeps_existing(tmp_path):
+    out = tmp_path/"titles.json"
+    out.write_text(json.dumps([{"id":"orig"}], ensure_ascii=False), encoding="utf-8")
+    xlsx = _make_xlsx(tmp_path/"r.xlsx", [_row(tid="a", name="A", root="G:\\a", active="N")])  # 활성 0
+    s = registry.build_titles_json(xlsx, out_path=out, overrides_path=tmp_path/"ov.json", repo_root=tmp_path)
+    assert s["status"] == "empty_kept_existing"
+    assert _read_json(out) == [{"id":"orig"}]
