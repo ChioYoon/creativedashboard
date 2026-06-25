@@ -70,3 +70,17 @@ def test_fetch_chunks_over_90_days_and_dedup():
     assert calls[2] == (date(2026, 4, 30), date(2026, 5, 19))
     # 세 청크 모두 동일 (A,facebook,2026-06-20) → dedup → 1건
     assert len(out) == 1
+
+
+def test_from_env_missing_token_raises(monkeypatch):
+    import pytest
+    monkeypatch.delenv("APPSFLYER_API_TOKEN", raising=False)
+    with pytest.raises(FileNotFoundError):
+        AppsFlyerMmpSource.from_env(app_id="com.x")
+
+
+def test_from_env_missing_app_id_raises(monkeypatch):
+    import pytest
+    monkeypatch.setenv("APPSFLYER_API_TOKEN", "tok")
+    with pytest.raises(FileNotFoundError):
+        AppsFlyerMmpSource.from_env(app_id="")

@@ -15,7 +15,6 @@ from __future__ import annotations
 import csv
 import io
 import os
-import sys
 from datetime import date, timedelta
 from typing import Optional
 
@@ -156,13 +155,14 @@ class AppsFlyerMmpSource:
             "kpis": "impressions,clicks,installs,cost,revenue",
             "format": "csv",
         }
+        resp = None
         try:
-            r = self.session.get(url, headers=self._headers(), params=params,
-                                 timeout=self.request_timeout)
-            r.raise_for_status()
+            resp = self.session.get(url, headers=self._headers(), params=params,
+                                    timeout=self.request_timeout)
+            resp.raise_for_status()
         except Exception as e:
-            self._raise_classified(e, resp_obj=locals().get("r"))
-        return r.text
+            self._raise_classified(e, resp_obj=resp)
+        return resp.text
 
     def fetch_mmp_window(self, start: date, end: date,
                          exclude_channels: Optional[set] = None) -> list[CreativeMmpDaily]:
@@ -170,7 +170,7 @@ class AppsFlyerMmpSource:
 
         dedup key = (creative_name, channel, campaign_name, date).
         """
-        exclude = {s.lower() for s in exclude_channels} if exclude_channels else self.exclude
+        exclude = {s.lower() for s in exclude_channels} if exclude_channels is not None else self.exclude
         out: list[CreativeMmpDaily] = []
         seen: set = set()
         self.last_fetch_truncated = False
