@@ -213,13 +213,40 @@ class AirbridgeMmpSource:
             print(f"[airbridge.auth_check] FAIL: {type(e).__name__}: {e}", file=sys.stderr)
             return False
 
+    MAX_CHUNK_DAYS = 90  # Airbridge actuals 쿼리 범위 제한(실측 81일 OK, 236일 400) 회피
+
     def fetch_mmp_window(self, start: date, end: date,
                          exclude_channels: Optional[set] = None) -> list[CreativeMmpDaily]:
         """기간 내 ad_creative×channel×campaign×event_date Actuals → CreativeMmpDaily 리스트.
 
-        non-Google + 유료 소재만(오가닉/제외채널/빈 ad_creative 스킵). 최대 400일.
-        event_date 를 groupBys 에 포함 → 일자별 분해. skip/size=100 페이지네이션으로
-        100행 응답 cap 우회(보고서당 최대 10,000행 — 초과 시 last_fetch_truncated=True).
+        non-Google + 유료 소재만(오가닉/제외채널/빈 ad_creative 스킵).
+        Airbridge actuals 쿼리 범위 제한을 회피하기 위해 ≤90일 청크로 분할 fetch 후
+        병합·dedup(key=creative_name·channel·campaign_name·event_date). 90일 이하면
+        단일 청크 = 기존 동작(하위 호환). last_fetch_truncated 는 청크 중 하나라도
+        10,000행 상한에 도달하면 True.
+        """
+        out: list[CreativeMmpDaily] = []
+        seen: set = set()
+        self.last_fetch_truncated = False
+        cs = start
+        while cs <= end:
+            ce = min(cs + timedelta(days=self.MAX_CHUNK_DAYS - 1), end)
+            rows, truncated = self._fetch_window_single(cs, ce, exclude_channels)
+            if truncated:
+                self.last_fetch_truncated = True
+            for r in rows:
+                key = (r.creative_name, r.channel, r.campaign_name, str(r.date))
+                if key not in seen:
+                    seen.add(key)
+                    out.append(r)
+            cs = ce + timedelta(days=1)
+        return out
+
+    def _fetch_window_single(self, start: date, end: date,
+                             exclude_channels: Optional[set] = None) -> tuple[list, bool]:
+        """단일 기간(≤90일) Actuals 쿼리 + skip/size=100 페이지네이션. (rows, truncated) 반환.
+
+        truncated = 이 청크가 10,000행(MAX_PAGES) 상한에 도달했는지.
         """
         exclude = set(exclude_channels) if exclude_channels else set(DEFAULT_EXCLUDE_CHANNELS)
         body = {
@@ -247,11 +274,11 @@ class AirbridgeMmpSource:
             page = self._get_page(task_id, skip=skip, size=PAGE_SIZE)
 
         pg = page.get("pagination") or {}
-        self.last_fetch_truncated = bool(pg.get("hasNext"))  # MAX_PAGES(=1만행) 도달 시에만
-        if self.last_fetch_truncated:
-            print(f"   [airbridge] ⚠️ 결과 {pg.get('totalCount')}행 중 {pages * PAGE_SIZE}행만 수신 "
-                  f"(10,000행 상한 도달) — Raw Data Export 필요.", file=sys.stderr)
-        return out
+        truncated = bool(pg.get("hasNext"))  # MAX_PAGES(=1만행) 도달 시에만
+        if truncated:
+            print(f"   [airbridge] ⚠️ 청크 {start}~{end}: {pg.get('totalCount')}행 중 "
+                  f"{pages * PAGE_SIZE}행만 수신 (10,000행 상한 도달) — Raw Data Export 필요.", file=sys.stderr)
+        return out, truncated
 
     def fetch_dataspec(self, kind: str) -> list[str]:
         """GET dataspec actual-report/{kind} → key 목록 (kind: 'metrics' | 'fields'). 7-A 검증용."""
