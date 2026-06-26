@@ -67,6 +67,28 @@
     "drive_folder_url": "https://drive.google.com/drive/folders/18TRUsNoIdn9f-ZFFqGcLVbRHxRslshB7"
   },
   {
+    "id": "zeus",
+    "name": "제우스: 오만의 신",
+    "json_url": "public/data/zeus.json",
+    "description": "제우스: 오만의 신 UA Asset — MMORPG 신작(2026-07-01 출시). Airbridge MMP + Google Ads.",
+    "_pipeline_creatives_root": "G:\\공유 드라이브\\[ZEUS_MKT] 컴투스 X 인크로스\\UA\\4. 크리에이티브\\2. UA 소재",
+    "_pipeline_scan_mode": "by-filename",
+    "_pipeline_types": ["BNR", "VID"],
+    "_pipeline_enabled": true,
+    "_pipeline_google_ads_customer_id": "3250895166",
+    "_pipeline_google_ads_campaign_filter": [],
+    "_pipeline_kpi_start_date": "2026-07-01",
+    "_pipeline_kpi_enabled": true,
+    "_pipeline_mmp_provider": "airbridge",
+    "_pipeline_airbridge_enabled": true,
+    "_pipeline_airbridge_app_name": "zeuskr",
+    "_pipeline_airbridge_exclude_channels": ["google.adwords", "unattributed", "appstore", "sns", "airbridge_sdk_test"],
+    "_pipeline_airbridge_usd_to_krw": 1500,
+    "_pipeline_genre": "mmorpg",
+    "_pipeline_game_context_file": "pipeline/game_context/zeus.md",
+    "drive_folder_url": "https://drive.google.com/drive/folders/1lwsKhgRksFDjg3KkQCguSAVvhvMZl3wb"
+  },
+  {
     "id": "sample",
     "name": "📦 샘플 데이터 (Stage 1 검증용)",
     "json_url": "public/data/sample.json",

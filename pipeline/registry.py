@@ -92,6 +92,7 @@ def _map_row(row: dict, repo_root: Path) -> dict:
         if mmp == "airbridge":
             t["_pipeline_mmp_provider"] = "airbridge"
             t["_pipeline_airbridge_enabled"] = True
+            t["_pipeline_airbridge_app_name"] = (row.get("MMP 앱 식별자") or "").strip()
             t["_pipeline_airbridge_exclude_channels"] = list(_DEF_AB_EXCLUDE)
             t["_pipeline_airbridge_usd_to_krw"] = _DEF_USD_KRW
         elif mmp == "appsflyer":

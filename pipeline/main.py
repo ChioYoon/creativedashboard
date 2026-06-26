@@ -118,6 +118,8 @@ def make_mmp_source(cfg: dict):
     if provider == "airbridge":
         from .sources.airbridge import AirbridgeMmpSource
         src = AirbridgeMmpSource.from_env()
+        if cfg.get("airbridge_app_name"):
+            src.app_name = cfg["airbridge_app_name"]   # per-title Airbridge 앱 (멀티타이틀 — .env 단일앱 오버라이드)
         if cfg.get("airbridge_usd_to_krw"):
             src.usd_to_krw = cfg["airbridge_usd_to_krw"]
         return src, provider
@@ -422,6 +424,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         )
         kpi_start_date = title_override.get("_pipeline_kpi_start_date", "")
         airbridge_enabled = bool(title_override.get("_pipeline_airbridge_enabled", False))
+        airbridge_app_name = title_override.get("_pipeline_airbridge_app_name", "")
         airbridge_exclude_channels = title_override.get("_pipeline_airbridge_exclude_channels",
                                                         ["google.adwords"])
         airbridge_usd_to_krw = float(title_override.get("_pipeline_airbridge_usd_to_krw", 0) or 0)
@@ -477,6 +480,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         )
         kpi_start_date = title_meta.get("_pipeline_kpi_start_date", "")
         airbridge_enabled = bool(title_meta.get("_pipeline_airbridge_enabled", False))
+        airbridge_app_name = title_meta.get("_pipeline_airbridge_app_name", "")
         airbridge_exclude_channels = title_meta.get("_pipeline_airbridge_exclude_channels",
                                                     ["google.adwords"])
         airbridge_usd_to_krw = float(title_meta.get("_pipeline_airbridge_usd_to_krw", 0) or 0)
@@ -533,6 +537,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         "airbridge_enabled": bool(airbridge_enabled),
         "airbridge_exclude_channels": airbridge_exclude_channels,
         "airbridge_usd_to_krw": airbridge_usd_to_krw,
+        "airbridge_app_name": airbridge_app_name,
         "mmp_provider": mmp_provider,
         "appsflyer_app_id": appsflyer_app_id,
         "appsflyer_exclude_media_sources": appsflyer_exclude,

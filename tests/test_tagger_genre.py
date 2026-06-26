@@ -55,6 +55,28 @@ def test_prompt_version_idle_distinct():
     assert len(versions) == 3
 
 
+def test_genre_instructions_has_mmorpg():
+    assert "mmorpg" in GENRE_INSTRUCTIONS
+
+
+def test_get_system_instruction_mmorpg():
+    instr = get_system_instruction("mmorpg")
+    assert isinstance(instr, str) and len(instr) > 100
+    # MMORPG 전용 가이드 포함 확인
+    assert "MMORPG" in instr and ("공성" in instr or "길드" in instr or "대규모 전투" in instr)
+
+
+def test_prompt_version_mmorpg_suffix():
+    assert prompt_version("mmorpg").endswith("-mmorpg-v1")
+
+
+def test_prompt_version_all_genres_distinct():
+    """캐시 격리 — 4개 장르 버전이 모두 달라야 함."""
+    versions = {prompt_version(g) for g in
+                ("character_collection_rpg", "dark_fantasy_card_rpg", "idle_rpg", "mmorpg")}
+    assert len(versions) == 4
+
+
 def test_get_system_instruction_unknown_falls_back_to_default():
     instr_unknown = get_system_instruction("unknown_genre_xyz")
     instr_default = get_system_instruction(DEFAULT_GENRE)
