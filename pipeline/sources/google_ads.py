@@ -30,6 +30,7 @@ from typing import Iterable, Optional, Sequence
 
 from .base import AuthError, KpiSource, QuotaError
 from ..schemas import CreativeKpiDaily
+from ..campaign_canonical import campaign_ua_type
 
 # google-ads SDK는 늦은 import (테스트·healthcheck 환경에서 미설치 시 우회)
 try:
@@ -52,6 +53,11 @@ COST_MICROS_PER_UNIT = 1_000_000  # 1 currency unit (KRW 등) = 1,000,000 micros
 # UAC/Display/Search 모두에서 소재로 매칭 가능한 asset type만 수집.
 # (TEXT, CALL_TO_ACTION 등 비-시각 asset은 GDrive 소재와 1:1 대응이 없어 제외)
 SUPPORTED_ASSET_TYPES = ("IMAGE", "YOUTUBE_VIDEO", "MEDIA_BUNDLE")
+
+
+def _quote_csv(items: Sequence[str]) -> str:
+    """GAQL IN 절용 CSV 이스케이프. asset.name의 작은따옴표를 백슬래시 이스케이프."""
+    return ", ".join("'" + x.replace("'", "\\'") + "'" for x in items)
 
 
 # ─────────────────────────────────────────────────────────────
@@ -145,6 +151,7 @@ class GoogleAdsKpiSource(KpiSource):
         end: date,
         creative_names: Optional[Sequence[str]] = None,
         campaign_filter: Optional[Sequence[str]] = None,
+        conversion_actions: Optional[dict] = None,
     ) -> Iterable[CreativeKpiDaily]:
         """28일 등 윈도우 일별 KPI를 SearchStream으로 fetch.
 
@@ -208,6 +215,33 @@ class GoogleAdsKpiSource(KpiSource):
                     raise QuotaError(err_msg)
                 raise RuntimeError(err_msg)
 
+        # ── 전환 기준 분기 (conversion_actions 설정 시): 듀얼 쿼리 ──
+        if conversion_actions:
+            from collections import defaultdict as _dd
+            prereg = set(conversion_actions.get("prereg") or [])
+            install = set(conversion_actions.get("install") or [])
+            conv_by_key: dict = _dd(lambda: _dd(float))
+            for chunk in chunks:
+                q2 = self._build_gaql_conversions(start, end, chunk, campaign_filter)
+                try:
+                    stream2 = ga_service.search_stream(customer_id=customer_id, query=q2)
+                    for batch in stream2:
+                        for row in batch.results:
+                            cname = self._resolve_creative_name(row)
+                            if not cname:
+                                continue
+                            key = (cname, row.campaign.name or "", row.ad_group.name or "", row.segments.date)
+                            act = row.segments.conversion_action_name or ""
+                            conv_by_key[key][act] += float(row.metrics.conversions)
+                except GoogleAdsException as e:
+                    err_msg = self._format_googleads_exception(e)
+                    if self._is_auth_error(e):
+                        raise AuthError(err_msg)
+                    if self._is_quota_error(e):
+                        raise QuotaError(err_msg)
+                    raise RuntimeError(err_msg)
+            _apply_conversion_basis(agg, conv_by_key, prereg, install)
+
         return list(agg.values())
 
     # ── 내부 헬퍼 ──
@@ -233,10 +267,6 @@ class GoogleAdsKpiSource(KpiSource):
         - YOUTUBE URL: youtube_video_asset.youtube_video_id → https://www.youtube.com/watch?v={id}
         - campaign.name, ad_group.name 도 SELECT 에 명시 (4-key agg용)
         """
-
-        def _quote_csv(items: Sequence[str]) -> str:
-            # asset.name에 작은따옴표가 들어있을 수 있어 백슬래시 이스케이프
-            return ", ".join("'" + x.replace("'", "\\'") + "'" for x in items)
 
         asset_types_csv = ", ".join(f"'{t}'" for t in SUPPORTED_ASSET_TYPES)
         where_clauses = [
@@ -277,6 +307,34 @@ class GoogleAdsKpiSource(KpiSource):
             WHERE {' AND '.join(where_clauses)}
         """
         return " ".join(query.split())  # 줄바꿈·들여쓰기 normalize
+
+    @staticmethod
+    def _build_gaql_conversions(start, end, chunk, campaign_filter) -> str:
+        """conversion_action별 전환 전용 쿼리. ⚠️ conversion_action 세그먼트는 노출/비용을
+        중복시키므로 conversions 만 SELECT (노출·클릭·비용 미수집)."""
+        where_clauses = [
+            f"segments.date BETWEEN '{start.isoformat()}' AND '{end.isoformat()}'"
+        ]
+        if campaign_filter:
+            where_clauses.append(f"campaign.name IN ({_quote_csv(campaign_filter)})")
+        if chunk:
+            names_csv = _quote_csv(chunk)
+            where_clauses.append(
+                f"(asset.name IN ({names_csv}) OR asset.youtube_video_asset.youtube_video_title IN ({names_csv}))"
+            )
+        query = f"""
+            SELECT
+              segments.date,
+              asset.name,
+              asset.youtube_video_asset.youtube_video_title,
+              ad_group.name,
+              campaign.name,
+              segments.conversion_action_name,
+              metrics.conversions
+            FROM ad_group_ad_asset_view
+            WHERE {' AND '.join(where_clauses)}
+        """
+        return " ".join(query.split())
 
     @staticmethod
     def _resolve_creative_name(row) -> str:
@@ -390,6 +448,20 @@ class GoogleAdsKpiSource(KpiSource):
 # ─────────────────────────────────────────────────────────────
 # 2. Helpers — 외부에서 호출 가능
 # ─────────────────────────────────────────────────────────────
+def _apply_conversion_basis(agg: dict, conv_by_key: dict, prereg: set, install: set) -> dict:
+    """agg(4-key→CreativeKpiDaily)의 conversions 를 캠페인 ua_type별 타깃 액션 합으로 덮어씀.
+
+    ua_type == 'NU-Pre' → prereg 액션 합, 그 외 → install 액션 합. 타깃 액션 없으면 0.
+    conv_by_key: 4-key(creative_name, campaign_name, ad_group_name, date) → {action_name: conversions}.
+    """
+    for key, daily in agg.items():
+        ua = campaign_ua_type(key[1])  # key[1] = campaign_name
+        target = prereg if ua == "NU-Pre" else install
+        action_map = conv_by_key.get(key) or {}
+        daily.conversions = float(sum(v for a, v in action_map.items() if a in target))
+    return agg
+
+
 def default_window(days: int = 28) -> tuple[date, date]:
     """기본 KPI 윈도우: 어제 - (days-1) ~ 어제.
 
