@@ -133,7 +133,8 @@ def make_mmp_source(cfg: dict):
 # 정규식 그룹 1 = concept (T열 값).
 # 미스 시 None 반환 — main.py가 fallback (파일 stem 사용 또는 그대로).
 _FILENAME_TO_CONCEPT_RE = re.compile(
-    r"^\d{6}_(?:BNR|VID|HTML5|IMG|MP4)_(.+?)_[LSVF]_\d+x\d+_[A-Z]+(?:\.[A-Za-z0-9]+)?$",
+    # lang(_[A-Z]+) 뒤 후행 세그먼트(_KR_NONE 등)·중복접미( (1)) 허용 — scanner.py FILENAME_PATTERN 과 정합
+    r"^\d{6}_(?:BNR|VID|HTML5|IMG|MP4)_(.+?)_[LSVF]_\d+x\d+_[A-Z]+(?:_[A-Za-z0-9\-]+)*(?:\s*\(\d+\))?(?:\.[A-Za-z0-9]+)?$",
     re.IGNORECASE,
 )
 

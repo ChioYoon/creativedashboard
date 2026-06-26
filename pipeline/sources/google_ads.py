@@ -312,8 +312,10 @@ class GoogleAdsKpiSource(KpiSource):
     def _build_gaql_conversions(start, end, chunk, campaign_filter) -> str:
         """conversion_action별 전환 전용 쿼리. ⚠️ conversion_action 세그먼트는 노출/비용을
         중복시키므로 conversions 만 SELECT (노출·클릭·비용 미수집)."""
+        asset_types_csv = ", ".join(f"'{t}'" for t in SUPPORTED_ASSET_TYPES)
         where_clauses = [
-            f"segments.date BETWEEN '{start.isoformat()}' AND '{end.isoformat()}'"
+            f"segments.date BETWEEN '{start.isoformat()}' AND '{end.isoformat()}'",
+            f"asset.type IN ({asset_types_csv})",
         ]
         if campaign_filter:
             where_clauses.append(f"campaign.name IN ({_quote_csv(campaign_filter)})")
