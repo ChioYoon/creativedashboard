@@ -46,7 +46,7 @@
     ],
     "_pipeline_scan_mode": "by-filename",
     "_pipeline_types": ["BNR", "VID"],
-    "_pipeline_enabled": false,
+    "_pipeline_enabled": true,
     "_pipeline_google_ads_customer_id": "5329912290",
     "_pipeline_google_ads_campaign_filter": [],
     "_pipeline_kpi_enabled": true,
@@ -54,6 +54,7 @@
     "_pipeline_appsflyer_app_id": "com.com2us.gd.android.google.global.normal",
     "_pipeline_airbridge_usd_to_krw": 1500,
     "_pipeline_genre": "idle_rpg",
+    "_pipeline_game_context_file": "pipeline/game_context/gd.md",
     "drive_folder_url": "https://drive.google.com/drive/folders/18TRUsNoIdn9f-ZFFqGcLVbRHxRslshB7"
   },
   {

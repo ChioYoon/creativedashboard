@@ -1,0 +1,110 @@
+{
+  "schema_version": "1.0",
+  "title_id": "gd",
+  "generated_at": "2026-06-26T12:19:28+09:00",
+  "pipeline_version": "stage2-mvp",
+  "gemini_model": "gemini-2.5-flash-lite",
+  "creatives": [
+    {
+      "creative_id": "Copy-Character-V1",
+      "소재명": "Copy-Character-V1",
+      "파일명": "241211_BNR_Copy-Character-V1_V_1200x1500_NONE_KR_NONE.png",
+      "유형": "BNR",
+      "일": "2024-12-11",
+      "캠페인": null,
+      "사이즈": "1200x1500",
+      "언어": "NONE",
+      "링크": null,
+      "creative_concept": "Copy-Character-V1",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "캐릭터 외형 소구",
+      "USP": "편의성형(방치/빠른성장)",
+      "art_style": "2D 일러스트",
+      "strengths": [
+        "강한 비주얼 임팩트",
+        "단일 명료한 가치 제안"
+      ],
+      "weaknesses": [
+        "장르/게임성 불분명",
+        "행동 유도 약함/부재"
+      ],
+      "hypothesis": [
+        "높은 CTR 예상 — 강한 후킹",
+        "낮은 전환 위험 — 행동 유도 약함"
+      ],
+      "test_ideas": [
+        "게임플레이 컷 추가",
+        "명시적 CTA 추가"
+      ],
+      "one_line_insight": "매력적인 캐릭터 비주얼로 시선 후킹은 성공했으나 게임성 노출이 없어 장르 인지가 약함 — 자동 전투 실연 컷과 명확한 CTA를 추가하여 전환율을 개선해야 함",
+      "strength_evidence": [
+        "화면 중앙에 배치된 매력적인 여성 캐릭터가 시선을 사로잡으며, 밝고 화려한 아트 스타일이 게임의 판타지 세계관을 직관적으로 전달함",
+        "'갓앤데몬'이라는 게임명과 '지금 만나러 갓'이라는 문구가 결합되어, 캐릭터의 매력을 통해 게임에 대한 호기심과 만남을 유도하는 명확한 메시지를 전달함"
+      ],
+      "weakness_evidence": [
+        "매력적인 캐릭터 일러스트만 있고 실제 게임 플레이 화면이나 방치형 RPG의 핵심인 '자동 전투', '오프라인 성장' 등 구체적인 게임성이 전혀 노출되지 않아 장르 인지가 어려움",
+        "엔드카드에 '지금 만나러 갓'이라는 문구만 있을 뿐, 다운로드 버튼이나 사전예약 안내 등 명확한 CTA가 없어 사용자의 즉각적인 행동 전환을 유도하지 못함"
+      ],
+      "improvement_actions": [
+        "캐릭터 일러스트 배경에 2~3초간 자동 전투 또는 방치 보상 획득 장면을 삽입하여 게임 장르와 편의성을 명확히 인지시킴",
+        "엔드카드에 '지금 바로 다운로드' 버튼과 함께 '전설 영웅 100% 지급' 보상 문구를 추가하여 전환율을 높임"
+      ],
+      "creator_intent": "매력적인 캐릭터 외형으로 시청자의 시선을 사로잡고, 게임명과 CTA를 통해 호기심을 유발하여 클릭을 유도하려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 1,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
+      "marketer_insight": null,
+      "tagged_at": "2026-06-26T11:55:46+09:00",
+      "gemini_model": "gemini-2.5-flash-lite",
+      "source_files": [
+        "Pre-reg\\P-DA-Character-copy-01\\KR\\old\\241211_BNR_Copy-Character-V1_V_1200x1500_NONE_KR_NONE.png"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
+    }
+  ],
+  "metrics": {
+    "scanned_folders": 132,
+    "tagged_records": 1,
+    "cache_hits": 0,
+    "cache_misses": 1,
+    "failures": 0,
+    "duration_sec": 1448.1,
+    "prompt_version": "v3.3-2026.06.13-character-split-single-idle-v1",
+    "fallback_used": true,
+    "carried_forward": 0,
+    "score_summary": {
+      "graded": 0,
+      "grades": {},
+      "top": null
+    }
+  }
+}
