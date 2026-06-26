@@ -36,6 +36,27 @@
     "drive_folder_url": "https://drive.google.com/drive/folders/1N3lnsfKTeiYLfT-OWwZ1aI-ou74u9pDJ"
   },
   {
+    "id": "gd",
+    "name": "갓앤데몬",
+    "json_url": "public/data/gd.json",
+    "description": "갓앤데몬 UA Asset — AppsFlyer MMP 메인 + Google Ads. 배너/비디오 분리 폴더(멀티 루트).",
+    "_pipeline_creatives_root": [
+      "G:\\공유 드라이브\\[GD] 갓앤데몬 외부 공유 드라이브\\0. Marketing Resources\\2. Banner\\UA asset",
+      "G:\\공유 드라이브\\[GD] 갓앤데몬 외부 공유 드라이브\\0. Marketing Resources\\1. Video\\UA assets"
+    ],
+    "_pipeline_scan_mode": "by-filename",
+    "_pipeline_types": ["BNR", "VID"],
+    "_pipeline_enabled": false,
+    "_pipeline_google_ads_customer_id": "5329912290",
+    "_pipeline_google_ads_campaign_filter": [],
+    "_pipeline_kpi_enabled": true,
+    "_pipeline_mmp_provider": "appsflyer",
+    "_pipeline_appsflyer_app_id": "com.com2us.gd.android.google.global.normal",
+    "_pipeline_airbridge_usd_to_krw": 1500,
+    "_pipeline_genre": "idle_rpg",
+    "drive_folder_url": "https://drive.google.com/drive/folders/18TRUsNoIdn9f-ZFFqGcLVbRHxRslshB7"
+  },
+  {
     "id": "sample",
     "name": "📦 샘플 데이터 (Stage 1 검증용)",
     "json_url": "public/data/sample.json",
