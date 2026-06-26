@@ -10,7 +10,7 @@ from __future__ import annotations
 import re
 
 _FIELDS = ["agency", "executor", "title", "country", "media", "ua_type", "os", "product"]
-_KNOWN_UA_TYPES = ("NU-Pre", "NU", "RT", "Boosting")  # NU-Pre 우선(NU 보다 앞)
+_KNOWN_UA_TYPES = ("NU-Pre", "RT", "Boosting", "NU")  # NU-Pre 우선(NU 보다 앞)
 _DATE_RE = re.compile(r"^\d{6}$")
 
 

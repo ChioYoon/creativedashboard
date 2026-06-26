@@ -28,3 +28,13 @@ def test_parse_canonical_no_date():
     p = parse_campaign_canonical("Mobidays_HQ_RUSH_WW-EN_FB_NU_AD_AAA-AEO-Tutorial2")
     assert p["product"] == "AAA-AEO-Tutorial2" and p["date"] is None
     assert p["ua_type"] == "NU"
+
+
+def test_ua_type_boosting():
+    assert campaign_ua_type("Maximizer_HQ_GD_KR-KR_GA_Boosting_AD_ACi_250115") == "Boosting"
+
+
+def test_parse_canonical_short_segments():
+    p = parse_campaign_canonical("A_B_C")
+    assert p["agency"] == "A" and p["executor"] == "B" and p["title"] == "C"
+    assert p["country"] is None and p["product"] is None and p["date"] is None
