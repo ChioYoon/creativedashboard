@@ -21,7 +21,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
   <!-- 데이터 소스 추상화 (v5.2 Stage 1) — CSV/JSON 단일 진입점, 타이틀 격리 -->
   <script src="js/layer-metrics.js?v=20260626a"></script>
-  <script src="js/data-source.js?v=20260623b"></script>
+  <script src="js/data-source.js?v=20260627a"></script>
   <!-- 캐노니컬(캠페인 유형) 필터 해석기 — 라이브 cv 미상-버킷 의미론 정합 -->
   <script src="js/canonical-filter.js?v=20260626a"></script>
   <!-- Gemini AI 공통 모듈 -->
@@ -1684,6 +1684,9 @@
           <div class="ds-stat-chip"><span class="ds-stat-chip-label">최우수</span><span class="ds-stat-chip-value" id="statExcellent" style="color:var(--brand-primary);">0</span></div>
           <div class="ds-stat-chip"><span class="ds-stat-chip-label">개선필요</span><span class="ds-stat-chip-value" id="statPoor" style="color:#6b7280;">0</span></div>
         </div>
+
+        <!-- 미매칭 집행 소재 패널 (별칭 매핑) -->
+        <div id="unmatchedPanel" style="display:none;"></div>
 
         <!-- 필터 요약 슬롯 -->
         <div id="filterSummarySlot"></div>
@@ -3430,6 +3433,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     let currentCampaign = '';
     let currentCanonical = { ua_type: new Set(), country: new Set(), os: new Set(), media: new Set(), product: new Set() };
     window.__campaignCanonical = {};
+    window.__unmatchedAssets = [];
     let currentType = ['BNR', 'VID']; // BNR/VID 필터 (배열 지원)
     let rankChart = null;
     
@@ -3547,6 +3551,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         const campaigns = extractCampaigns(rawData);
         populateCampaignFilter(campaigns);
         populateCanonicalFilter();
+        window.__unmatchedAssets = (normalized._meta && normalized._meta.unmatched_assets) || [];
+        renderUnmatchedPanel();
 
         const dateColumn = detectDateColumn(normalizedData.columns);
         let dateRangeInfo = '날짜 컬럼 없음';
@@ -3787,6 +3793,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         const campaigns = extractCampaigns(rawData);
         populateCampaignFilter(campaigns);
         populateCanonicalFilter();
+        window.__unmatchedAssets = [];   // CSV 는 미매칭 데이터 없음
+        renderUnmatchedPanel();
         console.log(`✅ 캠페인 추출 완료: ${campaigns.length}개`);
 
         // v5.1: 유사 소재명 자동 감지 (BNR/VID만 대상)
@@ -4101,6 +4109,57 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     }
     
     // 캠페인 검색 + 캐노니컬 narrowing 통합 (단일 가시성 패스)
+    // 미매칭(집행O·미조인) 소재 패널 + 별칭 매핑 UI (단일 진실원=titles_overrides.json)
+    function renderUnmatchedPanel() {
+      const panel = document.getElementById('unmatchedPanel');
+      if (!panel) return;
+      const items = window.__unmatchedAssets || [];
+      if (!items.length) { panel.style.display = 'none'; panel.innerHTML = ''; return; }
+      const names = [...new Set((rawData || []).map(r => r['소재명'] || r.creative_id).filter(Boolean))].sort();
+      const opts = ['<option value="">(매핑 안 함)</option>']
+        .concat(names.map(n => `<option value="${escapeAttr(n)}">${escapeAttr(n)}</option>`)).join('');
+      const won = v => '₩' + Math.round(v || 0).toLocaleString();
+      const rows = items.map((u) => {
+        const src = u.source === 'mmp' ? 'MMP' : 'Google Ads';
+        const types = (u.asset_types || []).join(', ');
+        return `<tr>
+          <td style="font-family:monospace;font-size:12px;">${escapeAttr(u.concept)}</td>
+          <td><span class="badge">${src}</span></td>
+          <td style="text-align:right;">${(u.impressions||0).toLocaleString()}</td>
+          <td style="text-align:right;">${won(u.cost)}</td>
+          <td style="font-size:11px;color:#6b7280;">${escapeAttr(types)}</td>
+          <td><select data-unmatched-concept="${escapeAttr(u.concept)}" style="font-size:12px;max-width:220px;">${opts}</select></td>
+        </tr>`;
+      }).join('');
+      panel.style.display = '';
+      panel.innerHTML = `
+        <div style="border:1px solid #f0c36d;background:#fffbeb;border-radius:8px;padding:12px 14px;margin:10px 0;">
+          <div style="font-weight:700;color:#92400e;margin-bottom:6px;">⚠️ 미매칭 집행 소재 ${items.length}건 — 매핑 필요</div>
+          <div style="font-size:12px;color:#6b7280;margin-bottom:8px;">Google Ads/MMP 집행은 있으나 소재명이 GDrive와 달라 분석에 안 잡힌 자산입니다. 매핑할 소재를 고른 뒤 아래 버튼으로 config를 생성해 <code>titles_overrides.json</code>에 반영하면 다음 실행부터 조인됩니다.</div>
+          <table class="ds-table" style="font-size:12px;"><thead><tr>
+            <th>자산(concept)</th><th>소스</th><th style="text-align:right;">노출</th><th style="text-align:right;">비용</th><th>유형</th><th>매핑 대상 소재</th>
+          </tr></thead><tbody>${rows}</tbody></table>
+          <button type="button" onclick="buildAliasConfig()" class="rt-btn" style="margin-top:8px;">별칭 config 생성·복사</button>
+          <pre id="aliasConfigOut" style="display:none;background:#1f2937;color:#e5e7eb;padding:10px;border-radius:6px;font-size:11px;overflow:auto;margin-top:8px;"></pre>
+        </div>`;
+    }
+
+    function escapeAttr(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+
+    // 선택된 매핑으로 titles_overrides.json 별칭 스니펫 생성 + 클립보드 복사
+    function buildAliasConfig() {
+      const sels = document.querySelectorAll('#unmatchedPanel select[data-unmatched-concept]');
+      const aliases = {};
+      sels.forEach(s => { if (s.value) aliases[s.dataset.unmatchedConcept] = s.value; });
+      const out = document.getElementById('aliasConfigOut');
+      if (!Object.keys(aliases).length) { out.style.display = ''; out.textContent = '매핑 대상을 1건 이상 선택하세요.'; return; }
+      const titleId = (window.DataSource && DataSource.getActiveTitleId && DataSource.getActiveTitleId()) || '<title>';
+      const snippet = JSON.stringify({ [titleId]: { _creative_name_aliases: aliases } }, null, 2);
+      out.style.display = ''; out.textContent =
+        `// js/titles_overrides.json 의 "${titleId}" 항목에 _creative_name_aliases 를 병합하세요:\n` + snippet;
+      if (navigator.clipboard) navigator.clipboard.writeText(snippet).catch(() => {});
+    }
+
     function filterCampaignList() {
       refreshCampaignVisibility();
     }
