@@ -1537,6 +1537,11 @@
               </label>
             </div>
 
+            <div id="canonicalFilterSection" style="display:none;">
+              <span class="sb-label">캠페인 유형</span>
+              <div id="canonicalFilterGroups"></div>
+            </div>
+
             <span class="sb-label">캠페인</span>
             <input type="text" id="campaignSearchInput" class="sb-input" placeholder="캠페인 검색..." oninput="filterCampaignList()" style="margin-bottom:4px;">
             <div class="sb-checkbox-group" id="campaignCheckboxGroup">
@@ -3421,6 +3426,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     let scoredCreatives = [];
     let currentGroupBy = '소재명';
     let currentCampaign = '';
+    let currentCanonical = { ua_type: new Set(), country: new Set(), os: new Set(), media: new Set(), product: new Set() };
+    window.__campaignCanonical = {};
     let currentType = ['BNR', 'VID']; // BNR/VID 필터 (배열 지원)
     let rankChart = null;
     
@@ -3534,8 +3541,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         console.log(`✅ JSON 로드 완료: ${sourceMeta.row_count}개 소재 (title=${sourceMeta.title_id})`);
 
         // 캠페인·날짜 갱신 (기존 흐름 재사용)
+        window.__campaignCanonical = (normalized._meta && normalized._meta.campaign_canonical) || {};
         const campaigns = extractCampaigns(rawData);
         populateCampaignFilter(campaigns);
+        populateCanonicalFilter();
 
         const dateColumn = detectDateColumn(normalizedData.columns);
         let dateRangeInfo = '날짜 컬럼 없음';
@@ -3772,8 +3781,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         
         // 3. 캠페인 목록 추출
         console.log('🔄 캠페인 목록 추출 중...');
+        window.__campaignCanonical = {};   // CSV 는 캐노니컬 맵 없음
         const campaigns = extractCampaigns(rawData);
         populateCampaignFilter(campaigns);
+        populateCanonicalFilter();
         console.log(`✅ 캠페인 추출 완료: ${campaigns.length}개`);
 
         // v5.1: 유사 소재명 자동 감지 (BNR/VID만 대상)
@@ -4086,19 +4097,75 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       updateCampaignFilter();
     }
     
-    // 캠페인 검색 필터
+    // 캠페인 검색 + 캐노니컬 narrowing 통합 (단일 가시성 패스)
     function filterCampaignList() {
-      const searchText = document.getElementById('campaignSearchInput').value.toLowerCase();
+      refreshCampaignVisibility();
+    }
+
+    const CANON_DIMS = [
+      { key: 'ua_type', label: '캠페인 목적' },
+      { key: 'country', label: '국가' },
+      { key: 'os', label: 'OS' },
+      { key: 'media', label: '매체' },
+      { key: 'product', label: '상품' },
+    ];
+
+    // 산출 JSON 의 campaign_canonical 맵 → 5차원 체크박스 그룹 렌더 (맵 없으면 섹션 숨김)
+    function populateCanonicalFilter() {
+      const map = window.__campaignCanonical || {};
+      const section = document.getElementById('canonicalFilterSection');
+      const host = document.getElementById('canonicalFilterGroups');
+      CANON_DIMS.forEach(d => currentCanonical[d.key] = new Set());   // 상태 초기화
+      if (!Object.keys(map).length) { if (section) section.style.display = 'none'; if (host) host.innerHTML = ''; return; }
+      const values = {};
+      CANON_DIMS.forEach(d => values[d.key] = new Set());
+      Object.values(map).forEach(f => CANON_DIMS.forEach(d => values[d.key].add((f && f[d.key]) || '미상')));
+      host.innerHTML = CANON_DIMS.map(d => {
+        const opts = [...values[d.key]].sort().map(v =>
+          `<label style="display:inline-flex;align-items:center;gap:3px;font-size:11px;margin:0 6px 4px 0;cursor:pointer;">` +
+          `<input type="checkbox" data-canon="${d.key}" value="${v}" onchange="onCanonicalChange()" style="margin:0;">${v}</label>`).join('');
+        return `<div style="margin-bottom:6px;"><div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:2px;">${d.label}</div><div>${opts}</div></div>`;
+      }).join('');
+      if (section) section.style.display = '';
+    }
+
+    // 캐노니컬 체크박스 변경 → 상태 갱신 + 캠페인 목록 좁혀 표시 (렌더는 분석 실행 버튼)
+    function onCanonicalChange() {
+      CANON_DIMS.forEach(d => currentCanonical[d.key] = new Set());
+      document.querySelectorAll('#canonicalFilterGroups input[type="checkbox"]:checked').forEach(cb => {
+        currentCanonical[cb.dataset.canon].add(cb.value);
+      });
+      refreshCampaignVisibility();
+    }
+
+    // 선택된 캐노니컬 값 → 충족 campaign_name 집합 (차원간 AND, 차원내 OR). 활성 차원 없으면 null.
+    function resolveCanonicalCampaigns() {
+      const map = window.__campaignCanonical || {};
+      const dims = ['ua_type', 'country', 'os', 'media', 'product'];
+      const active = dims.filter(d => currentCanonical[d] && currentCanonical[d].size);
+      if (!active.length) return null;
+      const allowed = new Set();
+      for (const cn in map) {
+        const f = map[cn] || {};
+        if (active.every(d => currentCanonical[d].has((f[d] || '미상')))) allowed.add(cn);
+      }
+      return allowed;
+    }
+
+    // 캠페인 체크박스 가시성 = 검색 텍스트 AND 캐노니컬 허용집합 (둘 다 충족 시만 표시)
+    function refreshCampaignVisibility() {
+      const searchInput = document.getElementById('campaignSearchInput');
+      const searchText = (searchInput ? searchInput.value : '').toLowerCase();
+      const allowed = resolveCanonicalCampaigns();   // Set<raw> 또는 null
       const container = document.getElementById('campaignCheckboxGroup');
-      const items = container.querySelectorAll('.checkbox-item:not(:first-child)');
-      
-      items.forEach(item => {
-        const campaignName = item.dataset.campaign || '';
-        if (campaignName.includes(searchText)) {
-          item.style.display = 'flex';
-        } else {
-          item.style.display = 'none';
-        }
+      if (!container) return;
+      container.querySelectorAll('.checkbox-item:not(:first-child)').forEach(item => {
+        const cb = item.querySelector('input[type="checkbox"]');
+        const val = cb ? cb.value : '';
+        const raw = val.startsWith('[MMP] ') ? val.slice(6) : val;
+        const matchSearch = (item.dataset.campaign || '').includes(searchText);
+        const matchCanon = !allowed || allowed.has(raw);
+        item.style.display = (matchSearch && matchCanon) ? 'flex' : 'none';
       });
     }
     
@@ -4191,6 +4258,18 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           // 필터 조건 수집 (v1.7: 요약 표시용)
           let filterSummary = [];
 
+          // ── 캐노니컬(캠페인 유형) 필터 → currentCampaign 과 교집합 ──
+          let effectiveCampaign = currentCampaign;
+          const canonAllowed = resolveCanonicalCampaigns();   // Set<raw> 또는 null
+          if (canonAllowed) {
+            const base = Array.isArray(currentCampaign)
+              ? currentCampaign
+              : Array.from(document.querySelectorAll('#campaignCheckboxGroup input[type="checkbox"]:not(#campaign_all)')).map(cb => cb.value);
+            effectiveCampaign = base.filter(v => canonAllowed.has(v.startsWith('[MMP] ') ? v.slice(6) : v));
+            filterSummary.push(`캠페인 유형 필터 → ${effectiveCampaign.length}개 캠페인`);
+            if (!effectiveCampaign.length) effectiveCampaign = [' __canon_no_match__'];  // 매칭 0 → 결과 0
+          }
+
           // 2-0 블록(일별 윈도우 합산)에 넘길 활성 필터 상태 — 매 실행 초기화
           let activeMmpCampaigns = null;   // 선택된 MMP 캠페인 라벨 배열 (없으면 전체)
           let activeGadsCampaigns = null;  // 선택된 Google Ads 캠페인 배열 (없으면 전체)
@@ -4203,8 +4282,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           //   캠페인 기준으로 자동 재계산됨 (calculateCreativeScores 는 KPI 필드만 읽음).
           //   선택 캠페인에서 미운영(매칭 kpi_daily 0행)인 소재는 제외 (CSV 의미론과 일관).
           //   rawData 원본은 비파괴 — 필터 해제 시 즉시 원복.
-          if (currentCampaign) {
-            const selectedCampaigns = Array.isArray(currentCampaign) ? currentCampaign : [currentCampaign];
+          if (effectiveCampaign) {
+            const selectedCampaigns = Array.isArray(effectiveCampaign) ? effectiveCampaign : [effectiveCampaign];
             // [MMP] 접두어 캠페인(Airbridge 채널)과 Google Ads 캠페인 분리
             const mmpChannels  = selectedCampaigns.filter(c => c.startsWith('[MMP] ')).map(c => c.replace('[MMP] ', ''));
             const gadsCampaigns = selectedCampaigns.filter(c => !c.startsWith('[MMP] '));
