@@ -192,6 +192,15 @@ def apply_alias(concept: str, candidates, aliases) -> str:
 _UNMATCHED_GA_TYPES = ("IMAGE", "YOUTUBE_VIDEO")
 
 
+def _build_unmatched_list(acc: dict, source: str) -> list:
+    """미매칭 자산 집계 dict({concept: {impr, cost, types?}}) → impr 내림차순 항목 리스트 (KPI·MMP 공용)."""
+    return [
+        {"concept": c, "source": source, "impressions": v["impr"],
+         "cost": round(v["cost"], 2), "asset_types": sorted(v.get("types") or [])}
+        for c, v in sorted(acc.items(), key=lambda x: -x[1]["impr"])
+    ]
+
+
 def build_kpi_index(kpi_rows, candidate_concepts, aliases=None):
     """Google Ads KPI 행 → (concept→rows 인덱스, 미매칭 자산 리스트).
 
@@ -212,12 +221,7 @@ def build_kpi_index(kpi_rows, candidate_concepts, aliases=None):
                 e["impr"] += row.impressions or 0
                 e["cost"] += getattr(row, "cost", 0) or 0
                 e["types"].add(at)
-    unmatched_list = [
-        {"concept": c, "source": "google_ads", "impressions": v["impr"],
-         "cost": round(v["cost"], 2), "asset_types": sorted(v["types"])}
-        for c, v in sorted(unmatched.items(), key=lambda x: -x[1]["impr"])
-    ]
-    return index, unmatched_list
+    return index, _build_unmatched_list(unmatched, "google_ads")
 
 
 def _load_creative_aliases(title: str, repo_root: Path) -> dict:
@@ -225,6 +229,8 @@ def _load_creative_aliases(title: str, repo_root: Path) -> dict:
        registry(CLOOP_REGISTRY_XLSX) 활성 여부와 무관하게 동작. 파일/키 부재 → {}."""
     if not title:
         return {}
+    # ⚠️ registry._load_overrides 재사용은 의도적으로 안 함 — registry 는 모듈 레벨에서
+    #    openpyxl(선택 의존성)을 import 하므로, 핵심 경로(매 resolve_config)를 결합시킴.
     path = repo_root / "js" / "titles_overrides.json"
     if not path.exists():
         return {}
@@ -300,11 +306,7 @@ def inject_mmp_into_records(records, mmp_daily, source_name="airbridge", currenc
             continue
         cost = sum((getattr(d, "cost", 0) or 0) for d in rows)
         unmatched[raw_of.get(key, key)] = {"impr": impr, "cost": cost}
-    return [
-        {"concept": c, "source": "mmp", "impressions": v["impr"],
-         "cost": round(v["cost"], 2), "asset_types": []}
-        for c, v in sorted(unmatched.items(), key=lambda x: -x[1]["impr"])
-    ]
+    return _build_unmatched_list(unmatched, "mmp")
 
 
 # ─────────────────────────────────────────────────────────────
@@ -1073,7 +1075,7 @@ def run(cfg: dict) -> dict:
             currency=cfg.get("_mmp_currency"), fx_rate=cfg.get("_mmp_fx_rate"),
             aliases=cfg.get("creative_name_aliases"),
         )
-    unmatched_all = (ga_unmatched or []) + (mmp_unmatched or [])
+    unmatched_all = ga_unmatched + mmp_unmatched
 
     # ── Stage 6: 점수 산출 (대시보드 calculateCreativeScores 와 동일 — pipeline/scoring.py) ──
     # 기본 가중치 25/25/25/25 + roas_mode=auto. compute_creative_scores 가 입력 dict 를

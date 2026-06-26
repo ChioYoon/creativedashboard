@@ -4117,18 +4117,18 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       if (!items.length) { panel.style.display = 'none'; panel.innerHTML = ''; return; }
       const names = [...new Set((rawData || []).map(r => r['소재명'] || r.creative_id).filter(Boolean))].sort();
       const opts = ['<option value="">(매핑 안 함)</option>']
-        .concat(names.map(n => `<option value="${escapeAttr(n)}">${escapeAttr(n)}</option>`)).join('');
+        .concat(names.map(n => `<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`)).join('');
       const won = v => '₩' + Math.round(v || 0).toLocaleString();
       const rows = items.map((u) => {
         const src = u.source === 'mmp' ? 'MMP' : 'Google Ads';
         const types = (u.asset_types || []).join(', ');
         return `<tr>
-          <td style="font-family:monospace;font-size:12px;">${escapeAttr(u.concept)}</td>
+          <td style="font-family:monospace;font-size:12px;">${escapeHtml(u.concept)}</td>
           <td><span class="badge">${src}</span></td>
           <td style="text-align:right;">${(u.impressions||0).toLocaleString()}</td>
           <td style="text-align:right;">${won(u.cost)}</td>
-          <td style="font-size:11px;color:#6b7280;">${escapeAttr(types)}</td>
-          <td><select data-unmatched-concept="${escapeAttr(u.concept)}" style="font-size:12px;max-width:220px;">${opts}</select></td>
+          <td style="font-size:11px;color:#6b7280;">${escapeHtml(types)}</td>
+          <td><select data-unmatched-concept="${escapeHtml(u.concept)}" style="font-size:12px;max-width:220px;">${opts}</select></td>
         </tr>`;
       }).join('');
       panel.style.display = '';
@@ -4143,8 +4143,6 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <pre id="aliasConfigOut" style="display:none;background:#1f2937;color:#e5e7eb;padding:10px;border-radius:6px;font-size:11px;overflow:auto;margin-top:8px;"></pre>
         </div>`;
     }
-
-    function escapeAttr(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 
     // 선택된 매핑으로 titles_overrides.json 별칭 스니펫 생성 + 클립보드 복사
     function buildAliasConfig() {
