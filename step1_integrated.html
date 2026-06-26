@@ -4940,6 +4940,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       // 활성 레이어 지표 기준 (MMP 레이어면 D1 CPI·D1 IPM·설치). 해당 매체 데이터 있는 소재만 대상.
       const isMmp = (window.currentAnalysisLayer || 'ads') === 'mmp';
       const lab = isMmp ? { cpa: 'D1 CPI', conv: '설치', ipm: 'D1 IPM' } : { cpa: 'CPA', conv: '전환', ipm: 'IPM' };
+      const cur = (isMmp && creatives.some(c => (c.meta || {}).mmp_currency === 'USD')) ? '$' : '₩';  // QA P1-G: AppsFlyer(USD) 타이틀 ₩ 오표기 방지
       const vs = creatives.map(c => ({ c, v: creativeLayerView(c) })).filter(x => x.v.hasData);
       if (vs.length < 3) return {};
 
@@ -4958,7 +4959,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         // 1. CPA(D1 CPI) 이상치
         if (avgCPA > 0 && v.CPA > 0 && v.CPA >= avgCPA * 3) {
           sigs.push({ icon: '🚨', color: '#dc2626', label: `${lab.cpa} 이상치`,
-            detail: `${lab.cpa} ₩${Math.round(v.CPA).toLocaleString()} — 평균 ₩${Math.round(avgCPA).toLocaleString()}의 ${(v.CPA/avgCPA).toFixed(1)}배` });
+            detail: `${lab.cpa} ${cur}${Math.round(v.CPA).toLocaleString()} — 평균 ${cur}${Math.round(avgCPA).toLocaleString()}의 ${(v.CPA/avgCPA).toFixed(1)}배` });
         }
         // 2. 노출 많은데 전환(설치) 없음
         if (노출 >= 1000 && 전환 === 0) {
@@ -6035,7 +6036,10 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       // 검색 입력 초기화
       document.getElementById('campaignSearchInput').value = '';
       filterCampaignList();
-      
+
+      // 날짜 범위 기본(최근 7일) 초기화 (QA P2-H)
+      if (typeof setDatePreset === 'function') setDatePreset('7d');
+
       console.log('🔄 설정 초기화 완료 (4개 지표 균등 배분: 각 25%)');
     }
     

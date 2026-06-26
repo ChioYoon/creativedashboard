@@ -30,7 +30,9 @@
   };
 
   // ── 일별 통합 평탄화 + 필터 ─────────────────────────────────
-  // Google Ads=conversions, MMP=installs → acq
+  // Google Ads=conversions, MMP=installs → acq (서로 다른 이벤트를 '획득'으로 합산).
+  // ⚠️ 비중복 가정(QA P2-L): GA·MMP 캠페인이 같은 기간 중복 집행되면 동일 유저가 양쪽
+  //    집계될 수 있음. 현 타이틀은 집행 시기 비중복이라 무발현 — 듀얼소스 동시집행 등록 시 재검토.
   LIVE.allDailies = function () {
     const out = [];
     const canon = LIVE.canon || {};

@@ -117,6 +117,8 @@ class AppsFlyerMmpSource:
         self.session = session or requests.Session()
         self.request_timeout = request_timeout
         self.exclude = {s.lower() for s in (exclude_media_sources or DEFAULT_EXCLUDE_MEDIA_SOURCES)}
+        # QA P2-I: Master API(집계)는 Airbridge 류의 절단 신호(hasNext/limit)가 없어 항상 False
+        #   유지 — 정확성은 ≤90일 청크 + dedup 이 보장. (향후 행 cap 징후 확인되면 fetch 에서 True 세팅)
         self.last_fetch_truncated = False
 
     @property

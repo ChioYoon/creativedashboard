@@ -1852,6 +1852,12 @@ function buildLayeredClusters(baseClusters, layer) {
 function applyLayerAndRender(layer) {
   if (!clusterResults || !clusterResults.baseClusters) return;
   window.currentAnalysisLayer = layer;
+  // F (QA P1): MMP 레이어인데 소재별 MMP 데이터가 전혀 없으면 안내 (점수 0 오인 방지 — 예: AppsFlyer 광고명 미정합)
+  if (layer === 'mmp') {
+    const _rows = (typeof csvData !== 'undefined' && csvData && csvData.rows) ? csvData.rows : [];
+    const _hasMmp = _rows.some(r => r && (r.mmp_quality_score != null || (+r.mmp_installs || 0) > 0 || (+r.mmp_impressions || 0) > 0));
+    if (!_hasMmp && typeof showToast === 'function') showToast('이 타이틀은 소재별 MMP 데이터가 없습니다 — MMP 점수가 0으로 표시됩니다.', 'info');
+  }
   const ba = document.getElementById('clLayerAds'), bm = document.getElementById('clLayerMmp');
   if (ba && bm) {
     const base = 'padding:5px 12px;border-radius:8px;border:1px solid var(--gray-line,#ddd);font-weight:700;font-size:12px;cursor:pointer;';
