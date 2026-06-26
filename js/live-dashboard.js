@@ -3,6 +3,7 @@
   'use strict';
   const LIVE = {
     state: { titleId: '', creatives: [], driveFolderUrl: '', hasKpi: false, manifest: [] },
+    canon: {},
     metric: 'impr',
     topN: 7,
     chart: null,
@@ -32,15 +33,22 @@
   // Google Ads=conversions, MMP=installs → acq
   LIVE.allDailies = function () {
     const out = [];
+    const canon = LIVE.canon || {};
+    // country/os: 캐노니컬 값 있으면 사용, 비었거나 항목 없으면 조회 단위로 JS 파서 폴백
+    const cf = (cn, field, jsFn) => { const v = canon[cn] && canon[cn][field]; return v ? v : jsFn(cn); };
+    // ua_type/media/product: 캐노니컬 전용 (맵 없으면 '미상' — 필터도 미표시)
+    const cv = (cn, field) => (canon[cn] && canon[cn][field]) || '미상';
     for (const c of LIVE.state.creatives) {
       for (const k of (c.kpi_daily || [])) {
         out.push({ creative: c, date: k.date, campaign_name: k.campaign_name,
-          country: LIVE.parseCountry(k.campaign_name), os: LIVE.parseOS(k.campaign_name),
+          country: cf(k.campaign_name, 'country', LIVE.parseCountry), os: cf(k.campaign_name, 'os', LIVE.parseOS),
+          ua_type: cv(k.campaign_name, 'ua_type'), media: cv(k.campaign_name, 'media'), product: cv(k.campaign_name, 'product'),
           src: 'GA', impr: +k.impressions || 0, acq: +k.conversions || 0, cost: +k.cost || 0 });
       }
       for (const m of (c.mmp_daily || [])) {
         out.push({ creative: c, date: m.date, campaign_name: m.campaign_name,
-          country: LIVE.parseCountry(m.campaign_name), os: LIVE.parseOS(m.campaign_name),
+          country: cf(m.campaign_name, 'country', LIVE.parseCountry), os: cf(m.campaign_name, 'os', LIVE.parseOS),
+          ua_type: cv(m.campaign_name, 'ua_type'), media: cv(m.campaign_name, 'media'), product: cv(m.campaign_name, 'product'),
           src: 'MMP', impr: +m.impressions || 0, acq: +m.installs || 0, cost: +m.cost || 0 });
       }
     }
@@ -48,12 +56,15 @@
   };
 
   LIVE.applyFilters = function () {
-    const f = LIVE.state.filters || { start:'', end:'', countries:new Set(), oses:new Set(), campaigns:new Set() };
+    const f = LIVE.state.filters || { start:'', end:'', countries:new Set(), oses:new Set(), campaigns:new Set(), ua_types:new Set(), medias:new Set(), products:new Set() };
     return LIVE.allDailies().filter(d => {
       if (f.start && d.date < f.start) return false;
       if (f.end && d.date > f.end) return false;
       if (f.countries.size && !f.countries.has(d.country)) return false;
       if (f.oses.size && !f.oses.has(d.os)) return false;
+      if (f.ua_types && f.ua_types.size && !f.ua_types.has(d.ua_type)) return false;
+      if (f.medias && f.medias.size && !f.medias.has(d.media)) return false;
+      if (f.products && f.products.size && !f.products.has(d.product)) return false;
       if (f.campaigns.size && !f.campaigns.has(d.campaign_name)) return false;
       return true;
     });
@@ -67,10 +78,14 @@
     const countries = [...new Set(ds.map(d => d.country))].sort();
     const oses = [...new Set(ds.map(d => d.os))].sort();
     const camps = [...new Set(ds.map(d => d.campaign_name).filter(Boolean))].sort();
+    const hasCanon = LIVE.canon && Object.keys(LIVE.canon).length > 0;
+    const uaTypes  = hasCanon ? [...new Set(ds.map(d => d.ua_type))].sort() : [];
+    const medias   = hasCanon ? [...new Set(ds.map(d => d.media))].sort()   : [];
+    const products = hasCanon ? [...new Set(ds.map(d => d.product))].sort() : [];
     const dates = ds.map(d => d.date).filter(Boolean).sort();
     LIVE.state._maxDate = dates[dates.length - 1] || '';
     LIVE.state._minDate = dates[0] || '';
-    LIVE.state.filters = { start:'', end:'', countries:new Set(), oses:new Set(), campaigns:new Set() };
+    LIVE.state.filters = { start:'', end:'', countries:new Set(), oses:new Set(), campaigns:new Set(), ua_types:new Set(), medias:new Set(), products:new Set() };
     const host = el('liveFilterDynamic');
     if (!ds.length) { host.innerHTML = '<span style="font-size:12px;color:#9ca3af;">운영 데이터 없음 — 필터 비활성 (아래 소재 목록은 전체 표시)</span>'; return; }
     const presetBtns = [['전체',0],['최근 7일',7],['14일',14],['28일',28]]
@@ -82,6 +97,10 @@
         `<span style="margin-left:6px;"><input type="date" id="liveDateStart" style="${DATE_INP}"> ~ <input type="date" id="liveDateEnd" style="${DATE_INP}"></span></div></div>` +
       `<div class="live-filter-group"><label>국가</label><div>${checks('countries', countries)}</div></div>` +
       `<div class="live-filter-group"><label>OS</label><div>${checks('oses', oses)}</div></div>` +
+      (hasCanon ?
+        `<div class="live-filter-group"><label>유형</label><div>${checks('ua_types', uaTypes)}</div></div>` +
+        `<div class="live-filter-group"><label>매체</label><div>${checks('medias', medias)}</div></div>` +
+        `<div class="live-filter-group"><label>상품</label><div>${checks('products', products)}</div></div>` : '') +
       `<div class="live-filter-group" style="max-width:360px;"><label>캠페인` +
         `<input type="text" id="liveCampSearch" placeholder="검색…" style="font-size:11px;padding:2px 6px;border:1px solid #e5e7eb;border-radius:6px;margin-left:6px;width:90px;">` +
         `<button type="button" data-camp-all="1" style="${MINI_BTN}">전체선택</button><button type="button" data-camp-all="0" style="${MINI_BTN}">해제</button></label>` +
@@ -354,6 +373,7 @@
     const res = await fetch(`public/data/${titleId}.json`, { cache: 'no-store' });
     const data = res.ok ? await res.json() : { creatives: [] };
     const creatives = data.creatives || [];
+    LIVE.canon = (data.campaign_canonical && typeof data.campaign_canonical === 'object') ? data.campaign_canonical : {};
     LIVE.state.titleId = titleId;
     LIVE.state.creatives = creatives;
     LIVE.state.driveFolderUrl = meta.drive_folder_url || '';
