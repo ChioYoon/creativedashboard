@@ -531,15 +531,6 @@
     }
     .mi-empty { color:var(--gray-line); font-size:11px; }
 
-    /* ═══════════ AI 코멘트 셀 ═══════════ */
-    .ai-comment-cell {
-      max-width:170px; font-size:11px; color:var(--purple);
-      font-weight:600; line-height:1.4;
-      overflow:hidden; text-overflow:ellipsis;
-      display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
-    }
-    .ai-comment-loading { color:var(--gray-text); font-size:10px; font-style:italic; }
-    .ai-comment-empty   { color:var(--gray-line); font-size:10px; }
 
     /* ═══════════ AI 허브 섹션 ═══════════ */
     .ai-hub-section {
@@ -633,10 +624,8 @@
   </style>
   <link rel="stylesheet" href="assets/ds/colors_and_type.css">
   <link rel="stylesheet" href="assets/cl-shell.css">
-  <link rel="stylesheet" href="css/gemini-ui.css">
   <script src="js/layer-metrics.js?v=20260626a"></script>
   <script src="js/data-source.js?v=20260627a"></script>
-  <script src="js/gemini-api.js"></script>
 </head>
 <body>
 
@@ -707,8 +696,6 @@
       <a href="사용안내서_인쇄용.html" target="_blank" class="cl-nav-link">사용 안내서</a>
     </nav>
   </header>
-  <!-- Gemini 모달 컨테이너 -->
-  <div id="geminiModalContainer"></div>
 
   <!-- ════ 프로그레스 ════ -->
   <div class="progress-bar">
@@ -2413,7 +2400,6 @@ function buildMappingTable(rows) {
     { key:'clusterName', label:'군집',      sortable:true  },
     { key:'topTags',     label:'주요 태그',    sortable:false },
     { key:'marketerInsight', label:'마케터 인사이트', sortable:false },
-    { key:'_aiComment',  label:'✨ AI 코멘트', sortable:false },
   ];
 
   document.getElementById('mappingHead').innerHTML = `<tr>${cols.map(c => `
@@ -2473,16 +2459,10 @@ function buildMappingTable(rows) {
           ? `<div class="mi-cell" title="${escHtml(miText)}">${escHtml(miText)}</div>`
           : `<span class="mi-empty">-</span>`}
       </td>
-      <td class="ai-comment-td" data-mat-name="${escHtml(row.name)}">
-        <span class="ai-comment-empty">-</span>
-      </td>
     </tr>`;
   }).join('');
 
   document.getElementById('tableInfo').textContent = `${sorted.length}개 소재 표시 중 (전체 ${allRows.length}개)`;
-
-  // ★ 정렬·필터 재렌더링 후 AI 코멘트 캐시 재주입
-  if (typeof _reapplyAiComments === 'function') _reapplyAiComments();
 
   // 현재 정렬/필터된 행을 미리보기 참조용으로 캐싱
   window._previewRows = sorted;
@@ -2676,288 +2656,6 @@ function showToast(msg, type='') {
   setTimeout(() => { toast.style.opacity='0'; setTimeout(()=>toast.remove(),400); }, 3500);
 }
 
-/* ══════════════════════════════════════════════════════════════
-   ✨ Gemini AI 군집 인사이트 — 컨트롤러 & 렌더러
-══════════════════════════════════════════════════════════════ */
-
-// 각 블록 결과 캐시 (군집화 재실행 전까지 유지)
-const _aiCache = { A: null, B: null, C: null };
-
-/**
- * AI 허브 초기화 — 군집화 완료 후 renderResults()에서 호출
- */
-function initAiHub() {
-  // 모달 삽입
-  const container = document.getElementById('geminiModalContainer');
-  if (container && typeof buildGeminiKeyModal === 'function') {
-    container.innerHTML = buildGeminiKeyModal();
-  }
-
-  // 캐시 초기화 (재실행 시 이전 결과 소거)
-  _aiCache.A = null; _aiCache.B = null; _aiCache.C = null;
-  Object.keys(_aiCommentMap).forEach(k => delete _aiCommentMap[k]);
-
-  // 탭 바 숨기기, 패널 초기화
-  document.getElementById('aiTabBar').style.display = 'none';
-  ['A','B','C'].forEach(id => {
-    const p = document.getElementById('panel-' + id);
-    if (p) { p.innerHTML = ''; p.classList.remove('active'); }
-    const t = document.getElementById('tab-' + id);
-    if (t) t.classList.remove('active');
-  });
-  document.getElementById('panel-A').classList.add('active');
-  document.getElementById('tab-A').classList.add('active');
-
-  // 버튼 활성화
-  ['aiBlockA','aiBlockB','aiBlockC','aiBlockAll'].forEach(id => {
-    const btn = document.getElementById(id);
-    if (btn) btn.disabled = false;
-  });
-
-  // 키 상태 업데이트
-  updateClusteringAiKeyBadge();
-  if (typeof updateGeminiButtonStates === 'function') updateGeminiButtonStates();
-
-  setAiStatus('idle', '군집화 완료! AI 분석 버튼을 클릭하세요');
-}
-
-/** 키 뱃지 업데이트 */
-function updateClusteringAiKeyBadge() {
-  if (typeof GeminiKeyManager === 'undefined') return;
-  const badge = document.getElementById('aiKeyBadge');
-  if (!badge) return;
-  const has = GeminiKeyManager.isSet();
-  badge.textContent = has ? '✅ API 키 설정됨' : '🔑 API 키 미설정';
-  badge.className   = 'ai-key-badge ' + (has ? 'set' : 'unset');
-}
-
-/** 상태 바 업데이트 */
-function setAiStatus(state, text) {
-  const dot  = document.getElementById('aiStatusDot');
-  const span = document.getElementById('aiStatusText');
-  if (dot)  { dot.className = 'ai-status-dot ' + state; }
-  if (span) { span.textContent = text; }
-}
-
-/** 탭 전환 */
-function switchAiTab(id) {
-  ['A','B','C'].forEach(k => {
-    document.getElementById('tab-' + k)?.classList.toggle('active', k === id);
-    document.getElementById('panel-' + k)?.classList.toggle('active', k === id);
-  });
-}
-
-/**
- * 메인 컨트롤러 — 블록 A / B / C / all 실행
- */
-async function runClusteringAI(block) {
-  if (!clusterResults) {
-    showToast('먼저 군집화를 실행하세요.', 'error'); return;
-  }
-  if (typeof GeminiKeyManager === 'undefined') {
-    showToast('Gemini API 모듈이 로드되지 않았습니다.', 'error'); return;
-  }
-  if (!GeminiKeyManager.isSet()) {
-    openGeminiModal(); return;
-  }
-
-  const { clusters, tagFreqs, weightMap } = clusterResults;
-  const allMats = clusters.flatMap(c => c.materials);
-  const overallAvg = allMats.length
-    ? allMats.reduce((s, m) => s + m.score, 0) / allMats.length : 0;
-
-  // 태그 성과 집계 (히트맵과 동일 로직)
-  const tagScoreMap = {};
-  const tagCntMap   = {};
-  allMats.forEach(m => {
-    (m.topTags || []).forEach(tag => {
-      if (!tagScoreMap[tag]) { tagScoreMap[tag] = 0; tagCntMap[tag] = 0; }
-      tagScoreMap[tag] += m.score;
-      tagCntMap[tag]   += 1;
-    });
-  });
-  const tagAvgs = Object.entries(tagScoreMap)
-    .filter(([, s]) => tagCntMap[s] >= 1)
-    .map(([tag, sum]) => ({ tag, avg: sum / tagCntMap[tag], cnt: tagCntMap[tag] }))
-    .sort((a, b) => b.avg - a.avg);
-  const topTags = tagAvgs.slice(0, 12);
-  const lowTags = tagAvgs.slice(-6).reverse();
-
-  const meta = {
-    gameName:       (sessionConfig?.gameName) || '게임',
-    totalMaterials: allMats.length,
-  };
-
-  const blocksToRun = block === 'all' ? ['A', 'B', 'C'] : [block];
-
-  for (let i = 0; i < blocksToRun.length; i++) {
-    const b = blocksToRun[i];
-
-    // 블록 간 딜레이 (Rate Limit 방지)
-    if (i > 0) {
-      setAiStatus('loading', `블록 ${b} 준비 중... (${GEMINI_CONFIG.BLOCK_INTERVAL / 1000}초 대기)`);
-      await new Promise(r => setTimeout(r, GEMINI_CONFIG.BLOCK_INTERVAL));
-    }
-
-    await _runSingleBlock(b, clusters, topTags, lowTags, meta, overallAvg, allMats);
-  }
-
-  // 전체 실행 완료 시
-  if (block === 'all') {
-    setAiStatus('done', '✅ 전체 AI 분석 완료');
-    showToast('✅ Gemini AI 군집 분석이 완료되었습니다.', 'success');
-  }
-}
-
-/** 단일 블록 실행 */
-async function _runSingleBlock(b, clusters, topTags, lowTags, meta, overallAvg, allMats) {
-  // 탭 바 표시 & 해당 탭으로 전환
-  document.getElementById('aiTabBar').style.display = 'flex';
-  switchAiTab(b);
-
-  const panelEl = document.getElementById('panel-' + b);
-
-  // 로딩 표시
-  if (typeof buildGeminiBox === 'function') {
-    panelEl.innerHTML = buildGeminiBox('', 'loading');
-  } else {
-    panelEl.innerHTML = '<p style="padding:20px;color:#6b7280;">분석 중...</p>';
-  }
-
-  const labelMap = { A: '승리 공식 분석', B: '군집별 심층 분석', C: '소재별 AI 코멘트' };
-  setAiStatus('loading', `블록 ${b} — ${labelMap[b]} 중...`);
-
-  try {
-    let prompt, result;
-
-    if (b === 'A') {
-      prompt = GeminiPrompts.clusteringWinningLogic(clusters, topTags, lowTags, meta);
-      result = await callGeminiAPI(prompt, {
-        maxTokens:   GEMINI_CONFIG.CLUSTER_TOKENS,
-        temperature: GEMINI_CONFIG.TEMPERATURE,
-        topP:        GEMINI_CONFIG.TOP_P,
-      });
-      _aiCache.A = result;
-      panelEl.innerHTML = buildGeminiBox(
-        geminiMarkdownToHtml(result), 'done'
-      );
-      setAiStatus('done', '✅ 승리 공식 분석 완료');
-
-    } else if (b === 'B') {
-      // 상위 군집 (최대 4개, 기타 군집 제외)
-      const topClusters = [...clusters]
-        .filter(c => c.id !== -1)
-        .sort((a, b) => b.avgScore - a.avgScore)
-        .slice(0, 4);
-      prompt = GeminiPrompts.clusteringDeepDive(topClusters, overallAvg);
-      result = await callGeminiAPI(prompt, {
-        maxTokens:   GEMINI_CONFIG.CLUSTER_TOKENS,
-        temperature: GEMINI_CONFIG.TEMPERATURE,
-        topP:        GEMINI_CONFIG.TOP_P,
-      });
-      _aiCache.B = result;
-      panelEl.innerHTML = buildGeminiBox(
-        geminiMarkdownToHtml(result), 'done'
-      );
-      setAiStatus('done', '✅ 군집별 심층 분석 완료');
-
-    } else if (b === 'C') {
-      // 고·저효율 각 10개
-      const sortedMats = [...allMats].sort((a, x) => x.score - a.score);
-      const top10  = sortedMats.slice(0, 10).map(m => ({
-        ...m, clusterName: clusters.find(c => c.materials.includes(m))?.name || '-'
-      }));
-      const low10  = sortedMats.slice(-10).reverse().map(m => ({
-        ...m, clusterName: clusters.find(c => c.materials.includes(m))?.name || '-'
-      }));
-      const targets = [...top10, ...low10];
-
-      prompt = GeminiPrompts.clusteringMaterialComment(targets);
-      result = await callGeminiAPI(prompt, {
-        maxTokens:   1200,
-        temperature: GEMINI_CONFIG.TEMPERATURE,
-        topP:        GEMINI_CONFIG.TOP_P,
-      });
-      _aiCache.C = result;
-
-      // JSON 파싱 & 테이블 주입 시도
-      const injected = injectMaterialComments(result, targets);
-
-      // 패널에도 요약 표시
-      const summaryHtml = injected
-        ? `<p class="gai-para" style="color:#059669;font-weight:600;">✅ ${targets.length}개 소재의 AI 코멘트가 아래 매핑 테이블에 주입되었습니다.</p>
-           <ul class="gai-list">${targets.slice(0,5).map(m=>`<li><strong>${escHtml(m.name)}</strong></li>`).join('')}${targets.length>5?'<li>…외 '+(targets.length-5)+'개</li>':''}</ul>`
-        : `<div class="gai-para">${escHtml(result)}</div>`;
-
-      panelEl.innerHTML = buildGeminiBox(summaryHtml, 'done');
-      setAiStatus('done', `✅ 소재별 AI 코멘트 완료 (${targets.length}개)`);
-    }
-
-  } catch (err) {
-    const msg = err.message || String(err);
-    if (typeof buildGeminiBox === 'function') {
-      panelEl.innerHTML = buildGeminiBox('', 'error', msg);
-    } else {
-      panelEl.innerHTML = `<p style="color:#dc2626;padding:20px;">오류: ${msg}</p>`;
-    }
-    setAiStatus('error', `❌ 블록 ${b} 오류 — ${msg}`);
-    showToast(`AI 분석 오류: ${msg}`, 'error');
-  }
-}
-
-/**
- * 정렬/필터 재렌더링 후 기존 AI 코멘트 캐시를 테이블에 재주입
- * (코멘트 맵은 _aiCommentMap에 유지)
- */
-const _aiCommentMap = {}; // { matName: comment }
-
-function _reapplyAiComments() {
-  if (!Object.keys(_aiCommentMap).length) return;
-  document.querySelectorAll('.ai-comment-td').forEach(td => {
-    const name = td.dataset.matName;
-    if (name && _aiCommentMap[name]) {
-      td.innerHTML = `<div class="ai-comment-cell" title="${escHtml(_aiCommentMap[name])}">${escHtml(_aiCommentMap[name])}</div>`;
-    }
-  });
-}
-
-/**
- * 소재별 AI 코멘트를 매핑 테이블에 주입
- * @param {string} rawText - Gemini 응답 (JSON 배열 기대)
- * @param {Array}  targets - 요청한 소재 배열 [{name, ...}]
- * @returns {boolean} 성공 여부
- */
-function injectMaterialComments(rawText, targets) {
-  try {
-    // JSON 배열 추출 (응답에 부가 텍스트 섞여도 파싱)
-    const jsonMatch = rawText.match(/\[[\s\S]*\]/);
-    if (!jsonMatch) throw new Error('JSON 배열 없음');
-    const comments = JSON.parse(jsonMatch[0]);
-
-    // idx 기반으로 소재명 → 코멘트 전역 맵 저장 (정렬/필터 재렌더 시 유지)
-    comments.forEach(item => {
-      const mat = targets[item.idx - 1];
-      if (mat) _aiCommentMap[mat.name] = item.comment || '';
-    });
-
-    // 테이블 셀 업데이트
-    const cells = document.querySelectorAll('.ai-comment-td');
-    let injectedCount = 0;
-    cells.forEach(td => {
-      const name = td.dataset.matName;
-      if (name && _aiCommentMap[name] !== undefined) {
-        td.innerHTML = `<div class="ai-comment-cell" title="${escHtml(_aiCommentMap[name])}">${escHtml(_aiCommentMap[name])}</div>`;
-        injectedCount++;
-      }
-    });
-
-    return injectedCount > 0;
-  } catch (e) {
-    // 파싱 실패 시 전체 텍스트를 첫 번째 셀에만 표시
-    console.warn('AI 코멘트 JSON 파싱 실패:', e.message);
-    return false;
-  }
-}
 </script>
 </body>
 </html>
