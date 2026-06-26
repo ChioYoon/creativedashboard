@@ -31,3 +31,27 @@ def test_dataset_unmatched_default():
     from pipeline.schemas import CreativeDataset
     ds = CreativeDataset(title_id="t", generated_at="2026-01-01T00:00:00+09:00")
     assert ds.model_dump(by_alias=True)["unmatched_assets"] == []
+
+
+def test_build_kpi_index_alias_and_unmatched():
+    from pipeline.main import build_kpi_index
+
+    class K:  # duck-typed CreativeKpiDaily
+        def __init__(self, name, at="IMAGE", impr=10, cost=5.0):
+            self.creative_name = name; self.asset_type = at
+            self.impressions = impr; self.cost = cost
+
+    candidates = {"P-DA-Reward-gacha-01", "A-Char-01"}
+    aliases = {"ConnectBNR": "P-DA-Reward-gacha-01"}
+    rows = [
+        K("251104_BNR_A-Char-01_L_1200x628_EN.jpg"),   # 표준 → A-Char-01 조인
+        K("ConnectBNR"),                                # 별칭 → P-DA-Reward-gacha-01 조인
+        K("Rank1", impr=100, cost=20.0),                # 미매칭(IMAGE, impr>0)
+        K("TextAsset", at="TEXT", impr=50),             # TEXT → 미매칭 제외
+        K("ZeroImpr", impr=0),                          # impr=0 → 제외
+    ]
+    index, unmatched = build_kpi_index(rows, candidates, aliases)
+    assert set(index.keys()) == {"A-Char-01", "P-DA-Reward-gacha-01"}
+    assert [u["concept"] for u in unmatched] == ["Rank1"]
+    u = unmatched[0]
+    assert u["source"] == "google_ads" and u["impressions"] == 100 and u["asset_types"] == ["IMAGE"]

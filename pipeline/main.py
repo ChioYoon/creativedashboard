@@ -187,6 +187,37 @@ def apply_alias(concept: str, candidates, aliases) -> str:
     return (aliases or {}).get(concept, concept)
 
 
+_UNMATCHED_GA_TYPES = ("IMAGE", "YOUTUBE_VIDEO")
+
+
+def build_kpi_index(kpi_rows, candidate_concepts, aliases=None):
+    """Google Ads KPI 행 → (concept→rows 인덱스, 미매칭 자산 리스트).
+
+    조인: resolve_concept → 별칭(apply_alias) → candidate 매칭.
+    미매칭: 매칭 실패 + impressions>0 + asset_type ∈ IMAGE/YOUTUBE_VIDEO (원본 concept 키로 집계).
+    """
+    index: dict = {}
+    unmatched: dict = {}  # raw concept -> {impr, cost, types}
+    for row in kpi_rows:
+        raw = resolve_concept(row.creative_name)
+        concept = apply_alias(raw, candidate_concepts, aliases)
+        if concept in candidate_concepts:
+            index.setdefault(concept, []).append(row)
+        else:
+            at = getattr(row, "asset_type", "") or ""
+            if (getattr(row, "impressions", 0) or 0) > 0 and at in _UNMATCHED_GA_TYPES:
+                e = unmatched.setdefault(raw, {"impr": 0, "cost": 0.0, "types": set()})
+                e["impr"] += row.impressions or 0
+                e["cost"] += getattr(row, "cost", 0) or 0
+                e["types"].add(at)
+    unmatched_list = [
+        {"concept": c, "source": "google_ads", "impressions": v["impr"],
+         "cost": round(v["cost"], 2), "asset_types": sorted(v["types"])}
+        for c, v in sorted(unmatched.items(), key=lambda x: -x[1]["impr"])
+    ]
+    return index, unmatched_list
+
+
 def _load_creative_aliases(title: str, repo_root: Path) -> dict:
     """js/titles_overrides.json 에서 {title}._creative_name_aliases 직접 로드(dict).
        registry(CLOOP_REGISTRY_XLSX) 활성 여부와 무관하게 동작. 파일/키 부재 → {}."""
@@ -580,6 +611,7 @@ def run(cfg: dict) -> dict:
 
     # ── 2-Stage5) KPI batch fetch (kpi_enabled=true 일 때만) ──
     kpi_index: dict[str, list] = {}  # creative_name → list[CreativeKpiDaily]
+    ga_unmatched: list = []          # 별칭 매핑 대상 미매칭 Google Ads 자산
     kpi_window_start = None
     kpi_window_end = None
     kpi_status = "skipped"
@@ -610,23 +642,16 @@ def run(cfg: dict) -> dict:
                     conversion_actions=cfg.get("conversion_actions"),
                 )
             )
-            # 그룹핑: concept(폴더명) → list[CreativeKpiDaily]
-            # asset.name(파일명) 에서 concept 추출 → 같은 concept의 L/S/V 변형 + 캠페인 분리 모두 보존
-            unmatched_assets: set[str] = set()
-            for row in kpi_rows:
-                # 표준 정규식 → 실패 시 관대 추출(parts[2]) — Google Ads 자동생성 자산명
-                #   (타임스탬프·종횡비·size-letter 누락 등)도 베이스 소재명에 조인 (MMP 와 동일)
-                concept = resolve_concept(row.creative_name)
-                if concept in candidate_concepts:
-                    kpi_index.setdefault(concept, []).append(row)
-                else:
-                    unmatched_assets.add(concept)
-            if unmatched_assets:
-                # candidate에 없는 asset (GDrive에 폴더 없는 경우) — 로그만
+            # 그룹핑: concept → rows (별칭 적용) + 미매칭(집행O·미조인) 수집
+            _idx, ga_unmatched = build_kpi_index(
+                kpi_rows, candidate_concepts, cfg.get("creative_name_aliases")
+            )
+            kpi_index.update(_idx)
+            if ga_unmatched:
                 print(
-                    f"   ℹ️  candidate 미매칭 asset {len(unmatched_assets)}개 "
-                    f"(GDrive 폴더에 없는 광고 asset, 대시보드 미표시): "
-                    f"{sorted(unmatched_assets)[:3]}{'...' if len(unmatched_assets)>3 else ''}"
+                    f"   ⚠️  미매칭 집행 asset {len(ga_unmatched)}개 (별칭 매핑 대상): "
+                    f"{[u['concept'] for u in ga_unmatched][:3]}"
+                    f"{'...' if len(ga_unmatched) > 3 else ''}"
                 )
 
             # KPI 캐시 보존 (백업·오프라인 분석용)
