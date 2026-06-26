@@ -373,7 +373,14 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
 
     if not title:
         sys.exit("❌ --title, --all-titles, 또는 .env CLOOP_TITLE_ID 가 필요합니다.")
-    if not root_str:
+    # creatives_root: 단일 문자열 또는 리스트(여러 폴더 — 예: 갓앤데몬 배너/비디오) 허용
+    if isinstance(root_str, list):
+        roots = [Path(str(r).strip()) for r in root_str if str(r).strip()]
+    elif root_str and str(root_str).strip():
+        roots = [Path(str(root_str).strip())]
+    else:
+        roots = []
+    if not roots:
         sys.exit(
             f"❌ 타이틀 '{title}'의 creatives_root 가 비어있습니다. "
             "titles.json의 _pipeline_creatives_root 또는 .env CLOOP_CREATIVES_ROOT 를 설정하세요."
@@ -386,7 +393,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
 
     return {
         "title": title,
-        "root": Path(root_str),
+        "root": roots[0] if len(roots) == 1 else roots,
         "model": model,
         "api_key": api_key,
         "cache_dir": Path(cache_dir),

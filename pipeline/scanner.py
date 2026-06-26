@@ -31,10 +31,12 @@ MEDIA_EXTS = IMAGE_EXTS | VIDEO_EXTS
 FILENAME_PATTERN = re.compile(
     r"^(?P<date>\d{6})"
     r"_(?P<type>BNR|VID|TXT)"
-    r"_(?P<creative_name>[A-Za-z0-9\-]+)"
+    r"_(?P<creative_name>.+?)"                   # 소재명 (언더스코어 포함 가능 — 우측 앵커로 구분)
     r"_(?P<size_code>[LSV])"
     r"_(?P<resolution>\d+x\d+)"
-    r"_(?P<lang>[A-Z]{2})"
+    r"_(?P<lang>[A-Z]{2,4})"                      # 2~4자 언어/지역 코드 (KR/EN/CNT 등)
+    r"(?:_[A-Za-z0-9\-]+)*"                       # 선택적 추가 세그먼트 (예: 갓앤데몬 _NONE)
+    r"(?:\s*\(\d+\))?"                            # 중복 다운로드 접미 ' (1)'
     r"\.(?P<ext>[a-z0-9]+)$",
     re.IGNORECASE,
 )
@@ -174,7 +176,7 @@ def scan_creative_folders(
 
 
 def scan_by_filename(
-    root: Path,
+    root,
     types: Iterable[str] = ("BNR", "VID"),
     exclude_dir_keywords: Iterable[str] = ("미사용",),
 ) -> list[CreativeCandidate]:
@@ -183,30 +185,37 @@ def scan_by_filename(
     루트 하위를 재귀 스캔하여 FILENAME_PATTERN 매칭 파일만 수집하고, 파싱된
     creative_name 으로 그룹핑한다. 차수/유형 폴더 순서가 다르거나 언어 하위폴더가
     끼어 있어도(예: 도원암귀 `차수/유형/소재명/언어/파일`) 동작한다.
+
+    root 는 단일 경로(str|Path) 또는 경로 리스트 — 여러 폴더(예: 갓앤데몬 배너/비디오
+    분리 폴더)를 하나로 합쳐 스캔한다. 같은 creative_name 이 여러 root 에 흩어져 있어도
+    그룹핑 단계에서 파일이 병합된다(유실 없음).
     - type 은 파일명에서 추출 (폴더명 무관).
     - phase(차수)는 루트 직속 폴더명에서 추론 (메타 용도).
     - 파일명 규칙 미매칭 파일(템플릿·작업본 등)은 자동 제외.
     - exclude_dir_keywords: 경로(폴더명)에 이 키워드가 포함되면 스킵
       (예: "카툰 소재(미사용)" → '미사용' 매칭으로 제외).
     """
-    if not root.exists():
-        raise FileNotFoundError(f"소재 루트 폴더가 없습니다: {root}")
+    roots = [Path(root)] if isinstance(root, (str, Path)) else [Path(r) for r in root]
+    for r in roots:
+        if not r.exists():
+            raise FileNotFoundError(f"소재 루트 폴더가 없습니다: {r}")
 
     types_up = {t.upper() for t in types}
     exclude_kw = tuple(exclude_dir_keywords or ())
     groups: dict[str, list[Path]] = {}
     meta_by_name: dict[str, dict] = {}
-    for p in sorted(root.rglob("*")):
-        if not (p.is_file() and p.suffix.lower() in MEDIA_EXTS):
-            continue
-        if any(kw in part for part in p.parts for kw in exclude_kw):
-            continue  # '미사용' 등 제외 키워드 포함 폴더 스킵
-        meta = parse_filename(p.name)
-        if not meta or meta["type"].upper() not in types_up:
-            continue
-        cname = meta["creative_name"]
-        groups.setdefault(cname, []).append(p)
-        meta_by_name.setdefault(cname, meta)
+    for r in roots:
+        for p in sorted(r.rglob("*")):
+            if not (p.is_file() and p.suffix.lower() in MEDIA_EXTS):
+                continue
+            if any(kw in part for part in p.parts for kw in exclude_kw):
+                continue  # '미사용' 등 제외 키워드 포함 폴더 스킵
+            meta = parse_filename(p.name)
+            if not meta or meta["type"].upper() not in types_up:
+                continue
+            cname = meta["creative_name"]
+            groups.setdefault(cname, []).append(p)
+            meta_by_name.setdefault(cname, meta)
 
     candidates: list[CreativeCandidate] = []
     for cname in sorted(groups):
@@ -219,9 +228,10 @@ def scan_by_filename(
             if anc.name == cname:
                 folder_path = anc
                 break
-        # 차수 = 루트 기준 첫 경로 세그먼트 (메타 용도)
+        # 차수 = rep 가 속한 root 기준 첫 경로 세그먼트 (메타 용도)
+        base = next((r for r in roots if rep.is_relative_to(r)), roots[0])
         try:
-            phase = rep.relative_to(root).parts[0]
+            phase = rep.relative_to(base).parts[0]
         except (ValueError, IndexError):
             phase = ""
         candidates.append(
