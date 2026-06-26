@@ -22,6 +22,8 @@
   <!-- 데이터 소스 추상화 (v5.2 Stage 1) — CSV/JSON 단일 진입점, 타이틀 격리 -->
   <script src="js/layer-metrics.js?v=20260626a"></script>
   <script src="js/data-source.js?v=20260623b"></script>
+  <!-- 캐노니컬(캠페인 유형) 필터 해석기 — 라이브 cv 미상-버킷 의미론 정합 -->
+  <script src="js/canonical-filter.js?v=20260626a"></script>
   <!-- Gemini AI 공통 모듈 -->
   <link rel="stylesheet" href="css/gemini-ui.css">
   <script src="js/gemini-api.js"></script>
@@ -2362,14 +2364,14 @@ function typeBlended(d) {
 
 // 피로도용 기간별 점수: 실적일(kpi_daily/mmp_daily)을 [winStart,winEnd]로 잘라 활성 레이어 점수 산출.
 //   ads = calculateCreativeScores(Google Ads), mmp = scoreMmpItems(품질). 신규 객체 반환(원본 비변경).
-function buildFatiguePeriodScores(creatives, winStart, winEnd, layer, weights) {
+function buildFatiguePeriodScores(creatives, winStart, winEnd, layer, weights, gcamps = null, mcamps = null) {
   const win = { start: winStart, end: winEnd };
   if (layer === 'mmp') {
     const items = [];
     (creatives || []).forEach(c => {
       const md = (c.meta && c.meta.mmp_source && Array.isArray(c.meta.mmp_daily)) ? c.meta.mmp_daily : [];
       if (!md.length) return;
-      const a = aggMmpWindow(md, win, null);
+      const a = aggMmpWindow(md, win, mcamps);
       if (a.imp <= 0 && a.installs <= 0) return;
       const { d1_ipm, d1_cpi, d7_roas } = mmpQualityMetrics(a);
       // 피로도 CPA(=D1 CPI): D1 잔존 0 이면 비용/설치(install CPI)로 폴백 — 0(=최저=신선) 오분류 방지
@@ -2386,7 +2388,7 @@ function buildFatiguePeriodScores(creatives, winStart, winEnd, layer, weights) {
   (creatives || []).forEach(c => {
     const kd = (c.meta && Array.isArray(c.meta.kpi_daily)) ? c.meta.kpi_daily : [];
     if (!kd.length) return;
-    const a = aggGadsWindow(kd, win, null);
+    const a = aggGadsWindow(kd, win, gcamps);
     if (a.imp <= 0 && a.conv <= 0) return;
     const o = { key: c.key, 유형: c.유형, 이미지링크: c.이미지링크, meta: c.meta, 전환: Math.round(a.conv), 비용: Math.round(a.cost), 노출수: a.imp, 클릭수: a.clk, 매출: Math.round(a.rev) };
     o.CTR = o.노출수 > 0 ? o.클릭수 / o.노출수 * 100 : 0;
@@ -4030,9 +4032,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       currentType = types; // 배열로 저장
       
       const count = types.length;
-      document.getElementById('typeSelectedCount').textContent = 
-        count > 0 ? `${count}개 선택됨` : '선택 없음';
-      
+      // typeSelectedCount 엘리먼트는 사이드바 개편으로 제거됨 — null-guard (없으면 sb-chips 가 표시 담당)
+      const _tsc = document.getElementById('typeSelectedCount');
+      if (_tsc) _tsc.textContent = count > 0 ? `${count}개 선택됨` : '선택 없음';
+
       console.log(`🎨 소재 유형 필터: ${types.join(', ') || '선택 없음'}`);
     }
     
@@ -4138,18 +4141,12 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       refreshCampaignVisibility();
     }
 
-    // 선택된 캐노니컬 값 → 충족 campaign_name 집합 (차원간 AND, 차원내 OR). 활성 차원 없으면 null.
+    // 선택된 캐노니컬 값 → 통과 판정기 (차원간 AND, 차원내 OR). 활성 차원 없으면 null.
+    // 핵심 로직은 js/canonical-filter.js 로 단일화(단위테스트: tests/js/canonical-filter.test.js).
+    // 반환 { has(raw) } 는 기존 Set 소비처(.has()/truthy 체크)와 드롭인 호환.
+    // 맵에 없는 raw(예: channel-only MMP)는 라이브 cv 의미론대로 '미상' 버킷 처리.
     function resolveCanonicalCampaigns() {
-      const map = window.__campaignCanonical || {};
-      const dims = ['ua_type', 'country', 'os', 'media', 'product'];
-      const active = dims.filter(d => currentCanonical[d] && currentCanonical[d].size);
-      if (!active.length) return null;
-      const allowed = new Set();
-      for (const cn in map) {
-        const f = map[cn] || {};
-        if (active.every(d => currentCanonical[d].has((f[d] || '미상')))) allowed.add(cn);
-      }
-      return allowed;
+      return resolveCanonicalAllowed(window.__campaignCanonical || {}, currentCanonical);
     }
 
     // 캠페인 체크박스 가시성 = 검색 텍스트 AND 캐노니컬 허용집합 (둘 다 충족 시만 표시)
@@ -6028,6 +6025,12 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       const checkboxes = container.querySelectorAll('input[type="checkbox"]');
       checkboxes.forEach(cb => cb.checked = true);
       updateCampaignFilter();
+
+      // 캐노니컬(캠페인 유형) 필터 초기화 (Phase 2 — QA P0-A)
+      if (typeof CANON_DIMS !== 'undefined' && typeof currentCanonical !== 'undefined') {
+        CANON_DIMS.forEach(d => currentCanonical[d.key] = new Set());
+        document.querySelectorAll('#canonicalFilterGroups input[type="checkbox"]').forEach(cb => cb.checked = false);
+      }
       
       // 검색 입력 초기화
       document.getElementById('campaignSearchInput').value = '';
@@ -6177,8 +6180,12 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       const roasWeight = parseInt(document.getElementById('roasWeight').value) / 100;
       const fatigueWeights = { conv: convWeight, cpa: cpaWeight, ipm: ipmWeight, roas: roasWeight };
 
-      const baselineScored = buildFatiguePeriodScores(allAgg, baseStart, baseEnd, fatigueLayer, fatigueWeights);
-      const comparisonScored = buildFatiguePeriodScores(allAgg, compStart, compEnd, fatigueLayer, fatigueWeights);
+      // Phase 2 캐노니컬(캠페인 유형) 필터를 피로도에도 적용 (QA P0-C) — 일별 슬라이스 campaign_name 제한
+      // resolveCanonicalCampaigns() 는 {has(raw)} 술어 → 맵 키를 통과시켜 배열화(aggGadsWindow 는 .includes 사용)
+      const _canonFat = (typeof resolveCanonicalCampaigns === 'function') ? resolveCanonicalCampaigns() : null;
+      const _fcamps = _canonFat ? Object.keys(window.__campaignCanonical || {}).filter(cn => _canonFat.has(cn)) : null;
+      const baselineScored = buildFatiguePeriodScores(allAgg, baseStart, baseEnd, fatigueLayer, fatigueWeights, _fcamps, _fcamps);
+      const comparisonScored = buildFatiguePeriodScores(allAgg, compStart, compEnd, fatigueLayer, fatigueWeights, _fcamps, _fcamps);
       console.log(`📅 피로도(${fatigueLayer === 'mmp' ? 'MMP 품질' : 'Google Ads'} · 실적일): 기준 ${baselineScored.length}개 / 비교 ${comparisonScored.length}개`);
       
       // 4. 비교 분석 (v1.7: Total Score 기준 순위, CPA 기준 피로도)

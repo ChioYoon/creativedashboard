@@ -186,7 +186,7 @@
           return (stacked && v == null) ? 0 : v;   // 누적은 결측=0
         }),
         borderColor: col, backgroundColor: col + '55',
-        fill: true, tension: 0.25, pointRadius: 1, spanGaps: !stacked,
+        fill: stacked, tension: 0.25, pointRadius: 1, spanGaps: !stacked,
       };
     });
     if (LIVE.chart) LIVE.chart.destroy();
