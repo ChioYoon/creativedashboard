@@ -78,3 +78,37 @@ def test_build_campaign_canonical_dedup_and_missing():
 def test_build_campaign_canonical_empty():
     assert build_campaign_canonical([]) == {}
     assert build_campaign_canonical(None) == {}
+
+
+def test_dataset_has_campaign_canonical_default():
+    from pipeline.schemas import CreativeDataset
+    ds = CreativeDataset(title_id="t", generated_at="2026-01-01T00:00:00+09:00")
+    payload = ds.model_dump(by_alias=True)
+    assert payload["campaign_canonical"] == {}
+
+
+def test_dataset_serializes_campaign_canonical():
+    from pipeline.schemas import CreativeDataset
+    m = {"A_B_C_US-EN_GA_NU_AD_ACp": {"ua_type": "NU", "country": "US", "os": "", "media": "GA", "product": "ACp"}}
+    ds = CreativeDataset(title_id="t", generated_at="2026-01-01T00:00:00+09:00", campaign_canonical=m)
+    assert ds.model_dump(by_alias=True)["campaign_canonical"] == m
+
+
+def test_collect_campaign_names():
+    from pipeline.main import _collect_campaign_names
+
+    class _Row:  # duck-typed (pydantic 모델 불필요)
+        def __init__(self, kpi, mmp):
+            self.kpi_daily = kpi
+            self.mmp_daily = mmp
+
+    class _Daily:
+        def __init__(self, cn):
+            self.campaign_name = cn
+
+    recs = [
+        _Row([_Daily("A_B_C"), _Daily("")], [_Daily("D_E_F")]),
+        _Row([_Daily("A_B_C")], []),       # 중복
+        _Row([], None),                    # mmp_daily None
+    ]
+    assert _collect_campaign_names(recs) == {"A_B_C", "D_E_F"}

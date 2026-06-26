@@ -572,3 +572,6 @@ class CreativeDataset(BaseModel):
 
     # 메트릭 (대시보드 신뢰도 배지 등에서 활용 가능)
     metrics: dict = Field(default_factory=dict)
+
+    # Phase 2: 캠페인명 캐노니컬 필드 맵 (campaign_name → {ua_type,country,os,media,product})
+    campaign_canonical: dict = Field(default_factory=dict, description="캠페인 유형 필터용")

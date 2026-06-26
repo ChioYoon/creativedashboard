@@ -40,6 +40,7 @@ from dotenv import load_dotenv
 from tqdm import tqdm
 
 from .cache import TagCache, file_sha256
+from .campaign_canonical import build_campaign_canonical
 from .mmp_metrics import aggregate_rows_total, compute_mmp_quality
 from .scanner import scan_creative_folders, scan_by_filename, summarize
 from .schemas import CreativeDataset, CreativeRecord
@@ -54,6 +55,21 @@ TITLES_JSON_PATH = Path("js/titles.json")
 
 # 프로젝트 루트 (pipeline/../ = cloop_dashboard/)
 _REPO_ROOT = Path(__file__).resolve().parent.parent
+
+
+def _collect_campaign_names(records) -> set:
+    """records 의 kpi_daily + mmp_daily 행에서 비어있지 않은 campaign_name 수집."""
+    names = set()
+    for r in records:
+        for k in (getattr(r, "kpi_daily", None) or []):
+            cn = getattr(k, "campaign_name", "")
+            if cn:
+                names.add(cn)
+        for m in (getattr(r, "mmp_daily", None) or []):
+            cn = getattr(m, "campaign_name", "")
+            if cn:
+                names.add(cn)
+    return names
 
 
 def _load_game_context(rel_path: str, repo_root: Path) -> str:
@@ -1025,6 +1041,7 @@ def run(cfg: dict) -> dict:
             "carried_forward": carried_forward,
             "score_summary": score_summary,  # Stage 6: 기본 가중치 점수 요약
         },
+        campaign_canonical=build_campaign_canonical(_collect_campaign_names(records)),
     )
 
     # ① 파일럿은 별도 파일로 출력 (production JSON 미오염 — 백업/복원 불필요)
