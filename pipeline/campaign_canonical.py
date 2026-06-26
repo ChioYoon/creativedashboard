@@ -39,3 +39,46 @@ def campaign_ua_type(name: str) -> str:
         if ua in segs:
             return ua
     return ""
+
+
+_COUNTRY_RE = re.compile(r"^[A-Z]{2,4}-[A-Z]{2}$")   # US-EN, CA-FR, KR-KR …
+_OS_MAP = {"ios": "iOS", "aos": "Android", "android": "Android", "web": "Web"}
+
+
+def campaign_country(name: str) -> str:
+    """캠페인명에서 country 추출 — XX-XX 세그먼트 스캔 후 '-' 앞부분. 없으면 ''. (라이브 JS parseCountry 이식)"""
+    if not name:
+        return ""
+    for seg in name.split("_"):
+        if _COUNTRY_RE.match(seg):
+            return seg.split("-")[0]
+    return ""
+
+
+def campaign_os(name: str) -> str:
+    """캠페인명에서 os 추출 — 토큰 소문자 매칭 → iOS/Android/Web. 없으면 ''. (라이브 JS parseOS 이식)"""
+    if not name:
+        return ""
+    for seg in name.split("_"):
+        v = _OS_MAP.get(seg.lower())
+        if v:
+            return v
+    return ""
+
+
+def build_campaign_canonical(campaign_names) -> dict:
+    """고유 campaign_name → {ua_type, country, os, media, product} 맵.
+
+    중복 제거·빈/None 제외. 추출 실패 필드는 '' (대시보드가 '미상' 버킷 처리). 빈 입력 → {}.
+    """
+    out: dict = {}
+    for cn in {c for c in (campaign_names or []) if c}:
+        pos = parse_campaign_canonical(cn)
+        out[cn] = {
+            "ua_type": campaign_ua_type(cn),            # token (견고)
+            "country": campaign_country(cn),            # XX-XX 스캔 (라이브 일치)
+            "os": campaign_os(cn),                      # 토큰 스캔 (라이브 일치)
+            "media": pos["media"] or "",                # positional best-effort
+            "product": pos["product"] or "",
+        }
+    return out
