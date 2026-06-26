@@ -331,6 +331,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         mmp_provider = title_override.get("_pipeline_mmp_provider", "")
         appsflyer_app_id = title_override.get("_pipeline_appsflyer_app_id", "")
         appsflyer_exclude = title_override.get("_pipeline_appsflyer_exclude_media_sources", [])
+        conversion_actions = title_override.get("_pipeline_conversion_actions")
     else:
         # 단일 타이틀 모드: CLI 인자 + titles.json _pipeline_* (Stage 5-D) + .env fallback
         title = args.title or os.environ.get("CLOOP_TITLE_ID", "")
@@ -385,6 +386,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         mmp_provider = title_meta.get("_pipeline_mmp_provider", "")
         appsflyer_app_id = title_meta.get("_pipeline_appsflyer_app_id", "")
         appsflyer_exclude = title_meta.get("_pipeline_appsflyer_exclude_media_sources", [])
+        conversion_actions = title_meta.get("_pipeline_conversion_actions")
 
     if not title:
         sys.exit("❌ --title, --all-titles, 또는 .env CLOOP_TITLE_ID 가 필요합니다.")
@@ -437,6 +439,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         "mmp_provider": mmp_provider,
         "appsflyer_app_id": appsflyer_app_id,
         "appsflyer_exclude_media_sources": appsflyer_exclude,
+        "conversion_actions": conversion_actions,
     }
 
 
@@ -559,6 +562,7 @@ def run(cfg: dict) -> dict:
                     end=kpi_window_end,
                     creative_names=None,
                     campaign_filter=cfg.get("google_ads_campaign_filter") or None,
+                    conversion_actions=cfg.get("conversion_actions"),
                 )
             )
             # 그룹핑: concept(폴더명) → list[CreativeKpiDaily]
