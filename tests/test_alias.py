@@ -55,3 +55,35 @@ def test_build_kpi_index_alias_and_unmatched():
     assert [u["concept"] for u in unmatched] == ["Rank1"]
     u = unmatched[0]
     assert u["source"] == "google_ads" and u["impressions"] == 100 and u["asset_types"] == ["IMAGE"]
+
+
+def test_inject_mmp_alias_and_unmatched():
+    from pipeline.main import inject_mmp_into_records
+
+    class R:  # duck-typed CreativeRecord
+        def __init__(self, cid, name):
+            self.creative_id = cid; self.소재명 = name
+            self.mmp_source = None; self.mmp_quality_score = None
+
+    class M:  # duck-typed CreativeMmpDaily
+        def __init__(self, name, installs=0, impr=0, cost=0.0):
+            self.creative_name = name; self.installs = installs
+            self.impressions = impr; self.cost = cost; self.channel = "Meta"
+            self.clicks = 0; self.retained_d1 = 0; self.revenue_d7 = 0.0
+
+    records = [R("c1", "P-DA-Reward-gacha-01")]
+    mmp = [
+        M("ConnectBNR", installs=5),    # 별칭 → P-DA-Reward-gacha-01 조인
+        M("Rank1", installs=3, impr=50),  # 미매칭(활동O)
+        M("Idle0", installs=0, impr=0),   # 활동 없음 → 제외
+    ]
+    aliases = {"ConnectBNR": "P-DA-Reward-gacha-01"}
+    unmatched = inject_mmp_into_records(records, mmp, source_name="appsflyer", aliases=aliases)
+    assert records[0].mmp_source == "appsflyer"   # 별칭 조인됨
+    assert [u["concept"] for u in unmatched] == ["Rank1"]
+    assert unmatched[0]["source"] == "mmp" and unmatched[0]["asset_types"] == []
+
+
+def test_inject_mmp_empty_returns_list():
+    from pipeline.main import inject_mmp_into_records
+    assert inject_mmp_into_records([], [], aliases=None) == []

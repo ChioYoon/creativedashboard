@@ -235,17 +235,22 @@ def _load_creative_aliases(title: str, repo_root: Path) -> dict:
         return {}
 
 
-def inject_mmp_into_records(records, mmp_daily, source_name="airbridge", currency=None, fx_rate=None):
+def inject_mmp_into_records(records, mmp_daily, source_name="airbridge", currency=None, fx_rate=None, aliases=None):
     """CreativeMmpDaily 리스트를 소재명(concept)으로 join 하여 records 에 mmp_* 주입.
 
-    소재명 매칭: Airbridge ad_creative == 파일명/소재명 컨벤션. concept(폴더명) 기준 join.
-    currency/fx_rate: 비용·매출 통화 메타(파이프라인에서 이미 변환 적용됨 — 표시용 라벨).
+    소재명 매칭: ad_creative == 파일명/소재명 컨벤션. 별칭(aliases)로 비표준명 재매핑.
+    반환: 미매칭(활동O·미조인) 자산 리스트 [{concept,source,impressions,cost,asset_types}].
     """
     if not mmp_daily:
-        return
+        return []
+    candidates = {r.creative_id for r in records} | {r.소재명 for r in records}
     by_concept: dict[str, list] = {}
+    raw_of: dict[str, str] = {}   # 매칭 key → 원본 concept(미매칭 표시용)
     for d in mmp_daily:
-        by_concept.setdefault(resolve_concept(d.creative_name), []).append(d)
+        raw = resolve_concept(d.creative_name)
+        key = apply_alias(raw, candidates, aliases)
+        by_concept.setdefault(key, []).append(d)
+        raw_of.setdefault(key, raw)
 
     for r in records:
         rows = by_concept.get(r.creative_id) or by_concept.get(r.소재명)
@@ -281,6 +286,23 @@ def inject_mmp_into_records(records, mmp_daily, source_name="airbridge", currenc
         for r in records:
             if r.creative_id in qscores:
                 r.mmp_quality_score = qscores[r.creative_id]
+
+    # 미매칭(활동O·미조인) 수집 — 별칭 매핑 대상
+    unmatched: dict = {}
+    for key, rows in by_concept.items():
+        if key in candidates:
+            continue
+        impr = sum((getattr(d, "impressions", 0) or 0) for d in rows)
+        installs = sum((getattr(d, "installs", 0) or 0) for d in rows)
+        if impr <= 0 and installs <= 0:
+            continue
+        cost = sum((getattr(d, "cost", 0) or 0) for d in rows)
+        unmatched[raw_of.get(key, key)] = {"impr": impr, "cost": cost}
+    return [
+        {"concept": c, "source": "mmp", "impressions": v["impr"],
+         "cost": round(v["cost"], 2), "asset_types": []}
+        for c, v in sorted(unmatched.items(), key=lambda x: -x[1]["impr"])
+    ]
 
 
 # ─────────────────────────────────────────────────────────────
@@ -1039,9 +1061,14 @@ def run(cfg: dict) -> dict:
         records.append(record)
 
     # Stage 7: 페치해둔 MMP daily 를 records 에 주입 (소재명 join)
+    mmp_unmatched: list = []
     if cfg.get("_mmp_daily"):
-        inject_mmp_into_records(records, cfg["_mmp_daily"], source_name=cfg.get("_mmp_provider") or "airbridge",
-                                currency=cfg.get("_mmp_currency"), fx_rate=cfg.get("_mmp_fx_rate"))
+        mmp_unmatched = inject_mmp_into_records(
+            records, cfg["_mmp_daily"], source_name=cfg.get("_mmp_provider") or "airbridge",
+            currency=cfg.get("_mmp_currency"), fx_rate=cfg.get("_mmp_fx_rate"),
+            aliases=cfg.get("creative_name_aliases"),
+        )
+    unmatched_all = (ga_unmatched or []) + (mmp_unmatched or [])
 
     # ── Stage 6: 점수 산출 (대시보드 calculateCreativeScores 와 동일 — pipeline/scoring.py) ──
     # 기본 가중치 25/25/25/25 + roas_mode=auto. compute_creative_scores 가 입력 dict 를
@@ -1095,6 +1122,7 @@ def run(cfg: dict) -> dict:
             "score_summary": score_summary,  # Stage 6: 기본 가중치 점수 요약
         },
         campaign_canonical=build_campaign_canonical(_collect_campaign_names(records)),
+        unmatched_assets=unmatched_all,
     )
 
     # ① 파일럿은 별도 파일로 출력 (production JSON 미오염 — 백업/복원 불필요)
