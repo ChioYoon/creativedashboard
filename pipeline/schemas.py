@@ -575,3 +575,6 @@ class CreativeDataset(BaseModel):
 
     # Phase 2: 캠페인명 캐노니컬 필드 맵 (campaign_name → {ua_type,country,os,media,product})
     campaign_canonical: dict = Field(default_factory=dict, description="캠페인 유형 필터용")
+
+    # 소재명 별칭 매핑: 집행O·미조인 자산 (concept,source,impressions,cost,asset_types)
+    unmatched_assets: list = Field(default_factory=list, description="별칭 매핑 대상 미매칭 자산")

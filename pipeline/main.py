@@ -180,6 +180,30 @@ def resolve_concept(name: str) -> str:
     return stem
 
 
+def apply_alias(concept: str, candidates, aliases) -> str:
+    """concept 가 candidates 에 있으면 그대로, 없으면 별칭 맵으로 재매핑(없으면 자기 자신)."""
+    if concept in candidates:
+        return concept
+    return (aliases or {}).get(concept, concept)
+
+
+def _load_creative_aliases(title: str, repo_root: Path) -> dict:
+    """js/titles_overrides.json 에서 {title}._creative_name_aliases 직접 로드(dict).
+       registry(CLOOP_REGISTRY_XLSX) 활성 여부와 무관하게 동작. 파일/키 부재 → {}."""
+    if not title:
+        return {}
+    path = repo_root / "js" / "titles_overrides.json"
+    if not path.exists():
+        return {}
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        al = (data.get(title) or {}).get("_creative_name_aliases") or {}
+        return al if isinstance(al, dict) else {}
+    except Exception as e:
+        print(f"   [경고] titles_overrides.json 별칭 로드 실패(무시): {e}")
+        return {}
+
+
 def inject_mmp_into_records(records, mmp_daily, source_name="airbridge", currency=None, fx_rate=None):
     """CreativeMmpDaily 리스트를 소재명(concept)으로 join 하여 records 에 mmp_* 주입.
 
@@ -460,6 +484,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         "appsflyer_app_id": appsflyer_app_id,
         "appsflyer_exclude_media_sources": appsflyer_exclude,
         "conversion_actions": conversion_actions,
+        "creative_name_aliases": _load_creative_aliases(title, _REPO_ROOT),
     }
 
 
