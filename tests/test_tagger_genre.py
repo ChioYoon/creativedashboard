@@ -33,6 +33,28 @@ def test_get_system_instruction_dark_fantasy():
     assert "인페르노 스킬" in instr or "다크 판타지" in instr or "카드 배틀" in instr
 
 
+def test_genre_instructions_has_idle_rpg():
+    assert "idle_rpg" in GENRE_INSTRUCTIONS
+
+
+def test_get_system_instruction_idle_rpg():
+    instr = get_system_instruction("idle_rpg")
+    assert isinstance(instr, str) and len(instr) > 100
+    # 방치형 전용 가이드 포함 확인
+    assert "방치형" in instr and ("자동 전투" in instr or "편의성" in instr)
+
+
+def test_prompt_version_idle_suffix():
+    v_idle = prompt_version("idle_rpg")
+    assert v_idle.endswith("-idle-v1")
+
+
+def test_prompt_version_idle_distinct():
+    """idle 캐시 격리 — 다른 장르 버전과 모두 달라야 함."""
+    versions = {prompt_version(g) for g in ("character_collection_rpg", "dark_fantasy_card_rpg", "idle_rpg")}
+    assert len(versions) == 3
+
+
 def test_get_system_instruction_unknown_falls_back_to_default():
     instr_unknown = get_system_instruction("unknown_genre_xyz")
     instr_default = get_system_instruction(DEFAULT_GENRE)

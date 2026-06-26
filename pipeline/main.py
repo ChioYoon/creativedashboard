@@ -67,6 +67,21 @@ def _load_game_context(rel_path: str, repo_root: Path) -> str:
     return full.read_text(encoding="utf-8")
 
 
+def _rel_source_path(p: Path, root) -> str:
+    """파일을 root(단일 Path 또는 리스트) 기준 상대경로 문자열로. 매칭 root 없으면 파일명.
+
+    멀티 루트(배너/비디오 분리 폴더) 타이틀은 각 파일이 속한 root 기준으로 환산.
+    """
+    roots = root if isinstance(root, list) else [root]
+    for r in roots:
+        try:
+            if p.is_relative_to(r):
+                return str(p.relative_to(r))
+        except (ValueError, AttributeError):
+            continue
+    return p.name
+
+
 def make_mmp_source(cfg: dict):
     """cfg['mmp_provider'](또는 airbridge_enabled 폴백)로 메인 MMP 소스 선택.
 
@@ -945,7 +960,7 @@ def run(cfg: dict) -> dict:
             # marketer_insight=one_line,  # ← 제거됨 (JS-side alias 로 대체)
             tagged_at=datetime.now(KST).isoformat(timespec="seconds"),
             gemini_model=cfg["model"],
-            source_files=[str(p.relative_to(cfg["root"])) for p in c.all_files],
+            source_files=[_rel_source_path(p, cfg["root"]) for p in c.all_files],
             **kpi_fields,
         )
         records.append(record)

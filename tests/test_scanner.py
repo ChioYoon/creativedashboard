@@ -49,3 +49,17 @@ def test_parse_filename_non_ua_rejected():
     """비-UA 소스 파일(원본·웹툰캡쳐 등)은 매칭 안 됨."""
     assert parse_filename("640x116.png") is None
     assert parse_filename("웹툰캡쳐01_sm_250515_1080x1080_x.jpg") is None
+
+
+def test_rel_source_path_multiroot(tmp_path):
+    """멀티 루트 — source_files 상대경로가 각 파일의 소속 root 기준으로 환산 (cfg['root']=list)."""
+    from pathlib import Path
+    from pipeline.main import _rel_source_path
+    r1 = tmp_path / "banner"
+    r2 = tmp_path / "video"
+    f1 = r1 / "sub" / "a.jpg"
+    f2 = r2 / "b.mp4"
+    assert _rel_source_path(f1, r1) == str(Path("sub") / "a.jpg")          # 단일 root
+    assert _rel_source_path(f1, [r1, r2]) == str(Path("sub") / "a.jpg")    # 멀티: r1 소속
+    assert _rel_source_path(f2, [r1, r2]) == "b.mp4"                       # 멀티: r2 소속
+    assert _rel_source_path(tmp_path / "x" / "c.png", [r1, r2]) == "c.png"  # 미매칭 → 파일명
