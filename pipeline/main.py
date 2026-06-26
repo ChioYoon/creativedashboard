@@ -157,13 +157,16 @@ def filename_to_concept(filename: str) -> Optional[str]:
     return m.group(1) if m else None
 
 
-def mmp_concept(name: str) -> str:
-    """Airbridge ad_creative(파일명) → concept. 표준 정규식 우선, 실패 시 관대한 추출.
+def resolve_concept(name: str) -> str:
+    """파일명/광고 자산명 → concept(소재명 코어). KPI·MMP 조인 공용.
 
-    Airbridge 소재명은 Google Ads/폴더와 동일 컨벤션이나 사이즈/해상도 토큰이 다양:
-      251104_BNR_A-Character-Keyart01A-DA_L_1200x628_EN  → 표준(filename_to_concept)
-      251104_BNR_A-Character-Keyart01A-DA_ALL_Mixed_EN   → Facebook 통합(_ALL_Mixed_) → fallback
-    fallback: {6자리}_{유형}_ 접두 제거 후 concept(언더스코어 없음)만 취함.
+    표준 정규식(filename_to_concept) 우선, 실패 시 관대한 추출:
+      251104_BNR_A-Character-Keyart01A-DA_L_1200x628_EN  → 표준
+      251104_BNR_A-Character-Keyart01A-DA_ALL_Mixed_EN   → Facebook 통합(_ALL_Mixed_)
+      260123_BNR_A-AI-Figure01A-DA_L_1200x628_EN_2026-01-22_17-38-56_1.91:1 → Google Ads
+        자동생성(타임스탬프·종횡비) / 251111_BNR_..._1200x1500_ES → size-letter 누락
+    fallback: {6자리}_{유형}_ 접두 후 3번째 세그먼트(concept). 이로써 비표준 자산명도
+    베이스 소재명에 조인(미조인 시 Google Ads 집행이 소재 KPI 에 누락되던 문제 해결).
     """
     if not name:
         return ""
@@ -187,7 +190,7 @@ def inject_mmp_into_records(records, mmp_daily, source_name="airbridge", currenc
         return
     by_concept: dict[str, list] = {}
     for d in mmp_daily:
-        by_concept.setdefault(mmp_concept(d.creative_name), []).append(d)
+        by_concept.setdefault(resolve_concept(d.creative_name), []).append(d)
 
     for r in records:
         rows = by_concept.get(r.creative_id) or by_concept.get(r.소재명)
@@ -586,10 +589,9 @@ def run(cfg: dict) -> dict:
             # asset.name(파일명) 에서 concept 추출 → 같은 concept의 L/S/V 변형 + 캠페인 분리 모두 보존
             unmatched_assets: set[str] = set()
             for row in kpi_rows:
-                concept = filename_to_concept(row.creative_name)
-                if concept is None:
-                    # 정규식 미스 — 파일명 stem 그대로 사용 (fallback)
-                    concept = row.creative_name.rsplit(".", 1)[0]
+                # 표준 정규식 → 실패 시 관대 추출(parts[2]) — Google Ads 자동생성 자산명
+                #   (타임스탬프·종횡비·size-letter 누락 등)도 베이스 소재명에 조인 (MMP 와 동일)
+                concept = resolve_concept(row.creative_name)
                 if concept in candidate_concepts:
                     kpi_index.setdefault(concept, []).append(row)
                 else:
