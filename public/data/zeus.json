@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "title_id": "zeus",
+  "generated_at": "2026-06-27T00:00:00+09:00",
+  "pipeline_version": "stage2-mvp",
+  "gemini_model": "gemini-2.5-flash",
+  "creatives": [],
+  "metrics": {
+    "tagged_records": 0,
+    "note": "태깅 전 placeholder — 소재 파일명 정식 컨벤션 정비 후 파이프라인 실행 시 자동 갱신됨"
+  },
+  "campaign_canonical": {},
+  "unmatched_assets": []
+}
