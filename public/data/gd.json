@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "title_id": "gd",
-  "generated_at": "2026-06-26T13:03:29+09:00",
+  "generated_at": "2026-06-27T20:49:20+09:00",
   "pipeline_version": "stage2-mvp",
   "gemini_model": "gemini-2.5-flash-lite",
   "creatives": [
@@ -66,7 +66,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-26T13:02:42+09:00",
+      "tagged_at": "2026-06-27T20:48:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Character-copy-01\\KR\\old\\241211_BNR_Copy-Character-V1_V_1200x1500_NONE_KR_NONE.png"
@@ -97,7 +97,7 @@
     "cache_hits": 1,
     "cache_misses": 0,
     "failures": 1,
-    "duration_sec": 47.0,
+    "duration_sec": 75.9,
     "prompt_version": "v3.3-2026.06.13-character-split-single-idle-v1",
     "fallback_used": true,
     "carried_forward": 0,
@@ -106,5 +106,1612 @@
       "grades": {},
       "top": null
     }
-  }
+  },
+  "campaign_canonical": {},
+  "unmatched_assets": [
+    {
+      "concept": "[Gods & Demons] GODS & DEMONS เปิดอย่างเป็นทางการ",
+      "source": "google_ads",
+      "impressions": 1809082,
+      "cost": 5412026.15,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "[Gods & Demons] GODS & DEMONS OFFICIAL LAUNCH",
+      "source": "google_ads",
+      "impressions": 1485641,
+      "cost": 24878908.51,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "누구나 갓고싶어해요 갓벽한 제니처럼.",
+      "source": "google_ads",
+      "impressions": 267446,
+      "cost": 3818134.47,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "[갓앤데몬] 손댈 게 없는 갓벽한 신화의 시작 그랜드오프닝!",
+      "source": "google_ads",
+      "impressions": 255146,
+      "cost": 7926096.51,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "[Gods & Demons] ปล่อย PV ลงทะเบียนล่วงหน้าแล้ว",
+      "source": "google_ads",
+      "impressions": 247591,
+      "cost": 540396.9,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "발만 대도 레벨업?! 오마이갓! (이수지x갓앤데몬)",
+      "source": "google_ads",
+      "impressions": 203538,
+      "cost": 3325829.82,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "[Gods & Demons] ลงทะเบียนล่วงหน้าสุดยอดเกม RPG!",
+      "source": "google_ads",
+      "impressions": 143840,
+      "cost": 293379.75,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "[갓앤데몬] 손댈 게 없는 갓벽한 신화, 갓앤데몬 런칭PV",
+      "source": "google_ads",
+      "impressions": 123328,
+      "cost": 2754693.22,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "레벨 올리느라 많이 고생하셨죠~? \"아뇨\" (이수지x갓앤데몬)",
+      "source": "google_ads",
+      "impressions": 103286,
+      "cost": 1927313.26,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "[갓앤데몬]🫶나의 최애 영웅은?❤️ #갓앤데몬 #방치형rpg #shorts",
+      "source": "google_ads",
+      "impressions": 89479,
+      "cost": 2475764.47,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "[갓앤데몬] 🌟갓앤데몬 Chill하게 시작하자 #1분육성꿀팁 #갓앤데몬 #방치형rpg",
+      "source": "google_ads",
+      "impressions": 58850,
+      "cost": 1495095.06,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "[갓앤데몬] 갓앤데몬X육환흑, 레전드 콜라보 오픈!",
+      "source": "google_ads",
+      "impressions": 18416,
+      "cost": 642099.99,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "[갓앤데몬]🚫이것만은 NO! 뉴비들의 흔한 실수 TOP 5 #갓앤데몬 #방치형rpg #shorts",
+      "source": "google_ads",
+      "impressions": 13476,
+      "cost": 685659.13,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "[Gods & Demons] Pre-register for Unmatched RPG NOW!",
+      "source": "google_ads",
+      "impressions": 7951,
+      "cost": 116741.32,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "[ゴッド&デモンズ]事前登録PV大公開！",
+      "source": "google_ads",
+      "impressions": 7644,
+      "cost": 157113.04,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "【ゴッド&デモンズ】誰もが待ち望んでいたRPG 事前登録受付中！",
+      "source": "google_ads",
+      "impressions": 6760,
+      "cost": 124433.81,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "《神召守護隊》輕鬆放置RPG，事前預約火熱開跑！",
+      "source": "google_ads",
+      "impressions": 6449,
+      "cost": 61713.61,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "[Gods & Demons] Top 5 Mistakes New Summoners Make! #Gods&demons #idlerpg #shortstips",
+      "source": "google_ads",
+      "impressions": 5999,
+      "cost": 284805.84,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "[갓앤데몬x호식이두마리치킨] GOD튀긴 바삭한 콜라보 등장!",
+      "source": "google_ads",
+      "impressions": 5891,
+      "cost": 383259.26,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "[神召守護隊] 事前預約宣傳影片正式公開！",
+      "source": "google_ads",
+      "impressions": 4959,
+      "cost": 71444.93,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "[Gods & Demons] Tips for Playing Gods & Demons! #Gods&Demons #idlerpg #shortstips",
+      "source": "google_ads",
+      "impressions": 4415,
+      "cost": 251274.25,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "[神召守護隊]《神召守護隊》正式上線",
+      "source": "google_ads",
+      "impressions": 2750,
+      "cost": 69555.17,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "[Gods & Demons] Who is Your Favorite Hero?!#Gods&Demons #idlerpg #shortstips",
+      "source": "google_ads",
+      "impressions": 1932,
+      "cost": 92959.24,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "[Gods & Demons] คอลแลบฯ Gods & Demons X จอมเวทเกิดใหม่ในรอบ 66666 ปีเริ่มแล้ว!",
+      "source": "google_ads",
+      "impressions": 699,
+      "cost": 19018.55,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "GODS & DEMONS X 66,666 YEARS: DARK MAGE COLLAB IS HERE!",
+      "source": "google_ads",
+      "impressions": 539,
+      "cost": 103507.92,
+      "asset_types": [
+        "YOUTUBE_VIDEO"
+      ]
+    },
+    {
+      "concept": "KK_Meme_Y",
+      "source": "mmp",
+      "impressions": 14838201,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "KK_Reward2_N",
+      "source": "mmp",
+      "impressions": 9898887,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Character-copy-01",
+      "source": "mmp",
+      "impressions": 8896923,
+      "cost": 9446175,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Reward-legendhero-01",
+      "source": "mmp",
+      "impressions": 8400463,
+      "cost": 35321302,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Reward-gacha-01",
+      "source": "mmp",
+      "impressions": 5821033,
+      "cost": 8248594,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Model-lee-04",
+      "source": "mmp",
+      "impressions": 3596930,
+      "cost": 6201419,
+      "asset_types": []
+    },
+    {
+      "concept": "KK_Reward1_Y",
+      "source": "mmp",
+      "impressions": 3297646,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "KK_Squid_N",
+      "source": "mmp",
+      "impressions": 3199284,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "L",
+      "source": "mmp",
+      "impressions": 2330509,
+      "cost": 2452559,
+      "asset_types": []
+    },
+    {
+      "concept": "ConnectBNR",
+      "source": "mmp",
+      "impressions": 1978212,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "KK_Model_Y",
+      "source": "mmp",
+      "impressions": 1918403,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "L-UA-Reward-aggro-02",
+      "source": "mmp",
+      "impressions": 1568993,
+      "cost": 21833735,
+      "asset_types": []
+    },
+    {
+      "concept": "L-UA-Character-growth-01",
+      "source": "mmp",
+      "impressions": 1543179,
+      "cost": 18619605,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Character-goddess-01",
+      "source": "mmp",
+      "impressions": 1520190,
+      "cost": 24098289,
+      "asset_types": []
+    },
+    {
+      "concept": "L-UA-Ingame-grandopen-01",
+      "source": "mmp",
+      "impressions": 1467355,
+      "cost": 22237355,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Event-specialcoupon-01",
+      "source": "mmp",
+      "impressions": 1371831,
+      "cost": 5325992,
+      "asset_types": []
+    },
+    {
+      "concept": "L-UA-Reward-aggro-01",
+      "source": "mmp",
+      "impressions": 1370580,
+      "cost": 18521500,
+      "asset_types": []
+    },
+    {
+      "concept": "L-PV-Event-launchingopen-01",
+      "source": "mmp",
+      "impressions": 1348426,
+      "cost": 30945410,
+      "asset_types": []
+    },
+    {
+      "concept": "L-UA-Reward-gacha-01",
+      "source": "mmp",
+      "impressions": 1281472,
+      "cost": 10384761,
+      "asset_types": []
+    },
+    {
+      "concept": "Hoonji",
+      "source": "mmp",
+      "impressions": 1008219,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "Rank2_N",
+      "source": "mmp",
+      "impressions": 1007475,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "L-UA-Reward-aggro-03",
+      "source": "mmp",
+      "impressions": 982127,
+      "cost": 12839943,
+      "asset_types": []
+    },
+    {
+      "concept": "Game_N",
+      "source": "mmp",
+      "impressions": 968648,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "HoonJi_N",
+      "source": "mmp",
+      "impressions": 968525,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "Reward_Y",
+      "source": "mmp",
+      "impressions": 967896,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Model-grandopen-01",
+      "source": "mmp",
+      "impressions": 643788,
+      "cost": 4256106,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Event-rank-01",
+      "source": "mmp",
+      "impressions": 580916,
+      "cost": 6185141,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Reward-gacha-02",
+      "source": "mmp",
+      "impressions": 552783,
+      "cost": 5976527,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Character-66666volpir-01",
+      "source": "mmp",
+      "impressions": 323479,
+      "cost": 1646501,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Reward-legendhero-02",
+      "source": "mmp",
+      "impressions": 312588,
+      "cost": 1349383,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Model-lee15s-02",
+      "source": "mmp",
+      "impressions": 299873,
+      "cost": 4518648,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Reward-buster-03",
+      "source": "mmp",
+      "impressions": 285549,
+      "cost": 5026388,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Character-ingameillust-01",
+      "source": "mmp",
+      "impressions": 244815,
+      "cost": 3330557,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Model-lee-02",
+      "source": "mmp",
+      "impressions": 239538,
+      "cost": 7227695,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Reward-buster-01",
+      "source": "mmp",
+      "impressions": 238119,
+      "cost": 2422711,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Reward-buster-02",
+      "source": "mmp",
+      "impressions": 232899,
+      "cost": 2490526,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Character-growth-01",
+      "source": "mmp",
+      "impressions": 225158,
+      "cost": 4000355,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Event-googlerank-01",
+      "source": "mmp",
+      "impressions": 211489,
+      "cost": 3976291,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Reward-66666gnarly-01",
+      "source": "mmp",
+      "impressions": 195077,
+      "cost": 1462552,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Model-lee15s-03",
+      "source": "mmp",
+      "impressions": 189569,
+      "cost": 2754903,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Ingame-ASO-01",
+      "source": "mmp",
+      "impressions": 187535,
+      "cost": 1727346,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Reward-66666reward-01",
+      "source": "mmp",
+      "impressions": 187366,
+      "cost": 627778,
+      "asset_types": []
+    },
+    {
+      "concept": "HoonJi",
+      "source": "mmp",
+      "impressions": 182780,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "Reward",
+      "source": "mmp",
+      "impressions": 182552,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "Model",
+      "source": "mmp",
+      "impressions": 181892,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Model-lee-03",
+      "source": "mmp",
+      "impressions": 162755,
+      "cost": 2622830,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Model-lee-05",
+      "source": "mmp",
+      "impressions": 161374,
+      "cost": 2837265,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Event-specialcoupon-02",
+      "source": "mmp",
+      "impressions": 150217,
+      "cost": 994967,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Reward-66666naverpay-01",
+      "source": "mmp",
+      "impressions": 142673,
+      "cost": 337590,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Reward-buster-04",
+      "source": "mmp",
+      "impressions": 139048,
+      "cost": 1792630,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Reward-66666character-01",
+      "source": "mmp",
+      "impressions": 132190,
+      "cost": 733062,
+      "asset_types": []
+    },
+    {
+      "concept": "Rank1",
+      "source": "mmp",
+      "impressions": 124731,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Model-lee6s-03",
+      "source": "mmp",
+      "impressions": 102465,
+      "cost": 681433,
+      "asset_types": []
+    },
+    {
+      "concept": "P-UA-Reward-gacha-02",
+      "source": "mmp",
+      "impressions": 93740,
+      "cost": 315332,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Model-lee15s-01",
+      "source": "mmp",
+      "impressions": 91957,
+      "cost": 1581889,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Model-lee15s-04",
+      "source": "mmp",
+      "impressions": 88476,
+      "cost": 1585103,
+      "asset_types": []
+    },
+    {
+      "concept": "L-PV-Event-66666open-01",
+      "source": "mmp",
+      "impressions": 88024,
+      "cost": 3296231,
+      "asset_types": []
+    },
+    {
+      "concept": "Rank2",
+      "source": "mmp",
+      "impressions": 86254,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Model-lee-01",
+      "source": "mmp",
+      "impressions": 78737,
+      "cost": 1941773,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Model-lee-04",
+      "source": "mmp",
+      "impressions": 58837,
+      "cost": 1645415,
+      "asset_types": []
+    },
+    {
+      "concept": "L-UA-Character-growth-02",
+      "source": "mmp",
+      "impressions": 49974,
+      "cost": 3867802,
+      "asset_types": []
+    },
+    {
+      "concept": "P-DA-Kakaobiz-modellee-04",
+      "source": "mmp",
+      "impressions": 46648,
+      "cost": 76279,
+      "asset_types": []
+    },
+    {
+      "concept": "L-UA-Reward-aggrocoupon-01",
+      "source": "mmp",
+      "impressions": 45852,
+      "cost": 4343518,
+      "asset_types": []
+    },
+    {
+      "concept": "L-UA-Event-febupdate-01",
+      "source": "mmp",
+      "impressions": 41439,
+      "cost": 2631775,
+      "asset_types": []
+    },
+    {
+      "concept": "P-DA-Model-lee-01",
+      "source": "mmp",
+      "impressions": 40676,
+      "cost": 29400,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Model-lee6s-02",
+      "source": "mmp",
+      "impressions": 39849,
+      "cost": 292124,
+      "asset_types": []
+    },
+    {
+      "concept": "L-UA-Reward-aggrov2-02",
+      "source": "mmp",
+      "impressions": 38395,
+      "cost": 3520555,
+      "asset_types": []
+    },
+    {
+      "concept": "P-UA-Character-ability-01",
+      "source": "mmp",
+      "impressions": 37644,
+      "cost": 171643,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Character-goddess-02",
+      "source": "mmp",
+      "impressions": 32237,
+      "cost": 143216,
+      "asset_types": []
+    },
+    {
+      "concept": "P-UA-Character-battle-01",
+      "source": "mmp",
+      "impressions": 26487,
+      "cost": 131496,
+      "asset_types": []
+    },
+    {
+      "concept": "L-UA-Reward-aggrov2-01",
+      "source": "mmp",
+      "impressions": 24234,
+      "cost": 1807875,
+      "asset_types": []
+    },
+    {
+      "concept": "P-DA-Kakaobiz-firegirl-01",
+      "source": "mmp",
+      "impressions": 21672,
+      "cost": 34944,
+      "asset_types": []
+    },
+    {
+      "concept": "Gods & Demons",
+      "source": "mmp",
+      "impressions": 21204,
+      "cost": 2332500,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Reward-gacha-02",
+      "source": "mmp",
+      "impressions": 19000,
+      "cost": 944434,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Model-lee6s-01",
+      "source": "mmp",
+      "impressions": 18378,
+      "cost": 230061,
+      "asset_types": []
+    },
+    {
+      "concept": "L-UA-Ingame-successvsfail-01",
+      "source": "mmp",
+      "impressions": 18081,
+      "cost": 1237416,
+      "asset_types": []
+    },
+    {
+      "concept": "P-PV-Event-preregopen-01",
+      "source": "mmp",
+      "impressions": 16872,
+      "cost": 74858,
+      "asset_types": []
+    },
+    {
+      "concept": "L-FK-Character-attempt-01",
+      "source": "mmp",
+      "impressions": 15658,
+      "cost": 742560,
+      "asset_types": []
+    },
+    {
+      "concept": "P-UA-Reward-gacha-01",
+      "source": "mmp",
+      "impressions": 15236,
+      "cost": 100265,
+      "asset_types": []
+    },
+    {
+      "concept": "P-DA-Model-lee-02",
+      "source": "mmp",
+      "impressions": 13204,
+      "cost": 47469,
+      "asset_types": []
+    },
+    {
+      "concept": "P-DA-Model-lee-04",
+      "source": "mmp",
+      "impressions": 13095,
+      "cost": 49468,
+      "asset_types": []
+    },
+    {
+      "concept": "L-UA-Character-guide-02",
+      "source": "mmp",
+      "impressions": 12547,
+      "cost": 424443,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Event-secretroom-01",
+      "source": "mmp",
+      "impressions": 9764,
+      "cost": 988775,
+      "asset_types": []
+    },
+    {
+      "concept": "L-UA-Character-guide-01",
+      "source": "mmp",
+      "impressions": 8354,
+      "cost": 331101,
+      "asset_types": []
+    },
+    {
+      "concept": "P-UA-Reward-typo-01",
+      "source": "mmp",
+      "impressions": 7998,
+      "cost": 107140,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Influencer-twugc-04",
+      "source": "mmp",
+      "impressions": 7723,
+      "cost": 329371,
+      "asset_types": []
+    },
+    {
+      "concept": "P-DA-Character-firegirl-02",
+      "source": "mmp",
+      "impressions": 7561,
+      "cost": 46146,
+      "asset_types": []
+    },
+    {
+      "concept": "P-DA-Character-firegirl-01",
+      "source": "mmp",
+      "impressions": 7387,
+      "cost": 47397,
+      "asset_types": []
+    },
+    {
+      "concept": "P-DA-Character-group-01",
+      "source": "mmp",
+      "impressions": 7333,
+      "cost": 46991,
+      "asset_types": []
+    },
+    {
+      "concept": "L-UA-Ingame-successvsfail-02",
+      "source": "mmp",
+      "impressions": 6628,
+      "cost": 498737,
+      "asset_types": []
+    },
+    {
+      "concept": "P-UA-Character-battle-02",
+      "source": "mmp",
+      "impressions": 6350,
+      "cost": 61612,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Event-hosigi-01",
+      "source": "mmp",
+      "impressions": 5211,
+      "cost": 222554,
+      "asset_types": []
+    },
+    {
+      "concept": "L-FK-Character-sims-01",
+      "source": "mmp",
+      "impressions": 4237,
+      "cost": 272570,
+      "asset_types": []
+    },
+    {
+      "concept": "L-UA-Character-newskin-01",
+      "source": "mmp",
+      "impressions": 3842,
+      "cost": 198670,
+      "asset_types": []
+    },
+    {
+      "concept": "L-UA-Character-newskin-02",
+      "source": "mmp",
+      "impressions": 3495,
+      "cost": 165504,
+      "asset_types": []
+    },
+    {
+      "concept": "L-UA-Event-hosigi-01",
+      "source": "mmp",
+      "impressions": 3452,
+      "cost": 198342,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Reward-character-02",
+      "source": "mmp",
+      "impressions": 3267,
+      "cost": 194601,
+      "asset_types": []
+    },
+    {
+      "concept": "P-PV-Event-launchingopen-01",
+      "source": "mmp",
+      "impressions": 2667,
+      "cost": 28557,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Character-twbanner-01",
+      "source": "mmp",
+      "impressions": 2366,
+      "cost": 59515,
+      "asset_types": []
+    },
+    {
+      "concept": "P-DA-Character-neoncopy-01",
+      "source": "mmp",
+      "impressions": 2061,
+      "cost": 12111,
+      "asset_types": []
+    },
+    {
+      "concept": "P-DA-Reward-gacha-01",
+      "source": "mmp",
+      "impressions": 2019,
+      "cost": 11934,
+      "asset_types": []
+    },
+    {
+      "concept": "P-UA-Character-ability-02",
+      "source": "mmp",
+      "impressions": 1909,
+      "cost": 16795,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Influencer-twugc-02",
+      "source": "mmp",
+      "impressions": 1808,
+      "cost": 83482,
+      "asset_types": []
+    },
+    {
+      "concept": "L-UA-Reward-noobvspro-01",
+      "source": "mmp",
+      "impressions": 1728,
+      "cost": 142382,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Influencer-twugc-03",
+      "source": "mmp",
+      "impressions": 1667,
+      "cost": 107985,
+      "asset_types": []
+    },
+    {
+      "concept": "P-UA-Reward-goods-01",
+      "source": "mmp",
+      "impressions": 1426,
+      "cost": 7322,
+      "asset_types": []
+    },
+    {
+      "concept": "P-DA-Character-copy-01",
+      "source": "mmp",
+      "impressions": 1178,
+      "cost": 14288,
+      "asset_types": []
+    },
+    {
+      "concept": "P-DA-Reward-legendhero-01",
+      "source": "mmp",
+      "impressions": 1113,
+      "cost": 12395,
+      "asset_types": []
+    },
+    {
+      "concept": "P-DA-Character-neoncopy-02",
+      "source": "mmp",
+      "impressions": 1107,
+      "cost": 13801,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Character-twbanner-02",
+      "source": "mmp",
+      "impressions": 1103,
+      "cost": 37289,
+      "asset_types": []
+    },
+    {
+      "concept": "P-DA-Reward-preregevent-01",
+      "source": "mmp",
+      "impressions": 1062,
+      "cost": 12626,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Influencer-twugc-01",
+      "source": "mmp",
+      "impressions": 759,
+      "cost": 33363,
+      "asset_types": []
+    },
+    {
+      "concept": "L-LA-Influencer-twugc-05",
+      "source": "mmp",
+      "impressions": 633,
+      "cost": 30679,
+      "asset_types": []
+    },
+    {
+      "concept": "복사본_250115_BNR_HoonJi_N_L_720x480_KR(Model 2)",
+      "source": "mmp",
+      "impressions": 66,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "P-LA-Reward-buster-01",
+      "source": "mmp",
+      "impressions": 1,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "MOTakeover",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "PCTakeover",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "Grandopening_Y",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "Naver_Newyear_Y",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "HoonJi_Y",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "Naver_Reward_Y",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "Reward 1_Y",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "Model_Y",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "Naver_Game_N",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "Rank1_Y",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "1007b70e-8e10-442e-9631-91462e8425ca",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "e1166592-2829-4b1a-b940-f304dc545599",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "309211f4-eeca-4145-8676-135ea355b566",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "51725d0a-d7e6-406e-aa58-515e1f4a534d",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "0ed871d3-c0e2-4f80-995a-4819039c496c",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "34192d1f-10ad-4056-8d5b-4ae70669c2ea",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "1875d820-eef5-42be-9fe4-5c963a8a4415",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "5abd6bb8-09d6-4597-b048-cb7d7e936a73",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "34e2cb63-2f6a-4b96-9dc6-37e2ec1bb14f",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "3f710945-c84b-43a7-b618-04347ae03b3d",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "a29567f5-1f66-41b4-b7b5-221ffc61830f",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "ee8fd7f6-9183-4f40-9628-4e99897c0ec6",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "bd3a7aa0-a899-463f-b92d-f69bfdae5953",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "1fb6f724-13cd-4335-8d1a-e83549a3cfa8",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "51beefa3-6df1-47eb-8ff9-ead74de74cb0",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "3afc2276-282f-4753-b996-e38e7b73b0e9",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "393dd66a-c854-4eb2-95de-71c2c5ae1586",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "97583c18-6df8-4009-9e52-af46aac2b809",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "3515b4f3-f200-40ff-8799-a8f0d54698f9",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "96e0cd8e-03e9-43da-b4da-b8d6ca82f8de",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "809e27aa-c5e1-4ca5-9c4e-2516f89643d0",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "955e752e-c921-40ed-9a9f-d17b4d3f3ab5",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "1bc20dae-5b24-4dc1-8554-21f9f5b7e8fd",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "db514aed-ebb1-4f82-a270-61af93c2ca36",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "a6915e1f-5c17-4543-add7-60697a07d1bf",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "8569b1ce-eb0a-479f-ba04-279d38592ac6",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "6d866f19-139d-4b8b-9314-4923d0c217e8",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "79b9ca25-c663-4d29-929a-49c4681ae69a",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "d53e9ce3-5853-4649-90d3-f5c4380adcc0",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "9bf50544-4f01-45df-ad7b-9635b9423c3d",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "61d886df-a5ad-4589-b04c-c95f7e0065c0",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "f014e416-c483-436f-99cf-a51ae002d527",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "74420e6b-3592-4e6b-b5d3-de251921cfd4",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "5c5a1582-4a2d-419d-bcc4-98f980d1ab95",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "64cedffe-6ef1-426a-8c54-f7688a4178bb",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "e93c8a29-7551-439f-b8a1-fd5d6f10eed7",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "9ba88d03-eabc-4fb8-bbfc-feda2074b603",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "4d87cfa5-0ab3-4444-8737-191063a83eee",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "4d0b0af9-8223-42cf-a60c-c0d006d5e442",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "a3760634-ca17-4dd5-b39d-b076df9a0ef3",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "9da6bef3-63c5-4c6b-8b0a-0cca313a0eff",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "f0885a91-d41a-4068-93e8-d5da6967bfd1",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "632c1881-80ec-4c17-9170-c6e4100fd3af",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "89f28e74-02f1-4b39-9f2e-f511c036ddf1",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "5e10ff8b-200f-4784-a1eb-66210d9ad1ce",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "ebf458f5-291c-41d1-bfb4-ce66ddffd32c",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "013590dd-ce97-4cac-a823-ef1bfaee6d66",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "5457094f-6168-4d9d-a802-d7558598bb4f",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "f0551baa-6396-42cb-93e8-8bbf9ca68313",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "167b437a-ee1e-4e38-9ff4-e0b0b8e6e093",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "fb417bc8-b938-4ba5-986a-977f7e44a497",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "46ad9ec8-1123-4989-a63d-19513a738b9a",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "14273519-31db-4924-b6b9-865a68b824bb",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "0c69018e-b465-4004-9e2b-b80d0da91f0a",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "73847957-4d3b-4e4f-822c-fd149618ad35",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "8bc7ae80-d638-4154-9de7-9c129ce18612",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "203b0e50-0c08-4284-bf29-38034610519c",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "eaed4fb3-9873-4c67-912d-d4a97360dc4e",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "c754394b-93c5-40b3-bd43-87d07a65a671",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "{ad_name}",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 1870749,
+      "asset_types": []
+    },
+    {
+      "concept": "L-DA-Icon-gods",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "ESC LT PLAYER",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "mangalogyclub",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "KonNime",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "1b68be57-9501-41db-a424-1ae0d25a2727",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "df564f9b-fc12-4a2f-b6be-382c8b3cdd01",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "8a2262bd-a3ab-46be-bf4f-bc779ee730b3",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "1dd4cc5e-a0df-437f-bd6c-460022994c22",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "61881a00-fcc7-4cfc-a705-5993ab4b20a6",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "085a989c-2bf3-46de-ab0a-9d0a4ef1506a",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "36fe7dac-e430-404d-9021-521154e33355",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "79633437-635e-4384-9048-138c564ed3b8",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    }
+  ]
 }
