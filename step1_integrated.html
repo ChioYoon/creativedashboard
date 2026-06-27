@@ -3625,6 +3625,22 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         hideLoadingIndicator();
       } catch (e) {
         hideLoadingIndicator();
+        if (e && e.httpStatus === 404) {
+          // 등록은 됐으나 아직 산출 JSON 이 없는 타이틀(미태깅) — 에러가 아닌 안내로 처리.
+          // stale 직전 타이틀 데이터가 분석에 잡히지 않도록 상태도 비움.
+          console.info(`[loadTitleFromJson] ${titleEntry.id}: 아직 데이터 없음 (HTTP 404) — 미태깅 타이틀`);
+          rawData = [];
+          normalizedData = { columns: [], rows: [] };
+          window.__unmatchedAssets = [];
+          renderUnmatchedPanel();
+          document.getElementById('uploadStatus').style.display = 'block';
+          document.getElementById('uploadInfo').innerHTML = `
+            <div style="padding: 12px 14px; background: #fff7ed; border-left: 3px solid #f59e0b; border-radius: 6px; font-size: 13px; color: #92400e;">
+              <div style="font-weight:700; margin-bottom:4px;">⏳ 아직 데이터가 없습니다 — <strong>${escapeHtml(titleEntry.id)}</strong></div>
+              등록은 되어 있으나 소재 태깅(파이프라인) 산출 전이라 분석할 데이터가 없습니다. 태깅이 완료되면 자동으로 표시됩니다.
+            </div>`;
+          return;
+        }
         console.error('[loadTitleFromJson] 실패:', e);
         alert(`JSON 로드 실패: ${e.message}\n\nURL: ${titleEntry.json_url}`);
       }

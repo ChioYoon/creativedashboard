@@ -208,7 +208,9 @@
       if (!opts.url) throw new Error('JSON URL이 지정되지 않았습니다.');
       const res = await fetch(opts.url, { cache: 'no-store' });
       if (!res.ok) {
-        throw new Error(`JSON 로드 실패 (HTTP ${res.status}): ${opts.url}`);
+        const err = new Error(`JSON 로드 실패 (HTTP ${res.status}): ${opts.url}`);
+        err.httpStatus = res.status;  // 404(미태깅 타이틀) 구분용 — 호출측에서 graceful 처리
+        throw err;
       }
       const parsed = await res.json();
       const normalized = normalizeFromJson(parsed);
