@@ -309,3 +309,26 @@
   .gai-section-action { flex-wrap: wrap; }
   .gai-section-action .gai-key-status { margin-left: 0; }
 }
+
+/* ── 무료 winning 구조화 카드 ── */
+.gai-structured-card { border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden; background: #fff; }
+.gai-zone { padding: 12px 14px; }
+.gai-zone--win  { background: #ecfdf5; }
+.gai-zone--lose { background: #fffbeb; border-top: 1px solid #e5e7eb; }
+.gai-zone-header { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+.gai-zone--win  .gai-zone-header { color: #10b981; }
+.gai-zone--lose .gai-zone-header { color: #f59e0b; }
+.gai-item-row { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; font-size: 12.5px; line-height: 1.5; }
+.gai-item-name { font-weight: 600; color: #111827; }
+.gai-item-reason { color: #6b7280; }
+.gai-chip { font-size: 11px; padding: 1px 7px; border-radius: 6px; border: 1px solid #e5e7eb; background: #fff; white-space: nowrap; }
+.gai-chip--ipm { color: #0f766e; }
+.gai-chip--cpa { color: #6b7280; }
+.gai-callout { font-size: 12px; border-radius: 6px; padding: 6px 9px; margin-top: 4px; background: #fff; }
+.gai-callout--win  { color: #0f766e; }
+.gai-callout--lose { color: #b45309; }
+.gai-reco-row { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; padding: 10px 14px; border-top: 1px solid #e5e7eb; }
+.gai-reco-label { font-size: 12px; color: #6b7280; }
+.gai-badge { font-size: 12px; padding: 2px 9px; border-radius: 6px; }
+.gai-badge--expand { background: #ecfdf5; color: #10b981; }
+.gai-badge--stop   { background: #fef2f2; color: #dc2626; }

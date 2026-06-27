@@ -953,6 +953,46 @@ function parseFreeWinning(rawText) {
   return { win, lose, recos, _ok: win.items.length > 0 };
 }
 
+function _esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+function _buildFreeWinningCard(parsed) {
+  const chip = (label, val, cls) => val
+    ? `<span class="gai-chip ${cls}">${label} ${_esc(val)}</span>` : '';
+  const itemRow = (it) => `
+    <div class="gai-item-row">
+      <span class="gai-item-name">${_esc(it.name)}</span>
+      ${chip('IPM', it.ipm, 'gai-chip--ipm')}
+      ${chip('CPA', it.cpa ? '₩' + it.cpa : '', 'gai-chip--cpa')}
+      ${it.reason ? `<span class="gai-item-reason">${_esc(it.reason)}</span>` : ''}
+    </div>`;
+  const calloutHtml = (c, cls) => c
+    ? `<div class="gai-callout ${cls}"><strong>${_esc(c.label)}</strong> · ${_esc(c.text)}</div>` : '';
+
+  const winZone = `
+    <div class="gai-zone gai-zone--win">
+      <div class="gai-zone-header">🏆 위닝 소재</div>
+      ${parsed.win.items.map(itemRow).join('')}
+      ${calloutHtml(parsed.win.callout, 'gai-callout--win')}
+    </div>`;
+  const loseZone = (parsed.lose.items.length || parsed.lose.callout) ? `
+    <div class="gai-zone gai-zone--lose">
+      <div class="gai-zone-header">⚠️ 저효율 소재</div>
+      ${parsed.lose.items.map(itemRow).join('')}
+      ${calloutHtml(parsed.lose.callout, 'gai-callout--lose')}
+    </div>` : '';
+  const recoRow = parsed.recos.length ? `
+    <div class="gai-reco-row">
+      <span class="gai-reco-label">즉시 권고</span>
+      ${parsed.recos.map(r => `<span class="gai-badge gai-badge--${r.kind === '확장' ? 'expand' : 'stop'}">${_esc(r.kind)} · ${_esc(r.name)}</span>`).join('')}
+    </div>` : '';
+
+  return `<div class="gai-structured-card">${winZone}${loseZone}${recoRow}</div>`;
+}
+
 function parseScoringSlots(raw) {
   // winning/losing: 신규 키 + winTags(하위호환) 모두 인식
   const KEYS = ['winning','losing','winTags','actionItems','scaleUp','stopNow'];
@@ -1107,6 +1147,16 @@ function buildScoringSlotCards(slots) {
   const retryBtn = (missingCount > 0 || hasTruncated)
     ? `<button class="gai-retry-btn" onclick="runScoringAIInsight()" title="재분석하면 누락된 슬롯을 복구할 수 있습니다">🔄 재분석</button>`
     : '';
+
+  // 무료 단일 winning 슬롯: 구조화 렌더 시도, 실패 시 아래 일반(평평) 렌더로 폴백
+  if (isWinningOnly) {
+    const parsedFW = parseFreeWinning(slots.winning);
+    if (parsedFW._ok) {
+      return `${_buildFreeWinningCard(parsedFW)}
+        <div class="gai-slot-summary"><span>${summaryParts.join(' ')}</span>${retryBtn}</div>`;
+    }
+    // _ok:false → 아래 기존 cardHtmlArr 경로로 폴백
+  }
 
   const cardHtmlArr = activeDefs.map(d => {
     const html = _slotText(slots[d.key], d.key);
