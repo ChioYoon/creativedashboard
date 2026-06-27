@@ -264,8 +264,6 @@ http://localhost:8080/step1_integrated.html
 | AI 인사이트 UI 렌더링 개선 | winning 슬롯 내 위닝/루징 블록을 시각적으로 분리 (카드 내 섹션 구분선, 배지 등) | 🔴 높음 |
 | 사용안내서 최신화 | `사용안내서_인쇄용.html` — CSV 붙여넣기 탭, 저조소재 카드, HTML추출 미리보기 반영 | 🟡 중간 |
 | README.md 업데이트 | 5/19~20 변경사항 반영 (현재 4/13 기준) | 🟡 중간 |
-| Step2 군집화 AI 인사이트 | step2_clustering.html — Gemini 연동 미완성 | 🟢 낮음 |
-| 레거시 파일 정리 | test_*.html, 완료보고서 .md 파일 다수 → 별도 폴더로 이동 | 🟢 낮음 |
 
 ---
 
