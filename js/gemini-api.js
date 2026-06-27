@@ -883,6 +883,76 @@ function _cleanAndRepairJson(raw) {
   return s;
 }
 
+/**
+ * 무료 winning 슬롯 텍스트 → 구조 객체 (순수함수).
+ * 실패 시 _ok:false → 호출측에서 기존 평평 렌더로 폴백.
+ */
+function parseFreeWinning(rawText) {
+  const empty = { win: { items: [], callout: null }, lose: { items: [], callout: null }, recos: [], _ok: false };
+  if (!rawText || String(rawText).trim() === '') return empty;
+  const text = String(rawText).replace(/\\n/g, '\n');
+
+  // ── 구간 분할: [위닝 소재] / [저효율 소재] / 즉시 권고 ──
+  const headerKind = (line) => {
+    const h = line.replace(/\*/g, '').trim();
+    if (/^\[?\s*위닝\s*소재/.test(h)) return 'win';
+    if (/^\[?\s*저효율\s*소재/.test(h)) return 'lose';
+    if (/^즉시\s*권고/.test(h)) return 'reco';
+    return null;
+  };
+  const buf = { win: [], lose: [], reco: [] };
+  let cur = null;
+  for (const line of text.split('\n')) {
+    const k = headerKind(line);
+    if (k) {
+      cur = k;
+      if (k === 'reco') {  // "**즉시 권고**: ..." 헤더 줄에 내용이 붙은 경우
+        const after = line.split(/[:：]/).slice(1).join(':').trim();
+        if (after) buf.reco.push(after);
+      }
+      continue;
+    }
+    if (cur) buf[cur].push(line);
+  }
+
+  const ITEM_RE = /^[•\-▸▪◆]\s*\*\*(.+?)\*\*\s*(?:\(([^)]*)\))?\s*(?:[—:\-]\s*(.*))?$/;
+  const CALLOUT_RE = /^\*\*(.+?)\*\*\s*[:：]\s*(.*)$/;
+  const parseSection = (arr) => {
+    const items = []; let callout = null;
+    for (const raw of arr) {
+      const line = raw.trim();
+      if (!line) continue;
+      const im = line.match(ITEM_RE);
+      if (im) {
+        const metrics = im[2] || '';
+        const ipm = (metrics.match(/IPM\s*([\d.]+)/i) || [])[1] || null;
+        const cpa = (metrics.match(/CPA\s*([\d,]+)/i) || [])[1] || null;
+        items.push({ name: im[1].trim(), ipm, cpa, reason: (im[3] || '').trim() });
+        continue;
+      }
+      if (!callout) {
+        const cm = line.match(CALLOUT_RE);
+        if (cm) callout = { label: cm[1].trim(), text: cm[2].trim() };
+      }
+    }
+    return { items, callout };
+  };
+
+  const win = parseSection(buf.win);
+  const lose = parseSection(buf.lose);
+
+  // ── 즉시 권고: [확장 …] 소재 / [중단 …] 소재 ──
+  const recoText = buf.reco.join(' ');
+  const recos = [];
+  let m;
+  const EXP_RE = /\[\s*확장[^\]]*\]\s*([^/\n\[]+)/g;
+  const STOP_RE = /\[\s*중단[^\]]*\]\s*([^/\n\[]+)/g;
+  while ((m = EXP_RE.exec(recoText))) recos.push({ kind: '확장', name: m[1].trim() });
+  while ((m = STOP_RE.exec(recoText))) recos.push({ kind: '중단', name: m[1].trim() });
+
+  return { win, lose, recos, _ok: win.items.length > 0 };
+}
+
 function parseScoringSlots(raw) {
   // winning/losing: 신규 키 + winTags(하위호환) 모두 인식
   const KEYS = ['winning','losing','winTags','actionItems','scaleUp','stopNow'];
