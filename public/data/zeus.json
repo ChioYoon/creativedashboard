@@ -1,13 +1,117 @@
 {
   "schema_version": "1.0",
   "title_id": "zeus",
-  "generated_at": "2026-06-27T00:00:00+09:00",
+  "generated_at": "2026-06-28T13:00:15+09:00",
   "pipeline_version": "stage2-mvp",
   "gemini_model": "gemini-2.5-flash",
-  "creatives": [],
+  "creatives": [
+    {
+      "creative_id": "P-Reward-PreReward03-DA",
+      "소재명": "P-Reward-PreReward03-DA",
+      "파일명": "260701_BNR_P-Reward-PreReward03-DA_L_1080x1920_KR.jpg",
+      "유형": "BNR",
+      "일": "2026-07-01",
+      "캠페인": null,
+      "사이즈": "1080x1920",
+      "언어": "KR",
+      "링크": null,
+      "creative_concept": "P-Reward-PreReward03-DA",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "압도적 보상",
+      "USP": "혜택형(무료뽑기/보상)",
+      "art_style": "시네마틱 실사 합성",
+      "strengths": [
+        "보상 약속 명확",
+        "단일 주인공 스포트라이트",
+        "강한 비주얼 임팩트"
+      ],
+      "weaknesses": [
+        "장르/게임성 불분명",
+        "초반 3초 안에 가치 전달 실패"
+      ],
+      "hypothesis": [
+        "높은 CTR 예상 — 강한 후킹",
+        "낮은 전환 위험 — 행동 유도 약함"
+      ],
+      "test_ideas": [
+        "게임플레이 컷 추가",
+        "다른 core_usp 각도 변주"
+      ],
+      "one_line_insight": "고급스러운 비주얼과 명확한 보상 약속으로 시선을 끄는 데는 강점이나, MMORPG의 핵심 게임성이 불분명함 — 초반 5초 내에 대규모 전투 장면을 추가하여 장르적 매력을 명확히 전달하면 전환율 개선",
+      "strength_evidence": [
+        "화면 중앙 상단에 '가장 거대한 보상', '희귀 탈것·의상 100% 지급' 문구가 크게 강조되어 시청자의 시선이 즉시 보상에 집중됨",
+        "화면 중앙에 황금빛 의상을 입은 여신 캐릭터가 클로즈업되어 게임의 신화적 분위기와 고퀄리티 비주얼을 효과적으로 전달함",
+        "실사풍의 고퀄리티 3D 캐릭터 모델링과 황금빛 보상 아이템, 배경의 별빛 연출이 웅장하고 고급스러운 분위기를 조성하여 시선을 사로잡음"
+      ],
+      "weakness_evidence": [
+        "캐릭터 외형과 보상만 강조될 뿐, MMORPG 장르의 핵심인 실제 게임플레이, 전투, 세계관 등의 단서가 없어 게임에 대한 궁금증이 해소되지 않음",
+        "보상 강조는 명확하나, MMORPG의 핵심 가치인 대규모 전투, 성장, 경쟁 요소가 전혀 드러나지 않아 장르 타겟 유저에게 어필하기 어려움"
+      ],
+      "improvement_actions": [
+        "캐릭터와 보상 강조 후, 3~5초 구간에 대규모 전투나 오픈필드 탐험 등 MMORPG 핵심 게임플레이 장면을 짧게 삽입하여 장르 인지를 높임",
+        "보상 강조 버전 외에, '압도적 스케일의 RvR' 또는 '독보적인 경제 시스템' 등 게임의 다른 핵심 USP를 전면에 내세운 A/B 테스트 소재를 제작함"
+      ],
+      "creator_intent": "고퀄리티 여신 캐릭터와 파격적인 사전예약 보상을 전면에 내세워 신규 유저의 시선을 사로잡고 사전예약 전환을 유도하려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 1,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
+      "marketer_insight": null,
+      "tagged_at": "2026-06-28T13:00:15+09:00",
+      "gemini_model": "gemini-2.5-flash",
+      "source_files": [
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_1080x1920_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_1200x1200_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_1200x628_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_1920x1080_KR.png",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_320x50_KR.jpg"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
+    }
+  ],
   "metrics": {
-    "tagged_records": 0,
-    "note": "태깅 전 placeholder — 소재 파일명 정식 컨벤션 정비 후 파이프라인 실행 시 자동 갱신됨"
+    "scanned_folders": 1,
+    "tagged_records": 1,
+    "cache_hits": 1,
+    "cache_misses": 0,
+    "failures": 0,
+    "duration_sec": 0.2,
+    "prompt_version": "v3.3-2026.06.13-character-split-single-mmorpg-v1",
+    "fallback_used": false,
+    "carried_forward": 0,
+    "score_summary": {
+      "graded": 0,
+      "grades": {},
+      "top": null
+    }
   },
   "campaign_canonical": {},
   "unmatched_assets": []

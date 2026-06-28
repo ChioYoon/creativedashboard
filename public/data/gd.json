@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "title_id": "gd",
-  "generated_at": "2026-06-27T20:49:20+09:00",
+  "generated_at": "2026-06-28T13:05:27+09:00",
   "pipeline_version": "stage2-mvp",
   "gemini_model": "gemini-2.5-flash-lite",
   "creatives": [
@@ -66,10 +66,279 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-27T20:48:04+09:00",
+      "tagged_at": "2026-06-28T13:03:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Character-copy-01\\KR\\old\\241211_BNR_Copy-Character-V1_V_1200x1500_NONE_KR_NONE.png"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
+    },
+    {
+      "creative_id": "L-DA-Character-66666heroine-01",
+      "소재명": "L-DA-Character-66666heroine-01",
+      "파일명": "250614_BNR_L-DA-Character-66666heroine-01_L_1200x628_CNT_NONE.png",
+      "유형": "BNR",
+      "일": "2025-06-14",
+      "캠페인": null,
+      "사이즈": "1200x628",
+      "언어": "CNT",
+      "링크": null,
+      "creative_concept": "L-DA-Character-66666heroine-01",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "비주얼 임팩트",
+      "USP": "전략/경쟁형(상성/조합)",
+      "art_style": "2D 일러스트",
+      "strengths": [
+        "강한 비주얼 임팩트",
+        "캐릭터 액션/전투 연출",
+        "다수 캐릭터 라인업"
+      ],
+      "weaknesses": [
+        "행동 유도 약함/부재",
+        "장르/게임성 불분명"
+      ],
+      "hypothesis": [
+        "높은 CTR 예상 — 강한 후킹",
+        "낮은 전환 위험 — 행동 유도 약함"
+      ],
+      "test_ideas": [
+        "명시적 CTA 추가",
+        "다른 core_usp 각도 변주"
+      ],
+      "one_line_insight": "강력한 비주얼 임팩트와 전투 연출로 시선을 사로잡지만, 방치형 게임의 핵심 USP와 명확한 CTA가 부재함 — 인게임 편의성 요소를 추가하고 다운로드 버튼을 명시하여 전환율을 개선해야 한다.",
+      "strength_evidence": [
+        "중앙에 배치된 두 개의 인게임 전투 화면에서 화려한 스킬 이펙트와 대미지 폰트가 시선을 압도하며, '震撼視覺感官的快感' 문구가 이를 뒷받침한다.",
+        "두 개의 인게임 화면에서 다수의 캐릭터들이 역동적으로 스킬을 사용하고 공격하는 모습이 명확하게 보여져 전투의 재미를 강조한다.",
+        "인게임 전투 화면에 다양한 외형의 캐릭터들이 팀을 이루어 전투하는 모습이 나타나 수집 및 조합의 재미를 암시한다."
+      ],
+      "weakness_evidence": [
+        "이미지 내에 다운로드 버튼, 사전등록 유도 문구 등 시청자의 다음 행동을 명확히 제시하는 CTA 요소가 전혀 없어 전환으로 이어지기 어렵다.",
+        "방치형 RPG임에도 불구하고 자동 전투, 오프라인 보상 등 핵심 편의성 요소가 시각적으로 드러나지 않아 장르 인지가 어렵다."
+      ],
+      "improvement_actions": [
+        "이미지 하단 또는 우측에 '지금 플레이' 또는 '사전등록' 버튼과 함께 보상 문구를 삽입하여 즉각적인 행동을 유도하는 B버전 제작",
+        "화려한 전투 연출과 함께 '자동 성장', '방치 보상' 등 방치형 게임의 핵심 편의성을 강조하는 카피와 UI를 추가한 C버전 제작"
+      ],
+      "creator_intent": "화려한 콜라보레이션 전투 연출과 캐릭터 비주얼을 통해 시각적 만족감을 극대화하고 게임에 대한 호기심을 유발하려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 2,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
+      "marketer_insight": null,
+      "tagged_at": "2026-06-28T13:03:38+09:00",
+      "gemini_model": "gemini-2.5-flash",
+      "source_files": [
+        "콜라보_개발사 제작 소재\\2기\\L-DA-Character-66666heroine-01\\250614_BNR_L-DA-Character-66666heroine-01_L_1200x628_CNT_NONE.png",
+        "콜라보_개발사 제작 소재\\2기\\L-DA-Character-66666heroine-01\\250614_BNR_L-DA-Character-66666heroine-01_S_1200x1200_CNT_NONE.png",
+        "콜라보_개발사 제작 소재\\2기\\L-DA-Character-66666heroine-01\\250614_BNR_L-DA-Character-66666heroine-01_V_1080x1920_CNT_NONE.png",
+        "콜라보_개발사 제작 소재\\2기\\L-DA-Character-66666heroine-01\\250614_BNR_L-DA-Character-66666heroine-01_V_1200x1500_CNT_NONE.png"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
+    },
+    {
+      "creative_id": "L-DA-Character-66666ingame-01",
+      "소재명": "L-DA-Character-66666ingame-01",
+      "파일명": "250614_BNR_L-DA-Character-66666ingame-01_L_1200x628_CNT_NONE.png",
+      "유형": "BNR",
+      "일": "2025-06-14",
+      "캠페인": null,
+      "사이즈": "1200x628",
+      "언어": "CNT",
+      "링크": null,
+      "creative_concept": "L-DA-Character-66666ingame-01",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "캐릭터 외형 소구",
+      "USP": "혜택형(무료뽑기/보상)",
+      "art_style": "2D 일러스트",
+      "strengths": [
+        "강한 비주얼 임팩트",
+        "다수 캐릭터 라인업",
+        "호기심/궁금증 유발"
+      ],
+      "weaknesses": [
+        "장르/게임성 불분명",
+        "행동 유도 약함/부재"
+      ],
+      "hypothesis": [
+        "높은 CTR 예상 — 강한 후킹",
+        "낮은 전환 위험 — 행동 유도 약함"
+      ],
+      "test_ideas": [
+        "명시적 CTA 추가",
+        "게임플레이 컷 추가"
+      ],
+      "one_line_insight": "화려한 캐릭터 비주얼과 콜라보 소식으로 시선 후킹은 강하나, 게임 장르와 구체적인 혜택이 불분명함 — 콜라보 영웅의 인게임 플레이 컷과 명확한 보상 CTA를 추가하여 장르 인지 및 전환율을 개선",
+      "strength_evidence": [
+        "화려한 색감의 배경과 캐릭터 이펙트(날개, 검의 푸른 불꽃)가 화면을 가득 채워 시선을 즉시 사로잡고 기대감을 높임",
+        "좌우 대칭으로 배치된 두 명의 매력적인 캐릭터가 각기 다른 개성을 뽐내며 콜라보레이션의 풍성함을 시각적으로 어필함",
+        "두 게임 로고의 'X' 표시와 '전설급 콜라보 시작' 문구가 어떤 캐릭터들이 추가될지, 어떤 내용일지 궁금증을 자아냄"
+      ],
+      "weakness_evidence": [
+        "캐릭터 일러스트와 콜라보 문구만 있어 방치형 RPG라는 장르나 실제 게임 플레이에 대한 단서가 전혀 없어 신규 유저의 인지도가 낮음",
+        "'즉시 이동' 버튼이 있지만, 콜라보의 구체적인 혜택이나 기간 한정 요소가 없어 즉각적인 클릭 동기가 약함"
+      ],
+      "improvement_actions": [
+        "콜라보 이벤트 페이지로 이동하는 '즉시 이동' 버튼 옆에 '콜라보 한정 영웅 무료 획득' 등 구체적인 보상 문구를 추가하여 클릭 유도",
+        "콜라보 캐릭터들이 인게임에서 자동 전투하는 짧은 컷을 하단에 삽입하여 방치형 RPG의 게임성을 간접적으로 보여줌"
+      ],
+      "creator_intent": "매력적인 콜라보 캐릭터 비주얼로 시선을 사로잡고, 전설급 콜라보를 통해 새로운 콘텐츠에 대한 기대감을 높이려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 3,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
+      "marketer_insight": null,
+      "tagged_at": "2026-06-28T13:03:51+09:00",
+      "gemini_model": "gemini-2.5-flash",
+      "source_files": [
+        "콜라보_개발사 제작 소재\\2기\\L-DA-Character-66666ingame-01\\250614_BNR_L-DA-Character-66666ingame-01_L_1200x628_CNT_NONE.png",
+        "콜라보_개발사 제작 소재\\2기\\L-DA-Character-66666ingame-01\\250614_BNR_L-DA-Character-66666ingame-01_S_1200x1200_CNT_NONE.png",
+        "콜라보_개발사 제작 소재\\2기\\L-DA-Character-66666ingame-01\\250614_BNR_L-DA-Character-66666ingame-01_V_1080x1920_CNT_NONE.png",
+        "콜라보_개발사 제작 소재\\2기\\L-DA-Character-66666ingame-01\\250614_BNR_L-DA-Character-66666ingame-01_V_1200x1500_CNT_NONE.png"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
+    },
+    {
+      "creative_id": "L-DA-Character-66666newoutfit-01",
+      "소재명": "L-DA-Character-66666newoutfit-01",
+      "파일명": "250614_BNR_L-DA-Character-66666newoutfit-01_L_1200x628_CNT_NONE.png",
+      "유형": "BNR",
+      "일": "2025-06-14",
+      "캠페인": null,
+      "사이즈": "1200x628",
+      "언어": "CNT",
+      "링크": null,
+      "creative_concept": "L-DA-Character-66666newoutfit-01",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "캐릭터 외형 소구",
+      "USP": "감성 유대형(교감/서사)",
+      "art_style": "2D 일러스트",
+      "strengths": [
+        "다수 캐릭터 라인업",
+        "강한 비주얼 임팩트",
+        "호기심/궁금증 유발"
+      ],
+      "weaknesses": [
+        "장르/게임성 불분명",
+        "행동 유도 약함/부재"
+      ],
+      "hypothesis": [
+        "특정 타겟에 강하게 반응"
+      ],
+      "test_ideas": [
+        "명시적 CTA 추가",
+        "게임플레이 컷 추가"
+      ],
+      "one_line_insight": "다수 캐릭터의 화려한 신규 의상으로 시선을 사로잡지만, 방치형 RPG의 핵심 게임성이나 명확한 행동 유도가 부족함 — 인게임 플레이 컷과 구체적인 CTA를 추가하여 게임 인지 및 전환율을 개선",
+      "strength_evidence": [
+        "다섯 명의 영웅과 한 마리의 신수가 화면을 가득 채우며, 각기 다른 매력적인 외형으로 수집 욕구를 자극하고 풍부한 캐릭터 라인업을 시각적으로 보여줌",
+        "선명한 색감의 2D 일러스트 캐릭터들이 중앙에 배치된 '全新時裝上架' 문구와 함께 시선을 압도하며, 화려한 배경 이펙트가 더해져 강렬한 인상을 줌",
+        "하단 '氣場直接爆表!' 문구가 새로운 시착으로 캐릭터의 '아우라'가 폭발적으로 증가한다는 메시지를 전달하여, 어떤 변화가 있을지 궁금증을 유발함"
+      ],
+      "weakness_evidence": [
+        "캐릭터 외형 소구에 집중하여 방치형 RPG의 핵심인 자동 성장, 보상, 전투 시스템 등의 게임플레이 단서가 전혀 없어 신규 유저의 장르 인지가 어려움",
+        "신규 의상 출시를 알리는 정보만 있을 뿐, 다운로드 버튼이나 이벤트 참여 등 구체적인 행동 유도(CTA)가 없어 시청자의 다음 행동을 이끌어내기 어려움"
+      ],
+      "improvement_actions": [
+        "하단 문구 옆에 '지금 바로 접속하여 신규 의상 획득'과 같은 명확한 다운로드 버튼 또는 이벤트 참여 유도 문구를 추가하여 전환율을 높임",
+        "캐릭터 소개와 함께 신규 의상을 착용한 캐릭터가 실제 인게임 전투에서 활약하는 짧은 연출 컷을 추가하여 게임성을 간접적으로 보여줌"
+      ],
+      "creator_intent": "매력적인 신규 캐릭터 의상 출시를 강조하여 기존 유저의 복귀 및 캐릭터 수집에 관심 있는 신규 유저의 유입을 유도하려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 4,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
+      "marketer_insight": null,
+      "tagged_at": "2026-06-28T13:04:05+09:00",
+      "gemini_model": "gemini-2.5-flash",
+      "source_files": [
+        "콜라보_개발사 제작 소재\\2기\\L-DA-Character-66666newoutfit-01\\250614_BNR_L-DA-Character-66666newoutfit-01_L_1200x628_CNT_NONE.png",
+        "콜라보_개발사 제작 소재\\2기\\L-DA-Character-66666newoutfit-01\\250614_BNR_L-DA-Character-66666newoutfit-01_S_1200x1200_CNT_NONE.png",
+        "콜라보_개발사 제작 소재\\2기\\L-DA-Character-66666newoutfit-01\\250614_BNR_L-DA-Character-66666newoutfit-01_V_1080x1920_CNT_NONE.png",
+        "콜라보_개발사 제작 소재\\2기\\L-DA-Character-66666newoutfit-01\\250614_BNR_L-DA-Character-66666newoutfit-01_V_1200x1500_CNT_NONE.png"
       ],
       "kpi_source": null,
       "kpi_window_start": null,
@@ -93,11 +362,11 @@
   ],
   "metrics": {
     "scanned_folders": 132,
-    "tagged_records": 1,
+    "tagged_records": 4,
     "cache_hits": 1,
-    "cache_misses": 0,
+    "cache_misses": 3,
     "failures": 1,
-    "duration_sec": 75.9,
+    "duration_sec": 123.3,
     "prompt_version": "v3.3-2026.06.13-character-split-single-idle-v1",
     "fallback_used": true,
     "carried_forward": 0,
