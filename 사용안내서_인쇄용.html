@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Com2uS R팀 소재 분석 시스템 사용 안내서 v5.2</title>
+  <title>Com2uS R팀 소재 분석 시스템 사용 안내서 v5.3</title>
   <style>
     /* ===== Pretendard — self-hosted (Com2uS DS) ===== */
     @font-face { font-family:"Pretendard"; src:url("assets/fonts/PretendardVariable.woff2") format("woff2-variations"), url("assets/fonts/PretendardVariable.woff2") format("woff2"); font-weight:45 920; font-style:normal; font-display:swap; }
@@ -264,7 +264,7 @@
       · <strong>빠른 참조</strong> → 마지막 Cheat Sheet(12p)를 책상에 붙여두세요.
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.2 | Com2uS R Marketing Team</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Com2uS R Marketing Team</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -361,7 +361,29 @@
       </tbody>
     </table>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.2 | Page 3</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 3</div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       1.5 데이터 연동 & 매칭 (2026-06 신규)
+  ════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <div class="page-title">1.5 데이터 연동 &amp; 매칭 <span class="badge badge-red" style="font-size:11px;">2026-06 신규</span></div>
+
+    <div class="section-title">타이틀 선택 → 자동 데이터 로드</div>
+    <p>담당 타이틀(제우스: 오만의 신·도원암귀·펩 히어로즈·갓앤데몬 등)이 시스템에 등록되어, Step 1 상단 <strong>타이틀 선택</strong> 드롭다운에서 고르면 매일 밤 자동 파이프라인이 산출한 <strong>분석 데이터(소재 태그 + 실제 KPI)</strong>가 즉시 로드됩니다. CSV 수동 업로드도 그대로 가능합니다.</p>
+    <div class="box box-green">· 아직 태깅 전인 타이틀을 선택하면 <strong>"아직 데이터 없음"</strong> 안내가 표시됩니다(오류 아님 — 소재 태깅 완료 후 자동 표시).</div>
+
+    <div class="section-title">MMP 지표 연동 (AppsFlyer / Airbridge)</div>
+    <p>Google Ads(광고비·노출·클릭)에 더해, 타이틀별로 연동된 <strong>MMP(AppsFlyer 또는 Airbridge)</strong>의 설치·전환 지표를 결합해 표시합니다. 광고 매체 데이터와 MMP 데이터를 소재 단위로 조인합니다.</p>
+
+    <div class="section-title">소재명 별칭 매핑 + 미매칭 리포트</div>
+    <p>광고 매체의 소재명과 GDrive 파일명이 다를 때, Step 1 상단 <strong>미매칭 패널</strong>에 "집행은 됐으나 매칭되지 않은 자산"이 표시됩니다. 매핑할 소재를 골라 config를 생성하면 다음 실행부터 자동으로 조인됩니다.</p>
+
+    <div class="section-title">캠페인 타입 필터</div>
+    <p>캠페인을 타입(예: 선론칭·상시 등)별로 정규화해 결과를 필터링할 수 있습니다.</p>
+
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | 데이터 연동</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -453,7 +475,7 @@
       · <strong>유료 AI 플랜</strong>: 원문 최대 200자 Gemini에 전달 → 깊은 인사이트
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.2 | Page 4</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 4</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -526,7 +548,7 @@
       · 하단 합계행: 전체 유형 통합 KPI — 캠페인 단위 벤치마크로 활용
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.2 | Page 5</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 5</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -576,7 +598,7 @@
       "전체 캠페인 / BNR+VID / 지난주" 필터 → 점수 계산 → HTML 추출 → 매주 월요일 정해진 채널에 첨부 한 번으로 <strong>주간 성과 리포트 발행</strong> 가능.
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.2 | Page 6</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 6</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -646,7 +668,7 @@
       · <strong>TXT 소재</strong>: 피로도 분석에서도 완전 제외 (BNR/VID만 분석)
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.2 | Page 7</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 7</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -686,7 +708,7 @@
       · Step 2-① 컬럼 설정에서 가중치 수동 조정도 가능
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.2 | Page 8</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 8</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -744,7 +766,7 @@
       다음 차수 분석 시 이전 군집과 자동 비교하여 신규 군집(NEW 배지)·기존 군집 연속성을 표시합니다.
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.2 | Page 9</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 9</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -788,12 +810,12 @@
     </div>
 
     <div class="section-title">5.2 소재 성과 AI 인사이트 (winning · losing 분리) <span class="badge badge-red" style="font-size:10px;">UPDATED</span></div>
-    <p>점수 계산 결과 화면의 <strong>"AI 인사이트 생성"</strong> 버튼으로 실행합니다. <strong>winning 슬롯이 단독일 때는 1컬럼 전체폭</strong>으로 렌더링되어 가독성이 높아집니다.</p>
+    <p>점수 계산 결과 화면의 <strong>"AI 인사이트 생성"</strong> 버튼으로 실행합니다(결과 영역 <code>#scoringAIBox</code>). <strong>무료 플랜의 winning 카드는 한 카드 안에서 위닝(초록)·저효율(주황) 영역으로 구분</strong>되고, 소재별 <strong>IPM·CPA가 배지(chip)</strong>로, 확장/중단 권고가 <strong>배지</strong>로 표시됩니다. <span class="badge badge-red" style="font-size:9px;">2026-06 카드 구조화</span></p>
 
     <div class="ai-slot-grid">
       <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #DC2828;">
         <div class="slot-title" style="color:#DC2828;">위닝 소재 분석 (winning) <span class="badge badge-green">무료·유료</span></div>
-        <div class="slot-body">고효율 소재 목록 + 공통 패턴<br>· 무료: 동일 슬롯 내부에 <strong>루징(저효율) 소재</strong>도 포함<br>· 유료: 위닝만 분리되어 더 깊은 분석</div>
+        <div class="slot-body">고효율 소재 목록(IPM·CPA 배지) + 공통 패턴<br>· 무료: 같은 카드 안에 <strong>위닝(초록)·저효율(주황) 영역 분리</strong> + 확장/중단 배지<br>· 유료: 위닝·저효율 별도 카드로 더 깊은 분석</div>
       </div>
       <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #ef4444;">
         <div class="slot-title" style="color:#ef4444;">루징 소재 분석 (losing) <span class="badge badge-purple">유료</span></div>
@@ -820,7 +842,7 @@
       · 신규 슬롯: <strong>losing · scaleUp · stopNow</strong> 추가
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.2 | Page 10</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 10</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -886,7 +908,7 @@
       · 모델: <strong>Gemini 2.5 Flash</strong> (thinking 모드 비활성화로 출력 토큰 100% 활용)
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.2 | Page 11</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 11</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -975,7 +997,7 @@
       <div class="faq-a">v5.0 신규 기능인 <strong>"유료 Pro 업그레이드 유도 카드"</strong>입니다. 무료 플랜에서는 잠긴 슬롯(losing/scaleUp/stopNow 등)을 아이콘으로 표시하며 클릭 한 번으로 API 키 모달이 열려 유료 키로 전환할 수 있습니다.</div>
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.2 | Page 12</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 12</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -1021,7 +1043,7 @@
       <li>※ KPI 보유 소재가 있는 <strong>타이틀 모드</strong>에서만 노출 (CSV 모드는 자동 숨김)</li>
     </ul>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.2 | Page 13</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 13</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -1122,7 +1144,13 @@
       <thead><tr><th style="width:16%">버전</th><th style="width:22%">날짜</th><th>주요 업데이트</th></tr></thead>
       <tbody>
         <tr>
-          <td><strong>v5.2</strong> <span class="badge badge-red">현재</span></td>
+          <td><strong>v5.3</strong> <span class="badge badge-red">현재</span></td>
+          <td>2026-06-29</td>
+          <td>① <strong>AI 인사이트 무료 카드 구조화</strong> — 위닝(초록)/저효율(주황) 영역 + 소재행 IPM·CPA 배지 + 확장/중단 배지<br>
+            ② <strong>데이터 연동 안내(1.5절)</strong> — 타이틀 JSON 자동 로드·MMP(AppsFlyer/Airbridge)·소재명 별칭 매핑·미매칭 패널·캠페인 타입 필터</td>
+        </tr>
+        <tr>
+          <td><strong>v5.2</strong></td>
           <td>2026-06-12</td>
           <td>AI 자동 태깅 인사이트 표면화:
             ① <strong>타이틀 선택 모드</strong> — 자동 태깅 소재 + 실제 KPI 를 드롭다운으로 즉시 로드 (CSV 불필요)

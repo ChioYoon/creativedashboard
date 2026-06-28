@@ -120,6 +120,20 @@ R팀 담당자별로 **개별 키**를 발급해서 사용합니다. (공용 키
 
 ---
 
+## 📌 최신 업데이트 (2026-06-29) — 데이터 연동 고도화 + AI 인사이트 카드 구조화
+
+> 2026-06 한 달간 SDD(스펙→플랜→구현)로 추가된 기능 요약. 상세 설계·플랜은 `docs/superpowers/specs/`·`docs/superpowers/plans/` 참고.
+
+- **타이틀 셀프 등록 + JSON 자동 로드** — `js/titles.json` 에 등록한 타이틀을 Step 1 드롭다운에서 선택하면 백엔드 파이프라인 산출 JSON(소재 태그 + 실제 KPI)이 자동 로드. 매일 밤 nightly 파이프라인이 `public/data/*.json` 갱신.
+- **MMP 연동 (AppsFlyer / Airbridge)** — 타이틀별 MMP 설치·전환 지표를 Google Ads 데이터와 소재 단위로 조인 (`pipeline/main.py`).
+- **소재명 별칭 매핑 + 미매칭 리포트** — 매체 소재명 ≠ GDrive 파일명일 때 Step 1 미매칭 패널 표시 + 별칭 config 로 조인 (`titles_overrides.json` 의 `_creative_name_aliases`).
+- **캠페인 타입(캐노니컬) 필터** — 캠페인을 타입별로 정규화해 결과 필터링.
+- **제우스: 오만의 신 등록** — MMORPG 신작(2026-07-01 출시), Airbridge MMP + Google Ads, MMORPG 전용 장르 프롬프트.
+- **AI 인사이트 무료 winning 카드 구조화** — 위닝(초록)/저효율(주황) 영역 분리 + 소재행 IPM·CPA 배지 + 확장/중단 배지 (`js/gemini-api.js` 의 `parseFreeWinning`·`_buildFreeWinningCard`, `css/gemini-ui.css`). 파싱 실패 시 기존 평평 렌더로 폴백.
+- **step1 미태깅 타이틀 404 graceful** — 데이터 없는 타이틀 선택 시 에러 대신 "아직 데이터 없음" 안내.
+
+---
+
 ## 📌 최신 업데이트 (2026-05-21 v8) — AI 인사이트 위닝/루징 분리 + CSV 업로드 개선
 
 ### ✨ 주요 변경사항
