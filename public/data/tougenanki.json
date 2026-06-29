@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
   "title_id": "tougenanki",
-  "generated_at": "2026-06-28T13:01:36+09:00",
+  "generated_at": "2026-06-29T13:04:41+09:00",
   "pipeline_version": "stage2-mvp",
-  "gemini_model": "gemini-2.5-flash-lite",
+  "gemini_model": "gemini-2.5-flash",
   "creatives": [
     {
       "creative_id": "FGT-IP-MudanoSSR01-DA",
@@ -68,7 +68,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:00:19+09:00",
+      "tagged_at": "2026-06-29T13:00:22+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-MudanoSSR01-DA\\260624_BNR_FGT-IP-MudanoSSR01-DA_L_1200x628_JP.jpg",
@@ -157,7 +157,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:00:19+09:00",
+      "tagged_at": "2026-06-29T13:00:22+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-OniMainTVA01-DA\\260624_BNR_FGT-IP-OniMainTVA01-DA_L_1200x628_JP.jpg",
@@ -248,7 +248,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:00:19+09:00",
+      "tagged_at": "2026-06-29T13:00:22+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-OniMomotaroTVA01-DA\\260518_BNR_FGT-IP-OniMomotaroTVA01-DA_L_1200x628_JP.jpg",
@@ -336,7 +336,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:00:19+09:00",
+      "tagged_at": "2026-06-29T13:00:22+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-Ingame-Friendship01-DA\\260623_BNR_FGT-Ingame-Friendship01-DA_L_1200x628_JP.jpg",
@@ -427,7 +427,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:00:19+09:00",
+      "tagged_at": "2026-06-29T13:00:22+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-Ingame-Kyoyatcg01-DA\\260623_BNR_FGT-Ingame-Kyoyatcg01-DA_S_1200x1200_JP.jpg",
@@ -519,7 +519,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:00:19+09:00",
+      "tagged_at": "2026-06-29T13:00:22+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-HomarePV01-PV\\260421_VID_P-Character-HomarePV01-PV_S_1080x1080_JP.mp4",
@@ -607,7 +607,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:00:20+09:00",
+      "tagged_at": "2026-06-29T13:00:22+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-JinPV01-PV\\260421_VID_P-Character-JinPV01-PV_S_1080x1080_JP.mp4",
@@ -695,7 +695,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:00:20+09:00",
+      "tagged_at": "2026-06-29T13:00:22+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-KyoyaPV01-PV\\JP\\260421_VID_P-Character-KyoyaPV01-PV_S_1080x1080_JP.mp4",
@@ -787,7 +787,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:00:20+09:00",
+      "tagged_at": "2026-06-29T13:00:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-MudanoPV01-PV\\260401_VID_P-Character-MudanoPV01-PV_S_1080x1080_JP.mp4",
@@ -875,7 +875,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:00:20+09:00",
+      "tagged_at": "2026-06-29T13:00:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-ShikiPV01-PV\\260421_VID_P-Character-ShikiPV01-PV_S_1080x1080_JP.mp4",
@@ -963,7 +963,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:00:21+09:00",
+      "tagged_at": "2026-06-29T13:00:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-TsubakiriPV01-PV\\260421_VID_P-Character-TsubakiriPV01-PV_S_1080x1080_JP.mp4",
@@ -1051,7 +1051,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:00:21+09:00",
+      "tagged_at": "2026-06-29T13:00:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Gamer-IngamePV01-PV\\260421_VID_P-Gamer-IngamePV01-PV_S_1080x1080_JP.mp4",
@@ -1139,7 +1139,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:00:21+09:00",
+      "tagged_at": "2026-06-29T13:00:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Gamer-RasetsuBattle01-DA\\JP\\260209_BNR_P-Gamer-RasetsuBattle01-DA_L_1200x628_JP.jpg",
@@ -1235,7 +1235,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:00:22+09:00",
+      "tagged_at": "2026-06-29T13:00:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Cinematic01-PV\\260421_VID_P-IP-Cinematic01-PV_S_1080x1080_JP.mp4",
@@ -1323,7 +1323,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:00:56+09:00",
+      "tagged_at": "2026-06-29T13:00:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Cutscene01-UA\\JP\\260519_VID_P-IP-Cutscene0-UA_L_1920x1080_JP.mp4"
@@ -1412,7 +1412,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:00:56+09:00",
+      "tagged_at": "2026-06-29T13:00:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\0. 엔드카드\\P-IP-Endcard01-EC\\JP\\260127_VID_P-IP-Endcard01-EC_L_1080x1080_JP.mp4",
@@ -1501,8 +1501,8 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:01:32+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-29T13:00:25+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\0. 엔드카드\\(활용불가) P-IP-Endcard02-EC\\JP\\260127_VID_P-IP-Endcard02-EC_L_1920x1080_JP.mp4"
       ],
@@ -1541,41 +1541,41 @@
       "노출수": 0,
       "클릭수": 0,
       "Revenue": 0,
-      "hooking_strategy": "캐릭터 외형 소구",
+      "hooking_strategy": "압도적 보상",
       "USP": "혜택형(무료뽑기/보상)",
       "art_style": "2D 일러스트",
       "strengths": [
-        "다수 캐릭터 라인업",
         "보상 약속 명확",
-        "감성 유대/스토리텔링"
+        "다수 캐릭터 라인업",
+        "캐릭터 액션/전투 연출"
       ],
       "weaknesses": [
-        "후킹 식상/평이",
-        "초반 3초 안에 가치 전달 실패"
+        "장르/게임성 불분명",
+        "행동 유도 약함/부재"
       ],
       "hypothesis": [
-        "높은 CVR 예상 — 명확한 가치",
-        "특정 타겟에 강하게 반응"
+        "높은 CTR 예상 — 강한 후킹",
+        "낮은 전환 위험 — 행동 유도 약함"
       ],
       "test_ideas": [
-        "게임플레이 컷 추가",
-        "명시적 CTA 추가"
+        "명시적 CTA 추가",
+        "게임플레이 컷 추가"
       ],
-      "one_line_insight": "원작 IP와 SSR 보상으로 팬덤 후킹은 강하나 게임성이 불분명함 — 배경에 인게임 스크린샷을 추가해 장르 인지를 높여야 합니다.",
+      "one_line_insight": "SSR 확정 보상과 캐릭터 비주얼로 잠재 유저의 시선을 끄는 데는 성공적이나, 게임성과 구체적인 행동 유도가 약함 — 실제 게임플레이 컷과 명확한 CTA를 추가하여 전환율을 개선",
       "strength_evidence": [
-        "세 명의 매력적인 남성 캐릭터가 전면에 배치되어, 각 캐릭터의 외형과 성우 정보를 통해 수집형 게임의 매력을 어필합니다.",
-        "하단에 '사전등록으로 SSR 캐릭터 1체 확정!' 문구가 붉은색 강조 효과와 함께 크게 노출되어 명확한 보상 혜택을 제시합니다.",
-        "TV 애니메이션 '도원암귀'의 공식 게임임을 명시하여, 원작 팬들에게 익숙한 캐릭터와 세계관으로 감성적 유대감을 형성합니다."
+        "화면 하단에 '事前登録で SSRキャラ1体確定!' 문구가 붉은색 강조 효과와 함께 크게 배치되어 사전등록 시 확정 보상을 명확히 제시함.",
+        "세 명의 주요 캐릭터가 화면 중앙에 배치되어 각자의 개성 있는 외형과 성우 정보를 통해 다양한 캐릭터 수집의 재미를 암시함.",
+        "캐릭터들이 붉은색 혈식 무기를 들고 전투 자세를 취하고 있으며, 배경의 붉은 피 이펙트가 다크 판타지 액션 분위기를 강조함."
       ],
       "weakness_evidence": [
-        "정적인 일러스트 구성으로, 캐릭터 외형 소구 외에 시선을 강하게 사로잡을 만한 동적인 요소나 독특한 연출이 부재합니다.",
-        "애니메이션 공식 게임이라는 점은 명확하나, 게임의 장르나 핵심 플레이 방식에 대한 시각적 단서가 없어 첫인상에서 게임성을 파악하기 어렵습니다."
+        "캐릭터 일러스트와 보상 정보만 제공될 뿐, 실제 카드 배틀 RPG의 게임플레이 화면이나 UI가 없어 장르 인지가 어려움.",
+        "'今すぐ応募する' 버튼이 있지만, 구체적인 다운로드 유도나 추가적인 혜택 강조 없이 단순히 사전등록을 유도하는 수준에 그침."
       ],
       "improvement_actions": [
-        "캐릭터 일러스트 하단 또는 배경에 실제 게임플레이 스크린샷 띠를 삽입하여 게임의 장르와 핵심 재미를 직관적으로 전달합니다.",
-        "현재 '지금 바로 응모하기' 버튼 옆에 'SSR 캐릭터 받기'와 같이 보상과 직접 연결되는 문구를 추가하여 클릭 유도를 강화합니다."
+        "'今すぐ応募する' 버튼 주변에 '지금 바로 사전등록하고 SSR 캐릭터 받기'와 같은 구체적인 행동 유도 문구를 추가하여 전환율을 높임.",
+        "캐릭터 하단 또는 우측 여백에 실제 카드 배틀 UI나 인페르노 스킬 이펙트가 짧게 노출되는 이미지를 추가하여 게임성을 명확히 함."
       ],
-      "creator_intent": "원작 애니메이션의 인지도를 활용하여 캐릭터와 사전등록 보상으로 팬덤의 참여를 유도하려는 의도",
+      "creator_intent": "원작 IP의 매력적인 캐릭터와 사전등록 보상을 전면에 내세워 팬덤과 신규 유저 모두에게 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
@@ -1588,8 +1588,8 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:01:35+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-29T13:01:45+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-OniMainTVA01-DA\\JP\\260810_BNR_P-IP-OniMainTVA01-DA_L_1200x628_JP.jpg",
         "1. 사전예약\\1. BNR\\P-IP-OniMainTVA01-DA\\JP\\260810_BNR_P-IP-OniMainTVA01-DA_S_1080x1080_JP.jpg",
@@ -1657,21 +1657,21 @@
         "게임플레이 컷 추가",
         "명시적 CTA 추가"
       ],
-      "one_line_insight": "원작 IP의 다수 캐릭터와 강렬한 비주얼로 후킹은 강하나 게임성과 행동 유도가 불분명함 — 인게임 스크린샷과 명확한 CTA를 추가하여 전환율을 개선",
+      "one_line_insight": "다수 캐릭터와 강렬한 비주얼로 원작 팬덤 후킹은 강하나, 게임플레이 정보와 행동 유도가 부족함 — 실제 전투 화면과 명시적 CTA를 추가하여 신규 유저 유입 및 전환율을 개선.",
       "strength_evidence": [
-        "화면 중앙에 7명 이상의 개성 강한 캐릭터들이 역동적인 포즈로 배치되어 수집형 RPG의 매력을 강하게 어필함",
-        "붉은 피와 무기, 거대한 괴물의 모습이 어두운 배경과 대비되어 강렬하고 잔혹한 세계관을 시각적으로 각인시킴",
-        "상단 카피 '鬼VS桃太郎, 生存をかけた戦いへ!'가 익숙한 설화의 비틀린 전개와 생존이라는 키워드로 스토리에 대한 궁금증을 자극함"
+        "화면 중앙에 7명 이상의 개성 강한 캐릭터들이 밀도 높게 배치되어 수집형 RPG의 매력을 직관적으로 어필함.",
+        "붉은 피와 무기로 강조된 다크 판타지 분위기, 거대한 오니의 모습이 시선을 압도하며 세계관의 강렬함을 전달함.",
+        "상단 카피 '오니 VS 모모타로, 생존을 건 싸움으로!'는 원작의 핵심 갈등을 명확히 제시하여 스토리에 대한 궁금증을 자극함."
       ],
       "weakness_evidence": [
-        "캐릭터 일러스트 외에 실제 게임플레이 UI나 전투 시스템에 대한 시각적 단서가 없어 어떤 장르의 게임인지 인지하기 어려움",
-        "다운로드 버튼이나 명확한 CTA 문구가 부재하며, 앱스토어 아이콘만으로는 즉각적인 행동 유도력이 약해 보임"
+        "캐릭터 일러스트와 세계관 문구만으로 구성되어 실제 게임플레이 화면이나 전투 방식에 대한 단서가 전혀 없어 장르 인지가 어려움.",
+        "하단 앱스토어/구글 플레이 아이콘은 작게 배치되어 있고, '다운로드'나 '지금 플레이'와 같은 명시적인 CTA가 부재하여 즉각적인 행동을 유도하지 못함."
       ],
       "improvement_actions": [
-        "하단 '공식 게임 등장' 띠 위에 실제 인게임 전투 화면을 작게 삽입하여 장르와 게임성을 명확히 전달",
-        "앱스토어 아이콘 옆에 '지금 플레이' 또는 '사전등록' 문구를 추가하여 시청자의 다음 행동을 명확히 유도"
+        "메인 캐릭터들 사이에 실제 카드 배틀 UI나 인페르노 스킬 이펙트 컷을 삽입하여 게임성을 명확히 전달하는 B버전 제작.",
+        "하단 앱스토어/구글 플레이 아이콘 위에 '지금 플레이' 또는 '사전등록' 문구를 크게 추가하여 행동 유도 강화."
       ],
-      "creator_intent": "원작 애니메이션의 강렬한 분위기와 다수 캐릭터의 매력을 전면에 내세워 팬덤을 후킹하려는 의도",
+      "creator_intent": "원작 애니메이션 팬덤에게 다수 캐릭터 라인업과 다크 판타지 세계관을 강조하여 게임 출시를 알리려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
@@ -1684,8 +1684,8 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:01:35+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-29T13:02:03+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-OniMomotaroTVA01-DA\\JP\\260223_BNR_P-IP-OniMomotaroTVA01-DA_L_1200x628_JP.jpg",
         "1. 사전예약\\1. BNR\\P-IP-OniMomotaroTVA01-DA\\JP\\260223_BNR_P-IP-OniMomotaroTVA01-DA_S_1080x1080_JP.jpg",
@@ -1775,8 +1775,8 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:01:35+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-29T13:02:03+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-RasetsuTVA01-DA\\JP\\260810_BNR_P-IP-RasetsuTVA01-DA_L_1200x628_JP.jpg",
         "1. 사전예약\\1. BNR\\P-IP-RasetsuTVA01-DA\\JP\\260810_BNR_P-IP-RasetsuTVA01-DA_S_1080x1080_JP.jpg",
@@ -1871,8 +1871,8 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:01:35+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-29T13:02:04+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Teaser01-PV\\260421_VID_P-IP-Teaser01-PV_S_1080x1080_JP.mp4",
         "1. 사전예약\\2. VID\\P-IP-Teaser01-PV\\260421_VID_P-IP-Teaser01-PV_V_1080x1920_JP.mp4"
@@ -1959,8 +1959,8 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:01:35+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-29T13:02:04+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR01-DA\\JP\\수정 전(무다노 캐릭터 컬러감 없는 버전)\\260223_BNR_P-Reward-MudanoSSR01-DA_L_1200x628_JP.jpg",
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR01-DA\\JP\\수정 전(무다노 캐릭터 컬러감 없는 버전)\\260223_BNR_P-Reward-MudanoSSR01-DA_S_1080x1080_JP.jpg",
@@ -2018,31 +2018,31 @@
       ],
       "weaknesses": [
         "장르/게임성 불분명",
-        "타이틀/브랜드 인지 약함"
+        "행동 유도 약함/부재"
       ],
       "hypothesis": [
         "높은 CTR 예상 — 강한 후킹",
-        "낮은 관련성 위험 — 정보 부족"
+        "낮은 전환 위험 — 행동 유도 약함"
       ],
       "test_ideas": [
-        "게임플레이 컷 추가",
-        "카피 1줄로 축약"
+        "명시적 CTA 추가",
+        "게임플레이 컷 추가"
       ],
-      "one_line_insight": "매력적인 캐릭터와 SSR 확정 보상으로 후킹은 강하나 게임성이 불분명함 — 핵심 게임플레이 컷과 장르 카피를 추가하여 유저의 이해도를 높여야 함.",
+      "one_line_insight": "매력적인 캐릭터 비주얼과 명확한 SSR 보상 약속으로 후킹은 강하나, 게임성 인지와 직접적인 행동 유도가 약함 — 앱스토어 아이콘을 확대하고 '지금 사전등록' CTA를 명확히 추가하여 전환율을 개선",
       "strength_evidence": [
-        "화면 중앙에 검은 머리 남성 캐릭터가 클로즈업되어 강렬한 시선과 함께 피 같은 붉은 액체를 흘리는 손으로 시선을 집중시킴.",
-        "하단에 '事前登録でSSRキャラ1体確定!' 문구가 가장 큰 글씨로 강조되어 사전등록 시 SSR 캐릭터 확정 보상을 명확히 전달함.",
-        "검은색 배경과 붉은색 피/액체 연출이 대비되어 어둡고 강렬한 분위기를 조성하며 시각적 몰입감을 높임."
+        "화면 중앙에 무다노 나이토 캐릭터가 크게 배치되어 시선을 집중시키고, 다크한 배경과 대비되어 캐릭터의 존재감을 부각시킴",
+        "하단에 '사전등록으로 SSR 캐릭터 1체 확정!' 문구가 붉은색 강조 텍스트로 명확하게 제시되어 보상 가치를 즉시 인지시킴",
+        "캐릭터 주변의 붉은 피와 같은 이펙트, '혈식해방'이라는 강렬한 문구가 다크 판타지 세계관의 분위기를 효과적으로 전달함"
       ],
       "weakness_evidence": [
-        "캐릭터 외형과 보상 정보만 제공될 뿐, 실제 게임 플레이 화면이나 장르를 유추할 수 있는 단서가 없어 어떤 게임인지 인지하기 어려움.",
-        "Com2us 로고는 있으나, '桃源暗鬼 Crimson Inferno' 타이틀이 작게 배치되어 브랜드 인지도가 낮은 유저에게는 게임명이 각인되기 어려움."
+        "캐릭터와 보상 정보만 제공될 뿐, 카드 배틀 턴제 RPG라는 게임플레이 화면이나 시스템에 대한 시각적 단서가 전무함",
+        "사전등록 보상 문구는 명확하나, Google Play 및 App Store 아이콘이 작게 배치되어 클릭 유도력이 약하며, '지금 다운로드'와 같은 직접적인 CTA가 없음"
       ],
       "improvement_actions": [
-        "캐릭터 일러스트 하단에 실제 전투 또는 핵심 게임플레이 스크린샷 띠를 삽입하여 장르와 게임성을 명확히 전달.",
-        "메인 카피 '血蝕解放' 아래에 게임의 핵심 장르나 특징을 한 줄로 요약하여 추가해 정보 전달력을 높임."
+        "하단 앱스토어/구글플레이 아이콘 위에 '지금 사전등록' 문구를 추가하여 행동 유도 메시지를 강화",
+        "캐릭터 하단 또는 배경에 카드 배틀 UI나 인페르노 스킬 연출 컷을 작게 삽입하여 장르 인지도를 높임"
       ],
-      "creator_intent": "강렬한 캐릭터 비주얼과 SSR 확정 보상을 전면에 내세워 사전등록 유입을 극대화하려는 의도",
+      "creator_intent": "원작 IP의 핵심 캐릭터 비주얼과 혈식해방이라는 키워드를 통해 팬덤을 후킹하고 사전등록 보상으로 전환을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
@@ -2055,8 +2055,8 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:01:35+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-29T13:02:59+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR01-DA\\JP\\260209_BNR_P-Reward-MudanoSSR01-DA-A_L_1200x628_JP.jpg",
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR01-DA\\JP\\260209_BNR_P-Reward-MudanoSSR01-DA-A_S_1080x1080_JP.jpg",
@@ -2099,12 +2099,12 @@
       "노출수": 0,
       "클릭수": 0,
       "Revenue": 0,
-      "hooking_strategy": "비주얼 임팩트",
+      "hooking_strategy": "캐릭터 외형 소구",
       "USP": "혜택형(무료뽑기/보상)",
       "art_style": "2D 일러스트",
       "strengths": [
-        "강한 비주얼 임팩트",
         "보상 약속 명확",
+        "강한 비주얼 임팩트",
         "단일 주인공 스포트라이트"
       ],
       "weaknesses": [
@@ -2119,21 +2119,21 @@
         "명시적 CTA 추가",
         "게임플레이 컷 추가"
       ],
-      "one_line_insight": "강렬한 비주얼과 보상 약속으로 시선 후킹은 성공했으나, 게임 장르 정보 부족과 행동 유도 부재로 전환율 확보에 한계 — 명확한 CTA와 게임 플레이 컷 추가로 개선 필요",
+      "one_line_insight": "강렬한 캐릭터 비주얼과 SSR 확정 보상으로 후킹은 강하나, 게임성 인지와 명확한 행동 유도가 부족함 — 하단에 '지금 사전등록' CTA를 추가하고 게임플레이 요소를 삽입하여 전환율을 개선",
       "strength_evidence": [
-        "화면 좌측 상단의 붉은 핏자국과 거친 질감의 일본어 타이틀이 시선을 압도하며, 중앙 캐릭터의 붉은 액체 디테일이 강렬한 인상을 줌",
-        "화면 하단에 '사전등록 시 SSR 캐릭터 1체 확정!'이라는 문구가 큼지막하게 배치되어 즉각적인 보상 혜택을 인지시킴",
-        "화면 우측 절반 이상을 차지하는 캐릭터 클로즈업, 날카로운 눈매와 붉은 액체가 묻은 손 디테일로 캐릭터의 매력을 강조함"
+        "화면 하단에 '사전등록으로 SSR 1체 확정!' 문구가 붉은색 강조 효과와 함께 명확히 제시되어 시청자에게 강력한 혜택을 약속합니다.",
+        "메인 캐릭터 주변과 손에서 붉은 피 같은 이펙트가 퍼져나가며 '혈식해방'이라는 문구와 함께 다크 판타지 분위기를 강렬하게 전달합니다.",
+        "화면 중앙에 무다노 나이토 캐릭터가 크게 배치되어 시선을 집중시키고, 캐릭터명과 CV 정보로 IP 팬덤의 주목도를 높입니다."
       ],
       "weakness_evidence": [
-        "캐릭터와 타이틀 외에 게임 플레이 화면이나 UI 요소가 전혀 없어 어떤 장르의 게임인지 파악하기 어려움",
-        "사전 등록 버튼이나 다운로드 버튼 등 명확한 CTA가 없어 시청자가 다음 행동을 취하기 어렵고 전환으로 이어지기 힘듦"
+        "캐릭터와 보상 정보만 제시될 뿐, 실제 게임플레이 화면이나 전투 시스템에 대한 시각적 단서가 없어 신규 유저가 장르를 파악하기 어렵습니다.",
+        "구글 플레이와 앱스토어 아이콘만 작게 배치되어 있으며, 명시적인 '지금 다운로드'나 '사전등록' 버튼이 없어 즉각적인 행동 유도가 약합니다."
       ],
       "improvement_actions": [
-        "화면 하단 'SSR 캐릭터 1체 확정!' 문구 옆에 '지금 사전등록' 버튼과 함께 Google Play, App Store 아이콘을 명확히 추가",
-        "캐릭터 일러스트 하단에 15초 내외의 짧은 전투 장면 또는 게임 UI 일부를 삽입하여 장르 및 게임성 인지도를 높임"
+        "앱스토어/구글 플레이 아이콘 위에 '지금 사전등록' 문구를 추가하여 시청자의 다음 행동을 명확히 유도합니다.",
+        "캐릭터 하단 또는 배경에 실제 카드 배틀 UI나 인페르노 스킬 연출 컷을 작게 삽입하여 장르 인지를 돕습니다."
       ],
-      "creator_intent": "강렬한 비주얼과 보상 약속으로 신규 유저의 호기심을 자극하고 사전 등록을 유도하려는 의도",
+      "creator_intent": "원작 IP 캐릭터의 매력과 사전등록 보상을 전면에 내세워 팬덤 유입과 전환을 동시에 노리려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
@@ -2146,8 +2146,8 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:01:35+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-29T13:03:11+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR02-DA (CTA)\\JP\\수정 전\\260223_BNR_P-Reward-MudanoSSR02-DA_L_1200x628_JP.jpg",
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR02-DA (CTA)\\JP\\수정 전\\260223_BNR_P-Reward-MudanoSSR02-DA_S_1080x1080_JP.jpg",
@@ -2194,8 +2194,8 @@
       "USP": "혜택형(무료뽑기/보상)",
       "art_style": "2D 일러스트",
       "strengths": [
-        "보상 약속 명확",
         "다수 캐릭터 라인업",
+        "보상 약속 명확",
         "강한 비주얼 임팩트"
       ],
       "weaknesses": [
@@ -2210,21 +2210,21 @@
         "명시적 CTA 추가",
         "게임플레이 컷 추가"
       ],
-      "one_line_insight": "SSR 보상 약속으로 후킹은 강하나 장르 정보 부재 및 CTA 부족으로 전환율이 낮을 우려 — 하단에 인게임 컷과 명확한 CTA를 추가하여 전환율 개선",
+      "one_line_insight": "다양한 캐릭터 라인업과 SSR 확정 보상으로 후킹은 강하나 게임성 인지와 행동 유도가 약함 — 하단에 인게임 플레이 컷과 명시적 CTA를 추가하여 전환율을 개선",
       "strength_evidence": [
-        "화면 중앙에 'SSRキャラ1体 必ずGET' 문구가 붉은색으로 강조되어 즉각적인 보상 획득을 약속함",
-        "상하단에 총 6명의 개성 있는 캐릭터를 나열하여 수집 욕구를 자극하고 게임의 볼륨감을 어필함",
-        "캐릭터들의 강렬한 눈빛과 붉은색 배경, 흩뿌려진 핏자국 효과가 전체적으로 자극적이고 인상적인 비주얼을 연출함"
+        "상단 4명, 하단 4명 총 8명의 다양한 캐릭터가 전면 배치되어 수집형 RPG의 매력을 직관적으로 어필합니다.",
+        "화면 중앙에 'SSRキャラ1体 必ずGET' 문구가 가장 크고 강조되어 시청자에게 확실한 보상을 약속합니다.",
+        "강렬한 붉은색 배경과 검은색 스플래터 효과가 다크 판타지 세계관을 시각적으로 강조하며 시선을 사로잡습니다."
       ],
       "weakness_evidence": [
-        "캐릭터와 보상 문구 외에 게임 플레이, UI, 장르를 나타내는 시각적 단서가 없어 어떤 종류의 게임인지 파악하기 어려움",
-        "Google Play, App Store 로고만 있고 명확한 CTA(Call to Action) 문구나 버튼이 없어 클릭으로 이어지는 행동 유도가 부족함"
+        "캐릭터 일러스트와 보상 문구만으로 구성되어 실제 게임 플레이 화면이나 전투 시스템에 대한 단서가 전혀 없어 장르 인지가 어렵습니다.",
+        "중앙의 보상 문구 외에 '지금 다운로드'와 같은 명시적인 CTA가 부재하여 시청자의 다음 행동을 유도하지 못합니다."
       ],
       "improvement_actions": [
-        "화면 하단에 '지금 사전등록' 또는 '지금 다운로드' 문구와 함께 버튼을 추가하여 클릭 유도 강화",
-        "캐릭터 라인업 하단에 짧은 인게임 전투 장면이나 핵심 시스템 UI를 삽입하여 장르 및 게임성 정보 제공"
+        "화면 하단 Google Play/App Store 로고 주변에 '지금 플레이' 또는 '사전등록하고 SSR 받기' 문구를 추가하여 행동을 유도합니다.",
+        "캐릭터 라인업 중 일부를 실제 인게임 카드 배틀 화면으로 교체하여 장르와 게임성을 명확히 보여주는 변형을 제작합니다."
       ],
-      "creator_intent": "SSR 캐릭터 획득 보상으로 신규 유저의 즉각적인 클릭 및 사전등록을 유도하려는 의도",
+      "creator_intent": "다수의 매력적인 캐릭터와 확정 SSR 보상을 전면에 내세워 신규 유저의 관심과 유입을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
@@ -2237,8 +2237,8 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:01:36+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-29T13:03:24+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-OniMomotaroSSR01-DA\\JP\\260810_BNR_P-Reward-OniMomotaroSSR01-DA_L_1200x628_JP.jpg",
         "1. 사전예약\\1. BNR\\P-Reward-OniMomotaroSSR01-DA\\JP\\260810_BNR_P-Reward-OniMomotaroSSR01-DA_S_1080x1080_JP.jpg",
@@ -2286,43 +2286,43 @@
       "노출수": 0,
       "클릭수": 0,
       "Revenue": 0,
-      "hooking_strategy": "캐릭터 외형 소구",
+      "hooking_strategy": "압도적 보상",
       "USP": "혜택형(무료뽑기/보상)",
       "art_style": "2D 일러스트",
       "strengths": [
         "다수 캐릭터 라인업",
         "보상 약속 명확",
-        "호기심/궁금증 유발"
+        "캐릭터 액션/전투 연출"
       ],
       "weaknesses": [
         "장르/게임성 불분명",
-        "후킹 식상/평이"
+        "정보 과적 (텍스트/UI 산만)"
       ],
       "hypothesis": [
         "높은 CTR 예상 — 강한 후킹",
-        "낮은 관련성 위험 — 정보 부족"
+        "특정 타겟에 강하게 반응"
       ],
       "test_ideas": [
         "게임플레이 컷 추가",
-        "명시적 CTA 추가",
+        "카피 1줄로 축약",
         "다른 core_usp 각도 변주"
       ],
-      "one_line_insight": "다수 캐릭터 라인업과 SSR 보상 약속으로 후킹은 강하나, 게임성 정보가 부족해 전환에 어려움이 예상됨 — 실제 게임플레이 컷을 추가하여 장르 인지도를 높이고 명확한 CTA로 전환을 유도해야 합니다.",
+      "one_line_insight": "다수 캐릭터 라인업과 SSR 보상 약속으로 팬덤 후킹은 강하나, 게임성 정보가 부족함 — SSR 보상 문구와 함께 게임플레이 컷을 추가해 장르 인지도를 높이고 전환율을 개선",
       "strength_evidence": [
-        "화면 중앙에 8명의 개성 강한 캐릭터들이 나란히 배치되어 수집형 게임의 라인업을 명확히 보여주며 다양한 매력을 어필합니다.",
-        "중앙 하단에 'SSR 캐릭터를 반드시 GET'이라는 문구가 크게 강조되어 사전등록 시 얻을 수 있는 핵심 보상을 명확히 제시합니다.",
-        "캐릭터들의 독특한 외형과 일부 캐릭터의 피 묻은 연출, 그리고 'Crimson Inferno'라는 부제가 게임의 다크한 분위기에 대한 호기심을 자극합니다."
+        "화면 중앙에 8명의 주요 캐릭터가 나란히 배치되어 수집형 RPG의 매력을 시각적으로 어필하며 다양한 캐릭터 풀을 강조함",
+        "중앙 하단에 '사전등록해서 SSR 캐릭터를 반드시 GET'이라는 문구가 명확하게 제시되어 시청자에게 강력한 행동 동기를 부여함",
+        "중앙의 주인공 캐릭터가 무기를 들고 공격적인 포즈를 취하고 있으며, 주변 캐릭터들도 각자의 개성을 드러내는 역동적인 자세로 연출됨"
       ],
       "weakness_evidence": [
-        "캐릭터 일러스트와 보상 정보만 제공될 뿐, 실제 게임플레이 화면이나 장르를 유추할 수 있는 시각적 단서가 없어 어떤 게임인지 알기 어렵습니다.",
-        "정적인 일러스트 나열 방식은 동일 장르의 다른 소재들과 비교했을 때 시각적 임팩트나 동적인 후킹 요소가 부족하여 시선 유지력이 약할 수 있습니다."
+        "캐릭터 일러스트와 보상 문구만으로 구성되어 실제 카드 배틀이나 턴제 RPG의 게임플레이 단서가 전혀 없어 장르 인지가 어려움",
+        "8명의 캐릭터 이름과 성우 정보가 작게 나열되어 있어 모바일 환경에서 가독성이 떨어지며, 시선이 분산될 여지가 있음"
       ],
       "improvement_actions": [
-        "캐릭터 일러스트 하단 또는 배경에 실제 전투 장면이나 핵심 게임플레이 UI를 작게 삽입하여 장르 인지도를 높입니다.",
-        "하단 앱스토어/구글플레이 버튼 옆에 '지금 사전등록'과 같은 명확한 행동 유도 문구를 추가하여 전환율을 개선합니다.",
-        "캐릭터 외형 소구와 보상 약속 외에, 게임의 핵심 전략 요소나 스토리 일부를 짧은 문구로 추가하여 가치 제안을 다각화합니다."
+        "하단 SSR 보상 문구 위에 실제 카드 배틀 UI 또는 인페르노 스킬 연출 컷을 짧게 삽입하여 장르 인지를 돕도록 제작",
+        "캐릭터명 및 CV 텍스트를 최소화하고 '사전등록하고 SSR 캐릭터 받자!'와 같은 핵심 메시지를 1줄로 강조하여 가독성을 높임",
+        "SSR 보상 대신 '전략적 카드 배틀' 또는 '다크 판타지 세계관'을 강조하는 다른 버전의 소재를 제작하여 다양한 USP를 테스트"
       ],
-      "creator_intent": "매력적인 캐릭터 라인업과 SSR 보상 약속으로 팬덤을 형성하고 사전등록을 유도하려는 의도",
+      "creator_intent": "다수의 매력적인 캐릭터 라인업과 SSR 보상을 전면에 내세워 원작 팬덤 및 수집형 RPG 유저의 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
@@ -2335,8 +2335,8 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:01:36+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-29T13:03:58+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR01-DA\\JP\\260810_BNR_P-Reward-RasetsuSSR01-DA_L_1200x628_JP.jpg",
         "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR01-DA\\JP\\260810_BNR_P-Reward-RasetsuSSR01-DA_S_1080x1080_JP.jpg",
@@ -2402,23 +2402,23 @@
       ],
       "test_ideas": [
         "명시적 CTA 추가",
-        "게임플레이 컷 추가"
+        "카피 1줄로 축약"
       ],
-      "one_line_insight": "다수 캐릭터 라인업과 SSR 보상 강조로 후킹은 강하나, 게임성 불분명 및 CTA 부재가 약점 — 실제 게임플레이 컷과 명확한 CTA 버튼을 추가하여 전환율을 개선해야 합니다.",
+      "one_line_insight": "다수 캐릭터와 SSR 보상으로 후킹은 강하나 게임 장르와 명확한 행동 유도가 부족함 — 하단에 '카드 배틀 RPG' 문구와 '사전등록하기' 버튼을 추가해 전환율을 개선",
       "strength_evidence": [
-        "화면 전체에 8명의 개성 강한 2D 일러스트 캐릭터들이 나란히 배치되어 수집형 RPG의 매력을 직관적으로 어필합니다.",
-        "중앙에 'SSR 캐릭터를 얻을 기회'와 '사전등록 선물 GET' 문구가 명확하게 제시되어 유저에게 직접적인 혜택을 약속합니다.",
-        "붉은색 배경과 캐릭터들의 강렬한 표정, 그리고 'Crimson Inferno' 타이틀이 어우러져 다크 판타지 분위기를 효과적으로 전달합니다."
+        "화면 중앙에 8명의 다양한 캐릭터가 전신 일러스트로 나열되어 수집형 RPG의 매력을 직관적으로 전달합니다.",
+        "중앙 하단에 'SSR 캐릭터를 손에 넣을 찬스'와 '사전등록 선물 GET' 문구가 크게 강조되어 명확한 혜택을 제시합니다.",
+        "붉은색 배경과 캐릭터들의 강렬한 표정, 중앙의 'SSR' 텍스트가 시선을 압도하며 다크 판타지 분위기를 효과적으로 전달합니다."
       ],
       "weakness_evidence": [
-        "캐릭터 일러스트와 보상 정보만 있을 뿐, 실제 게임플레이 화면이나 전투 연출이 없어 어떤 장르의 게임인지 파악하기 어렵습니다.",
-        "사전등록 보상을 강조하지만, 구체적인 '지금 등록하기'와 같은 CTA 버튼이나 문구가 명확히 부각되지 않아 행동 전환을 유도하는 힘이 약합니다."
+        "캐릭터 일러스트와 보상 정보만 있어, 카드 배틀 턴제 RPG라는 게임의 핵심 플레이 방식이나 장르적 특징을 알 수 없습니다.",
+        "사전등록 선물 GET 문구는 있지만, 직접적인 '지금 다운로드' 또는 '사전등록하기' 버튼이 없어 즉각적인 행동 유도가 약합니다."
       ],
       "improvement_actions": [
-        "하단 Google Play/App Store 로고 위에 '지금 사전등록' 버튼을 추가하여 유저의 다음 행동을 명확히 유도합니다.",
-        "캐릭터 라인업 일부를 줄이고 그 자리에 실제 게임 전투 장면 스크린샷을 삽입하여 장르와 게임성을 직관적으로 보여줍니다."
+        "화면 하단에 '사전등록 바로가기' 버튼을 추가하여 유저가 다음 행동으로 쉽게 이어지도록 유도합니다.",
+        "현재 카피를 'SSR 캐릭터 받고, 설화를 뒤집는 카드 배틀 RPG를 경험하세요!' 한 줄로 교체하여 게임성을 명확히 합니다."
       ],
-      "creator_intent": "다수의 매력적인 캐릭터와 사전등록 보상을 전면에 내세워 잠재 유저의 호기심과 참여를 유도하려는 의도",
+      "creator_intent": "다수의 매력적인 캐릭터와 SSR 보상으로 원작 팬덤 및 신규 유저의 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
@@ -2431,8 +2431,8 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:01:36+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-29T13:04:11+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR02-DA (CTA)\\JP\\260810_BNR_P-Reward-RasetsuSSR02-DA_L_1200x628_JP.jpg",
         "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR02-DA (CTA)\\JP\\260810_BNR_P-Reward-RasetsuSSR02-DA_S_1080x1080_JP.jpg",
@@ -2485,36 +2485,36 @@
       "art_style": "2D 일러스트",
       "strengths": [
         "보상 약속 명확",
-        "캐릭터 액션/전투 연출",
-        "강한 비주얼 임팩트"
+        "다수 캐릭터 라인업",
+        "캐릭터 액션/전투 연출"
       ],
       "weaknesses": [
         "장르/게임성 불분명",
-        "행동 유도 약함/부재"
+        "정보 과적 (텍스트/UI 산만)"
       ],
       "hypothesis": [
         "높은 CTR 예상 — 강한 후킹",
         "낮은 전환 위험 — 행동 유도 약함"
       ],
       "test_ideas": [
-        "명시적 CTA 추가",
-        "게임플레이 컷 추가"
+        "게임플레이 컷 추가",
+        "카피 1줄로 축약"
       ],
-      "one_line_insight": "보상 약속과 화려한 액션 연출로 클릭 유도는 강하나, 게임성 정보 부족과 행동 유도 부재로 전환율 확보에 한계 — 엔드카드에 명확한 CTA와 게임 플레이 힌트를 추가하여 전환율 개선 필요.",
+      "one_line_insight": "SSR 확정 보상과 캐릭터 스킬 연출로 후킹은 강하나, 실제 게임 플레이 정보가 부족하여 장르 인지가 어려움 — 각 캐릭터 스킬 연출 후 짧게 인게임 전투 화면을 추가해 게임성을 명확히 전달",
       "strength_evidence": [
-        "화면 상단에 'SSR 캐릭터 1체 반드시 GET'이라는 문구가 붉은색으로 강조되어 즉각적으로 보상을 인지시킴.",
-        "00:03~00:13 구간에서 캐릭터들의 역동적인 공격 및 스킬 시전 장면이 연달아 연출되어 게임의 액션성을 시각적으로 어필함.",
-        "붉은색 피 효과와 어두운 배경, 강렬한 캐릭터 디자인이 조화를 이루며 시각적으로 강렬한 인상을 줌."
+        "0초부터 화면 상단에 'SSR 캐릭터 1체 반드시 GET' 문구가 크게 노출되어 시청자에게 명확한 보상 혜택을 즉시 전달합니다.",
+        "세 명의 주요 캐릭터(무다노, 모모미야, 코우가사키)가 순차적으로 등장하며 각자의 일러스트와 스킬 연출을 보여줘 수집형 RPG의 매력을 어필합니다.",
+        "각 캐릭터별로 4~6초간 펼쳐지는 화려한 스킬 이펙트와 역동적인 전투 애니메이션은 캐릭터의 개성과 게임의 액션성을 강조합니다."
       ],
       "weakness_evidence": [
-        "전투 장면이 다수 등장하지만, 실제 게임 플레이 UI나 핵심 메카닉에 대한 정보가 없어 어떤 장르의 게임인지 명확히 인지하기 어려움.",
-        "영상 마지막 00:22~00:27 구간에 게임 로고와 사전등록 문구만 노출될 뿐, 다운로드 버튼이나 명확한 CTA(Call to Action)가 부재하여 전환으로 이어지기 어려움."
+        "캐릭터 스킬 연출만 반복될 뿐 실제 카드 배틀 UI나 턴제 전략 플레이 화면이 전혀 노출되지 않아 신규 유저가 게임 장르를 인지하기 어렵습니다.",
+        "화면 좌측 상단 보상 문구와 우측 하단 캐릭터 정보, 중앙의 스킬 연출이 동시에 진행되어 시선이 분산되고 집중하기 어렵습니다."
       ],
       "improvement_actions": [
-        "영상 마지막 2초 구간에 '지금 사전등록' 버튼과 함께 'SSR 캐릭터 획득!' 문구를 추가하여 전환율을 높이는 A/B 테스트 진행.",
-        "00:03~00:13 구간의 전투 연출 중 일부를 실제 게임 플레이 화면으로 교체하여 장르 인지도를 높이는 변주 제작."
+        "각 캐릭터 스킬 연출 직후 2~3초간 실제 카드 배틀 UI가 적용된 인게임 플레이 화면을 삽입하여 장르 인지를 돕도록 개선합니다.",
+        "상단 'SSR 캐릭터 1체 반드시 GET' 문구를 유지하되, 캐릭터 정보 영역에 '원작 초월 다크 판타지 카드 배틀 RPG'와 같은 1줄 카피를 추가합니다."
       ],
-      "creator_intent": "SSR 캐릭터 보상을 전면에 내세워 유저의 즉각적인 관심을 유도하고 사전등록 전환을 노리는 의도.",
+      "creator_intent": "SSR 캐릭터 확정 지급 보상과 주요 캐릭터들의 화려한 스킬 연출로 IP 팬덤과 수집형 RPG 유저의 이목을 끌려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
@@ -2527,8 +2527,8 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:01:36+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-06-29T13:04:41+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Reward-SkillcardSSR01-UA\\JP\\260313_VID_P-Reward-SkillcardSSR01-UA_L_1920x1080_JP.mp4"
       ],
@@ -2555,13 +2555,13 @@
   "metrics": {
     "scanned_folders": 28,
     "tagged_records": 28,
-    "cache_hits": 18,
-    "cache_misses": 2,
+    "cache_hits": 20,
+    "cache_misses": 8,
     "failures": 0,
-    "duration_sec": 76.8,
+    "duration_sec": 259.5,
     "prompt_version": "v3.3-2026.06.13-character-split-single-darkfantasy-v1",
-    "fallback_used": true,
-    "carried_forward": 8,
+    "fallback_used": false,
+    "carried_forward": 0,
     "score_summary": {
       "graded": 0,
       "grades": {},

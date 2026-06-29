@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "title_id": "zeus",
-  "generated_at": "2026-06-28T13:00:15+09:00",
+  "generated_at": "2026-06-29T13:00:18+09:00",
   "pipeline_version": "stage2-mvp",
   "gemini_model": "gemini-2.5-flash",
   "creatives": [
@@ -68,7 +68,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-28T13:00:15+09:00",
+      "tagged_at": "2026-06-29T13:00:18+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_1080x1920_KR.jpg",
