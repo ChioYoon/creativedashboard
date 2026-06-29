@@ -4200,9 +4200,28 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         const opts = [...values[d.key]].sort().map(v =>
           `<label style="display:inline-flex;align-items:center;gap:3px;font-size:11px;margin:0 6px 4px 0;cursor:pointer;">` +
           `<input type="checkbox" data-canon="${d.key}" value="${v}" onchange="onCanonicalChange()" style="margin:0;">${v}</label>`).join('');
-        return `<div style="margin-bottom:6px;"><div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:2px;">${d.label}</div><div>${opts}</div></div>`;
+        return `<div style="margin-bottom:4px;border-bottom:1px solid #f1f1f1;">
+          <div onclick="toggleCanonGroup('${d.key}')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:5px 0;">
+            <span style="font-size:11px;font-weight:700;color:#6b7280;">${d.label}</span>
+            <span style="display:flex;align-items:center;gap:5px;">
+              <span id="canonCount_${d.key}" style="display:none;font-size:10px;background:#eef2ff;color:#4f46e5;border-radius:5px;padding:0 6px;line-height:1.6;"></span>
+              <span id="canonChevron_${d.key}" style="font-size:10px;color:#9ca3af;">▸</span>
+            </span>
+          </div>
+          <div id="canonGroup_${d.key}" style="display:none;max-height:120px;overflow-y:auto;padding:2px 0 5px;">${opts}</div>
+        </div>`;
       }).join('');
       if (section) section.style.display = '';
+    }
+
+    // 캐노니컬 그룹 접기/펼치기 토글 (표시만 — 상태는 DOM display 에서 직접 읽음)
+    function toggleCanonGroup(key) {
+      const c = document.getElementById('canonGroup_' + key);
+      const ch = document.getElementById('canonChevron_' + key);
+      if (!c) return;
+      const open = c.style.display !== 'none';
+      c.style.display = open ? 'none' : '';
+      if (ch) ch.textContent = open ? '▸' : '▾';
     }
 
     // 캐노니컬 체크박스 변경 → 상태 갱신 + 캠페인 목록 좁혀 표시 (렌더는 분석 실행 버튼)
@@ -4210,6 +4229,13 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       CANON_DIMS.forEach(d => currentCanonical[d.key] = new Set());
       document.querySelectorAll('#canonicalFilterGroups input[type="checkbox"]:checked').forEach(cb => {
         currentCanonical[cb.dataset.canon].add(cb.value);
+      });
+      CANON_DIMS.forEach(d => {
+        const badge = document.getElementById('canonCount_' + d.key);
+        if (!badge) return;
+        const n = currentCanonical[d.key].size;
+        badge.textContent = String(n);
+        badge.style.display = n > 0 ? '' : 'none';
       });
       refreshCampaignVisibility();
     }
@@ -6104,6 +6130,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       if (typeof CANON_DIMS !== 'undefined' && typeof currentCanonical !== 'undefined') {
         CANON_DIMS.forEach(d => currentCanonical[d.key] = new Set());
         document.querySelectorAll('#canonicalFilterGroups input[type="checkbox"]').forEach(cb => cb.checked = false);
+        CANON_DIMS.forEach(d => { const b = document.getElementById('canonCount_' + d.key); if (b) b.style.display = 'none'; });
       }
       
       // 검색 입력 초기화
