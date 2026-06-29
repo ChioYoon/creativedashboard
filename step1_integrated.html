@@ -2156,16 +2156,26 @@ function renderTagCreativeList(creatives) {
   panel.classList.add('visible');
 }
 
+// 성과 데이터(Google Ads 노출 또는 MMP) 보유 여부 — 미집행 소재 인사이트 게이트
+function hasPerfData(creative) {
+  const c = creative || {};
+  const m = c.meta || {};
+  return !!(c._ads && c._ads.imp > 0) || !!(m.mmp_quality_score && m.mmp_quality_score.total != null);
+}
+
 // Stage 5-F-2 / 5-H v3: v2 구조화 신호(강점/약점/가설/변주 + one_line_insight)를 모달용 HTML로 렌더.
 // 5-H: 강점/약점/변주는 칩 아래 근거(evidence)/실행안(action) 텍스트 페어 표시.
 //      근거 배열 부재 시(구 JSON) 칩만 표시 — graceful degrade.
 function buildSignalChipsHtml(creative) {
   const meta = (creative && creative.meta) || {};
+  const perf = hasPerfData(creative);
   const groups = [
     { label: '강점',       items: meta.strengths,  cls: 'signal-chip-strength',   evCls: 'evidence-strength', evidences: meta.strength_evidence },
     { label: '약점',       items: meta.weaknesses, cls: 'signal-chip-weakness',   evCls: 'evidence-weakness', evidences: meta.weakness_evidence },
+    ...(perf ? [
     { label: '가설',       items: meta.hypothesis, cls: 'signal-chip-hypothesis', evCls: null,                evidences: null },
     { label: '차주 변주',  items: meta.test_ideas, cls: 'signal-chip-testidea',   evCls: 'evidence-testidea', evidences: meta.improvement_actions, evPrefix: '→ ' },
+    ] : []),
   ];
   // C-ⓐ: 카테고리별 좌측 보더 색 + 잉크 텍스트 카드 (펄 칩 → 절제, 스캔성 유지)
   const cardCls = { 'signal-chip-strength':'signal-card-strength', 'signal-chip-weakness':'signal-card-weakness', 'signal-chip-hypothesis':'signal-card-hypothesis', 'signal-chip-testidea':'signal-card-testidea' };
@@ -2189,6 +2199,11 @@ function buildSignalChipsHtml(creative) {
 // CSV 모드: one_line_insight 부재 시 marketer_insight 컬럼 원문 fallback.
 function buildInsightBlocksHtml(creative) {
   const meta = (creative && creative.meta) || {};
+  if (!hasPerfData(creative)) {
+    return `<div class="signal-insight" style="opacity:.85;">` +
+           `<span class="signal-insight-key" style="background:#9ca3af;">안내</span>` +
+           `<div class="signal-insight-lead" style="font-weight:400;color:var(--text-secondary,#666);">캠페인 집행 후 성과 인사이트(가설·차주 변주)가 추가됩니다. 현재는 시각 분석(강점·약점·제작 의도)만 제공됩니다.</div></div>`;
+  }
   const insight = ((meta.one_line_insight || meta.marketer_insight) || '').trim();
   const reality = (meta.kpi_reality_check || '').trim();
   if (!insight && !reality) return '';
