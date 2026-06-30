@@ -909,10 +909,7 @@
     .layer-toggle-btn.active-mmp  { background: #ccfbf1; color: #0f766e; }
     .layer-hint { font-size: 11.5px; color: #9ca3af; }
     /* 레이어별 부가 컬럼 처리: ads 레이어는 MMP 컬럼 흐리게(부가 참조), mmp 레이어는 성과(Google Ads 백분위)·MMP(종합 배지) 컬럼 숨김 — 지표 컬럼 자체가 활성 데이터라 더 이상 흐리지 않음 */
-    #resultTable.layer-ads-primary .col-mmp th,
-    #resultTable.layer-ads-primary .col-mmp td { opacity: .65; }
-    #resultTable.layer-mmp-primary .col-pctile,
-    #resultTable.layer-mmp-primary .col-mmp { display: none; }
+    /* (② 레이어별 col-mmp/col-pctile 숨김·dim 제거 — 두 점수 상시 표시. 데이터 게이트 show-mmp/show-pctile 는 유지) */
     /* ── DS Table ── */
     .ds-table { width: 100%; border-collapse: collapse; }
     .ds-table thead th {
@@ -1730,10 +1727,10 @@
                 <th class="num has-tooltip" data-tip="노출수">노출수 <span class="th-info">?</span></th>
                 <th class="num has-tooltip" data-tip="클릭수">클릭수 <span class="th-info">?</span></th>
                 <th class="num has-tooltip" data-tip="클릭수 ÷ 노출수 × 100%">CTR <span class="th-info">?</span></th>
-                <th id="thScore" class="has-tooltip" data-tip="전환수·CPA·IPM·ROAS 점수의 가중치 합산">총점 <span class="th-info">?</span></th>
+                <th id="thScore" class="has-tooltip" data-tip="전환수·CPA·IPM·ROAS 점수의 가중치 합산 (Google Ads 기준)">총점 <span class="th-info">?</span></th>
                 <th class="has-tooltip" data-tip="총점 기준 등급 · 최우수≥80 / 우수≥60 / 양호≥40">등급 <span class="th-info">?</span></th>
                 <th class="col-pctile has-tooltip" data-tip="풀 대비 백분위 · CTR/CVR/CPA · Google Ads KPI 보유 소재">성과 <span class="th-info">?</span></th>
-                <th class="col-mmp has-tooltip" data-tip="소재 품질(MMP) · D1 IPM·D1 CPI·D7 ROAS·D1 잔존 종합">MMP <span class="th-info">?</span></th>
+                <th class="col-mmp has-tooltip" data-tip="소재 품질(MMP) · D1 IPM·D1 CPI·D7 ROAS·D1 잔존 종합">MMP 점수 <span class="th-info">?</span></th>
                 <th class="has-tooltip" data-tip="일별 전환수 추이">추이 <span class="th-info">?</span></th>
               </tr>
             </thead>
@@ -5159,6 +5156,11 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           mRev = won(c.매출); mCost = won(c.비용); mImp = numv(c.노출수); mClk = numv(c.클릭수);
           mCtr = (c.CTR != null) ? c.CTR.toFixed(2) + '%' : dash;
         }
+
+        // ② 총점·등급은 레이어 무관 항상 Google Ads 기준 (MMP 점수는 별도 col-mmp 컬럼)
+        const _hasAdsScore = c._ads && c._ads.imp > 0;
+        scoreCell = _hasAdsScore ? c.TotalScore.toFixed(1) : dash;
+        gradeCell = _hasAdsScore ? `<span class="badge grade-${c.등급}">${c.등급}</span>` : dash;
 
         tr.innerHTML = `
           <td style="text-align: center;">${previewHtml}</td>
