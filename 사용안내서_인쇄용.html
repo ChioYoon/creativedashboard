@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Com2uS R팀 소재 분석 시스템 사용 안내서 v5.3</title>
+  <title>Com2uS R팀 소재 분석 시스템 사용 안내서 v5.4</title>
   <style>
     /* ===== Pretendard — self-hosted (Com2uS DS) ===== */
     @font-face { font-family:"Pretendard"; src:url("assets/fonts/PretendardVariable.woff2") format("woff2-variations"), url("assets/fonts/PretendardVariable.woff2") format("woff2"); font-weight:45 920; font-style:normal; font-display:swap; }
@@ -198,11 +198,11 @@
     <div class="cover-meta">
       <div class="cover-meta-item">
         <span class="cover-meta-label">Version</span>
-        <span class="cover-meta-value">v5.2 (시스템 v19)</span>
+        <span class="cover-meta-value">v5.4 (시스템 v19)</span>
       </div>
       <div class="cover-meta-item">
         <span class="cover-meta-label">Updated</span>
-        <span class="cover-meta-value">2026. 06. 13</span>
+        <span class="cover-meta-value">2026. 06. 30</span>
       </div>
       <div class="cover-meta-item">
         <span class="cover-meta-label">Team</span>
@@ -264,7 +264,17 @@
       · <strong>빠른 참조</strong> → 마지막 Cheat Sheet(12p)를 책상에 붙여두세요.
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Com2uS R Marketing Team</div>
+    <div class="box box-blue" style="margin-top: 16px;">
+      <strong>최근 업데이트 (2026-06-30, v5.4)</strong>
+      · <strong>소재 상태 배지</strong> — 표에 라이브/중단/제외 표시 (1.5·3.2절)<br>
+      · <strong>컬럼 정렬 · 선택 소재만 집계 · 지표 통일</strong> — 소재 목록 표 강화 (3.2절)<br>
+      · <strong>상세 모달 일별 추이 차트</strong> — 전환/노출/CPA 토글 (3.2절)<br>
+      · <strong>성과별 강·약점 태그</strong> — 최우수/하위 소재 공통 태그 (3.2절)<br>
+      · <strong>미매칭 매칭 개선</strong> — 패널 기본 접기 + 완전 병합 파일·다운로드 (1.5절)<br>
+      · <strong>Step 2 공통 패턴 분리 · 최저 성과 소재 카드</strong> (4절)
+    </div>
+
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.4 | Com2uS R Marketing Team</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -361,7 +371,7 @@
       </tbody>
     </table>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 3</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.4 | Page 3</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -378,12 +388,13 @@
     <p>Google Ads(광고비·노출·클릭)에 더해, 타이틀별로 연동된 <strong>MMP(AppsFlyer 또는 Airbridge)</strong>의 설치·전환 지표를 결합해 표시합니다. 광고 매체 데이터와 MMP 데이터를 소재 단위로 조인합니다.</p>
 
     <div class="section-title">소재명 별칭 매핑 + 미매칭 리포트</div>
-    <p>광고 매체의 소재명과 GDrive 파일명이 다를 때, Step 1 상단 <strong>미매칭 패널</strong>에 "집행은 됐으나 매칭되지 않은 자산"이 표시됩니다. 매핑할 소재를 골라 config를 생성하면 다음 실행부터 자동으로 조인됩니다.</p>
+    <p>광고 매체의 소재명과 GDrive 파일명이 다를 때, Step 1 상단 <strong>미매칭 패널</strong>(기본 접힘 — 요약줄 클릭 시 펼침)에 "집행은 됐으나 매칭되지 않은 자산"이 표시됩니다. 매핑할 소재를 고른 뒤 <strong>"매핑 반영 파일 생성"</strong>을 누르면, 기존 설정을 보존한 <strong>완전한 <code>titles_overrides.json</code> 전체</strong>가 생성됩니다(클립보드 복사 또는 "파일 다운로드"). 이 내용을 시스템 담당자에게 전달해 반영하면 <strong>다음 야간 실행부터 자동으로 조인</strong>됩니다.</p>
+    <div class="box box-green">· 과거에는 일부 조각(snippet)만 생성돼 수동 병합 시 기존 설정이 지워질 위험이 있었으나, 이제 전체 파일을 안전하게 생성합니다.</div>
 
     <div class="section-title">캠페인 타입 필터</div>
     <p>캠페인을 타입(예: 선론칭·상시 등)별로 정규화해 결과를 필터링할 수 있습니다.</p>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | 데이터 연동</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.4 | 데이터 연동</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -475,7 +486,7 @@
       · <strong>유료 AI 플랜</strong>: 원문 최대 200자 Gemini에 전달 → 깊은 인사이트
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 4</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.4 | Page 4</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -525,7 +536,7 @@
         <tr><td><strong>③</strong></td><td><strong>적용된 필터 조건</strong></td><td>캠페인·소재유형·기간·집계기준 한 줄 요약 — 결과 캡처 시 컨텍스트 명확화</td></tr>
         <tr><td><strong>④</strong></td><td><strong>AI 인사이트</strong></td><td>"AI 인사이트 생성" 버튼 → 위닝/루징 분석 카드 (5번 섹션 참고)</td></tr>
         <tr><td><strong>⑤</strong></td><td><strong>소재 유형별 요약 표</strong> <span class="badge badge-red" style="font-size:9px;">NEW</span></td><td>BNR/VID 별 가중평균 <strong>CPA · IPM · CTR · ROAS · 평균점수</strong> + 합계행 — 포맷 의사결정 핵심 자료</td></tr>
-        <tr><td><strong>⑥</strong></td><td><strong>소재 상세 테이블</strong></td><td>썸네일 · 전환 · CPA · IPM · ROAS · 4개 점수 · 총점 · 등급 (모든 컬럼 헤더에 툴팁 제공)</td></tr>
+        <tr><td><strong>⑥</strong></td><td><strong>소재 상세 테이블</strong> <span class="badge badge-red" style="font-size:9px;">UPDATED</span></td><td>맨 앞 <strong>라이브/중단/제외 상태 배지</strong> · 썸네일 · 전환 · CPA · IPM · ROAS · 4개 점수 · 총점 · 등급. <strong>컬럼 헤더 클릭 정렬</strong>(오름/내림) · <strong>체크박스로 선택 소재만 보기</strong>(집계는 전체 고정) · 행 클릭 시 상세 모달(<strong>일별 추이 차트</strong> 전환/노출/CPA 토글). 모든 헤더 툴팁 제공.</td></tr>
       </tbody>
     </table>
 
@@ -548,7 +559,13 @@
       · 하단 합계행: 전체 유형 통합 KPI — 캠페인 단위 벤치마크로 활용
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 5</div>
+    <div class="box box-green" style="margin-top:12px;">
+      <strong>2026-06 추가 — 표 상태 배지 &amp; 성과별 태그</strong>
+      · <strong>라이브/중단/제외 상태 배지</strong>: 소재명 앞 색 점으로 표시. 자동 판정(최근 노출 유무) + 상세 모달에서 자동/라이브/제외 수동 지정(개인 브라우저 저장). <strong>표시 전용 — 점수·집계엔 영향 없음.</strong><br>
+      · <strong>성과별 강·약점 태그</strong>(전체 성과 요약 탭): 종합점수 상위 소재의 <strong>공통 강점</strong>과 하위 소재의 <strong>공통 약점</strong> 태그를 Top 5로 분리 — "이긴 소재가 공유하는 강점 / 진 소재가 공유하는 약점"을 한눈에 파악.
+    </div>
+
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.4 | Page 5</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -598,7 +615,7 @@
       "전체 캠페인 / BNR+VID / 지난주" 필터 → 점수 계산 → HTML 추출 → 매주 월요일 정해진 채널에 첨부 한 번으로 <strong>주간 성과 리포트 발행</strong> 가능.
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 6</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.4 | Page 6</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -668,7 +685,7 @@
       · <strong>TXT 소재</strong>: 피로도 분석에서도 완전 제외 (BNR/VID만 분석)
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 7</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.4 | Page 7</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -708,7 +725,7 @@
       · Step 2-① 컬럼 설정에서 가중치 수동 조정도 가능
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 8</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.4 | Page 8</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -760,13 +777,19 @@
       </div>
     </div>
 
+    <div class="box box-green" style="margin-top:12px;">
+      <strong>2026-06 추가 — 공통 패턴 분리 &amp; 최저 성과 소재</strong>
+      · <strong>공통 패턴 분리</strong>: 고성과·저성과 양쪽에 흔해 변별력이 낮은 태그(예: 2D 일러스트·혜택형)를 승리공식/중단패턴에서 빼 <strong>"⚖️ 공통 패턴"</strong>으로 별도 표기 → 진짜 승리에 기여하는 태그만 승리공식에 남깁니다.<br>
+      · <strong>최저 성과 소재 카드</strong>: 최고 성과 소재 옆에 <strong>최저 성과 소재</strong>를 함께 제시해 대비 분석을 돕습니다.
+    </div>
+
     <div class="box box-blue">
       <strong>차수 히스토리 저장</strong>
       군집화 완료 후 <strong>"이번 차수 저장"</strong> 버튼을 클릭하면 localStorage에 저장됩니다.<br>
       다음 차수 분석 시 이전 군집과 자동 비교하여 신규 군집(NEW 배지)·기존 군집 연속성을 표시합니다.
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 9</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.4 | Page 9</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -842,7 +865,7 @@
       · 신규 슬롯: <strong>losing · scaleUp · stopNow</strong> 추가
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 10</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.4 | Page 10</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -908,7 +931,7 @@
       · 모델: <strong>Gemini 2.5 Flash</strong> (thinking 모드 비활성화로 출력 토큰 100% 활용)
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 11</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.4 | Page 11</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -997,7 +1020,7 @@
       <div class="faq-a">v5.0 신규 기능인 <strong>"유료 Pro 업그레이드 유도 카드"</strong>입니다. 무료 플랜에서는 잠긴 슬롯(losing/scaleUp/stopNow 등)을 아이콘으로 표시하며 클릭 한 번으로 API 키 모달이 열려 유료 키로 전환할 수 있습니다.</div>
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 12</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.4 | Page 12</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -1043,7 +1066,7 @@
       <li>※ KPI 보유 소재가 있는 <strong>타이틀 모드</strong>에서만 노출 (CSV 모드는 자동 숨김)</li>
     </ul>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.3 | Page 13</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.4 | Page 13</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -1144,7 +1167,12 @@
       <thead><tr><th style="width:16%">버전</th><th style="width:22%">날짜</th><th>주요 업데이트</th></tr></thead>
       <tbody>
         <tr>
-          <td><strong>v5.3</strong> <span class="badge badge-red">현재</span></td>
+          <td><strong>v5.4</strong> <span class="badge badge-red">현재</span></td>
+          <td>2026-06-30</td>
+          <td>① <strong>소재 상태 배지</strong>(라이브/중단/제외, 표시 전용) · ② <strong>컬럼 정렬·선택 소재 집계·지표 통일</strong> · ③ <strong>상세 모달 일별 추이 차트</strong>(전환/노출/CPA) · ④ <strong>성과별 강·약점 태그</strong>(최우수/하위 공통 태그) · ⑤ <strong>미매칭 패널 접기 + 완전 병합 파일 생성·다운로드</strong> · ⑥ <strong>Step 2 공통 패턴 분리 + 최저 성과 소재 카드</strong> · 툴팁/MMP 기준 명칭/HTML 추출 필터 접기 등 UX 개선</td>
+        </tr>
+        <tr>
+          <td><strong>v5.3</strong></td>
           <td>2026-06-29</td>
           <td>① <strong>AI 인사이트 무료 카드 구조화</strong> — 위닝(초록)/저효율(주황) 영역 + 소재행 IPM·CPA 배지 + 확장/중단 배지<br>
             ② <strong>데이터 연동 안내(1.5절)</strong> — 타이틀 JSON 자동 로드·MMP(AppsFlyer/Airbridge)·소재명 별칭 매핑·미매칭 패널·캠페인 타입 필터</td>

@@ -120,6 +120,19 @@ R팀 담당자별로 **개별 키**를 발급해서 사용합니다. (공용 키
 
 ---
 
+## 📌 최신 업데이트 (2026-06-30) — Step 1/2 UX 일괄 개선 + 미매칭 매칭 편의화
+
+> 11개 개선 항목(A~E) + 라이브/제외 상태 + 미매칭 매칭을 SDD로 적용. 전부 **표시/UX 전용 — 점수·집계·파이프라인 불변**. 상세는 `docs/superpowers/specs/2026-06-30-*`·`2026-06-29-batch*`.
+
+- **소재 상태 배지 (라이브/중단/제외)** — 표 소재명 앞 색 점. 자동 판정(최근 노출) + 상세 모달 수동 지정(localStorage 개인). 표시 전용 (`step1_integrated.html` `resolveStatus`/`statusBadgeHtml`).
+- **소재 목록 표 강화** — 컬럼 헤더 클릭 정렬 · 체크박스 선택 소재만 집계(통계는 전체 고정) · Google Ads/MMP 지표 명칭 통일 · 툴팁 깨짐 수정.
+- **상세 모달 일별 추이 차트** — 전환/노출/CPA 토글 (Chart.js, `renderModalTrend`).
+- **성과별 강·약점 태그** — 전체 성과 요약에 종합점수 상위 공통 강점 / 하위 공통 약점 Top5 (`buildPerfTagAnalysis`).
+- **미매칭 매칭 편의화** — 미매칭 패널 기본 접기 + "매핑 반영 파일 생성"이 현재 `titles_overrides.json` fetch→딥 병합→**완전 파일** 출력(복사·다운로드, 기존 설정 보존) (`buildAliasConfig`/`downloadAliasConfig`).
+- **Step 2 군집화** — 고·저 공유 변별력 낮은 태그를 **공통 패턴**으로 분리 + **최저 성과 소재 카드** 추가 (`step2_clustering.html` `buildPatternInsights`).
+
+---
+
 ## 📌 최신 업데이트 (2026-06-29) — 데이터 연동 고도화 + AI 인사이트 카드 구조화
 
 > 2026-06 한 달간 SDD(스펙→플랜→구현)로 추가된 기능 요약. 상세 설계·플랜은 `docs/superpowers/specs/`·`docs/superpowers/plans/` 참고.
