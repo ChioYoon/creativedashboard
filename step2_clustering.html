@@ -2215,7 +2215,7 @@ function renderQualityCard(clusters) {
 function buildPatternInsights(clusters) {
   const mats = (clusters || []).flatMap(c => c.materials || []);
   const n = mats.length;
-  if (n < 4) return { winners: [], losers: [], n, k: 0 };
+  if (n < 4) return { winners: [], losers: [], shared: [], n, k: 0 };
   const sorted = [...mats].sort((a, b) => (b.score || 0) - (a.score || 0));
   let k = Math.max(2, Math.ceil(n * 0.25));
   if (k > Math.floor(n / 2)) k = Math.floor(n / 2);   // 상·하위 겹침 방지
@@ -2223,17 +2223,23 @@ function buildPatternInsights(clusters) {
   const tagsOf = m => Array.isArray(m.tags) ? m.tags : [];
   const cand = new Set();
   winners.concat(losers).forEach(m => tagsOf(m).forEach(t => cand.add(t)));
-  const rows = [];
+  const WEAK = 0.12, BOTH = 0.5;
+  const win = [], lose = [], shared = [];
   cand.forEach(t => {
     const topN = winners.filter(m => tagsOf(m).includes(t)).length;
     const botN = losers.filter(m => tagsOf(m).includes(t)).length;
     if (topN < 2 && botN < 2) return;   // 최소 지지(상위 또는 하위 2건 이상)
-    const topR = topN / k, botR = botN / k;
-    rows.push({ tag: t, lift: topR - botR, topPct: Math.round(topR * 100), botPct: Math.round(botR * 100), topN, botN });
+    const topR = topN / k, botR = botN / k, lift = topR - botR;
+    const row = { tag: t, lift, topPct: Math.round(topR * 100), botPct: Math.round(botR * 100), topN, botN };
+    if (Math.abs(lift) < WEAK) {
+      if (Math.min(topR, botR) >= BOTH) shared.push(row);   // 양쪽 흔하고 변별력 낮음 → 공통 패턴
+    } else if (lift >= WEAK) win.push(row);
+    else lose.push(row);
   });
   return {
-    winners: rows.filter(r => r.lift > 0).sort((a, b) => b.lift - a.lift || b.topPct - a.topPct).slice(0, 5),
-    losers:  rows.filter(r => r.lift < 0).sort((a, b) => a.lift - b.lift || b.botPct - a.botPct).slice(0, 5),
+    winners: win.sort((a, b) => b.lift - a.lift || b.topPct - a.topPct).slice(0, 5),
+    losers:  lose.sort((a, b) => a.lift - b.lift || b.botPct - a.botPct).slice(0, 5),
+    shared:  shared.sort((a, b) => (b.topPct + b.botPct) - (a.topPct + a.botPct)).slice(0, 5),
     n, k,
   };
 }
@@ -2251,11 +2257,19 @@ function buildPatternInsightsHtml(clusters) {
       <div style="font-size:12px;font-weight:700;color:var(--mid);margin-bottom:6px;">${title}</div>
       ${rows.length ? rows.map(r => liftRow(r, win)).join('') : `<div style="font-size:11px;color:var(--gray-text);padding:6px 0;">${empty}</div>`}
     </div>`;
+  const sharedRow = (r) => `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px dashed var(--gray-line);">
+      <span style="flex:1;font-size:12.5px;font-weight:600;color:var(--dark);">${escHtml(r.tag)}</span>
+      <span style="font-size:10.5px;color:var(--gray-text);white-space:nowrap;">상위 ${r.topPct}% · 하위 ${r.botPct}%</span>
+    </div>`;
   return `<div class="insight-card win fade-in" style="grid-column:1/-1;">
       <div class="ic-header"><span class="ic-icon">🎯</span><span class="ic-title">승리공식 · 중단패턴 <span style="font-weight:500;font-size:11px;color:var(--gray-text);">상·하위 25% 소재 태그 lift · ${layerLbl} 기준</span></span></div>
       <div class="ic-body" style="display:flex;gap:24px;flex-wrap:wrap;">
         ${col('🏆 승리공식 (상위에서 더 흔한 태그)', pat.winners, true, '뚜렷한 승리 태그 없음')}
         ${col('⛔ 중단패턴 (하위에서 더 흔한 태그)', pat.losers, false, '뚜렷한 저성과 태그 없음')}
+        ${(pat.shared && pat.shared.length) ? `<div style="flex:1;min-width:220px;">
+          <div style="font-size:12px;font-weight:700;color:var(--mid);margin-bottom:6px;">⚖️ 공통 패턴 <span style="font-weight:500;font-size:10.5px;color:var(--gray-text);">(고·저 공유 · 변별력 낮음)</span></div>
+          ${pat.shared.map(sharedRow).join('')}
+        </div>` : ''}
       </div>
     </div>`;
 }
@@ -2338,6 +2352,19 @@ function renderInsights(clusters, data) {
       title:'최고 성과 소재',
       body:`<strong>${escHtml(topMat.name)}</strong>(${topMat.score}점)이 가장 높은 성과를 보입니다.${topCl?` [${escHtml(topCl.name)}] 군집 소속.`:''} 이 소재의 태그 조합을 레퍼런스로 활용하세요.`,
       tags: topMat.topTags.slice(0,4)
+    });
+  }
+
+  // 6b. 최저 소재 (최고와 대비) — ⑪
+  const bottomMat = allMats.length >= 2 ? allMats[allMats.length - 1] : null;  // allMats 는 topMat 산출에서 점수 내림차순 정렬됨
+  if (bottomMat && topMat && bottomMat.idx !== topMat.idx) {
+    const botCl = clusters.find(c => c.materials.some(m => m.idx === bottomMat.idx));
+    insights.push({
+      type:'alert',
+      icon:'⚠️',
+      title:'최저 성과 소재',
+      body:`<strong>${escHtml(bottomMat.name)}</strong>(${bottomMat.score}점)이 가장 낮은 성과를 보입니다.${botCl?` [${escHtml(botCl.name)}] 군집 소속.`:''} 최고 성과 소재와 태그 조합을 비교해 보완·교체를 검토하세요.`,
+      tags: (bottomMat.topTags || []).slice(0,4)
     });
   }
 
