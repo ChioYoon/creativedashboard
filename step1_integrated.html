@@ -1716,21 +1716,21 @@
             <thead>
               <tr>
                 <th>미리보기</th>
-                <th>소재명</th>
-                <th>유형</th>
-                <th id="thM1" class="has-tooltip" data-tip="설치 또는 목표 행동 완료 횟수">전환 <span class="th-info">?</span></th>
-                <th id="thM2" class="has-tooltip" data-tip="비용 ÷ 전환수 · 낮을수록 효율적">CPA <span class="th-info">?</span></th>
-                <th id="thM3" class="has-tooltip" data-tip="(전환수 ÷ 노출수) × 1,000 · 높을수록 우수">IPM <span class="th-info">?</span></th>
-                <th id="thM4" class="has-tooltip" data-tip="(매출 ÷ 비용) × 100% · Revenue 컬럼 없으면 —">ROAS <span class="th-info">?</span></th>
-                <th class="num has-tooltip" data-tip="매출 · Google Ads=Revenue / MMP=D7 LTV(D0~D7 누적)">매출 <span class="th-info">?</span></th>
-                <th class="num has-tooltip" data-tip="광고 비용">비용 <span class="th-info">?</span></th>
-                <th class="num has-tooltip" data-tip="노출수">노출수 <span class="th-info">?</span></th>
-                <th class="num has-tooltip" data-tip="클릭수">클릭수 <span class="th-info">?</span></th>
-                <th class="num has-tooltip" data-tip="클릭수 ÷ 노출수 × 100%">CTR <span class="th-info">?</span></th>
-                <th id="thScore" class="has-tooltip" data-tip="전환수·CPA·IPM·ROAS 점수의 가중치 합산 (Google Ads 기준)">총점 <span class="th-info">?</span></th>
-                <th class="has-tooltip" data-tip="총점 기준 등급 · 최우수≥80 / 우수≥60 / 양호≥40">등급 <span class="th-info">?</span></th>
+                <th data-sortkey="key" data-sorttype="str">소재명</th>
+                <th data-sortkey="유형" data-sorttype="str">유형</th>
+                <th id="thM1" class="has-tooltip" data-sortkey="전환" data-sorttype="num" data-tip="설치 또는 목표 행동 완료 횟수">전환 <span class="th-info">?</span></th>
+                <th id="thM2" class="has-tooltip" data-sortkey="CPA" data-sorttype="num" data-tip="비용 ÷ 전환수 · 낮을수록 효율적">CPA <span class="th-info">?</span></th>
+                <th id="thM3" class="has-tooltip" data-sortkey="IPM" data-sorttype="num" data-tip="(전환수 ÷ 노출수) × 1,000 · 높을수록 우수">IPM <span class="th-info">?</span></th>
+                <th id="thM4" class="has-tooltip" data-sortkey="ROAS" data-sorttype="num" data-tip="(매출 ÷ 비용) × 100% · Revenue 컬럼 없으면 —">ROAS <span class="th-info">?</span></th>
+                <th class="num has-tooltip" data-sortkey="매출" data-sorttype="num" data-tip="매출 · Google Ads=Revenue / MMP=D7 LTV(D0~D7 누적)">매출 <span class="th-info">?</span></th>
+                <th class="num has-tooltip" data-sortkey="비용" data-sorttype="num" data-tip="광고 비용">비용 <span class="th-info">?</span></th>
+                <th class="num has-tooltip" data-sortkey="노출수" data-sorttype="num" data-tip="노출수">노출수 <span class="th-info">?</span></th>
+                <th class="num has-tooltip" data-sortkey="클릭수" data-sorttype="num" data-tip="클릭수">클릭수 <span class="th-info">?</span></th>
+                <th class="num has-tooltip" data-sortkey="CTR" data-sorttype="num" data-tip="클릭수 ÷ 노출수 × 100%">CTR <span class="th-info">?</span></th>
+                <th id="thScore" class="has-tooltip" data-sortkey="TotalScore" data-sorttype="num" data-tip="전환수·CPA·IPM·ROAS 점수의 가중치 합산 (Google Ads 기준)">총점 <span class="th-info">?</span></th>
+                <th class="has-tooltip" data-sortkey="TotalScore" data-sorttype="num" data-tip="총점 기준 등급 · 최우수≥80 / 우수≥60 / 양호≥40">등급 <span class="th-info">?</span></th>
                 <th class="col-pctile has-tooltip" data-tip="풀 대비 백분위 · CTR/CVR/CPA · Google Ads KPI 보유 소재">성과 <span class="th-info">?</span></th>
-                <th class="col-mmp has-tooltip" data-tip="소재 품질(MMP) · D1 IPM·D1 CPI·D7 ROAS·D1 잔존 종합">MMP 점수 <span class="th-info">?</span></th>
+                <th class="col-mmp has-tooltip" data-sortkey="__mmpscore" data-sorttype="num" data-tip="소재 품질(MMP) · D1 IPM·D1 CPI·D7 ROAS·D1 잔존 종합">MMP 점수 <span class="th-info">?</span></th>
                 <th class="has-tooltip" data-tip="일별 전환수 추이">추이 <span class="th-info">?</span></th>
               </tr>
             </thead>
@@ -2310,7 +2310,8 @@ function setLayerHeaders(layer) {
   set('thM2', L.m2, L.tip2);
   set('thM3', L.m3, L.tip3);
   set('thM4', L.m4, L.tip4);
-  set('thScore', L.score, L.tipScore);
+  // ② 총점 헤더는 레이어 무관 항상 '총점 (Google Ads 기준)' 고정 — layerLabels 상대변경 안 함(값도 항상 GA)
+  // set('thScore', L.score, L.tipScore);
 }
 
 // creativeLayerView → js/layer-metrics.js (공용 모듈)
@@ -2511,11 +2512,11 @@ function sortByColumn(field, type) {
     : (type === 'str' ? 'asc' : 'desc');
   window._headerSort = { field, dir };
   // 레이어 인식: MMP 레이어에선 지표·총점 헤더 정렬도 MMP 값(creativeLayerView) 기준 (표시값과 일치)
-  const LAYER_FIELDS = { '전환': '전환', 'CPA': 'CPA', 'IPM': 'IPM', 'ROAS': 'ROAS', 'TotalScore': 'score' };
+  const LAYER_FIELDS = { '전환': '전환', 'CPA': 'CPA', 'IPM': 'IPM', 'ROAS': 'ROAS' };  // TotalScore 제외 — ② 총점은 항상 Google Ads
   const rawVal = (c) => {
+    if (field === '__mmpscore') return (c.meta && c.meta.mmp_quality_score) ? c.meta.mmp_quality_score.total : null;
     if ((window.currentAnalysisLayer || 'ads') === 'mmp' && Object.prototype.hasOwnProperty.call(LAYER_FIELDS, field)) {
-      const lv = creativeLayerView(c);
-      return field === 'TotalScore' ? lv.score : lv[LAYER_FIELDS[field]];
+      return creativeLayerView(c)[LAYER_FIELDS[field]];
     }
     return c[field];
   };
@@ -2548,26 +2549,16 @@ function updateSortIndicators() {
 function attachHeaderSort() {
   const table = document.getElementById('resultTable');
   if (!table) return;
-  const MAP = {
-    '전환': ['전환', 'num'], 'CPA': ['CPA', 'num'], 'IPM': ['IPM', 'num'], 'ROAS': ['ROAS', 'num'],
-    '전환수점수': ['전환수점수', 'num'], 'CPA점수': ['CPA점수', 'num'], 'IPM점수': ['IPM점수', 'num'],
-    'ROAS점수': ['ROAS점수', 'num'], '총점': ['TotalScore', 'num'], '등급': ['TotalScore', 'num'],
-  };
-  table.querySelectorAll('thead th').forEach((th) => {
-    if (th.dataset.sortBound) return;  // 멱등
-    const label = th.textContent.replace(/[ℹ▲▼]/g, '').replace(/\s+/g, '');
-    const hit = MAP[label];
-    if (!hit) return;
-    const [field, type] = hit;
-    th.dataset.sortkey = field;
+  // 정적 data-sortkey/data-sorttype 기반 바인딩 (헤더 라벨·레이어 변경 무관, 멱등)
+  table.querySelectorAll('thead th[data-sortkey]').forEach((th) => {
+    if (th.dataset.sortBound) return;
     th.dataset.sortBound = '1';
     th.style.cursor = 'pointer';
-    th.title = (th.getAttribute('data-tip') || '') + '\n(클릭하여 정렬)';
     const ind = document.createElement('span');
     ind.className = 'sort-ind';
     ind.style.cssText = 'color:#E84855;font-weight:800;';
     th.appendChild(ind);
-    th.addEventListener('click', () => sortByColumn(field, type));
+    th.addEventListener('click', () => sortByColumn(th.dataset.sortkey, th.dataset.sorttype || 'num'));
   });
 }
 
