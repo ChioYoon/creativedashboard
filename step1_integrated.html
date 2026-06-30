@@ -4178,29 +4178,59 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       }).join('');
       panel.style.display = '';
       panel.innerHTML = `
-        <div style="border:1px solid #f0c36d;background:#fffbeb;border-radius:8px;padding:12px 14px;margin:10px 0;">
-          <div style="font-weight:700;color:#92400e;margin-bottom:6px;">⚠️ 미매칭 집행 소재 ${items.length}건 — 매핑 필요</div>
-          <div style="font-size:12px;color:#6b7280;margin-bottom:8px;">Google Ads/MMP 집행은 있으나 소재명이 GDrive와 달라 분석에 안 잡힌 자산입니다. 매핑할 소재를 고른 뒤 아래 버튼으로 config를 생성해 <code>titles_overrides.json</code>에 반영하면 다음 실행부터 조인됩니다.</div>
-          <table class="ds-table" style="font-size:12px;"><thead><tr>
-            <th>자산(concept)</th><th>소스</th><th style="text-align:right;">노출</th><th style="text-align:right;">비용</th><th>유형</th><th>매핑 대상 소재</th>
-          </tr></thead><tbody>${rows}</tbody></table>
-          <button type="button" onclick="buildAliasConfig()" class="rt-btn" style="margin-top:8px;">별칭 config 생성·복사</button>
-          <pre id="aliasConfigOut" style="display:none;background:#1f2937;color:#e5e7eb;padding:10px;border-radius:6px;font-size:11px;overflow:auto;margin-top:8px;"></pre>
-        </div>`;
+        <details style="border:1px solid #f0c36d;background:#fffbeb;border-radius:8px;padding:10px 14px;margin:10px 0;">
+          <summary style="font-weight:700;color:#92400e;cursor:pointer;">⚠️ 미매칭 집행 소재 ${items.length}건 — 매핑 필요 (펼쳐서 매핑)</summary>
+          <div style="margin-top:8px;">
+            <div style="font-size:12px;color:#6b7280;margin-bottom:8px;">Google Ads/MMP 집행은 있으나 소재명이 GDrive와 달라 분석에 안 잡힌 자산입니다. 매핑할 소재를 고른 뒤 아래에서 반영 파일을 생성하세요.</div>
+            <table class="ds-table" style="font-size:12px;"><thead><tr>
+              <th>자산(concept)</th><th>소스</th><th style="text-align:right;">노출</th><th style="text-align:right;">비용</th><th>유형</th><th>매핑 대상 소재</th>
+            </tr></thead><tbody>${rows}</tbody></table>
+            <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+              <button type="button" onclick="buildAliasConfig()" class="rt-btn">매핑 반영 파일 생성</button>
+              <button type="button" onclick="downloadAliasConfig()" class="rt-btn">파일 다운로드</button>
+            </div>
+            <pre id="aliasConfigOut" style="display:none;background:#1f2937;color:#e5e7eb;padding:10px;border-radius:6px;font-size:11px;overflow:auto;margin-top:8px;white-space:pre-wrap;word-break:break-all;"></pre>
+          </div>
+        </details>`;
     }
 
-    // 선택된 매핑으로 titles_overrides.json 별칭 스니펫 생성 + 클립보드 복사
-    function buildAliasConfig() {
+    // 선택 매핑을 현재 titles_overrides.json 에 딥 병합해 '완전한 파일' 생성 (기존 설정·타 타이틀 보존)
+    async function buildAliasConfig() {
       const sels = document.querySelectorAll('#unmatchedPanel select[data-unmatched-concept]');
       const aliases = {};
       sels.forEach(s => { if (s.value) aliases[s.dataset.unmatchedConcept] = s.value; });
       const out = document.getElementById('aliasConfigOut');
       if (!Object.keys(aliases).length) { out.style.display = ''; out.textContent = '매핑 대상을 1건 이상 선택하세요.'; return; }
       const titleId = (window.DataSource && DataSource.getActiveTitleId && DataSource.getActiveTitleId()) || '<title>';
-      const snippet = JSON.stringify({ [titleId]: { _creative_name_aliases: aliases } }, null, 2);
-      out.style.display = ''; out.textContent =
-        `// js/titles_overrides.json 의 "${titleId}" 항목에 _creative_name_aliases 를 병합하세요:\n` + snippet;
-      if (navigator.clipboard) navigator.clipboard.writeText(snippet).catch(() => {});
+      let current = {}, fetchOk = false;
+      try {
+        const res = await fetch('js/titles_overrides.json', { cache: 'no-store' });
+        if (res.ok) { current = await res.json(); fetchOk = true; }
+      } catch (_) {}
+      const merged = { ...current };
+      const prevTitle = merged[titleId] || {};
+      const prevAliases = prevTitle._creative_name_aliases || {};
+      merged[titleId] = { ...prevTitle, _creative_name_aliases: { ...prevAliases, ...aliases } };
+      const fullJson = JSON.stringify(merged, null, 2);
+      window._aliasConfigJson = fullJson;
+      const note = fetchOk
+        ? `// js/titles_overrides.json 전체를 아래 내용으로 교체하세요 (기존 설정 모두 포함됨).\n// 또는 이 내용을 Claude에게 전달하면 로컬 파일에 반영+커밋해 드립니다.\n`
+        : `// ⚠️ 현재 설정 파일을 읽지 못해 이 타이틀 별칭만 포함됩니다. 기존 파일에 병합하거나 Claude에게 전달하세요.\n`;
+      out.style.display = ''; out.textContent = note + fullJson;
+      if (navigator.clipboard) navigator.clipboard.writeText(fullJson).catch(() => {});
+    }
+
+    // 생성된 완전 파일을 titles_overrides.json 으로 다운로드
+    function downloadAliasConfig() {
+      const out = document.getElementById('aliasConfigOut');
+      const json = window._aliasConfigJson;
+      if (!json) { if (out) { out.style.display = ''; out.textContent = '먼저 "매핑 반영 파일 생성"을 누르세요.'; } return; }
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'titles_overrides.json';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
     }
 
     function filterCampaignList() {
