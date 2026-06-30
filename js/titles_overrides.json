@@ -1,6 +1,10 @@
 {
   "pepp-us": {
     "_pipeline_google_ads_window_days": 159,
-    "_pipeline_kpi_start_date": "2025-11-01"
+    "_pipeline_kpi_start_date": "2025-11-01",
+    "_creative_name_aliases": {
+      "L-Character-Keyart01A-DA": "A-Character-Keyart01A-DA",
+      "P-Character-Reward01A-DA": "L-Character-Reward01A-DA"
+    }
   }
 }
