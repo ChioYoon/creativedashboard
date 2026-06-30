@@ -1255,33 +1255,34 @@
     .has-tooltip::after {
       content: attr(data-tip);
       position: absolute;
-      bottom: calc(100% + 6px);
+      top: calc(100% + 8px);
       left: 50%;
       transform: translateX(-50%);
       background: #1f2937;
-      color: white;
-      padding: 6px 10px;
+      color: #fff;
+      padding: 7px 11px;
       border-radius: 6px;
       font-size: 11.5px;
       font-weight: 400;
-      white-space: nowrap;
+      line-height: 1.55;
+      white-space: normal;
+      word-break: keep-all;
+      width: max-content;
+      max-width: 260px;
+      text-align: left;
       pointer-events: none;
       opacity: 0;
       transition: opacity .18s;
       z-index: 9999;
-      line-height: 1.5;
-      max-width: 280px;
-      white-space: pre-line;
-      text-align: center;
     }
     .has-tooltip::before {
       content: '';
       position: absolute;
-      bottom: calc(100% + 1px);
+      top: calc(100% + 3px);
       left: 50%;
       transform: translateX(-50%);
       border: 5px solid transparent;
-      border-top-color: #1f2937;
+      border-bottom-color: #1f2937;
       pointer-events: none;
       opacity: 0;
       transition: opacity .18s;
@@ -1342,16 +1343,7 @@
       font-size: 9px; font-weight: 700; cursor: help; vertical-align: middle;
       margin-left: 3px;
     }
-    .has-tooltip { position: relative; }
-    .has-tooltip:hover::after {
-      content: attr(data-tip);
-      position: absolute; top: calc(100% + 4px); left: 0; z-index: 50;
-      background: var(--text-primary); color: #fff;
-      font-size: 11px; line-height: 1.5; font-weight: 400;
-      padding: 6px 10px; border-radius: var(--radius-md);
-      white-space: pre-wrap; max-width: 220px; pointer-events: none;
-      box-shadow: var(--shadow-md);
-    }
+    /* (중복 .has-tooltip 툴팁 정의 제거 — 위 단일 정의로 통합) */
 
     /* ── 전체 성과 요약 탭 ── */
     .summary-block { margin-bottom: 28px; }
@@ -1662,7 +1654,7 @@
         <span style="font-size:12px;font-weight:700;color:var(--text-secondary);">분석 레이어</span>
         <div class="layer-toggle-group">
           <button id="layerBtnAds" class="layer-toggle-btn active-ads" onclick="switchAnalysisLayer('ads')">Google Ads 기준</button>
-          <button id="layerBtnMmp" class="layer-toggle-btn" onclick="switchAnalysisLayer('mmp')">MMP 품질 기준</button>
+          <button id="layerBtnMmp" class="layer-toggle-btn" onclick="switchAnalysisLayer('mmp')">MMP 기준</button>
         </div>
         <span id="layerHint" class="layer-hint">Google Ads 종합점수 기준으로 정렬 중</span>
       </div>
@@ -2305,7 +2297,7 @@ function mmpCellHtml(meta) {
   return `<span class="mmp-score-cell" style="${style}" title="${escapeHtml(tip)}">${qs.total} ${escapeHtml(qs.grade)}</span>`;
 }
 
-// Stage 8: 분석 레이어 전환 — Google Ads 기준 / MMP 품질 기준
+// Stage 8: 분석 레이어 전환 — Google Ads 기준 / MMP 기준
 window.currentAnalysisLayer = 'ads';  // 기본값
 
 // 레이어별 표 헤더 라벨·툴팁 (4지표 + 총점). 두 레이어가 같은 4컬럼 구조를 공유.
@@ -5411,9 +5403,13 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const excellent = scoredV.filter(x => x.v.grade === '최우수').length;
       const poor      = scoredV.filter(x => x.v.grade === '개선필요').length;
 
-      /* ── 필터 조건 요약 추출 ── */
+      /* ── 필터 조건 요약 추출 (접기) ── */
       const fsEl = document.querySelector('#filterSummarySlot .filter-summary');
-      const filterHtml = fsEl ? fsEl.outerHTML : '';
+      const filterHtml = fsEl
+        ? `<details style="margin:0 0 16px;border:1px solid #e5e7eb;border-radius:8px;">` +
+          `<summary style="cursor:pointer;padding:10px 14px;font-size:13px;font-weight:700;color:#374151;">적용 필터 조건</summary>` +
+          `<div style="padding:0 14px 12px;">${fsEl.outerHTML}</div></details>`
+        : '';
 
       /* ── 유형별 요약 (활성 레이어 블렌디드 · 공용 aggregateTypeMetrics — 대시보드 유형요약과 동일 산식) ── */
       const typeAgg = aggregateTypeMetrics(creatives);
@@ -5944,7 +5940,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
             <div class="summary-block-title">Google Ads × MMP 교차 성과</div>
             <div style="font-size:13px;color:var(--text-secondary);padding:12px 2px;line-height:1.6;">
               선택 기간에 <strong>Google Ads·MMP 양쪽 데이터를 모두 가진 소재</strong>가 부족해 교차 분석을 표시할 수 없습니다.<br>
-              (Google Ads 미집행 기간에는 분석 레이어를 <strong>MMP 품질 기준</strong>으로 보세요.)
+              (Google Ads 미집행 기간에는 분석 레이어를 <strong>MMP 기준</strong>으로 보세요.)
             </div>
           </div>` : '';
       } else if (crossData) {
