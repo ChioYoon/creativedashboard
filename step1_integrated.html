@@ -1691,6 +1691,9 @@
               <option value="cpa">CPA 풀 백분위 높은 순</option>
               <option id="resultSortMmpOpt" value="mmpscore" style="display:none;">MMP 품질점수 높은 순</option>
             </select>
+            <label style="display:inline-flex;align-items:center;gap:4px;font-size:12px;margin-left:14px;cursor:pointer;">
+              <input type="checkbox" id="selectedOnlyToggle"> 선택만 보기 <span id="selectedCount" style="color:#6b7280;"></span>
+            </label>
           </div>
           <div class="rt-right">
             <button class="rt-btn rt-btn-ai" onclick="runScoringAIInsight()">
@@ -1715,6 +1718,7 @@
           <table id="resultTable" class="ds-table">
             <thead>
               <tr>
+                <th style="width:30px;text-align:center;"><input type="checkbox" id="selectAllRows" title="현재 표시 행 전체 선택/해제"></th>
                 <th>미리보기</th>
                 <th data-sortkey="key" data-sorttype="str">소재명</th>
                 <th data-sortkey="유형" data-sorttype="str">유형</th>
@@ -1735,7 +1739,7 @@
               </tr>
             </thead>
             <tbody id="tableBody">
-              <tr><td colspan="17" style="text-align:center;padding:40px;color:var(--text-secondary);">점수 계산을 실행하세요</td></tr>
+              <tr><td colspan="18" style="text-align:center;padding:40px;color:var(--text-secondary);">점수 계산을 실행하세요</td></tr>
             </tbody>
           </table>
         </div>
@@ -2560,6 +2564,36 @@ function attachHeaderSort() {
     th.appendChild(ind);
     th.addEventListener('click', () => sortByColumn(th.dataset.sortkey, th.dataset.sorttype || 'num'));
   });
+}
+
+// ⑥ 소재 선택 체크박스 wiring (위임 리스너, 멱등). 선택은 표 뷰 필터만 — 통계·요약 불변.
+function attachRowSelection() {
+  const tbody = document.getElementById('tableBody');
+  const all = document.getElementById('selectAllRows');
+  const tog = document.getElementById('selectedOnlyToggle');
+  const cnt = () => { const e = document.getElementById('selectedCount'); const s = window._selectedKeys || new Set(); if (e) e.textContent = s.size ? `(${s.size}개 선택)` : ''; };
+  const rerenderIfSelOnly = () => { const t = document.getElementById('selectedOnlyToggle'); if (t && t.checked) renderResultTableRows(window.currentCreatives || []); };
+  if (tbody && !tbody.dataset.selBound) {
+    tbody.dataset.selBound = '1';
+    tbody.addEventListener('change', (e) => {
+      const cb = e.target.closest('.row-select'); if (!cb) return;
+      const s = window._selectedKeys || (window._selectedKeys = new Set());
+      if (cb.checked) s.add(cb.dataset.rowkey); else s.delete(cb.dataset.rowkey);
+      cnt(); rerenderIfSelOnly();
+    });
+  }
+  if (all && !all.dataset.selBound) {
+    all.dataset.selBound = '1';
+    all.addEventListener('change', () => {
+      const s = window._selectedKeys || (window._selectedKeys = new Set());
+      document.querySelectorAll('#tableBody .row-select').forEach((cb) => { cb.checked = all.checked; if (all.checked) s.add(cb.dataset.rowkey); else s.delete(cb.dataset.rowkey); });
+      cnt(); rerenderIfSelOnly();
+    });
+  }
+  if (tog && !tog.dataset.selBound) {
+    tog.dataset.selBound = '1';
+    tog.addEventListener('change', () => renderResultTableRows(window.currentCreatives || []));
+  }
 }
 
 function plParseCSV(text) {
@@ -5085,7 +5119,13 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const riskSignals = window._riskSignals || {};
       const dailyMap = window._dailyMap || {};
 
-      creatives.forEach((c, index) => {
+      // ⑥ 선택만 보기: 선택 소재만 렌더(통계·요약은 전체 고정)
+      const _selSet = window._selectedKeys || (window._selectedKeys = new Set());
+      const _selOnlyEl = document.getElementById('selectedOnlyToggle');
+      const _selOnly = !!(_selOnlyEl && _selOnlyEl.checked) && _selSet.size > 0;
+      const _rows = _selOnly ? creatives.filter(c => _selSet.has(c.key)) : creatives;
+
+      _rows.forEach((c, index) => {
         const tr = document.createElement('tr');
         if (index === 0) tr.classList.add('rank-top');
 
@@ -5154,6 +5194,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         gradeCell = _hasAdsScore ? `<span class="badge grade-${c.등급}">${c.등급}</span>` : dash;
 
         tr.innerHTML = `
+          <td style="text-align:center;"><input type="checkbox" class="row-select" data-rowkey="${escapeHtml(c.key)}" ${_selSet.has(c.key) ? 'checked' : ''}></td>
           <td style="text-align: center;">${previewHtml}</td>
           <td style="max-width: 250px;">
             <div style="display:flex;align-items:center;gap:6px;">
@@ -5180,6 +5221,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
 
         tbody.appendChild(tr);
       });
+      const _cntEl = document.getElementById('selectedCount');
+      if (_cntEl) _cntEl.textContent = _selSet.size ? `(${_selSet.size}개 선택)` : '';
     }
 
     function displayScoringResults(creatives, filterSummary = [], excludeInfo = {}) {
@@ -5304,6 +5347,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       // 헤더 클릭 정렬 바인딩 — 정적 ads 라벨 기준(멱등). 레이어 relabel 전에 바인딩해야 필드 매핑 정확.
       window._headerSort = null;
       attachHeaderSort();
+      attachRowSelection();
 
       // 분석 레이어 바 + 기본 레이어 자동 선택: 기간 내 Google Ads 활동 없고 MMP만 있으면 MMP 레이어로 시작.
       const _layerBar = document.getElementById('analysisLayerBar');
