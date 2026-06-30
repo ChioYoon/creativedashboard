@@ -5109,6 +5109,59 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       return signals;
     }
 
+    // ⑨ 소재 라이브/제외 상태 (자동 판정 + 개인 수동 오버라이드). 표시 전용 — 분석·집계 무관.
+    const LIVE_LOOKBACK_DAYS = 2;
+    const STATUS_STORE_PREFIX = 'r_team_status_';
+    function statusStoreKey() {
+      const tid = (window.DataSource && DataSource.getActiveTitleId && DataSource.getActiveTitleId()) || '_';
+      return STATUS_STORE_PREFIX + tid;
+    }
+    function loadStatusOverrides() {
+      try { return JSON.parse(localStorage.getItem(statusStoreKey()) || '{}') || {}; }
+      catch (_) { return {}; }
+    }
+    function saveStatusOverride(creativeKey, value /* 'live' | 'excluded' | null */) {
+      const m = loadStatusOverrides();
+      if (value === null) delete m[creativeKey]; else m[creativeKey] = value;
+      try { localStorage.setItem(statusStoreKey(), JSON.stringify(m)); } catch (_) {}
+    }
+    function computeGlobalMaxDate(creatives) {
+      let max = null;
+      (creatives || []).forEach(c => {
+        const daily = (c.meta && c.meta.kpi_daily) || [];
+        daily.forEach(d => { const s = String(d.date || ''); if (s && (max === null || s > max)) max = s; });
+      });
+      return max;
+    }
+    function deriveAutoStatus(creative, globalMaxDate) {
+      if (!globalMaxDate) return 'stopped';
+      const daily = (creative.meta && creative.meta.kpi_daily) || [];
+      const maxMs = new Date(globalMaxDate).getTime();
+      const recent = daily.some(d => {
+        if (Number(d.impressions || 0) <= 0) return false;
+        const diff = (maxMs - new Date(String(d.date)).getTime()) / 86400000;
+        return diff >= 0 && diff <= LIVE_LOOKBACK_DAYS;
+      });
+      return recent ? 'live' : 'stopped';
+    }
+    function resolveStatus(creative, globalMaxDate, overrides) {
+      const ov = overrides[creative.key];
+      if (ov === 'live' || ov === 'excluded') return ov;
+      return deriveAutoStatus(creative, globalMaxDate);
+    }
+    function statusBadgeHtml(status) {
+      const map = {
+        live:     { dot: '#22c55e', label: '라이브' },
+        stopped:  { dot: '#9ca3af', label: '중단(최근 노출 없음)' },
+        excluded: { dot: '#ef4444', label: '제외(수동)' },
+      };
+      const s = map[status] || map.stopped;
+      const mark = status === 'excluded'
+        ? '🚫'
+        : `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${s.dot};"></span>`;
+      return `<span class="status-badge" title="${s.label}" style="display:inline-flex;align-items:center;flex:none;">${mark}</span>`;
+    }
+
     // Stage 5-J: 결과 표 행 렌더링 (displayScoringResults 최초 렌더 + applyResultSort 재정렬 공용).
     // riskSignals/dailyMap 은 window 에 보관된 값을 읽어 정렬 재렌더 시 재계산 불필요.
     // index 는 화면 표시 순서와 동일 → openPreviewModal(index) 가 currentCreatives[index] 와 정합.
@@ -5118,6 +5171,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       tbody.innerHTML = '';
       const riskSignals = window._riskSignals || {};
       const dailyMap = window._dailyMap || {};
+      const _statusOvr = loadStatusOverrides();
+      const _statusGMax = computeGlobalMaxDate(creatives);
 
       // ⑥ 선택만 보기: 선택 소재만 렌더(통계·요약은 전체 고정)
       const _selSet = window._selectedKeys || (window._selectedKeys = new Set());
@@ -5139,6 +5194,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         const sigIconsHtml = sigs.length > 0
           ? sigs.map(s => `<span class="has-tooltip" data-tip="${s.label}: ${s.detail}" style="font-size:14px;cursor:help;margin-right:2px;">${s.icon}</span>`).join('')
           : '';
+        const _rowStatus = resolveStatus(c, _statusGMax, _statusOvr);
 
         // 썸네일 HTML 생성
         let previewHtml = '';
@@ -5198,6 +5254,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td style="text-align: center;">${previewHtml}</td>
           <td style="max-width: 250px;">
             <div style="display:flex;align-items:center;gap:6px;">
+              ${statusBadgeHtml(_rowStatus)}
               ${sigIconsHtml}
               <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.key}</span>
             </div>
