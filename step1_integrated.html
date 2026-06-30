@@ -6831,6 +6831,21 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         <div style="position:relative;height:200px;"><canvas id="modalTrendChart"></canvas></div>`
         : `<div style="padding:14px;background:#f9fafb;border-radius:8px;color:#6b7280;font-size:13px;">일별 데이터가 없습니다(미집행 또는 단일일). 캠페인 집행·누적 후 추이가 표시됩니다.</div>`}`;
 
+      // ⑨ 라이브 상태 세그먼트 컨트롤 (자동/라이브/제외) — 표시 전용, 분석엔 항상 포함
+      const _segBtn = 'padding:4px 14px;font-size:12px;border:1px solid #e5e7eb;border-radius:6px;background:#fff;color:#374151;cursor:pointer;font-weight:500;';
+      const statusBlock = `
+          <div class="modal-info-row">
+            <div class="modal-info-label">라이브 상태</div>
+            <div class="modal-info-value">
+              <div id="modalStatusControl" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+                <button type="button" class="status-seg-btn" data-status="auto" style="${_segBtn}">자동</button>
+                <button type="button" class="status-seg-btn" data-status="live" style="${_segBtn}">라이브</button>
+                <button type="button" class="status-seg-btn" data-status="excluded" style="${_segBtn}">제외</button>
+                <span style="font-size:11px;color:#9ca3af;margin-left:4px;">자동 = 최근 노출 기준 · 분석엔 항상 포함</span>
+              </div>
+            </div>
+          </div>`;
+
       // 폴리싱: 활성 레이어 기준 지표 배치(비활성 레이어 접기) + 매출/ROAS 무데이터 시 숨김
       const _noRev = (creative.매출 ?? 0) <= 0;
       const adsGridHtml = `
@@ -6887,6 +6902,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
             <div class="modal-info-label">유형</div>
             <div class="modal-info-value"><strong>${creative.유형}</strong> ${isVideo ? '(동영상)' : '(이미지)'}</div>
           </div>
+          ${statusBlock}
           ${(creative.meta?.creator_intent || '').trim() ? `
           <div class="modal-info-row">
             <div class="modal-info-label">제작 의도(추론)</div>
@@ -6907,7 +6923,24 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
 
       modalBody.innerHTML = content;
       renderModalTrend(creative);
+      wireStatusButtons(creative);
       modal.classList.add('active');
+    }
+
+    // ⑨ 모달 라이브 상태 세그먼트 컨트롤 (자동/라이브/제외) — 저장 후 표 배지 즉시 갱신
+    function wireStatusButtons(creative) {
+      const wrap = document.getElementById('modalStatusControl');
+      if (!wrap) return;
+      const btns = wrap.querySelectorAll('.status-seg-btn');
+      const cur = () => { const ov = loadStatusOverrides()[creative.key]; return (ov === 'live' || ov === 'excluded') ? ov : 'auto'; };
+      const paint = () => { const c = cur(); btns.forEach(b => { const on = b.dataset.status === c; b.style.background = on ? '#E84855' : '#fff'; b.style.color = on ? '#fff' : '#374151'; b.style.fontWeight = on ? '700' : '500'; }); };
+      btns.forEach(b => b.addEventListener('click', () => {
+        const v = b.dataset.status;
+        saveStatusOverride(creative.key, v === 'auto' ? null : v);
+        paint();
+        if (typeof renderResultTableRows === 'function' && window.currentCreatives) renderResultTableRows(window.currentCreatives);
+      }));
+      paint();
     }
 
     // 모달 일별 추이 차트 (Chart.js 라인 + 전환/노출/CPA 토글) — Batch C ③
