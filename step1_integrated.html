@@ -6761,6 +6761,18 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
 
       // Stage 5-F-2: v2 구조화 신호 칩 (강점/약점/가설/변주)
       const signalsBlock = buildSignalChipsHtml(creative);
+      const _hasDaily = creative.meta && Array.isArray(creative.meta.kpi_daily) && creative.meta.kpi_daily.length >= 1;
+      const _tbtn = 'padding:3px 12px;font-size:12px;border:1px solid #e5e7eb;border-radius:6px;background:#fff;color:#374151;cursor:pointer;';
+      const trendBlock = `
+        <div class="modal-block-title" style="margin-top:16px;">일별 추이 (Google Ads)</div>
+        ${_hasDaily ? `
+        <div style="display:flex;gap:6px;margin-bottom:8px;">
+          <button type="button" class="trend-metric-btn" data-metric="전환" style="${_tbtn}">전환</button>
+          <button type="button" class="trend-metric-btn" data-metric="노출" style="${_tbtn}">노출</button>
+          <button type="button" class="trend-metric-btn" data-metric="CPA" style="${_tbtn}">CPA</button>
+        </div>
+        <div style="position:relative;height:200px;"><canvas id="modalTrendChart"></canvas></div>`
+        : `<div style="padding:14px;background:#f9fafb;border-radius:8px;color:#6b7280;font-size:13px;">일별 데이터가 없습니다(미집행 또는 단일일). 캠페인 집행·누적 후 추이가 표시됩니다.</div>`}`;
 
       // 폴리싱: 활성 레이어 기준 지표 배치(비활성 레이어 접기) + 매출/ROAS 무데이터 시 숨김
       const _noRev = (creative.매출 ?? 0) <= 0;
@@ -6826,6 +6838,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
           ${insightBlocks}
           ${metricsHtml}
           ${signalsBlock}
+          ${trendBlock}
           ${hasUrl ? `
           <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e5e7eb;">
             <a href="${contentUrl}" target="_blank" style="color: #E84855; text-decoration: none; font-weight: 600;">
@@ -6836,9 +6849,37 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       `;
 
       modalBody.innerHTML = content;
+      renderModalTrend(creative);
       modal.classList.add('active');
     }
-    
+
+    // 모달 일별 추이 차트 (Chart.js 라인 + 전환/노출/CPA 토글) — Batch C ③
+    function renderModalTrend(creative) {
+      const cv = document.getElementById('modalTrendChart');
+      if (!cv || typeof Chart === 'undefined') return;
+      const daily = ((creative.meta && creative.meta.kpi_daily) || []).slice()
+        .sort((a, b) => String(a.date).localeCompare(String(b.date)));
+      const labels = daily.map(d => String(d.date).slice(5));
+      const series = {
+        '전환': daily.map(d => Number(d.conversions || 0)),
+        '노출': daily.map(d => Number(d.impressions || 0)),
+        'CPA':  daily.map(d => (Number(d.conversions) > 0 ? Math.round(Number(d.cost || 0) / Number(d.conversions)) : null)),
+      };
+      const btns = document.querySelectorAll('.trend-metric-btn');
+      const setActive = (m) => btns.forEach(b => { const on = b.dataset.metric === m; b.style.background = on ? '#E84855' : '#fff'; b.style.color = on ? '#fff' : '#374151'; });
+      const draw = (metric) => {
+        if (window._modalTrendChart) { try { window._modalTrendChart.destroy(); } catch (_) {} }
+        window._modalTrendChart = new Chart(cv.getContext('2d'), {
+          type: 'line',
+          data: { labels, datasets: [{ label: metric, data: series[metric], borderColor: '#E84855', backgroundColor: 'rgba(232,72,85,.08)', tension: .25, spanGaps: true, pointRadius: 2, fill: true }] },
+          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+        });
+        setActive(metric);
+      };
+      btns.forEach(b => b.addEventListener('click', () => draw(b.dataset.metric)));
+      draw('전환');
+    }
+
     // v5.1.1: YouTube 임베드 HTML 생성 헬퍼 — 오류 153 대비 fallback 포함
     function buildYouTubeEmbedHtml(videoId) {
       if (!videoId) {
