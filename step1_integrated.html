@@ -6022,6 +6022,49 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       return blocks ? `<div class="summary-block"><div class="summary-block-title">성과 랭킹 (풀 상·하위)</div>${blocks}</div>` : '';
     }
 
+    // ⑧ 성과별 강·약점 태그 — 최우수/하위 소재 그룹의 strengths/weaknesses 태그 집계 (표시 전용)
+    function buildPerfTagAnalysis(creatives) {
+      const valid = (creatives || []).filter(c =>
+        c && c._ads && c._ads.imp > 0 && typeof c.TotalScore === 'number' &&
+        ((Array.isArray(c.meta?.strengths) && c.meta.strengths.length) ||
+         (Array.isArray(c.meta?.weaknesses) && c.meta.weaknesses.length))
+      );
+      const n = valid.length;
+      if (n < 4) return '';
+      const sorted = valid.slice().sort((a, b) => b.TotalScore - a.TotalScore);
+      const k = Math.min(3, Math.floor(n / 2));
+      const topG = sorted.slice(0, k);
+      const botG = sorted.slice(n - k);
+      const tally = (group, field) => {
+        const m = new Map();
+        group.forEach(c => {
+          const list = (c.meta && c.meta[field]) || [];
+          if (Array.isArray(list)) list.forEach(v => m.set(v, (m.get(v) || 0) + 1));
+        });
+        return [...m.entries()].sort((a, b) => b[1] - a[1]);
+      };
+      const topStr = tally(topG, 'strengths');
+      const botWk  = tally(botG, 'weaknesses');
+      if (!topStr.length && !botWk.length) return '';
+      const li = (arr, denom) => arr.slice(0, 5).map(([label, cnt]) =>
+        `<li><span>${escapeHtml(label)}</span><span style="color:#6b7280;font-size:12px;white-space:nowrap;">${cnt}건 (${Math.round((cnt / denom) * 100)}%)</span></li>`
+      ).join('') || '<li style="color:#9ca3af;">(공통 태그 없음)</li>';
+      return `
+        <div class="summary-block">
+          <div class="summary-block-title">성과별 강·약점 태그 <span style="font-weight:400;font-size:12px;color:var(--text-secondary,#6b7280);">(상위 ${k}개 · 하위 ${k}개 소재 기준 · Google Ads 종합점수)</span></div>
+          <div class="signal-perf-block">
+            <div class="signal-perf-card">
+              <h4>🏆 최우수 소재 공통 강점</h4>
+              <ul>${li(topStr, k)}</ul>
+            </div>
+            <div class="signal-perf-card">
+              <h4>⚠️ 하위 소재 공통 약점</h4>
+              <ul>${li(botWk, k)}</ul>
+            </div>
+          </div>
+        </div>`;
+    }
+
     function renderCrossPerformanceCards(crossData, creatives) {
       const container = document.getElementById('crossPerformanceContainer');
       if (!container) return;
@@ -6069,7 +6112,8 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
             </div>
           </div>`;
       }
-      container.innerHTML = crossHtml + perfHtml;
+      const perfTagHtml = buildPerfTagAnalysis(creatives || window.currentCreatives || []);
+      container.innerHTML = crossHtml + perfHtml + perfTagHtml;
     }
 
     // ──────────────────────────────────────────────
