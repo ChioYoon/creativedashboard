@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "title_id": "zeus",
-  "generated_at": "2026-07-02T07:18:12+09:00",
+  "generated_at": "2026-07-02T07:37:04+09:00",
   "pipeline_version": "stage2-mvp",
   "gemini_model": "gemini-2.5-flash",
   "creatives": [
@@ -72,7 +72,7 @@
         "roas": null
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-02T07:18:08+09:00",
+      "tagged_at": "2026-07-02T07:37:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-01-PV\\260701_VID_P-Genre-DirInsight-01-PV_V_1080x1920_KR.mp4"
@@ -159,7 +159,7 @@
         "roas": null
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-02T07:18:09+09:00",
+      "tagged_at": "2026-07-02T07:37:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\BNR_P-Reward-PreReward03-DA\\원본\\260701_BNR_P-Reward-PreReward03-DA_L_1080x1920_KR.jpg",
@@ -242,19 +242,19 @@
       "kpi_percentiles": {
         "ctr": 38,
         "cvr": 50,
-        "cpa": 62
+        "cpa": 50
       },
       "scores": {
-        "total": 57.58,
+        "total": 54.55,
         "grade": "양호",
         "rank": 6,
         "conv": 36.36,
-        "cpa": 72.73,
+        "cpa": 63.64,
         "ipm": 63.64,
         "roas": null
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-02T07:18:11+09:00",
+      "tagged_at": "2026-07-02T07:37:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-CinematicPV30s-01-PV\\260701_VID_P-Slogan-CinematicPV30s-01-PV_L_1920x1080_KR.mp4",
@@ -330,20 +330,67 @@
           "conversions_value": 0.0
         }
       ],
-      "mmp_source": null,
-      "mmp_channels": [],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
       "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": null,
-      "mmp_d1_retention": null,
-      "mmp_quality_score": null,
-      "mmp_installs": null,
-      "mmp_retained_d1": null,
-      "mmp_cost": null,
-      "mmp_revenue": null,
-      "mmp_currency": null,
-      "mmp_fx_rate": null,
-      "mmp_daily": []
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 50.0,
+        "grade": "양호",
+        "rank": 7,
+        "conv": 100.0,
+        "cpi": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
+      "mmp_installs": 0,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 14520,
+      "mmp_revenue": 0,
+      "mmp_currency": "KRW",
+      "mmp_fx_rate": 1500.0,
+      "mmp_daily": [
+        {
+          "creative_name": "260701_VID_P-Slogan-CinematicPV30s-01-PV_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 0,
+          "clicks": 15,
+          "cost": 8445,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260701_VID_P-Slogan-CinematicPV30s-01-PV_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 0,
+          "clicks": 14,
+          "cost": 5895,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260701_VID_P-Slogan-CinematicPV30s-01-PV_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 180,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "P-Slogan-Keyvisual01-DA",
@@ -358,7 +405,7 @@
       "creative_concept": "P-Slogan-Keyvisual01-DA",
       "전환": 36,
       "비용": 214731,
-      "노출수": 50875,
+      "노출수": 50873,
       "클릭수": 1148,
       "Revenue": 0,
       "hooking_strategy": "캐릭터 외형 소구",
@@ -412,7 +459,7 @@
         "roas": null
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-02T07:18:11+09:00",
+      "tagged_at": "2026-07-02T07:37:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\BNR_P-Slogan-KeyVisual01-DA\\260701_BNR_P-Slogan-Keyvisual01-DA_L_1024x768_KR.jpg",
@@ -470,7 +517,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://tpc.googlesyndication.com/simgad/8844155172544197102",
           "asset_type": "IMAGE",
-          "impressions": 9180,
+          "impressions": 9178,
           "clicks": 236,
           "cost_micros": 47157261013,
           "cost": 47157.261013,
@@ -542,20 +589,67 @@
           "conversions_value": 0.0
         }
       ],
-      "mmp_source": null,
-      "mmp_channels": [],
-      "mmp_d1_ipm": null,
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": null,
-      "mmp_d1_retention": null,
-      "mmp_quality_score": null,
-      "mmp_installs": null,
-      "mmp_retained_d1": null,
-      "mmp_cost": null,
-      "mmp_revenue": null,
-      "mmp_currency": null,
-      "mmp_fx_rate": null,
-      "mmp_daily": []
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 75.0,
+        "grade": "우수",
+        "rank": 1,
+        "conv": 100.0,
+        "cpi": 0.0,
+        "ipm": 100.0,
+        "roas": 100.0
+      },
+      "mmp_installs": 0,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 25995,
+      "mmp_revenue": 0,
+      "mmp_currency": "KRW",
+      "mmp_fx_rate": 1500.0,
+      "mmp_daily": [
+        {
+          "creative_name": "260701_BNR_P-Slogan-Keyvisual01-DA_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 120,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260701_BNR_P-Slogan-Keyvisual01-DA_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 0,
+          "clicks": 4,
+          "cost": 3405,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260701_BNR_P-Slogan-Keyvisual01-DA_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 2646,
+          "clicks": 25,
+          "cost": 22470,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "P-Slogan-Keyvisual02-DA",
@@ -624,7 +718,7 @@
         "roas": null
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-02T07:18:11+09:00",
+      "tagged_at": "2026-07-02T07:37:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\BNR_P-Slogan-KeyVisual02-DA\\260701_BNR_P-Slogan-Keyvisual02-DA_L_1024x768_KR.jpg",
@@ -754,20 +848,67 @@
           "conversions_value": 0.0
         }
       ],
-      "mmp_source": null,
-      "mmp_channels": [],
-      "mmp_d1_ipm": null,
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": null,
-      "mmp_d1_retention": null,
-      "mmp_quality_score": null,
-      "mmp_installs": null,
-      "mmp_retained_d1": null,
-      "mmp_cost": null,
-      "mmp_revenue": null,
-      "mmp_currency": null,
-      "mmp_fx_rate": null,
-      "mmp_daily": []
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 75.0,
+        "grade": "우수",
+        "rank": 2,
+        "conv": 100.0,
+        "cpi": 0.0,
+        "ipm": 100.0,
+        "roas": 100.0
+      },
+      "mmp_installs": 0,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 53865,
+      "mmp_revenue": 0,
+      "mmp_currency": "KRW",
+      "mmp_fx_rate": 1500.0,
+      "mmp_daily": [
+        {
+          "creative_name": "260701_BNR_P-Slogan-Keyvisual02-DA_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 2999,
+          "clicks": 48,
+          "cost": 26055,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260701_BNR_P-Slogan-Keyvisual02-DA_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 60,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260701_BNR_P-Slogan-Keyvisual02-DA_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 5331,
+          "clicks": 27,
+          "cost": 27750,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "P-Slogan-PreregPV15s-01-PV",
@@ -780,7 +921,7 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=sAf0F7ORrbQ",
       "creative_concept": "P-Slogan-PreregPV15s-01-PV",
-      "전환": 48,
+      "전환": 50,
       "비용": 208114,
       "노출수": 28335,
       "클릭수": 482,
@@ -820,19 +961,19 @@
       "kpi_percentiles": {
         "ctr": 25,
         "cvr": 62,
-        "cpa": 50
+        "cpa": 62
       },
       "scores": {
-        "total": 72.73,
+        "total": 75.76,
         "grade": "우수",
         "rank": 4,
         "conv": 81.82,
-        "cpa": 63.64,
+        "cpa": 72.73,
         "ipm": 72.73,
         "roas": null
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-02T07:18:11+09:00",
+      "tagged_at": "2026-07-02T07:37:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV15s-01-PV\\260701_VID_P-Slogan-PreregPV15s-01-PV_L_1920x1080_KR.mp4",
@@ -872,7 +1013,7 @@
           "clicks": 158,
           "cost_micros": 73799672603,
           "cost": 73799.672603,
-          "conversions": 21.0,
+          "conversions": 22.0,
           "conversions_value": 0.0
         },
         {
@@ -888,7 +1029,7 @@
           "clicks": 160,
           "cost_micros": 71074068534,
           "cost": 71074.068534,
-          "conversions": 12.0,
+          "conversions": 13.0,
           "conversions_value": 0.0
         },
         {
@@ -940,20 +1081,55 @@
           "conversions_value": 0.0
         }
       ],
-      "mmp_source": null,
-      "mmp_channels": [],
-      "mmp_d1_ipm": null,
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": null,
-      "mmp_d1_retention": null,
-      "mmp_quality_score": null,
-      "mmp_installs": null,
-      "mmp_retained_d1": null,
-      "mmp_cost": null,
-      "mmp_revenue": null,
-      "mmp_currency": null,
-      "mmp_fx_rate": null,
-      "mmp_daily": []
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 75.0,
+        "grade": "우수",
+        "rank": 3,
+        "conv": 100.0,
+        "cpi": 0.0,
+        "ipm": 100.0,
+        "roas": 100.0
+      },
+      "mmp_installs": 0,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 265530,
+      "mmp_revenue": 0,
+      "mmp_currency": "KRW",
+      "mmp_fx_rate": 1500.0,
+      "mmp_daily": [
+        {
+          "creative_name": "260701_VID_P-Slogan-PreregPV15s-01-PV_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260701_VID_P-Slogan-PreregPV15s-01-PV_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 15182,
+          "clicks": 250,
+          "cost": 265530,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "P-Slogan-PreregPV15s-02-PV",
@@ -1022,7 +1198,7 @@
         "roas": null
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-02T07:18:11+09:00",
+      "tagged_at": "2026-07-02T07:37:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV15s-02-PV\\260701_VID_P-Slogan-PreregPV15s-02-PV_L_1920x1080_KR (1).mp4",
@@ -1082,20 +1258,55 @@
           "conversions_value": 0.0
         }
       ],
-      "mmp_source": null,
-      "mmp_channels": [],
-      "mmp_d1_ipm": null,
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": null,
-      "mmp_d1_retention": null,
-      "mmp_quality_score": null,
-      "mmp_installs": null,
-      "mmp_retained_d1": null,
-      "mmp_cost": null,
-      "mmp_revenue": null,
-      "mmp_currency": null,
-      "mmp_fx_rate": null,
-      "mmp_daily": []
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 75.0,
+        "grade": "우수",
+        "rank": 4,
+        "conv": 100.0,
+        "cpi": 0.0,
+        "ipm": 100.0,
+        "roas": 100.0
+      },
+      "mmp_installs": 0,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 84285,
+      "mmp_revenue": 0,
+      "mmp_currency": "KRW",
+      "mmp_fx_rate": 1500.0,
+      "mmp_daily": [
+        {
+          "creative_name": "260701_VID_P-Slogan-PreregPV15s-02-PV_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 1,
+          "cost": 375,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260701_VID_P-Slogan-PreregPV15s-02-PV_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 5844,
+          "clicks": 144,
+          "cost": 83910,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "P-Slogan-PreregPV30s-01-PV",
@@ -1108,10 +1319,10 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=lCgioDJVeac",
       "creative_concept": "P-Slogan-PreregPV30s-01-PV",
-      "전환": 46,
-      "비용": 148877,
-      "노출수": 21458,
-      "클릭수": 448,
+      "전환": 47,
+      "비용": 149444,
+      "노출수": 21457,
+      "클릭수": 451,
       "Revenue": 0,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "감성 유대형(교감/서사)",
@@ -1150,7 +1361,7 @@
       "creator_intent": "그리스 신화 기반의 웅장한 세계관과 고퀄리티 시네마틱 연출로 유저들의 감성적 몰입과 기대감을 높이려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": {
-        "ctr": 50,
+        "ctr": 62,
         "cvr": 100,
         "cpa": 100
       },
@@ -1164,7 +1375,7 @@
         "roas": null
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-02T07:18:12+09:00",
+      "tagged_at": "2026-07-02T07:37:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV30s-01-PV\\260701_VID_P-Slogan-PreregPV30s-01-PV_L_1920x1080_KR.mp4",
@@ -1200,28 +1411,75 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=qLPTHnmb9QQ",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 11071,
-          "clicks": 235,
-          "cost_micros": 66581751070,
-          "cost": 66581.75107,
-          "conversions": 23.0,
+          "impressions": 11070,
+          "clicks": 238,
+          "cost_micros": 67148567972,
+          "cost": 67148.567972,
+          "conversions": 24.0,
           "conversions_value": 0.0
         }
       ],
-      "mmp_source": null,
-      "mmp_channels": [],
-      "mmp_d1_ipm": null,
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": null,
-      "mmp_d1_retention": null,
-      "mmp_quality_score": null,
-      "mmp_installs": null,
-      "mmp_retained_d1": null,
-      "mmp_cost": null,
-      "mmp_revenue": null,
-      "mmp_currency": null,
-      "mmp_fx_rate": null,
-      "mmp_daily": []
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 75.0,
+        "grade": "우수",
+        "rank": 5,
+        "conv": 100.0,
+        "cpi": 0.0,
+        "ipm": 100.0,
+        "roas": 100.0
+      },
+      "mmp_installs": 0,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 45915,
+      "mmp_revenue": 0,
+      "mmp_currency": "KRW",
+      "mmp_fx_rate": 1500.0,
+      "mmp_daily": [
+        {
+          "creative_name": "260701_VID_P-Slogan-PreregPV30s-01-PV_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 0,
+          "clicks": 2,
+          "cost": 15,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260701_VID_P-Slogan-PreregPV30s-01-PV_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 2505,
+          "clicks": 51,
+          "cost": 45885,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260701_VID_P-Slogan-PreregPV30s-01-PV_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 15,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "P-Slogan-PreregPV30s-02-PV",
@@ -1288,7 +1546,7 @@
         "roas": null
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-02T07:18:12+09:00",
+      "tagged_at": "2026-07-02T07:37:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV30s-02-PV\\260701_VID_P-Slogan-PreregPV30s-02-PV_L_1920x1080_KR.mp4",
@@ -1348,20 +1606,67 @@
           "conversions_value": 0.0
         }
       ],
-      "mmp_source": null,
-      "mmp_channels": [],
-      "mmp_d1_ipm": null,
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
+      "mmp_d1_ipm": 0.0,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": null,
-      "mmp_d1_retention": null,
-      "mmp_quality_score": null,
-      "mmp_installs": null,
-      "mmp_retained_d1": null,
-      "mmp_cost": null,
-      "mmp_revenue": null,
-      "mmp_currency": null,
-      "mmp_fx_rate": null,
-      "mmp_daily": []
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 75.0,
+        "grade": "우수",
+        "rank": 6,
+        "conv": 100.0,
+        "cpi": 0.0,
+        "ipm": 100.0,
+        "roas": 100.0
+      },
+      "mmp_installs": 0,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 65415,
+      "mmp_revenue": 0,
+      "mmp_currency": "KRW",
+      "mmp_fx_rate": 1500.0,
+      "mmp_daily": [
+        {
+          "creative_name": "260701_VID_P-Slogan-PreregPV30s-02-PV_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 0,
+          "clicks": 30,
+          "cost": 9180,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260701_VID_P-Slogan-PreregPV30s-02-PV_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 30,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260701_VID_P-Slogan-PreregPV30s-02-PV_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 3931,
+          "clicks": 129,
+          "cost": 56205,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "P-Slogan-Universe02-DA",
@@ -1375,8 +1680,8 @@
       "링크": "https://tpc.googlesyndication.com/simgad/15208341403562725288",
       "creative_concept": "P-Slogan-Universe02-DA",
       "전환": 40,
-      "비용": 236302,
-      "노출수": 51686,
+      "비용": 236303,
+      "노출수": 51687,
       "클릭수": 1106,
       "Revenue": 3,
       "hooking_strategy": "캐릭터 외형 소구",
@@ -1430,7 +1735,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-02T07:18:12+09:00",
+      "tagged_at": "2026-07-02T07:37:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_1024x768_KR.jpg",
@@ -1472,10 +1777,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://tpc.googlesyndication.com/simgad/15208341403562725288",
           "asset_type": "IMAGE",
-          "impressions": 30452,
+          "impressions": 30453,
           "clicks": 639,
-          "cost_micros": 92610853759,
-          "cost": 92610.853759,
+          "cost_micros": 92612425827,
+          "cost": 92612.425827,
           "conversions": 16.0,
           "conversions_value": 0.0
         },
@@ -1560,20 +1865,67 @@
           "conversions_value": 0.0
         }
       ],
-      "mmp_source": null,
-      "mmp_channels": [],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
       "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": null,
-      "mmp_d1_retention": null,
-      "mmp_quality_score": null,
-      "mmp_installs": null,
-      "mmp_retained_d1": null,
-      "mmp_cost": null,
-      "mmp_revenue": null,
-      "mmp_currency": null,
-      "mmp_fx_rate": null,
-      "mmp_daily": []
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 50.0,
+        "grade": "양호",
+        "rank": 8,
+        "conv": 100.0,
+        "cpi": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
+      "mmp_installs": 0,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 7455,
+      "mmp_revenue": 0,
+      "mmp_currency": "KRW",
+      "mmp_fx_rate": 1500.0,
+      "mmp_daily": [
+        {
+          "creative_name": "260701_BNR_P-Slogan-Universe02-DA_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 0,
+          "clicks": 20,
+          "cost": 6750,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260701_BNR_P-Slogan-Universe02-DA_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 420,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260701_BNR_P-Slogan-Universe02-DA_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 2,
+          "cost": 285,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
+      ]
     },
     {
       "creative_id": "P-Slogan-Universe03-DA",
@@ -1626,7 +1978,7 @@
       "creator_intent": "강렬한 비주얼과 도전적인 슬로건으로 MMORPG의 웅장한 세계관과 전투 경험을 강조하여 코어 유저의 관심을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": {
-        "ctr": 62,
+        "ctr": 50,
         "cvr": 0,
         "cpa": 0
       },
@@ -1640,7 +1992,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-02T07:18:12+09:00",
+      "tagged_at": "2026-07-02T07:37:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_1024x768_KR.jpg",
@@ -1770,20 +2122,67 @@
           "conversions_value": 0.0
         }
       ],
-      "mmp_source": null,
-      "mmp_channels": [],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "facebook.business"
+      ],
       "mmp_d1_ipm": null,
       "mmp_d1_cpi": null,
-      "mmp_d7_roas": null,
-      "mmp_d1_retention": null,
-      "mmp_quality_score": null,
-      "mmp_installs": null,
-      "mmp_retained_d1": null,
-      "mmp_cost": null,
-      "mmp_revenue": null,
-      "mmp_currency": null,
-      "mmp_fx_rate": null,
-      "mmp_daily": []
+      "mmp_d7_roas": 0.0,
+      "mmp_d1_retention": 0.0,
+      "mmp_quality_score": {
+        "total": 50.0,
+        "grade": "양호",
+        "rank": 9,
+        "conv": 100.0,
+        "cpi": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
+      "mmp_installs": 0,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 2895,
+      "mmp_revenue": 0,
+      "mmp_currency": "KRW",
+      "mmp_fx_rate": 1500.0,
+      "mmp_daily": [
+        {
+          "creative_name": "260701_BNR_P-Slogan-Universe03-DA_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 0,
+          "clicks": 1,
+          "cost": 2385,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260701_BNR_P-Slogan-Universe03-DA_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 3,
+          "cost": 465,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        },
+        {
+          "creative_name": "260701_BNR_P-Slogan-Universe03-DA_ALL_Mixed_KR",
+          "date": "2026-07-01",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 45,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0
+        }
+      ]
     }
   ],
   "metrics": {
@@ -1792,7 +2191,7 @@
     "cache_hits": 11,
     "cache_misses": 0,
     "failures": 0,
-    "duration_sec": 4.3,
+    "duration_sec": 4.8,
     "prompt_version": "v3.3-2026.06.13-character-split-single-mmorpg-v1",
     "fallback_used": false,
     "carried_forward": 0,
@@ -1818,12 +2217,33 @@
       "media": "GA",
       "product": "ACp"
     },
+    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701": {
+      "ua_type": "NU-Pre",
+      "country": "",
+      "os": "iOS",
+      "media": "Meta",
+      "product": "MAIA-CPP"
+    },
     "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701": {
       "ua_type": "NU-Pre",
       "country": "",
       "os": "",
       "media": "GA",
       "product": "DemandGen"
+    },
+    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701": {
+      "ua_type": "NU-Pre",
+      "country": "",
+      "os": "",
+      "media": "Meta",
+      "product": "Conversion"
+    },
+    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701": {
+      "ua_type": "NU-Pre",
+      "country": "",
+      "os": "",
+      "media": "Meta",
+      "product": "MAIA-CSL"
     }
   },
   "unmatched_assets": [
@@ -1848,7 +2268,7 @@
     {
       "concept": "[제우스: 오만의 신] 사전예약 PV | 선택받은 자들만의 신화는 끝났다",
       "source": "google_ads",
-      "impressions": 11055,
+      "impressions": 11056,
       "cost": 76135.75,
       "asset_types": [
         "YOUTUBE_VIDEO"
@@ -1871,6 +2291,181 @@
       "asset_types": [
         "YOUTUBE_VIDEO"
       ]
+    },
+    {
+      "concept": "엘리멘탈리스트1안_커뮤니케이션애드",
+      "source": "mmp",
+      "impressions": 389785,
+      "cost": 142935,
+      "asset_types": []
+    },
+    {
+      "concept": "로고형_커뮤니케이션애드",
+      "source": "mmp",
+      "impressions": 389114,
+      "cost": 154755,
+      "asset_types": []
+    },
+    {
+      "concept": "엘리멘탈리스트1안_스마트채널",
+      "source": "mmp",
+      "impressions": 246891,
+      "cost": 121590,
+      "asset_types": []
+    },
+    {
+      "concept": "엘리멘탈리스트2안_스마트채널",
+      "source": "mmp",
+      "impressions": 246379,
+      "cost": 129195,
+      "asset_types": []
+    },
+    {
+      "concept": "KV1안_스마트채널",
+      "source": "mmp",
+      "impressions": 245618,
+      "cost": 125265,
+      "asset_types": []
+    },
+    {
+      "concept": "KV1안_PC네이티브",
+      "source": "mmp",
+      "impressions": 216452,
+      "cost": 70980,
+      "asset_types": []
+    },
+    {
+      "concept": "엘리멘탈리스트1안_PC네이티브",
+      "source": "mmp",
+      "impressions": 216177,
+      "cost": 80550,
+      "asset_types": []
+    },
+    {
+      "concept": "KV2안_PC네이티브",
+      "source": "mmp",
+      "impressions": 213373,
+      "cost": 65685,
+      "asset_types": []
+    },
+    {
+      "concept": "엘리멘탈리스트1안_메인서브",
+      "source": "mmp",
+      "impressions": 121934,
+      "cost": 212880,
+      "asset_types": []
+    },
+    {
+      "concept": "KV2안_메인서브",
+      "source": "mmp",
+      "impressions": 121092,
+      "cost": 206160,
+      "asset_types": []
+    },
+    {
+      "concept": "KV1안_메인서브",
+      "source": "mmp",
+      "impressions": 120706,
+      "cost": 221955,
+      "asset_types": []
+    },
+    {
+      "concept": "신작게임 제우스: 오만의 신",
+      "source": "mmp",
+      "impressions": 37070,
+      "cost": 214065,
+      "asset_types": []
+    },
+    {
+      "concept": "P-Slogan-DirInsight-01-PV",
+      "source": "mmp",
+      "impressions": 22184,
+      "cost": 302685,
+      "asset_types": []
+    },
+    {
+      "concept": "제우스: 오만의 신",
+      "source": "mmp",
+      "impressions": 18396,
+      "cost": 153660,
+      "asset_types": []
+    },
+    {
+      "concept": "KV1안_피드",
+      "source": "mmp",
+      "impressions": 14060,
+      "cost": 65100,
+      "asset_types": []
+    },
+    {
+      "concept": "엘리멘탈리스트1안_피드",
+      "source": "mmp",
+      "impressions": 9723,
+      "cost": 35265,
+      "asset_types": []
+    },
+    {
+      "concept": "P-Slogan-GamePreview-01-PV",
+      "source": "mmp",
+      "impressions": 9219,
+      "cost": 85830,
+      "asset_types": []
+    },
+    {
+      "concept": "압도적 그래픽의 MMORPG",
+      "source": "mmp",
+      "impressions": 5845,
+      "cost": 53520,
+      "asset_types": []
+    },
+    {
+      "concept": "KV2안_피드",
+      "source": "mmp",
+      "impressions": 4341,
+      "cost": 9270,
+      "asset_types": []
+    },
+    {
+      "concept": "신작 그리스신화 MMORPG",
+      "source": "mmp",
+      "impressions": 1295,
+      "cost": 9990,
+      "asset_types": []
+    },
+    {
+      "concept": "KV1_1",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "KV1_2",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "Premium_MO",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "Premium_PC",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
+    },
+    {
+      "concept": "{{creative",
+      "source": "mmp",
+      "impressions": 0,
+      "cost": 0,
+      "asset_types": []
     }
   ]
 }
