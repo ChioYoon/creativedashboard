@@ -98,6 +98,13 @@ def _rel_source_path(p: Path, root) -> str:
     return p.name
 
 
+def _resolve_airbridge_token(title: str, env: "dict | None" = None) -> str:
+    """타이틀별 Airbridge 토큰: AIRBRIDGE_API_TOKEN_<ID> 우선, 없으면 기본 AIRBRIDGE_API_TOKEN."""
+    env = env if env is not None else os.environ
+    suffix = "".join(c if c.isalnum() else "_" for c in (title or "")).upper()
+    return (env.get(f"AIRBRIDGE_API_TOKEN_{suffix}", "") or env.get("AIRBRIDGE_API_TOKEN", "")).strip()
+
+
 def make_mmp_source(cfg: dict):
     """cfg['mmp_provider'](또는 airbridge_enabled 폴백)로 메인 MMP 소스 선택.
 
@@ -120,6 +127,8 @@ def make_mmp_source(cfg: dict):
         src = AirbridgeMmpSource.from_env()
         if cfg.get("airbridge_app_name"):
             src.app_name = cfg["airbridge_app_name"]   # per-title Airbridge 앱 (멀티타이틀 — .env 단일앱 오버라이드)
+        if cfg.get("airbridge_token"):
+            src.token = cfg["airbridge_token"]   # per-title Airbridge 토큰 (별도 계정 — .env 단일토큰 오버라이드)
         if cfg.get("airbridge_usd_to_krw"):
             src.usd_to_krw = cfg["airbridge_usd_to_krw"]
         return src, provider
@@ -511,6 +520,8 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
             "Google AI Studio(https://aistudio.google.com/apikey)에서 발급한 키를 .env 에 입력하세요."
         )
 
+    airbridge_token = _resolve_airbridge_token(title)
+
     return {
         "title": title,
         "root": roots[0] if len(roots) == 1 else roots,
@@ -540,6 +551,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         "airbridge_exclude_channels": airbridge_exclude_channels,
         "airbridge_usd_to_krw": airbridge_usd_to_krw,
         "airbridge_app_name": airbridge_app_name,
+        "airbridge_token": airbridge_token,
         "mmp_provider": mmp_provider,
         "appsflyer_app_id": appsflyer_app_id,
         "appsflyer_exclude_media_sources": appsflyer_exclude,
