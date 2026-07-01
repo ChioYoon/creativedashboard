@@ -1,18 +1,109 @@
 {
   "schema_version": "1.0",
   "title_id": "zeus",
-  "generated_at": "2026-06-30T13:07:42+09:00",
+  "generated_at": "2026-07-01T13:05:41+09:00",
   "pipeline_version": "stage2-mvp",
   "gemini_model": "gemini-2.5-flash",
   "creatives": [
     {
-      "creative_id": "P-Reward-PreReward03-DA",
-      "소재명": "P-Reward-PreReward03-DA",
-      "파일명": "260701_BNR_P-Reward-PreReward03-DA_L_1080x1920_KR.jpg",
-      "유형": "BNR",
+      "creative_id": "P-Genre-DirInsight-01-PV",
+      "소재명": "P-Genre-DirInsight-01-PV",
+      "파일명": "260701_VID_P-Genre-DirInsight-01-PV_V_1080x1920_KR.mp4",
+      "유형": "VID",
       "일": "2026-07-01",
       "캠페인": null,
       "사이즈": "1080x1920",
+      "언어": "KR",
+      "링크": null,
+      "creative_concept": "P-Genre-DirInsight-01-PV",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "질문/선택 상황 제시",
+      "USP": "전략/경쟁형(상성/조합)",
+      "art_style": "시네마틱 실사 합성",
+      "strengths": [
+        "호기심/궁금증 유발",
+        "단일 명료한 가치 제안",
+        "오디오 후킹(BGM/SFX/Voice)"
+      ],
+      "weaknesses": [
+        "장르/게임성 불분명",
+        "초반 3초 안에 가치 전달 실패",
+        "행동 유도 약함/부재"
+      ],
+      "hypothesis": [
+        "낮은 관련성 위험 — 정보 부족",
+        "낮은 전환 위험 — 행동 유도 약함"
+      ],
+      "test_ideas": [
+        "게임플레이 컷 추가",
+        "명시적 CTA 추가",
+        "15초 컷 테스트"
+      ],
+      "one_line_insight": "개발자 인터뷰로 '상생형 경쟁' 가치 제안은 명확하나, 게임 비주얼 부재와 약한 CTA로 장르 인지 및 전환 유도가 약함 — 초반에 인게임 플레이 컷을 추가하고 명확한 사전예약 CTA를 삽입하여 게임성과 행동 유도를 강화해야 합니다.",
+      "strength_evidence": [
+        "0~15초 두 개발자의 대화에서 기존 MMORPG의 경쟁 스트레스를 언급하며 '제우스는 다르다'는 메시지로 차별점에 대한 궁금증을 유발합니다.",
+        "상단 카피 '모두가 즐기는 경쟁 제우스는 다릅니다'와 대화 내용이 일관되게 '상생형 경쟁'이라는 핵심 가치를 명확히 전달합니다.",
+        "0:00부터 시작되는 개발자들의 차분하고 설득력 있는 목소리 톤이 콘텐츠에 몰입하게 하며, 0:43초 제우스 로고 등장 시 웅장한 SFX가 타이틀에 대한 기대를 높입니다."
+      ],
+      "weakness_evidence": [
+        "영상 전체가 개발자 인터뷰와 로고 연출로 구성되어 MMORPG 장르의 핵심인 인게임 플레이, 캐릭터, 세계관 비주얼이 전혀 노출되지 않아 게임성을 알기 어렵습니다.",
+        "초반 3초는 개발자 대화로 시작되어 게임의 핵심 비주얼이나 장르적 특징을 파악하기 어려워, MMORPG 관심 유저의 이탈 위험이 높습니다.",
+        "영상 내내 '사전예약 중' 문구만 노출될 뿐, 사전예약 페이지로 이동을 유도하는 명확한 CTA 버튼이나 보상 강조가 없어 전환으로 이어지기 어렵습니다."
+      ],
+      "improvement_actions": [
+        "개발자 대화 중간 또는 초반 10초 이내에 '상생형 경쟁'의 가치를 보여줄 수 있는 대규모 RvR이나 길드 콘텐츠 인게임 플레이 컷을 삽입하여 장르 인지를 높입니다.",
+        "엔드카드 및 영상 하단 '사전예약 중' 문구 옆에 '지금 사전예약하기'와 같은 명확한 버튼을 추가하고, 사전예약 보상 내용을 함께 노출하여 행동을 유도합니다.",
+        "개발자 대화의 핵심 메시지를 10초 이내로 압축하고, 나머지 시간에 인게임 플레이나 핵심 캐릭터 비주얼을 배치하여 15초 내에 게임의 매력을 전달하는 버전을 제작합니다."
+      ],
+      "creator_intent": "기존 MMORPG의 경쟁 피로도를 지적하며 '상생형 경쟁'이라는 제우스만의 차별화된 가치를 개발자 인터뷰를 통해 설득하려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 1,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
+      "marketer_insight": null,
+      "tagged_at": "2026-07-01T13:02:06+09:00",
+      "gemini_model": "gemini-2.5-flash",
+      "source_files": [
+        "2. 영상\\VID_P-Genre-DirInsight-01-PV\\260701_VID_P-Genre-DirInsight-01-PV_V_1080x1920_KR.mp4"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
+    },
+    {
+      "creative_id": "P-Reward-PreReward03-DA",
+      "소재명": "P-Reward-PreReward03-DA",
+      "파일명": "260701_BNR_P-Reward-PreReward03-DA_L_1024x768_KR.jpg",
+      "유형": "BNR",
+      "일": "2026-07-01",
+      "캠페인": null,
+      "사이즈": "1024x768",
       "언어": "KR",
       "링크": null,
       "creative_concept": "P-Reward-PreReward03-DA",
@@ -26,56 +117,81 @@
       "art_style": "시네마틱 실사 합성",
       "strengths": [
         "보상 약속 명확",
-        "단일 주인공 스포트라이트",
-        "강한 비주얼 임팩트"
+        "강한 비주얼 임팩트",
+        "출시일·한정 강조"
       ],
       "weaknesses": [
         "장르/게임성 불분명",
-        "초반 3초 안에 가치 전달 실패"
+        "타이틀/브랜드 인지 약함"
       ],
       "hypothesis": [
         "높은 CTR 예상 — 강한 후킹",
-        "낮은 전환 위험 — 행동 유도 약함"
+        "낮은 관련성 위험 — 정보 부족"
       ],
       "test_ideas": [
         "게임플레이 컷 추가",
         "다른 core_usp 각도 변주"
       ],
-      "one_line_insight": "고급스러운 비주얼과 명확한 보상 약속으로 시선을 끄는 데는 강점이나, MMORPG의 핵심 게임성이 불분명함 — 초반 5초 내에 대규모 전투 장면을 추가하여 장르적 매력을 명확히 전달하면 전환율 개선",
+      "one_line_insight": "압도적인 보상 비주얼로 후킹은 강하나, 게임의 장르나 핵심 플레이가 불분명함 — 보상과 함께 인게임 전투 컷을 추가하여 MMORPG임을 명확히 하면 전환율 개선",
       "strength_evidence": [
-        "화면 중앙 상단에 '가장 거대한 보상', '희귀 탈것·의상 100% 지급' 문구가 크게 강조되어 시청자의 시선이 즉시 보상에 집중됨",
-        "화면 중앙에 황금빛 의상을 입은 여신 캐릭터가 클로즈업되어 게임의 신화적 분위기와 고퀄리티 비주얼을 효과적으로 전달함",
-        "실사풍의 고퀄리티 3D 캐릭터 모델링과 황금빛 보상 아이템, 배경의 별빛 연출이 웅장하고 고급스러운 분위기를 조성하여 시선을 사로잡음"
+        "화면 중앙 상단에 '사전예약자 모두에게 허락된 가장 거대한 보상' 문구가 크게 강조되고, 희귀 탈것·의상 100% 지급을 명시하여 시청자의 보상 기대감을 즉시 높임",
+        "화면 전체를 가득 채운 황금빛 코인과 아이템 카드, 그리고 빛나는 이펙트가 보상의 규모와 가치를 시각적으로 압도적으로 표현하여 시선을 강하게 사로잡음",
+        "하단 '지금 사전예약 중' 버튼이 보상과 연계되어 행동을 유도하며, 사전예약 기간에만 얻을 수 있는 한정적인 기회임을 강조하여 참여를 독려함"
       ],
       "weakness_evidence": [
-        "캐릭터 외형과 보상만 강조될 뿐, MMORPG 장르의 핵심인 실제 게임플레이, 전투, 세계관 등의 단서가 없어 게임에 대한 궁금증이 해소되지 않음",
-        "보상 강조는 명확하나, MMORPG의 핵심 가치인 대규모 전투, 성장, 경쟁 요소가 전혀 드러나지 않아 장르 타겟 유저에게 어필하기 어려움"
+        "보상 정보만 강조되어 있어, MMORPG 장르의 핵심인 전투, 캐릭터, 세계관 등의 게임 플레이 요소가 전혀 노출되지 않아 어떤 게임인지 알기 어려움",
+        "상단에 'ZEUS' 로고가 있지만, 게임의 특징이나 세계관을 보여주는 시각적 요소가 없어 신규 유저에게는 브랜드 인지도를 높이는 데 한계가 있음"
       ],
       "improvement_actions": [
-        "캐릭터와 보상 강조 후, 3~5초 구간에 대규모 전투나 오픈필드 탐험 등 MMORPG 핵심 게임플레이 장면을 짧게 삽입하여 장르 인지를 높임",
-        "보상 강조 버전 외에, '압도적 스케일의 RvR' 또는 '독보적인 경제 시스템' 등 게임의 다른 핵심 USP를 전면에 내세운 A/B 테스트 소재를 제작함"
+        "배너 하단 또는 좌우에 실제 인게임 캐릭터나 대규모 전투 장면을 작게라도 추가하여 MMORPG 장르임을 시각적으로 암시",
+        "보상 강조 버전 외에, 그리스 신화 세계관이나 핵심 클래스의 비주얼을 전면에 내세운 A/B 테스트 버전 제작"
       ],
-      "creator_intent": "고퀄리티 여신 캐릭터와 파격적인 사전예약 보상을 전면에 내세워 신규 유저의 시선을 사로잡고 사전예약 전환을 유도하려는 의도",
+      "creator_intent": "사전예약 보상의 압도적인 규모를 전면에 내세워 유저들의 즉각적인 사전예약 참여를 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 1,
+        "rank": 2,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-30T13:00:20+09:00",
+      "tagged_at": "2026-07-01T13:02:29+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
-        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_1080x1920_KR.jpg",
-        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_1200x1200_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_1024x768_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_1200x600_KR.jpg",
         "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_1200x628_KR.jpg",
-        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_1920x1080_KR.png",
-        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_320x50_KR.jpg"
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_1280x720_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_300x250_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_300x50_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_315x258_KR.png",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_320x100_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_320x50_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_336x280_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_468x60_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_480x320_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_728x90_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_970x250_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_970x90_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_S_1200x1200_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_S_500x500_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_V_1200x1500_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_V_120x600_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_V_160x600_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_V_300x600_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_V_320x480_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_V_720x1280_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_V_768x1024_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_V_800x1000_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\원본\\260701_BNR_P-Reward-PreReward03-DA_L_1080x1920_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\원본\\260701_BNR_P-Reward-PreReward03-DA_L_1200x1200_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\원본\\260701_BNR_P-Reward-PreReward03-DA_L_1200x628_KR.jpg",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\원본\\260701_BNR_P-Reward-PreReward03-DA_L_1920x1080_KR.png",
+        "1. 배너\\BNR_P-Reward-PreReward03-DA\\원본\\260701_BNR_P-Reward-PreReward03-DA_L_320x50_KR.jpg"
       ],
       "kpi_source": null,
       "kpi_window_start": null,
@@ -152,14 +268,14 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 2,
+        "rank": 3,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-30T13:05:38+09:00",
+      "tagged_at": "2026-07-01T13:02:31+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-CinematicPV30s-01-PV\\260701_VID_P-Slogan-CinematicPV30s-01-PV_L_1920x1080_KR.mp4",
@@ -241,14 +357,14 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 3,
+        "rank": 4,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-30T13:05:53+09:00",
+      "tagged_at": "2026-07-01T13:02:31+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\BNR_P-Slogan-KeyVisual01-DA\\260701_BNR_P-Slogan-Keyvisual01-DA_L_1024x768_KR.jpg",
@@ -352,14 +468,14 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 4,
+        "rank": 5,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-30T13:06:05+09:00",
+      "tagged_at": "2026-07-01T13:02:31+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\BNR_P-Slogan-KeyVisual02-DA\\260701_BNR_P-Slogan-Keyvisual02-DA_L_1024x768_KR.jpg",
@@ -459,19 +575,108 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 5,
+        "rank": 6,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-30T13:06:46+09:00",
+      "tagged_at": "2026-07-01T13:02:31+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV15s-01-PV\\260701_VID_P-Slogan-PreregPV15s-01-PV_L_1920x1080_KR.mp4",
         "2. 영상\\VID_P-Slogan-PreregPV15s-01-PV\\260701_VID_P-Slogan-PreregPV15s-01-PV_S_1080x1080_KR.mp4",
         "2. 영상\\VID_P-Slogan-PreregPV15s-01-PV\\260701_VID_P-Slogan-PreregPV15s-01-PV_V_1080x1920_KR.mp4"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
+    },
+    {
+      "creative_id": "P-Slogan-PreregPV15s-02-PV",
+      "소재명": "P-Slogan-PreregPV15s-02-PV",
+      "파일명": "260701_VID_P-Slogan-PreregPV15s-02-PV_L_1920x1080_KR (1).mp4",
+      "유형": "VID",
+      "일": "2026-07-01",
+      "캠페인": null,
+      "사이즈": "1920x1080",
+      "언어": "KR",
+      "링크": null,
+      "creative_concept": "P-Slogan-PreregPV15s-02-PV",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "비주얼 임팩트",
+      "USP": "감성 유대형(교감/서사)",
+      "art_style": "시네마틱 실사 합성",
+      "strengths": [
+        "강한 비주얼 임팩트",
+        "다수 캐릭터 라인업",
+        "감성 유대/스토리텔링"
+      ],
+      "weaknesses": [
+        "장르/게임성 불분명",
+        "행동 유도 약함/부재"
+      ],
+      "hypothesis": [
+        "높은 CTR 예상 — 강한 후킹",
+        "낮은 전환 위험 — 행동 유도 약함"
+      ],
+      "test_ideas": [
+        "게임플레이 컷 추가",
+        "명시적 CTA 추가"
+      ],
+      "one_line_insight": "압도적인 시네마틱 비주얼과 서사 강조는 강점이나, 실제 게임플레이와 명확한 행동 유도가 부족함 — 초반에 대규모 전투 장면을 추가하고 엔드카드에 사전예약 CTA를 명확히 삽입하여 전환을 개선해야 합니다.",
+      "strength_evidence": [
+        "0~12초 전반에 걸쳐 언리얼 엔진 5 기반의 실사급 3D 시네마틱 연출과 고퀄리티 캐릭터 모델링이 시선을 압도하며 몰입감을 제공합니다.",
+        "2~12초 동안 다양한 외형과 무기를 가진 여성 캐릭터들이 클로즈업과 단체샷으로 등장하여, 풍부한 캐릭터 선택지를 암시하고 수집 욕구를 자극합니다.",
+        "0~12초 '모두에게 허락된 세계', '각자의 서사가 하나로 만나는 순간' 등의 카피와 캐릭터들의 결연한 표정이 어우러져, 신화 속 서사에 대한 기대감을 높입니다."
+      ],
+      "weakness_evidence": [
+        "12초까지 시네마틱 연출만 이어지고 실제 게임 플레이 화면이나 대규모 전투 장면이 없어, MMORPG 장르의 핵심 재미 요소가 명확하게 전달되지 않습니다.",
+        "12초까지 게임 타이틀 외에 사전예약이나 다운로드 등 구체적인 행동 유도 문구나 버튼이 없어, 시청자의 다음 행동을 이끌어내기 어렵습니다."
+      ],
+      "improvement_actions": [
+        "시네마틱 중간 5~8초 구간에 대규모 RvR이나 공성전 등 MMORPG의 핵심 전투 플레이 장면을 삽입하여 게임성을 명확히 전달합니다.",
+        "12초 엔드카드에 '사전예약 참여하고 전설 장비 받기'와 같은 구체적인 보상 연계 CTA 버튼을 추가하여 전환율을 높입니다."
+      ],
+      "creator_intent": "고퀄리티 시네마틱 연출과 매력적인 캐릭터 비주얼로 그리스 신화 세계관의 웅장함과 서사적 몰입감을 강조하려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 7,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
+      "marketer_insight": null,
+      "tagged_at": "2026-07-01T13:03:42+09:00",
+      "gemini_model": "gemini-2.5-flash",
+      "source_files": [
+        "2. 영상\\VID_P-Slogan-PreregPV15s-02-PV\\260701_VID_P-Slogan-PreregPV15s-02-PV_L_1920x1080_KR (1).mp4",
+        "2. 영상\\VID_P-Slogan-PreregPV15s-02-PV\\260701_VID_P-Slogan-PreregPV15s-02-PV_S_1080x1080_KR.mp4",
+        "2. 영상\\VID_P-Slogan-PreregPV15s-02-PV\\260701_VID_P-Slogan-PreregPV15s-02-PV_V_1080x1920_KR.mp4"
       ],
       "kpi_source": null,
       "kpi_window_start": null,
@@ -548,14 +753,14 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 6,
+        "rank": 8,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-06-30T13:07:42+09:00",
+      "tagged_at": "2026-07-01T13:03:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV30s-01-PV\\260701_VID_P-Slogan-PreregPV30s-01-PV_L_1920x1080_KR.mp4",
@@ -580,15 +785,322 @@
       "mmp_currency": null,
       "mmp_fx_rate": null,
       "mmp_daily": []
+    },
+    {
+      "creative_id": "P-Slogan-PreregPV30s-02-PV",
+      "소재명": "P-Slogan-PreregPV30s-02-PV",
+      "파일명": "260701_VID_P-Slogan-PreregPV30s-02-PV_L_1920x1080_KR.mp4",
+      "유형": "VID",
+      "일": "2026-07-01",
+      "캠페인": null,
+      "사이즈": "1920x1080",
+      "언어": "KR",
+      "링크": null,
+      "creative_concept": "P-Slogan-PreregPV30s-02-PV",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "비주얼 임팩트",
+      "USP": "감성 유대형(교감/서사)",
+      "art_style": "시네마틱 실사 합성",
+      "strengths": [
+        "강한 비주얼 임팩트",
+        "다수 캐릭터 라인업",
+        "캐릭터 액션/전투 연출"
+      ],
+      "weaknesses": [
+        "행동 유도 약함/부재"
+      ],
+      "hypothesis": [
+        "높은 CTR 예상 — 강한 후킹",
+        "낮은 전환 위험 — 행동 유도 약함"
+      ],
+      "test_ideas": [
+        "명시적 CTA 추가",
+        "15초 컷 테스트"
+      ],
+      "one_line_insight": "압도적인 시네마틱 비주얼과 매력적인 캐릭터 라인업으로 세계관 몰입은 강하나, 사전예약 행동 유도가 약함 — 엔드카드에 구체적인 보상 혜택을 명시하여 전환율을 개선해야 합니다.",
+      "strength_evidence": [
+        "0~3초 거대한 제우스 석상과 신전, 광활한 오픈필드 전경이 실사급 3D 그래픽으로 연출되어 압도적인 스케일과 세계관 몰입감을 즉시 제공합니다.",
+        "0~12초 다양한 외형의 여성 캐릭터들이 클로즈업과 역동적인 포즈로 연이어 등장하며, 각자의 개성과 매력을 짧은 시간 안에 효과적으로 보여줍니다.",
+        "12~18초 활을 쏘거나 거대 몬스터와 대치하는 등 캐릭터들의 역동적인 전투 동작과 스킬 이펙트가 짧지만 강렬하게 표현되어 기대감을 높입니다."
+      ],
+      "weakness_evidence": [
+        "영상 후반부 '사전예약 중' 문구와 버튼이 등장하지만, 구체적인 보상 혜택이나 참여 동기를 유발하는 추가 정보가 없어 전환 유도력이 약합니다."
+      ],
+      "improvement_actions": [
+        "엔드카드 '사전예약 중' 버튼 옆에 '전설 장비 100% 지급'과 같은 구체적인 보상 문구를 추가하여 전환율을 높입니다.",
+        "초반 비주얼 임팩트와 캐릭터 라인업을 강조하고, 핵심 슬로건과 CTA를 15초 내에 압축하여 짧은 버전의 효율을 테스트합니다."
+      ],
+      "creator_intent": "그리스 신화 기반의 웅장한 세계관과 고퀄리티 캐릭터 비주얼을 통해 MMORPG의 서사적 몰입감을 강조하려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 9,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
+      "marketer_insight": null,
+      "tagged_at": "2026-07-01T13:04:45+09:00",
+      "gemini_model": "gemini-2.5-flash",
+      "source_files": [
+        "2. 영상\\VID_P-Slogan-PreregPV30s-02-PV\\260701_VID_P-Slogan-PreregPV30s-02-PV_L_1920x1080_KR.mp4",
+        "2. 영상\\VID_P-Slogan-PreregPV30s-02-PV\\260701_VID_P-Slogan-PreregPV30s-02-PV_S_1080x1080_KR.mp4",
+        "2. 영상\\VID_P-Slogan-PreregPV30s-02-PV\\260701_VID_P-Slogan-PreregPV30s-02-PV_V_1080x1920_KR.mp4"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
+    },
+    {
+      "creative_id": "P-Slogan-Universe02-DA",
+      "소재명": "P-Slogan-Universe02-DA",
+      "파일명": "260701_BNR_P-Slogan-Universe02-DA_L_1024x768_KR.jpg",
+      "유형": "BNR",
+      "일": "2026-07-01",
+      "캠페인": null,
+      "사이즈": "1024x768",
+      "언어": "KR",
+      "링크": null,
+      "creative_concept": "P-Slogan-Universe02-DA",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "캐릭터 외형 소구",
+      "USP": "감성 유대형(교감/서사)",
+      "art_style": "시네마틱 실사 합성",
+      "strengths": [
+        "강한 비주얼 임팩트",
+        "단일 주인공 스포트라이트",
+        "호기심/궁금증 유발"
+      ],
+      "weaknesses": [
+        "행동 유도 약함/부재",
+        "정보 과적 (텍스트/UI 산만)"
+      ],
+      "hypothesis": [
+        "높은 CTR 예상 — 강한 후킹",
+        "낮은 전환 위험 — 행동 유도 약함"
+      ],
+      "test_ideas": [
+        "카피 1줄로 축약",
+        "명시적 CTA 추가"
+      ],
+      "one_line_insight": "압도적인 3D 비주얼과 도발적인 카피로 시선 후킹은 강하나, 사전예약 CTA가 약해 전환으로 직결되기 어려움 — CTA에 구체적인 보상 문구를 추가하고 메인 카피를 축약하여 전환율을 개선해야 합니다.",
+      "strength_evidence": [
+        "고퀄리티 3D 모델링의 두 캐릭터와 웅장한 그리스 신전 배경이 압도적인 스케일과 몰입감을 제공하며 시선을 즉시 사로잡습니다.",
+        "전면에 배치된 여신 캐릭터의 섬세한 표정과 황금 갑옷 디테일이 클로즈업되어 캐릭터의 매력을 극대화하고 시선을 집중시킵니다.",
+        "메인 카피 '선택받은 자들만의 신화는 끝났다'는 도발적인 문구로 게임의 스토리에 대한 호기심을 자극합니다."
+      ],
+      "weakness_evidence": [
+        "하단 '지금 사전예약 중' CTA가 존재하지만, 메인 카피와 직접적인 연관성이 부족하고 보상 강조가 없어 클릭 유도력이 약합니다.",
+        "메인 카피가 길고, '확률형 아이템 포함' 등 부가 텍스트가 많아 시선이 분산될 수 있으며, 핵심 메시지 전달이 지연될 수 있습니다."
+      ],
+      "improvement_actions": [
+        "메인 카피 '선택받은 자들만의 신화는 끝났다'를 '이제, 오만해질 시간'과 같이 짧고 임팩트 있는 문구로 교체해 메시지 전달력을 높입니다.",
+        "CTA 버튼 위에 '전설 장비 100% 지급'과 같은 구체적인 사전예약 보상 문구를 추가하여 행동 유도력을 강화합니다."
+      ],
+      "creator_intent": "고퀄리티 3D 캐릭터와 웅장한 세계관 비주얼로 유저의 시선을 사로잡고 게임의 서사적 깊이에 대한 호기심을 유발하려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 10,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
+      "marketer_insight": null,
+      "tagged_at": "2026-07-01T13:05:27+09:00",
+      "gemini_model": "gemini-2.5-flash",
+      "source_files": [
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_1024x768_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_1200x600_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_1200x628_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_1280x720_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_300x250_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_300x50_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_315x258_KR.png",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_320x100_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_320x50_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_336x280_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_468x60_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_480x320_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_728x90_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_970x250_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_970x90_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_S_1200x1200_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_S_500x500_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_V_1200x1500_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_V_120x600_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_V_160x600_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_V_300x600_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_V_320x480_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_V_720x1280_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_V_768x1024_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_V_800x1000_KR.jpg"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
+    },
+    {
+      "creative_id": "P-Slogan-Universe03-DA",
+      "소재명": "P-Slogan-Universe03-DA",
+      "파일명": "260701_BNR_P-Slogan-Universe03-DA_L_1024x768_KR.jpg",
+      "유형": "BNR",
+      "일": "2026-07-01",
+      "캠페인": null,
+      "사이즈": "1024x768",
+      "언어": "KR",
+      "링크": null,
+      "creative_concept": "P-Slogan-Universe03-DA",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "비주얼 임팩트",
+      "USP": "전략/경쟁형(상성/조합)",
+      "art_style": "시네마틱 실사 합성",
+      "strengths": [
+        "강한 비주얼 임팩트",
+        "캐릭터 액션/전투 연출",
+        "호기심/궁금증 유발"
+      ],
+      "weaknesses": [
+        "행동 유도 약함/부재"
+      ],
+      "hypothesis": [
+        "높은 CTR 예상 — 강한 후킹",
+        "특정 타겟에 강하게 반응"
+      ],
+      "test_ideas": [
+        "명시적 CTA 추가",
+        "카피 1줄로 축약"
+      ],
+      "one_line_insight": "압도적인 비주얼과 슬로건으로 코어 유저 후킹은 강하나, 사전예약 행동 유도가 약함 — '지금 사전예약 중' 문구를 보상과 연계된 명확한 CTA 버튼으로 교체하여 전환 효율을 개선",
+      "strength_evidence": [
+        "화면 중앙의 거대한 황금 갑옷 캐릭터와 빛나는 무기가 웅장한 배경과 어우러져 압도적인 스케일과 고퀄리티 그래픽을 즉시 각인시킵니다.",
+        "번개 이펙트와 함께 검을 휘두르는 듯한 캐릭터의 역동적인 자세가 전투에 대한 기대감을 높이며, MMORPG의 핵심 재미를 시사합니다.",
+        "'신의 오만을 심판하라'는 강렬한 슬로건이 시청자에게 도전적인 메시지를 던져 게임의 세계관과 플레이 목적에 대한 궁금증을 유발합니다."
+      ],
+      "weakness_evidence": [
+        "'지금 사전예약 중' 문구가 작고 하단에 위치하여 시각적 우선순위가 낮습니다. 명확한 CTA 버튼이나 보상 강조가 없어 즉각적인 행동을 유도하기 어렵습니다."
+      ],
+      "improvement_actions": [
+        "엔드카드 하단 '지금 사전예약 중' 문구를 '지금 사전예약하고 전설 장비 받기'와 같이 보상을 명시하고, 클릭 가능한 버튼 형태로 강조하여 전환율을 높입니다.",
+        "'신의 오만을 심판하라' 슬로건과 함께 사전예약 보상 문구를 중앙에 배치하여 핵심 메시지와 행동 유도를 동시에 강화합니다."
+      ],
+      "creator_intent": "강렬한 비주얼과 도전적인 슬로건으로 MMORPG의 웅장한 세계관과 전투 경험을 강조하여 코어 유저의 관심을 유도하려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 11,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
+      "marketer_insight": null,
+      "tagged_at": "2026-07-01T13:05:41+09:00",
+      "gemini_model": "gemini-2.5-flash",
+      "source_files": [
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_1024x768_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_1200x600_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_1200x628_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_1280x720_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_300x250_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_300x50_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_315x258_KR.png",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_320x100_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_320x50_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_336x280_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_468x60_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_480x320_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_728x90_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_970x250_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_970x90_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_S_1200x1200_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_S_500x500_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_V_1200x1500_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_V_120x600_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_V_160x600_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_V_300x600_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_V_320x480_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_V_720x1280_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_V_768x1024_KR.jpg",
+        "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_V_800x1000_KR.jpg"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
     }
   ],
   "metrics": {
-    "scanned_folders": 6,
-    "tagged_records": 6,
-    "cache_hits": 1,
-    "cache_misses": 5,
+    "scanned_folders": 11,
+    "tagged_records": 11,
+    "cache_hits": 5,
+    "cache_misses": 6,
     "failures": 0,
-    "duration_sec": 441.6,
+    "duration_sec": 324.0,
     "prompt_version": "v3.3-2026.06.13-character-split-single-mmorpg-v1",
     "fallback_used": false,
     "carried_forward": 0,
