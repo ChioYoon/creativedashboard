@@ -86,3 +86,56 @@ python -m pipeline.main --title pepp-us
 - `--days 30 --limit 10` 출력 (0행인지, Google 섞였는지, 4지표 값이 그럴듯한지)
 
 이 3가지를 캡처해 주시면 다음 단계를 정확히 잡겠습니다.
+
+---
+
+# 향후 타이틀 추가 (멀티 계정) — "제우스식" 📌
+
+위 1~5단계는 **첫(기본) 타이틀** 설정입니다(현재 펩=`relicheros`, `.env`의 `AIRBRIDGE_API_TOKEN`/`AIRBRIDGE_APP_NAME` 사용). 두 번째부터의 타이틀은 보통 **자기 Airbridge 계정/토큰**을 써서 아래 방식으로 추가합니다. (2026-07-01 제우스 연동에서 확립)
+
+## 핵심 규칙 (한눈에)
+
+| | 토큰 | 앱 이름(subdomain) |
+|---|---|---|
+| **기본 타이틀(펩)** | `.env` `AIRBRIDGE_API_TOKEN` | `.env` `AIRBRIDGE_APP_NAME` |
+| **추가 타이틀(제우스~)** | `.env` `AIRBRIDGE_API_TOKEN_<타이틀ID>` | `titles.json` `_pipeline_airbridge_app_name` |
+
+- ⚠️ **기본 2줄(`AIRBRIDGE_API_TOKEN`/`AIRBRIDGE_APP_NAME`)은 절대 바꾸지 마세요** — 펩 전용입니다.
+- 추가 타이틀 토큰은 **새 줄로 추가**(`_<ID>` 접미사), **앱 이름은 titles.json에**(`.env` 아님).
+
+## 절차 (3단계)
+
+### ① `.env`에 그 타이틀 토큰 추가
+```
+AIRBRIDGE_API_TOKEN_<타이틀ID>=<그 타이틀의 Airbridge 토큰>
+```
+- `<타이틀ID>` = `titles.json`의 `id`를 **대문자**로, `-`·공백은 `_`로 바꾼 것.
+  - `zeus` → `AIRBRIDGE_API_TOKEN_ZEUS`
+  - `starseed-jp` → `AIRBRIDGE_API_TOKEN_STARSEED_JP`
+- 기본 `AIRBRIDGE_API_TOKEN`(펩)은 **그대로 두고**, 아래에 새 줄만 추가.
+
+### ② `titles.json`(또는 등록부)에 앱·활성화 설정
+해당 타이틀 항목에:
+```json
+"_pipeline_mmp_provider": "airbridge",
+"_pipeline_airbridge_enabled": true,
+"_pipeline_airbridge_app_name": "<앱 subdomain>"
+```
+- 앱 subdomain = Airbridge 대시보드 URL `https://app.airbridge.io/`**`여기`**`/...` 의 이름 (제우스=`zeuskr`).
+
+### ③ 반영 + 검증
+```powershell
+cd C:\claude\cloop_dashboard
+.\.venv\Scripts\python.exe -m pipeline.main --title <타이틀ID>
+```
+- 로그에 `→ airbridge N행 fetch` 가 나오면 **성공**.
+- `403`/`404` 가 나오면: 토큰(계정 불일치) 또는 앱 이름 오타 → 확인.
+
+## 같은 계정을 쓰는 타이틀이라면?
+그 계정 토큰이 여러 앱 접근 권한(org 토큰)을 가지면 **①(토큰 추가)을 생략**하고 기본 `AIRBRIDGE_API_TOKEN`으로 접근할 수도 있습니다. 다만 **헷갈리지 않게 항상 ①까지 넣는 걸 권장**합니다.
+
+## 실제 예시 — 제우스 (2026-07-01 확립)
+- `.env`: `AIRBRIDGE_API_TOKEN_ZEUS=<제우스 토큰>` (사용자 직접 입력)
+- `titles.json` zeus: `_pipeline_mmp_provider="airbridge"` · `_pipeline_airbridge_enabled=true` · `_pipeline_airbridge_app_name="zeuskr"`
+- 결과: `airbridge 92행 fetch` · MMP 9소재 (채널 `facebook.business`)
+- 뒷단 코드: `pipeline/main.py` `_resolve_airbridge_token(title)` — env `AIRBRIDGE_API_TOKEN_<ID>` 우선, 없으면 기본 `AIRBRIDGE_API_TOKEN` 폴백.
