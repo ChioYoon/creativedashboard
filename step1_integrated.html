@@ -4429,6 +4429,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           let activeMmpCampaigns = null;   // 선택된 MMP 캠페인 라벨 배열 (없으면 전체)
           let activeGadsCampaigns = null;  // 선택된 Google Ads 캠페인 배열 (없으면 전체)
           let activeDateWindow = null;     // {start,end} 실적일 윈도우 (없으면 전체)
+          window._mmpDecoupledNote = false;  // Google Ads 캠페인만 선택 시 MMP는 전체 채널 기준 안내 플래그
 
           // 캠페인 필터 (다중 선택 지원)
           // Stage 5-F-4: JSON 모드 (row.kpi_daily 보유)는 row 제외가 아니라 "KPI 교체" —
@@ -4443,6 +4444,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             const mmpChannels  = selectedCampaigns.filter(c => c.startsWith('[MMP] ')).map(c => c.replace('[MMP] ', ''));
             const gadsCampaigns = selectedCampaigns.filter(c => !c.startsWith('[MMP] '));
             const isJsonKpiMode = filteredRows.some(row => Array.isArray(row.kpi_daily) && row.kpi_daily.length);
+            window._mmpDecoupledNote = gadsCampaigns.length > 0 && mmpChannels.length === 0;
 
             if (gadsCampaigns.length > 0 && isJsonKpiMode) {
               // Google Ads 캠페인 선택 — KPI 교체 모드
@@ -5373,6 +5375,14 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           }
         }
 
+        // MMP 디커플 안내: Google Ads 캠페인만 선택 시 MMP는 전체 채널 기준 (캠페인 미적용)
+        let mmpNotice = '';
+        if (window._mmpDecoupledNote && creatives.some(c => c.meta && c.meta.mmp_quality_score && c.meta.mmp_quality_score.total != null)) {
+          mmpNotice = `<div style="margin-top:10px;padding:10px 14px;background:#eff6ff;border-left:3px solid #93c5fd;border-radius:6px;font-size:12.5px;color:#1d4ed8;">
+            <strong>ⓘ MMP 지표 안내:</strong> 선택한 Google Ads 캠페인은 MMP 어트리뷰션에 적용되지 않아, <strong>MMP 점수·지표는 전체 채널 기준</strong>으로 표시됩니다. (날짜 기간은 공통 적용)
+          </div>`;
+        }
+
         // v5.1: 분석 신뢰도 배지 (필터 요약 위에 노출)
         const reliability = evaluateReliability(creatives);
         const reliabilityHtml = buildReliabilityBadgeHtml(reliability);
@@ -5398,6 +5408,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
                   ${countLine}
                 </div>
                 ${roasNotice}
+                ${mmpNotice}
                 ${excludeDetailHtml}
               </div>
             </div>
