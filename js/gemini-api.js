@@ -959,30 +959,35 @@ function _esc(s) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
-function _buildFreeWinningCard(parsed) {
-  const chip = (label, val, cls) => val
-    ? `<span class="gai-chip ${cls}">${label} ${_esc(val)}</span>` : '';
-  const itemRow = (it) => `
-    <div class="gai-item-row">
+// 공용 렌더 부품 (무료·유료 카드 공유). 점수 칩은 값 있을 때만(무료엔 없음 → 시각 동일).
+function _gaiChip(label, val, cls) {
+  return val ? `<span class="gai-chip ${cls}">${label} ${_esc(val)}</span>` : '';
+}
+function _gaiItemRow(it) {
+  return `<div class="gai-item-row">
       <span class="gai-item-name">${_esc(it.name)}</span>
-      ${chip('IPM', it.ipm, 'gai-chip--ipm')}
-      ${chip('CPA', it.cpa ? '₩' + it.cpa : '', 'gai-chip--cpa')}
+      ${_gaiChip('점수', it.score, 'gai-chip--score')}
+      ${_gaiChip('IPM', it.ipm, 'gai-chip--ipm')}
+      ${_gaiChip('CPA', it.cpa ? '₩' + it.cpa : '', 'gai-chip--cpa')}
       ${it.reason ? `<span class="gai-item-reason">${_esc(it.reason)}</span>` : ''}
     </div>`;
-  const calloutHtml = (c, cls) => c
-    ? `<div class="gai-callout ${cls}"><strong>${_esc(c.label)}</strong> · ${_esc(c.text)}</div>` : '';
+}
+function _gaiCallout(c, cls) {
+  return c ? `<div class="gai-callout ${cls}"><strong>${_esc(c.label)}</strong> · ${_esc(c.text)}</div>` : '';
+}
 
+function _buildFreeWinningCard(parsed) {
   const winZone = `
     <div class="gai-zone gai-zone--win">
       <div class="gai-zone-header">🏆 위닝 소재</div>
-      ${parsed.win.items.map(itemRow).join('')}
-      ${calloutHtml(parsed.win.callout, 'gai-callout--win')}
+      ${parsed.win.items.map(_gaiItemRow).join('')}
+      ${_gaiCallout(parsed.win.callout, 'gai-callout--win')}
     </div>`;
   const loseZone = (parsed.lose.items.length || parsed.lose.callout) ? `
     <div class="gai-zone gai-zone--lose">
       <div class="gai-zone-header">⚠️ 저효율 소재</div>
-      ${parsed.lose.items.map(itemRow).join('')}
-      ${calloutHtml(parsed.lose.callout, 'gai-callout--lose')}
+      ${parsed.lose.items.map(_gaiItemRow).join('')}
+      ${_gaiCallout(parsed.lose.callout, 'gai-callout--lose')}
     </div>` : '';
   const recoRow = parsed.recos.length ? `
     <div class="gai-reco-row">
@@ -991,6 +996,86 @@ function _buildFreeWinningCard(parsed) {
     </div>` : '';
 
   return `<div class="gai-structured-card">${winZone}${loseZone}${recoRow}</div>`;
+}
+
+// 유료 슬롯(winning/losing/actionItems/scaleUp/stopNow) → 구조 객체 (순수함수). 실패 시 _ok:false.
+function parsePaidInsight(slots) {
+  const norm = t => String(t == null ? '' : t).replace(/\\n/g, '\n');
+  const ITEM_RE = /^[•\-▸▪◆]\s*\*\*(.+?)\*\*\s*(?:\(([^)]*)\))?\s*(?:[—:\-]\s*(.*))?$/;
+  const CALLOUT_RE = /^\*\*(.+?)\*\*\s*[:：]\s*(.*)$/;
+  const parseSection = (text) => {
+    const items = [], callouts = [];
+    for (const raw of norm(text).split('\n')) {
+      const line = raw.trim();
+      if (!line) continue;
+      if (/^\*{0,2}\[/.test(line) && /소재\s*분석/.test(line.replace(/\*/g, ''))) continue;
+      const im = line.match(ITEM_RE);
+      if (im) {
+        const m = im[2] || '';
+        items.push({
+          name: im[1].trim(),
+          score: (m.match(/점수\s*([\d.]+)/) || [])[1] || null,
+          ipm: (m.match(/IPM\s*([\d.]+)/i) || [])[1] || null,
+          cpa: (m.match(/CPA\s*([\d,]+)/i) || [])[1] || null,
+          reason: (im[3] || '').trim(),
+        });
+        continue;
+      }
+      const cm = line.match(CALLOUT_RE);
+      if (cm) callouts.push({ label: cm[1].trim(), text: cm[2].trim() });
+    }
+    return { items, callouts };
+  };
+  const parseBullets = (text) => norm(text).split('\n').map(r => r.trim()).filter(Boolean)
+    .map(line => {
+      const m = line.match(/^[•\-▸▪◆]\s*(?:\*\*(.+?)\*\*)?\s*[—:\-]?\s*(.*)$/);
+      return m ? { tag: (m[1] || '').trim(), text: (m[2] || '').trim() } : null;
+    }).filter(b => b && (b.tag || b.text));
+  const win = parseSection(slots.winning || '');
+  const lose = parseSection(slots.losing || '');
+  const actions = {
+    immediate: parseBullets(slots.actionItems || ''),
+    scaleUp: parseBullets(slots.scaleUp || ''),
+    stopNow: parseBullets(slots.stopNow || ''),
+  };
+  return { win, lose, actions, _ok: win.items.length > 0 || lose.items.length > 0 };
+}
+
+function _buildPaidCard(parsed) {
+  const zone = (cls, header, sec) => (sec.items.length || sec.callouts.length) ? `
+    <div class="gai-zone ${cls}">
+      <div class="gai-zone-header">${header}</div>
+      ${sec.items.map(_gaiItemRow).join('')}
+      ${sec.callouts.map(c => _gaiCallout(c, cls === 'gai-zone--win' ? 'gai-callout--win' : 'gai-callout--lose')).join('')}
+    </div>` : '';
+  const badgeCls = (tag) => {
+    const t = tag || '';
+    if (/확장/.test(t)) return 'gai-badge--expand';
+    if (/개선/.test(t)) return 'gai-badge--improve';
+    if (/중단/.test(t)) return 'gai-badge--stop';
+    return 'gai-badge--rank';
+  };
+  const actionRow = (b) => `<div class="gai-action-row">
+      ${b.tag ? `<span class="gai-badge ${badgeCls(b.tag)}">${_esc(b.tag)}</span>` : ''}
+      ${b.text ? `<span class="gai-action-text">${_esc(b.text)}</span>` : ''}
+    </div>`;
+  const group = (icon, title, bullets) => bullets.length ? `
+    <div class="gai-action-group">
+      <div class="gai-action-title">${icon} ${title}</div>
+      ${bullets.map(actionRow).join('')}
+    </div>` : '';
+  const hasActions = parsed.actions.immediate.length || parsed.actions.scaleUp.length || parsed.actions.stopNow.length;
+  const actionZone = hasActions ? `
+    <div class="gai-zone gai-zone--action">
+      ${group('⚡', '즉시 실행', parsed.actions.immediate)}
+      ${group('🚀', '스케일업', parsed.actions.scaleUp)}
+      ${group('🛑', '중단 권고', parsed.actions.stopNow)}
+    </div>` : '';
+  return `<div class="gai-structured-card">
+    ${zone('gai-zone--win', '🏆 위닝 소재', parsed.win)}
+    ${zone('gai-zone--lose', '⚠️ 저효율 소재', parsed.lose)}
+    ${actionZone}
+  </div>`;
 }
 
 function parseScoringSlots(raw) {
@@ -1156,6 +1241,15 @@ function buildScoringSlotCards(slots) {
         <div class="gai-slot-summary"><span>${summaryParts.join(' ')}</span>${retryBtn}</div>`;
     }
     // _ok:false → 아래 기존 cardHtmlArr 경로로 폴백
+  }
+
+  // 유료(다중 슬롯): 구조화 렌더 시도, 실패 시 아래 평평 렌더로 폴백
+  if (!isWinningOnly && (slots.winning || slots.losing)) {
+    const parsedPaid = parsePaidInsight(slots);
+    if (parsedPaid._ok) {
+      return `${_buildPaidCard(parsedPaid)}
+        <div class="gai-slot-summary"><span>${summaryParts.join(' ')}</span>${retryBtn}</div>`;
+    }
   }
 
   const cardHtmlArr = activeDefs.map(d => {

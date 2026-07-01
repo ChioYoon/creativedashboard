@@ -332,3 +332,14 @@
 .gai-badge { font-size: 12px; padding: 2px 9px; border-radius: 6px; }
 .gai-badge--expand { background: #ecfdf5; color: #10b981; }
 .gai-badge--stop   { background: #fef2f2; color: #dc2626; }
+.gai-badge--improve { background: #fffbeb; color: #d97706; }
+.gai-badge--rank    { background: #f5f3ff; color: #8b5cf6; }
+
+/* 유료 카드: 점수 칩 + 실행 플랜 존 */
+.gai-chip--score { color: #dc2626; font-weight: 600; }
+.gai-zone--action { background: #faf5ff; border-top: 1px solid #e5e7eb; }
+.gai-action-group { margin-bottom: 10px; }
+.gai-action-group:last-child { margin-bottom: 0; }
+.gai-action-title { font-size: 12.5px; font-weight: 700; color: #6b21a8; margin-bottom: 6px; }
+.gai-action-row { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px; margin-bottom: 5px; font-size: 12.5px; line-height: 1.5; }
+.gai-action-text { color: #374151; }
