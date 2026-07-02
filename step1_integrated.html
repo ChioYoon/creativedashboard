@@ -298,7 +298,7 @@
 
     /* 헤더 */
     .header {
-      background: linear-gradient(135deg, #E84855 0%, #FF6B6B 100%);
+      background: linear-gradient(135deg, #DC2828 0%, #FF6B6B 100%);
       color: white;
       padding: 40px;
       text-align: center;
@@ -341,11 +341,11 @@
       background: #f8fafc;
     }
     .upload-area:hover {
-      border-color: #E84855;
+      border-color: #DC2828;
       background: #f0f4ff;
     }
     .upload-area.dragover {
-      border-color: #E84855;
+      border-color: #DC2828;
       background: #e0e7ff;
       transform: scale(1.02);
     }
@@ -366,7 +366,7 @@
     
     /* 버튼 */
     .btn {
-      background: linear-gradient(135deg, #E84855 0%, #FF6B6B 100%);
+      background: linear-gradient(135deg, #DC2828 0%, #FF6B6B 100%);
       color: white;
       padding: 12px 24px;
       border: none;
@@ -437,8 +437,8 @@
     }
     .setting-input:focus {
       outline: none;
-      border-color: #E84855;
-      box-shadow: 0 0 0 3px rgba(232, 72, 85, 0.1);
+      border-color: #DC2828;
+      box-shadow: 0 0 0 3px rgba(220, 40, 40, 0.1);
     }
     
     /* 슬라이더 */
@@ -461,13 +461,13 @@
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      background: #E84855;
+      background: #DC2828;
       cursor: pointer;
       transition: all 0.2s;
     }
     .slider::-webkit-slider-thumb:hover {
       transform: scale(1.2);
-      box-shadow: 0 0 0 8px rgba(232, 72, 85, 0.1);
+      box-shadow: 0 0 0 8px rgba(220, 40, 40, 0.1);
     }
     .weight-input {
       width: 60px;
@@ -482,14 +482,14 @@
     }
     .weight-input:focus {
       outline: none;
-      border-color: #E84855;
-      box-shadow: 0 0 0 3px rgba(232, 72, 85, 0.1);
+      border-color: #DC2828;
+      box-shadow: 0 0 0 3px rgba(220, 40, 40, 0.1);
     }
     .slider-value {
       min-width: 50px;
       text-align: right;
       font-weight: 700;
-      color: #E84855;
+      color: #DC2828;
       font-size: 16px;
     }
     
@@ -580,14 +580,14 @@
     }
     .search-input:focus {
       outline: none;
-      border-color: #E84855;
-      box-shadow: 0 0 0 3px rgba(232, 72, 85, 0.1);
+      border-color: #DC2828;
+      box-shadow: 0 0 0 3px rgba(220, 40, 40, 0.1);
     }
     
     /* 선택된 항목 카운트 */
     .selected-count {
       font-size: 12px;
-      color: #E84855;
+      color: #DC2828;
       font-weight: 600;
       margin-top: 5px;
     }
@@ -615,7 +615,7 @@
       margin-bottom: 24px;
     }
     .stat-card {
-      background: linear-gradient(135deg, #E84855 0%, #FF6B6B 100%);
+      background: linear-gradient(135deg, #DC2828 0%, #FF6B6B 100%);
       color: white;
       padding: 20px;
       border-radius: 12px;
@@ -687,20 +687,20 @@
     }
     .preview-thumbnail:hover {
       transform: scale(1.1);
-      border-color: #E84855;
+      border-color: #DC2828;
       box-shadow: 0 4px 8px rgba(103, 126, 234, 0.4);
     }
     .preview-video {
       width: 60px;
       height: 60px;
       border-radius: 8px;
-      background: linear-gradient(135deg, #E84855 0%, #FF6B6B 100%);
+      background: linear-gradient(135deg, #DC2828 0%, #FF6B6B 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       transition: all 0.2s;
-      border: 2px solid #E84855;
+      border: 2px solid #DC2828;
       position: relative;
       color: white;
       font-size: 24px;
@@ -1221,9 +1221,9 @@
     
     /* ── 임계값 라디오 선택 강조 ── */
     label.thresh-active {
-      border-color: #E84855 !important;
+      border-color: #DC2828 !important;
       background: #fff0f2 !important;
-      color: #E84855 !important;
+      color: #DC2828 !important;
     }
 
     /* ── 제외 소재 드롭다운 ── */
@@ -1866,7 +1866,7 @@
                                       justify-content: center; align-items: center;">
     <div style="background: white; padding: 40px 60px; border-radius: 15px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
       <div class="spinner" style="width: 60px; height: 60px; border: 6px solid #f3f4f6; 
-                                   border-top: 6px solid #E84855; border-radius: 50%; 
+                                   border-top: 6px solid #DC2828; border-radius: 50%; 
                                    animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
       <p id="loadingMessage" style="font-size: 18px; font-weight: 600; color: #1f2937; margin: 0;">처리 중...</p>
     </div>
@@ -2560,7 +2560,7 @@ function attachHeaderSort() {
     th.style.cursor = 'pointer';
     const ind = document.createElement('span');
     ind.className = 'sort-ind';
-    ind.style.cssText = 'color:#E84855;font-weight:800;';
+    ind.style.cssText = 'color:#DC2828;font-weight:800;';
     th.appendChild(ind);
     th.addEventListener('click', () => sortByColumn(th.dataset.sortkey, th.dataset.sorttype || 'num'));
   });
@@ -3415,7 +3415,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             ${variantBlock}
             <div style="display:flex;gap:10px;margin-top:16px;justify-content:flex-end;">
               <button onclick="closeSimilarNamesModal(false)" style="padding:10px 20px;background:#f3f4f6;color:#6b7280;border:none;border-radius:8px;font-size:13px;cursor:pointer;">건너뛰기</button>
-              <button onclick="closeSimilarNamesModal(true)" style="padding:10px 24px;background:linear-gradient(135deg,#E84855,#ff6b6b);color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;">선택 적용</button>
+              <button onclick="closeSimilarNamesModal(true)" style="padding:10px 24px;background:linear-gradient(135deg,#DC2828,#ff6b6b);color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;">선택 적용</button>
             </div>
           </div>
         </div>`;
@@ -3480,7 +3480,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       if (!url) return '';
       const safe = url.replace(/'/g, "\\'");
       const text = label || '📁 Drive 폴더 열기';
-      return `<button type="button" onclick="window.open('${safe}','_blank','noopener')" title="공유 드라이브 폴더에서 이 소재를 찾아보세요" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:10px 18px;background:#E84855;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;">${text}</button>`;
+      return `<button type="button" onclick="window.open('${safe}','_blank','noopener')" title="공유 드라이브 폴더에서 이 소재를 찾아보세요" style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:10px 18px;background:#DC2828;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;">${text}</button>`;
     }
     
     // 페이지 로드
@@ -3644,7 +3644,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             백엔드 산출 JSON 로드 완료
           </div>
           <button onclick="calculateScores()"
-                  style="width: 100%; padding: 12px; background: linear-gradient(135deg, #E84855 0%, #FF6B6B 100%);
+                  style="width: 100%; padding: 12px; background: linear-gradient(135deg, #DC2828 0%, #FF6B6B 100%);
                          color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;
                          font-size: 15px;">
             분석 실행 →
@@ -3926,7 +3926,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           </div>
           
           <button onclick="calculateScores()"
-                  style="width: 100%; padding: 12px; background: linear-gradient(135deg, #E84855 0%, #FF6B6B 100%);
+                  style="width: 100%; padding: 12px; background: linear-gradient(135deg, #DC2828 0%, #FF6B6B 100%);
                          color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;
                          font-size: 15px;">
             분석 실행 →
@@ -5064,8 +5064,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     function buildSparklineSvg(values, opts = {}) {
       const width = opts.width || 80;
       const height = opts.height || 22;
-      const stroke = opts.stroke || '#E84855';
-      const fill = opts.fill || 'rgba(232,72,85,0.15)';
+      const stroke = opts.stroke || '#DC2828';
+      const fill = opts.fill || 'rgba(220,40,40,0.15)';
       if (!values || values.length < 2) {
         return `<span style="font-size:10px;color:#d1d5db;">—</span>`;
       }
@@ -5235,7 +5235,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         } else if (hasImage) {
           previewHtml = `<img src="${imageUrl}" class="preview-thumbnail" onclick="openPreviewModal(${index})" alt="미리보기">`;
         } else {
-          previewHtml = `<span class="preview-placeholder-clickable" onclick="openPreviewModal(${index})" title="소재 상세 정보 보기" style="cursor:pointer; color:#9ca3af; font-size:24px; display:inline-block; padding:8px 12px; border:1.5px dashed #d1d5db; border-radius:8px; transition:all .15s;" onmouseover="this.style.background='#fef2f2'; this.style.borderColor='#E84855';" onmouseout="this.style.background=''; this.style.borderColor='#d1d5db';">📷</span>`;
+          previewHtml = `<span class="preview-placeholder-clickable" onclick="openPreviewModal(${index})" title="소재 상세 정보 보기" style="cursor:pointer; color:#9ca3af; font-size:24px; display:inline-block; padding:8px 12px; border:1.5px dashed #d1d5db; border-radius:8px; transition:all .15s;" onmouseover="this.style.background='#fef2f2'; this.style.borderColor='#DC2828';" onmouseout="this.style.background=''; this.style.borderColor='#d1d5db';">📷</span>`;
         }
 
         // v5.1: sparkline 셀 (일별 전환수 추이)
@@ -5301,7 +5301,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td style="text-align: right;">${mImp}</td>
           <td style="text-align: right;">${mClk}</td>
           <td style="text-align: right;">${mCtr}</td>
-          <td style="text-align: right; font-weight: 700; color: #E84855; font-size: 16px;">${scoreCell}</td>
+          <td style="text-align: right; font-weight: 700; color: #DC2828; font-size: 16px;">${scoreCell}</td>
           <td>${gradeCell}</td>
           <td class="col-pctile" style="text-align:left;">${pctileCellHtml(c.meta && c.meta.kpi_percentiles)}</td>
           <td class="col-mmp" style="text-align:center;">${mmpCellHtml(c.meta)}</td>
@@ -5352,7 +5352,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
              ✅ 포함 <strong style="color:#10b981;">${total}개</strong> /
              🚫 제외 <strong style="color:#ef4444;">${excludedCreatives.length}개</strong>
              <span style="color:#9ca3af;font-size:12px;margin-left:6px;">(노출 기준 ${excludedByImp}개·전환 기준 ${excludedByConv}개 중복 포함 가능)</span>`
-          : `총 <strong style="color:#E84855;">${total}개</strong> 소재 분석 완료`;
+          : `총 <strong style="color:#DC2828;">${total}개</strong> 소재 분석 완료`;
 
         // ROAS 모드 안내 메시지 (v5.1)
         let roasNotice = '';
@@ -5398,8 +5398,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             </summary>
             <div style="padding:12px 14px;background:var(--bg-base);">
               ${reliabilityHtml}
-              <div class="filter-summary" style="background:linear-gradient(135deg,rgba(232,72,85,.08),rgba(255,107,107,.08));
-                   padding:15px;border-radius:10px;margin-bottom:8px;border-left:4px solid #E84855;">
+              <div class="filter-summary" style="background:linear-gradient(135deg,rgba(220,40,40,.08),rgba(255,107,107,.08));
+                   padding:15px;border-radius:10px;margin-bottom:8px;border-left:4px solid #DC2828;">
                 <div style="font-weight:600;margin-bottom:10px;color:#1f2937;font-size:14px;">📌 적용된 필터 조건</div>
                 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;font-size:13px;">
                   ${filterSummary.map(item => `<div style="color:#4b5563;">• ${item}</div>`).join('')}
@@ -6755,8 +6755,8 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
             {
               label: '기준 기간 순위',
               data: baselineData,
-              borderColor: '#E84855',
-              backgroundColor: 'rgba(232, 72, 85, 0.1)',
+              borderColor: '#DC2828',
+              backgroundColor: 'rgba(220, 40, 40, 0.1)',
               tension: 0.3,
               borderWidth: 3,
               pointRadius: 5,
@@ -6999,7 +6999,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
           ${trendBlock}
           ${hasUrl ? `
           <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e5e7eb;">
-            <a href="${contentUrl}" target="_blank" style="color: #E84855; text-decoration: none; font-weight: 600;">
+            <a href="${contentUrl}" target="_blank" style="color: #DC2828; text-decoration: none; font-weight: 600;">
               원본 링크 열기
             </a>
           </div>` : ''}
@@ -7018,7 +7018,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       if (!wrap) return;
       const btns = wrap.querySelectorAll('.status-seg-btn');
       const cur = () => { const ov = loadStatusOverrides()[creative.key]; return (ov === 'live' || ov === 'excluded') ? ov : 'auto'; };
-      const paint = () => { const c = cur(); btns.forEach(b => { const on = b.dataset.status === c; b.style.background = on ? '#E84855' : '#fff'; b.style.color = on ? '#fff' : '#374151'; b.style.fontWeight = on ? '700' : '500'; }); };
+      const paint = () => { const c = cur(); btns.forEach(b => { const on = b.dataset.status === c; b.style.background = on ? '#DC2828' : '#fff'; b.style.color = on ? '#fff' : '#374151'; b.style.fontWeight = on ? '700' : '500'; }); };
       btns.forEach(b => b.addEventListener('click', () => {
         const v = b.dataset.status;
         saveStatusOverride(creative.key, v === 'auto' ? null : v);
@@ -7041,12 +7041,12 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         'CPA':  daily.map(d => (Number(d.conversions) > 0 ? Math.round(Number(d.cost || 0) / Number(d.conversions)) : null)),
       };
       const btns = document.querySelectorAll('.trend-metric-btn');
-      const setActive = (m) => btns.forEach(b => { const on = b.dataset.metric === m; b.style.background = on ? '#E84855' : '#fff'; b.style.color = on ? '#fff' : '#374151'; });
+      const setActive = (m) => btns.forEach(b => { const on = b.dataset.metric === m; b.style.background = on ? '#DC2828' : '#fff'; b.style.color = on ? '#fff' : '#374151'; });
       const draw = (metric) => {
         if (window._modalTrendChart) { try { window._modalTrendChart.destroy(); } catch (_) {} }
         window._modalTrendChart = new Chart(cv.getContext('2d'), {
           type: 'line',
-          data: { labels, datasets: [{ label: metric, data: series[metric], borderColor: '#E84855', backgroundColor: 'rgba(232,72,85,.08)', tension: .25, spanGaps: true, pointRadius: 2, fill: true }] },
+          data: { labels, datasets: [{ label: metric, data: series[metric], borderColor: '#DC2828', backgroundColor: 'rgba(220,40,40,.08)', tension: .25, spanGaps: true, pointRadius: 2, fill: true }] },
           options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
         });
         setActive(metric);

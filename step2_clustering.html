@@ -45,7 +45,7 @@
       background:linear-gradient(135deg,var(--red) 0%,var(--red-light) 100%);
       padding:0 28px; display:flex; align-items:center;
       height:52px;
-      box-shadow:0 3px 12px rgba(232,72,85,.30);
+      box-shadow:0 3px 12px rgba(220,40,40,.30);
     }
     .nav-logo {
       display:flex; align-items:center; gap:8px;
@@ -113,7 +113,7 @@
     .prog-step.done .prog-dot { background:var(--green); border-color:var(--green); color:#fff; }
     .prog-step.done::after { background:var(--green); }
     .prog-step.active .prog-dot { background:var(--red); border-color:var(--red); color:#fff;
-      box-shadow:0 0 0 4px rgba(232,72,85,.2); }
+      box-shadow:0 0 0 4px rgba(220,40,40,.2); }
     .prog-label { font-size:11px; color:var(--gray-text); font-weight:500; white-space:nowrap; }
     .prog-step.active .prog-label { color:var(--red); font-weight:700; }
     .prog-step.done .prog-label { color:var(--green); font-weight:600; }
@@ -193,10 +193,10 @@
       color:#fff; border:none; border-radius:var(--radius-md);
       font-size:15px; font-weight:700; cursor:pointer;
       display:inline-flex; align-items:center; gap:8px;
-      box-shadow:0 4px 14px rgba(232,72,85,.4);
+      box-shadow:0 4px 14px rgba(220,40,40,.4);
       transition:var(--transition);
     }
-    .run-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 6px 20px rgba(232,72,85,.5); }
+    .run-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 6px 20px rgba(220,40,40,.5); }
     .run-btn:disabled { opacity:.5; cursor:not-allowed; transform:none; }
     .run-info { flex:1; }
     .run-info h4 { font-size:14px; font-weight:700; color:var(--dark); margin-bottom:4px; }
@@ -957,7 +957,7 @@ let showTopOnly    = false;
 window.currentAnalysisLayer = window.currentAnalysisLayer || 'ads';  // 분석 레이어(Google Ads / MMP) — T5 토글
 
 const CLUSTER_COLORS = [
-  '#E84855','#3182CE','#38A169','#D4A017','#6B46C1',
+  '#DC2828','#3182CE','#38A169','#D4A017','#6B46C1',
   '#DD6B20','#0BC5EA','#9B2C2C','#2C7A7B','#553C9A',
   '#276749','#744210','#2A4365','#702459'
 ];
