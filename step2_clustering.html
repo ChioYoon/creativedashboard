@@ -1721,6 +1721,51 @@ async function computeClusterResults(rows, cfg, onPhase) {
   };
 }
 
+/* ── 군집 트렌드 비교 — 과거 스냅샷 fetch ──
+   git 히스토리(nightly 커밋)를 암묵적 스냅샷 저장소로 사용. 신규 백엔드 없음.
+   저장소가 public이라 인증 없이 GitHub REST API + raw.githubusercontent.com 사용 가능. */
+const GITHUB_REPO = 'ChioYoon/creativedashboard';
+
+function daysAgoISO(days) {
+  const d = new Date();
+  d.setDate(d.getDate() - days);
+  return d.toISOString().slice(0, 10);
+}
+
+function _clusterTrendCacheKey(titleId, targetDateISO) {
+  return `r_team_cluster_trend_${titleId}_${targetDateISO}`;
+}
+
+async function fetchHistoricalSnapshot(titleId, targetDateISO) {
+  const cacheKey = _clusterTrendCacheKey(titleId, targetDateISO);
+  const cached = sessionStorage.getItem(cacheKey);
+  if (cached) {
+    try { return JSON.parse(cached); } catch (e) { /* 손상된 캐시 — 무시하고 재조회 */ }
+  }
+
+  const path = `public/data/${titleId}.json`;
+  const commitsUrl = `https://api.github.com/repos/${GITHUB_REPO}/commits`
+    + `?path=${encodeURIComponent(path)}&until=${encodeURIComponent(targetDateISO)}T23:59:59Z&per_page=1`;
+  const commitsRes = await fetch(commitsUrl);
+  if (!commitsRes.ok) throw new Error(`커밋 조회 실패 (HTTP ${commitsRes.status})`);
+  const commits = await commitsRes.json();
+  if (!Array.isArray(commits) || !commits.length) return null;   // 그 시점에 데이터 없음(타이틀이 그만큼 오래되지 않음)
+
+  const sha = commits[0].sha;
+  const rawUrl = `https://raw.githubusercontent.com/${GITHUB_REPO}/${sha}/${path}`;
+  const rawRes = await fetch(rawUrl);
+  if (!rawRes.ok) throw new Error(`과거 데이터 조회 실패 (HTTP ${rawRes.status})`);
+  const historicalJson = await rawRes.json();
+
+  const normalized = window.DataSource.normalizeFromJson(historicalJson);
+  const rows = normalized.rows;
+
+  try { sessionStorage.setItem(cacheKey, JSON.stringify(rows)); }
+  catch (e) { /* sessionStorage 용량 초과 등 — 캐시는 최적화일 뿐이므로 무시 */ }
+
+  return rows;
+}
+
 /* ── 메인 실행 함수 (라이브) ── */
 async function runClustering() {
   if (!csvData || !sessionConfig) {
