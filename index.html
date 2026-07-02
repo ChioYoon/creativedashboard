@@ -11,38 +11,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/ds/colors_and_type.css?v=20260702a">
   <link rel="stylesheet" href="assets/cl-shell.css?v=20260702a">
   <script defer src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
   <style>
-    /* ── Com2uS Design System tokens ── */
-    :root {
-      --brand-primary:        #DC2828;
-      --brand-primary-hover:  #A51E1E;
-      --brand-primary-active: #891110;
-      --text-primary:   #191919;
-      --text-secondary: #666666;
-      --text-muted:     #999999;
-      --text-disabled:  #B2B2B2;
-      --text-on-brand:  #FFFFFF;
-      --bg-base:        #FFFFFF;
-      --surface-soft:   #FAF9F7;
-      --surface-card:   #F4F2EF;
-      --surface-sink:   #ECEAE6;
-      --hairline-warm:  #E4E1DC;
-      --border-default: #CCCCCC;
-      --shadow-sm:  0 1px 2px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.08);
-      --shadow-md:  0 2px 8px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
-      --shadow-lg:  0 8px 28px rgba(0,0,0,.12), 0 2px 8px rgba(0,0,0,.06);
-      --radius-sm:   4px;
-      --radius-md:   8px;
-      --radius-lg:   16px;
-      --radius-full: 9999px;
-      --font-kr: "Noto Sans KR", "Apple SD Gothic Neo", sans-serif;
-      --dur-fast: 120ms;
-      --dur-base: 200ms;
-      --ease-standard: cubic-bezier(.2, 0, 0, 1);
-    }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
@@ -51,45 +23,6 @@
       color: var(--text-primary);
       line-height: 1.6;
       min-height: 100vh;
-    }
-
-    /* ── Topbar ── */
-    .topbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-      height: 44px;
-      background: var(--brand-primary);
-      display: flex; align-items: center; padding: 0 20px;
-      gap: 12px;
-      box-shadow: 0 1px 4px rgba(0,0,0,.2);
-    }
-    .topbar-logo {
-      display: flex; align-items: center; gap: 8px;
-      color: var(--text-on-brand); font-size: 15px; font-weight: 700;
-      text-decoration: none; flex-shrink: 0;
-    }
-    .topbar-logo svg { width: 20px; height: 20px; }
-    .topbar-sub {
-      font-size: 12px; font-weight: 500;
-      color: rgba(255,255,255,.6); flex: 1;
-    }
-    .topbar-nav { display: flex; align-items: center; gap: 6px; margin-left: auto; }
-    .topbar-nav a {
-      color: rgba(255,255,255,.85); font-size: 13px; font-weight: 600;
-      text-decoration: none; padding: 5px 12px;
-      background: rgba(255,255,255,.12); border-radius: var(--radius-md);
-      border: 1px solid rgba(255,255,255,.2);
-      transition: background var(--dur-fast), color var(--dur-fast);
-      white-space: nowrap;
-    }
-    .topbar-nav a:hover { background: rgba(255,255,255,.22); color: white; }
-    .topbar-nav a.active { background: rgba(255,255,255,.28); color: white; border-color: rgba(255,255,255,.45); }
-    .version-badge {
-      background: rgba(255,255,255,.15);
-      color: rgba(255,255,255,.9);
-      padding: 3px 10px; border-radius: var(--radius-full);
-      font-size: 12px; font-weight: 600;
-      border: 1px solid rgba(255,255,255,.25);
-      letter-spacing: .02em;
     }
 
     /* ── Page body ── */
