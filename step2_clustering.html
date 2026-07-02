@@ -1586,7 +1586,142 @@ function mergeSmallClusters(clusters, minSize) {
   return [...targets, ...misc];
 }
 
-/* ── 메인 실행 함수 ── */
+/* ── 순수 계산 (라이브 실행 + 과거 스냅샷 재계산 공용) ──
+   onPhase(phaseIdx, message)는 선택적 async 콜백 — 라이브 실행은 진행바를 갱신,
+   과거 스냅샷 계산은 생략 가능(느슨한 pacing sleep은 이 함수가 그대로 소유). */
+async function computeClusterResults(rows, cfg, onPhase) {
+  onPhase = onPhase || (async () => {});
+  // ★ 마케터 인사이트는 군집화 태그에서 제외 (소재 설명용으로만 활용)
+  const tagCols    = (cfg.columnConfig || []).filter(c => c.type === 'tag');
+  // 인사이트 컬럼은 매핑 테이블 표시용으로 별도 보존
+  const insightCols = (cfg.columnConfig || []).filter(c => c.type === 'insight');
+  const params     = cfg.params || {};
+  const perfWeight = cfg.perfWeight || 30;
+
+  // ━━━ Phase 0: 소재명 기준 집계 ━━━
+  await onPhase(0, '소재명 기준으로 일자별 데이터 집계 중...');
+  await sleep(100);
+
+  // TXT 유형 제외: Step1 소재 성과 분석과 동일하게 BNR/VID만 분석 대상
+  const bnrVidRows = rows.filter(row => {
+    const t = (row['유형'] || row['앱 확장 소재 유형'] || '').toUpperCase().trim();
+    return t === 'BNR' || t === 'VID';
+  });
+  const txtCount = rows.length - bnrVidRows.length;
+  if (txtCount > 0) {
+    console.log(`[군집화] TXT 제외: 전체 ${rows.length}개 → BNR/VID ${bnrVidRows.length}개 (TXT ${txtCount}개 제외)`);
+  }
+
+  // 일자별 raw rows → 소재명 단위로 전환/비용/노출/클릭/매출 합산
+  await onPhase(0, `일자별 데이터를 소재명 기준으로 합산 중... (BNR/VID ${bnrVidRows.length}개${txtCount > 0 ? `, TXT ${txtCount}개 제외` : ''})`);
+  const aggregated = aggregateByMaterial(bnrVidRows);
+  const rawRowCount = bnrVidRows.length;
+  const matCount    = aggregated.length;
+
+  // ━━━ Rank 기반 스코어링 (Step1 동일) ━━━
+  const scoreWeights = {
+    conv: 0.25, cpa: 0.25, ipm: 0.25, roas: 0.25   // 기본 균등 가중치
+  };
+  const scoredMaterials = calcRankScores(aggregated, scoreWeights);
+
+  await sleep(200);
+
+  // ━━━ Phase 1: 태그 빈도 & IQR 노이즈 필터 ━━━
+  // 집계된 소재(_firstRow)의 태그 기반으로 빈도/공출현 계산
+  await onPhase(1, `IQR 기반 노이즈 태그 필터링 중... (${matCount}개 소재 대상)`);
+
+  const tagFreqs = {};
+  const weightMap = {};
+  const coMatrix  = {};
+
+  // ★ 포맷 자동 태그화: 파일명 패턴으로 사이즈/포맷 태그 부여
+  function detectFormatTag(mat) {
+    const src = (mat.파일명 || mat._key || mat.소재명 || '').toLowerCase()
+              + (mat._firstRow?.['앱 확장 소재'] || '').toLowerCase();
+    if (/_v_|1200x1500/i.test(src)) return 'format:vertical';
+    if (/_s_|1200x1200/i.test(src)) return 'format:square';
+    if (/_l_|1200x628/i.test(src))  return 'format:landscape';
+    if (/vid|\.mp4/i.test(src))     return 'format:video';
+    return null;
+  }
+
+  scoredMaterials.forEach(mat => {
+    const srcRow = mat._firstRow;
+    const rowTags = [];
+
+    // ★ 포맷 태그 자동 추가
+    const fmtTag = detectFormatTag(mat);
+    if (fmtTag) {
+      tagFreqs[fmtTag]  = (tagFreqs[fmtTag]  || 0) + 1;
+      weightMap[fmtTag] = weightMap[fmtTag] || 50;
+      rowTags.push(fmtTag);
+    }
+
+    tagCols.forEach(col => {
+      const val = (srcRow[col.col] || '').trim();
+      if (!val || val === '-') return;
+      // ★ 태그 정규화(동의어 통합) 후 분리
+      splitTagValue(val).map(v => normalizeTag(v)).filter(v => v && v.length < 60).forEach(v => {
+        tagFreqs[v]  = (tagFreqs[v]  || 0) + 1;
+        weightMap[v] = Math.max(weightMap[v] || 0, col.weight || 40);
+        rowTags.push(v);
+      });
+    });
+    // 공출현 매트릭스 (소재 단위로 계산)
+    for (let i = 0; i < rowTags.length; i++) {
+      for (let j = i + 1; j < rowTags.length; j++) {
+        const key = [rowTags[i], rowTags[j]].sort().join('|||');
+        coMatrix[key] = (coMatrix[key] || 0) + 1;
+      }
+    }
+  });
+
+  const noiseSet = iqrNoiseFilter(tagFreqs, scoredMaterials);
+  await sleep(200);
+
+  // ━━━ Phase 2: Union-Find 클러스터링 ━━━
+  await onPhase(2, '태그 공출현 분석 및 군집 형성 중...');
+
+  const n = scoredMaterials.length;
+  // ★ co-occurrence 임계값: 고유 태그 수 기반 자동 결정
+  //   태그가 적을수록 관대하게(넓게 연결) → 군집 형성 용이
+  const uniqueTagCount = Object.keys(tagFreqs).length;
+  const coThreshold = uniqueTagCount <= 10 ? 0.10
+                    : uniqueTagCount <= 20 ? 0.15
+                    : uniqueTagCount <= 40 ? 0.20
+                    : 0.25;
+  // ★ 최소 군집 수: 파라미터 설정값 사용 (기본 2개)
+  const minClusters = Math.max(2, parseInt(params.minClusters) || 2);
+  const tagGroups = buildTagClusters(tagFreqs, coMatrix, noiseSet, weightMap, coThreshold, minClusters);
+  await sleep(300);
+
+  // ━━━ Phase 3: 소재 배정 (집계+스코어링된 소재 사용) ━━━
+  await onPhase(3, '소재를 군집에 배정하고 TotalScore 기반 정제 중...');
+
+  const rawClusters = assignMaterialsToClusters(
+    scoredMaterials, tagGroups, tagCols, weightMap, insightCols, perfWeight
+  );
+  // ⓐ 최소 군집 크기 적용 — 크기 미만 군집을 가장 유사한 큰 군집에 흡수 ('기타'는 유지)
+  const minClusterSize = Math.max(2, parseInt(params.minCluster) || 3);
+  const mergedClusters = mergeSmallClusters(rawClusters, minClusterSize);
+  console.log(`[군집화] 최소 군집 크기 ${minClusterSize} 적용: ${rawClusters.length}개 → ${mergedClusters.length}개 군집`);
+  const enriched = enrichClusters(mergedClusters, weightMap);
+  await sleep(300);
+
+  // ━━━ Phase 4: 인사이트 도출 ━━━
+  await onPhase(4, '패턴 분석 및 인사이트 도출 중...');
+  await sleep(200);
+
+  return {
+    clusters: enriched,
+    tagFreqs,
+    weightMap,
+    noiseSet: [...noiseSet],
+    params: { coThreshold, perfWeight, n, rawRowCount, matCount }
+  };
+}
+
+/* ── 메인 실행 함수 (라이브) ── */
 async function runClustering() {
   if (!csvData || !sessionConfig) {
     showToast('데이터가 없습니다.', 'error'); return;
@@ -1594,149 +1729,20 @@ async function runClustering() {
 
   const overlay = document.getElementById('loadingOverlay');
   overlay.classList.add('show');
-  setLoadingPhase(0);
-  updateLoadingMsg('소재명 기준으로 일자별 데이터 집계 중...');
-
-  await sleep(100);
 
   try {
-    const cfg        = sessionConfig;
-    // ★ 마케터 인사이트는 군집화 태그에서 제외 (소재 설명용으로만 활용)
-    const tagCols    = (cfg.columnConfig || []).filter(c => c.type === 'tag');
-    // 인사이트 컬럼은 매핑 테이블 표시용으로 별도 보존
-    const insightCols = (cfg.columnConfig || []).filter(c => c.type === 'insight');
-    const params     = cfg.params || {};
-    const perfWeight = cfg.perfWeight || 30;
-
-    // ━━━ Phase 0: 소재명 기준 집계 ━━━
-    // TXT 유형 제외: Step1 소재 성과 분석과 동일하게 BNR/VID만 분석 대상
-    const bnrVidRows = csvData.rows.filter(row => {
-      const t = (row['유형'] || row['앱 확장 소재 유형'] || '').toUpperCase().trim();
-      return t === 'BNR' || t === 'VID';
-    });
-    const txtCount = csvData.rows.length - bnrVidRows.length;
-    if (txtCount > 0) {
-      console.log(`[군집화] TXT 제외: 전체 ${csvData.rows.length}개 → BNR/VID ${bnrVidRows.length}개 (TXT ${txtCount}개 제외)`);
-    }
-
-    // 일자별 raw rows → 소재명 단위로 전환/비용/노출/클릭/매출 합산
-    updateLoadingMsg(`일자별 데이터를 소재명 기준으로 합산 중... (BNR/VID ${bnrVidRows.length}개${txtCount > 0 ? `, TXT ${txtCount}개 제외` : ''})`);
-    const aggregated = aggregateByMaterial(bnrVidRows);
-    const rawRowCount = bnrVidRows.length;
-    const matCount    = aggregated.length;
-
-    // ━━━ Rank 기반 스코어링 (Step1 동일) ━━━
-    const scoreWeights = {
-      conv: 0.25, cpa: 0.25, ipm: 0.25, roas: 0.25   // 기본 균등 가중치
-    };
-    const scoredMaterials = calcRankScores(aggregated, scoreWeights);
-
-    // 집계 결과를 설정 요약에 반영
-    updateAggregationBadge(rawRowCount, matCount);
-
-    await sleep(200);
-
-    // ━━━ Phase 1: 태그 빈도 & IQR 노이즈 필터 ━━━
-    // 집계된 소재(_firstRow)의 태그 기반으로 빈도/공출현 계산
-    setLoadingPhase(1);  // Phase 0 완료 → Phase 1 활성
-    updateLoadingMsg(`IQR 기반 노이즈 태그 필터링 중... (${matCount}개 소재 대상)`);
-
-    const tagFreqs = {};
-    const weightMap = {};
-    const coMatrix  = {};
-
-    // ★ 포맷 자동 태그화: 파일명 패턴으로 사이즈/포맷 태그 부여
-    function detectFormatTag(mat) {
-      const src = (mat.파일명 || mat._key || mat.소재명 || '').toLowerCase()
-                + (mat._firstRow?.['앱 확장 소재'] || '').toLowerCase();
-      if (/_v_|1200x1500/i.test(src)) return 'format:vertical';
-      if (/_s_|1200x1200/i.test(src)) return 'format:square';
-      if (/_l_|1200x628/i.test(src))  return 'format:landscape';
-      if (/vid|\.mp4/i.test(src))     return 'format:video';
-      return null;
-    }
-
-    scoredMaterials.forEach(mat => {
-      const srcRow = mat._firstRow;
-      const rowTags = [];
-
-      // ★ 포맷 태그 자동 추가
-      const fmtTag = detectFormatTag(mat);
-      if (fmtTag) {
-        tagFreqs[fmtTag]  = (tagFreqs[fmtTag]  || 0) + 1;
-        weightMap[fmtTag] = weightMap[fmtTag] || 50;
-        rowTags.push(fmtTag);
-      }
-
-      tagCols.forEach(col => {
-        const val = (srcRow[col.col] || '').trim();
-        if (!val || val === '-') return;
-        // ★ 태그 정규화(동의어 통합) 후 분리
-        splitTagValue(val).map(v => normalizeTag(v)).filter(v => v && v.length < 60).forEach(v => {
-          tagFreqs[v]  = (tagFreqs[v]  || 0) + 1;
-          weightMap[v] = Math.max(weightMap[v] || 0, col.weight || 40);
-          rowTags.push(v);
-        });
-      });
-      // 공출현 매트릭스 (소재 단위로 계산)
-      for (let i = 0; i < rowTags.length; i++) {
-        for (let j = i + 1; j < rowTags.length; j++) {
-          const key = [rowTags[i], rowTags[j]].sort().join('|||');
-          coMatrix[key] = (coMatrix[key] || 0) + 1;
-        }
-      }
+    const result = await computeClusterResults(csvData.rows, sessionConfig, async (phase, msg) => {
+      setLoadingPhase(phase);
+      updateLoadingMsg(msg);
     });
 
-    const noiseSet = iqrNoiseFilter(tagFreqs, scoredMaterials);
-    await sleep(200);
+    updateAggregationBadge(result.params.rawRowCount, result.params.matCount);
 
-    // ━━━ Phase 2: Union-Find 클러스터링 ━━━
-    setLoadingPhase(2);
-    updateLoadingMsg('태그 공출현 분석 및 군집 형성 중...');
-
-    const n = scoredMaterials.length;
-    // ★ co-occurrence 임계값: 고유 태그 수 기반 자동 결정
-    //   태그가 적을수록 관대하게(넓게 연결) → 군집 형성 용이
-    const uniqueTagCount = Object.keys(tagFreqs).length;
-    const coThreshold = uniqueTagCount <= 10 ? 0.10
-                      : uniqueTagCount <= 20 ? 0.15
-                      : uniqueTagCount <= 40 ? 0.20
-                      : 0.25;
-    // ★ 최소 군집 수: 파라미터 설정값 사용 (기본 2개)
-    const minClusters = Math.max(2, parseInt(params.minClusters) || 2);
-    const tagGroups = buildTagClusters(tagFreqs, coMatrix, noiseSet, weightMap, coThreshold, minClusters);
-    await sleep(300);
-
-    // ━━━ Phase 3: 소재 배정 (집계+스코어링된 소재 사용) ━━━
-    setLoadingPhase(3);
-    updateLoadingMsg('소재를 군집에 배정하고 TotalScore 기반 정제 중...');
-
-    const rawClusters = assignMaterialsToClusters(
-      scoredMaterials, tagGroups, tagCols, weightMap, insightCols, perfWeight
-    );
-    // ⓐ 최소 군집 크기 적용 — 크기 미만 군집을 가장 유사한 큰 군집에 흡수 ('기타'는 유지)
-    const minClusterSize = Math.max(2, parseInt(params.minCluster) || 3);
-    const mergedClusters = mergeSmallClusters(rawClusters, minClusterSize);
-    console.log(`[군집화] 최소 군집 크기 ${minClusterSize} 적용: ${rawClusters.length}개 → ${mergedClusters.length}개 군집`);
-    const enriched = enrichClusters(mergedClusters, weightMap);
-    await sleep(300);
-
-    // ━━━ Phase 4: 인사이트 도출 ━━━
-    setLoadingPhase(4);
-    updateLoadingMsg('패턴 분석 및 인사이트 도출 중...');
-    await sleep(200);
-
-    clusterResults = {
-      clusters: enriched,
-      tagFreqs,
-      weightMap,
-      noiseSet: [...noiseSet],
-      params: { coThreshold, perfWeight, n, rawRowCount, matCount }
-    };
+    clusterResults = result;
 
     overlay.classList.remove('show');
     renderResults(clusterResults);
-    showToast(`✅ 군집화 완료! ${matCount}개 소재 → ${enriched.length}개 군집`, 'success');
+    showToast(`✅ 군집화 완료! ${result.params.matCount}개 소재 → ${result.clusters.length}개 군집`, 'success');
 
   } catch (err) {
     overlay.classList.remove('show');
