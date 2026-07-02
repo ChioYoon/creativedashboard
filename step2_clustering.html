@@ -1766,6 +1766,48 @@ async function fetchHistoricalSnapshot(titleId, targetDateISO) {
   return rows;
 }
 
+/* ── 군집 트렌드 비교 — Jaccard 기반 군집 매칭 ──
+   Union-Find 재계산 시 군집 ID는 시점마다 안정적이지 않으므로, 소재 구성 겹침으로 매칭한다.
+   threshold 미만이면 매칭 안 함(신규 취급) — 실측 데이터 부족한 초기 추정치, 조정 여지 있음. */
+function _clusterMaterialKeys(cluster) {
+  return new Set((cluster.materials || []).map(m => m._key || m.소재명 || m.파일명 || ''));
+}
+
+function _jaccardSets(a, b) {
+  if (!a.size || !b.size) return 0;
+  let inter = 0;
+  a.forEach(k => { if (b.has(k)) inter++; });
+  const union = a.size + b.size - inter;
+  return union ? inter / union : 0;
+}
+
+function matchClustersAcrossSnapshots(nowClusters, prevClusters, threshold) {
+  threshold = threshold == null ? 0.2 : threshold;
+  const prevKeySets = prevClusters.map(c => _clusterMaterialKeys(c));
+
+  const matched = [];
+  const matchedPrevIdx = new Set();
+
+  nowClusters.forEach(nowC => {
+    const nowKeys = _clusterMaterialKeys(nowC);
+    let bestIdx = -1, bestJ = 0;
+    prevClusters.forEach((prevC, i) => {
+      const j = _jaccardSets(nowKeys, prevKeySets[i]);
+      if (j > bestJ) { bestJ = j; bestIdx = i; }
+    });
+    if (bestIdx >= 0 && bestJ >= threshold) {
+      matched.push({ now: nowC, prev: prevClusters[bestIdx], jaccard: bestJ });
+      matchedPrevIdx.add(bestIdx);
+    } else {
+      matched.push({ now: nowC, prev: null, jaccard: 0 });   // 과거 대응 없음 = 신규 군집
+    }
+  });
+
+  const goneClusters = prevClusters.filter((c, i) => !matchedPrevIdx.has(i));
+
+  return { matched, goneClusters };
+}
+
 /* ── 메인 실행 함수 (라이브) ── */
 async function runClustering() {
   if (!csvData || !sessionConfig) {
