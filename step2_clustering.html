@@ -813,6 +813,7 @@
           </div>
         </div>
         <div class="section-body">
+          <div id="clusterBasis" style="margin:0 0 12px;padding:8px 12px;background:#faf5ff;border:1px solid #e9d5ff;border-radius:8px;font-size:12px;color:#6b21a8;line-height:1.6;"></div>
           <div class="cluster-grid" id="clusterGrid"></div>
         </div>
       </div>
@@ -1862,6 +1863,13 @@ function applyLayerAndRender(layer) {
   renderMappingTable(c);
   renderTagImpact(clusterResults);            // R2-A
   renderInsights(c, clusterResults);          // R2-A
+  renderClusterBasis(layer);                  // 데이터 기준 표기
+}
+// 군집 데이터 기준 안내 — 태그로 군집·성과는 오버레이(활성 레이어). 토글 시 갱신.
+function renderClusterBasis(layer) {
+  const box = document.getElementById('clusterBasis'); if (!box) return;
+  const lyr = ((layer || window.currentAnalysisLayer || 'ads') === 'mmp') ? 'MMP 품질점수' : 'Google Ads 종합점수';
+  box.innerHTML = `🔖 <strong>군집 기준</strong> — 소재를 <strong>태그</strong>(USP·후킹 전략·아트스타일 등 선택 컬럼)로 묶습니다. 성과 지표는 <strong>군집 구성을 바꾸지 않고</strong> 점수·등급 표시와 고/저성과 정제에만 쓰입니다. · 현재 성과 레이어: <strong>${lyr}</strong> · 전체 기간 기준`;
 }
 function setClusterLayer(layer) { applyLayerAndRender(layer); }
 
