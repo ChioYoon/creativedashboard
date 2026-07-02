@@ -68,3 +68,11 @@
   .cl-nav-link { padding: 7px 10px; font-size: 13px; }
   .cl-nav-cta { padding: 7px 12px; font-size: 13px; }
 }
+
+/* 데이터 기준 안내 배너 (라이브 대시보드 · Step2 군집화 공용) — margin은 배치 위치가 다르므로 호출부에서 지정 */
+.cl-data-basis {
+  padding: 8px 12px; border-radius: 8px;
+  font-size: 12px; line-height: 1.6;
+}
+.cl-data-basis-blue { background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; }
+.cl-data-basis-purple { background: #faf5ff; border: 1px solid #e9d5ff; color: #6b21a8; }
