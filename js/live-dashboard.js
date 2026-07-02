@@ -289,14 +289,19 @@
   // ── 소재 그리드 (전체 소재, 노출 무관) ─────────────────────
   LIVE.renderGrid = function () {
     const agg = LIVE.aggregate(LIVE.applyFilters());   // 필터 기간 획득 배지
-    const acqOf = c => (agg.perCreative.get(c) || { acq:0 }).acq;
+    const cellOf = c => agg.perCreative.get(c) || { acq:0, impr:0 };
+    const acqOf = c => cellOf(c).acq;
     const list = [...LIVE.state.creatives].sort((a, b) => acqOf(b) - acqOf(a));
     const grid = el('liveGrid');
     if (!list.length) { grid.innerHTML = '<div class="live-empty">이 타이틀에 소재가 없습니다.</div>'; return; }
     grid.innerHTML = list.map((c, i) => {
-      const acq = acqOf(c);
-      const badge = LIVE.state.hasKpi ? `<div class="live-card-badge">획득 ${acq.toLocaleString()}</div>` : '';
-      return `<div class="live-card" data-idx="${i}"><div class="live-card-preview">${livePreviewHtml(c)}</div><div class="live-card-body"><div class="live-card-name">${escapeHtml(c.소재명 || c.creative_id || '')}</div>${badge}</div></div>`;
+      const cell = cellOf(c);
+      const idle = LIVE.state.hasKpi && cell.impr === 0 && cell.acq === 0;   // 선택 기간 미집행
+      const badge = !LIVE.state.hasKpi ? ''
+        : idle ? `<div class="live-card-badge" style="background:#6b7280;">미집행</div>`
+        : `<div class="live-card-badge">획득 ${cell.acq.toLocaleString()}</div>`;
+      const dim = idle ? 'style="opacity:.5;"' : '';
+      return `<div class="live-card" ${dim} data-idx="${i}"><div class="live-card-preview">${livePreviewHtml(c)}</div><div class="live-card-body"><div class="live-card-name">${escapeHtml(c.소재명 || c.creative_id || '')}</div>${badge}</div></div>`;
     }).join('');
     LIVE._gridList = list;
     grid.querySelectorAll('.live-card').forEach(card => card.addEventListener('click', () => {
@@ -386,7 +391,23 @@
     LIVE.render();
   };
 
+  LIVE.renderDataBasis = function () {
+    const box = document.getElementById('liveDataBasis'); if (!box) return;
+    if (!LIVE.state.hasKpi) { box.style.display = 'none'; return; }
+    box.style.display = '';
+    const f = LIVE.state.filters || {};
+    let period;
+    if (f.start && f.end) period = `${f.start} ~ ${f.end}`;
+    else {
+      const ds = LIVE.applyFilters().map(r => r.date).filter(Boolean).sort();
+      period = ds.length ? `${ds[0]} ~ ${ds[ds.length - 1]} (전체)` : '전체';
+    }
+    box.innerHTML = `📊 <strong>데이터 기준</strong> — 획득 = <strong>Google Ads 전환 + MMP 설치</strong> 합산 · 노출/CPI는 각 매체 원값 · 기간 <strong>${period}</strong> `
+      + `<span title="Google Ads와 MMP를 같은 기간 동시 집행하면 동일 유저가 양쪽에 잡혀 중복 집계될 수 있습니다. 현재 타이틀은 집행 시기가 겹치지 않아 무관합니다." style="cursor:help;border-bottom:1px dotted #1e40af;">ⓘ 합산 주의</span>`;
+  };
+
   LIVE.render = function () {
+    LIVE.renderDataBasis();
     if (!LIVE.state.hasKpi) {
       el('liveChartArea').innerHTML = '<div class="live-empty">이 타이틀은 운영(KPI) 데이터가 없어 추이를 표시할 수 없습니다. 아래 소재 목록과 분석은 확인할 수 있습니다.</div>';
     } else {
