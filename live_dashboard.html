@@ -16,6 +16,17 @@
     .live-filter-group { display:flex; flex-direction:column; gap:4px; font-size:12px; }
     .live-filter-group label { font-weight:600; color: var(--text-secondary,#6b7280); }
     .live-filter-group select { padding:6px 10px; border:1px solid var(--border-default,#e5e7eb); border-radius:8px; font-size:13px; }
+    .live-dd { position: relative; }
+    .live-dd-btn { cursor:pointer; padding:6px 12px; border:1px solid var(--border-default,#e5e7eb); border-radius:8px; background:#fff; font-size:12px; font-weight:600; min-width:88px; text-align:left; }
+    .live-dd-btn.active-filter { border-color: var(--brand-primary,#DC2828); color: var(--brand-primary,#DC2828); }
+    .live-dd-panel { display:none; position:absolute; top:calc(100% + 4px); left:0; z-index:50; background:#fff; border:1px solid var(--border-default,#e5e7eb); border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,.12); padding:10px; min-width:200px; max-width:280px; }
+    .live-dd-panel.open { display:block; }
+    .live-dd-search { width:100%; box-sizing:border-box; font-size:12px; padding:5px 8px; border:1px solid #e5e7eb; border-radius:6px; margin-bottom:8px; }
+    .live-dd-actions { display:flex; gap:6px; margin-bottom:8px; }
+    .live-dd-actions button { cursor:pointer; font-size:11px; font-weight:600; padding:3px 9px; border:1px solid #e5e7eb; border-radius:6px; background:#f9fafb; }
+    .live-dd-list { max-height:220px; overflow-y:auto; display:flex; flex-direction:column; gap:2px; }
+    .live-dd-list label { font-size:12.5px; display:flex; gap:6px; align-items:center; padding:4px; border-radius:4px; cursor:pointer; }
+    .live-dd-list label:hover { background:#f9fafb; }
     .live-chart-card { background:#fff; border:1px solid var(--border-default,#e5e7eb); border-radius:10px; padding:16px; margin-bottom:16px; }
     .live-chart-toolbar { display:flex; gap:8px; align-items:center; margin-bottom:12px; flex-wrap:wrap; }
     .live-metric-btn { cursor:pointer; padding:6px 14px; border:1px solid var(--border-default,#e5e7eb); border-radius:20px; background:#fff; font-size:12px; font-weight:600; }
@@ -91,6 +102,6 @@
 
   <script src="js/data-source.js?v=20260627a"></script>
   <script src="js/layer-metrics.js?v=20260626a"></script>
-  <script src="js/live-dashboard.js?v=20260702a"></script>
+  <script src="js/live-dashboard.js?v=20260702b"></script>
 </body>
 </html>
