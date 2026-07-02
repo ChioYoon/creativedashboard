@@ -26,15 +26,17 @@
 ```
 기존 토큰은 전혀 건드리지 않음 — 순수 추가.
 
+**공통 규칙(link 배치)**: DS 파일 `<link>`는 각 페이지의 로컬 `<style>` 블록보다 **반드시 앞**에 위치해야 한다(캐스케이드 우선순위상 로컬 규칙이 DS 기본값을 이겨야 하므로). 다른 `<link>` 태그들과의 상대 순서는 무관.
+
 ### 2. `index.html`
 
-- `<head>`에 `<link rel="stylesheet" href="assets/ds/colors_and_type.css?v=20260702a">` 추가(다른 `<link>` 앞, `<style>` 블록보다 먼저 — 캐스케이드상 로컬 규칙이 우선하도록).
+- `<head>`에 `<link rel="stylesheet" href="assets/ds/colors_and_type.css?v=20260702a">` 추가(로컬 `<style>` 블록보다 앞).
 - 로컬 `<style>` 내 `:root { ... }` 블록(24개 토큰) 전체 삭제.
 - `.hero`/`.btn-primary`/`.topbar-nav` 등 나머지 클래스는 무변경 — `var(--token)` 참조가 이제 DS 파일에서 값을 받음.
 
 ### 3. `step1_integrated.html`
 
-- `<head>`에 `<link rel="stylesheet" href="assets/ds/colors_and_type.css?v=20260702a">` 추가(`assets/cl-shell.css` 근처).
+- `<head>`에 `<link rel="stylesheet" href="assets/ds/colors_and_type.css?v=20260702a">` 추가(`assets/cl-shell.css` 인접 위치, 로컬 `<style>` 블록보다 앞).
 - 로컬 `<style>` 내 `:root { ... }` 블록(26개 토큰) 전체 삭제.
 - 죽은 CSS 삭제: `.ds-topbar`·`.ds-topbar-logo`·`.ds-topbar-logo svg`·`.ds-topbar-title`·`.ds-topbar-right`·`.ds-topbar-icon-btn`·`.ds-topbar-icon-btn:hover`(74~98줄, 주석 `/* ── Shell Layout ── */` 라인은 `.ds-app-body`용으로 재사용되므로 유지).
 - `.ds-btn-primary`/`.ds-table` 등 자체 컴포넌트 클래스, 인라인 `style=`는 **무변경**(범위 밖).
