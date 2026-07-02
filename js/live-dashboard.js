@@ -211,8 +211,8 @@
 
   // ── Top N 추이 그래프 ───────────────────────────────────────
   const CHART_COLORS = ['#DC2828','#2563eb','#16a34a','#d97706','#7c3aed','#0891b2','#db2777','#65a30d','#ea580c','#4f46e5'];
-  LIVE.renderChart = function () {
-    const agg = LIVE.aggregate(LIVE.applyFilters());
+  LIVE.renderChart = function (agg) {
+    agg = agg || LIVE._agg || LIVE.aggregate(LIVE.applyFilters());
     const area = el('liveChartArea');
     if (!agg.dates.length) { area.innerHTML = '<div class="live-empty">선택한 필터에 해당하는 추이 데이터가 없습니다.</div>'; LIVE.chart = null; return; }
     if (!area.querySelector('canvas')) area.innerHTML = '<canvas id="liveChart"></canvas>';
@@ -245,9 +245,9 @@
   function wireToolbar() {
     document.querySelectorAll('.live-metric-btn[data-metric]').forEach(b => b.addEventListener('click', () => {
       document.querySelectorAll('.live-metric-btn[data-metric]').forEach(x => x.classList.remove('active'));
-      b.classList.add('active'); LIVE.metric = b.dataset.metric; LIVE.renderChart();
+      b.classList.add('active'); LIVE.metric = b.dataset.metric; LIVE.renderChart(LIVE._agg);
     }));
-    el('liveTopN').addEventListener('change', e => { LIVE.topN = +e.target.value; LIVE.renderChart(); });
+    el('liveTopN').addEventListener('change', e => { LIVE.topN = +e.target.value; LIVE.renderChart(LIVE._agg); });
   }
 
   // ── 분석 모달 순수 헬퍼 (step1 미변경 — 복제) ───────────────
@@ -327,8 +327,8 @@
   }
 
   // ── 소재 그리드 (전체 소재, 노출 무관) ─────────────────────
-  LIVE.renderGrid = function () {
-    const agg = LIVE.aggregate(LIVE.applyFilters());   // 필터 기간 획득 배지
+  LIVE.renderGrid = function (agg) {
+    agg = agg || LIVE._agg || LIVE.aggregate(LIVE.applyFilters());   // 필터 기간 획득 배지
     const cellOf = c => agg.perCreative.get(c) || { acq:0, impr:0 };
     const acqOf = c => cellOf(c).acq;
     const list = [...LIVE.state.creatives].sort((a, b) => acqOf(b) - acqOf(a));
@@ -431,7 +431,7 @@
     LIVE.render();
   };
 
-  LIVE.renderDataBasis = function () {
+  LIVE.renderDataBasis = function (agg) {
     const box = document.getElementById('liveDataBasis'); if (!box) return;
     if (!LIVE.state.hasKpi) { box.style.display = 'none'; return; }
     box.style.display = '';
@@ -439,21 +439,23 @@
     let period;
     if (f.start && f.end) period = `${f.start} ~ ${f.end}`;
     else {
-      const ds = LIVE.applyFilters().map(r => r.date).filter(Boolean).sort();
-      period = ds.length ? `${ds[0]} ~ ${ds[ds.length - 1]} (전체)` : '전체';
+      const dates = agg.dates;
+      period = dates.length ? `${dates[0]} ~ ${dates[dates.length - 1]} (전체)` : '전체';
     }
     box.innerHTML = `📊 <strong>데이터 기준</strong> — 획득 = <strong>Google Ads 전환 + MMP 설치</strong> 합산 · 노출/CPI는 각 매체 원값 · 기간 <strong>${period}</strong> `
       + `<span title="Google Ads와 MMP를 같은 기간 동시 집행하면 동일 유저가 양쪽에 잡혀 중복 집계될 수 있습니다. 현재 타이틀은 집행 시기가 겹치지 않아 무관합니다." style="cursor:help;border-bottom:1px dotted #1e40af;">ⓘ 합산 주의</span>`;
   };
 
   LIVE.render = function () {
-    LIVE.renderDataBasis();
+    const agg = LIVE.aggregate(LIVE.applyFilters());
+    LIVE._agg = agg;
+    LIVE.renderDataBasis(agg);
     if (!LIVE.state.hasKpi) {
       el('liveChartArea').innerHTML = '<div class="live-empty">이 타이틀은 운영(KPI) 데이터가 없어 추이를 표시할 수 없습니다. 아래 소재 목록과 분석은 확인할 수 있습니다.</div>';
     } else {
-      LIVE.renderChart();
+      LIVE.renderChart(agg);
     }
-    LIVE.renderGrid();
+    LIVE.renderGrid(agg);
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
