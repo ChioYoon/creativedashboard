@@ -365,7 +365,7 @@
     else {
       // 유튜브·이미지 링크 모두 없을 때만 Drive
       const drive = LIVE.state.driveFolderUrl
-        ? `<div style="margin-top:16px;"><button type="button" onclick="window.open('${LIVE.state.driveFolderUrl.replace(/'/g,"\\'")}','_blank','noopener')" style="cursor:pointer;padding:10px 18px;background:#E84855;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;">📁 Google Drive 폴더에서 소재 찾기</button></div>` : '';
+        ? `<div style="margin-top:16px;"><button type="button" onclick="window.open('${LIVE.state.driveFolderUrl.replace(/'/g,"\\'")}','_blank','noopener')" style="cursor:pointer;padding:10px 18px;background:#DC2828;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;">📁 Google Drive 폴더에서 소재 찾기</button></div>` : '';
       preview = `<div style="padding:28px;background:#f9fafb;border:1.5px dashed #d1d5db;border-radius:12px;text-align:center;color:#6b7280;"><div style="font-size:40px;">📂</div><div style="font-size:13px;font-weight:600;color:#374151;margin-top:8px;">미리보기 링크 없음</div><div style="font-size:11px;font-family:monospace;color:#9ca3af;margin-top:6px;">${escapeHtml(c.파일명 || '-')}</div>${drive}</div>`;
     }
     const w = { meta: c };   // 복제 헬퍼는 creative.meta.* 를 읽음
