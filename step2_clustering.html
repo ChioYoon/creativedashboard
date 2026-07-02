@@ -869,6 +869,25 @@
         </div>
       </div>
 
+      <!-- 군집 트렌드 비교 (시점 간 비교, 클릭 시에만 실행) -->
+      <div class="section">
+        <div class="section-head">
+          <div class="section-icon" style="background:var(--blue);">
+            <i class="fas fa-clock-rotate-left"></i>
+          </div>
+          <h3>군집 트렌드 비교</h3>
+          <span style="margin-left:auto;display:flex;gap:6px;">
+            <button onclick="runClusterTrendCompare(7)" style="padding:5px 12px;border-radius:8px;border:1px solid var(--gray-line,#ddd);font-weight:700;font-size:12px;cursor:pointer;background:var(--gray-bg,#f3f4f6);color:var(--mid,#555);">1주 전</button>
+            <button onclick="runClusterTrendCompare(14)" style="padding:5px 12px;border-radius:8px;border:1px solid var(--gray-line,#ddd);font-weight:700;font-size:12px;cursor:pointer;background:var(--gray-bg,#f3f4f6);color:var(--mid,#555);">2주 전</button>
+            <button onclick="runClusterTrendCompare(30)" style="padding:5px 12px;border-radius:8px;border:1px solid var(--gray-line,#ddd);font-weight:700;font-size:12px;cursor:pointer;background:var(--gray-bg,#f3f4f6);color:var(--mid,#555);">1개월 전</button>
+          </span>
+        </div>
+        <div class="section-body">
+          <div id="clusterTrendStatus" style="font-size:12px;color:var(--gray-text);margin-bottom:8px;"></div>
+          <div id="clusterTrendResult"></div>
+        </div>
+      </div>
+
       <!-- 소재-군집 매핑 테이블 -->
       <div class="section">
         <div class="section-head">
@@ -1806,6 +1825,91 @@ function matchClustersAcrossSnapshots(nowClusters, prevClusters, threshold) {
   const goneClusters = prevClusters.filter((c, i) => !matchedPrevIdx.has(i));
 
   return { matched, goneClusters };
+}
+
+/* ── 군집 트렌드 비교 — 오케스트레이션 + 렌더 ── */
+async function runClusterTrendCompare(daysAgo) {
+  if (!clusterResults || !clusterResults.baseClusters) {
+    showToast('먼저 군집화를 실행하세요.', 'error'); return;
+  }
+  const titleId = _activeTitleId();
+  if (!titleId) { showToast('타이틀 정보를 확인할 수 없습니다.', 'error'); return; }
+
+  const statusEl = document.getElementById('clusterTrendStatus');
+  const resultEl = document.getElementById('clusterTrendResult');
+  statusEl.textContent = '과거 스냅샷 불러오는 중...';
+  resultEl.innerHTML = '';
+
+  const targetDateISO = daysAgoISO(daysAgo);
+
+  try {
+    const prevRows = await fetchHistoricalSnapshot(titleId, targetDateISO);
+    if (!prevRows) {
+      statusEl.textContent = `선택한 시점(${targetDateISO})에 데이터가 없습니다.`;
+      return;
+    }
+
+    const prevResult = await computeClusterResults(prevRows, sessionConfig);
+    const layer = window.currentAnalysisLayer || 'ads';
+    applyLayerToMaterials(prevResult.clusters, layer);   // 오늘과 동일한 활성 레이어로 점수 반영
+
+    const cmp = matchClustersAcrossSnapshots(clusterResults.baseClusters, prevResult.clusters, 0.2);
+    const matchedCount = cmp.matched.filter(m => m.prev).length;
+    const newCount = cmp.matched.filter(m => !m.prev).length;
+    statusEl.textContent = `${targetDateISO} 대비 비교 — 매칭 ${matchedCount}개 · 신규 ${newCount}개 · 소멸 ${cmp.goneClusters.length}개`;
+    resultEl.innerHTML = renderClusterTrendHtml(cmp);
+
+  } catch (err) {
+    console.error(err);
+    statusEl.textContent = '트렌드 비교 중 오류: ' + err.message;
+  }
+}
+
+function renderClusterTrendHtml(cmp) {
+  const matchedPairs = cmp.matched.filter(m => m.prev);
+  const newOnes = cmp.matched.filter(m => !m.prev).map(m => m.now);
+  const goneOnes = cmp.goneClusters;
+
+  const sorted = [...matchedPairs].sort((a, b) =>
+    (b.now.avgScore - b.prev.avgScore) - (a.now.avgScore - a.prev.avgScore));
+  const risers = sorted.filter(m => m.now.avgScore > m.prev.avgScore).slice(0, 5);
+  const fallers = sorted.filter(m => m.now.avgScore < m.prev.avgScore).slice(-5).reverse();
+
+  const deltaRow = (m) => {
+    const delta = Math.round((m.now.avgScore - m.prev.avgScore) * 10) / 10;
+    const color = delta > 0 ? '#059669' : delta < 0 ? 'var(--red)' : 'var(--gray-text)';
+    return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px dashed var(--gray-line);">
+      <span style="flex:1;font-size:12.5px;font-weight:600;color:var(--dark);">${escHtml(m.now.name)}</span>
+      <span style="font-size:10.5px;color:var(--gray-text);white-space:nowrap;">${m.prev.avgScore} → ${m.now.avgScore}</span>
+      <span style="font-size:12px;font-weight:800;min-width:46px;text-align:right;color:${color};">${delta > 0 ? '+' : ''}${delta}</span>
+    </div>`;
+  };
+
+  const summaryCard = `<div class="insight-card fade-in" style="grid-column:1/-1;">
+    <div class="ic-header"><span class="ic-icon">📈</span><span class="ic-title">상승/하락 군집</span></div>
+    <div class="ic-body" style="display:flex;gap:24px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:220px;">
+        <div style="font-size:12px;font-weight:700;color:var(--mid);margin-bottom:6px;">🔼 상승</div>
+        ${risers.length ? risers.map(deltaRow).join('') : '<div style="font-size:11px;color:var(--gray-text);padding:6px 0;">뚜렷한 상승 없음</div>'}
+      </div>
+      <div style="flex:1;min-width:220px;">
+        <div style="font-size:12px;font-weight:700;color:var(--mid);margin-bottom:6px;">🔽 하락</div>
+        ${fallers.length ? fallers.map(deltaRow).join('') : '<div style="font-size:11px;color:var(--gray-text);padding:6px 0;">뚜렷한 하락 없음</div>'}
+      </div>
+    </div>
+  </div>`;
+
+  const listNames = (clusters) => clusters.length ? clusters.map(c => escHtml(c.name)).join(', ') : '없음';
+
+  const newGoneCard = `<div class="insight-card fade-in" style="grid-column:1/-1;">
+    <div class="ic-header"><span class="ic-icon">🆕</span><span class="ic-title">신규 · 소멸 군집</span></div>
+    <div class="ic-body">
+      <div style="margin-bottom:8px;"><strong>신규:</strong> ${listNames(newOnes)}</div>
+      <div><strong>소멸:</strong> ${listNames(goneOnes)}</div>
+    </div>
+  </div>`;
+
+  return `<div class="insight-grid">${summaryCard}${newGoneCard}</div>`;
 }
 
 /* ── 메인 실행 함수 (라이브) ── */
