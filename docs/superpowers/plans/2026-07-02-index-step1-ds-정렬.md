@@ -227,7 +227,7 @@ window.location.href = '/index.html'; 'nav'
   };
 })()
 ```
-Expected: `brandPrimaryVar`가 `#DC2828`(또는 DS 파일이 정의한 값), `clTopbarBg`와 `btnPrimaryBg` 둘 다 `rgb(220, 40, 40)`, `hasLocalRoot`가 `false`, `topbarRuleGone`이 `true`.
+Expected: `brandPrimaryVar`가 `#DC2828`(또는 DS 파일이 정의한 값), `hasLocalRoot`가 `false`, `topbarRuleGone`이 `true`. **정정(Task 2 리뷰에서 확인)**: `clTopbarBg`와 `btnPrimaryBg`는 `rgb(220, 40, 40)`이 아니라 `rgb(255, 255, 255)`가 정상 — `.cl-topbar`는 `background: var(--bg-base, #FFFFFF)`, `.btn-primary`는 `background: var(--bg-base)`(둘 다 흰 배경에 레드 텍스트/보더 스타일)이므로 원래 이 브리프의 기대값이 잘못 작성되었던 것. 실제 코드는 변경 전/후 동일하게 흰색이라 시각적 회귀 없음.
 
 `mcp__Claude_Preview__preview_console_logs`(`level: "error"`)로 콘솔 에러 0 확인.
 
@@ -380,7 +380,7 @@ window.location.href = '/step1_integrated.html'; 'nav'
   };
 })()
 ```
-Expected: `hasLocalRoot: false`, `btnPrimaryBg`와 `clTopbarBg` 둘 다 `rgb(220, 40, 40)`, `dsTopbarRuleGone: true`.
+Expected: `hasLocalRoot: false`, `btnPrimaryBg`가 `rgb(220, 40, 40)`(`.ds-btn-primary`는 `background: var(--brand-primary)`이므로 브랜드 레드), `clTopbarBg`가 `rgb(255, 255, 255)`(`.cl-topbar`는 `background: var(--bg-base, #FFFFFF)`이므로 흰색 — 브랜드 레드 아님, Task 2 리뷰에서 확인된 정정사항), `dsTopbarRuleGone: true`.
 
 `mcp__Claude_Preview__preview_console_logs`(`level: "error"`)로 콘솔 에러 0 확인.
 
