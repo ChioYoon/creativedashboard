@@ -134,7 +134,7 @@
     el('liveDateStart').addEventListener('change', e => { clearPreset(); LIVE.state.filters.start = e.target.value; LIVE.render(); });
     el('liveDateEnd').addEventListener('change', e => { clearPreset(); LIVE.state.filters.end = e.target.value; LIVE.render(); });
 
-    // ── 드롭다운 와이어링 ──
+    // ── 드롭다운 와이어링 (위임 — host는 타이틀 전환 시에도 재사용되므로 1회만 부착) ──
     const updateTriggerLabel = (name) => {
       const btn = host.querySelector(`[data-dd-trigger="${name}"]`);
       if (!btn) return;
@@ -143,31 +143,7 @@
       btn.classList.toggle('active-filter', n > 0);
     };
     const closeAllPanels = () => host.querySelectorAll('.live-dd-panel.open').forEach(p => p.classList.remove('open'));
-    host.querySelectorAll('[data-dd-trigger]').forEach(btn => btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const name = btn.dataset.ddTrigger;
-      const panel = host.querySelector(`[data-dd-panel="${name}"]`);
-      const willOpen = !panel.classList.contains('open');
-      closeAllPanels();
-      if (willOpen) panel.classList.add('open');
-    }));
-    host.querySelectorAll('input[type="checkbox"][data-filter]').forEach(cb => cb.addEventListener('change', () => {
-      const name = cb.dataset.filter;
-      const set = LIVE.state.filters[name];
-      cb.checked ? set.add(cb.value) : set.delete(cb.value);
-      updateTriggerLabel(name);
-      LIVE.render();
-    }));
-    host.querySelectorAll('[data-dd-search]').forEach(inp => inp.addEventListener('input', (e) => {
-      const name = inp.dataset.ddSearch;
-      const q = e.target.value.toLowerCase();
-      host.querySelector(`[data-dd-list="${name}"]`).querySelectorAll('label').forEach(lbl => {
-        lbl.style.display = lbl.textContent.toLowerCase().includes(q) ? '' : 'none';
-      });
-    }));
-    host.querySelectorAll('[data-dd-all]').forEach(b => b.addEventListener('click', () => {
-      const name = b.dataset.ddAll;
-      const select = b.dataset.ddSelect === '1';
+    const setGroupChecked = (name, select) => {
       host.querySelector(`[data-dd-list="${name}"]`).querySelectorAll('label').forEach(lbl => {
         if (lbl.style.display === 'none') return;
         const cb = lbl.querySelector('input'); if (!cb) return;
@@ -176,7 +152,42 @@
       });
       updateTriggerLabel(name);
       LIVE.render();
-    }));
+    };
+    if (!host._ddWired) {
+      host.addEventListener('click', (e) => {
+        const trigger = e.target.closest('[data-dd-trigger]');
+        if (trigger) {
+          e.stopPropagation();
+          const name = trigger.dataset.ddTrigger;
+          const panel = host.querySelector(`[data-dd-panel="${name}"]`);
+          const willOpen = !panel.classList.contains('open');
+          closeAllPanels();
+          if (willOpen) panel.classList.add('open');
+          return;
+        }
+        const allBtn = e.target.closest('[data-dd-all]');
+        if (allBtn) setGroupChecked(allBtn.dataset.ddAll, allBtn.dataset.ddSelect === '1');
+      });
+      host.addEventListener('change', (e) => {
+        const cb = e.target.closest('input[type="checkbox"][data-filter]');
+        if (!cb) return;
+        const name = cb.dataset.filter;
+        const set = LIVE.state.filters[name];
+        cb.checked ? set.add(cb.value) : set.delete(cb.value);
+        updateTriggerLabel(name);
+        LIVE.render();
+      });
+      host.addEventListener('input', (e) => {
+        const inp = e.target.closest('[data-dd-search]');
+        if (!inp) return;
+        const name = inp.dataset.ddSearch;
+        const q = e.target.value.toLowerCase();
+        host.querySelector(`[data-dd-list="${name}"]`).querySelectorAll('label').forEach(lbl => {
+          lbl.style.display = lbl.textContent.toLowerCase().includes(q) ? '' : 'none';
+        });
+      });
+      host._ddWired = true;
+    }
     if (!LIVE._ddOutsideWired) {
       document.addEventListener('click', (e) => {
         if (e.target.closest('.live-dd')) return;
