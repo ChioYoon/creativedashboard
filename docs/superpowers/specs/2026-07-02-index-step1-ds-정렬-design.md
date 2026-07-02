@@ -8,7 +8,7 @@
 
 공식 DS 토큰·컴포넌트 파일은 `assets/ds/colors_and_type.css`이지만, 실제로 이 파일을 `<link>`로 로드하는 페이지는 `step2_clustering.html`·`step2_column_selector.html` 뿐이다.
 
-- **index.html**: `assets/ds/colors_and_type.css` 미로드. 자체 `<style>` 블록에 `:root` 토큰(24개)을 손으로 복제해 사용. `.hero`/`.btn-primary` 등 독자 클래스명.
+- **index.html**: `assets/ds/colors_and_type.css` 미로드. 자체 `<style>` 블록에 `:root` 토큰(24개)을 손으로 복제해 사용. `.hero`/`.btn-primary` 등 독자 클래스명. **추가 확인(plan 작성 중 발견)**: `.topbar`/`.topbar-logo`/`.topbar-sub`/`.topbar-nav`/`.version-badge`(56~93줄, `/* ── Topbar ── */` 주석 포함)도 step1의 `.ds-topbar`와 동일한 패턴 — 실제 헤더는 `cl-topbar`(공유 셸)를 쓰면서 완전히 죽은 코드로 남음(본문 `class=` 참조 0건, grep 재확인).
 - **step1_integrated.html**(7,523줄): 마찬가지로 미로드. 자체 `:root`(26개) 복제 + `.ds-btn-primary`/`.ds-table`/`.ds-topbar` 등 **"ds-" 접두사 클래스를 자체 정의**(이름만 DS처럼 보이고 공식 파일과 무관). `.ds-topbar*`(5개 셀렉터, 74~98줄)는 실제 헤더가 `cl-topbar`(공유 셸, `assets/cl-shell.css`)를 쓰면서 완전히 죽은 코드로 남아있음(본문 `class=` 참조 0건, grep으로 확인).
 - **live_dashboard.html**: 로컬 `:root` 자체가 없고 `var(--brand-primary, #DC2828)` 형태의 미해결 폴백 패턴만 사용 — DS 파일이 없으니 항상 폴백값으로 렌더링됨.
 
@@ -25,7 +25,8 @@
 
 - `<head>`에 `<link rel="stylesheet" href="assets/ds/colors_and_type.css?v=20260702a">` 추가(로컬 `<style>` 블록보다 앞).
 - 로컬 `<style>` 내 `:root { ... }` 블록(24개 토큰) 전체 삭제.
-- `.hero`/`.btn-primary`/`.topbar-nav` 등 나머지 클래스는 무변경 — `var(--token)` 참조가 이제 DS 파일에서 값을 받음.
+- 죽은 CSS 삭제: `.topbar`·`.topbar-logo`·`.topbar-logo svg`·`.topbar-sub`·`.topbar-nav`·`.topbar-nav a`·`.topbar-nav a:hover`·`.topbar-nav a.active`·`.version-badge`(56~93줄, `.ds-topbar`와 동일 근거로 처리 — step1과 같은 카테고리의 이미 확인된 사례).
+- `.hero`/`.btn-primary` 등 실제 사용 중인 나머지 클래스는 무변경 — `var(--token)` 참조가 이제 DS 파일에서 값을 받음.
 
 ### 2. `step1_integrated.html`
 
@@ -56,5 +57,5 @@
 각 페이지 로드 후:
 1. 콘솔 error 0.
 2. `getComputedStyle`로 대표 요소 확인 — 브랜드 레드 배경(`.cl-nav-cta`/`.live-metric-btn.active` 등)이 `rgb(220, 40, 40)`, 카드 배경(각 페이지 카드류)이 변경 전과 동일한지.
-3. step1_integrated.html: `.ds-topbar` 관련 DOM/CSS 잔존 참조 0건 재확인.
+3. index.html/step1_integrated.html: `.topbar`/`.ds-topbar` 관련 DOM/CSS 잔존 참조 0건 재확인.
 4. `pytest` 무회귀(CSS/HTML 변경만이라 영향 없을 것으로 예상, 그래도 실행).
