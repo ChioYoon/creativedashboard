@@ -97,34 +97,6 @@
     }
     .ds-main-content { flex: 1; overflow-y: auto; padding: 20px; }
 
-    /* ── DS 버튼 ── */
-    .ds-btn-primary {
-      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      padding: 10px 16px;
-      background: var(--brand-primary); color: var(--text-on-brand);
-      border: none; border-radius: var(--radius-md);
-      font-family: var(--font-kr); font-size: 14px; font-weight: 700;
-      cursor: pointer; transition: background var(--dur-fast);
-    }
-    .ds-btn-primary:hover { background: var(--brand-primary-hover); }
-    .ds-btn-secondary {
-      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      padding: 8px 14px;
-      background: var(--bg-base); color: var(--brand-primary);
-      border: 1.5px solid var(--brand-primary); border-radius: var(--radius-md);
-      font-family: var(--font-kr); font-size: 13px; font-weight: 600;
-      cursor: pointer; transition: background var(--dur-fast);
-    }
-    .ds-btn-secondary:hover { background: #fff1f1; }
-    .ds-btn-ghost {
-      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-      padding: 6px 12px;
-      background: none; color: var(--text-secondary);
-      border: none; border-radius: var(--radius-md);
-      font-family: var(--font-kr); font-size: 13px; font-weight: 500;
-      cursor: pointer; transition: background var(--dur-fast);
-    }
-    .ds-btn-ghost:hover { background: var(--surface-sink); }
 
     /* ── Sidebar Accordion ── */
     .sb-section { border-bottom: 1px solid var(--hairline-warm); }
@@ -1439,7 +1411,7 @@
                 style="width:100%;height:80px;padding:8px;border:1px solid var(--border-default);
                        border-radius:var(--radius-md);font-size:11px;resize:vertical;
                        font-family:monospace;color:var(--text-primary);"></textarea>
-              <button class="ds-btn-primary" style="width:100%;margin-top:6px;padding:7px;" onclick="processPastedCSV()">불러오기</button>
+              <button class="ds-pill ds-pill--primary" style="width:100%;margin-top:6px;" onclick="processPastedCSV()">불러오기</button>
             </div>
           </div>
         </div>
@@ -1576,7 +1548,7 @@
 
       </div>
       <div class="ds-sidebar-footer">
-        <button class="ds-btn-primary" style="width:100%;" onclick="calculateScores()" title="분석 실행">
+        <button class="ds-pill ds-pill--primary" style="width:100%;" onclick="calculateScores()" title="분석 실행">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           <span class="ds-sidebar-footer-label">분석 실행</span>
         </button>
@@ -1749,8 +1721,8 @@
               <span style="font-size:11px;color:var(--text-secondary);">~</span>
               <input type="date" id="comparisonEnd" class="sb-input" style="width:130px;" onchange="markFatiguePreset(0)">
             </div>
-            <button class="ds-btn-primary" onclick="runFatigueAnalysis()" style="padding:8px 20px;font-size:13px;">적용</button>
-            <button class="ds-btn-ghost" onclick="resetFatigue()">초기화</button>
+            <button class="ds-pill ds-pill--primary" onclick="runFatigueAnalysis()">적용</button>
+            <button class="ds-pill ds-pill--ghost" onclick="resetFatigue()">초기화</button>
           </div>
           <div style="font-size:11.5px;color:var(--text-secondary);padding-bottom:14px;border-bottom:1px solid var(--hairline-warm);margin-bottom:16px;">비교 기간(최근)이 기준 기간(이전)보다 나빠지면 피로도가 높습니다.</div>
         </div>
