@@ -5041,7 +5041,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     }
 
     // Stage 5-J: 결과 표 행 렌더링 (displayScoringResults 최초 렌더 + applyResultSort 재정렬 공용).
-    // riskSignals/dailyMap 은 window 에 보관된 값을 읽어 정렬 재렌더 시 재계산 불필요.
+    // riskSignals 는 window 에 보관된 값을 읽어 정렬 재렌더 시 재계산 불필요.
     // index 는 화면 표시 순서와 동일 → openPreviewModal(index) 가 currentCreatives[index] 와 정합.
     function renderResultTableRows(creatives) {
       const tbody = document.getElementById('tableBody');
