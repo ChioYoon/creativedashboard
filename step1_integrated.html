@@ -2333,6 +2333,15 @@ function updateStatCards(layer) {
   set('statPoor', cs.filter(c => gradeOf(c) === '개선필요').length);
 }
 
+// 활성 데이터의 캠페인 유형(ua_type)에서 전환 기준을 파생. NU-Pre(사전예약)만이면 '사전예약',
+// 그 외/혼합/맵없음이면 '설치'(현행 기본). ADS 레이어 라벨 표기용.
+function detectConversionBasis() {
+  const cc = window.__campaignCanonical || {};
+  const uaTypes = Object.values(cc).map(v => v && v.ua_type).filter(Boolean);
+  if (!uaTypes.length) return '설치';
+  return uaTypes.every(t => t === 'NU-Pre') ? '사전예약' : '설치';
+}
+
 function switchAnalysisLayer(layer) {
   window.currentAnalysisLayer = layer;
 
@@ -2359,9 +2368,10 @@ function switchAnalysisLayer(layer) {
     if (sel)  sel.value = 'mmpscore';
     applyResultSort('mmpscore');
   } else {
-    // Google Ads = 순수 Google Ads 데이터.
+    // Google Ads = 순수 Google Ads 데이터. 전환 기준(사전예약/설치)은 캠페인 유형에서 파생해 표기.
+    const _basis = detectConversionBasis();
     if (hint) hint.innerHTML = `<strong>Google Ads 종합점수</strong> 기준 — Google Ads 매체 · ` +
-      `전환 · CPA · IPM · ROAS <span style="opacity:.7;">(분모=설치)</span> · ${periodTxt} · 현재 집합 상대순위`;
+      `전환(${_basis}) · CPA · IPM · ROAS <span style="opacity:.7;">(분모=${_basis})</span> · ${periodTxt} · 현재 집합 상대순위`;
     if (sel)  sel.value = 'score';
     applyResultSort('score');
   }
