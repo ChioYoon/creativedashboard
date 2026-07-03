@@ -65,8 +65,8 @@
   --text-disabled:   var(--gray-20);   /* #B2B2B2 */
   --text-on-brand:   var(--gray-00);   /* white on red */
 
-  --bg-base:    var(--gray-00);  /* #FFFFFF */
-  --bg-subtle:  var(--gray-05);  /* #E5E5E5 divider surface */
+  --bg-base:    #FEFDFA;         /* 미색 (아주 밝은 warm off-white) */
+  --bg-subtle:  #F7F4EE;         /* 크림 위 divider·표 surface (warm tint) */
   --bg-inverse: var(--gray-90);  /* #000000 */
 
   --border-default: var(--gray-10);  /* #CCCCCC */
@@ -295,7 +295,7 @@
 .ds-table tbody tr:hover { background: var(--surface-soft); }
 .ds-table .num, .ds-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .ds-table .ds-cell-strong { font-weight: var(--fw-bold); }
-.ds-table .ds-cell-key { font-weight: var(--fw-bold); color: var(--brand-primary); font-variant-numeric: tabular-nums; } /* 핵심 수치 강조 */
+.ds-table .ds-cell-key { font-weight: var(--fw-bold); color: var(--brand-primary); font-variant-numeric: tabular-nums; background: rgba(220,40,40,.09); } /* 핵심(최고 성과) 수치 강조 — 빨간 음영 */
 /* 활성/선택 행 — 좌측 Red 인디케이터 (Notion의 primary active를 Red로) */
 .ds-table tr.is-active { background: var(--surface-soft); }
 .ds-table tr.is-active td:first-child { box-shadow: inset 3px 0 0 var(--brand-primary); }
@@ -312,6 +312,69 @@
 .ds-status--live { color: var(--brand-primary); background: rgba(220,40,40,.10); }
 .ds-status--done { color: var(--gray-60); background: var(--bg-subtle); }
 .ds-status--soon { color: var(--gray-50); background: transparent; border: 1px solid var(--border-default); }
+
+/* --- Data Table v2 확장 [확장 권장] : 합계행·인셀바·증감·밀도·스티키 ---
+   참고 Data Table 키트의 구조 패턴(합계 footer, 셀 내 강도바, 정렬/밀도)만 차용,
+   색은 전부 모노 + COM2US Red. 다색 강조·아바타 셀 장식은 미채택. */
+
+/* 합계 / 소계 행 (tfoot) — 상단 굵은 라인 + Red 핵심 수치 */
+.ds-table tfoot td {
+  font-size: 15px; padding: 14px 16px;
+  border-top: 2px solid var(--text-primary); border-bottom: none;
+  background: var(--bg-subtle); white-space: nowrap;
+}
+.ds-table tfoot .ds-foot-label { font-family: var(--font-en); font-weight: var(--fw-bold); letter-spacing: .02em; text-transform: uppercase; font-size: 12px; color: var(--text-secondary); }
+.ds-table tfoot .ds-foot-total { font-family: var(--font-en); font-weight: var(--fw-black); font-size: 19px; letter-spacing: -.01em; color: var(--brand-primary); font-variant-numeric: tabular-nums; }
+.ds-table tfoot td.num { text-align: right; }
+
+/* 셀 내 미니 바 — 수치 + 비율 막대 (강도 시각화). 강조 셀만 Red */
+.ds-cell-meter { display: flex; flex-direction: column; gap: 5px; min-width: 96px; }
+.ds-cell-meter__val { font-family: var(--font-en); font-weight: var(--fw-bold); font-size: 14px; line-height: 1; font-variant-numeric: tabular-nums; color: var(--text-primary); }
+.ds-cell-meter__track { height: 5px; border-radius: var(--radius-full); background: var(--bg-subtle); overflow: hidden; }
+.ds-cell-meter__fill { height: 100%; border-radius: var(--radius-full); background: var(--gray-30); }
+.ds-cell-meter--key .ds-cell-meter__val { color: var(--brand-primary); }
+.ds-cell-meter--key .ds-cell-meter__fill { background: var(--brand-primary); }
+
+/* 증감 표시 — 모노 글리프(▲/▼). 의미는 화살표 방향, 강조는 굵기로 (녹/적 금지) */
+.ds-delta { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-en); font-weight: var(--fw-bold); font-size: 13px; font-variant-numeric: tabular-nums; }
+.ds-delta::before { font-size: 10px; line-height: 1; }
+.ds-delta--up { color: var(--text-primary); }
+.ds-delta--up::before { content: "\25B2"; } /* ▲ */
+.ds-delta--down { color: var(--text-disabled); }
+.ds-delta--down::before { content: "\25BC"; } /* ▼ */
+.ds-delta--flat { color: var(--text-disabled); }
+.ds-delta--flat::before { content: "\2013"; } /* – */
+.ds-delta--key { color: var(--brand-primary); } /* 한 행만 Red 강조 */
+
+/* 밀도 변형 */
+.ds-table--compact th { padding: 8px 12px; }
+.ds-table--compact td { padding: 8px 12px; font-size: 14px; }
+.ds-table--comfortable th { padding: 16px 20px; }
+.ds-table--comfortable td { padding: 18px 20px; }
+
+/* 스크롤 래퍼 + 스티키 헤더 (열·행 많은 표) */
+.ds-table-scroll { overflow: auto; max-height: 100%; }
+.ds-table-scroll .ds-table th { position: sticky; top: 0; z-index: 2; background: var(--bg-subtle); }
+
+/* 그룹/스패닝 헤더 — 2단 헤더의 상위 그룹 라벨 */
+.ds-table th.ds-group-head { text-align: center; border-bottom: 1px solid var(--border-default); color: var(--text-primary); font-weight: var(--fw-bold); }
+
+/* --- 피벗 테이블 [UA 대시보드] : 그룹 계층 · 소계 · 매트릭스 ---
+   캠페인 > 광고세트 > 소재 드릴다운. 계층은 들여쓰기 + 캐럿, 합계는 배경 강도로. */
+.ds-row-group td { background: var(--bg-subtle); font-weight: var(--fw-bold); color: var(--text-primary); }
+.ds-caret { display: inline-block; width: 14px; font-size: 10px; color: var(--gray-40); }
+.ds-indent-1 { padding-left: 38px !important; }
+.ds-indent-2 { padding-left: 62px !important; }
+.ds-row-subtotal td { background: var(--bg-subtle); font-weight: var(--fw-bold); border-top: 1px solid var(--border-default); font-size: 14px; }
+.ds-row-subtotal .ds-sub-label { font-family: var(--font-en); font-weight: var(--fw-bold); font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--text-secondary); }
+
+/* 목표 이탈 셀 — 모노+Red 규율: 색 의미는 Red 하나만 (미달=Red, 정상=모노) */
+.ds-cell-alert { color: var(--brand-primary) !important; font-weight: var(--fw-bold); }
+.ds-cell-alert::after { content: ""; display: block; height: 2px; background: var(--brand-primary); margin-top: 3px; border-radius: 1px; }
+
+/* 소재 썸네일 타일 (실 소재 이미지 스왑 전 플레이스홀더) */
+.ds-thumb { width: 44px; height: 44px; border-radius: var(--radius-sm); background: linear-gradient(135deg, var(--gray-05), var(--gray-20)); display: inline-flex; align-items: center; justify-content: center; font: 700 10px var(--font-en); color: var(--gray-50); letter-spacing: .02em; flex: none; }
+.ds-thumb--video::after { content: "\25B6"; font-size: 12px; color: var(--gray-60); }
 
 /* ============================================================
    Product Selector — [확장 권장 · Notion-inspired, Com2uS-skinned]
