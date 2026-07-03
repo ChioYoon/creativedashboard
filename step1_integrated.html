@@ -1636,7 +1636,6 @@
                 <th class="has-tooltip" data-sortkey="TotalScore" data-sorttype="num" data-tip="총점 기준 등급 · 최우수≥80 / 우수≥60 / 양호≥40">등급 <span class="th-info">?</span></th>
                 <th class="col-pctile has-tooltip" data-tip="풀 대비 백분위 · CTR/CVR/CPA · Google Ads KPI 보유 소재">성과 <span class="th-info">?</span></th>
                 <th class="col-mmp has-tooltip" data-sortkey="__mmpscore" data-sorttype="num" data-tip="소재 품질(MMP) · D1 IPM·D1 CPI·D7 ROAS·D1 잔존 종합">MMP 점수 <span class="th-info">?</span></th>
-                <th class="has-tooltip" data-tip="일별 전환수 추이">추이 <span class="th-info">?</span></th>
               </tr>
             </thead>
             <tbody id="tableBody">
@@ -4938,70 +4937,6 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         </div>`;
     }
 
-    // ──────────────────────────────────────────────
-    // 일별 sparkline 데이터 생성 (v5.1)
-    // ──────────────────────────────────────────────
-    function buildDailySparklineMap(rows, groupBy) {
-      const dateColumn = detectDateColumn(normalizedData.columns);
-      if (!dateColumn) return {};
-      const map = {}; // {key: [{date, 전환, CPA}, ...]}
-      rows.forEach(r => {
-        const key = r[groupBy];
-        if (!key) return;
-        const date = r[dateColumn];
-        if (!date) return;
-        if (!map[key]) map[key] = {};
-        if (!map[key][date]) map[key][date] = {전환:0, 비용:0, 노출수:0};
-        map[key][date].전환 += safeParseNumber(r['전환']);
-        map[key][date].비용 += safeParseNumber(r['비용']);
-        map[key][date].노출수 += safeParseNumber(r['노출수']);
-      });
-      // 정렬된 배열로 변환
-      const result = {};
-      Object.keys(map).forEach(key => {
-        const dailyArr = Object.entries(map[key])
-          .map(([date, v]) => ({
-            date,
-            전환: v.전환,
-            CPA: v.전환 > 0 ? v.비용 / v.전환 : 0,
-            노출수: v.노출수
-          }))
-          .sort((a, b) => a.date.localeCompare(b.date));
-        result[key] = dailyArr;
-      });
-      return result;
-    }
-
-    function buildSparklineSvg(values, opts = {}) {
-      const width = opts.width || 80;
-      const height = opts.height || 22;
-      const stroke = opts.stroke || '#DC2828';
-      const fill = opts.fill || 'rgba(220,40,40,0.15)';
-      if (!values || values.length < 2) {
-        return `<span style="font-size:10px;color:#d1d5db;">—</span>`;
-      }
-      const max = Math.max(...values, 0);
-      const min = Math.min(...values);
-      const range = max - min || 1;
-      const step = width / (values.length - 1);
-      const points = values.map((v, i) => {
-        const x = (i * step).toFixed(1);
-        const y = (height - 2 - ((v - min) / range) * (height - 4)).toFixed(1);
-        return `${x},${y}`;
-      });
-      const polyPoints = points.join(' ');
-      const areaPath = `M0,${height} L${points.join(' L')} L${width},${height} Z`;
-      // 마지막 점 표시
-      const lastIdx = values.length - 1;
-      const lastX = (lastIdx * step).toFixed(1);
-      const lastY = (height - 2 - ((values[lastIdx] - min) / range) * (height - 4)).toFixed(1);
-      return `<svg width="${width}" height="${height}" style="overflow:visible;display:block;">
-        <path d="${areaPath}" fill="${fill}" stroke="none"/>
-        <polyline points="${polyPoints}" fill="none" stroke="${stroke}" stroke-width="1.5"/>
-        <circle cx="${lastX}" cy="${lastY}" r="2" fill="${stroke}"/>
-      </svg>`;
-    }
-
     // 위험 신호 자동 감지 (v5.1)
     // - CPA가 평균의 3배 이상 (이상치)
     // - 노출수>1000인데 전환=0 (학습 부진)
@@ -5113,7 +5048,6 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       if (!tbody) return;
       tbody.innerHTML = '';
       const riskSignals = window._riskSignals || {};
-      const dailyMap = window._dailyMap || {};
       const _statusOvr = loadStatusOverrides();
       const _statusGMax = computeGlobalMaxDate(creatives);
 
@@ -5148,12 +5082,6 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         } else {
           previewHtml = `<span class="preview-placeholder-clickable" onclick="openPreviewModal(${index})" title="소재 상세 정보 보기" style="cursor:pointer; color:#9ca3af; font-size:24px; display:inline-block; padding:8px 12px; border:1.5px dashed #d1d5db; border-radius:8px; transition:all .15s;" onmouseover="this.style.background='#fef2f2'; this.style.borderColor='#DC2828';" onmouseout="this.style.background=''; this.style.borderColor='#d1d5db';">📷</span>`;
         }
-
-        // v5.1: sparkline 셀 (일별 전환수 추이)
-        const dailyData = dailyMap[c.key] || [];
-        const sparkHtml = dailyData.length >= 2
-          ? `<div class="has-tooltip" data-tip="일별 전환수 추이 (${dailyData.length}일)&#10;${dailyData.slice(-7).map(d=>`${d.date.slice(5)}: ${d.전환}건`).join('&#10;')}" style="cursor:help;">${buildSparklineSvg(dailyData.map(d=>d.전환))}</div>`
-          : `<span style="font-size:10px;color:#d1d5db;">—</span>`;
 
         // 레이어별 4지표·총점·등급 (데이터 소스 분리: ads=순수 Google Ads / mmp=순수 MMP)
         const layer = window.currentAnalysisLayer || 'ads';
@@ -5216,7 +5144,6 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td>${gradeCell}</td>
           <td class="col-pctile" style="text-align:left;">${pctileCellHtml(c.meta && c.meta.kpi_percentiles)}</td>
           <td class="col-mmp" style="text-align:center;">${mmpCellHtml(c.meta)}</td>
-          <td style="text-align:center;padding:6px 4px;">${sparkHtml}</td>
         `;
 
         tbody.appendChild(tr);
@@ -5328,14 +5255,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       
       // 위험 신호는 아래 switchAnalysisLayer 가 활성 레이어 기준으로 window._riskSignals 에 산출 (중복 제거)
 
-      // v5.1: 일별 sparkline 데이터
-      const sparkRows = window._lastFilteredRows
-        ? applySimilarMergeMap(window._lastFilteredRows, window._creativeMergeMap, currentGroupBy)
-        : [];
-      const dailyMap = buildDailySparklineMap(sparkRows, currentGroupBy);
-
       // 테이블 데이터 — 실제 행 렌더는 레이어 결정 후 switchAnalysisLayer 가 수행(레이어별 컬럼/값).
-      window._dailyMap = dailyMap;
 
       // Stage 5-J: 풀 백분위 보유 소재가 있을 때만 '성과 백분위' 컬럼 노출.
       const hasPctile = creatives.some(c => c.meta && c.meta.kpi_percentiles &&
@@ -6943,13 +6863,22 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
     function renderModalTrend(creative) {
       const cv = document.getElementById('modalTrendChart');
       if (!cv || typeof Chart === 'undefined') return;
-      const daily = ((creative.meta && creative.meta.kpi_daily) || []).slice()
-        .sort((a, b) => String(a.date).localeCompare(String(b.date)));
-      const labels = daily.map(d => String(d.date).slice(5));
+      const rawDaily = (creative.meta && creative.meta.kpi_daily) || [];
+      // ★ 날짜별 합산 — NU-Pre 등 캠페인 다수면 날짜당 여러 행이므로 date 기준 집계(중복 x축 방지)
+      const byDate = {};
+      for (const r of rawDaily) {
+        const dt = r.date; if (!dt) continue;
+        if (!byDate[dt]) byDate[dt] = { impr: 0, conv: 0, cost: 0 };
+        byDate[dt].impr += Number(r.impressions || 0);
+        byDate[dt].conv += Number(r.conversions || 0);
+        byDate[dt].cost += Number(r.cost || 0);
+      }
+      const dates = Object.keys(byDate).sort();
+      const labels = dates.map(d => String(d).slice(5));
       const series = {
-        '전환': daily.map(d => Number(d.conversions || 0)),
-        '노출': daily.map(d => Number(d.impressions || 0)),
-        'CPA':  daily.map(d => (Number(d.conversions) > 0 ? Math.round(Number(d.cost || 0) / Number(d.conversions)) : null)),
+        '전환': dates.map(d => byDate[d].conv),
+        '노출': dates.map(d => byDate[d].impr),
+        'CPA':  dates.map(d => byDate[d].conv > 0 ? Math.round(byDate[d].cost / byDate[d].conv) : null),
       };
       const btns = document.querySelectorAll('.trend-metric-btn');
       const setActive = (m) => btns.forEach(b => { const on = b.dataset.metric === m; b.style.background = on ? '#DC2828' : '#fff'; b.style.color = on ? '#fff' : '#374151'; });
