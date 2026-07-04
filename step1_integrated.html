@@ -817,6 +817,9 @@
     @media (max-width: 640px) { .mmp-metric-grid { grid-template-columns: repeat(2, 1fr); } }
     /* 결과표 MMP 컬럼 (col-pctile 토글 패턴 동일) */
     #resultTable:not(.show-mmp) .col-mmp { display: none; }
+    /* 목표 렌즈: 사전예약 목표면 매출·ROAS 컬럼 흐리게 (설치·매출 이벤트 없어 무의미) */
+    #resultTable.obj-prereg .col-revenue,
+    #resultTable.obj-prereg .col-roas { opacity: 0.4; }
     .mmp-score-cell { display: inline-block; padding: 2px 9px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: help; white-space: nowrap; }
     /* 분석 레이어 토글 */
     .analysis-layer-bar { display: none; margin-top: 16px; margin-bottom: 4px; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -1626,8 +1629,8 @@
                 <th id="thM1" class="has-tooltip" data-sortkey="전환" data-sorttype="num" data-tip="설치 또는 목표 행동 완료 횟수">전환 <span class="th-info">?</span></th>
                 <th id="thM2" class="has-tooltip" data-sortkey="CPA" data-sorttype="num" data-tip="비용 ÷ 전환수 · 낮을수록 효율적">CPA <span class="th-info">?</span></th>
                 <th id="thM3" class="has-tooltip" data-sortkey="IPM" data-sorttype="num" data-tip="(전환수 ÷ 노출수) × 1,000 · 높을수록 우수">IPM <span class="th-info">?</span></th>
-                <th id="thM4" class="has-tooltip" data-sortkey="ROAS" data-sorttype="num" data-tip="(매출 ÷ 비용) × 100% · Revenue 컬럼 없으면 —">ROAS <span class="th-info">?</span></th>
-                <th class="num has-tooltip" data-sortkey="매출" data-sorttype="num" data-tip="매출 · Google Ads=Revenue / MMP=D7 LTV(D0~D7 누적)">매출 <span class="th-info">?</span></th>
+                <th id="thM4" class="has-tooltip col-roas" data-sortkey="ROAS" data-sorttype="num" data-tip="(매출 ÷ 비용) × 100% · Revenue 컬럼 없으면 —">ROAS <span class="th-info">?</span></th>
+                <th class="num has-tooltip col-revenue" data-sortkey="매출" data-sorttype="num" data-tip="매출 · Google Ads=Revenue / MMP=D7 LTV(D0~D7 누적)">매출 <span class="th-info">?</span></th>
                 <th class="num has-tooltip" data-sortkey="비용" data-sorttype="num" data-tip="광고 비용">비용 <span class="th-info">?</span></th>
                 <th class="num has-tooltip" data-sortkey="노출수" data-sorttype="num" data-tip="노출수">노출수 <span class="th-info">?</span></th>
                 <th class="num has-tooltip" data-sortkey="클릭수" data-sorttype="num" data-tip="클릭수">클릭수 <span class="th-info">?</span></th>
@@ -5151,8 +5154,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td style="text-align: right;">${m1}</td>
           <td style="text-align: right;">${m2}</td>
           <td style="text-align: right;">${m3}</td>
-          <td style="text-align: right; font-weight: 600; color: #1f2937;">${m4}</td>
-          <td style="text-align: right;">${mRev}</td>
+          <td class="col-roas" style="text-align: right; font-weight: 600; color: #1f2937;">${m4}</td>
+          <td class="col-revenue" style="text-align: right;">${mRev}</td>
           <td style="text-align: right;">${mCost}</td>
           <td style="text-align: right;">${mImp}</td>
           <td style="text-align: right;">${mClk}</td>
