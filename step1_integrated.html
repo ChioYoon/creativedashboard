@@ -2341,6 +2341,21 @@ function detectConversionBasis() {
   return uaTypes.every(t => t === 'NU-Pre') ? '사전예약' : '설치';
 }
 
+// 목표(objective) 렌즈 — 결과표 컬럼 dim 제어용. 전환 라벨(데이터 사실)과 분리.
+// 자동감지: 전환기준이 '사전예약'이면 '사전예약', 아니면 '일반'. 수동 오버라이드(__objectiveOverride) 우선.
+function detectObjective() {
+  return detectConversionBasis() === '사전예약' ? '사전예약' : '일반';
+}
+window.__objectiveOverride = null;  // null=자동감지 | '사전예약' | '일반'
+function effectiveObjective() {
+  return window.__objectiveOverride || detectObjective();
+}
+function applyObjectiveClass() {
+  const table = document.getElementById('resultTable');
+  if (!table) return;
+  table.classList.toggle('obj-prereg', effectiveObjective() === '사전예약');
+}
+
 function switchAnalysisLayer(layer) {
   window.currentAnalysisLayer = layer;
 
@@ -2384,6 +2399,8 @@ function switchAnalysisLayer(layer) {
   if (window.currentCreatives && typeof renderTypeSummaryTable === 'function') {
     renderTypeSummaryTable(window.currentCreatives);
   }
+  // 목표 렌즈 dim 적용 (레이어 전환·최초 렌더 모두 이 경로 경유)
+  applyObjectiveClass();
 }
 
 // Stage 5-J: 결과 표를 정렬 기준으로 재정렬 후 행만 재렌더 (currentCreatives 를 in-place 정렬해
