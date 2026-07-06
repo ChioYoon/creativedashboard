@@ -1598,6 +1598,12 @@
             <label style="display:inline-flex;align-items:center;gap:4px;font-size:12px;margin-left:14px;cursor:pointer;">
               <input type="checkbox" id="selectedOnlyToggle"> 선택만 보기 <span id="selectedCount" style="color:#6b7280;"></span>
             </label>
+            <label class="rt-sort-label" style="margin-left:14px;">목표</label>
+            <select id="objectiveSelect" onchange="onObjectiveChange(this.value)" class="rt-select">
+              <option value="auto">자동감지</option>
+              <option value="사전예약">사전예약</option>
+              <option value="일반">일반</option>
+            </select>
           </div>
           <div class="rt-right">
             <button class="rt-btn rt-btn-ai" onclick="runScoringAIInsight()">
@@ -2357,6 +2363,11 @@ function applyObjectiveClass() {
   const table = document.getElementById('resultTable');
   if (!table) return;
   table.classList.toggle('obj-prereg', effectiveObjective() === '사전예약');
+}
+// 목표 셀렉터 변경 핸들러 — 'auto'=자동감지(override 해제), 그 외=수동 오버라이드
+function onObjectiveChange(val) {
+  window.__objectiveOverride = (val === 'auto') ? null : val;
+  applyObjectiveClass();
 }
 
 function switchAnalysisLayer(layer) {
