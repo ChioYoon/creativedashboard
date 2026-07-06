@@ -4752,14 +4752,34 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const validForRoas = creatives.map(c => c.매출 > 0);
 
       let effectiveRoasMode = roasMode;
-      // 자동 모드: 매출 보유 30% 미만 또는 매출 전무 → 재배분
+      // 자동 모드: 사전예약 → ROAS 제외(B) / 매출 전무·30% 미만 → 재배분
       if (roasMode === 'auto') {
-        if (!hasRevenue) {
+        if (typeof detectConversionBasis === 'function' && detectConversionBasis() === '사전예약') {
+          effectiveRoasMode = 'off';                 // B: 사전예약 캠페인은 ROAS 무의미 (Level 2 dim 일치)
+          window._roasMeta.offReason = 'prereg';
+        } else if (!hasRevenue) {
           effectiveRoasMode = 'off';
+          window._roasMeta.offReason = 'norevenue';
         } else if (revenueRatio < 0.3) {
           effectiveRoasMode = 'exclude'; // 매출 있는 소재끼리만 ROAS 평가
         } else {
           effectiveRoasMode = 'strict'; // 매출 충분 → 기존 동작
+        }
+      }
+
+      // C: ROAS 비변별(전원 동점) 감지 → off 로 전환 (수동 모드 포함, 정확성 교정)
+      function roasIsNonDiscriminating(pop) {
+        const vals = pop.map(c => Number(c.ROAS) || 0).sort((a, b) => a - b);
+        for (let i = 1; i < vals.length; i++) {
+          if (Math.abs(vals[i] - vals[i - 1]) >= 0.0001) return false; // 변별 존재
+        }
+        return true; // 전원 tie(비변별)
+      }
+      if (effectiveRoasMode !== 'off' && roasWeight > 0) {
+        const roasPop = (effectiveRoasMode === 'exclude') ? creatives.filter(c => c.매출 > 0) : creatives;
+        if (roasPop.length > 0 && roasIsNonDiscriminating(roasPop)) {
+          effectiveRoasMode = 'off';
+          window._roasMeta.offReason = 'nondiscriminating';
         }
       }
 
