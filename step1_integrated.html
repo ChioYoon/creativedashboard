@@ -1611,6 +1611,10 @@
               AI 인사이트 생성
             </button>
             <span class="gai-key-status rt-key-status"></span>
+            <button class="rt-btn" onclick="exportSummaryReport()">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 17v-6h6v6"/><path d="M4 4h16v16H4z"/><path d="M9 4v4h6V4"/></svg>
+              요약 리포트
+            </button>
             <button class="rt-btn" onclick="exportResultHTML()">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               HTML 추출
@@ -5378,6 +5382,100 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const insightHtml = (box && box.textContent.trim()) ? box.innerHTML : '';
 
       return { titleName, period, layer, kpis, topN, typeRows, insightHtml };
+    }
+
+    // ── 성과 요약 리포트: HTML 렌더 (자체 완결·인쇄용) ──
+    function renderSummaryReportHtml(data) {
+      const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
+      const won = v => (v != null) ? '₩' + Math.round(v).toLocaleString() : '—';
+      const num = v => (v != null) ? Math.round(v).toLocaleString() : '—';
+      const sc  = v => (v != null) ? Number(v).toFixed(1) : '—';
+      const now = new Date();
+      const p2 = n => String(n).padStart(2, '0');
+      const gen = `${now.getFullYear()}-${p2(now.getMonth()+1)}-${p2(now.getDate())} ${p2(now.getHours())}:${p2(now.getMinutes())}`;
+      const gradeStyle = {
+        '최우수': 'background:#dcfce7;color:#15803d;', '우수': 'background:#dbeafe;color:#1d4ed8;',
+        '양호': 'background:#fef9c3;color:#a16207;', '보통': 'background:#f3f4f6;color:#374151;',
+        '개선필요': 'background:#fee2e2;color:#b91c1c;'
+      };
+      const k = data.kpis;
+      const kpiCard = (label, val, color) =>
+        `<div class="kc"><div class="kl">${esc(label)}</div><div class="kv"${color ? ` style="color:${color};"` : ''}>${val}</div></div>`;
+      const kpiHtml = [
+        kpiCard('소재 수', num(k.count)),
+        kpiCard('평균 점수', sc(k.avgScore)),
+        kpiCard('최우수', num(k.excellent), '#15803d'),
+        kpiCard('개선필요', num(k.poor), '#6b7280'),
+        kpiCard(`총 전환(${esc(k.convBasis)})`, num(k.totalConv)),
+      ].join('');
+      const topHtml = data.topN.length ? data.topN.map(t => `
+        <div class="tr">
+          <div class="tt">${t.thumb ? `<img src="${esc(t.thumb)}" alt="">` : esc(t.type)}</div>
+          <div class="tn"><div class="tnm">${esc(t.name)}</div><div class="tms">전환 ${num(t.conv)} · CPA ${won(t.cpa)} · 점수 ${sc(t.score)}</div></div>
+          <span class="gb" style="${gradeStyle[t.grade] || gradeStyle['보통']}">${esc(t.grade || '—')}</span>
+        </div>`).join('') : '<div class="empty">표시할 소재가 없습니다.</div>';
+      const typeHtml = data.typeRows.map(r =>
+        `<tr><td>${esc(r.type)}</td><td class="r">${num(r.count)}</td><td class="r">${sc(r.avgScore)}</td></tr>`).join('');
+      const insightBlock = data.insightHtml
+        ? `<div class="sec"><div class="st">인사이트</div><div class="ins">${data.insightHtml}</div></div>` : '';
+
+      return `<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
+<title>성과 요약 · ${esc(data.titleName)}</title>
+<style>
+  * { box-sizing:border-box; } body { margin:0; font-family:'Noto Sans KR','Pretendard',sans-serif; color:#191919; background:#f4f2ef; }
+  .wrap { max-width:820px; margin:0 auto; padding:24px; }
+  .toolbar { text-align:right; margin-bottom:12px; }
+  .toolbar button { font-size:13px; padding:8px 16px; border:1px solid #DC2828; background:#DC2828; color:#fff; border-radius:8px; cursor:pointer; }
+  .card { background:#fff; border-radius:12px; padding:24px 26px; box-shadow:0 2px 8px rgba(0,0,0,.08); }
+  .hd { display:flex; justify-content:space-between; align-items:baseline; border-bottom:2px solid #e5e5e5; padding-bottom:12px; margin-bottom:18px; }
+  .ht { font-size:20px; font-weight:800; } .hs { font-size:12px; color:#666; margin-top:3px; } .hg { font-size:11px; color:#9ca3af; }
+  .kpis { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:22px; }
+  .kc { background:#faf9f7; border-radius:8px; padding:12px 14px; } .kl { font-size:11px; color:#666; } .kv { font-size:22px; font-weight:800; margin-top:2px; }
+  .sec { margin-bottom:22px; } .st { font-size:14px; font-weight:700; margin-bottom:10px; }
+  .tr { display:flex; align-items:center; gap:12px; background:#faf9f7; border-radius:8px; padding:9px 12px; margin-bottom:8px; }
+  .tt { width:44px; height:44px; border-radius:6px; background:#F4F2EF; overflow:hidden; flex:none; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#9ca3af; }
+  .tt img { width:100%; height:100%; object-fit:cover; } .tn { flex:1; min-width:0; } .tnm { font-size:13px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .tms { font-size:11px; color:#666; margin-top:2px; }
+  .gb { font-size:11px; font-weight:700; padding:3px 10px; border-radius:10px; white-space:nowrap; }
+  table { width:100%; border-collapse:collapse; font-size:13px; } th,td { padding:6px 8px; text-align:left; border-bottom:1px solid #eee; } td.r,th.r { text-align:right; } thead th { color:#666; font-weight:600; }
+  .ins { font-size:13px; color:#374151; line-height:1.6; } .empty { color:#9ca3af; font-size:13px; padding:16px; text-align:center; }
+  .ft { font-size:11px; color:#9ca3af; text-align:center; margin-top:20px; }
+  @media print { body { background:#fff; } .toolbar { display:none; } .card { box-shadow:none; padding:0; } .wrap { padding:0; } }
+</style></head><body>
+<div class="wrap">
+  <div class="toolbar"><button onclick="window.print()">인쇄 / PDF 저장</button></div>
+  <div class="card">
+    <div class="hd"><div><div class="ht">${esc(data.titleName)} 성과 요약</div><div class="hs">${esc(data.period)} · ${esc(data.layer)}</div></div><div class="hg">생성 ${gen}</div></div>
+    <div class="kpis">${kpiHtml}</div>
+    <div class="sec"><div class="st">Top 성과 소재</div>${topHtml}</div>
+    <div class="sec"><div class="st">유형별 요약</div><table><thead><tr><th>유형</th><th class="r">소재 수</th><th class="r">평균 점수</th></tr></thead><tbody>${typeHtml}</tbody></table></div>
+    ${insightBlock}
+    <div class="ft">Com2uS R팀 소재 분석 대시보드 · 내부 참고용</div>
+  </div>
+</div>
+</body></html>`;
+    }
+
+    // ── 성과 요약 리포트: 생성·다운로드 ──
+    function exportSummaryReport() {
+      const creatives = window.currentCreatives;
+      if (!creatives || creatives.length === 0) {
+        alert('분석 결과가 없습니다. 점수 계산을 먼저 실행해 주세요.');
+        return;
+      }
+      const data = buildSummaryReportData(creatives);
+      const html = renderSummaryReportHtml(data);
+      const now = new Date();
+      const p2 = n => String(n).padStart(2, '0');
+      const stamp = `${now.getFullYear()}${p2(now.getMonth()+1)}${p2(now.getDate())}_${p2(now.getHours())}${p2(now.getMinutes())}`;
+      const safeTitle = String(data.titleName).replace(/[\\/:*?"<>|\s]+/g, '').slice(0, 30) || '소재분석';
+      const fileName = `성과요약_${safeTitle}_${stamp}.html`;
+      const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = fileName;
+      document.body.appendChild(a); a.click();
+      setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
+      console.log('요약 리포트 생성: ' + fileName);
     }
 
     // ──────────────────────────────────────────────
