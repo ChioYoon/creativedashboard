@@ -4783,6 +4783,11 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         }
       }
 
+      // 수동 off(제외) 등 사유 미기록 off → 'manual'
+      if (effectiveRoasMode === 'off' && !window._roasMeta.offReason) {
+        window._roasMeta.offReason = 'manual';
+      }
+
       // off 모드 또는 매출 전무 → 가중치 재배분
       if (effectiveRoasMode === 'off' && roasWeight > 0) {
         console.warn('⚠️ ROAS 가중치 자동 재배분 — 모드: ' + roasMode);
@@ -5259,6 +5264,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
               text = `사전예약 캠페인 → ROAS 제외 (전환·CPA·IPM으로 평가)`;
             } else if (rm.offReason === 'nondiscriminating') {
               text = `ROAS 값이 소재 간 변별력 없음 → 제외·재배분 (나머지 3개 지표로 평가)`;
+            } else if (rm.offReason === 'manual') {
+              text = `수동 제외 선택 → ROAS 가중치 재배분 (나머지 3개 지표로 평가)`;
             } else {
               text = `매출 데이터 부재 → ROAS 가중치 자동 재배분 (나머지 3개 지표로 평가)`;
             }
