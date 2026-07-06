@@ -5337,6 +5337,49 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       console.log('✅ 점수 결과 표시 완료');
     }
     
+    // ── 성과 요약 리포트: 데이터 조립 (currentCreatives + 기존 집계 재사용) ──
+    function buildSummaryReportData(creatives) {
+      const cs = creatives || [];
+      const sel = document.getElementById('titleSelector');
+      const titleName = (sel && sel.selectedOptions && sel.selectedOptions[0])
+        ? sel.selectedOptions[0].textContent.trim()
+        : ((sel && sel.value) || '소재분석');
+      const _s = document.getElementById('startDate'), _e = document.getElementById('endDate');
+      const period = (_s && _e && _s.value && _e.value) ? `${_s.value} ~ ${_e.value}` : '전체 기간';
+      const layer = (window.currentAnalysisLayer === 'mmp') ? 'MMP 기준' : 'Google Ads 기준';
+      const convBasis = (typeof detectConversionBasis === 'function') ? detectConversionBasis() : '설치';
+
+      const views = cs.map(c => ({ c, v: creativeLayerView(c) }));
+      const withData = views.filter(x => x.v.hasData);
+      const scores = withData.map(x => x.v.score).filter(s => s != null);
+      const kpis = {
+        count: cs.length,
+        avgScore: scores.length ? (scores.reduce((s, v) => s + v, 0) / scores.length) : null,
+        excellent: withData.filter(x => x.v.grade === '최우수').length,
+        poor: withData.filter(x => x.v.grade === '개선필요').length,
+        totalConv: withData.reduce((s, x) => s + (Number(x.v.전환) || 0), 0),
+        convBasis,
+      };
+
+      const topN = withData.slice()
+        .sort((a, b) => (b.v.score || 0) - (a.v.score || 0))
+        .slice(0, 5)
+        .map(x => ({
+          thumb: x.c.이미지링크 || '', type: x.c.유형 || '',
+          name: x.c.key || '', conv: x.v.전환, cpa: x.v.CPA, score: x.v.score, grade: x.v.grade || '',
+        }));
+
+      const types = (typeof aggregateTypeMetrics === 'function') ? aggregateTypeMetrics(cs) : {};
+      const typeRows = Object.keys(types).map(t => ({
+        type: t, count: types[t].count, avgScore: typeBlended(types[t]).avg,
+      })).sort((a, b) => b.count - a.count);
+
+      const box = document.getElementById('scoringAIBox');
+      const insightHtml = (box && box.textContent.trim()) ? box.innerHTML : '';
+
+      return { titleName, period, layer, kpis, topN, typeRows, insightHtml };
+    }
+
     // ──────────────────────────────────────────────
     // 분석 결과 HTML 추출 (유관부서 공유용)
     // ──────────────────────────────────────────────
