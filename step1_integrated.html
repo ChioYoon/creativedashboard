@@ -5254,7 +5254,14 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           const pct = (rm.revenueRatio * 100).toFixed(0);
           let icon = '[ROAS]', color = '#92400e', bg = '#fffbeb', border = '#fcd34d', text = '';
           if (rm.effectiveMode === 'off') {
-            icon = '[제외]'; text = `매출 데이터 부재 → ROAS 가중치 자동 재배분 (나머지 3개 지표로 평가)`;
+            icon = '[제외]';
+            if (rm.offReason === 'prereg') {
+              text = `사전예약 캠페인 → ROAS 제외 (전환·CPA·IPM으로 평가)`;
+            } else if (rm.offReason === 'nondiscriminating') {
+              text = `ROAS 값이 소재 간 변별력 없음 → 제외·재배분 (나머지 3개 지표로 평가)`;
+            } else {
+              text = `매출 데이터 부재 → ROAS 가중치 자동 재배분 (나머지 3개 지표로 평가)`;
+            }
           } else if (rm.effectiveMode === 'exclude') {
             icon = '[공정]'; text = `매출 보유 ${rm.revenueCount}/${rm.totalCount}개 (${pct}%) → 매출=0 소재 ${rm.excludedFromRoas}개는 ROAS 평가에서 제외 (공정 모드)`;
           } else if (rm.effectiveMode === 'strict') {
