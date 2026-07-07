@@ -5705,7 +5705,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           ${hasCmp ? `<td class="r">${sc(r.scoreBasis)}</td><td class="r" style="font-weight:700;">${sc(r.scoreCur)}</td><td class="r">${pctBadge(r.scoreCur, r.scoreBasis)}</td><td class="r">${num(r.convBasis)}</td><td class="r" style="font-weight:700;">${num(r.convCur)}</td><td class="r">${pctBadge(r.convCur, r.convBasis)}</td>` : ''}
         </tr>`).join('');
       const detailBlock = data.detailRows.length
-        ? `<div class="sec"><div class="st">소재 상세 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(데이터 보유 소재${hasCmp ? ' · 전 기간 비교 포함' : ''})</span></div><div class="dtwrap"><table class="dt"><thead>${dHead}</thead><tbody>${dBody}</tbody></table></div></div>`
+        ? `<div class="sec"><div class="st">소재 상세 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(데이터 보유 소재${hasCmp ? ' · 표시 지표=현재 분석 기간 / 기준·비교 컬럼=보고서 비교 기간' : ''})</span></div><div class="dtwrap"><table class="dt"><thead>${dHead}</thead><tbody>${dBody}</tbody></table></div></div>`
         : '<div class="sec"><div class="st">소재 상세</div><div class="empty">표시할 소재가 없습니다.</div></div>';
 
       return `<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
