@@ -5375,6 +5375,35 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       console.log('✅ 점수 결과 표시 완료');
     }
     
+    // ── 리포트 기간 비교 엔진 (buildFatiguePeriodScores 재사용) ──
+    function computeReportComparison(creatives, curWin, prevWin, layer, weights) {
+      const cur = buildFatiguePeriodScores(creatives, curWin.start, curWin.end, layer, weights);
+      const prev = (prevWin && prevWin.start && prevWin.end)
+        ? buildFatiguePeriodScores(creatives, prevWin.start, prevWin.end, layer, weights) : [];
+      const hasPrev = prev.length > 0;
+      const prevMap = {}; prev.forEach(o => { prevMap[o.key] = o; });
+      const sum = (arr, f) => arr.reduce((s, o) => s + (Number(f(o)) || 0), 0);
+      const avg = (arr, f) => arr.length ? sum(arr, f) / arr.length : 0;
+      const mk = (c, p) => ({ cur: c, prev: p, deltaAbs: c - p, deltaPct: (hasPrev && p) ? (c - p) / p * 100 : null });
+      const kpiDeltas = {
+        전환:   mk(sum(cur, o => o.전환),   sum(prev, o => o.전환)),
+        비용:   mk(sum(cur, o => o.비용),   sum(prev, o => o.비용)),
+        노출수: mk(sum(cur, o => o.노출수), sum(prev, o => o.노출수)),
+        avgScore: mk(avg(cur, o => o.TotalScore), avg(prev, o => o.TotalScore)),
+      };
+      const withDelta = cur.filter(o => prevMap[o.key]).map(o => ({
+        key: o.key, thumb: o.이미지링크 || '', type: o.유형 || '',
+        scoreCur: o.TotalScore, scorePrev: prevMap[o.key].TotalScore, delta: o.TotalScore - prevMap[o.key].TotalScore,
+      }));
+      const risers  = withDelta.filter(x => x.delta > 0).sort((a, b) => b.delta - a.delta).slice(0, 3);
+      const fallers = withDelta.filter(x => x.delta < 0).sort((a, b) => a.delta - b.delta).slice(0, 3);
+      const newcomers = hasPrev
+        ? cur.filter(o => !prevMap[o.key]).sort((a, b) => (b.TotalScore || 0) - (a.TotalScore || 0)).slice(0, 3)
+            .map(o => ({ key: o.key, thumb: o.이미지링크 || '', type: o.유형 || '', scoreCur: o.TotalScore }))
+        : [];
+      return { curWin, prevWin, hasPrev, kpiDeltas, movers: { risers, fallers, newcomers } };
+    }
+
     // ── 성과 요약 리포트: 데이터 조립 (currentCreatives + 기존 집계 재사용) ──
     function buildSummaryReportData(creatives) {
       const cs = creatives || [];
