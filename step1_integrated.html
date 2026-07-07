@@ -5462,6 +5462,34 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       exportSummaryReport(cmp);
     }
 
+    // ── AI 내러티브: 프롬프트 빌더(순수) + Gemini 호출(async) ──
+    function buildReportNarrativePrompt(data) {
+      const k = data.kpis, cmp = data.comparison;
+      const dpct = d => (d && d.deltaPct != null) ? `(전 기간 대비 ${d.deltaAbs >= 0 ? '+' : ''}${Math.round(d.deltaPct)}%)` : '';
+      const L = [];
+      L.push('당신은 컴투스 R마케팅팀의 UA 소재 분석가입니다. 아래 데이터로 주간/월간 보고에 넣을 3~4문장 한국어 코멘트를 작성하세요. 과장 없이 핵심 변화·주목 소재·다음 액션을 담고, 마크다운 없이 평문으로만 쓰세요.');
+      L.push(`타이틀: ${data.titleName} / 기간: ${data.period} / 레이어: ${data.layer}`);
+      L.push(`핵심 지표: 소재 ${k.count}개, 평균 점수 ${k.avgScore == null ? '-' : k.avgScore.toFixed(1)}, 최우수 ${k.excellent}개, 총 전환(${k.convBasis}) ${Math.round(k.totalConv).toLocaleString()}`);
+      if (cmp && cmp.hasPrev) {
+        L.push(`전 기간 대비: 전환 ${Math.round(cmp.kpiDeltas.전환.cur).toLocaleString()} ${dpct(cmp.kpiDeltas.전환)}, 평균점수 ${dpct(cmp.kpiDeltas.avgScore)}`);
+        const names = arr => (arr.map(m => m.key).slice(0, 3).join(', ') || '없음');
+        L.push(`급등: ${names(cmp.movers.risers)} / 급락: ${names(cmp.movers.fallers)} / 신규: ${names(cmp.movers.newcomers)}`);
+      }
+      L.push(`Top 소재: ${data.topN.slice(0, 3).map(t => `${t.name}(점수 ${t.score == null ? '-' : t.score.toFixed(1)})`).join(', ')}`);
+      return L.join('\n');
+    }
+    async function buildReportNarrative(comparison, creatives) {
+      if (typeof GeminiKeyManager === 'undefined' || !GeminiKeyManager.isSet()) return '';
+      try {
+        const data = buildSummaryReportData(creatives, comparison);
+        const prompt = buildReportNarrativePrompt(data);
+        return await callGeminiAPI(prompt, { maxTokens: 500, temperature: 0.6 });
+      } catch (e) {
+        console.warn('AI 코멘트 생성 실패:', e && e.message);
+        return '';
+      }
+    }
+
     // ── 성과 요약 리포트: 데이터 조립 (currentCreatives + 기존 집계 재사용) ──
     function buildSummaryReportData(creatives, comparison) {
       const cs = creatives || [];
