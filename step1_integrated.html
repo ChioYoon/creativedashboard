@@ -5419,7 +5419,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         ? cur.filter(o => !prevMap[o.key]).sort((a, b) => (b.TotalScore || 0) - (a.TotalScore || 0)).slice(0, 3)
             .map(o => ({ key: o.key, thumb: o.이미지링크 || '', type: o.유형 || '', scoreCur: o.TotalScore }))
         : [];
-      return { curWin, prevWin, hasPrev, kpiDeltas, movers: { risers, fallers, newcomers } };
+      return { curWin, prevWin, hasPrev, kpiDeltas, movers: { risers, fallers, newcomers }, cur };
     }
 
     function defaultPrevWindow() {
@@ -5468,28 +5468,68 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       exportSummaryReport(cmp, narrative);
     }
 
+    // ── 태그 코호트 요약(순수): 우수-저효율 차별 강점(lift) + 소재군 성과 ──
+    // scoredList = 리포트 기간 점수 리스트(computeReportComparison.cur), creatives = 태그(meta) 조회용
+    function buildTagCohortSummary(scoredList, creatives) {
+      const list = Array.isArray(scoredList) ? scoredList.filter(o => o && typeof o.TotalScore === 'number') : [];
+      if (list.length < 4) return null; // 코호트 분할 불가(소재 4개 미만)
+      const metaByKey = {};
+      (creatives || []).forEach(c => { if (c && c.key) metaByKey[c.key] = c.meta || {}; });
+      const tagsOf = (key, f) => { const m = metaByKey[key]; return (m && Array.isArray(m[f])) ? m[f] : []; };
+      const sorted = list.slice().sort((a, b) => b.TotalScore - a.TotalScore);
+      const half = Math.floor(sorted.length / 2); // 홀수: 중앙 소재는 양군서 제외
+      const winners = sorted.slice(0, half), losers = sorted.slice(sorted.length - half);
+      const freq = (arr, f) => { const m = new Map(); arr.forEach(o => tagsOf(o.key, f).forEach(s => m.set(s, (m.get(s) || 0) + 1))); return m; };
+      const wStr = freq(winners, 'strengths'), lStr = freq(losers, 'strengths');
+      const diffStrengths = [...wStr.keys()].map(s => {
+        const wr = wStr.get(s) / (winners.length || 1), lr = (lStr.get(s) || 0) / (losers.length || 1);
+        return { tag: s, lift: +(wr - lr).toFixed(2), winCount: wStr.get(s) };
+      }).sort((a, b) => b.lift - a.lift || b.winCount - a.winCount).slice(0, 4);
+      const lWeak = freq(losers, 'weaknesses');
+      const loserWeak = [...lWeak.entries()].map(([tag, cnt]) => ({ tag, count: cnt }))
+        .sort((a, b) => b.count - a.count).slice(0, 4);
+      const typeMap = new Map();
+      sorted.forEach(o => { const t = o.유형 || '기타'; const e = typeMap.get(t) || { sum: 0, n: 0 }; e.sum += o.TotalScore; e.n++; typeMap.set(t, e); });
+      const typePerf = [...typeMap.entries()].map(([type, e]) => ({ type, avg: +(e.sum / e.n).toFixed(1), count: e.n }))
+        .sort((a, b) => b.avg - a.avg);
+      return { k: half, diffStrengths, loserWeak, typePerf };
+    }
+
     // ── AI 내러티브: 프롬프트 빌더(순수) + Gemini 호출(async) ──
-    function buildReportNarrativePrompt(data) {
+    function buildReportNarrativePrompt(data, tags) {
       const k = data.kpis, cmp = data.comparison;
       const dpct = d => (d && d.deltaPct != null) ? `(전 기간 대비 ${d.deltaAbs >= 0 ? '+' : ''}${Math.round(d.deltaPct)}%)` : '';
       const L = [];
-      L.push('당신은 컴투스 R마케팅팀의 UA 소재 분석가입니다. 아래 데이터로 주간/월간 보고에 넣을 3~4문장 한국어 코멘트를 작성하세요. 과장 없이 핵심 변화·주목 소재·다음 액션을 담고, 마크다운 없이 평문으로만 쓰세요.');
-      L.push(`타이틀: ${data.titleName} / 기간: ${data.period} / 레이어: ${data.layer}`);
-      L.push(`핵심 지표: 소재 ${k.count}개, 평균 점수 ${k.avgScore == null ? '-' : k.avgScore.toFixed(1)}, 최우수 ${k.excellent}개, 총 전환(${k.convBasis}) ${Math.round(k.totalConv).toLocaleString()}`);
+      L.push('당신은 컴투스 R마케팅팀의 UA 소재 분석가입니다. 아래 데이터로 주간/월간 보고에 넣을 코멘트를 작성하세요.');
+      L.push('작성 규칙: (1) 개조식 보고체 — 각 줄을 명사형/음슴체로 끝내는 짧은 불릿. (2) 아래 4개 섹션을 순서대로 사용하고, 섹션 제목 줄은 "■ "로 시작. (3) 각 섹션 2~3줄, 불릿 줄은 " - "로 시작. (4) 마크다운(**, ##)·서론·맺음말 금지, 섹션 제목과 불릿 줄만 출력. (5) 데이터 근거로만 작성, 과장 금지, 태그 인용 시 작은따옴표.');
+      L.push('섹션(제목 그대로 사용): ■ 핵심 변화 / ■ 우수 요소 (저효율 대비) / ■ 성과 좋은 소재군 / ■ 부진 요인·다음 액션');
+      L.push('');
+      L.push(`[데이터] 타이틀: ${data.titleName} / 기간: ${data.period} / 레이어: ${data.layer}`);
+      L.push(`핵심 지표: 소재 ${k.count}개, 평균 점수 ${k.avgScore == null ? '-' : k.avgScore.toFixed(1)}, 최우수 ${k.excellent}개, 개선필요 ${k.poor}개, 총 전환(${k.convBasis}) ${Math.round(k.totalConv).toLocaleString()}`);
       if (cmp && cmp.hasPrev) {
         L.push(`전 기간 대비: 전환 ${Math.round(cmp.kpiDeltas.전환.cur).toLocaleString()} ${dpct(cmp.kpiDeltas.전환)}, 평균점수 ${dpct(cmp.kpiDeltas.avgScore)}`);
         const names = arr => (arr.map(m => m.key).slice(0, 3).join(', ') || '없음');
         L.push(`급등: ${names(cmp.movers.risers)} / 급락: ${names(cmp.movers.fallers)} / 신규: ${names(cmp.movers.newcomers)}`);
       }
       L.push(`Top 소재: ${data.topN.slice(0, 3).map(t => `${t.name}(점수 ${t.score == null ? '-' : t.score.toFixed(1)})`).join(', ')}`);
+      if (tags) {
+        const ds = tags.diffStrengths.map(d => `'${d.tag}'(lift ${d.lift >= 0 ? '+' : ''}${d.lift})`).join(', ');
+        L.push(`우수-저효율 차별 강점 태그[lift = 우수군 출현율 − 저효율군 출현율, 높을수록 우수군 고유 요소]: ${ds || '없음'}`);
+        L.push(`저효율 공통 약점 태그: ${tags.loserWeak.map(w => `'${w.tag}'(${w.count}건)`).join(', ') || '없음'}`);
+        L.push(`유형별 평균 점수: ${tags.typePerf.map(t => `${t.type} ${t.avg}(${t.count}개)`).join(', ')}`);
+        L.push('해석 지침: lift가 0에 가까운 태그는 양 군 공통이라 차별 요소 아님(기본 요건). lift 높은 태그를 우수 요소로 강조. 유형별 평균 격차로 성과 좋은 소재군 제시.');
+      } else {
+        L.push('태그 데이터 부족(소재 4개 미만) — 요소 인사이트는 지표 기반으로만 간략히.');
+      }
       return L.join('\n');
     }
     async function buildReportNarrative(comparison, creatives) {
       if (typeof GeminiKeyManager === 'undefined' || !GeminiKeyManager.isSet()) return '';
       try {
         const data = buildSummaryReportData(creatives, comparison);
-        const prompt = buildReportNarrativePrompt(data);
-        return await callGeminiAPI(prompt, { maxTokens: 500, temperature: 0.6 });
+        const tags = buildTagCohortSummary(comparison && comparison.cur, creatives);
+        const prompt = buildReportNarrativePrompt(data, tags);
+        return await callGeminiAPI(prompt, { maxTokens: 800, temperature: 0.6 });
       } catch (e) {
         console.warn('AI 코멘트 생성 실패:', e && e.message);
         return '';
@@ -5623,7 +5663,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
   <div class="card">
     <div class="hd"><div><div class="ht">${esc(data.titleName)} 성과 요약</div><div class="hs">${esc(data.period)} · ${esc(data.layer)}${(data.comparison && data.comparison.hasPrev && data.comparison.prevWin) ? ` · 전 기간 ${esc(data.comparison.prevWin.start)}~${esc(data.comparison.prevWin.end)}` : ''}</div></div><div class="hg">생성 ${gen}</div></div>
     <div class="kpis">${kpiHtml}</div>
-    ${data.narrative ? `<div class="sec"><div class="st">AI 코멘트</div><div class="ins">${esc(data.narrative).replace(/\n/g, '<br>')}</div></div>` : ''}
+    ${data.narrative ? `<div class="sec"><div class="st">AI 코멘트</div><div class="ins">${esc(data.narrative).split('\n').map(ln => /^\s*■/.test(ln) ? `<b>${ln}</b>` : ln).join('<br>')}</div></div>` : ''}
     <div class="sec"><div class="st">Top 성과 소재</div>${topHtml}</div>
     ${moverBlock}
     <div class="sec"><div class="st">유형별 요약</div><table><thead><tr><th>유형</th><th class="r">소재 수</th><th class="r">평균 점수</th></tr></thead><tbody>${typeHtml}</tbody></table></div>
