@@ -5907,34 +5907,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
 
       /* ── 소재별 상세 행 (미리보기 + 상세컬럼) ── */
       const detailRows = creatives.map((c, i) => {
-        const imageUrl = c.meta?.['링크'] || c.이미지링크 || c.meta?.['image_url'] || '';
-        const isVideo  = (c.유형||'').toUpperCase() === 'VID';
-        const hasImg   = imageUrl && imageUrl.startsWith('http');
-
-        // 미리보기 셀
-        let previewCell = '';
-        if (isVideo) {
-          if (hasImg) {
-            // 영상 링크가 있으면 썸네일+플레이 오버레이
-            previewCell = `<div style="position:relative;width:80px;height:54px;display:inline-block;cursor:pointer;" onclick="window.open('${imageUrl}','_blank')">
-              <img src="${imageUrl}" style="width:80px;height:54px;object-fit:cover;border-radius:6px;" onerror="this.parentNode.innerHTML='<div style=\\'width:80px;height:54px;background:#F4F2EF;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#666;\\'>VID</div>'">
-              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
-                <div style="width:26px;height:26px;background:rgba(0,0,0,.55);border-radius:50%;display:flex;align-items:center;justify-content:center;">
-                  <span style="color:#fff;font-size:12px;margin-left:2px;">▶</span>
-                </div>
-              </div>
-            </div>`;
-          } else {
-            previewCell = `<div style="width:80px;height:54px;background:#F4F2EF;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#666;cursor:default;">VID</div>`;
-          }
-        } else if (hasImg) {
-          previewCell = `<a href="${imageUrl}" target="_blank" title="원본 이미지 열기">
-            <img src="${imageUrl}" style="width:80px;height:54px;object-fit:cover;border-radius:6px;display:block;"
-                 onerror="this.parentNode.innerHTML='<div style=\\'width:80px;height:54px;background:#F4F2EF;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#999;\\'>IMG</div>'">
-          </a>`;
-        } else {
-          previewCell = `<div style="width:80px;height:54px;background:#F4F2EF;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#999;">—</div>`;
-        }
+        const previewCell = creativeThumbHtml(c.meta?.['링크'] || c.이미지링크 || c.meta?.['image_url'] || '', c.유형, 80, 54);
 
         const v   = creativeLayerView(c);
         const gs  = gradeStyle[v.grade] || 'background:#f3f4f6;color:#374151;';
@@ -6142,16 +6115,7 @@ img { display:block; }
       const avoidHtml = avoid.length ? avoid.map(a => `<span class="tag tag-bad">${esc(a.s)}</span>`).join('') : '<span class="none">두드러진 공통 약점 없음 — 양호</span>';
 
       // 썸네일 (이미지/영상 · 폴백)
-      const thumb = (c) => {
-        const u = c.meta?.['링크'] || c.이미지링크 || c.meta?.['image_url'] || '';
-        const isVid = (c.유형 || '').toUpperCase() === 'VID';
-        const ok = u && u.startsWith('http');
-        if (ok) {
-          const play = isVid ? `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;"><div style="width:24px;height:24px;background:rgba(0,0,0,.55);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;">▶</div></div>` : '';
-          return `<div style="position:relative;width:96px;height:64px;flex:none;"><img src="${u}" style="width:96px;height:64px;object-fit:cover;border-radius:8px;display:block;" onerror="this.style.display='none'">${play}</div>`;
-        }
-        return `<div style="width:96px;height:64px;background:#F4F2EF;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#999;">${isVid ? 'VID' : 'IMG'}</div>`;
-      };
+      const thumb = (c) => creativeThumbHtml(c.meta?.['링크'] || c.이미지링크 || c.meta?.['image_url'] || '', c.유형, 96, 64);
 
       // 우수 소재 + 추가 실험 제안 카드 — "이 소재가 [강점]으로 잘 됐으니, [요소]를 더해 A/B 테스트"
       const winnerCards = winners.slice(0, 5).map(c => {
