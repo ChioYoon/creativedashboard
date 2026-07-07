@@ -5154,7 +5154,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         // 썸네일 HTML 생성
         let previewHtml = '';
         if (isVideo) {
-          previewHtml = `<div class="preview-video" onclick="openPreviewModal(${index})"></div>`;
+          previewHtml = (yt => `<div class="preview-video"${yt ? ` style="background:linear-gradient(rgba(0,0,0,.30),rgba(0,0,0,.30)),url('${yt}'),linear-gradient(135deg,#DC2828 0%,#FF6B6B 100%);background-size:cover;background-position:center;"` : ''} onclick="openPreviewModal(${index})"></div>`)(youtubeThumb(imageUrl));
         } else if (hasImage) {
           previewHtml = `<img src="${imageUrl}" class="preview-thumbnail" onclick="openPreviewModal(${index})" alt="미리보기">`;
         } else {
@@ -5599,21 +5599,26 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       return { titleName, period, layer, kpis, topN, typeRows, insightHtml, comparison: comparison || null, narrative: narrative || '' };
     }
 
+    // ── YouTube 영상 썸네일 URL 추출 (watch / youtu.be / embed / shorts → hqdefault) ──
+    function youtubeThumb(url) {
+      const m = String(url || '').match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
+      return m ? `https://img.youtube.com/vi/${m[1]}/hqdefault.jpg` : '';
+    }
+
     // ── 소재 썸네일 셀(공용): 영상=YouTube 썸네일, 이미지=원본, 둘 다 클릭 링크(새 탭), 로드 실패 시 아이콘 폴백 ──
     function creativeThumbHtml(url, type, w, h) {
       const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
       const u = String(url || '');
       const t = String(type || '').toUpperCase();
       const isVid = t === 'VID';
-      const ym = u.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
-      const yid = ym ? ym[1] : '';
-      const isImg = /^https?:\/\//.test(u) && !yid;
+      const yThumb = youtubeThumb(u);
+      const isImg = /^https?:\/\//.test(u) && !yThumb;
       const box = `width:${w}px;height:${h}px;border-radius:6px;flex:none;`;
       const label = esc(t || (isVid ? 'VID' : 'IMG')) || '—';
       const fs = Math.max(9, Math.round(h / 4.5));
       const iconBox = `<div style="${box}background:#F4F2EF;display:flex;align-items:center;justify-content:center;font-size:${fs}px;font-weight:700;color:#999;">${label}</div>`;
-      if (!yid && !isImg) return iconBox;
-      const src = yid ? `https://img.youtube.com/vi/${yid}/hqdefault.jpg` : esc(u);
+      if (!yThumb && !isImg) return iconBox;
+      const src = yThumb || esc(u);
       const ph = `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:${fs}px;font-weight:700;color:#999;">${label}</div>`;
       const img = `<img src="${src}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'">`;
       const pd = Math.round(h * 0.4);
@@ -6953,7 +6958,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         let previewHtml = '';
         if (isVideo) {
           // 동영상: 플레이 버튼 표시
-          previewHtml = `<div class="preview-video" onclick="showFatigueModal('${r.key.replace(/'/g, "\\'")}', '${r.유형}', '${imageUrl.replace(/'/g, "\\'")}', ${r.baselineCPA}, ${r.comparisonCPA})"></div>`;
+          previewHtml = (yt => `<div class="preview-video"${yt ? ` style="background:linear-gradient(rgba(0,0,0,.30),rgba(0,0,0,.30)),url('${yt}'),linear-gradient(135deg,#DC2828 0%,#FF6B6B 100%);background-size:cover;background-position:center;"` : ''} onclick="showFatigueModal('${r.key.replace(/'/g, "\\'")}', '${r.유형}', '${imageUrl.replace(/'/g, "\\'")}', ${r.baselineCPA}, ${r.comparisonCPA})"></div>`)(youtubeThumb(imageUrl));
         } else if (hasImage) {
           // 이미지: 실제 이미지 표시
           previewHtml = `<img src="${imageUrl}" class="preview-thumbnail" onclick="showFatigueModal('${r.key.replace(/'/g, "\\'")}', '${r.유형}', '${imageUrl.replace(/'/g, "\\'")}', ${r.baselineCPA}, ${r.comparisonCPA})" alt="미리보기">`;
