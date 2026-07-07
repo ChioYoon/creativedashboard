@@ -5451,7 +5451,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       document.getElementById('reportDialog').style.display = 'flex';
     }
     function closeReportDialog() { document.getElementById('reportDialog').style.display = 'none'; }
-    function generateSummaryReport() {
+    async function generateSummaryReport() {
       const s = document.getElementById('startDate')?.value, e = document.getElementById('endDate')?.value;
       const ps = document.getElementById('reportPrevStart').value, pe = document.getElementById('reportPrevEnd').value;
       const layer = window.currentAnalysisLayer || 'ads';
@@ -5459,7 +5459,13 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const prevWin = (ps && pe) ? { start: ps, end: pe } : null;
       const cmp = computeReportComparison(window.currentCreatives, curWin, prevWin, layer, getReportWeights());
       closeReportDialog();
-      exportSummaryReport(cmp);
+      let narrative = '';
+      if (typeof GeminiKeyManager !== 'undefined' && GeminiKeyManager.isSet()) {
+        showLoadingIndicator('AI 코멘트 생성 중...');
+        try { narrative = await buildReportNarrative(cmp, window.currentCreatives); }
+        finally { hideLoadingIndicator(); }
+      }
+      exportSummaryReport(cmp, narrative);
     }
 
     // ── AI 내러티브: 프롬프트 빌더(순수) + Gemini 호출(async) ──
@@ -5491,7 +5497,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     }
 
     // ── 성과 요약 리포트: 데이터 조립 (currentCreatives + 기존 집계 재사용) ──
-    function buildSummaryReportData(creatives, comparison) {
+    function buildSummaryReportData(creatives, comparison, narrative) {
       const cs = creatives || [];
       const sel = document.getElementById('titleSelector');
       const titleName = (sel && sel.selectedOptions && sel.selectedOptions[0])
@@ -5530,7 +5536,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const box = document.getElementById('scoringAIBox');
       const insightHtml = (box && box.textContent.trim()) ? box.innerHTML : '';
 
-      return { titleName, period, layer, kpis, topN, typeRows, insightHtml, comparison: comparison || null };
+      return { titleName, period, layer, kpis, topN, typeRows, insightHtml, comparison: comparison || null, narrative: narrative || '' };
     }
 
     // ── 성과 요약 리포트: HTML 렌더 (자체 완결·인쇄용) ──
@@ -5617,6 +5623,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
   <div class="card">
     <div class="hd"><div><div class="ht">${esc(data.titleName)} 성과 요약</div><div class="hs">${esc(data.period)} · ${esc(data.layer)}${(data.comparison && data.comparison.hasPrev && data.comparison.prevWin) ? ` · 전 기간 ${esc(data.comparison.prevWin.start)}~${esc(data.comparison.prevWin.end)}` : ''}</div></div><div class="hg">생성 ${gen}</div></div>
     <div class="kpis">${kpiHtml}</div>
+    ${data.narrative ? `<div class="sec"><div class="st">AI 코멘트</div><div class="ins">${esc(data.narrative).replace(/\n/g, '<br>')}</div></div>` : ''}
     <div class="sec"><div class="st">Top 성과 소재</div>${topHtml}</div>
     ${moverBlock}
     <div class="sec"><div class="st">유형별 요약</div><table><thead><tr><th>유형</th><th class="r">소재 수</th><th class="r">평균 점수</th></tr></thead><tbody>${typeHtml}</tbody></table></div>
@@ -5628,13 +5635,13 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     }
 
     // ── 성과 요약 리포트: 생성·다운로드 ──
-    function exportSummaryReport(comparison) {
+    function exportSummaryReport(comparison, narrative) {
       const creatives = window.currentCreatives;
       if (!creatives || creatives.length === 0) {
         alert('분석 결과가 없습니다. 점수 계산을 먼저 실행해 주세요.');
         return;
       }
-      const data = buildSummaryReportData(creatives, comparison);
+      const data = buildSummaryReportData(creatives, comparison, narrative);
       const html = renderSummaryReportHtml(data);
       const now = new Date();
       const p2 = n => String(n).padStart(2, '0');
