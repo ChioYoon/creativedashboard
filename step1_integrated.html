@@ -1615,7 +1615,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 17v-6h6v6"/><path d="M4 4h16v16H4z"/><path d="M9 4v4h6V4"/></svg>
               요약 리포트
             </button>
-            <button class="rt-btn" onclick="exportResultHTML()">
+            <button class="rt-btn" onclick="openReportDialog('html')">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               HTML 추출
             </button>
@@ -1767,7 +1767,7 @@
 
   <div id="reportDialog" style="display:none; position:fixed; inset:0; z-index:1200; background:rgba(0,0,0,.45); align-items:center; justify-content:center;">
     <div style="background:#fff; border-radius:12px; padding:22px 24px; width:360px; max-width:92vw; box-shadow:0 12px 40px rgba(0,0,0,.2);">
-      <div style="font-size:16px; font-weight:700; margin-bottom:14px;">요약 리포트 생성</div>
+      <div id="reportDialogTitle" style="font-size:16px; font-weight:700; margin-bottom:14px;">요약 리포트 생성</div>
       <div style="font-size:12px; color:#6b7280; margin-bottom:4px;">현재 기간</div>
       <div id="reportCurPeriod" style="font-size:13px; font-weight:600; margin-bottom:14px;">—</div>
       <div style="font-size:12px; color:#6b7280; margin-bottom:4px;">비교(전) 기간</div>
@@ -1778,7 +1778,7 @@
       </div>
       <div style="display:flex; gap:8px; justify-content:flex-end;">
         <button onclick="closeReportDialog()" style="font-size:13px; padding:8px 16px; border:1px solid #e5e7eb; background:#fff; border-radius:8px; cursor:pointer;">취소</button>
-        <button onclick="generateSummaryReport()" style="font-size:13px; padding:8px 16px; border:none; background:#DC2828; color:#fff; border-radius:8px; cursor:pointer;">생성</button>
+        <button onclick="generateReport()" style="font-size:13px; padding:8px 16px; border:none; background:#DC2828; color:#fff; border-radius:8px; cursor:pointer;">생성</button>
       </div>
     </div>
   </div>
@@ -5438,11 +5438,14 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const tot = (c + p + i + r) || 1;
       return { conv: c / tot, cpa: p / tot, ipm: i / tot, roas: r / tot };
     }
-    function openReportDialog() {
+    function openReportDialog(kind) {
       if (!window.currentCreatives || !window.currentCreatives.length) {
         alert('분석 결과가 없습니다. 점수 계산을 먼저 실행해 주세요.');
         return;
       }
+      window._reportKind = (kind === 'html') ? 'html' : 'summary';
+      const titleEl = document.getElementById('reportDialogTitle');
+      if (titleEl) titleEl.textContent = (window._reportKind === 'html') ? 'HTML 추출 (기간 비교)' : '요약 리포트 생성';
       const s = document.getElementById('startDate')?.value, e = document.getElementById('endDate')?.value;
       document.getElementById('reportCurPeriod').textContent = (s && e) ? `${s} ~ ${e}` : '전체 기간';
       const pw = defaultPrevWindow();
@@ -5466,6 +5469,23 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         finally { hideLoadingIndicator(); }
       }
       exportSummaryReport(cmp, narrative);
+    }
+
+    // ── 리포트 생성 디스패처 (다이얼로그 '생성' → 종류별 분기) ──
+    function generateReport() {
+      if (window._reportKind === 'html') generateResultHtmlReport();
+      else generateSummaryReport();
+    }
+    // ── HTML 추출: 기간 비교 계산 후 exportResultHTML 호출 ──
+    function generateResultHtmlReport() {
+      const s = document.getElementById('startDate')?.value, e = document.getElementById('endDate')?.value;
+      const ps = document.getElementById('reportPrevStart').value, pe = document.getElementById('reportPrevEnd').value;
+      const layer = window.currentAnalysisLayer || 'ads';
+      const curWin = { start: s, end: e };
+      const prevWin = (ps && pe) ? { start: ps, end: pe } : null;
+      const cmp = computeReportComparison(window.currentCreatives, curWin, prevWin, layer, getReportWeights());
+      closeReportDialog();
+      exportResultHTML(cmp);
     }
 
     // ── 태그 코호트 요약(순수): 우수-저효율 차별 강점(lift) + 소재군 성과 ──
