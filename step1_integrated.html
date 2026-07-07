@@ -5419,7 +5419,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         ? cur.filter(o => !prevMap[o.key]).sort((a, b) => (b.TotalScore || 0) - (a.TotalScore || 0)).slice(0, 3)
             .map(o => ({ key: o.key, thumb: o.이미지링크 || '', type: o.유형 || '', scoreCur: o.TotalScore }))
         : [];
-      return { curWin, prevWin, hasPrev, kpiDeltas, movers: { risers, fallers, newcomers }, cur };
+      return { curWin, prevWin, hasPrev, kpiDeltas, movers: { risers, fallers, newcomers }, cur, prev };
     }
 
     function defaultPrevWindow() {
@@ -5720,7 +5720,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     // ──────────────────────────────────────────────
     // 분석 결과 HTML 추출 (유관부서 공유용)
     // ──────────────────────────────────────────────
-    function exportResultHTML() {
+    function exportResultHTML(comparison) {
       const creatives = window.currentCreatives;
       if (!creatives || creatives.length === 0) {
         alert('분석 결과가 없습니다. 점수 계산을 먼저 실행해 주세요.');
@@ -5779,6 +5779,45 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const avgScore  = scoredV.length ? (scoredV.reduce((s,x)=>s+x.v.score,0)/scoredV.length).toFixed(1) : '—';
       const excellent = scoredV.filter(x => x.v.grade === '최우수').length;
       const poor      = scoredV.filter(x => x.v.grade === '개선필요').length;
+
+      /* ── Phase 3: 기간 비교(점수·전환 기준/비교/변화율 + 델타 헤더) ── */
+      const hasCmp = !!(comparison && comparison.hasPrev);
+      const curByKey = {}, prevByKey = {};
+      if (hasCmp) {
+        (comparison.cur  || []).forEach(o => { curByKey[o.key]  = o; });
+        (comparison.prev || []).forEach(o => { prevByKey[o.key] = o; });
+      }
+      // 소재 셀용: 상승=녹/하락=적(점수·전환 모두 높을수록 개선). 기준 0/누락 → —
+      const pctBadge = (cur, prev) => {
+        if (cur == null || prev == null || prev === 0) return '<span style="color:#9ca3af;">—</span>';
+        const p = (cur - prev) / prev * 100, up = p >= 0;
+        return `<span style="color:${up ? '#15803d' : '#b91c1c'};font-weight:700;">${up ? '▲ +' : '▼ '}${Math.round(p)}%</span>`;
+      };
+      // 델타 헤더 배지: neutral=true(비용)는 가치판단 없이 회색
+      const deltaBadge = (dd, neutral) => {
+        if (!dd || dd.deltaPct == null) return '<span style="color:#9ca3af;font-size:11px;">전 기간 데이터 없음</span>';
+        const up = dd.deltaAbs >= 0;
+        const col = neutral ? '#666666' : (up ? '#15803d' : '#b91c1c');
+        return `<span style="color:${col};font-weight:700;font-size:12px;">${up ? '▲ +' : '▼ '}${Math.round(dd.deltaPct)}%</span>`;
+      };
+      const dcard = (label, dd, fmtv, neutral) => `
+        <div style="padding:12px 16px;border-right:1px solid #eee;">
+          <div style="font-size:11px;color:#666;margin-bottom:4px;">${label}</div>
+          <div style="font-size:18px;font-weight:800;">${dd ? fmtv(dd.cur) : '—'}</div>
+          <div style="margin-top:3px;">${deltaBadge(dd, neutral)}</div>
+        </div>`;
+      const kpiDeltaHeader = hasCmp ? `
+        <div style="margin:0 0 20px;border:1px solid #E5E5E5;border-radius:12px;overflow:hidden;">
+          <div style="padding:10px 16px;background:#F4F2EF;border-bottom:1px solid #CCCCCC;font-weight:700;font-size:13px;">
+            전 기간 대비 <span style="font-weight:500;color:#666;">(기준 기간: ${comparison.prevWin.start} ~ ${comparison.prevWin.end})</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);">
+            ${dcard('전환', comparison.kpiDeltas.전환, v => Math.round(v).toLocaleString(), false)}
+            ${dcard('비용', comparison.kpiDeltas.비용, v => '₩' + Math.round(v).toLocaleString(), true)}
+            ${dcard('노출수', comparison.kpiDeltas.노출수, v => Math.round(v).toLocaleString(), false)}
+            ${dcard('평균 점수', comparison.kpiDeltas.avgScore, v => Number(v).toFixed(1), false)}
+          </div>
+        </div>` : '';
 
       /* ── 필터 조건 요약 추출 (접기) ── */
       const fsEl = document.querySelector('#filterSummarySlot .filter-summary');
@@ -5907,6 +5946,20 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;">${sc(v.s3)}</td>
           <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;">${sc(v.s4)}</td>
           <td style="padding:8px;text-align:right;vertical-align:middle;font-size:14px;font-weight:800;color:#DC2828;">${v.score==null?'<span style="color:#9ca3af;">—</span>':v.score.toFixed(1)}</td>
+          ${hasCmp ? (() => {
+            const co = curByKey[c.key], po = prevByKey[c.key];
+            const cS = co ? co.TotalScore : null, pS = po ? po.TotalScore : null;
+            const cC = co ? co.전환 : null, pC = po ? po.전환 : null;
+            const s1 = x => x == null ? '<span style="color:#9ca3af;">—</span>' : Number(x).toFixed(1);
+            const n1 = x => x == null ? '<span style="color:#9ca3af;">—</span>' : Math.round(x).toLocaleString();
+            return `
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;color:#666;">${s1(pS)}</td>
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;font-weight:700;">${s1(cS)}</td>
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;">${pctBadge(cS, pS)}</td>
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;color:#666;">${n1(pC)}</td>
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;font-weight:700;">${n1(cC)}</td>
+          <td style="padding:8px;text-align:right;vertical-align:middle;font-size:12px;">${pctBadge(cC, pC)}</td>`;
+          })() : ''}
           <td style="padding:8px;text-align:center;vertical-align:middle;">
             ${v.grade ? `<span style="display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;${gs}">${v.grade}</span>` : '<span style="color:#9ca3af;">—</span>'}
           </td>
@@ -5962,6 +6015,9 @@ img { display:block; }
     <div class="stat-card stat-card-poor"><div class="stat-label">저조 소재</div><div class="stat-value">${poor}</div><div class="stat-sub">개선필요 등급</div></div>
   </div>
 
+  <!-- 전 기간 대비 델타 헤더 (Phase 3) -->
+  ${kpiDeltaHeader}
+
   <!-- 필터 조건 -->
   ${filterHtml}
 
@@ -5970,7 +6026,7 @@ img { display:block; }
 
   <!-- 소재 상세 테이블 -->
   <div class="detail-wrap">
-    <div class="detail-header">소재별 점수 상세 (미리보기 포함)</div>
+    <div class="detail-header">소재별 점수 상세 (미리보기 포함)${hasCmp ? ` · 전 기간 대비 (${comparison.prevWin.start}~${comparison.prevWin.end})` : ''}</div>
     <div style="overflow-x:auto;">
       <table>
         <thead><tr>
@@ -5991,6 +6047,13 @@ img { display:block; }
           <th style="text-align:right;">${LBL.s3}</th>
           <th style="text-align:right;">${LBL.s4}</th>
           <th style="text-align:right;">${LBL.score}</th>
+          ${hasCmp ? `
+          <th style="text-align:right;">점수(기준)</th>
+          <th style="text-align:right;">점수(비교)</th>
+          <th style="text-align:right;">점수 변화</th>
+          <th style="text-align:right;">전환(기준)</th>
+          <th style="text-align:right;">전환(비교)</th>
+          <th style="text-align:right;">전환 변화</th>` : ''}
           <th style="text-align:center;">등급</th>
           ${showPctile ? '<th style="text-align:left;min-width:120px;">성과 백분위</th>' : ''}
         </tr></thead>
