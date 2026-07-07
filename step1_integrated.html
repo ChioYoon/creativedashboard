@@ -5693,7 +5693,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const dHead = `<tr><th class="l">미리보기</th><th class="l">소재명</th><th>유형</th><th class="r">전환</th><th class="r">비용</th><th class="r">CTR</th><th class="r">CPA</th><th class="r">ROAS</th><th class="r">종합점수</th><th>등급</th>${hasCmp ? '<th class="r">점수(기준)</th><th class="r">점수(비교)</th><th class="r">점수 변화</th><th class="r">전환(기준)</th><th class="r">전환(비교)</th><th class="r">전환 변화</th>' : ''}</tr>`;
       const dBody = data.detailRows.map(r => `<tr>
           <td class="l">${creativeThumbHtml(r.thumb, r.type, 64, 42)}</td>
-          <td class="l" style="max-width:180px;white-space:normal;word-break:break-all;">${esc(r.name)}</td>
+          <td class="l"><div style="min-width:140px;max-width:190px;white-space:normal;overflow-wrap:anywhere;line-height:1.35;">${esc(r.name)}</div></td>
           <td>${esc(r.type)}</td>
           <td class="r">${num(r.conv)}</td>
           <td class="r">${won(r.cost)}</td>
