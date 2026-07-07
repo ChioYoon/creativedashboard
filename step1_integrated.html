@@ -5596,7 +5596,26 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const box = document.getElementById('scoringAIBox');
       const insightHtml = (box && box.textContent.trim()) ? box.innerHTML : '';
 
-      return { titleName, period, layer, kpis, topN, typeRows, insightHtml, comparison: comparison || null, narrative: narrative || '' };
+      // 통합 보고서: 소재 상세표 rows (레이어 데이터 보유 소재만) + 비교값(기준/비교) 매칭
+      const _thumbUrl = c => c.meta?.['링크'] || c.이미지링크 || c.meta?.['image_url'] || '';
+      const _cur = (comparison && comparison.cur) || [], _prev = (comparison && comparison.prev) || [];
+      const _curByKey = {}; _cur.forEach(o => { _curByKey[o.key] = o; });
+      const _prevByKey = {}; _prev.forEach(o => { _prevByKey[o.key] = o; });
+      const detailRows = withData.map(({ c, v }) => {
+        const co = _curByKey[c.key], po = _prevByKey[c.key];
+        const ctr = (v.노출수 > 0 && v.클릭수 != null) ? (v.클릭수 / v.노출수 * 100) : null;
+        return {
+          thumb: _thumbUrl(c), name: c.key || '', type: c.유형 || '',
+          conv: v.전환, cost: v.비용, ctr, cpa: v.CPA, roas: v.ROAS, score: v.score, grade: v.grade || '',
+          scoreBasis: po ? po.TotalScore : null, scoreCur: co ? co.TotalScore : null,
+          convBasis: po ? po.전환 : null, convCur: co ? co.전환 : null,
+        };
+      });
+      // 통합 보고서: 필터 조건 요약(현재 슬롯 innerHTML 그대로)
+      const _fs = document.getElementById('filterSummarySlot');
+      const filterHtml = (_fs && _fs.textContent.trim()) ? _fs.innerHTML : '';
+
+      return { titleName, period, layer, kpis, topN, typeRows, insightHtml, comparison: comparison || null, narrative: narrative || '', detailRows, filterHtml };
     }
 
     // ── YouTube 영상 썸네일 URL 추출 (watch / youtu.be / embed / shorts → hqdefault) ──
@@ -5683,8 +5702,38 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const insightBlock = data.insightHtml
         ? `<div class="sec"><div class="st">인사이트</div><div class="ins">${data.insightHtml}</div></div>` : '';
 
+      // 통합 보고서: 필터 요약 섹션
+      const filterBlock = data.filterHtml
+        ? `<div class="sec"><div class="st">필터 조건 요약</div>${data.filterHtml}</div>` : '';
+      // 통합 보고서: 소재 상세표 (핵심 컬럼 + 비교 6컬럼)
+      const hasCmp = !!(cmp && cmp.hasPrev);
+      const pctBadge = (cur, prev) => {
+        if (cur == null || prev == null || prev === 0) return '<span style="color:#9ca3af;">—</span>';
+        const p = (cur - prev) / prev * 100, up = p >= 0;
+        return `<span style="color:${up ? '#15803d' : '#b91c1c'};font-weight:700;">${up ? '▲ +' : '▼ '}${Math.round(p)}%</span>`;
+      };
+      const roasF = v => v != null ? Math.round(v * 100) + '%' : '—';
+      const ctrF = v => v != null ? Number(v).toFixed(2) + '%' : '—';
+      const dHead = `<tr><th class="l">미리보기</th><th class="l">소재명</th><th>유형</th><th class="r">전환</th><th class="r">비용</th><th class="r">CTR</th><th class="r">CPA</th><th class="r">ROAS</th><th class="r">종합점수</th><th>등급</th>${hasCmp ? '<th class="r">점수(기준)</th><th class="r">점수(비교)</th><th class="r">점수 변화</th><th class="r">전환(기준)</th><th class="r">전환(비교)</th><th class="r">전환 변화</th>' : ''}</tr>`;
+      const dBody = data.detailRows.map(r => `<tr>
+          <td class="l">${creativeThumbHtml(r.thumb, r.type, 64, 42)}</td>
+          <td class="l" style="max-width:180px;white-space:normal;word-break:break-all;">${esc(r.name)}</td>
+          <td>${esc(r.type)}</td>
+          <td class="r">${num(r.conv)}</td>
+          <td class="r">${won(r.cost)}</td>
+          <td class="r">${ctrF(r.ctr)}</td>
+          <td class="r">${won(r.cpa)}</td>
+          <td class="r">${roasF(r.roas)}</td>
+          <td class="r" style="font-weight:800;color:#DC2828;">${sc(r.score)}</td>
+          <td><span class="gb" style="${gradeStyle[r.grade] || gradeStyle['보통']}">${esc(r.grade || '—')}</span></td>
+          ${hasCmp ? `<td class="r">${sc(r.scoreBasis)}</td><td class="r" style="font-weight:700;">${sc(r.scoreCur)}</td><td class="r">${pctBadge(r.scoreCur, r.scoreBasis)}</td><td class="r">${num(r.convBasis)}</td><td class="r" style="font-weight:700;">${num(r.convCur)}</td><td class="r">${pctBadge(r.convCur, r.convBasis)}</td>` : ''}
+        </tr>`).join('');
+      const detailBlock = data.detailRows.length
+        ? `<div class="sec"><div class="st">소재 상세 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(데이터 보유 소재${hasCmp ? ' · 전 기간 비교 포함' : ''})</span></div><div class="dtwrap"><table class="dt"><thead>${dHead}</thead><tbody>${dBody}</tbody></table></div></div>`
+        : '<div class="sec"><div class="st">소재 상세</div><div class="empty">표시할 소재가 없습니다.</div></div>';
+
       return `<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
-<title>성과 요약 · ${esc(data.titleName)}</title>
+<title>성과 보고서 · ${esc(data.titleName)}</title>
 <style>
   * { box-sizing:border-box; } body { margin:0; font-family:'Noto Sans KR','Pretendard',sans-serif; color:#191919; background:#f4f2ef; }
   .wrap { max-width:820px; margin:0 auto; padding:24px; }
@@ -5699,7 +5748,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
   .tr { display:flex; align-items:center; gap:12px; background:#faf9f7; border-radius:8px; padding:9px 12px; margin-bottom:8px; }
   .tn { flex:1; min-width:0; } .tnm { font-size:13px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .tms { font-size:11px; color:#666; margin-top:2px; }
   .gb { font-size:11px; font-weight:700; padding:3px 10px; border-radius:10px; white-space:nowrap; }
-  table { width:100%; border-collapse:collapse; font-size:13px; } th,td { padding:6px 8px; text-align:left; border-bottom:1px solid #eee; } td.r,th.r { text-align:right; } thead th { color:#666; font-weight:600; }
+  table { width:100%; border-collapse:collapse; font-size:13px; } th,td { padding:6px 8px; text-align:left; border-bottom:1px solid #eee; } td.r,th.r { text-align:right; } td.l,th.l { text-align:left; } thead th { color:#666; font-weight:600; }
+  .dtwrap { overflow-x:auto; } .dt { font-size:12px; white-space:nowrap; } .dt td, .dt th { padding:6px 8px; }
   .ins { font-size:13px; color:#374151; line-height:1.6; } .empty { color:#9ca3af; font-size:13px; padding:16px; text-align:center; }
   .ft { font-size:11px; color:#9ca3af; text-align:center; margin-top:20px; }
   @media print { body { background:#fff; } .toolbar { display:none; } .card { box-shadow:none; padding:0; } .wrap { padding:0; } }
@@ -5707,12 +5757,14 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
 <div class="wrap">
   <div class="toolbar"><button onclick="window.print()">인쇄 / PDF 저장</button></div>
   <div class="card">
-    <div class="hd"><div><div class="ht">${esc(data.titleName)} 성과 요약</div><div class="hs">${esc(data.period)} · ${esc(data.layer)}${(data.comparison && data.comparison.hasPrev && data.comparison.prevWin) ? ` · 전 기간 ${esc(data.comparison.prevWin.start)}~${esc(data.comparison.prevWin.end)}` : ''}</div></div><div class="hg">생성 ${gen}</div></div>
+    <div class="hd"><div><div class="ht">${esc(data.titleName)} 성과 보고서</div><div class="hs">${esc(data.period)} · ${esc(data.layer)}${(data.comparison && data.comparison.hasPrev && data.comparison.prevWin) ? ` · 전 기간 ${esc(data.comparison.prevWin.start)}~${esc(data.comparison.prevWin.end)}` : ''}</div></div><div class="hg">생성 ${gen}</div></div>
     <div class="kpis">${kpiHtml}</div>
     ${data.narrative ? `<div class="sec"><div class="st">AI 코멘트</div><div class="ins">${esc(data.narrative).split('\n').map(ln => /^\s*■/.test(ln) ? `<b>${ln}</b>` : ln).join('<br>')}</div></div>` : ''}
     <div class="sec"><div class="st">Top 성과 소재</div>${topHtml}</div>
     ${moverBlock}
     <div class="sec"><div class="st">유형별 요약</div><table><thead><tr><th>유형</th><th class="r">소재 수</th><th class="r">평균 점수</th></tr></thead><tbody>${typeHtml}</tbody></table></div>
+    ${filterBlock}
+    ${detailBlock}
     ${insightBlock}
     <div class="ft">Com2uS R팀 소재 분석 대시보드 · 내부 참고용</div>
   </div>
@@ -5733,14 +5785,14 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const p2 = n => String(n).padStart(2, '0');
       const stamp = `${now.getFullYear()}${p2(now.getMonth()+1)}${p2(now.getDate())}_${p2(now.getHours())}${p2(now.getMinutes())}`;
       const safeTitle = String(data.titleName).replace(/[\\/:*?"<>|\s]+/g, '').slice(0, 30) || '소재분석';
-      const fileName = `성과요약_${safeTitle}_${stamp}.html`;
+      const fileName = `보고서_${safeTitle}_${stamp}.html`;
       const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url; a.download = fileName;
       document.body.appendChild(a); a.click();
       setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1000);
-      console.log('요약 리포트 생성: ' + fileName);
+      console.log('통합 보고서 생성: ' + fileName);
     }
 
     // ──────────────────────────────────────────────
