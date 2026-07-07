@@ -5405,7 +5405,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     }
 
     // ── 성과 요약 리포트: 데이터 조립 (currentCreatives + 기존 집계 재사용) ──
-    function buildSummaryReportData(creatives) {
+    function buildSummaryReportData(creatives, comparison) {
       const cs = creatives || [];
       const sel = document.getElementById('titleSelector');
       const titleName = (sel && sel.selectedOptions && sel.selectedOptions[0])
@@ -5444,7 +5444,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const box = document.getElementById('scoringAIBox');
       const insightHtml = (box && box.textContent.trim()) ? box.innerHTML : '';
 
-      return { titleName, period, layer, kpis, topN, typeRows, insightHtml };
+      return { titleName, period, layer, kpis, topN, typeRows, insightHtml, comparison: comparison || null };
     }
 
     // ── 성과 요약 리포트: HTML 렌더 (자체 완결·인쇄용) ──
@@ -5462,15 +5462,37 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         '개선필요': 'background:#fee2e2;color:#b91c1c;'
       };
       const k = data.kpis;
-      const kpiCard = (label, val, color) =>
-        `<div class="kc"><div class="kl">${esc(label)}</div><div class="kv"${color ? ` style="color:${color};"` : ''}>${val}</div></div>`;
+      const cmp = data.comparison;
+      const deltaBadge = (d) => {
+        if (!d || d.deltaPct == null) return '';
+        const up = d.deltaAbs >= 0;
+        const col = up ? '#15803d' : '#b91c1c';
+        const sign = up ? '+' : '';
+        return `<div class="kd" style="color:${col};">${up ? '▲' : '▼'} ${sign}${Math.round(d.deltaAbs).toLocaleString()} (${sign}${d.deltaPct.toFixed(0)}%)</div>`;
+      };
+      const kpiCard = (label, val, color, delta) =>
+        `<div class="kc"><div class="kl">${esc(label)}</div><div class="kv"${color ? ` style="color:${color};"` : ''}>${val}</div>${delta || ''}</div>`;
       const kpiHtml = [
         kpiCard('소재 수', num(k.count)),
-        kpiCard('평균 점수', sc(k.avgScore)),
+        kpiCard('평균 점수', sc(k.avgScore), null, cmp ? deltaBadge(cmp.kpiDeltas.avgScore) : ''),
         kpiCard('최우수', num(k.excellent), '#15803d'),
         kpiCard('개선필요', num(k.poor), '#6b7280'),
-        kpiCard(`총 전환(${esc(k.convBasis)})`, num(k.totalConv)),
+        kpiCard(`총 전환(${esc(k.convBasis)})`, num(k.totalConv), null, cmp ? deltaBadge(cmp.kpiDeltas.전환) : ''),
       ].join('');
+      const moverRow = (m, tag, tagColor) => `
+        <div class="tr">
+          <div class="tt">${m.thumb ? `<img src="${esc(m.thumb)}" alt="">` : esc(m.type)}</div>
+          <div class="tn"><div class="tnm">${esc(m.key)}</div><div class="tms">점수 ${sc(m.scorePrev)} → ${sc(m.scoreCur)}${m.delta != null ? ` (${m.delta >= 0 ? '+' : ''}${sc(m.delta)})` : ''}</div></div>
+          <span class="gb" style="${tagColor}">${tag}</span>
+        </div>`;
+      const moverBlock = (cmp && cmp.hasPrev)
+        ? `<div class="sec"><div class="st">주목할 소재 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(전 기간 대비)</span></div>${
+            [...cmp.movers.risers.map(m => moverRow(m, '급등', 'background:#dcfce7;color:#15803d;')),
+             ...cmp.movers.fallers.map(m => moverRow(m, '급락', 'background:#fee2e2;color:#b91c1c;')),
+             ...cmp.movers.newcomers.map(m => moverRow({ ...m, scorePrev: null, delta: null }, '신규', 'background:#dbeafe;color:#1d4ed8;'))
+            ].join('') || '<div class="empty">변화가 두드러진 소재가 없습니다.</div>'
+          }</div>`
+        : '';
       const topHtml = data.topN.length ? data.topN.map(t => `
         <div class="tr">
           <div class="tt">${t.thumb ? `<img src="${esc(t.thumb)}" alt="">` : esc(t.type)}</div>
@@ -5493,7 +5515,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
   .hd { display:flex; justify-content:space-between; align-items:baseline; border-bottom:2px solid #e5e5e5; padding-bottom:12px; margin-bottom:18px; }
   .ht { font-size:20px; font-weight:800; } .hs { font-size:12px; color:#666; margin-top:3px; } .hg { font-size:11px; color:#9ca3af; }
   .kpis { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:22px; }
-  .kc { background:#faf9f7; border-radius:8px; padding:12px 14px; } .kl { font-size:11px; color:#666; } .kv { font-size:22px; font-weight:800; margin-top:2px; }
+  .kc { background:#faf9f7; border-radius:8px; padding:12px 14px; } .kl { font-size:11px; color:#666; } .kv { font-size:22px; font-weight:800; margin-top:2px; } .kd { font-size:11px; font-weight:700; margin-top:3px; }
   .sec { margin-bottom:22px; } .st { font-size:14px; font-weight:700; margin-bottom:10px; }
   .tr { display:flex; align-items:center; gap:12px; background:#faf9f7; border-radius:8px; padding:9px 12px; margin-bottom:8px; }
   .tt { width:44px; height:44px; border-radius:6px; background:#F4F2EF; overflow:hidden; flex:none; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#9ca3af; }
@@ -5507,9 +5529,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
 <div class="wrap">
   <div class="toolbar"><button onclick="window.print()">인쇄 / PDF 저장</button></div>
   <div class="card">
-    <div class="hd"><div><div class="ht">${esc(data.titleName)} 성과 요약</div><div class="hs">${esc(data.period)} · ${esc(data.layer)}</div></div><div class="hg">생성 ${gen}</div></div>
+    <div class="hd"><div><div class="ht">${esc(data.titleName)} 성과 요약</div><div class="hs">${esc(data.period)} · ${esc(data.layer)}${(data.comparison && data.comparison.hasPrev && data.comparison.prevWin) ? ` · 전 기간 ${esc(data.comparison.prevWin.start)}~${esc(data.comparison.prevWin.end)}` : ''}</div></div><div class="hg">생성 ${gen}</div></div>
     <div class="kpis">${kpiHtml}</div>
     <div class="sec"><div class="st">Top 성과 소재</div>${topHtml}</div>
+    ${moverBlock}
     <div class="sec"><div class="st">유형별 요약</div><table><thead><tr><th>유형</th><th class="r">소재 수</th><th class="r">평균 점수</th></tr></thead><tbody>${typeHtml}</tbody></table></div>
     ${insightBlock}
     <div class="ft">Com2uS R팀 소재 분석 대시보드 · 내부 참고용</div>
@@ -5519,13 +5542,13 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     }
 
     // ── 성과 요약 리포트: 생성·다운로드 ──
-    function exportSummaryReport() {
+    function exportSummaryReport(comparison) {
       const creatives = window.currentCreatives;
       if (!creatives || creatives.length === 0) {
         alert('분석 결과가 없습니다. 점수 계산을 먼저 실행해 주세요.');
         return;
       }
-      const data = buildSummaryReportData(creatives);
+      const data = buildSummaryReportData(creatives, comparison);
       const html = renderSummaryReportHtml(data);
       const now = new Date();
       const p2 = n => String(n).padStart(2, '0');
