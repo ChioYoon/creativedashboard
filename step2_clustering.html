@@ -1973,10 +1973,11 @@ function _materialLayerVals(m, layer) {
   if (layer === 'mmp') {
     const r = m.row || m._firstRow || {};   // cluster material 은 원본 행을 m.row 에 보관
     const qs = r.mmp_quality_score;
-    // 알려진 gap(별건): 등록 기준 타이틀(convBasis='사전예약')은 전환=mmp_conversions·CPA/IPM 등록 기준이어야 하나
-    //   step2 클러스터 경로는 아직 설치 기준(mmp_installs·D1). MMP 전환 후속 Phase에서 대응.
+    // 점수는 파이프라인 사전계산값(qs.total). 등록 기준 타이틀(convBasis='사전예약')은 전환=등록수(mmp_conversions);
+    //   CPA·IPM은 파이프라인이 이미 등록 기준으로 mmp_d1_cpi(비용/등록)·mmp_d1_ipm(등록/노출)에 저장, ROAS는 해당 없음.
+    const isReg = !!(qs && qs.convBasis === '사전예약');
     return { score: (qs && qs.total != null) ? qs.total : 0,
-             전환: r.mmp_installs ?? 0, CPA: r.mmp_d1_cpi ?? 0, IPM: r.mmp_d1_ipm ?? 0, ROAS: r.mmp_d7_roas ?? 0 };
+             전환: (isReg ? r.mmp_conversions : r.mmp_installs) ?? 0, CPA: r.mmp_d1_cpi ?? 0, IPM: r.mmp_d1_ipm ?? 0, ROAS: r.mmp_d7_roas ?? 0 };
   }
   const a = m._ads || {};
   return { score: a.score ?? 0, 전환: a.전환 ?? 0, CPA: a.CPA ?? 0, IPM: a.IPM ?? 0, ROAS: a.ROAS ?? 0 };
