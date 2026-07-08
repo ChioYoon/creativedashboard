@@ -48,10 +48,22 @@ def aggregate_creative_mmp(daily: list) -> dict:
     return {name: aggregate_rows_total(rows) for name, rows in by_name.items()}
 
 
-def compute_mmp_quality(agg: dict) -> dict:
-    """한 소재의 집계 dict → 4 품질지표. 0 분모는 None (cost·impressions=0 → '—')."""
+def compute_mmp_quality(agg: dict, conversion_basis: str = "install") -> dict:
+    """한 소재의 집계 dict → 4 품질지표. 0 분모는 None (cost·impressions=0 → '—').
+
+    conversion_basis='registration'(웹 사전예약): 전환축을 등록(conversions)으로.
+      d1_ipm=등록IPM(등록/노출×1000), d1_cpi=CPA(비용/등록), d1_retention·d7_roas=None(N/A).
+    'install'(기본): 기존 설치 기반 4지표.
+    """
     impressions = agg.get("impressions", 0)
     cost = agg.get("cost", 0)
+
+    if conversion_basis == "registration":
+        conversions = agg.get("conversions", 0)
+        reg_ipm: Optional[float] = (conversions / impressions) * 1000 if impressions > 0 else None
+        cpa: Optional[float] = (cost / conversions) if (conversions > 0 and cost > 0) else None
+        return {"d1_ipm": reg_ipm, "d1_cpi": cpa, "d1_retention": None, "d7_roas": None}
+
     installs = agg.get("installs", 0)
     retained_d1 = agg.get("retained_d1", 0)
     revenue_d7 = agg.get("revenue_d7", 0)
