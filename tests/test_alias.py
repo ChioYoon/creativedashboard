@@ -69,7 +69,7 @@ def test_inject_mmp_alias_and_unmatched():
         def __init__(self, name, installs=0, impr=0, cost=0.0):
             self.creative_name = name; self.installs = installs
             self.impressions = impr; self.cost = cost; self.channel = "Meta"
-            self.clicks = 0; self.retained_d1 = 0; self.revenue_d7 = 0.0
+            self.clicks = 0; self.retained_d1 = 0; self.revenue_d7 = 0.0; self.conversions = 0
 
     records = [R("c1", "P-DA-Reward-gacha-01")]
     mmp = [

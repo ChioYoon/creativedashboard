@@ -31,7 +31,7 @@ def aggregate_rows_total(rows: list) -> dict:
         total["installs"] += d.installs
         total["retained_d1"] += d.retained_d1
         total["revenue_d7"] += d.revenue_d7
-        total["conversions"] += getattr(d, "conversions", 0)
+        total["conversions"] += d.conversions
         if d.channel:
             total["channels"].add(d.channel)
     return total
