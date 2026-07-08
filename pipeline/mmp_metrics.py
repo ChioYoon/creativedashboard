@@ -76,12 +76,12 @@ def compute_mmp_quality(agg: dict, conversion_basis: str = "install") -> dict:
     return {"d1_ipm": d1_ipm, "d1_cpi": d1_cpi, "d1_retention": d1_retention, "d7_roas": d7_roas}
 
 
-def compute_mmp_quality_scores(metrics_by_creative: dict) -> dict:
-    """소재별 4지표 dict → 품질 종합점수 {total, grade, rank, conv/cpi/ipm/roas 점수}.
+def compute_mmp_quality_scores(metrics_by_creative: dict, conversion_basis: str = "install") -> dict:
+    """소재별 지표 dict → 품질 종합점수 {total, grade, rank, convBasis, conv/cpi/ipm/roas 점수}.
 
-    Google Ads 종합점수와 동일 4지표 구조(대시보드 일치): 전환(installs)↑·D1 CPI↓·D1 IPM↑·D7 ROAS↑.
-    균등 25%. None 지표는 해당 축 점수 0(최하). rank 점수 = (n-rank+1)/n×100.
-    (D1 잔존율은 표시용 지표로만 유지 — 점수 축에서는 전환으로 대체)
+    install(기본): 4축(전환=installs↑·D1 CPI↓·D1 IPM↑·D7 ROAS↑) 균등 25%.
+    registration(웹 사전예약): 3축(전환=conversions↑·CPA(d1_cpi)↓·등록IPM(d1_ipm)↑) 균등 1/3. ROAS 제외.
+    None 지표는 해당 축 점수 0(최하). rank 점수 = (n-rank+1)/n×100.
     """
     keys = list(metrics_by_creative.keys())
     n = len(keys)
@@ -90,7 +90,6 @@ def compute_mmp_quality_scores(metrics_by_creative: dict) -> dict:
     items = [{"key": k, **metrics_by_creative[k]} for k in keys]
 
     def rank_score(field: str, higher_better: bool):
-        # None 은 최하위로: higher_better 면 -inf, 아니면 +inf
         def val(it):
             v = it.get(field)
             if v is None:
@@ -102,13 +101,19 @@ def compute_mmp_quality_scores(metrics_by_creative: dict) -> dict:
             none_v = it.get(field) is None
             it[f"_s_{field}"] = 0.0 if none_v else ((n - it["_assignedRank"] + 1) / n) * 100
 
-    rank_score("installs", True)
+    is_reg = conversion_basis == "registration"
+    conv_field = "conversions" if is_reg else "installs"
+    rank_score(conv_field, True)
     rank_score("d1_cpi", False)
     rank_score("d1_ipm", True)
-    rank_score("d7_roas", True)
+    if not is_reg:
+        rank_score("d7_roas", True)
 
     for it in items:
-        it["_total"] = (it["_s_installs"] + it["_s_d1_cpi"] + it["_s_d1_ipm"] + it["_s_d7_roas"]) / 4
+        if is_reg:
+            it["_total"] = (it[f"_s_{conv_field}"] + it["_s_d1_cpi"] + it["_s_d1_ipm"]) / 3
+        else:
+            it["_total"] = (it[f"_s_{conv_field}"] + it["_s_d1_cpi"] + it["_s_d1_ipm"] + it["_s_d7_roas"]) / 4
 
     ranked = sorted(items, key=lambda it: it["_total"], reverse=True)
     out = {}
@@ -117,7 +122,9 @@ def compute_mmp_quality_scores(metrics_by_creative: dict) -> dict:
         grade = ("최우수" if t >= 80 else "우수" if t >= 60 else "양호" if t >= 40 else "보통" if t >= 20 else "개선필요")
         out[it["key"]] = {
             "total": round(t, 2), "grade": grade, "rank": i + 1,
-            "conv": round(it["_s_installs"], 1), "cpi": round(it["_s_d1_cpi"], 1),
-            "ipm": round(it["_s_d1_ipm"], 1), "roas": round(it["_s_d7_roas"], 1),
+            "convBasis": "사전예약" if is_reg else "설치",
+            "conv": round(it[f"_s_{conv_field}"], 1), "cpi": round(it["_s_d1_cpi"], 1),
+            "ipm": round(it["_s_d1_ipm"], 1),
+            "roas": None if is_reg else round(it["_s_d7_roas"], 1),
         }
     return out
