@@ -79,21 +79,35 @@
           tipScore: '전환수·CPA·IPM·ROAS 점수의 가중치 합산 (Google Ads)' };
   }
 
+  // MMP 전환 기준(타이틀 단위 균일): 등록 기준 타이틀이면 '사전예약', 아니면 '설치'.
+  //   mmp_quality_score.convBasis(파이프라인 Phase2)에서 파생 — currentCreatives 스캔.
+  function mmpConvBasis() {
+    const cs = (typeof window !== 'undefined' && window.currentCreatives) || [];
+    for (const c of cs) {
+      const q = c && c.meta && c.meta.mmp_quality_score;
+      if (q && q.convBasis) return q.convBasis;
+    }
+    return '설치';
+  }
+
   // 활성 레이어 기준 소재 1건의 표시값 묶음 (표·export·브리프·군집 공용). 데이터 소스 완전 분리.
   //   ads = 순수 Google Ads / mmp = 순수 MMP. base = CPA·IPM 분모/분자(ads:전환, mmp:D1 잔존수).
   function creativeLayerView(c) {
     const isMmp = (window.currentAnalysisLayer || 'ads') === 'mmp';
     if (isMmp) {
       const m = c.meta || {}; const q = m.mmp_quality_score;
+      const isReg = !!(q && q.convBasis === '사전예약');
+      // 등록 기준: 전환=등록수(mmp_conversions), CPA·IPM 분모/분자=등록, ROAS·D1잔존=N/A.
+      const conv = isReg ? (m.mmp_conversions ?? null) : (m.mmp_installs ?? null);
       return {
-        isMmp: true, hasData: !!(q && q.total != null),
-        전환: m.mmp_installs ?? null, 비용: m.mmp_cost ?? null, 노출수: m.mmp_impressions ?? null,
-        클릭수: m.mmp_clicks ?? null, base: m.mmp_installs ?? 0, 매출: m.mmp_revenue ?? 0,
+        isMmp: true, hasData: !!(q && q.total != null), convBasis: (q && q.convBasis) || '설치',
+        전환: conv, 비용: m.mmp_cost ?? null, 노출수: m.mmp_impressions ?? null,
+        클릭수: m.mmp_clicks ?? null, base: conv ?? 0, 매출: m.mmp_revenue ?? 0,
         CTR: (m.mmp_impressions > 0) ? (m.mmp_clicks || 0) / m.mmp_impressions * 100 : 0,
-        // B: MMP 표시 지표를 Google Ads 동일 산식(설치 기준)으로 — CPA=비용/설치, IPM=설치/노출×1000. ROAS=D7 LTV. (품질점수는 D1 기준 유지)
-        CPA: (m.mmp_cost > 0 && m.mmp_installs > 0) ? m.mmp_cost / m.mmp_installs : null,
-        IPM: (m.mmp_impressions > 0) ? (m.mmp_installs || 0) / m.mmp_impressions * 1000 : null,
-        ROAS: m.mmp_d7_roas ?? null,
+        // 표시 지표(설치 기준: CPA=비용/설치·IPM=설치/노출 / 등록 기준: 비용/등록·등록/노출). 품질점수는 파이프라인 산출.
+        CPA: (m.mmp_cost > 0 && conv > 0) ? m.mmp_cost / conv : null,
+        IPM: (m.mmp_impressions > 0 && conv != null) ? (conv || 0) / m.mmp_impressions * 1000 : null,
+        ROAS: isReg ? null : (m.mmp_d7_roas ?? null),
         score: q?.total ?? null, grade: q?.grade ?? null,
         s1: q?.conv ?? null, s2: q?.cpi ?? null, s3: q?.ipm ?? null, s4: q?.roas ?? null,
       };
