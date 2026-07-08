@@ -24,6 +24,7 @@ from typing import Optional
 import requests
 
 from ..base_errors import AuthError, QuotaError
+from ..campaign_canonical import campaign_ua_type
 from ..schemas import CreativeMmpDaily
 
 API_BASE = "https://api.airbridge.io/reports/api"
@@ -39,6 +40,7 @@ DEFAULT_METRICS = {
     "installs": "app_installs",
     "retained_d1": "retention_app_open_day_1_count",
     "revenue_d7": "custom_revenue_j75a3l",
+    "conversions": "",          # 전환(등록) — 타이틀별 오버라이드. 빈 값=미사용(→installs 기준 유지).
 }
 
 # 비-Google 유료 소재 분석이 목적 → Google + 오가닉/테스트 채널 제외.
@@ -46,7 +48,8 @@ DEFAULT_EXCLUDE_CHANNELS = ["google.adwords", "unattributed", "appstore", "sns",
 
 
 def parse_actuals_rows(result: dict, metrics_map: dict, exclude_channels: set,
-                       default_date: str = "", fx_rate: float = 1.0) -> list[CreativeMmpDaily]:
+                       default_date: str = "", fx_rate: float = 1.0,
+                       ua_scope: bool = False) -> list[CreativeMmpDaily]:
     """Actuals SUCCESS 결과 → CreativeMmpDaily 리스트 (HTTP 무의존, 단위 테스트용).
 
     row = {"groupBys": [ad_creative, channel, campaign, event_date], "values": {metric_key: {"value": x}}}
@@ -62,11 +65,12 @@ def parse_actuals_rows(result: dict, metrics_map: dict, exclude_channels: set,
         if len(gb) < 2:
             continue
         creative, channel = gb[0], gb[1]
-        # groupBys: ["ad_creative", "channel", "campaign", "event_date"]
         campaign_name = gb[2] if len(gb) > 2 else ""
-        dt = gb[3] if len(gb) > 3 else default_date  # event_date 있으면 일자별, 없으면 윈도우 종료일
+        dt = gb[3] if len(gb) > 3 else default_date
         if not creative or channel in exclude_channels:
             continue
+        if ua_scope and campaign_ua_type(campaign_name) == "":
+            continue                      # 등록 기준: 非UA(BR·검색) 캠페인 행 전량 제외
         vals = row.get("values") or {}
 
         def gv(field: str) -> float:
@@ -80,10 +84,11 @@ def parse_actuals_rows(result: dict, metrics_map: dict, exclude_channels: set,
             creative_name=creative, date=dt, channel=channel, campaign_name=campaign_name,
             impressions=int(round(gv("impressions"))),
             clicks=int(round(gv("clicks"))),
-            cost=int(round(gv("cost") * fx_rate)),          # 통화 변환(USD→KRW)
+            cost=int(round(gv("cost") * fx_rate)),
             installs=int(round(gv("installs"))),
             retained_d1=int(round(gv("retained_d1"))),
-            revenue_d7=int(round(gv("revenue_d7") * fx_rate)),  # 통화 변환
+            revenue_d7=int(round(gv("revenue_d7") * fx_rate)),
+            conversions=int(round(gv("conversions"))),
         ))
     return out
 
@@ -92,11 +97,15 @@ class AirbridgeMmpSource:
     """Airbridge Actuals 단일 쿼리로 소재별 MMP 품질 데이터 수집. (KpiSource ABC 미상속 — 반환형 상이)"""
 
     def __init__(self, token: str, app_name: str, metrics_map: Optional[dict] = None,
+                 conversion_metric: str = "",
                  usd_to_krw: float = 1.0, session=None, poll_interval_sec: float = 4.0,
                  poll_timeout_sec: float = 300.0, request_timeout: float = 90.0):
         self.token = token
         self.app_name = app_name
         self.metrics_map = dict(metrics_map) if metrics_map else dict(DEFAULT_METRICS)
+        self.conversion_metric = (conversion_metric or "").strip()
+        if self.conversion_metric:
+            self.metrics_map["conversions"] = self.conversion_metric
         self.usd_to_krw = float(usd_to_krw or 1.0)  # 비용·매출 통화 변환 환율(USD→KRW), 1.0=변환 안 함
         self.session = session or requests.Session()
         self.poll_interval_sec = poll_interval_sec
@@ -140,7 +149,7 @@ class AirbridgeMmpSource:
     def _query_metrics(self) -> list[str]:
         """매핑에서 빈 값 제외한 실제 메트릭 key 목록 (중복 제거, 순서 보존)."""
         seen, out = set(), []
-        for k in ("impressions", "clicks", "cost", "installs", "retained_d1", "revenue_d7"):
+        for k in ("impressions", "clicks", "cost", "installs", "retained_d1", "revenue_d7", "conversions"):
             m = self.metrics_map.get(k) or ""
             if m and m not in seen:
                 seen.add(m); out.append(m)
@@ -265,7 +274,8 @@ class AirbridgeMmpSource:
         end_iso = end.isoformat()
         while True:
             out += parse_actuals_rows(page, self.metrics_map, exclude,
-                                      default_date=end_iso, fx_rate=self.usd_to_krw)
+                                      default_date=end_iso, fx_rate=self.usd_to_krw,
+                                      ua_scope=bool(self.conversion_metric))
             pages += 1
             pg = page.get("pagination") or {}
             if not pg.get("hasNext") or pages >= MAX_PAGES:
