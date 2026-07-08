@@ -66,13 +66,21 @@
   // 활성 레이어 라벨·툴팁 단일 소스 — setLayerHeaders(헤더+data-tip)·renderTypeSummaryTable·export 공용.
   //   m1~m4/score=컬럼 라벨, tip1~tip4/tipScore=헤더 툴팁, s2~s4=export 점수 라벨, tag=레이어 배지.
   function layerLabels() {
-    return (window.currentAnalysisLayer || 'ads') === 'mmp'
-      ? { tag: 'MMP 품질 기준', m1: '전환', m2: 'CPA', m3: 'IPM', m4: 'D7 ROAS', score: '품질점수',
-          s2: 'D1 CPI점수', s3: 'D1 IPM점수', s4: 'D7 ROAS점수',
-          tip1: 'MMP 설치수 (installs)', tip2: '비용 ÷ 설치 · 낮을수록 효율적 (install 기준)',
-          tip3: '(설치 ÷ 노출) × 1,000 · 높을수록 우수 (install 기준)', tip4: '(D0~D7 누적매출 ÷ 비용) × 100% · 설치 후 7일 내 조기 회수율(전체 ROAS 아님) · 데이터 없으면 —',
-          tipScore: '품질점수 = D1 코호트 기준(D1 CPI·D1 IPM·D7 ROAS·전환) · 표시 CPA/IPM은 install 기준' }
-      : { tag: 'Google Ads 기준', m1: '전환', m2: 'CPA', m3: 'IPM', m4: 'ROAS', score: '총점',
+    if ((window.currentAnalysisLayer || 'ads') === 'mmp') {
+      const reg = mmpConvBasis() === '사전예약';
+      return reg
+        ? { tag: 'MMP 사전예약 기준', m1: '전환', m2: 'CPA', m3: 'IPM', m4: 'ROAS', score: '품질점수',
+            s2: 'CPA점수', s3: 'IPM점수', s4: 'ROAS점수',
+            tip1: '웹 사전예약 등록수 (complete_registration · UA 캠페인)', tip2: '비용 ÷ 등록수 · 낮을수록 효율적',
+            tip3: '(등록수 ÷ 노출) × 1,000 · 높을수록 우수', tip4: '웹 사전예약: ROAS 해당 없음(—)',
+            tipScore: '품질점수 = 사전예약 3축(전환=등록·CPA·IPM) · ROAS/D1잔존 제외' }
+        : { tag: 'MMP 품질 기준', m1: '전환', m2: 'CPA', m3: 'IPM', m4: 'D7 ROAS', score: '품질점수',
+            s2: 'D1 CPI점수', s3: 'D1 IPM점수', s4: 'D7 ROAS점수',
+            tip1: 'MMP 설치수 (installs)', tip2: '비용 ÷ 설치 · 낮을수록 효율적 (install 기준)',
+            tip3: '(설치 ÷ 노출) × 1,000 · 높을수록 우수 (install 기준)', tip4: '(D0~D7 누적매출 ÷ 비용) × 100% · 설치 후 7일 내 조기 회수율(전체 ROAS 아님) · 데이터 없으면 —',
+            tipScore: '품질점수 = D1 코호트 기준(D1 CPI·D1 IPM·D7 ROAS·전환) · 표시 CPA/IPM은 install 기준' };
+    }
+    return { tag: 'Google Ads 기준', m1: '전환', m2: 'CPA', m3: 'IPM', m4: 'ROAS', score: '총점',
           s2: 'CPA점수', s3: 'IPM점수', s4: 'ROAS점수',
           tip1: '설치 또는 목표 행동 완료 횟수', tip2: '비용 ÷ 전환수 · 낮을수록 효율적',
           tip3: '(전환수 ÷ 노출수) × 1,000 · 높을수록 우수', tip4: '(매출 ÷ 비용) × 100% · Revenue 컬럼 없으면 —',
