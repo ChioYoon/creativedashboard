@@ -5171,8 +5171,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           const m = c.meta || {};
           const q = m.mmp_quality_score;
           const has = q && q.total != null;
-          const s = mmpStdMetrics(m);   // B: install 기준 (CPA=비용/설치, IPM=설치/노출×1000)
-          m1 = (m.mmp_installs != null) ? numv(m.mmp_installs) : dash;
+          const s = mmpStdMetrics(m);   // 전환 기준(등록/설치) — convBasis로 분기(s.inst=등록수 or 설치수)
+          m1 = numv(s.inst);   // 전환: 등록 기준이면 등록수, 설치 기준이면 설치수 (s.inst 재사용 — 모달/creativeLayerView와 정합)
           m2 = (s.cpa != null) ? won(s.cpa) : dash;
           m3 = (s.ipm != null) ? s.ipm.toFixed(2) : dash;
           m4 = (s.roas != null) ? Math.round(s.roas * 100) + '%' : dash;

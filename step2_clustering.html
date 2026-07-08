@@ -1973,6 +1973,8 @@ function _materialLayerVals(m, layer) {
   if (layer === 'mmp') {
     const r = m.row || m._firstRow || {};   // cluster material 은 원본 행을 m.row 에 보관
     const qs = r.mmp_quality_score;
+    // 알려진 gap(별건): 등록 기준 타이틀(convBasis='사전예약')은 전환=mmp_conversions·CPA/IPM 등록 기준이어야 하나
+    //   step2 클러스터 경로는 아직 설치 기준(mmp_installs·D1). MMP 전환 후속 Phase에서 대응.
     return { score: (qs && qs.total != null) ? qs.total : 0,
              전환: r.mmp_installs ?? 0, CPA: r.mmp_d1_cpi ?? 0, IPM: r.mmp_d1_ipm ?? 0, ROAS: r.mmp_d7_roas ?? 0 };
   }
