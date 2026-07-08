@@ -131,6 +131,10 @@ def make_mmp_source(cfg: dict):
             src.token = cfg["airbridge_token"]   # per-title Airbridge 토큰 (별도 계정 — .env 단일토큰 오버라이드)
         if cfg.get("airbridge_usd_to_krw"):
             src.usd_to_krw = cfg["airbridge_usd_to_krw"]
+        cm = (cfg.get("airbridge_conversion_metric") or "").strip()
+        if cm:
+            src.conversion_metric = cm
+            src.metrics_map["conversions"] = cm
         return src, provider
     return None, ""
 
@@ -286,6 +290,7 @@ def inject_mmp_into_records(records, mmp_daily, source_name="airbridge", currenc
         r.mmp_d7_roas = None if q["d7_roas"] is None else round(q["d7_roas"], 4)
         r.mmp_d1_retention = None if q["d1_retention"] is None else round(q["d1_retention"], 2)
         r.mmp_installs = a["installs"]
+        r.mmp_conversions = a["conversions"]
         r.mmp_retained_d1 = a["retained_d1"]
         r.mmp_cost = a["cost"]
         r.mmp_revenue = a["revenue_d7"]
@@ -436,6 +441,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         kpi_start_date = title_override.get("_pipeline_kpi_start_date", "")
         airbridge_enabled = bool(title_override.get("_pipeline_airbridge_enabled", False))
         airbridge_app_name = title_override.get("_pipeline_airbridge_app_name", "")
+        airbridge_conversion_metric = title_override.get("_pipeline_airbridge_conversion_metric", "")
         airbridge_exclude_channels = title_override.get("_pipeline_airbridge_exclude_channels",
                                                         ["google.adwords"])
         airbridge_usd_to_krw = float(title_override.get("_pipeline_airbridge_usd_to_krw", 0) or 0)
@@ -492,6 +498,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         kpi_start_date = title_meta.get("_pipeline_kpi_start_date", "")
         airbridge_enabled = bool(title_meta.get("_pipeline_airbridge_enabled", False))
         airbridge_app_name = title_meta.get("_pipeline_airbridge_app_name", "")
+        airbridge_conversion_metric = title_meta.get("_pipeline_airbridge_conversion_metric", "")
         airbridge_exclude_channels = title_meta.get("_pipeline_airbridge_exclude_channels",
                                                     ["google.adwords"])
         airbridge_usd_to_krw = float(title_meta.get("_pipeline_airbridge_usd_to_krw", 0) or 0)
@@ -551,6 +558,7 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         "airbridge_exclude_channels": airbridge_exclude_channels,
         "airbridge_usd_to_krw": airbridge_usd_to_krw,
         "airbridge_app_name": airbridge_app_name,
+        "airbridge_conversion_metric": airbridge_conversion_metric,
         "airbridge_token": airbridge_token,
         "mmp_provider": mmp_provider,
         "appsflyer_app_id": appsflyer_app_id,

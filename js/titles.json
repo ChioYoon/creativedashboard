@@ -15,6 +15,7 @@
     "_pipeline_mmp_provider": "airbridge",
     "_pipeline_airbridge_enabled": true,
     "_pipeline_airbridge_app_name": "zeuskr",
+    "_pipeline_airbridge_conversion_metric": "web_custom_complete_registration",
     "_pipeline_airbridge_exclude_channels": ["google.adwords", "unattributed", "appstore", "sns", "airbridge_sdk_test"],
     "_pipeline_airbridge_usd_to_krw": 1500,
     "_pipeline_genre": "mmorpg",
