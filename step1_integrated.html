@@ -5535,7 +5535,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       L.push(`섹션(제목 그대로 사용${orderTag}): ${mkSections}■ 핵심 요약 / ■ 성과 드라이버 / ■ 개선 포인트·액션`);
       L.push('섹션 내용(중복 금지 — 같은 사실은 한 섹션에서만 언급): ■ 핵심 요약 = 이번 기간 KPI와 가장 큰 변화 1~2가지. ■ 성과 드라이버 = 우수 소재군(유형별 평균)과 잘 작동한 요소(lift 높은 강점 태그)를 함께. ■ 개선 포인트·액션 = 저효율 소재·공통 약점 태그와 다음 액션.');
       if (note) {
-        L.push('마케터 관점 처리(검증 결합형): "■ 마케터 관점 (데이터 검증)" 아래에 [마케터 의견]의 각 주장을 개조식 불릿 하나로 정리하고 같은 줄 뒤에 " → "와 데이터 근거(지표·태그·소재명 인용)를 붙일 것. 규칙: (a) 데이터로 뒷받침되는 주장만 포함. (b) 데이터로 확인 안 되는(근거 없는) 주장은 제외. (c) 데이터가 주장과 반대면 제외하지 말고 " → 데이터는 다르게 나타남: …"으로 교정 표기. (d) 원문 과장·추가해석 금지.');
+        L.push('마케터 의견 처리(검증 결합 + 계획 반영): [마케터 의견]을 (A)성과 관찰·판단 과 (B)향후 계획·액션 으로 구분해 처리.');
+        L.push('(A) 관찰·판단(예: 영상이 배너보다 우수): "■ 마케터 관점 (데이터 검증)" 아래에 각 주장을 개조식 불릿으로 정리하고 뒤에 " → "와 데이터 근거(지표·태그·소재명). 데이터로 뒷받침되면 근거 제시, 반대면 " → 데이터는 다르게 나타남: …"으로 교정, 데이터로 확인 안 되는(근거 없는) 관찰은 제외.');
+        L.push('(B) 향후 계획·액션(예: 컷다운·신규 소재 제작·캐릭터/카피 변경): 절대 제외하지 말 것. "■ 개선 포인트·액션" 안에 데이터 기반 액션과 함께 통합하고, 각 마케터 발(發) 액션 불릿은 문장 맨 끝에 정확히 " @MK@"를 붙일 것(다른 위치엔 쓰지 말 것). 가능하면 데이터 정합 여부를 같은 줄에 한 마디 덧붙임.');
+        L.push('원문 과장·추가해석 금지. 마케터 관점과 데이터 근거는 구분.');
       }
       L.push('');
       L.push(`[데이터] 타이틀: ${data.titleName} / 기간: ${data.period} / 레이어: ${data.layer}`);
@@ -5775,7 +5778,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
   <div class="card">
     <div class="hd"><div><div class="ht">${esc(data.titleName)} 성과 보고서</div><div class="hs">${esc(data.period)} · ${esc(data.layer)}${(data.comparison && data.comparison.hasPrev && data.comparison.prevWin) ? ` · 전 기간 ${esc(data.comparison.prevWin.start)}~${esc(data.comparison.prevWin.end)}` : ''}</div></div><div class="hg">생성 ${gen}</div></div>
     <div class="kpis">${kpiHtml}</div>
-    ${data.narrative ? `<div class="sec"><div class="st">인사이트 <span style="font-size:11px;color:#9ca3af;font-weight:400;" title="AI 분석이 포함된 요약입니다. 데이터 기반 참고용으로 활용하세요.">ⓘ AI 분석 포함 · 참고용</span></div><div class="ins">${esc(data.narrative).split('\n').map(ln => /^\s*■/.test(ln) ? `<b>${ln}</b>` : ln).join('<br>')}</div></div>` : ''}
+    ${data.narrative ? `<div class="sec"><div class="st">인사이트 <span style="font-size:11px;color:#9ca3af;font-weight:400;" title="AI 분석이 포함된 요약입니다. 데이터 기반 참고용으로 활용하세요.">ⓘ AI 분석 포함 · 참고용</span></div><div class="ins">${esc(data.narrative).split('\n').map(ln => { ln = ln.replace(/\s*@MK@/g, '<span title="[마케터 의견]" style="color:#DC2828;font-weight:700;cursor:help;">*</span>'); return /^\s*■/.test(ln) ? `<b>${ln}</b>` : ln; }).join('<br>')}${data.narrative.includes('@MK@') ? '<div style="font-size:11px;color:#9ca3af;margin-top:10px;">* 마케터 의견 반영 항목</div>' : ''}</div></div>` : ''}
     <div class="sec"><div class="st">Top 성과 소재</div>${topHtml}</div>
     ${moverBlock}
     <div class="sec"><div class="st">유형별 요약</div><table><thead><tr><th>유형</th><th class="r">소재 수</th><th class="r">평균 점수</th></tr></thead><tbody>${typeHtml}</tbody></table></div>
