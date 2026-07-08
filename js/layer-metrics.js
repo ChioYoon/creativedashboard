@@ -30,7 +30,16 @@
   };
 
   // MMP 윈도우 집계 → 4 품질지표 (파이프라인 compute_mmp_quality 동일: 잔존0→cpi null, 비용0→roas null)
-  function mmpQualityMetrics(a) {
+  //   convBasis='사전예약'(웹 사전예약): 전환축을 등록(conversions)으로 — 등록IPM·CPA만 산출, D1잔존·D7 ROAS는 N/A(null).
+  function mmpQualityMetrics(a, convBasis) {
+    if (convBasis === '사전예약') {
+      const conv = a.conversions || 0;
+      return {
+        d1_ipm: a.imp > 0 ? (conv / a.imp) * 1000 : null,          // 등록IPM = 등록 / 노출 × 1000
+        d1_cpi: (conv > 0 && a.cost > 0) ? (a.cost / conv) : null, // CPA = 비용 / 등록
+        d1_ret: null, d7_roas: null,                              // 웹 사전예약: D1 잔존·D7 ROAS 해당 없음
+      };
+    }
     return {
       d1_ipm: a.imp > 0 ? (a.retained_d1 / a.imp) * 1000 : null,
       d1_cpi: (a.retained_d1 > 0 && a.cost > 0) ? (a.cost / a.retained_d1) : null,
@@ -39,10 +48,13 @@
     };
   }
 
-  // MMP 4지표(전환=installs↑·D1 CPI↓·D1 IPM↑·D7 ROAS↑)를 rank 점수화 → 항목 순서대로 점수 배열 반환.
-  // 파이프라인 compute_mmp_quality_scores 동일(균등 25%·None→0·등급컷). 2-0b·피로도 공용. items 는 내부 필드 추가됨.
-  function scoreMmpItems(items) {
+  // MMP 지표를 rank 점수화 → 항목 순서대로 점수 배열 반환. 파이프라인 compute_mmp_quality_scores 동일(None→0·등급컷). 2-0b·피로도 공용.
+  //   convBasis 미지정/'설치': 4축(전환=installs↑·D1 CPI↓·D1 IPM↑·D7 ROAS↑) 균등 25%.
+  //   convBasis='사전예약'(웹 사전예약): 3축(전환=conversions↑·CPA(d1_cpi)↓·등록IPM(d1_ipm)↑) 균등 1/3, ROAS 제외.
+  function scoreMmpItems(items, convBasis) {
     const n = items.length; if (!n) return [];
+    const isReg = convBasis === '사전예약';
+    const convField = isReg ? 'conversions' : 'installs';
     const r = (v, d) => { const p = Math.pow(10, d); return Math.round(v * p) / p; };
     items.forEach(it => it._s = {});
     const assignRankTies = (ordered, val) => { let rank = 1, prev = null; ordered.forEach((it, k) => { const v = val(it); if (!(prev !== null && Math.abs(v - prev) < 0.0001)) rank = k + 1; it._rk = rank; prev = v; }); };
@@ -52,14 +64,19 @@
       assignRankTies(ordered, val);
       ordered.forEach(it => { it._s[field] = (it[field] == null) ? 0 : ((n - it._rk + 1) / n) * 100; });
     };
-    rankScore('installs', true); rankScore('d1_cpi', false); rankScore('d1_ipm', true); rankScore('d7_roas', true);
-    items.forEach(it => it._total = (it._s.installs + it._s.d1_cpi + it._s.d1_ipm + it._s.d7_roas) / 4);
+    rankScore(convField, true); rankScore('d1_cpi', false); rankScore('d1_ipm', true);
+    if (!isReg) rankScore('d7_roas', true);
+    items.forEach(it => it._total = isReg
+      ? (it._s[convField] + it._s.d1_cpi + it._s.d1_ipm) / 3
+      : (it._s.installs + it._s.d1_cpi + it._s.d1_ipm + it._s.d7_roas) / 4);
     const ranked = [...items].sort((a, b) => b._total - a._total);
     const rankMap = new Map(); ranked.forEach((it, i) => rankMap.set(it, i + 1));
     return items.map(it => {
       const t = it._total;
       const grade = t >= 80 ? '최우수' : t >= 60 ? '우수' : t >= 40 ? '양호' : t >= 20 ? '보통' : '개선필요';
-      return { total: r(t, 2), grade, rank: rankMap.get(it), conv: r(it._s.installs, 1), cpi: r(it._s.d1_cpi, 1), ipm: r(it._s.d1_ipm, 1), roas: r(it._s.d7_roas, 1) };
+      return { total: r(t, 2), grade, rank: rankMap.get(it), convBasis: isReg ? '사전예약' : '설치',
+        conv: r(it._s[convField], 1), cpi: r(it._s.d1_cpi, 1), ipm: r(it._s.d1_ipm, 1),
+        roas: isReg ? null : r(it._s.d7_roas, 1) };
     });
   }
 

@@ -21,7 +21,7 @@
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
   <!-- 데이터 소스 추상화 (v5.2 Stage 1) — CSV/JSON 단일 진입점, 타이틀 격리 -->
-  <script src="js/layer-metrics.js?v=20260708a"></script>
+  <script src="js/layer-metrics.js?v=20260708b"></script>
   <script src="js/data-source.js?v=20260627a"></script>
   <!-- 캐노니컬(캠페인 유형) 필터 해석기 — 라이브 cv 미상-버킷 의미론 정합 -->
   <script src="js/canonical-filter.js?v=20260626a"></script>
@@ -2268,8 +2268,9 @@ function aggMmpWindow(mmpDaily, win, mcamps) {
     if (!inWin(x.date) || !inCamp(x)) return a;
     a.imp += x.impressions || 0; a.clk += x.clicks || 0; a.cost += x.cost || 0;
     a.installs += x.installs || 0; a.retained_d1 += x.retained_d1 || 0; a.revenue_d7 += x.revenue_d7 || 0;
+    a.conversions += x.conversions || 0;   // 웹 사전예약 등록수(사전예약 기준 타이틀) — 재계산 시 등록 3축 점수에 사용
     if (x.channel) a.channels.add(x.channel); return a;
-  }, { imp: 0, clk: 0, cost: 0, installs: 0, retained_d1: 0, revenue_d7: 0, channels: new Set() });
+  }, { imp: 0, clk: 0, cost: 0, installs: 0, retained_d1: 0, revenue_d7: 0, conversions: 0, channels: new Set() });
 }
 // mmpQualityMetrics → js/layer-metrics.js (공용 모듈)
 
@@ -2310,18 +2311,22 @@ function typeBlended(d) {
 function buildFatiguePeriodScores(creatives, winStart, winEnd, layer, weights, gcamps = null, mcamps = null) {
   const win = { start: winStart, end: winEnd };
   if (layer === 'mmp') {
+    // 타이틀 전환 기준(파이프라인 convBasis 파생): 등록 타이틀이면 사전예약(등록) 3축.
+    const convBasis = (creatives || []).some(c => c.meta && c.meta.mmp_quality_score && c.meta.mmp_quality_score.convBasis === '사전예약') ? '사전예약' : '설치';
+    const isReg = convBasis === '사전예약';
     const items = [];
     (creatives || []).forEach(c => {
       const md = (c.meta && c.meta.mmp_source && Array.isArray(c.meta.mmp_daily)) ? c.meta.mmp_daily : [];
       if (!md.length) return;
       const a = aggMmpWindow(md, win, mcamps);
-      if (a.imp <= 0 && a.installs <= 0) return;
-      const { d1_ipm, d1_cpi, d7_roas } = mmpQualityMetrics(a);
-      // 피로도 CPA(=D1 CPI): D1 잔존 0 이면 비용/설치(install CPI)로 폴백 — 0(=최저=신선) 오분류 방지
-      const fatigueCpa = (d1_cpi != null) ? d1_cpi : (a.installs > 0 ? a.cost / a.installs : 0);
-      items.push({ key: c.key, 유형: c.유형, 이미지링크: c.이미지링크, meta: c.meta, 전환: a.installs, CPA: fatigueCpa, installs: a.installs, d1_cpi, d1_ipm, d7_roas });
+      if (isReg ? (a.imp <= 0 && a.conversions <= 0) : (a.imp <= 0 && a.installs <= 0)) return;
+      const { d1_ipm, d1_cpi, d7_roas } = mmpQualityMetrics(a, convBasis);
+      const conv = isReg ? a.conversions : a.installs;
+      // 피로도 CPA(=D1 CPI / 등록 CPA): null 이면 비용/전환으로 폴백 — 0(=최저=신선) 오분류 방지
+      const fatigueCpa = (d1_cpi != null) ? d1_cpi : (conv > 0 ? a.cost / conv : 0);
+      items.push({ key: c.key, 유형: c.유형, 이미지링크: c.이미지링크, meta: c.meta, 전환: conv, CPA: fatigueCpa, installs: a.installs, conversions: a.conversions, d1_cpi, d1_ipm, d7_roas });
     });
-    const scores = scoreMmpItems(items);
+    const scores = scoreMmpItems(items, convBasis);
     items.forEach((it, i) => { it.TotalScore = scores[i].total; it.등급 = scores[i].grade; });
     const ranked = [...items].sort((a, b) => b.TotalScore - a.TotalScore);
     ranked.forEach((it, i) => it.Rank = i + 1);
@@ -2412,9 +2417,13 @@ function switchAnalysisLayer(layer) {
   const periodTxt = (_s && _e && _s.value && _e.value) ? `${_s.value}~${_e.value}` : '전체 기간';
 
   if (layer === 'mmp') {
-    // MMP = 순수 非Google 매체 데이터. Google Ads 와 같은 4지표 구조, 분모만 D1 잔존수.
-    if (hint) hint.innerHTML = `<strong>MMP 품질점수</strong> 기준 — 非Google 매체 · ` +
-      `전환 · D1 CPI · D1 IPM · D7 ROAS <span style="opacity:.7;">(분모=D1 잔존수)</span> · ${periodTxt} · 코호트 상대순위`;
+    // MMP = 순수 非Google 매체 데이터. 설치 기준=4지표(분모 D1 잔존수) / 웹 사전예약 등록 기준=3지표(ROAS·D1잔존 제외).
+    const _mmpReg = (window.currentCreatives || []).some(c => c.meta && c.meta.mmp_quality_score && c.meta.mmp_quality_score.convBasis === '사전예약');
+    if (hint) hint.innerHTML = _mmpReg
+      ? `<strong>MMP 품질점수</strong> 기준 — 非Google 매체 · 전환(웹 사전예약 등록) · CPA · 등록IPM ` +
+        `<span style="opacity:.7;">(등록 3축 · ROAS/D1 잔존 제외)</span> · ${periodTxt} · 코호트 상대순위`
+      : `<strong>MMP 품질점수</strong> 기준 — 非Google 매체 · 전환 · D1 CPI · D1 IPM · D7 ROAS ` +
+        `<span style="opacity:.7;">(분모=D1 잔존수)</span> · ${periodTxt} · 코호트 상대순위`;
     if (sel)  sel.value = 'mmpscore';
     applyResultSort('mmpscore');
   } else {
@@ -4567,6 +4576,9 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             const win = activeDateWindow;
             const mcamps = activeMmpCampaigns;
             const r = (v, d) => { const p = Math.pow(10, d); return Math.round(v * p) / p; };
+            // 타이틀 전환 기준(파이프라인 convBasis 파생 · 재계산 전 원본 점수 스캔). 등록 타이틀이면 사전예약(등록) 3축.
+            const convBasis = aggregated.some(c => c.meta && c.meta.mmp_quality_score && c.meta.mmp_quality_score.convBasis === '사전예약') ? '사전예약' : '설치';
+            const isReg = convBasis === '사전예약';
 
             const mmpItems = [];
             aggregated.forEach(c => {
@@ -4574,31 +4586,32 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
               if (!md.length) return;
               const a = aggMmpWindow(md, win, mcamps);
 
-              if (a.imp <= 0 && a.installs <= 0) {   // 윈도우 내 MMP 활동 없음 → 품질점수·표시지표 모두 초기화
+              // 윈도우 내 MMP 활동(노출·전환) 없음 → 품질점수·표시지표 모두 초기화. 등록 기준은 전환=등록수.
+              if (isReg ? (a.imp <= 0 && a.conversions <= 0) : (a.imp <= 0 && a.installs <= 0)) {
                 c.meta.mmp_quality_score = null;
                 c.meta.mmp_d1_ipm = null; c.meta.mmp_d1_cpi = null; c.meta.mmp_d7_roas = null; c.meta.mmp_d1_retention = null;
-                c.meta.mmp_installs = 0; c.meta.mmp_retained_d1 = 0; c.meta.mmp_impressions = 0; c.meta.mmp_clicks = 0;
+                c.meta.mmp_installs = 0; c.meta.mmp_conversions = 0; c.meta.mmp_retained_d1 = 0; c.meta.mmp_impressions = 0; c.meta.mmp_clicks = 0;
                 c.meta.mmp_cost = 0; c.meta.mmp_revenue = 0;
                 return;
               }
-              const { d1_ipm, d1_cpi, d1_ret, d7_roas } = mmpQualityMetrics(a);
+              const { d1_ipm, d1_cpi, d1_ret, d7_roas } = mmpQualityMetrics(a, convBasis);
               // 표시용 메타 갱신(모달·표·배지가 읽는 필드) — 원본 rawData 아닌 per-run meta 객체만 교체
-              c.meta.mmp_d1_ipm = r(d1_ipm, 3);
+              c.meta.mmp_d1_ipm = d1_ipm == null ? null : r(d1_ipm, 3);
               c.meta.mmp_d1_cpi = d1_cpi == null ? null : r(d1_cpi, 1);
               c.meta.mmp_d7_roas = d7_roas == null ? null : r(d7_roas, 4);
-              c.meta.mmp_d1_retention = r(d1_ret, 2);
-              c.meta.mmp_installs = a.installs; c.meta.mmp_retained_d1 = a.retained_d1;
+              c.meta.mmp_d1_retention = d1_ret == null ? null : r(d1_ret, 2);
+              c.meta.mmp_installs = a.installs; c.meta.mmp_conversions = a.conversions; c.meta.mmp_retained_d1 = a.retained_d1;
               c.meta.mmp_impressions = a.imp; c.meta.mmp_clicks = a.clk;
               c.meta.mmp_cost = a.cost; c.meta.mmp_revenue = a.revenue_d7;
               c.meta.mmp_channels = Array.from(a.channels).sort();
-              mmpItems.push({ c, installs: a.installs, d1_ipm, d1_cpi, d1_ret, d7_roas });
+              mmpItems.push({ c, installs: a.installs, conversions: a.conversions, d1_ipm, d1_cpi, d1_ret, d7_roas });
             });
 
             const n = mmpItems.length;
             if (n > 0) {
-              const scores = scoreMmpItems(mmpItems);          // 공용 스코어러 (파이프라인 동일)
+              const scores = scoreMmpItems(mmpItems, convBasis);          // 공용 스코어러 (파이프라인 동일 · 등록 타이틀은 사전예약 3축)
               mmpItems.forEach((it, i) => { it.c.meta.mmp_quality_score = scores[i]; });
-              console.log(`🎯 MMP 품질점수 ${n}개 소재 기간 재계산 (${win ? win.start + '~' + win.end : '전체'})`);
+              console.log(`🎯 MMP 품질점수 ${n}개 소재 기간 재계산 (${convBasis} · ${win ? win.start + '~' + win.end : '전체'})`);
             }
           }
 
