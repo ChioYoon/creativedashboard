@@ -2159,13 +2159,15 @@ function mmpFmt(m) {
 }
 // A: MMP install 기준 표준 지표 (Google Ads 동일 산식) — CPA=비용/설치, IPM=설치/노출×1000, ROAS=LTV매출/비용.
 function mmpStdMetrics(m) {
-  const inst = Number(m.mmp_installs) || 0, cost = Number(m.mmp_cost) || 0,
-        imp = Number(m.mmp_impressions) || 0, clk = Number(m.mmp_clicks) || 0,
-        rev = Number(m.mmp_revenue) || 0;
-  return { inst, cost, imp, clk, rev,
+  const q = m.mmp_quality_score;
+  const isReg = !!(q && q.convBasis === '사전예약');
+  const inst = Number(isReg ? (m.mmp_conversions || 0) : (m.mmp_installs || 0)) || 0;
+  const cost = Number(m.mmp_cost) || 0, imp = Number(m.mmp_impressions) || 0,
+        clk = Number(m.mmp_clicks) || 0, rev = Number(m.mmp_revenue) || 0;
+  return { inst, cost, imp, clk, rev, isReg,
     cpa: inst > 0 ? cost / inst : null,
     ipm: imp > 0 ? inst / imp * 1000 : null,
-    roas: cost > 0 ? rev / cost : null,
+    roas: isReg ? null : (cost > 0 ? rev / cost : null),
     ctr: imp > 0 ? clk / imp * 100 : null };
 }
 // 모달 소재 품질(MMP) 섹션 — Google Ads 동일 산식(설치 기준) 10카드 + D1 품질지표 참조.
@@ -2198,17 +2200,19 @@ function buildMmpSectionHtml(creative) {
             ? `<strong style="font-size:17px;color:var(--brand-primary,#DC2828);">${qs.total}</strong> <span class="kpi-metric-sub">${escapeHtml(qs.grade || '')}</span>`
             : '—'}</div>
         </div>
-        ${cell('전환 (설치)', s.inst.toLocaleString())}
+        ${cell(s.isReg ? '전환(사전예약 등록)' : '전환 (설치)', s.inst.toLocaleString())}
         ${cell('CPA', s.cpa != null ? won(s.cpa) : '—')}
         ${cell('IPM', s.ipm != null ? s.ipm.toFixed(2) : '—')}
-        ${cell('ROAS (D7 LTV)', s.roas != null ? Math.round(s.roas * 100) + '%' : '—')}
+        ${cell('ROAS (D7 LTV)', s.isReg ? '—(웹 사전예약 해당 없음)' : (s.roas != null ? Math.round(s.roas * 100) + '%' : '—'))}
         ${cell('매출 (D7 LTV)', won(s.rev))}
         ${cell('비용', won(s.cost))}
         ${cell('노출수', s.imp.toLocaleString())}
         ${cell('클릭수', s.clk.toLocaleString())}
         ${cell('CTR', s.ctr != null ? s.ctr.toFixed(2) + '%' : '—')}
       </div>
-      <div style="margin-top:8px;font-size:11px;color:#0f766e;">품질지표(D1 기준): D1 CPI ${f.cpi} · D1 IPM ${f.ipm} · D7 ROAS ${f.roas} · D1 잔존 ${f.ret}${fxNote}</div>
+      <div style="margin-top:8px;font-size:11px;color:#0f766e;">${s.isReg
+        ? '품질지표(D1 기준): 웹 사전예약 등록 소재는 D1 CPI·IPM·ROAS·잔존 해당 없음(등록 기준 집계)' + fxNote
+        : `품질지표(D1 기준): D1 CPI ${f.cpi} · D1 IPM ${f.ipm} · D7 ROAS ${f.roas} · D1 잔존 ${f.ret}${fxNote}`}</div>
     </div>`;
 }
 // 결과표 MMP 셀 — 품질점수 배지(등급색) + 4지표 native 툴팁. mmp 없으면 '—'.
