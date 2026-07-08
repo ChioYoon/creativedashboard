@@ -1772,6 +1772,8 @@
         <span style="color:#9ca3af;">~</span>
         <input type="date" id="reportPrevEnd" style="flex:1; font-size:13px; padding:6px 8px; border:1px solid #e5e7eb; border-radius:6px;">
       </div>
+      <div style="font-size:12px; color:#6b7280; margin-bottom:4px;">마케터 의견 <span style="color:#9ca3af;">(선택)</span></div>
+      <textarea id="reportMarketerNote" rows="4" placeholder="이번 기간에 주목한 점, 소재 판단, 다음 액션 가설 등 자유롭게 — AI가 데이터로 검증해 보고서에 반영합니다." style="width:100%; box-sizing:border-box; font-size:13px; padding:8px; border:1px solid #e5e7eb; border-radius:6px; resize:vertical; margin-bottom:18px; font-family:inherit; line-height:1.5;"></textarea>
       <div style="display:flex; gap:8px; justify-content:flex-end;">
         <button onclick="closeReportDialog()" style="font-size:13px; padding:8px 16px; border:1px solid #e5e7eb; background:#fff; border-radius:8px; cursor:pointer;">취소</button>
         <button onclick="generateSummaryReport()" style="font-size:13px; padding:8px 16px; border:none; background:#DC2828; color:#fff; border-radius:8px; cursor:pointer;">생성</button>
@@ -5451,6 +5453,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const tot = (c + p + i + r) || 1;
       return { conv: c / tot, cpa: p / tot, ipm: i / tot, roas: r / tot };
     }
+    function reportNoteKey() {
+      const tid = (document.getElementById('titleSelector')?.value || '').replace(/[^a-zA-Z0-9_-]/g, '');
+      return tid ? `r_team_report_marketer_note_${tid}` : 'r_team_report_marketer_note';
+    }
     function openReportDialog() {
       if (!window.currentCreatives || !window.currentCreatives.length) {
         alert('분석 결과가 없습니다. 점수 계산을 먼저 실행해 주세요.');
@@ -5461,12 +5467,17 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const pw = defaultPrevWindow();
       document.getElementById('reportPrevStart').value = pw.start;
       document.getElementById('reportPrevEnd').value = pw.end;
+      // 마케터 의견 미리채움 (타이틀별 localStorage — 개인 편의, 팀 공유 아님. 공유·영속은 후속 1b)
+      const _noteEl = document.getElementById('reportMarketerNote');
+      if (_noteEl) { try { _noteEl.value = localStorage.getItem(reportNoteKey()) || ''; } catch (_) { _noteEl.value = ''; } }
       document.getElementById('reportDialog').style.display = 'flex';
     }
     function closeReportDialog() { document.getElementById('reportDialog').style.display = 'none'; }
     async function generateSummaryReport() {
       const s = document.getElementById('startDate')?.value, e = document.getElementById('endDate')?.value;
       const ps = document.getElementById('reportPrevStart').value, pe = document.getElementById('reportPrevEnd').value;
+      const note = (document.getElementById('reportMarketerNote')?.value || '').trim();
+      try { if (note) localStorage.setItem(reportNoteKey(), note); else localStorage.removeItem(reportNoteKey()); } catch (_) {}
       const layer = window.currentAnalysisLayer || 'ads';
       const curWin = { start: s, end: e };
       const prevWin = (ps && pe) ? { start: ps, end: pe } : null;
@@ -5475,8 +5486,12 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       let narrative = '';
       if (typeof GeminiKeyManager !== 'undefined' && GeminiKeyManager.isSet()) {
         showLoadingIndicator('AI 코멘트 생성 중...');
-        try { narrative = await buildReportNarrative(cmp, window.currentCreatives); }
+        try { narrative = await buildReportNarrative(cmp, window.currentCreatives, note); }
         finally { hideLoadingIndicator(); }
+      }
+      // 무키/실패 폴백: 내러티브 없고 노트 있으면 원문을 개조식 섹션으로만 표시(정리·검증 생략)
+      if (!narrative && note) {
+        narrative = '■ 마케터 관점\n' + note.split('\n').map(ln => ln.trim()).filter(Boolean).map(ln => ' - ' + ln).join('\n');
       }
       exportSummaryReport(cmp, narrative);
     }
