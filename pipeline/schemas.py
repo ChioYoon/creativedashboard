@@ -450,6 +450,7 @@ class CreativeRecord(BaseModel):
     mmp_d1_retention: Optional[float] = Field(None, description="D1 잔존수/설치수 ×100 (0~100)")
     mmp_quality_score: Optional[dict] = Field(None, description="4지표 rank 종합 {total,grade,rank,...} (phase-2)")
     mmp_installs: Optional[int] = None
+    mmp_conversions: Optional[int] = None   # 등록 기준 타이틀의 MMP 전환수(사전예약). 설치 기준이면 None.
     mmp_retained_d1: Optional[int] = None
     mmp_cost: Optional[int] = None      # 비용 (mmp_currency 기준 — 환율 변환 후)
     mmp_revenue: Optional[int] = None   # D7 누적매출 합 (mmp_currency 기준)
@@ -479,6 +480,7 @@ class CreativeMmpDaily(BaseModel):
     installs: int = 0            # 코호트 설치수 (Retention interval-0)
     retained_d1: int = 0         # D1 잔존수 (Retention interval-1)
     revenue_d7: int = 0          # D0~D7 누적 인앱매출
+    conversions: int = 0         # 전환수(등록 기준 타이틀: web complete_registration 이벤트수). 미설정 타이틀 0.
 
 
 # ─────────────────────────────────────────────────────────────
