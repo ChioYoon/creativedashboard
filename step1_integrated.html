@@ -5524,13 +5524,17 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     }
 
     // ── AI 내러티브: 프롬프트 빌더(순수) + Gemini 호출(async) ──
-    function buildReportNarrativePrompt(data, tags) {
+    function buildReportNarrativePrompt(data, tags, note = '') {
       const k = data.kpis, cmp = data.comparison;
       const dpct = d => (d && d.deltaPct != null) ? `(전 기간 대비 ${d.deltaAbs >= 0 ? '+' : ''}${Math.round(d.deltaPct)}%)` : '';
       const L = [];
       L.push('당신은 컴투스 R마케팅팀의 UA 소재 분석가입니다. 아래 데이터로 주간/월간 보고에 넣을 코멘트를 작성하세요.');
       L.push('작성 규칙: (1) 개조식 보고체 — 각 줄을 명사형/음슴체로 끝내는 짧은 불릿. (2) 아래 4개 섹션을 순서대로 사용하고, 섹션 제목 줄은 "■ "로 시작. (3) 각 섹션 2~3줄, 불릿 줄은 " - "로 시작. (4) 마크다운(**, ##)·서론·맺음말 금지, 섹션 제목과 불릿 줄만 출력. (5) 데이터 근거로만 작성, 과장 금지, 태그 인용 시 작은따옴표.');
-      L.push('섹션(제목 그대로 사용): ■ 핵심 변화 / ■ 우수 요소 (저효율 대비) / ■ 성과 좋은 소재군 / ■ 부진 요인·다음 액션');
+      const mkSections = note ? '■ 마케터 관점 / ■ 마케터 관점 검증 / ' : '';
+      L.push(`섹션(제목 그대로 사용, 순서 유지): ${mkSections}■ 핵심 변화 / ■ 우수 요소 (저효율 대비) / ■ 성과 좋은 소재군 / ■ 부진 요인·다음 액션`);
+      if (note) {
+        L.push('마케터 의견 처리(검증형): (1) "■ 마케터 관점"에 아래 [마케터 의견]을 개조식 음슴체 불릿으로 정리(내용 보존·과장/추가해석 금지). (2) "■ 마케터 관점 검증"에서 각 항목을 이번 기간 데이터·태그로 판정 — 각 불릿을 \'뒷받침\'·\'반박·보정\'·\'데이터로 확인 불가\' 중 하나로 시작하고 근거(지표·태그·소재명) 제시. 데이터로 확인 안 되면 억지 동조 없이 "데이터로 확인 불가"로 명시. 마케터 관점과 데이터 근거를 구분.');
+      }
       L.push('');
       L.push(`[데이터] 타이틀: ${data.titleName} / 기간: ${data.period} / 레이어: ${data.layer}`);
       L.push(`핵심 지표: 소재 ${k.count}개, 평균 점수 ${k.avgScore == null ? '-' : k.avgScore.toFixed(1)}, 최우수 ${k.excellent}개, 개선필요 ${k.poor}개, 총 전환(${k.convBasis}) ${Math.round(k.totalConv).toLocaleString()}`);
@@ -5549,15 +5553,16 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       } else {
         L.push('태그 데이터 부족(소재 4개 미만) — 요소 인사이트는 지표 기반으로만 간략히.');
       }
+      if (note) { L.push(''); L.push('[마케터 의견]'); L.push(note); }
       return L.join('\n');
     }
-    async function buildReportNarrative(comparison, creatives) {
+    async function buildReportNarrative(comparison, creatives, note = '') {
       if (typeof GeminiKeyManager === 'undefined' || !GeminiKeyManager.isSet()) return '';
       try {
         const data = buildSummaryReportData(creatives, comparison);
         const tags = buildTagCohortSummary(comparison && comparison.cur, creatives);
-        const prompt = buildReportNarrativePrompt(data, tags);
-        return await callGeminiAPI(prompt, { maxTokens: 800, temperature: 0.6 });
+        const prompt = buildReportNarrativePrompt(data, tags, note);
+        return await callGeminiAPI(prompt, { maxTokens: note ? 1100 : 800, temperature: 0.6 });
       } catch (e) {
         console.warn('AI 코멘트 생성 실패:', e && e.message);
         return '';
