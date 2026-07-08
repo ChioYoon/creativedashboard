@@ -256,7 +256,7 @@ def _load_creative_aliases(title: str, repo_root: Path) -> dict:
         return {}
 
 
-def inject_mmp_into_records(records, mmp_daily, source_name="airbridge", currency=None, fx_rate=None, aliases=None):
+def inject_mmp_into_records(records, mmp_daily, source_name="airbridge", currency=None, fx_rate=None, aliases=None, conversion_basis="install"):
     """CreativeMmpDaily 리스트를 소재명(concept)으로 join 하여 records 에 mmp_* 주입.
 
     소재명 매칭: ad_creative == 파일명/소재명 컨벤션. 별칭(aliases)로 비표준명 재매핑.
@@ -280,7 +280,7 @@ def inject_mmp_into_records(records, mmp_daily, source_name="airbridge", currenc
         # concept 의 모든 변형(L/S/V·채널)을 하나로 합산 — Google Ads aggregate_kpi 와 동일 의미론.
         # (creative_name 별로 쪼개면 첫 변형만 반영되는 데이터 손실 발생 — 멀티변형 소재가 핵심 대상)
         a = aggregate_rows_total(rows)
-        q = compute_mmp_quality(a)
+        q = compute_mmp_quality(a, conversion_basis)
         r.mmp_source = source_name
         r.mmp_currency = currency
         r.mmp_fx_rate = fx_rate
@@ -297,14 +297,21 @@ def inject_mmp_into_records(records, mmp_daily, source_name="airbridge", currenc
         r.mmp_daily = rows
 
     # phase-2: 4지표 보유 소재들로 품질 종합점수 산출 후 주입 (대시보드 동일: 전환·D1 CPI·D1 IPM·D7 ROAS)
-    scored_metrics = {
-        r.creative_id: {"installs": r.mmp_installs, "d1_cpi": r.mmp_d1_cpi,
-                        "d1_ipm": r.mmp_d1_ipm, "d7_roas": r.mmp_d7_roas}
-        for r in records if r.mmp_source
-    }
+    if conversion_basis == "registration":
+        scored_metrics = {
+            r.creative_id: {"conversions": r.mmp_conversions or 0,
+                            "d1_cpi": r.mmp_d1_cpi, "d1_ipm": r.mmp_d1_ipm}
+            for r in records if r.mmp_source
+        }
+    else:
+        scored_metrics = {
+            r.creative_id: {"installs": r.mmp_installs, "d1_cpi": r.mmp_d1_cpi,
+                            "d1_ipm": r.mmp_d1_ipm, "d7_roas": r.mmp_d7_roas}
+            for r in records if r.mmp_source
+        }
     if scored_metrics:
         from .mmp_metrics import compute_mmp_quality_scores
-        qscores = compute_mmp_quality_scores(scored_metrics)
+        qscores = compute_mmp_quality_scores(scored_metrics, conversion_basis)
         for r in records:
             if r.creative_id in qscores:
                 r.mmp_quality_score = qscores[r.creative_id]
@@ -1094,6 +1101,7 @@ def run(cfg: dict) -> dict:
             records, cfg["_mmp_daily"], source_name=cfg.get("_mmp_provider") or "airbridge",
             currency=cfg.get("_mmp_currency"), fx_rate=cfg.get("_mmp_fx_rate"),
             aliases=cfg.get("creative_name_aliases"),
+            conversion_basis=("registration" if cfg.get("airbridge_conversion_metric") else "install"),
         )
     unmatched_all = ga_unmatched + mmp_unmatched
 
