@@ -5529,7 +5529,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const dpct = d => (d && d.deltaPct != null) ? `(전 기간 대비 ${d.deltaAbs >= 0 ? '+' : ''}${Math.round(d.deltaPct)}%)` : '';
       const L = [];
       L.push('당신은 컴투스 R마케팅팀의 UA 소재 분석가입니다. 아래 데이터로 주간/월간 보고에 넣을 코멘트를 작성하세요.');
-      L.push('작성 규칙: (1) 개조식 보고체 — 각 줄을 명사형/음슴체로 끝내는 짧은 불릿. (2) 아래 섹션을 순서대로 사용하고, 섹션 제목 줄은 "■ "로 시작. (3) 각 섹션 2~3줄, 불릿 줄은 " - "로 시작. (4) 마크다운(**, ##)·서론·맺음말 금지, 섹션 제목과 불릿 줄만 출력. (5) 데이터 근거로만 작성, 과장 금지, 태그 인용 시 작은따옴표.');
+      L.push('작성 규칙: (1) 각 불릿은 핵심 판단을 명사형/음슴체로 먼저 쓰고, 데이터 근거가 있으면 " → " 뒤에 수치·태그·소재명으로 맥락이 전달되게 한 문장 덧붙임(근거 없으면 " → " 생략, 억지 금지). (2) 아래 섹션을 순서대로 사용하고, 섹션 제목 줄은 "■ "로 시작. (3) 각 섹션 2~4줄, 불릿 줄은 " - "로 시작. (4) 마크다운(**, ##)·서론·맺음말 금지, 섹션 제목과 불릿 줄만 출력. (5) 데이터 근거로만 작성, 과장 금지, 태그 인용 시 작은따옴표.');
       const mkSections = note ? '■ 마케터 관점 (데이터 검증) / ' : '';
       const orderTag = note ? ', 순서 유지' : '';
       L.push(`섹션(제목 그대로 사용${orderTag}): ${mkSections}■ 핵심 요약 / ■ 성과 드라이버 / ■ 개선 포인트·액션`);
@@ -5663,6 +5663,43 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       return `<a href="${esc(u)}" target="_blank" rel="noopener" title="${isVid ? '영상 열기' : '원본 이미지 열기'}" style="position:relative;display:block;${box}overflow:hidden;background:#F4F2EF;text-decoration:none;">${ph}${img}${play}</a>`;
     }
 
+    // 인사이트 내러티브(■ 섹션 / '핵심 → 근거' 불릿 / @MK@) → 섹션 카드 HTML. 보고 스캔성 강화.
+    function insightSectionsHtml(narrative) {
+      if (!narrative) return '';
+      const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
+      // 섹션 제목 키워드 → 색상(막대·배경·제목). 마케터=파랑 / 성과 드라이버=초록 / 개선=주황 / 기타(핵심 요약)=중립.
+      const styleFor = t => t.includes('마케터') ? { bar: '#3b82f6', tint: '#eff6ff', tc: '#1d4ed8' }
+        : t.includes('성과 드라이버') ? { bar: '#16a34a', tint: '#f0fdf4', tc: '#15803d' }
+        : t.includes('개선') ? { bar: '#f59e0b', tint: '#fffbeb', tc: '#b45309' }
+        : { bar: '#9ca3af', tint: '#faf9f7', tc: '#374151' };
+      const mk = '<span title="[마케터 의견]" style="color:#DC2828;font-weight:700;cursor:help;">*</span>';
+      const secs = []; let cur = null;
+      String(narrative).split('\n').forEach(raw => {
+        const ln = raw.trim(); if (!ln) return;
+        const h = ln.match(/^■\s*(.+)$/);
+        if (h) { cur = { title: h[1].trim(), bullets: [] }; secs.push(cur); return; }
+        const b = ln.replace(/^[-·]\s*/, '');
+        if (cur) cur.bullets.push(b); else { cur = { title: '', bullets: [b] }; secs.push(cur); }
+      });
+      let hasMk = false;
+      const cards = secs.map(sec => {
+        const st = styleFor(sec.title);
+        const items = sec.bullets.map(b => {
+          const had = /@MK@/.test(b);
+          if (had) hasMk = true;
+          const parts = b.split(/\s*→\s*/);
+          const claim = esc(parts[0].replace(/\s*@MK@/g, '').trim()) + (had ? ' ' + mk : '');
+          const ev = parts.slice(1).join(' → ').replace(/\s*@MK@/g, '').trim();
+          const evHtml = ev ? `<div style="color:#6b7280;font-size:12px;line-height:1.5;margin-top:2px;">${esc(ev)}</div>` : '';
+          return `<li style="margin-bottom:9px;"><div style="color:#191919;font-weight:600;font-size:13px;line-height:1.45;">${claim}</div>${evHtml}</li>`;
+        }).join('');
+        const head = sec.title ? `<div style="font-size:13px;font-weight:700;color:${st.tc};margin-bottom:8px;">${esc(sec.title)}</div>` : '';
+        return `<div style="border:1px solid #eee;border-left:3px solid ${st.bar};border-radius:8px;padding:12px 14px;margin-bottom:10px;background:${st.tint};">${head}<ul style="list-style:none;margin:0;padding:0;">${items}</ul></div>`;
+      }).join('');
+      const foot = hasMk ? '<div style="font-size:11px;color:#9ca3af;margin-top:2px;">* 마케터 의견 반영 항목</div>' : '';
+      return cards + foot;
+    }
+
     // ── 성과 요약 리포트: HTML 렌더 (자체 완결·인쇄용) ──
     function renderSummaryReportHtml(data) {
       const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
@@ -5778,7 +5815,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
   <div class="card">
     <div class="hd"><div><div class="ht">${esc(data.titleName)} 성과 보고서</div><div class="hs">${esc(data.period)} · ${esc(data.layer)}${(data.comparison && data.comparison.hasPrev && data.comparison.prevWin) ? ` · 전 기간 ${esc(data.comparison.prevWin.start)}~${esc(data.comparison.prevWin.end)}` : ''}</div></div><div class="hg">생성 ${gen}</div></div>
     <div class="kpis">${kpiHtml}</div>
-    ${data.narrative ? `<div class="sec"><div class="st">인사이트 <span style="font-size:11px;color:#9ca3af;font-weight:400;" title="AI 분석이 포함된 요약입니다. 데이터 기반 참고용으로 활용하세요.">ⓘ AI 분석 포함 · 참고용</span></div><div class="ins">${esc(data.narrative).split('\n').map(ln => { ln = ln.replace(/\s*@MK@/g, '<span title="[마케터 의견]" style="color:#DC2828;font-weight:700;cursor:help;">*</span>'); return /^\s*■/.test(ln) ? `<b>${ln}</b>` : ln; }).join('<br>')}${data.narrative.includes('@MK@') ? '<div style="font-size:11px;color:#9ca3af;margin-top:10px;">* 마케터 의견 반영 항목</div>' : ''}</div></div>` : ''}
+    ${data.narrative ? `<div class="sec"><div class="st">인사이트 <span style="font-size:11px;color:#9ca3af;font-weight:400;" title="AI 분석이 포함된 요약입니다. 데이터 기반 참고용으로 활용하세요.">ⓘ AI 분석 포함 · 참고용</span></div>${insightSectionsHtml(data.narrative)}</div>` : ''}
     <div class="sec"><div class="st">Top 성과 소재</div>${topHtml}</div>
     ${moverBlock}
     <div class="sec"><div class="st">유형별 요약</div><table><thead><tr><th>유형</th><th class="r">소재 수</th><th class="r">평균 점수</th></tr></thead><tbody>${typeHtml}</tbody></table></div>
