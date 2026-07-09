@@ -3556,6 +3556,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         populateCampaignFilter(campaigns);
         populateCanonicalFilter();
         window.__unmatchedAssets = (normalized._meta && normalized._meta.unmatched_assets) || [];
+        window.__gameContext = (normalized._meta && normalized._meta.game_context) || '';   // 1b: 팀 공유 컨텍스트
         renderUnmatchedPanel();
 
         const dateColumn = detectDateColumn(normalizedData.columns);

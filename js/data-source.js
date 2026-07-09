@@ -144,6 +144,7 @@
         creative_count: rows.length,
         campaign_canonical: (data.campaign_canonical && typeof data.campaign_canonical === 'object') ? data.campaign_canonical : {},
         unmatched_assets: Array.isArray(data.unmatched_assets) ? data.unmatched_assets : [],
+        game_context: (typeof data.game_context === 'string') ? data.game_context : '',
       },
     };
   }
