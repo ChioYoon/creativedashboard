@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>소재 사전평가 — Com2uS R Marketing Team</title>
+  <link rel="stylesheet" href="assets/ds/colors_and_type.css?v=20260703a">
+  <link rel="stylesheet" href="assets/cl-shell.css?v=20260702a">
+  <style>
+    .pe-wrap { max-width: 880px; margin: 0 auto; padding: 24px; }
+    .pe-card { background:#fff; border:1px solid var(--hairline-warm,#E4E1DC); border-radius:12px; padding:20px 22px; margin-bottom:16px; }
+    .pe-row { display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap; }
+    .pe-label { font-size:12px; color:var(--text-secondary,#666); font-weight:600; margin-bottom:6px; }
+    .pe-drop { border:2px dashed #d1cfc9; border-radius:10px; padding:26px; text-align:center; color:#9ca3af; cursor:pointer; font-size:13px; background:#faf9f7; }
+    .pe-drop.drag { border-color:#DC2828; color:#DC2828; background:#fff5f5; }
+    .pe-preview { max-width:220px; max-height:220px; border-radius:8px; border:1px solid #eee; }
+    .pe-btn { font-size:14px; font-weight:700; padding:10px 20px; border:none; border-radius:8px; background:#DC2828; color:#fff; cursor:pointer; }
+    .pe-btn:disabled { background:#e5e7eb; color:#9ca3af; cursor:not-allowed; }
+    .pe-select { font-size:14px; padding:8px 10px; border:1px solid #e5e7eb; border-radius:8px; min-width:220px; }
+    .pe-note { font-size:12px; color:#9ca3af; margin-top:8px; }
+    #peResult { margin-top:8px; }
+  </style>
+</head>
+<body>
+  <header class="cl-header">
+    <a href="index.html" class="cl-brand">
+      <span class="cl-brand-title">소재 분석 대시보드</span>
+    </a>
+    <nav class="cl-nav">
+      <a href="index.html" class="cl-nav-link">홈</a>
+      <a href="step1_integrated.html" class="cl-nav-link">Step 1 소재 분석</a>
+      <a href="step2_column_selector.html" class="cl-nav-link">Step 2 군집화</a>
+      <a href="pre_eval.html" class="cl-nav-link active">소재 사전평가</a>
+      <a href="live_dashboard.html" class="cl-nav-link">라이브 대시보드</a>
+      <a href="사용안내서_인쇄용.html" target="_blank" class="cl-nav-link">사용 안내서</a>
+    </nav>
+  </header>
+
+  <div class="pe-wrap">
+    <div class="pe-card">
+      <div style="font-size:18px;font-weight:800;margin-bottom:4px;">소재 사전평가</div>
+      <div class="pe-note">신규 제작 소재(이미지)를 업로드하면, 선택 타이틀의 누적 성과 패턴에 얼마나 부합하는지 집행 전에 예측·개선 가이드를 제시합니다. <b>방향성 참고용</b>이며 실제 성과는 집행으로 검증하세요.</div>
+    </div>
+
+    <div class="pe-card">
+      <div class="pe-row">
+        <div>
+          <div class="pe-label">타이틀</div>
+          <select id="peTitle" class="pe-select"></select>
+        </div>
+        <div style="flex:1;min-width:260px;">
+          <div class="pe-label">소재 이미지 (배너/대표 프레임)</div>
+          <div id="peDrop" class="pe-drop">클릭 또는 드래그하여 이미지 업로드 (PNG/JPG, 10MB 이하)</div>
+          <input type="file" id="peFile" accept="image/*" style="display:none;">
+          <div id="pePreviewWrap" style="margin-top:10px;display:none;"><img id="pePreview" class="pe-preview"></div>
+        </div>
+      </div>
+      <div style="margin-top:14px;">
+        <div class="pe-label">소재 컨셉·의도 (선택)</div>
+        <textarea id="peConcept" rows="2" placeholder="의도한 후킹·USP·타겟 등 (선택)" style="width:100%;box-sizing:border-box;font-size:13px;padding:8px;border:1px solid #e5e7eb;border-radius:6px;font-family:inherit;"></textarea>
+      </div>
+      <div style="margin-top:14px;display:flex;align-items:center;gap:12px;">
+        <button id="peRun" class="pe-btn" disabled>평가 실행</button>
+        <span id="peStatus" class="pe-note"></span>
+      </div>
+    </div>
+
+    <div id="peResult"></div>
+  </div>
+
+  <script src="js/data-source.js"></script>
+  <script src="js/gemini-api.js"></script>
+  <script>
+  /* ===== 입력 UI (Task 2) ===== */
+  window.__preEvalImage = null;   // { mimeType, data(base64) }
+
+  async function _peInitTitles() {
+    const sel = document.getElementById('peTitle');
+    try {
+      const titles = (window.DataSource && await window.DataSource.loadTitleManifest()) || [];
+      const withData = titles.filter(t => t.json_url);
+      sel.innerHTML = withData.map(t => `<option value="${t.id}">${t.name || t.id}</option>`).join('');
+    } catch (_) { sel.innerHTML = '<option value="">타이틀 로드 실패</option>'; }
+  }
+
+  function _peUpdateRunState() {
+    document.getElementById('peRun').disabled = !(window.__preEvalImage && document.getElementById('peTitle').value);
+  }
+
+  function _peHandleFile(file) {
+    const status = document.getElementById('peStatus');
+    if (!file) return;
+    if (!/^image\//.test(file.type)) { status.textContent = '이미지 파일만 업로드할 수 있습니다.'; return; }
+    if (file.size > 10 * 1024 * 1024) { status.textContent = '이미지가 10MB를 초과합니다.'; return; }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = String(reader.result);
+      const base64 = dataUrl.split(',')[1] || '';
+      window.__preEvalImage = { mimeType: file.type, data: base64 };
+      document.getElementById('pePreview').src = dataUrl;
+      document.getElementById('pePreviewWrap').style.display = 'block';
+      status.textContent = '';
+      _peUpdateRunState();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function _peWireInputs() {
+    const drop = document.getElementById('peDrop'), file = document.getElementById('peFile');
+    drop.addEventListener('click', () => file.click());
+    file.addEventListener('change', e => _peHandleFile(e.target.files[0]));
+    ['dragover','dragenter'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('drag'); }));
+    ['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('drag'); }));
+    drop.addEventListener('drop', e => _peHandleFile(e.dataTransfer.files[0]));
+    document.getElementById('peTitle').addEventListener('change', _peUpdateRunState);
+    document.getElementById('peRun').addEventListener('click', () => { if (typeof runPreEval === 'function') runPreEval(); });
+  }
+
+  // Task 4에서 정의됨. 그 전까지 stub.
+  if (typeof window.runPreEval === 'undefined') { window.runPreEval = () => { document.getElementById('peStatus').textContent = '(평가 로직 미구현 — Task 4)'; }; }
+
+  window.addEventListener('DOMContentLoaded', () => { _peInitTitles(); _peWireInputs(); });
+  </script>
+</body>
+</html>
