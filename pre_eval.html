@@ -165,8 +165,100 @@
     document.getElementById('peRun').addEventListener('click', () => { if (typeof runPreEval === 'function') runPreEval(); });
   }
 
-  // Task 4에서 정의됨. 그 전까지 stub.
-  if (typeof window.runPreEval === 'undefined') { window.runPreEval = () => { document.getElementById('peStatus').textContent = '(평가 로직 미구현 — Task 4)'; }; }
+  /* ===== 오케스트레이션 · 프롬프트 · 렌더 (Task 4) ===== */
+  function buildVisionPrompt(pattern, gameCtx, concept) {
+    const T = TAG_TAXONOMY;
+    const list = a => a.join(' / ');
+    const L = [];
+    L.push('당신은 모바일 게임 UA 소재 분석가입니다. 첨부 이미지를 분석해 아래 고정 택소노미의 정확한 한글 라벨로만 태깅하고, JSON으로만 응답하세요(다른 텍스트 금지).');
+    L.push(`[택소노미] art_style(1개): ${list(T.art_style)} // hooking_strategy(1개): ${list(T.hooking_strategy)} // USP(1개): ${list(T.USP)} // strengths(1~3개): ${list(T.strengths)} // weaknesses(0~3개): ${list(T.weaknesses)} // hypothesis(1~2개): ${list(T.hypothesis)}`);
+    if (gameCtx) L.push(`[게임 컨텍스트] ${gameCtx}`);
+    if (pattern && !pattern.insufficient) {
+      L.push(`[이 타이틀 우수 소재 공통 강점] ${pattern.winnerTags.join(', ') || '없음'}`);
+      L.push(`[이 타이틀 저효율 공통 약점] ${pattern.riskTags.join(', ') || '없음'}`);
+    }
+    if (concept) L.push(`[마케터가 의도한 컨셉] ${concept}`);
+    L.push('종합인사이트: 이 소재의 시각 신호를 위 패턴과 대조해 2~3문장. 개선가이드: 놓친 우수 요소 보완·리스크 제거 구체책 2~3개(개조식). 근거 없는 과장 금지.');
+    L.push('출력 JSON 스키마: {"art_style":"","hooking_strategy":"","USP":"","strengths":[],"weaknesses":[],"hypothesis":[],"종합인사이트":"","개선가이드":[]}');
+    return L.join('\n');
+  }
+
+  function parseVisionJson(raw) {
+    if (!raw) return null;
+    let s = String(raw).replace(/```json|```/g, '').trim();
+    const a = s.indexOf('{'), b = s.lastIndexOf('}');
+    if (a === -1 || b === -1) return null;
+    try { return JSON.parse(s.slice(a, b + 1)); } catch (_) { return null; }
+  }
+
+  async function _peGameContext(titleId) {
+    try {
+      const res = await fetch(`pipeline/game_context/${titleId}.md`, { cache: 'no-store' });
+      if (!res.ok) return '';
+      return (await res.text()).slice(0, 1200);
+    } catch (_) { return ''; }
+  }
+
+  window.runPreEval = async function runPreEval() {
+    const status = document.getElementById('peStatus'), result = document.getElementById('peResult');
+    const titleId = document.getElementById('peTitle').value;
+    const img = window.__preEvalImage;
+    if (!img) { status.textContent = '이미지를 먼저 업로드하세요.'; return; }
+    if (typeof GeminiKeyManager === 'undefined' || !GeminiKeyManager.isSet()) {
+      result.innerHTML = '<div class="pe-card">Gemini API 키가 설정되지 않았습니다. Step 1 화면에서 키를 설정한 뒤 이용하세요.</div>';
+      return;
+    }
+    status.textContent = '분석 중… (수 초 소요)'; document.getElementById('peRun').disabled = true; result.innerHTML = '';
+    try {
+      const { normalized } = await window.DataSource.loadCreativeData('json-url', { url: `public/data/${titleId}.json`, titleId });
+      const creatives = (normalized && normalized.rows) || [];
+      const pattern = computeTitlePattern(creatives);
+      const gameCtx = await _peGameContext(titleId);
+      const concept = document.getElementById('peConcept').value.trim();
+      const raw = await callGeminiVision(buildVisionPrompt(pattern, gameCtx, concept), img, { maxTokens: 1400, temperature: 0.4 });
+      const parsed = parseVisionJson(raw);
+      if (!parsed) { result.innerHTML = `<div class="pe-card"><b>AI 응답 파싱 실패</b><div class="pe-note" style="white-space:pre-wrap;margin-top:8px;">${_peEsc(raw).slice(0,1500)}</div></div>`; return; }
+      const tags = { strengths: parsed.strengths || [], weaknesses: parsed.weaknesses || [] };
+      const graded = pattern.insufficient ? null : gradeCreative(tags, pattern);
+      renderPreEval({ titleId, pattern, parsed, graded });
+    } catch (e) {
+      const msg = (e && e.message) || String(e);
+      result.innerHTML = `<div class="pe-card"><b>분석 실패</b><div class="pe-note" style="margin-top:6px;">${_peEsc(msg)}</div></div>`;
+    } finally {
+      status.textContent = ''; document.getElementById('peRun').disabled = false;
+    }
+  };
+
+  function _peEsc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m])); }
+  function _peBadges(arr, color) { return (arr || []).map(t => `<span style="display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:12px;margin:2px 4px 2px 0;background:${color.bg};color:${color.tc};">${_peEsc(t)}</span>`).join('') || '<span class="pe-note">없음</span>'; }
+
+  function renderPreEval({ titleId, pattern, parsed, graded }) {
+    const gradeStyle = { '유망': {bar:'#16a34a',tint:'#f0fdf4',tc:'#15803d'}, '보통': {bar:'#9ca3af',tint:'#faf9f7',tc:'#374151'}, '개선필요': {bar:'#f59e0b',tint:'#fffbeb',tc:'#b45309'} };
+    const card = (bar, tint, inner) => `<div class="pe-card" style="border-left:4px solid ${bar};background:${tint};">${inner}</div>`;
+    let html = '';
+    // 등급
+    if (graded) {
+      const st = gradeStyle[graded.grade] || gradeStyle['보통'];
+      html += card(st.bar, st.tint,
+        `<div style="font-size:13px;color:${st.tc};font-weight:700;">예측 등급</div>`
+        + `<div style="font-size:24px;font-weight:800;color:${st.tc};margin:4px 0 10px;">${graded.grade}</div>`
+        + `<div class="pe-label">✅ 보유한 우수 태그</div><div>${_peBadges(graded.matchedWinners, {bg:'#dcfce7',tc:'#15803d'})}</div>`
+        + `<div class="pe-label" style="margin-top:8px;">⚠️ 놓친 우수 태그</div><div>${_peBadges(graded.missedWinners, {bg:'#f3f4f6',tc:'#374151'})}</div>`
+        + `<div class="pe-label" style="margin-top:8px;">🚩 보유 리스크 태그</div><div>${_peBadges(graded.heldRisks, {bg:'#fee2e2',tc:'#b91c1c'})}</div>`);
+    } else {
+      html += card('#9ca3af', '#faf9f7', `<div style="font-weight:700;">비교 데이터 부족</div><div class="pe-note" style="margin-top:4px;">이 타이틀의 분석 소재가 4개 미만이라 등급은 생략합니다. 아래 감지 태그·AI 인사이트를 참고하세요.</div>`);
+    }
+    // 종합 인사이트
+    if (parsed.종합인사이트) html += card('#3b82f6', '#eff6ff', `<div style="font-size:13px;color:#1d4ed8;font-weight:700;margin-bottom:6px;">종합 인사이트</div><div style="font-size:13px;color:#191919;line-height:1.6;">${_peEsc(parsed.종합인사이트)}</div>`);
+    // 개선 가이드
+    if (Array.isArray(parsed.개선가이드) && parsed.개선가이드.length) html += card('#f59e0b', '#fffbeb', `<div style="font-size:13px;color:#b45309;font-weight:700;margin-bottom:6px;">개선 가이드</div><ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.6;">${parsed.개선가이드.map(x => `<li>${_peEsc(x)}</li>`).join('')}</ul>`);
+    // 감지 태그 요약
+    html += card('#9ca3af', '#fff', `<div class="pe-label">감지된 태그 (참고)</div>`
+      + `<div style="font-size:12.5px;color:#374151;line-height:1.8;">아트: <b>${_peEsc(parsed.art_style||'-')}</b> · 후킹: <b>${_peEsc(parsed.hooking_strategy||'-')}</b> · USP: <b>${_peEsc(parsed.USP||'-')}</b><br>강점: ${_peEsc((parsed.strengths||[]).join(', ')||'-')}<br>약점: ${_peEsc((parsed.weaknesses||[]).join(', ')||'-')}<br>예측: ${_peEsc((parsed.hypothesis||[]).join(', ')||'-')}</div>`);
+    // 신뢰도 안내
+    html += `<div class="pe-note">시각 신호 + ${_peEsc(titleId)} 소재 ${pattern.n}개 성과 패턴 기반 <b>방향성 참고</b>입니다. 실제 성과는 집행으로 검증하세요.</div>`;
+    document.getElementById('peResult').innerHTML = html;
+  }
 
   window.addEventListener('DOMContentLoaded', () => { _peInitTitles(); _peWireInputs(); });
   </script>
