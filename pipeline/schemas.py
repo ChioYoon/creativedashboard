@@ -580,3 +580,6 @@ class CreativeDataset(BaseModel):
 
     # 소재명 별칭 매핑: 집행O·미조인 자산 (concept,source,impressions,cost,asset_types)
     unmatched_assets: list = Field(default_factory=list, description="별칭 매핑 대상 미매칭 자산")
+
+    # 1b: 팀 공유 게임/마케터 컨텍스트 (game_context/{title}.md 전문 — 보고서·사전평가가 읽음)
+    game_context: str = Field(default="", description="game_context md 전문(팀 공유 배경)")

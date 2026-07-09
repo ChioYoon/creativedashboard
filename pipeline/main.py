@@ -27,6 +27,7 @@ CLI 진입점 — Com2uS R팀 소재 자동 태깅 파이프라인.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -81,6 +82,18 @@ def _load_game_context(rel_path: str, repo_root: Path) -> str:
         print(f"[WARNING] _pipeline_game_context_file 없음: {full}")
         return ""
     return full.read_text(encoding="utf-8")
+
+
+def _context_sha(text: str) -> str:
+    """게임 컨텍스트 식별 해시(16자). 빈 문자열이면 ''."""
+    if not text:
+        return ""
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+
+
+def _context_stale(prev_sha: str, cur_sha: str) -> bool:
+    """이전 태깅 컨텍스트 해시와 현재가 다르면 True(둘 다 값 있을 때만)."""
+    return bool(prev_sha) and bool(cur_sha) and prev_sha != cur_sha
 
 
 def _rel_source_path(p: Path, root) -> str:
@@ -657,6 +670,19 @@ def run(cfg: dict) -> dict:
     tagger = GeminiTagger(api_key=cfg["api_key"], model=cfg["model"])
     genre = cfg.get("genre", DEFAULT_GENRE)
     game_ctx = _load_game_context(cfg.get("game_context_file", ""), _REPO_ROOT)
+    # 1b: 컨텍스트 스테일 알림 — 컨텍스트가 마지막 태깅 이후 바뀌었으면 재태깅 권장(자동 아님)
+    cur_ctx_sha = _context_sha(game_ctx)
+    if game_ctx and not cfg.get("no_cache"):
+        _prev_out = cfg["output_dir"] / (f"{cfg['title']}.pilot.json" if cfg.get("pilot") else f"{cfg['title']}.json")
+        if _prev_out.exists():
+            try:
+                _prev = json.loads(_prev_out.read_text(encoding="utf-8"))
+                _prev_sha = (_prev.get("metrics") or {}).get("game_context_sha", "")
+                if _context_stale(_prev_sha, cur_ctx_sha):
+                    print(f"[WARNING] ⚠️ 게임 컨텍스트가 마지막 태깅 이후 변경됨 (이전 {_prev_sha} → 현재 {cur_ctx_sha}). "
+                          f"캐시된 태그는 이전 컨텍스트 기준입니다. 태그를 갱신하려면 --no-cache로 재실행하세요.")
+            except Exception:
+                pass
     # ① 파일럿: 캐시 버전에 '-pilot' 접미 (production 캐시 미오염)
     # ② 타이틀 핀: _pipeline_prompt_version_pin 이 있으면 글로벌 bump 무시 (재태깅 격리)
     if cfg.get("pilot"):
@@ -1155,9 +1181,11 @@ def run(cfg: dict) -> dict:
             "fallback_used": metrics["fallback_used"],
             "carried_forward": carried_forward,
             "score_summary": score_summary,  # Stage 6: 기본 가중치 점수 요약
+            "game_context_sha": cur_ctx_sha,  # 1b: 태깅 시점 컨텍스트 식별 해시
         },
         campaign_canonical=build_campaign_canonical(_collect_campaign_names(records)),
         unmatched_assets=unmatched_all,
+        game_context=game_ctx,  # 1b: 팀 공유 게임/마케터 컨텍스트 전문
     )
 
     # ① 파일럿은 별도 파일로 출력 (production JSON 미오염 — 백업/복원 불필요)
