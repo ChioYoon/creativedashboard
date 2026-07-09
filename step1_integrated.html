@@ -5530,9 +5530,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     // 1b: game_context md에서 UA 전략(§4)~금기(§5)만 슬라이스·상한. 보고서 배경 프레이밍용.
     function _extractUaContext(md) {
       if (!md) return '';
-      const m = md.match(/^#{1,6}\s*\*{0,2}\s*4[\\.\s]/m);   // "## **4\. UA 전략..." 헤딩
-      const sliced = m ? md.slice(m.index) : md;
-      return sliced.replace(/\*\*/g, '').replace(/\\([.\-])/g, '$1').trim().slice(0, 1500);
+      // "UA … 전략" 헤딩부터 EOF(=UA전략·금기 섹션)만 슬라이스. 번호(zeus '## **4\. UA 전략')·이름(gd/pepp/tougen '## UA 소재 전략') 헤딩 모두 매치.
+      const m = md.match(/^#{1,6}[^\n]*UA[^\n]*전략/mi);
+      if (!m) return '';   // UA 전략 섹션 못 찾으면 배경 생략(§1·§2 로어 유입 방지)
+      return md.slice(m.index).replace(/\*\*/g, '').replace(/\\([^\s])/g, '$1').trim().slice(0, 1500);
     }
     function buildReportNarrativePrompt(data, tags, note = '', sharedContext = '') {
       const k = data.kpis, cmp = data.comparison;
