@@ -22,8 +22,10 @@
   </style>
 </head>
 <body>
-  <header class="cl-header">
+  <header class="cl-topbar">
     <a href="index.html" class="cl-brand">
+      <img src="assets/com2us/logo-primary-red.png" alt="Com2uS" class="cl-brand-logo">
+      <span class="cl-brand-divider"></span>
       <span class="cl-brand-title">소재 분석 대시보드</span>
     </a>
     <nav class="cl-nav">
@@ -81,7 +83,6 @@
     weaknesses: ['장르·게임성 불분명','정보 과적 (텍스트·UI 산만)','후킹 식상·평이','행동 유도 약함·부재','모바일 가독성 떨어지는 텍스트','타이틀·브랜드 인지 약함','초반 3초 안에 가치 전달 실패'],
     hypothesis: ['높은 CTR 예상—강한 후킹','높은 CVR 예상—명확한 가치','낮은 관련성 위험—정보 부족','낮은 전환 위험—행동 유도 약함','특정 타겟에 강하게 반응','범용 어필(Mass-market)','피로도 빠를 위험—변주 필요'],
   };
-  const NEGATIVE_HYPOTHESES = ['낮은 관련성 위험—정보 부족','낮은 전환 위험—행동 유도 약함','피로도 빠를 위험—변주 필요'];
 
   // 저장값·스키마 라벨의 구분자 차이(/··() 공백)를 흡수해 매칭.
   function normTag(s) { return String(s == null ? '' : s).replace(/[\s·・/()（）\[\]]/g, ''); }
@@ -128,7 +129,7 @@
     try {
       const titles = (window.DataSource && await window.DataSource.loadTitleManifest()) || [];
       const withData = titles.filter(t => t.json_url);
-      sel.innerHTML = withData.map(t => `<option value="${t.id}">${t.name || t.id}</option>`).join('');
+      sel.innerHTML = withData.map(t => `<option value="${_peEsc(t.id)}">${_peEsc(t.name || t.id)}</option>`).join('');
     } catch (_) { sel.innerHTML = '<option value="">타이틀 로드 실패</option>'; }
   }
 
