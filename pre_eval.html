@@ -192,14 +192,6 @@
     try { return JSON.parse(s.slice(a, b + 1)); } catch (_) { return null; }
   }
 
-  async function _peGameContext(titleId) {
-    try {
-      const res = await fetch(`pipeline/game_context/${titleId}.md`, { cache: 'no-store' });
-      if (!res.ok) return '';
-      return (await res.text()).slice(0, 1200);
-    } catch (_) { return ''; }
-  }
-
   window.runPreEval = async function runPreEval() {
     const status = document.getElementById('peStatus'), result = document.getElementById('peResult');
     const titleId = document.getElementById('peTitle').value;
@@ -214,7 +206,7 @@
       const { normalized } = await window.DataSource.loadCreativeData('json-url', { url: `public/data/${titleId}.json`, titleId });
       const creatives = (normalized && normalized.rows) || [];
       const pattern = computeTitlePattern(creatives);
-      const gameCtx = await _peGameContext(titleId);
+      const gameCtx = ((normalized && normalized._meta && normalized._meta.game_context) || '').slice(0, 1200);
       const concept = document.getElementById('peConcept').value.trim();
       const raw = await callGeminiVision(buildVisionPrompt(pattern, gameCtx, concept), img, { maxTokens: 1400, temperature: 0.4 });
       const parsed = parseVisionJson(raw);
