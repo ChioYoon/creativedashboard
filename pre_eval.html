@@ -71,6 +71,55 @@
   <script src="js/data-source.js"></script>
   <script src="js/gemini-api.js"></script>
   <script>
+  /* ===== 태그 택소노미 · 패턴 · 등급 (Task 3) =====
+     SYNC: pipeline/schemas.py Enum (StrengthSignal/WeaknessSignal/HookingStrategy/CoreUSP/VisualStyle/PerformanceHypothesis) */
+  const TAG_TAXONOMY = {
+    art_style: ['2D 일러스트','3D 셀셰이딩','2.5D 피규어 입체 화풍','도트·픽셀 레트로','시네마틱 실사 합성'],
+    hooking_strategy: ['실패/분노 유도','캐릭터 외형 소구','압도적 보상','질문·선택 상황 제시','비주얼 임팩트','트렌드·인터넷 밈'],
+    USP: ['혜택형(무료뽑기/보상)','전략·경쟁형(상성/조합)','감성 유대형(교감/서사)','편의성형(방치/빠른성장)','대세감(출시일/사전등록수)'],
+    strengths: ['강한 비주얼 임팩트','다수 캐릭터 라인업','SD·귀여운 캐릭터 연출','단일 주인공 스포트라이트','캐릭터 액션·전투 연출','보상 약속 명확','호기심·궁금증 유발','단일 명료한 가치 제안','수치·수상 사회증명','감성 유대·스토리텔링','출시일·한정 강조','게임플레이 자체 매력','오디오 후킹(BGM/SFX/Voice)'],
+    weaknesses: ['장르·게임성 불분명','정보 과적 (텍스트·UI 산만)','후킹 식상·평이','행동 유도 약함·부재','모바일 가독성 떨어지는 텍스트','타이틀·브랜드 인지 약함','초반 3초 안에 가치 전달 실패'],
+    hypothesis: ['높은 CTR 예상—강한 후킹','높은 CVR 예상—명확한 가치','낮은 관련성 위험—정보 부족','낮은 전환 위험—행동 유도 약함','특정 타겟에 강하게 반응','범용 어필(Mass-market)','피로도 빠를 위험—변주 필요'],
+  };
+  const NEGATIVE_HYPOTHESES = ['낮은 관련성 위험—정보 부족','낮은 전환 위험—행동 유도 약함','피로도 빠를 위험—변주 필요'];
+
+  // 저장값·스키마 라벨의 구분자 차이(/··() 공백)를 흡수해 매칭.
+  function normTag(s) { return String(s == null ? '' : s).replace(/[\s·・/()（）\[\]]/g, ''); }
+  function _hasTag(list, tag) { const n = normTag(tag); return (list || []).some(x => normTag(x) === n); }
+
+  // 타이틀 소재 → 우수/리스크 태그. 소재 4개 미만이면 insufficient.
+  function computeTitlePattern(creatives) {
+    const valid = (creatives || []).filter(c => c && c.scores && c.scores.total != null);
+    const n = valid.length;
+    if (n < 4) return { n, winnerTags: [], riskTags: [], insufficient: true };
+    const sorted = valid.slice().sort((a, b) => b.scores.total - a.scores.total);
+    const half = Math.floor(n / 2);
+    const winners = sorted.slice(0, half), losers = sorted.slice(n - half);
+    const rate = (cohort, tag) => cohort.filter(c => _hasTag(c.strengths, tag)).length / (cohort.length || 1);
+    const allStrengths = [...new Set(valid.flatMap(c => c.strengths || []))];
+    const winnerTags = allStrengths
+      .map(tag => ({ tag, lift: +(rate(winners, tag) - rate(losers, tag)).toFixed(2) }))
+      .filter(o => o.lift >= 0.2).sort((a, b) => b.lift - a.lift).map(o => o.tag);
+    const wCount = {};
+    losers.forEach(c => (c.weaknesses || []).forEach(w => { wCount[w] = (wCount[w] || 0) + 1; }));
+    const thr = Math.ceil(losers.length / 3);
+    const riskTags = Object.keys(wCount).filter(w => wCount[w] >= thr);
+    return { n, winnerTags, riskTags, insufficient: false };
+  }
+
+  // 신규 소재 태그 × 타이틀 패턴 → 정성 등급 (결정론적).
+  function gradeCreative(tags, pattern) {
+    const s = tags.strengths || [], w = tags.weaknesses || [];
+    const matchedWinners = (pattern.winnerTags || []).filter(t => _hasTag(s, t));
+    const missedWinners  = (pattern.winnerTags || []).filter(t => !_hasTag(s, t));
+    const heldRisks      = (pattern.riskTags || []).filter(t => _hasTag(w, t));
+    let grade;
+    if (matchedWinners.length >= 2 && heldRisks.length === 0) grade = '유망';
+    else if (heldRisks.length >= 2 || (heldRisks.length >= 1 && matchedWinners.length === 0)) grade = '개선필요';
+    else grade = '보통';
+    return { grade, matchedWinners, missedWinners, heldRisks };
+  }
+
   /* ===== 입력 UI (Task 2) ===== */
   window.__preEvalImage = null;   // { mimeType, data(base64) }
 
