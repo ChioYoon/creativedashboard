@@ -199,6 +199,60 @@ async function callGeminiAPI(prompt, { maxTokens = GEMINI_CONFIG.MAX_TOKENS, tem
 }
 
 /* ──────────────────────────────────────
+   3-A. 비전 호출 (이미지 + 프롬프트) — 소재 사전평가 전용
+   ※ 기존 callGeminiAPI(텍스트 전용)와 분리. inlineData(base64) part 추가.
+────────────────────────────────────── */
+async function callGeminiVision(prompt, image, { maxTokens = 2048, temperature = 0.4, topP = GEMINI_CONFIG.TOP_P } = {}) {
+  const apiKey = GeminiKeyManager.get();
+  if (!apiKey) throw new Error('API_KEY_MISSING');
+  if (!image || !image.data || !image.mimeType) throw new Error('IMAGE_MISSING');
+
+  const url = `${GEMINI_CONFIG.BASE_URL}/${GEMINI_CONFIG.MODEL}:generateContent?key=${apiKey}`;
+  const body = {
+    contents: [{ parts: [
+      { inlineData: { mimeType: image.mimeType, data: image.data } },
+      { text: prompt },
+    ] }],
+    generationConfig: { maxOutputTokens: maxTokens, temperature, topP, thinkingConfig: { thinkingBudget: 0 } },
+    safetySettings: [
+      { category: 'HARM_CATEGORY_HARASSMENT',        threshold: 'BLOCK_NONE' },
+      { category: 'HARM_CATEGORY_HATE_SPEECH',       threshold: 'BLOCK_NONE' },
+      { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+      { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+    ],
+  };
+
+  for (let attempt = 0; attempt <= 1; attempt++) {
+    let res;
+    try {
+      res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    } catch (networkErr) {
+      if (attempt === 1) throw new Error(`네트워크 오류: ${networkErr.message}`);
+      await new Promise(r => setTimeout(r, 1000));
+      continue;
+    }
+    if (!res.ok) {
+      let apiMsg = '';
+      try { apiMsg = (await res.json())?.error?.message || ''; } catch (_) {}
+      switch (res.status) {
+        case 429: throw new Error('RATE_LIMIT');
+        case 400: throw new Error(`잘못된 요청(400): ${apiMsg || '이미지 또는 파라미터를 확인하세요.'}`);
+        case 403: throw new Error('INVALID_API_KEY');
+        case 500: case 503: throw new Error(`Gemini 서버 오류(${res.status}): 잠시 후 다시 시도하세요.`);
+        default: throw new Error(`HTTP ${res.status}: ${apiMsg || res.statusText}`);
+      }
+    }
+    const json = await res.json();
+    const candidate = json?.candidates?.[0];
+    const text = candidate?.content?.parts?.[0]?.text;
+    const finishReason = candidate?.finishReason || 'UNKNOWN';
+    console.log(`[GeminiVision] finishReason: ${finishReason} | 출력길이: ${(text||'').length}자`);
+    if (!text) throw new Error(`응답 없음 (사유: ${finishReason})`);
+    return text.trim();
+  }
+}
+
+/* ──────────────────────────────────────
    3-B. 텍스트 압축 유틸리티
    ─ 긴 자유 텍스트 컬럼(marketer_insight 등)에서
      핵심 키워드만 추출하여 토큰 사용량을 최소화
