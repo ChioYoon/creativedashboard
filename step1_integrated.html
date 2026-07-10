@@ -152,9 +152,11 @@
       transition: border-color var(--dur-fast);
     }
     .sb-input:focus { border-color: var(--brand-primary); }
-    .sb-date-row { display: flex; align-items: center; gap: 6px; }
-    .sb-date-row .sb-input { flex: 1; }
-    .sb-date-sep { font-size: 11px; color: var(--text-secondary); flex-shrink: 0; }
+    /* 날짜 직접 입력: 240px 사이드바에서 잘리지 않게 라벨+세로 스택 (LTV 대시보드 방식 참고) */
+    .sb-date-field { margin-bottom: 6px; }
+    .sb-date-field:last-child { margin-bottom: 0; }
+    .sb-date-flabel { display: block; font-size: 11px; color: var(--text-secondary); margin-bottom: 3px; }
+    .sb-date-field .sb-input { width: 100%; min-width: 0; box-sizing: border-box; }
     .sb-date-presets { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
     .sb-date-preset {
       padding: 3px 8px; border: 1px solid var(--border-default);
@@ -1458,11 +1460,8 @@
               <button class="sb-date-preset" data-preset="custom" onclick="setDatePreset('custom')">직접</button>
             </div>
             <div id="dateCustomInputs" style="display:none;">
-              <div class="sb-date-row">
-                <input type="date" id="startDate" class="sb-input">
-                <span class="sb-date-sep">~</span>
-                <input type="date" id="endDate" class="sb-input">
-              </div>
+              <div class="sb-date-field"><span class="sb-date-flabel">시작일</span><input type="date" id="startDate" class="sb-input"></div>
+              <div class="sb-date-field"><span class="sb-date-flabel">종료일</span><input type="date" id="endDate" class="sb-input"></div>
             </div>
 
             <!-- 저노출/저전환 소재 제외 토글 -->
