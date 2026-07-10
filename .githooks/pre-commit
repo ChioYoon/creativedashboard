@@ -1,0 +1,25 @@
+#!/bin/sh
+# ─────────────────────────────────────────────────────────────
+# pre-commit 훅 — 캐시버스터 자동 갱신
+# 공용 js/css 를 수정하면 이를 로드하는 HTML의 ?v= 해시를 자동으로 맞추고,
+# 변경된 HTML 만 이번 커밋 스테이지에 포함한다.
+#
+# 활성화(클론당 1회):  git config core.hooksPath .githooks
+# ─────────────────────────────────────────────────────────────
+
+# python 실행기 탐색 (py 런처 > python3 > python)
+if command -v py >/dev/null 2>&1; then PY="py -3";
+elif command -v python3 >/dev/null 2>&1; then PY="python3";
+else PY="python"; fi
+
+changed="$($PY tools/bump_cache_busters.py --print-changed 2>/dev/null)"
+
+if [ -n "$changed" ]; then
+  printf '%s\n' "$changed" | while IFS= read -r f; do
+    [ -n "$f" ] && git add -- "$f"
+  done
+  echo "[pre-commit] 캐시버스터 갱신 → 위 HTML을 커밋에 포함했습니다:"
+  printf '  %s\n' $changed
+fi
+
+exit 0
