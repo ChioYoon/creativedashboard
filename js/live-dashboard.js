@@ -14,12 +14,18 @@
 
   // ── campaign_name 파서 ──────────────────────────────────────
   // 예: HQ_HQ_PH_US-EN_GA_NU_AD_ACA-PU_260429 / HQ_HQ_PH_CA-EN_FB_NU_iOS_INSTALL_260122
+  // 폴백 파서 — 파이프라인 campaign_canonical.py 와 동일 의미론 유지(단일 국가코드·AD/ALL).
+  //   주 경로는 campaign_canonical 맵(cf) — 이 파서는 맵에 없는 캠페인명 전용.
   LIVE.parseCountry = function (cn) {
     if (!cn) return '미상';
-    const seg = String(cn).split('_').find(s => /^[A-Z]{2,4}-[A-Z]{2}$/.test(s));
+    const segs = String(cn).split('_');
+    let c = segs[3] || '';                                   // 위치 기반 country 토큰
+    if (c.includes('-')) c = c.split('-')[0];                // KR-KR → KR
+    if (/^[A-Z]{2,4}$/.test(c)) return c;                    // 단일 코드 (KR, WW …)
+    const seg = segs.find(s => /^[A-Z]{2,4}-[A-Z]{2}$/.test(s));   // 위치 어긋난 이름 폴백
     return seg ? seg.split('-')[0] : '미상';
   };
-  const OS_TOKENS = { ios: 'iOS', aos: 'Android', android: 'Android', web: 'Web' };
+  const OS_TOKENS = { ios: 'iOS', aos: 'Android', ad: 'Android', android: 'Android', web: 'Web', all: '전체' };
   LIVE.parseOS = function (cn) {
     if (!cn) return '미상';
     for (const s of String(cn).split('_')) {
@@ -349,7 +355,7 @@
       const cell = cellOf(c);
       const idle = LIVE.state.hasKpi && cell.impr === 0 && cell.acq === 0;   // 선택 기간 미집행
       const badge = !LIVE.state.hasKpi ? ''
-        : idle ? `<div class="live-card-badge" style="background:#6b7280;">미집행</div>`
+        : idle ? `<div class="live-card-badge"><span style="display:inline-block;background:#ECEAE6;color:#4C4C4C;font-size:10px;font-weight:700;padding:1px 8px;border-radius:9999px;">미집행</span></div>`
         : `<div class="live-card-badge">획득 ${cell.acq.toLocaleString()}</div>`;
       const dim = idle ? 'style="opacity:.5;"' : '';
       return `<div class="live-card" ${dim} data-idx="${i}"><div class="live-card-preview">${livePreviewHtml(c)}</div><div class="live-card-body"><div class="live-card-name">${escapeHtml(c.소재명 || c.creative_id || '')}</div>${badge}</div></div>`;
