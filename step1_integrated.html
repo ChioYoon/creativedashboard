@@ -1454,8 +1454,11 @@
               <div class="sb-date-field"><span class="sb-date-flabel">종료일</span><input type="date" id="endDate" class="sb-input"></div>
             </div>
 
-            <span class="sb-label">분석 기준</span>
-            <div class="sb-radio-group">
+            <!-- 분석 기준(소재명/파일명) 숨김: 파이프라인 데이터는 소재 단위로 이미 병합돼 파일명 그룹핑이
+                 무의미(소재명과 1:1)하여 오해 방지. 소재명 기준 고정. 파일→에셋 성과는 소재 상세 모달의
+                 '에셋별 성과'에서 확인. (소재명 라디오는 checked 유지 → currentGroupBy='소재명') -->
+            <span class="sb-label" style="display:none;">분석 기준</span>
+            <div class="sb-radio-group" style="display:none;">
               <label class="sb-radio-item selected" id="sbGroupByName" onclick="setSbRadio('groupBy','소재명')">
                 <input type="radio" name="groupBy" value="소재명" checked>소재명
               </label>
@@ -1699,8 +1702,9 @@
         <div id="fatigueTabContent">
         <!-- 피로도 전용 필터 (간소) -->
         <div style="display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
-          <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-secondary);">분석 기준</span>
-          <div style="display:flex;gap:5px;">
+          <!-- 분석 기준 숨김(소재명 고정) — 상단 필터와 동일 사유. 소재명 라디오 checked 유지 -->
+          <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--text-secondary);display:none;">분석 기준</span>
+          <div style="display:none;gap:5px;">
             <label style="display:flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--border-default);border-radius:var(--radius-full);font-size:12px;cursor:pointer;">
               <input type="radio" name="fatigueGroupBy" value="소재명" checked style="accent-color:var(--brand-primary);">소재명
             </label>
@@ -7056,6 +7060,46 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       openModalByName(el.dataset.name || el.getAttribute('title') || el.textContent.trim());
     });
 
+    // 에셋별 성과 드릴다운 — kpi_daily(Google Ads)를 asset_url(집행 에셋)로 재집계.
+    //   규격 파일(source_files)과 asset_url은 데이터상 연결되지 않아 '규격' 라벨은 불가 →
+    //   실제 집행 에셋 단위(썸네일+지표)로 표시. 에셋 2개 이상일 때만 노출. 현재 분석 기간 반영.
+    function assetBreakdownHtml(creative) {
+      const kd = (creative.meta && Array.isArray(creative.meta.kpi_daily)) ? creative.meta.kpi_daily : [];
+      if (!kd.length) return '';
+      const s = (document.getElementById('startDate') || {}).value;
+      const e = (document.getElementById('endDate') || {}).value;
+      const inWin = d => !(s && e) || (d && d >= s && d <= e);
+      const byAsset = {};
+      kd.forEach(r => {
+        if (!inWin(r.date)) return;
+        const url = r.asset_url; if (!url) return;
+        const a = byAsset[url] || (byAsset[url] = { url, imp: 0, clk: 0, cost: 0, conv: 0 });
+        a.imp += r.impressions || 0; a.clk += r.clicks || 0; a.cost += r.cost || 0; a.conv += r.conversions || 0;
+      });
+      const assets = Object.values(byAsset).filter(a => a.imp > 0 || a.conv > 0);
+      if (assets.length < 2) return '';   // 단일 에셋이면 드릴다운 불필요
+      assets.sort((a, b) => (b.conv - a.conv) || (b.imp - a.imp));
+      const totConv = assets.reduce((x, a) => x + a.conv, 0);
+      const totImp  = assets.reduce((x, a) => x + a.imp, 0);
+      const rows = assets.map((a, i) => {
+        const cpa = a.conv > 0 ? a.cost / a.conv : null;
+        const share = totConv > 0 ? (a.conv / totConv * 100) : (totImp > 0 ? a.imp / totImp * 100 : 0);
+        const best = i === 0 ? '<span style="font-size:10px;font-weight:700;color:#DC2828;background:rgba(220,40,40,.10);padding:1px 6px;border-radius:9999px;margin-left:6px;">최고</span>' : '';
+        return `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--hairline-warm,#E4E1DC);">
+          ${creativeThumbHtml(a.url, creative.유형, 52, 52)}
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:12.5px;font-weight:700;color:#191919;">에셋 ${i + 1}${best} <span style="font-weight:400;color:#666;">· 전환 비중 ${share.toFixed(0)}%</span></div>
+            <div style="font-size:11.5px;color:#666;margin-top:2px;">노출 ${a.imp.toLocaleString()} · 전환 ${Math.round(a.conv).toLocaleString()} · CPA ${cpa != null ? '₩' + Math.round(cpa).toLocaleString() : '—'}</div>
+          </div>
+        </div>`;
+      }).join('');
+      return `<div class="modal-info-row" style="flex-direction:column;align-items:stretch;">
+        <div class="modal-info-label" style="margin-bottom:2px;">에셋별 성과 <span style="font-weight:400;color:#999;font-size:11px;">(Google Ads · 집행 에셋 ${assets.length}개 · 현재 분석 기간)</span></div>
+        <div style="font-size:11px;color:#999;margin-bottom:2px;">폴더의 규격 파일과 별개로, 실제 집행된 에셋 단위 성과입니다.</div>
+        <div>${rows}</div>
+      </div>`;
+    }
+
     function openPreviewModal(index) {
       if (!window.currentCreatives || !window.currentCreatives[index]) {
         alert('소재 정보를 찾을 수 없습니다.');
@@ -7184,6 +7228,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
             <div class="modal-info-label">유형</div>
             <div class="modal-info-value"><strong>${creative.유형}</strong> ${isVideo ? '(동영상)' : '(이미지)'}</div>
           </div>
+          ${assetBreakdownHtml(creative)}
           ${statusBlock}
           ${(creative.meta?.creator_intent || '').trim() ? `
           <div class="modal-info-row">
