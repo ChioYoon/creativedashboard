@@ -24,7 +24,7 @@ from __future__ import annotations
 from enum import Enum
 from typing import Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 # ─────────────────────────────────────────────────────────────
@@ -458,8 +458,7 @@ class CreativeRecord(BaseModel):
     mmp_fx_rate: Optional[float] = Field(None, description="적용 환율(USD→KRW). 1.0=변환 안 함")
     mmp_daily: list["CreativeMmpDaily"] = Field(default_factory=list, description="채널별·일별(sparkline)")
 
-    class Config:
-        populate_by_name = True  # alias와 원본 이름 둘 다 허용
+    model_config = ConfigDict(populate_by_name=True)  # alias와 원본 이름 둘 다 허용
 
 
 # ─────────────────────────────────────────────────────────────
@@ -525,8 +524,7 @@ class CreativeKpiDaily(BaseModel):
     conversions: float = Field(0.0, description="Google Ads는 float (소수 가능)")
     conversions_value: float = 0.0
 
-    class Config:
-        populate_by_name = True
+    model_config = ConfigDict(populate_by_name=True)
 
 
 # Forward reference 해결 (CreativeRecord에서 CreativeKpiDaily를 참조하므로)
