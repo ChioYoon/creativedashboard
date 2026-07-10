@@ -832,6 +832,23 @@
 
       <!-- 차트 제거 (R16): 군집별 평균 점수·소재 수는 군집 카드에 이미 표시 — 정보 중복 -->
 
+      <!-- 자동 인사이트 (Rule-based) — R19: 군집 분석 결과 바로 아래 배치 -->
+      <div class="section">
+        <div class="section-head">
+          <div class="section-icon" style="background:var(--mid);">
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <h3>자동 인사이트 도출</h3>
+          <span style="margin-left:auto;font-size:11px;background:var(--green-pale);
+                       color:var(--green);padding:3px 10px;border-radius:10px;font-weight:700;">
+            규칙 기반 패턴 분석
+          </span>
+        </div>
+        <div class="section-body">
+          <div class="insight-grid" id="insightGrid"></div>
+        </div>
+      </div>
+
       <!-- 태그 영향도 -->
       <div class="section">
         <div class="section-head">
@@ -853,23 +870,7 @@
       </div>
 
       <!-- Gemini AI 허브 제거 (R15-2): 규칙기반 인사이트·태그 히트맵·매핑 테이블로 충분 -->
-
-      <!-- 자동 인사이트 (Rule-based, 유지) -->
-      <div class="section">
-        <div class="section-head">
-          <div class="section-icon" style="background:var(--mid);">
-            <i class="fas fa-lightbulb"></i>
-          </div>
-          <h3>자동 인사이트 도출</h3>
-          <span style="margin-left:auto;font-size:11px;background:var(--green-pale);
-                       color:var(--green);padding:3px 10px;border-radius:10px;font-weight:700;">
-            규칙 기반 패턴 분석
-          </span>
-        </div>
-        <div class="section-body">
-          <div class="insight-grid" id="insightGrid"></div>
-        </div>
-      </div>
+      <!-- 자동 인사이트는 R19에서 군집 분석 결과 바로 아래로 이동 -->
 
       <!-- 군집 트렌드 비교 (시점 간 비교, 클릭 시에만 실행) -->
       <div class="section">
@@ -2568,31 +2569,10 @@ function renderInsights(clusters, data) {
     });
   }
 
-  // 3. 집중 투자 추천
-  const bigCluster = clusters.filter(c=>c.materials.length>=3).sort((a,b)=>b.avgScore-a.avgScore)[0];
-  if (bigCluster) {
-    insights.push({
-      type:'info',
-      icon:'💡',
-      title:'집중 투자 추천',
-      body:`<strong>${escHtml(bigCluster.name)}</strong> 군집은 ${bigCluster.materials.length}개 소재, 평균 ${bigCluster.avgScore}점으로 가장 안정적인 고성과 군집입니다. 예산 집중 투자를 권장합니다.`,
-      tags: bigCluster.topTags.slice(0,4)
-    });
-  }
-
-  // 4. 태그 시너지
-  const { weightMap } = data;
-  const highWeightTags = Object.entries(weightMap)
-    .filter(([t,w])=>w>=60).map(([t])=>t);
-  if (highWeightTags.length >= 2) {
-    insights.push({
-      type:'purple',
-      icon:'✨',
-      title:'고가중치 태그 시너지',
-      body:`가중치 60% 이상의 핵심 태그 <strong>${highWeightTags.slice(0,3).map(t=>escHtml(t)).join(', ')}</strong> 등이 상위 군집에 집중 분포합니다. 신규 소재 기획 시 이 태그 조합을 우선 적용하세요.`,
-      tags: highWeightTags.slice(0,5)
-    });
-  }
+  // R19 카드 정리 — 제거: '집중 투자 추천'(승리 패턴과 동일 군집 중복),
+  //   '고가중치 태그 시너지'(사용자 설정 가중치의 자기 참조 — 데이터 근거 아님),
+  //   '최고/최저 성과 소재'(군집 카드 TOP 소재·대표 썸네일과 중복).
+  //   유지: 승리공식·중단패턴(lift), 승리 패턴, 저성과 패턴, 기타 과다 경고.
 
   // 5. 소재 다양성
   const miscCluster = clusters.find(c=>c.id===-1);
@@ -2603,32 +2583,6 @@ function renderInsights(clusters, data) {
       title:'소재 분류 다양성 과다',
       body:`전체 소재의 <strong>${(miscCluster.materials.length/allMats.length*100).toFixed(0)}%</strong>(${miscCluster.materials.length}개)가 '기타' 군집으로 분류되었습니다. 태그 컬럼 선택을 늘리거나 CSV 태그 데이터를 보강하면 더 정확한 군집화가 가능합니다.`,
       tags: ['태그 보강 필요']
-    });
-  }
-
-  // 6. 최고 소재
-  const topMat = allMats.sort((a,b)=>b.score-a.score)[0];
-  if (topMat) {
-    const topCl = clusters.find(c=>c.materials.some(m=>m.idx===topMat.idx));
-    insights.push({
-      type:'win',
-      icon:'⭐',
-      title:'최고 성과 소재',
-      body:`<strong>${escHtml(topMat.name)}</strong>(${topMat.score}점)이 가장 높은 성과를 보입니다.${topCl?` [${escHtml(topCl.name)}] 군집 소속.`:''} 이 소재의 태그 조합을 레퍼런스로 활용하세요.`,
-      tags: topMat.topTags.slice(0,4)
-    });
-  }
-
-  // 6b. 최저 소재 (최고와 대비) — ⑪
-  const bottomMat = allMats.length >= 2 ? allMats[allMats.length - 1] : null;  // allMats 는 topMat 산출에서 점수 내림차순 정렬됨
-  if (bottomMat && topMat && bottomMat.idx !== topMat.idx) {
-    const botCl = clusters.find(c => c.materials.some(m => m.idx === bottomMat.idx));
-    insights.push({
-      type:'alert',
-      icon:'⚠️',
-      title:'최저 성과 소재',
-      body:`<strong>${escHtml(bottomMat.name)}</strong>(${bottomMat.score}점)이 가장 낮은 성과를 보입니다.${botCl?` [${escHtml(botCl.name)}] 군집 소속.`:''} 최고 성과 소재와 태그 조합을 비교해 보완·교체를 검토하세요.`,
-      tags: (bottomMat.topTags || []).slice(0,4)
     });
   }
 
