@@ -38,7 +38,11 @@
     body {
       font-family: var(--font-kr);
       background: var(--surface-soft);
-      min-height: 100vh;
+      /* 고정 뷰포트 셸(헤더 + .ds-app-body) — 창 자체는 스크롤하지 않고 .ds-main 내부만 스크롤.
+         (min-height:100vh 이면 표의 가로 스크롤바가 뷰포트 높이를 15px 잠식 → 창에 유령 세로 스크롤바 = 이중 스크롤) */
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
       color: var(--text-primary);
     }
     
@@ -1623,6 +1627,9 @@
         </div>
         <div id="scoringAIBox"></div>
 
+        <!-- 엄격 스코핑: 현재 필터가 이 레이어의 소스 캠페인을 0개로 만들 때 안내 (레이어 전환 시 갱신) -->
+        <div id="layerScopeNotice" style="display:none;"></div>
+
         <!-- 소재 테이블 -->
         <div class="table-container">
           <table id="resultTable" class="ds-table">
@@ -2399,6 +2406,28 @@ function onObjectiveChange(val) {
   applyObjectiveClass();
 }
 
+// 엄격 스코핑 빈 레이어 안내 배너 — 현재 필터가 활성 레이어의 소스 캠페인을 0개로 만들 때(상대 소스엔 캠페인 있음).
+//   테이블 상단 배너로 사유·대안 레이어를 안내. 레이어 전환·최초 렌더 모두 switchAnalysisLayer 경유 → 반응형.
+function renderLayerScopeNotice() {
+  const el = document.getElementById('layerScopeNotice');
+  if (!el) return;
+  const layer = window.currentAnalysisLayer || 'ads';
+  let msg = '';
+  if (layer === 'ads' && window._gadsScopedEmpty) {
+    msg = '현재 필터에 해당하는 <strong>Google Ads 캠페인이 없습니다</strong>. 이 소재들은 MMP(Airbridge) 매체로 집행되었어요 — 상단 <strong>‘MMP 기준’</strong>으로 전환해 분석하세요.';
+  } else if (layer === 'mmp' && window._mmpScopedEmpty) {
+    msg = '현재 필터에 해당하는 <strong>MMP 캠페인이 없습니다</strong>. 이 소재들은 Google Ads 매체로 집행되었어요 — 상단 <strong>‘Google Ads 기준’</strong>으로 전환해 분석하세요.';
+  }
+  if (msg) {
+    el.innerHTML = `<div style="margin-bottom:12px;padding:12px 16px;background:#eff6ff;border:1px solid #bfdbfe;border-left:4px solid #2563eb;border-radius:8px;font-size:13px;color:#1d4ed8;line-height:1.5;">
+      <strong>ⓘ 안내:</strong> ${msg}</div>`;
+    el.style.display = 'block';
+  } else {
+    el.innerHTML = '';
+    el.style.display = 'none';
+  }
+}
+
 function switchAnalysisLayer(layer) {
   window.currentAnalysisLayer = layer;
 
@@ -2448,6 +2477,8 @@ function switchAnalysisLayer(layer) {
   }
   // 목표 렌즈 dim 적용 (레이어 전환·최초 렌더 모두 이 경로 경유)
   applyObjectiveClass();
+  // 엄격 스코핑 빈 레이어 안내 배너 (활성 레이어 반응형)
+  renderLayerScopeNotice();
 }
 
 // Stage 5-J: 결과 표를 정렬 기준으로 재정렬 후 행만 재렌더 (currentCreatives 를 in-place 정렬해
@@ -4404,7 +4435,9 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           let activeMmpCampaigns = null;   // 선택된 MMP 캠페인 라벨 배열 (없으면 전체)
           let activeGadsCampaigns = null;  // 선택된 Google Ads 캠페인 배열 (없으면 전체)
           let activeDateWindow = null;     // {start,end} 실적일 윈도우 (없으면 전체)
-          window._mmpDecoupledNote = false;  // Google Ads 캠페인만 선택 시 MMP는 전체 채널 기준 안내 플래그
+          // 엄격 스코핑(대칭): 현재 필터가 특정 레이어를 비우는지 안내용 플래그 (매 실행 초기화)
+          window._gadsScopedEmpty = false;  // 필터 결과 Google Ads 캠페인 0 (상대 소스엔 있음) → GA 레이어 빈 상태
+          window._mmpScopedEmpty  = false;  // 필터 결과 MMP 캠페인 0 (상대 소스엔 있음) → MMP 레이어 빈 상태
 
           // 캠페인 필터 (다중 선택 지원)
           // Stage 5-F-4: JSON 모드 (row.kpi_daily 보유)는 row 제외가 아니라 "KPI 교체" —
@@ -4419,7 +4452,6 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             const mmpChannels  = selectedCampaigns.filter(c => c.startsWith('[MMP] ')).map(c => c.replace('[MMP] ', ''));
             const gadsCampaigns = selectedCampaigns.filter(c => !c.startsWith('[MMP] '));
             const isJsonKpiMode = filteredRows.some(row => Array.isArray(row.kpi_daily) && row.kpi_daily.length);
-            window._mmpDecoupledNote = gadsCampaigns.length > 0 && mmpChannels.length === 0;
 
             if (gadsCampaigns.length > 0 && isJsonKpiMode) {
               // Google Ads 캠페인 선택 — KPI 교체 모드
@@ -4476,6 +4508,17 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
               console.log(`🎯 MMP 채널 필터: ${mmpChannels.join(', ')} → ${filteredRows.length}개 (${beforeMmp - filteredRows.length}개 제외)`);
               window._campaignKpiSwapActive = false;
             }
+
+            // ── 엄격 스코핑(대칭) ─────────────────────────────────────────
+            // 필터가 활성인데 특정 소스 캠페인이 0개면 그 레이어를 빈 스코프([])로 명시.
+            //   → aggGadsWindow / 2-0b(MMP 재계산)가 0 합산 → creativeLayerView.hasData=false
+            //   → 해당 레이어 표에서 자동 제외(빈 상태). 필터와 무관한 상대 소스 데이터 노출 차단.
+            //   (기존 _mmpDecoupledNote '전체 채널 기준' 폴백 폐기)
+            if (gadsCampaigns.length === 0) activeGadsCampaigns = [];   // Google Ads 레이어 → 0
+            if (mmpChannels.length === 0)   activeMmpCampaigns  = [];   // MMP 레이어 → 0
+            // 현재 필터가 한쪽 레이어만 비우는 경우(상대 소스엔 캠페인 있음) → 빈 레이어 안내용
+            window._gadsScopedEmpty = gadsCampaigns.length === 0 && mmpChannels.length > 0;
+            window._mmpScopedEmpty  = mmpChannels.length === 0 && gadsCampaigns.length > 0;
 
             if (gadsCampaigns.length === 0 && mmpChannels.length === 0) {
               window._campaignKpiSwapActive = false;
@@ -5141,6 +5184,9 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const tbody = document.getElementById('tableBody');
       if (!tbody) return;
       tbody.innerHTML = '';
+      // 엄격 스코핑: 현재 레이어가 필터로 인해 자기 소스 캠페인 0개면 행 미표시(제로행 방지) — 상단 배너가 사유·대안 안내
+      const _actLayer = window.currentAnalysisLayer || 'ads';
+      if ((_actLayer === 'ads' && window._gadsScopedEmpty) || (_actLayer === 'mmp' && window._mmpScopedEmpty)) return;
       const riskSignals = window._riskSignals || {};
       const _statusOvr = loadStatusOverrides();
       const _statusGMax = computeGlobalMaxDate(creatives);
@@ -5316,13 +5362,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           }
         }
 
-        // MMP 디커플 안내: Google Ads 캠페인만 선택 시 MMP는 전체 채널 기준 (캠페인 미적용)
-        let mmpNotice = '';
-        if (window._mmpDecoupledNote && creatives.some(c => c.meta && c.meta.mmp_quality_score && c.meta.mmp_quality_score.total != null)) {
-          mmpNotice = `<div style="margin-top:10px;padding:10px 14px;background:#eff6ff;border-left:3px solid #93c5fd;border-radius:6px;font-size:12.5px;color:#1d4ed8;">
-            <strong>ⓘ MMP 지표 안내:</strong> 선택한 Google Ads 캠페인은 MMP 어트리뷰션에 적용되지 않아, <strong>MMP 점수·지표는 전체 채널 기준</strong>으로 표시됩니다. (날짜 기간은 공통 적용)
-          </div>`;
-        }
+        // 엄격 스코핑 빈 레이어 안내는 #layerScopeNotice(테이블 상단, 레이어 전환 반응형)에서 렌더 → renderLayerScopeNotice()
+        const mmpNotice = '';
 
         // v5.1: 분석 신뢰도 배지 (필터 요약 위에 노출)
         const reliability = evaluateReliability(creatives);
