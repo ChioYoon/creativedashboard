@@ -37,7 +37,7 @@
     }
     body {
       font-family: var(--font-kr);
-      background: var(--surface-soft);
+      background: var(--bg-base);   /* 밝은 미색 — LTV 대시보드와 동일 (#FEFDFA) */
       /* 고정 뷰포트 셸(헤더 + .ds-app-body) — 창 자체는 스크롤하지 않고 .ds-main 내부만 스크롤.
          (min-height:100vh 이면 표의 가로 스크롤바가 뷰포트 높이를 15px 잠식 → 창에 유령 세로 스크롤바 = 이중 스크롤) */
       height: 100vh;
@@ -89,7 +89,7 @@
     .ds-main {
       flex: 1; overflow-y: auto;
       display: flex; flex-direction: column;
-      background: var(--surface-soft);
+      background: var(--bg-base);   /* 분석 결과 메인 영역 — 밝은 미색 (LTV와 동일) */
       min-width: 0;
     }
     .ds-main-toolbar {
