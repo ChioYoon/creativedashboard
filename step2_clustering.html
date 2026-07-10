@@ -627,6 +627,7 @@
   <link rel="stylesheet" href="assets/cl-shell.css?v=20260702a">
   <script src="js/layer-metrics.js?v=20260710a"></script>
   <script src="js/data-source.js?v=20260709a"></script>
+  <script src="js/gemini-api.js?v=20260701a"></script>
 </head>
 <body>
 
@@ -816,6 +817,8 @@
                        color:var(--purple);padding:3px 10px;border-radius:10px;font-weight:700;">
           </span>
           <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+            <button id="aiInterpBtn" onclick="runAiClusterInterpretation()" title="게임 컨텍스트·마케터 인사이트를 토대로 군집 이름·해석을 AI가 생성합니다 (Gemini 키 필요)"
+              style="padding:5px 12px;border-radius:8px;border:1.5px solid var(--red);font-weight:700;font-size:12px;cursor:pointer;background:#fff;color:var(--red);">✨ AI 군집 해석</button>
             <button id="clLayerAds" onclick="setClusterLayer('ads')" style="padding:5px 12px;border-radius:8px;border:1px solid var(--gray-line,#ddd);font-weight:700;font-size:12px;cursor:pointer;background:var(--red);color:#fff;">Google Ads</button>
             <button id="clLayerMmp" onclick="setClusterLayer('mmp')" style="padding:5px 12px;border-radius:8px;border:1px solid var(--gray-line,#ddd);font-weight:700;font-size:12px;cursor:pointer;background:var(--gray-bg,#f3f4f6);color:var(--mid,#555);">MMP 품질</button>
             <span style="font-size:11px;color:var(--gray-text);">전체 기간 기준</span>
@@ -2121,6 +2124,70 @@ function renderKPIStrip(clusters) {
 }
 
 /* ── 군집 카드 ── */
+/* ── R18: AI 군집 해석 — 게임 컨텍스트·마케터 인사이트 기반 이름·해석 생성 (온디맨드) ──
+   결과는 군집 시그니처(소재 구성) 키 캐시에 저장 → 레이어 토글로 재구성돼도 동일 구성 군집엔 유지.
+   규칙 기반(차별 태그) 이름·정의는 폴백/부제로 항상 유지. */
+window._aiInterp = window._aiInterp || {};
+function _clusterSig(cl) {
+  return (cl.materials || []).map(m => m.name).sort().join('|');
+}
+async function runAiClusterInterpretation() {
+  const btn = document.getElementById('aiInterpBtn');
+  if (!clusterResults || !clusterResults.clusters) { showToast('먼저 군집화를 실행하세요.', 'error'); return; }
+  if (typeof GeminiKeyManager === 'undefined' || !GeminiKeyManager.isSet()) {
+    showToast('Gemini API 키가 없습니다 — 소재 분석 페이지의 AI 설정에서 키를 먼저 저장하세요.', 'error'); return;
+  }
+  const targets = clusterResults.clusters.filter(c => c.id !== -1);
+  if (!targets.length) { showToast('해석할 군집이 없습니다.', 'error'); return; }
+  const orig = btn ? btn.innerHTML : '';
+  if (btn) { btn.disabled = true; btn.innerHTML = '⏳ 해석 생성 중…'; }
+  try {
+    // 게임 컨텍스트(UA 전략 중심) — 파이프라인 JSON에서 직접 로드, 실패해도 진행
+    let gameCtx = '';
+    try {
+      const tid = _activeTitleId();
+      if (tid) {
+        const j = await (await fetch(`public/data/${tid}.json`, { cache: 'no-store' })).json();
+        const md = j.game_context || '';
+        const m = md.match(/^#{1,6}[^\n]*UA[^\n]*전략[\s\S]*/m);
+        gameCtx = (m ? m[0] : md).slice(0, 1500);
+      }
+    } catch (_) {}
+
+    const payload = targets.map((c, i) => ({
+      idx: i,
+      태그이름: c.name,
+      차별태그: (c.distinctiveTags || []).map(s => `${s.tag}(+${s.lift}%p)`).join(', '),
+      공통태그: (c.commonTags || []).join(', '),
+      소재수: c.materials.length, 평균점수: c.avgScore, 등급: c.grade,
+      대표소재: c.top3.slice(0, 2).map(m => m.name).join(', '),
+      마케터인사이트: [...new Set(c.materials.map(m => m.marketerInsight).filter(Boolean))].slice(0, 3).join(' / ').slice(0, 300),
+    }));
+
+    const prompt = [
+      '당신은 컴투스 R마케팅팀의 UA 소재 분석가입니다. 아래 소재 군집들에 대해, 마케터가 바로 이해할 수 있는 군집 이름과 한 줄 해석을 작성하세요.',
+      '규칙: (1) 이름은 6~16자 명사형(예: "신화 서사 브랜딩 PV군") — 태그 단순 나열 금지, 소구 방식·콘셉트가 드러나게. (2) 해석은 한 문장 80자 이내 — 게임 컨텍스트·마케터 인사이트를 근거로 이 군집이 무엇이고 어떤 역할인지. (3) 과장·추정 금지, 주어진 데이터 근거만. (4) 반드시 JSON 배열만 출력: [{"idx":0,"name":"...","definition":"..."}]',
+      gameCtx ? `[게임/UA 컨텍스트]\n${gameCtx}` : '',
+      `[군집 데이터]\n${JSON.stringify(payload, null, 1)}`,
+    ].filter(Boolean).join('\n\n');
+
+    const raw = await callGeminiAPI(prompt, { maxTokens: 1024, temperature: 0.4 });
+    const jsonText = String(raw).replace(/```json|```/g, '').trim();
+    const arr = JSON.parse(jsonText.slice(jsonText.indexOf('['), jsonText.lastIndexOf(']') + 1));
+    let applied = 0;
+    arr.forEach(r => {
+      const c = targets[r.idx];
+      if (c && r.name) { window._aiInterp[_clusterSig(c)] = { name: String(r.name).trim(), def: String(r.definition || '').trim() }; applied++; }
+    });
+    renderClusterCards(clusterResults.clusters);
+    showToast(`✨ AI 해석 적용: ${applied}개 군집`, 'success');
+  } catch (e) {
+    showToast('AI 해석 실패: ' + e.message, 'error');
+  } finally {
+    if (btn) { btn.disabled = false; btn.innerHTML = orig; }
+  }
+}
+
 function renderClusterCards(clusters) {
   const grid = document.getElementById('clusterGrid');
   grid.innerHTML = '';
@@ -2158,7 +2225,14 @@ function renderClusterCards(clusters) {
       </div>
     `).join('');
 
+    // R18: AI 해석 캐시 조회 (있으면 이름 메인 교체 + 해석 문장 추가)
+    const ai = window._aiInterp[_clusterSig(cl)];
+
     // R17: 정의 박스 + 차별 태그 바(보유율 vs 타 군집) + 공통 기반 라인
+    const aiDefLine = (ai && ai.def) ? `
+      <div style="font-size:12px;color:var(--dark);line-height:1.6;background:rgba(220,40,40,.05);border:1px solid rgba(220,40,40,.18);border-radius:8px;padding:9px 12px;margin-bottom:12px;">
+        <span style="font-size:10px;font-weight:700;color:#fff;background:var(--red);border-radius:9999px;padding:1px 7px;margin-right:6px;">AI</span>${escHtml(ai.def)}
+      </div>` : '';
     const defBox = cl.defText ? `
       <div style="font-size:12px;color:var(--gray-text);line-height:1.6;background:var(--gray-bg);border-radius:8px;padding:9px 12px;margin-bottom:12px;">
         ${escHtml(cl.defText)}
@@ -2180,12 +2254,14 @@ function renderClusterCards(clusters) {
       <div class="cc-header" style="background:${color}18;border-bottom:2px solid ${color}33;">
         <div class="cc-num" style="background:${color};">${cl.displayId}</div>
         <div class="cc-title">
-          <div class="cc-name">${escHtml(cl.name)}</div>
+          <div class="cc-name">${ai ? escHtml(ai.name) : escHtml(cl.name)}</div>
+          ${ai ? `<div style="font-size:10.5px;color:var(--gray-text);margin-top:1px;">${escHtml(cl.name)}</div>` : ''}
           <div class="cc-count">${cl.materials.length}개 소재${cl.perfSplitLabel ? ` · <span style="display:inline-block;font-size:10px;font-weight:700;padding:1px 7px;border-radius:9999px;background:${cl._perfSplit === 'hi' ? 'rgba(220,40,40,.10)' : '#ECEAE6'};color:${cl._perfSplit === 'hi' ? 'var(--red)' : 'var(--mid)'};" title="같은 태그 군집을 성과 수준(±1σ)으로 분리한 그룹">${cl.perfSplitLabel}</span>` : ''}</div>
         </div>
         <span class="cc-grade grade-${cl.grade}">${cl.grade}등급</span>
       </div>
       <div class="cc-body">
+        ${aiDefLine}
         ${defBox}
         ${distinctiveBars}
         ${commonLine}
