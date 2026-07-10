@@ -27,7 +27,7 @@
   <script src="js/canonical-filter.js?v=cbc66317"></script>
   <!-- Gemini AI 공통 모듈 -->
   <link rel="stylesheet" href="css/gemini-ui.css?v=91d8def8">
-  <script src="js/gemini-api.js?v=94c88276"></script>
+  <script src="js/gemini-api.js?v=d758b0f6"></script>
   
   <style>
     * {
@@ -5642,17 +5642,48 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       if (note) { L.push(''); L.push('[마케터 의견]'); L.push(note); }
       return L.join('\n');
     }
+    // 규칙기반 서술 폴백 접두 sentinel (렌더 시 라벨 구분 + 스트립)
+    const RULE_NARRATIVE_TAG = '[[RULE]]';
     async function buildReportNarrative(comparison, creatives, note = '', sharedContext = '') {
-      if (typeof GeminiKeyManager === 'undefined' || !GeminiKeyManager.isSet()) return '';
-      try {
-        const data = buildSummaryReportData(creatives, comparison);
-        const tags = buildTagCohortSummary(comparison && comparison.cur, creatives);
-        const prompt = buildReportNarrativePrompt(data, tags, note, sharedContext);
-        return await callGeminiAPI(prompt, { maxTokens: note ? 1100 : 800, temperature: 0.6 });
-      } catch (e) {
-        console.warn('AI 코멘트 생성 실패:', e && e.message);
-        return '';
+      const data = buildSummaryReportData(creatives, comparison);
+      const tags = buildTagCohortSummary(comparison && comparison.cur, creatives);
+      const hasKey = (typeof GeminiKeyManager !== 'undefined' && GeminiKeyManager.isSet());
+      if (hasKey) {
+        try {
+          const prompt = buildReportNarrativePrompt(data, tags, note, sharedContext);
+          const call = () => callGeminiAPI(prompt, { maxTokens: note ? 1100 : 800, temperature: 0.6 });
+          if (typeof GeminiCache !== 'undefined') {
+            const tid = (window.DataSource && DataSource.getActiveTitleId && DataSource.getActiveTitleId()) || '';
+            const sig = GeminiCache._hash(tid + '|' + prompt);   // 프롬프트=데이터 지문 → 데이터 변경 시 자동 무효화
+            return await GeminiCache.wrap('report_narrative', sig, call);
+          }
+          return await call();
+        } catch (e) {
+          console.warn('AI 코멘트 생성 실패 — 규칙기반 폴백:', e && e.message);
+          return buildRuleBasedNarrative(data, tags, note);
+        }
       }
+      return buildRuleBasedNarrative(data, tags, note);   // 무키 폴백
+    }
+
+    // AI 미사용(무키·쿼터초과) 시 KPI·차별 태그(lift) 데이터로 결정론적 요약 생성.
+    // buildReportNarrativePrompt와 동일한 2섹션(■) 포맷 → insightSectionsHtml이 그대로 렌더.
+    function buildRuleBasedNarrative(data, tags, note = '') {
+      const k = data.kpis, cmp = data.comparison;
+      const L = [RULE_NARRATIVE_TAG, '■ 종합 인사이트'];
+      L.push(` - 소재 ${k.count}개 · 평균 점수 ${k.avgScore == null ? '-' : k.avgScore.toFixed(1)} · 총 전환(${k.convBasis}) ${Math.round(k.totalConv).toLocaleString()} · 최우수 ${k.excellent}개 / 개선필요 ${k.poor}개`);
+      if (cmp && cmp.hasPrev && cmp.kpiDeltas && cmp.kpiDeltas.전환 && cmp.kpiDeltas.전환.deltaPct != null) {
+        const dp = Math.round(cmp.kpiDeltas.전환.deltaPct);
+        L.push(` - 전 기간 대비 전환 ${dp >= 0 ? '+' : ''}${dp}%`);
+      }
+      if (data.topN && data.topN.length) L.push(` - 상위 성과 소재: ${data.topN.slice(0, 3).map(t => t.name).join(', ')}`);
+      if (tags && tags.diffStrengths && tags.diffStrengths.length) L.push(` - 우수군 차별 강점 태그: ${tags.diffStrengths.slice(0, 3).map(d => `'${d.tag}'(lift ${d.lift >= 0 ? '+' : ''}${d.lift})`).join(', ')}`);
+      if (tags && tags.typePerf && tags.typePerf.length) L.push(` - 유형별 평균 점수: ${tags.typePerf.map(t => `${t.type} ${t.avg}`).join(' · ')}`);
+      L.push('■ 개선 포인트·액션');
+      if (tags && tags.loserWeak && tags.loserWeak.length) L.push(` - 저효율 공통 약점 태그 보완: ${tags.loserWeak.slice(0, 3).map(w => `'${w.tag}'`).join(', ')}`);
+      L.push(` - 개선필요 ${k.poor}개 소재 교체·리프레시 검토`);
+      if (note) L.push(` - 마케터 계획: ${String(note).slice(0, 200)} @MK@`);
+      return L.join('\n');
     }
 
     // ── 성과 요약 리포트: 데이터 조립 (currentCreatives + 기존 집계 재사용) ──
@@ -5938,7 +5969,15 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     </div>
     <div id="tab-report" class="tabpanel active">
     <div class="kpis">${kpiHtml}</div>
-    ${data.narrative ? `<div class="sec"><div class="st">인사이트 <span style="font-size:11px;color:#9ca3af;font-weight:400;" title="AI 분석이 포함된 요약입니다. 데이터 기반 참고용으로 활용하세요.">ⓘ AI 분석 포함 · 참고용</span></div>${insightSectionsHtml(data.narrative)}</div>` : ''}
+    ${(() => {
+      if (!data.narrative) return '';
+      const isRule = typeof RULE_NARRATIVE_TAG !== 'undefined' && data.narrative.indexOf(RULE_NARRATIVE_TAG) === 0;
+      const body = isRule ? data.narrative.slice(RULE_NARRATIVE_TAG.length).replace(/^\s+/, '') : data.narrative;
+      const chip = isRule
+        ? `<span style="font-size:11px;color:#9ca3af;font-weight:400;" title="API 키·쿼터 없이 데이터로 자동 생성한 규칙기반 요약입니다.">ⓘ 규칙기반 요약 · 참고용</span>`
+        : `<span style="font-size:11px;color:#9ca3af;font-weight:400;" title="AI 분석이 포함된 요약입니다. 데이터 기반 참고용으로 활용하세요.">ⓘ AI 분석 포함 · 참고용</span>`;
+      return `<div class="sec"><div class="st">인사이트 ${chip}</div>${insightSectionsHtml(body)}</div>`;
+    })()}
     <div class="sec"><div class="st">Top 성과 소재</div>${topHtml}</div>
     ${moverBlock}
     <div class="sec"><div class="st">유형별 요약</div><table><thead><tr><th>유형</th><th class="r">소재 수</th><th class="r">평균 점수</th></tr></thead><tbody>${typeHtml}</tbody></table></div>

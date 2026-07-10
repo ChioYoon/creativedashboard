@@ -627,7 +627,7 @@
   <link rel="stylesheet" href="assets/cl-shell.css?v=74a462d6">
   <script src="js/layer-metrics.js?v=a4ec6d29"></script>
   <script src="js/data-source.js?v=80beadf3"></script>
-  <script src="js/gemini-api.js?v=94c88276"></script>
+  <script src="js/gemini-api.js?v=d758b0f6"></script>
 </head>
 <body>
 
@@ -2138,6 +2138,25 @@ window._aiInterp = window._aiInterp || {};
 function _clusterSig(cl) {
   return (cl.materials || []).map(m => m.name).sort().join('|');
 }
+// AI 군집 해석 캐시 — 메모리(window._aiInterp) + localStorage 영속(GeminiCache) 이중화.
+//   영속 키는 타이틀+군집구성(_clusterSig) 해시 → 새로고침·재방문·재군집(동일 구성) 시 재사용.
+function _clusterInterpKey(cl) {
+  const tid = (typeof _activeTitleId === 'function' ? _activeTitleId() : '') || '';
+  return (typeof GeminiCache !== 'undefined') ? GeminiCache._hash(tid + '|' + _clusterSig(cl)) : '';
+}
+function _clusterInterpGet(cl) {
+  const memo = window._aiInterp[_clusterSig(cl)];
+  if (memo) return memo;
+  if (typeof GeminiCache !== 'undefined') {
+    const v = GeminiCache.get('cluster_interp', _clusterInterpKey(cl));
+    if (v) { window._aiInterp[_clusterSig(cl)] = v; return v; }   // 메모리로 승격
+  }
+  return null;
+}
+function _clusterInterpSet(cl, val) {
+  window._aiInterp[_clusterSig(cl)] = val;
+  if (typeof GeminiCache !== 'undefined') GeminiCache.set('cluster_interp', _clusterInterpKey(cl), val);
+}
 async function runAiClusterInterpretation() {
   const btn = document.getElementById('aiInterpBtn');
   if (!clusterResults || !clusterResults.clusters) { showToast('먼저 군집화를 실행하세요.', 'error'); return; }
@@ -2184,7 +2203,7 @@ async function runAiClusterInterpretation() {
     let applied = 0;
     arr.forEach(r => {
       const c = targets[r.idx];
-      if (c && r.name) { window._aiInterp[_clusterSig(c)] = { name: String(r.name).trim(), def: String(r.definition || '').trim() }; applied++; }
+      if (c && r.name) { _clusterInterpSet(c, { name: String(r.name).trim(), def: String(r.definition || '').trim() }); applied++; }
     });
     renderClusterCards(clusterResults.clusters);
     showToast(`✨ AI 해석 적용: ${applied}개 군집`, 'success');
@@ -2233,7 +2252,7 @@ function renderClusterCards(clusters) {
     `).join('');
 
     // R18: AI 해석 캐시 조회 (있으면 이름 메인 교체 + 해석 문장 추가)
-    const ai = window._aiInterp[_clusterSig(cl)];
+    const ai = _clusterInterpGet(cl);
 
     // R17: 정의 박스 + 차별 태그 바(보유율 vs 타 군집) + 공통 기반 라인
     const aiDefLine = (ai && ai.def) ? `

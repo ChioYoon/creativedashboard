@@ -115,6 +115,70 @@ const GeminiKeyManager = {
 };
 
 /* ──────────────────────────────────────
+   2-b. AI 결과 영속 캐시 (localStorage)
+   - 동일 입력(프롬프트) 재호출 방지 → 쿼터 절감·즉시 응답.
+   - 키는 프롬프트 해시 기반 → 데이터가 바뀌면 프롬프트(수치 포함)가 바뀌어 자동 무효화.
+   - 네임스페이스당 항목 수 상한 + 용량초과 시 오래된 것부터 정리.
+────────────────────────────────────── */
+const GeminiCache = {
+  PREFIX: 'r_team_ai_cache_v1',
+  MAX_PER_NS: 40,
+
+  // djb2 문자열 해시 → 짧은 36진수 키
+  _hash(str) {
+    str = String(str == null ? '' : str);
+    let h = 5381;
+    for (let i = 0; i < str.length; i++) h = (((h << 5) + h) + str.charCodeAt(i)) | 0;
+    return (h >>> 0).toString(36);
+  },
+  _key(ns, sig) { return `${this.PREFIX}:${ns}:${sig}`; },
+
+  get(ns, sig) {
+    try {
+      const raw = localStorage.getItem(this._key(ns, sig));
+      if (!raw) return null;
+      const o = JSON.parse(raw);
+      return (o && o.v !== undefined) ? o.v : null;
+    } catch (_) { return null; }
+  },
+
+  set(ns, sig, value) {
+    const rec = JSON.stringify({ v: value, at: Date.now() });
+    try {
+      localStorage.setItem(this._key(ns, sig), rec);
+      this._prune(ns);
+    } catch (_) {
+      // 용량초과 → 해당 네임스페이스 비우고 1회 재시도
+      try { this._clearNs(ns); localStorage.setItem(this._key(ns, sig), rec); } catch (__) {}
+    }
+  },
+
+  // 캐시 우선 실행: 히트 시 fn 미호출. 비어있지 않은 결과만 저장.
+  async wrap(ns, sig, fn) {
+    const hit = this.get(ns, sig);
+    if (hit !== null && hit !== undefined && hit !== '') return hit;
+    const val = await fn();
+    if (val != null && val !== '') this.set(ns, sig, val);
+    return val;
+  },
+
+  _nsKeys(ns) {
+    const p = `${this.PREFIX}:${ns}:`, out = [];
+    try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && k.indexOf(p) === 0) out.push(k); } } catch (_) {}
+    return out;
+  },
+  _prune(ns) {
+    const keys = this._nsKeys(ns);
+    if (keys.length <= this.MAX_PER_NS) return;
+    // at(저장시각) 오름차순 정렬 후 초과분 제거
+    const withAt = keys.map(k => { let at = 0; try { at = (JSON.parse(localStorage.getItem(k)) || {}).at || 0; } catch (_) {} return { k, at }; });
+    withAt.sort((a, b) => a.at - b.at);
+    withAt.slice(0, withAt.length - this.MAX_PER_NS).forEach(o => { try { localStorage.removeItem(o.k); } catch (_) {} });
+  },
+  _clearNs(ns) { this._nsKeys(ns).forEach(k => { try { localStorage.removeItem(k); } catch (_) {} }); },
+};
+
+/* ──────────────────────────────────────
    3. 핵심 API 호출
    ※ RATE_LIMIT(429)은 재시도하지 않음
      → 재시도할수록 한도를 추가 소진하므로 즉시 에러 반환
