@@ -1927,6 +1927,10 @@ async function runClustering() {
     showToast('데이터가 없습니다.', 'error'); return;
   }
 
+  // R18b: Gemini 키가 있으면 실행 시점에 AI 군집 해석 동시 진행 여부 확인 (승인 시 분석 완료 직후 자동 적용)
+  const wantAi = (typeof GeminiKeyManager !== 'undefined' && GeminiKeyManager.isSet())
+    && confirm('Gemini API 키가 설정되어 있습니다.\n군집화 완료 후 AI 군집 해석(이름·한 줄 해석)을 바로 적용할까요?');
+
   const overlay = document.getElementById('loadingOverlay');
   overlay.classList.add('show');
 
@@ -1943,6 +1947,8 @@ async function runClustering() {
     overlay.classList.remove('show');
     renderResults(clusterResults);
     showToast(`✅ 군집화 완료! ${result.params.matCount}개 소재 → ${result.clusters.length}개 군집`, 'success');
+
+    if (wantAi) await runAiClusterInterpretation();   // R18b: 승인 시 해석 바로 적용
 
   } catch (err) {
     overlay.classList.remove('show');
