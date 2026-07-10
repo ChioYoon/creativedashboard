@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="assets/ds/colors_and_type.css?v=20260703a">
   <link rel="stylesheet" href="assets/cl-shell.css?v=20260702a">
   <style>
+    body { background: var(--bg-base, #FEFDFA); }   /* 밝은 미색 — 소재 분석·군집화·라이브와 통일 (LTV 정합) */
     .pe-wrap { max-width: 880px; margin: 0 auto; padding: 24px; }
     .pe-card { background:#fff; border:1px solid var(--hairline-warm,#E4E1DC); border-radius:12px; padding:20px 22px; margin-bottom:16px; }
     .pe-row { display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap; }
@@ -226,7 +227,8 @@
   function _peBadges(arr, color) { return (arr || []).map(t => `<span style="display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:12px;margin:2px 4px 2px 0;background:${color.bg};color:${color.tc};">${_peEsc(t)}</span>`).join('') || '<span class="pe-note">없음</span>'; }
 
   function renderPreEval({ titleId, pattern, parsed, graded }) {
-    const gradeStyle = { '유망': {bar:'#16a34a',tint:'#f0fdf4',tc:'#15803d'}, '보통': {bar:'#9ca3af',tint:'#faf9f7',tc:'#374151'}, '개선필요': {bar:'#f59e0b',tint:'#fffbeb',tc:'#b45309'} };
+    // DS 정성 등급 — 모노 뉴트럴 + 양 끝(유망·개선필요)만 Red (step1 등급 뱃지와 통일)
+    const gradeStyle = { '유망': {bar:'#DC2828',tint:'rgba(220,40,40,.06)',tc:'#DC2828'}, '보통': {bar:'#999999',tint:'#F7F4EE',tc:'#4C4C4C'}, '개선필요': {bar:'#DC2828',tint:'#FAF9F7',tc:'#DC2828'} };
     const card = (bar, tint, inner) => `<div class="pe-card" style="border-left:4px solid ${bar};background:${tint};">${inner}</div>`;
     let html = '';
     // 등급
@@ -235,19 +237,19 @@
       html += card(st.bar, st.tint,
         `<div style="font-size:13px;color:${st.tc};font-weight:700;">예측 등급</div>`
         + `<div style="font-size:24px;font-weight:800;color:${st.tc};margin:4px 0 10px;">${graded.grade}</div>`
-        + `<div class="pe-label">✅ 보유한 우수 태그</div><div>${_peBadges(graded.matchedWinners, {bg:'#dcfce7',tc:'#15803d'})}</div>`
-        + `<div class="pe-label" style="margin-top:8px;">⚠️ 놓친 우수 태그</div><div>${_peBadges(graded.missedWinners, {bg:'#f3f4f6',tc:'#374151'})}</div>`
-        + `<div class="pe-label" style="margin-top:8px;">🚩 보유 리스크 태그</div><div>${_peBadges(graded.heldRisks, {bg:'#fee2e2',tc:'#b91c1c'})}</div>`);
+        + `<div class="pe-label">보유한 우수 태그</div><div>${_peBadges(graded.matchedWinners, {bg:'#ECEAE6',tc:'#191919'})}</div>`
+        + `<div class="pe-label" style="margin-top:8px;">놓친 우수 태그</div><div>${_peBadges(graded.missedWinners, {bg:'#F4F2EF',tc:'#808080'})}</div>`
+        + `<div class="pe-label" style="margin-top:8px;">보유 리스크 태그</div><div>${_peBadges(graded.heldRisks, {bg:'rgba(220,40,40,.10)',tc:'#DC2828'})}</div>`);
     } else {
-      html += card('#9ca3af', '#faf9f7', `<div style="font-weight:700;">비교 데이터 부족</div><div class="pe-note" style="margin-top:4px;">이 타이틀의 분석 소재가 4개 미만이라 등급은 생략합니다. 아래 감지 태그·AI 인사이트를 참고하세요.</div>`);
+      html += card('#CCCCCC', '#F7F4EE', `<div style="font-weight:700;">비교 데이터 부족</div><div class="pe-note" style="margin-top:4px;">이 타이틀의 분석 소재가 4개 미만이라 등급은 생략합니다. 아래 감지 태그·AI 인사이트를 참고하세요.</div>`);
     }
-    // 종합 인사이트
-    if (parsed.종합인사이트) html += card('#3b82f6', '#eff6ff', `<div style="font-size:13px;color:#1d4ed8;font-weight:700;margin-bottom:6px;">종합 인사이트</div><div style="font-size:13px;color:#191919;line-height:1.6;">${_peEsc(parsed.종합인사이트)}</div>`);
-    // 개선 가이드
-    if (Array.isArray(parsed.개선가이드) && parsed.개선가이드.length) html += card('#f59e0b', '#fffbeb', `<div style="font-size:13px;color:#b45309;font-weight:700;margin-bottom:6px;">개선 가이드</div><ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.6;">${parsed.개선가이드.map(x => `<li>${_peEsc(x)}</li>`).join('')}</ul>`);
+    // 종합 인사이트 — DS 모노 뉴트럴 (step1 보고서 '종합 인사이트'와 통일)
+    if (parsed.종합인사이트) html += card('#CCCCCC', '#FAF9F7', `<div style="font-size:13px;color:#191919;font-weight:700;margin-bottom:6px;">종합 인사이트</div><div style="font-size:13px;color:#191919;line-height:1.6;">${_peEsc(parsed.종합인사이트)}</div>`);
+    // 개선 가이드 — DS Red 액센트 (step1 보고서 '개선 포인트·액션'과 통일)
+    if (Array.isArray(parsed.개선가이드) && parsed.개선가이드.length) html += card('#DC2828', '#FAF9F7', `<div style="font-size:13px;color:#DC2828;font-weight:700;margin-bottom:6px;">개선 가이드</div><ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.6;">${parsed.개선가이드.map(x => `<li>${_peEsc(x)}</li>`).join('')}</ul>`);
     // 감지 태그 요약
-    html += card('#9ca3af', '#fff', `<div class="pe-label">감지된 태그 (참고)</div>`
-      + `<div style="font-size:12.5px;color:#374151;line-height:1.8;">아트: <b>${_peEsc(parsed.art_style||'-')}</b> · 후킹: <b>${_peEsc(parsed.hooking_strategy||'-')}</b> · USP: <b>${_peEsc(parsed.USP||'-')}</b><br>강점: ${_peEsc((parsed.strengths||[]).join(', ')||'-')}<br>약점: ${_peEsc((parsed.weaknesses||[]).join(', ')||'-')}<br>예측: ${_peEsc((parsed.hypothesis||[]).join(', ')||'-')}</div>`);
+    html += card('#CCCCCC', '#fff', `<div class="pe-label">감지된 태그 (참고)</div>`
+      + `<div style="font-size:12.5px;color:#4C4C4C;line-height:1.8;">아트: <b>${_peEsc(parsed.art_style||'-')}</b> · 후킹: <b>${_peEsc(parsed.hooking_strategy||'-')}</b> · USP: <b>${_peEsc(parsed.USP||'-')}</b><br>강점: ${_peEsc((parsed.strengths||[]).join(', ')||'-')}<br>약점: ${_peEsc((parsed.weaknesses||[]).join(', ')||'-')}<br>예측: ${_peEsc((parsed.hypothesis||[]).join(', ')||'-')}</div>`);
     // 신뢰도 안내
     html += `<div class="pe-note">시각 신호 + ${_peEsc(titleId)} 소재 ${pattern.n}개 성과 패턴 기반 <b>방향성 참고</b>입니다. 실제 성과는 집행으로 검증하세요.</div>`;
     document.getElementById('peResult').innerHTML = html;
