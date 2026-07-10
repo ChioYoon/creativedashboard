@@ -7106,9 +7106,21 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       openModalByName(el.dataset.name || el.getAttribute('title') || el.textContent.trim());
     });
 
+    // 집행 에셋의 creative_name(파일명)에서 규격(가로x세로)을 파싱해 라벨화.
+    //   IMAGE·파일명 컨벤션 영상은 파일명에 '1200x628' 형태가 포함됨 → 사이즈+방향 라벨.
+    //   마케팅용 제목으로 업로드된 영상 등 규격 미포함 시 null(→ '에셋 N' 폴백).
+    function assetSpecLabel(name) {
+      const m = /(\d{2,5})\s*[x×X]\s*(\d{2,5})/.exec(String(name || ''));
+      if (!m) return null;
+      const w = +m[1], h = +m[2];
+      if (!w || !h) return null;
+      const orient = w > h ? '가로형' : (w < h ? '세로형' : '정방형');
+      return `${w}×${h} · ${orient}`;
+    }
+
     // 에셋별 성과 드릴다운 — kpi_daily(Google Ads)를 asset_url(집행 에셋)로 재집계.
-    //   규격 파일(source_files)과 asset_url은 데이터상 연결되지 않아 '규격' 라벨은 불가 →
-    //   실제 집행 에셋 단위(썸네일+지표)로 표시. 에셋 2개 이상일 때만 노출. 현재 분석 기간 반영.
+    //   각 에셋의 파일명(creative_name)에서 규격을 파싱해 표시(없으면 '에셋 N').
+    //   에셋 2개 이상일 때만 노출. 현재 분석 기간 반영.
     function assetBreakdownHtml(creative) {
       const kd = (creative.meta && Array.isArray(creative.meta.kpi_daily)) ? creative.meta.kpi_daily : [];
       if (!kd.length) return '';
@@ -7119,7 +7131,8 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       kd.forEach(r => {
         if (!inWin(r.date)) return;
         const url = r.asset_url; if (!url) return;
-        const a = byAsset[url] || (byAsset[url] = { url, imp: 0, clk: 0, cost: 0, conv: 0 });
+        const a = byAsset[url] || (byAsset[url] = { url, name: '', imp: 0, clk: 0, cost: 0, conv: 0 });
+        if (!a.name && r.creative_name) a.name = r.creative_name;   // 규격 파싱용 파일명 보존
         a.imp += r.impressions || 0; a.clk += r.clicks || 0; a.cost += r.cost || 0; a.conv += r.conversions || 0;
       });
       const assets = Object.values(byAsset).filter(a => a.imp > 0 || a.conv > 0);
@@ -7131,17 +7144,19 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         const cpa = a.conv > 0 ? a.cost / a.conv : null;
         const share = totConv > 0 ? (a.conv / totConv * 100) : (totImp > 0 ? a.imp / totImp * 100 : 0);
         const best = i === 0 ? '<span style="font-size:10px;font-weight:700;color:#DC2828;background:rgba(220,40,40,.10);padding:1px 6px;border-radius:9999px;margin-left:6px;">최고</span>' : '';
+        const label = assetSpecLabel(a.name) || `에셋 ${i + 1}`;
         return `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--hairline-warm,#E4E1DC);">
           ${creativeThumbHtml(a.url, creative.유형, 52, 52)}
           <div style="flex:1;min-width:0;">
-            <div style="font-size:12.5px;font-weight:700;color:#191919;">에셋 ${i + 1}${best} <span style="font-weight:400;color:#666;">· 전환 비중 ${share.toFixed(0)}%</span></div>
+            <div style="font-size:12.5px;font-weight:700;color:#191919;">${label}${best} <span style="font-weight:400;color:#666;">· 전환 비중 ${share.toFixed(0)}%</span></div>
             <div style="font-size:11.5px;color:#666;margin-top:2px;">노출 ${a.imp.toLocaleString()} · 전환 ${Math.round(a.conv).toLocaleString()} · CPA ${cpa != null ? '₩' + Math.round(cpa).toLocaleString() : '—'}</div>
           </div>
         </div>`;
       }).join('');
+      const specCnt = assets.filter(a => assetSpecLabel(a.name)).length;
       return `<div class="modal-info-row" style="flex-direction:column;align-items:stretch;">
-        <div class="modal-info-label" style="margin-bottom:2px;">에셋별 성과 <span style="font-weight:400;color:#999;font-size:11px;">(Google Ads · 집행 에셋 ${assets.length}개 · 현재 분석 기간)</span></div>
-        <div style="font-size:11px;color:#999;margin-bottom:2px;">폴더의 규격 파일과 별개로, 실제 집행된 에셋 단위 성과입니다.</div>
+        <div class="modal-info-label" style="margin-bottom:2px;">규격·에셋별 성과 <span style="font-weight:400;color:#999;font-size:11px;">(Google Ads · 집행 에셋 ${assets.length}개 · 현재 분석 기간)</span></div>
+        <div style="font-size:11px;color:#999;margin-bottom:2px;">실제 집행된 에셋 단위 성과입니다. 파일명에 규격이 있으면 사이즈로, 없으면 에셋 순번으로 표시합니다.${specCnt < assets.length ? ` (규격 확인 ${specCnt}/${assets.length})` : ''}</div>
         <div>${rows}</div>
       </div>`;
     }
