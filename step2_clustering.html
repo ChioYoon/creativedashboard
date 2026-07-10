@@ -1498,6 +1498,14 @@ function assignMaterialsToClusters(scoredMats, tagGroups, tagCols, weightMap, in
 
 /* ── Phase 4: 군집 메타 계산 ── */
 function enrichClusters(clusters, weightMap) {
+  // R17: 차별 태그 기반 정의 — 태그별 '군집 내 보유율 vs 군집 외 보유율' 산출용 전역 카운트.
+  //   빈도 기반 이름은 전 군집 공통 태그(예: 시네마틱 실사 합성 88~100%)가 모든 이름을 점령해
+  //   군집끼리 구별 불가 → 이름·정의는 차별 태그(lift)로, 공통 기반 태그는 분리 표기.
+  const allMats = clusters.flatMap(c => c.materials);
+  const totalN = allMats.length;
+  const globalTagCnt = {};
+  allMats.forEach(m => new Set(m.tags).forEach(t => { globalTagCnt[t]=(globalTagCnt[t]||0)+1; }));
+
   return clusters.map(cl => {
     const scores = cl._scores;
     const avg = scores.length ? scores.reduce((a,b)=>a+b,0)/scores.length : 0;
@@ -1509,11 +1517,24 @@ function enrichClusters(clusters, weightMap) {
     const top3   = sorted.slice(0,3);
     const worst  = sorted[sorted.length-1];
 
-    // TF-IDF 기반 대표 태그
+    // 빈도 대표 태그 (인사이트·매핑 등 기존 소비처 유지용)
     const tagCount = {};
     cl.materials.forEach(m => m.tags.forEach(t => { tagCount[t]=(tagCount[t]||0)+1; }));
     const topTags = Object.entries(tagCount)
       .sort((a,b)=>b[1]-a[1]).slice(0,8).map(e=>e[0]);
+
+    // R17: 차별 태그 — inRate(군집 내 보유율) − outRate(타 군집 보유율) = lift
+    const n = cl.materials.length;
+    const inCnt = {};
+    cl.materials.forEach(m => new Set(m.tags).forEach(t => { inCnt[t]=(inCnt[t]||0)+1; }));
+    const tagStats = Object.entries(inCnt).map(([t, cnt]) => {
+      const inRate  = cnt / Math.max(1, n);
+      const outRate = ((globalTagCnt[t]||0) - cnt) / Math.max(1, totalN - n);
+      return { tag: t, inPct: Math.round(inRate*100), outPct: Math.round(outRate*100),
+               lift: Math.round((inRate - outRate)*100) };
+    }).sort((a,b) => b.lift - a.lift);
+    const distinctiveTags = tagStats.filter(s => s.lift > 0 && !/^\[MI\]/i.test(s.tag)).slice(0, 3);
+    const commonTags = tagStats.filter(s => s.inPct >= 70 && s.outPct >= 70).map(s => s.tag).slice(0, 4);
 
     // 등급
     const grade = avg >= 75 ? 'S' : avg >= 60 ? 'A' : avg >= 45 ? 'B' : avg >= 30 ? 'C' : 'D';
@@ -1522,11 +1543,20 @@ function enrichClusters(clusters, weightMap) {
     const vidCnt = cl.materials.filter(m => /vid|video|영상/i.test(m.type)).length;
     const bnrCnt = cl.materials.filter(m => /bnr|banner|배너/i.test(m.type)).length;
 
-    // 군집 이름 자동 생성
-    const nameTags = topTags.slice(0,3);
-    const autoName = nameTags.length ? nameTags.join(' · ') : `군집 ${cl.id+1}`;
+    // R17: 군집 이름 = 차별 태그(lift≥30 최대 2개) + ' 군'. 없으면 빈도 이름 폴백.
+    const nameSrc = distinctiveTags.filter(s => s.lift >= 30).slice(0, 2).map(s => s.tag);
+    const autoName = nameSrc.length ? nameSrc.join(' · ') + ' 군'
+      : (topTags.length ? topTags.slice(0,3).join(' · ') : `군집 ${cl.id+1}`);
+
+    // R17: 정의문 — 최상위 차별 태그 기준 한 문장 ('기타 소재' catch-all엔 정의 미적용)
+    const isMisc = cl.id === -1;
+    const d0 = distinctiveTags[0];
+    const defText = (!isMisc && d0)
+      ? `소재 ${n}개 중 ${d0.inPct === 100 ? '전부(100%)' : d0.inPct + '%'}가 '${d0.tag}' 보유 — 다른 군집 대비 +${d0.lift}%p`
+      : '';
 
     return {
+      distinctiveTags: isMisc ? [] : distinctiveTags, commonTags: isMisc ? [] : commonTags, defText,
       ...cl,
       avgScore: Math.round(avg * 10) / 10,
       maxScore: Math.round(maxScore * 10) / 10,
@@ -2100,9 +2130,21 @@ function renderClusterCards(clusters) {
     card.style.borderColor = color + '44';
     card.style.animationDelay = (idx * 0.08) + 's';
 
+    // R17: 대표 소재(1위) 썸네일 — YouTube→썸네일, 이미지→원본, 실패 시 유형 폴백
+    const matThumb = (m, size) => {
+      const u = String(m.mediaUrl || '');
+      const yt = u.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([\w-]{11})/);
+      const src = yt ? `https://img.youtube.com/vi/${yt[1]}/default.jpg` : (/^https?:\/\//.test(u) ? u : '');
+      const label = /vid|video|영상/i.test(m.type||'') ? '▶' : (m.type||'IMG').slice(0,3).toUpperCase();
+      const box = `width:${size}px;height:${size}px;border-radius:6px;flex:none;overflow:hidden;position:relative;background:#191919;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;`;
+      if (!src) return `<div style="${box}">${label}</div>`;
+      return `<div style="${box}">${label}<img src="${escHtml(src)}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" onerror="this.remove()"></div>`;
+    };
+
     const top3Html = cl.top3.map((m, i) => `
       <div class="cc-material">
         <div class="cc-rank ${['rank-1','rank-2','rank-3'][i]}">${i+1}</div>
+        ${i === 0 ? matThumb(m, 34) : ''}
         <div class="cc-mat-name" title="${escHtml(m.name)}">${escHtml(m.name)}</div>
         <div class="cc-mat-score" style="color:${color};">${m.score}점</div>
         <span class="grade-chip grade-${calcGrade(m.score)}"
@@ -2112,8 +2154,23 @@ function renderClusterCards(clusters) {
       </div>
     `).join('');
 
-    const miTags = cl.topTags.filter(t => /^\[MI\]/i.test(t));
-    const normTags = cl.topTags.filter(t => !/^\[MI\]/i.test(t));
+    // R17: 정의 박스 + 차별 태그 바(보유율 vs 타 군집) + 공통 기반 라인
+    const defBox = cl.defText ? `
+      <div style="font-size:12px;color:var(--gray-text);line-height:1.6;background:var(--gray-bg);border-radius:8px;padding:9px 12px;margin-bottom:12px;">
+        <span style="color:var(--dark);font-weight:700;">정의</span> — ${escHtml(cl.defText)}
+      </div>` : '';
+    const distinctiveBars = (cl.distinctiveTags && cl.distinctiveTags.length) ? `
+      <div style="font-size:11px;font-weight:700;color:var(--dark);margin-bottom:5px;">이 군집만의 특징 <span style="font-weight:400;color:var(--gray-text);">(군집 내 보유율 − 타 군집)</span></div>
+      <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:10px;">
+        ${cl.distinctiveTags.map((s, i) => `
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;">
+            <span style="flex:none;max-width:46%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:2px 9px;border-radius:9999px;background:rgba(220,40,40,.08);color:var(--red);font-weight:700;font-size:11px;" title="${escHtml(s.tag)}">${escHtml(s.tag)}</span>
+            <div style="flex:1;height:5px;border-radius:9999px;background:var(--gray-bg);overflow:hidden;"><div style="width:${Math.max(4, s.lift)}%;height:100%;background:${i === 0 ? 'var(--red)' : '#767676'};"></div></div>
+            <span style="flex:none;color:var(--dark);font-weight:700;font-size:11px;">${s.inPct}% <span style="color:var(--gray-text);font-weight:400;">vs ${s.outPct}%</span></span>
+          </div>`).join('')}
+      </div>` : '';
+    const commonLine = (cl.commonTags && cl.commonTags.length) ? `
+      <div style="font-size:11px;color:var(--gray-text);margin-bottom:10px;">공통 기반(전 군집 공유): ${cl.commonTags.map(escHtml).join(' · ')} <span style="opacity:.7;">— 이름·정의에서 제외</span></div>` : '';
 
     card.innerHTML = `
       <div class="cc-header" style="background:${color}18;border-bottom:2px solid ${color}33;">
@@ -2125,6 +2182,9 @@ function renderClusterCards(clusters) {
         <span class="cc-grade grade-${cl.grade}">${cl.grade}등급</span>
       </div>
       <div class="cc-body">
+        ${defBox}
+        ${distinctiveBars}
+        ${commonLine}
         <div class="cc-score-row">
           <div class="cc-score-val" style="color:${color};">${cl.avgScore}</div>
           <div style="font-size:11px;color:var(--gray-text);">평균</div>
@@ -2132,10 +2192,6 @@ function renderClusterCards(clusters) {
             <div class="cc-score-fill" style="width:${cl.avgScore}%;background:${color};"></div>
           </div>
           <div style="font-size:11px;color:var(--gray-text);">범위: ${cl.minScore}~${cl.maxScore}</div>
-        </div>
-        <div class="cc-tags">
-          ${normTags.map(t=>`<span class="cc-tag top">${escHtml(t)}</span>`).join('')}
-          ${miTags.map(t=>`<span class="cc-tag mi">${escHtml(t)}</span>`).join('')}
         </div>
         <div class="cc-divider"></div>
         <div class="cc-top3">
