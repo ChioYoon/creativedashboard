@@ -59,6 +59,26 @@ def test_campaign_os():
     assert campaign_os("") == ""
 
 
+def test_campaign_country_positional_single():
+    # 위치 country 토큰(단일 KR) — 제우스 GA/Meta 캠페인. 이전엔 XX-XX 아니라 '미상'되던 버그.
+    assert campaign_country("Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701") == "KR"
+    assert campaign_country("Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701") == "KR"
+    assert campaign_country("Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701") == "KR"
+
+
+def test_campaign_os_ad_all():
+    # AD=Android(제우스 표기), ALL=전체. 이전엔 둘 다 '미상'되던 버그.
+    assert campaign_os("Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701") == "Android"
+    assert campaign_os("Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701") == "전체"
+    assert campaign_os("Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701") == "iOS"
+
+
+def test_build_canonical_zeus_ga_kr_android():
+    name = "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701"
+    e = build_campaign_canonical([name])[name]
+    assert e["country"] == "KR" and e["os"] == "Android" and e["media"] == "GA"
+
+
 def test_build_campaign_canonical_basic():
     names = ["HQ_HQ_PH_US-EN_GA_NU-Pre_iOS_ACp_260429"]
     m = build_campaign_canonical(names)

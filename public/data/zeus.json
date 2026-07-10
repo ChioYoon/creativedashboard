@@ -12188,64 +12188,64 @@
   "campaign_canonical": {
     "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701": {
       "ua_type": "NU-Pre",
-      "country": "",
-      "os": "",
+      "country": "KR",
+      "os": "Android",
       "media": "GA",
       "product": "ACp"
     },
     "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
-      "os": "",
+      "os": "전체",
       "media": "Meta",
       "product": "Conversion"
     },
     "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701": {
       "ua_type": "NU-Pre",
-      "country": "",
-      "os": "",
+      "country": "KR",
+      "os": "전체",
       "media": "GA",
       "product": "DemandGen"
     },
     "Incross_HQ_ZEUS_KR-KR_MSN_NU-Pre_ALL_Display_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
-      "os": "",
+      "os": "전체",
       "media": "MSN",
       "product": "Display"
     },
     "Incross_HQ_ZEUS_KR_Criteo_NU-Pre_ALL_Display_260701": {
       "ua_type": "NU-Pre",
-      "country": "",
-      "os": "",
+      "country": "KR",
+      "os": "전체",
       "media": "Criteo",
       "product": "Display"
     },
     "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701": {
       "ua_type": "NU-Pre",
-      "country": "",
+      "country": "KR",
       "os": "iOS",
       "media": "Meta",
       "product": "MAIA-CPP"
     },
     "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701": {
       "ua_type": "NU-Pre",
-      "country": "",
-      "os": "",
+      "country": "KR",
+      "os": "Android",
       "media": "Meta",
       "product": "MAIA-CSL"
     },
     "Incross_HQ_ZEUS_KR-KR_Moloco_NU-Pre_ALL_Conversion_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
-      "os": "",
+      "os": "전체",
       "media": "Moloco",
       "product": "Conversion"
     },
     "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701": {
       "ua_type": "NU-Pre",
-      "country": "",
-      "os": "",
+      "country": "KR",
+      "os": "전체",
       "media": "Meta",
       "product": "Conversion"
     }

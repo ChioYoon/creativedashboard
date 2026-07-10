@@ -42,13 +42,22 @@ def campaign_ua_type(name: str) -> str:
 
 
 _COUNTRY_RE = re.compile(r"^[A-Z]{2,4}-[A-Z]{2}$")   # US-EN, CA-FR, KR-KR …
-_OS_MAP = {"ios": "iOS", "aos": "Android", "android": "Android", "web": "Web"}
+_COUNTRY_CODE_RE = re.compile(r"^[A-Z]{2,4}$")       # 위치 기반 단일 국가코드 (KR, US …)
+# AD·AOS 모두 Android(타이틀별 표기 상이 — 제우스=AD, GD/PH=AOS), ALL=전체(양 OS).
+_OS_MAP = {"ios": "iOS", "aos": "Android", "ad": "Android", "android": "Android", "web": "Web", "all": "전체"}
 
 
 def campaign_country(name: str) -> str:
-    """캠페인명에서 country 추출 — XX-XX 세그먼트 스캔 후 '-' 앞부분. 없으면 ''. (라이브 JS parseCountry 이식)"""
+    """캠페인명에서 country 추출 — 위치 country 토큰(단일 KR / 지역-국가 KR-KR) 우선, XX-XX 세그 스캔 폴백. 없으면 ''."""
     if not name:
         return ""
+    # 1) 위치 기반 country 토큰 (규칙: {agency}_{executor}_{title}_{country}_{media}_…)
+    c = (parse_campaign_canonical(name).get("country") or "")
+    if "-" in c:                       # XX-XX(지역-국가) → 앞부분(국가)
+        c = c.split("-")[0]
+    if _COUNTRY_CODE_RE.match(c):
+        return c
+    # 2) 폴백: 위치가 어긋난 이름은 XX-XX 세그먼트 스캔 (기존 동작 유지)
     for seg in name.split("_"):
         if _COUNTRY_RE.match(seg):
             return seg.split("-")[0]
