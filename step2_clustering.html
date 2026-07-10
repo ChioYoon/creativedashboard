@@ -818,7 +818,7 @@
           </span>
           <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
             <button id="aiInterpBtn" onclick="runAiClusterInterpretation()" title="게임 컨텍스트·마케터 인사이트를 토대로 군집 이름·해석을 AI가 생성합니다 (Gemini 키 필요)"
-              style="padding:5px 12px;border-radius:8px;border:1.5px solid var(--red);font-weight:700;font-size:12px;cursor:pointer;background:#fff;color:var(--red);">✨ AI 군집 해석</button>
+              style="padding:5px 12px;border-radius:8px;border:1.5px solid var(--red);font-weight:700;font-size:12px;cursor:pointer;background:#fff;color:var(--red);">AI 군집 해석</button>
             <button id="clLayerAds" onclick="setClusterLayer('ads')" style="padding:5px 12px;border-radius:8px;border:1px solid var(--gray-line,#ddd);font-weight:700;font-size:12px;cursor:pointer;background:var(--red);color:#fff;">Google Ads</button>
             <button id="clLayerMmp" onclick="setClusterLayer('mmp')" style="padding:5px 12px;border-radius:8px;border:1px solid var(--gray-line,#ddd);font-weight:700;font-size:12px;cursor:pointer;background:var(--gray-bg,#f3f4f6);color:var(--mid,#555);">MMP 품질</button>
             <span style="font-size:11px;color:var(--gray-text);">전체 기간 기준</span>
@@ -1887,7 +1887,8 @@ function renderClusterTrendHtml(cmp) {
 
   const deltaRow = (m) => {
     const delta = Math.round((m.now.avgScore - m.prev.avgScore) * 10) / 10;
-    const color = delta > 0 ? '#191919' : delta < 0 ? '#999999' : 'var(--gray-text)';
+    // DS 모노+Red: 상승/유지=중립 다크, 하락=Red 강조(주의)
+    const color = delta < 0 ? 'var(--red,#DC2828)' : '#191919';
     return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px dashed var(--gray-line);">
       <span style="flex:1;font-size:12.5px;font-weight:600;color:var(--dark);">${escHtml(m.now.name)}</span>
       <span style="font-size:10.5px;color:var(--gray-text);white-space:nowrap;">${m.prev.avgScore} → ${m.now.avgScore}</span>
@@ -1896,14 +1897,14 @@ function renderClusterTrendHtml(cmp) {
   };
 
   const summaryCard = `<div class="insight-card fade-in" style="grid-column:1/-1;">
-    <div class="ic-header"><span class="ic-icon">📈</span><span class="ic-title">상승/하락 군집</span></div>
+    <div class="ic-header"><span class="ic-title">상승 · 하락 군집</span></div>
     <div class="ic-body" style="display:flex;gap:24px;flex-wrap:wrap;">
       <div style="flex:1;min-width:220px;">
-        <div style="font-size:12px;font-weight:700;color:var(--mid);margin-bottom:6px;">🔼 상승</div>
+        <div style="font-size:12px;font-weight:700;color:var(--mid);margin-bottom:6px;">상승</div>
         ${risers.length ? risers.map(deltaRow).join('') : '<div style="font-size:11px;color:var(--gray-text);padding:6px 0;">뚜렷한 상승 없음</div>'}
       </div>
       <div style="flex:1;min-width:220px;">
-        <div style="font-size:12px;font-weight:700;color:var(--mid);margin-bottom:6px;">🔽 하락</div>
+        <div style="font-size:12px;font-weight:700;color:var(--red,#DC2828);margin-bottom:6px;">하락</div>
         ${fallers.length ? fallers.map(deltaRow).join('') : '<div style="font-size:11px;color:var(--gray-text);padding:6px 0;">뚜렷한 하락 없음</div>'}
       </div>
     </div>
@@ -1912,7 +1913,7 @@ function renderClusterTrendHtml(cmp) {
   const listNames = (clusters) => clusters.length ? clusters.map(c => escHtml(c.name)).join(', ') : '없음';
 
   const newGoneCard = `<div class="insight-card fade-in" style="grid-column:1/-1;">
-    <div class="ic-header"><span class="ic-icon">🆕</span><span class="ic-title">신규 · 소멸 군집</span></div>
+    <div class="ic-header"><span class="ic-title">신규 · 소멸 군집</span></div>
     <div class="ic-body">
       <div style="margin-bottom:8px;"><strong>신규:</strong> ${listNames(newOnes)}</div>
       <div><strong>소멸:</strong> ${listNames(goneOnes)}</div>
@@ -2166,7 +2167,7 @@ async function runAiClusterInterpretation() {
   const targets = clusterResults.clusters.filter(c => c.id !== -1);
   if (!targets.length) { showToast('해석할 군집이 없습니다.', 'error'); return; }
   const orig = btn ? btn.innerHTML : '';
-  if (btn) { btn.disabled = true; btn.innerHTML = '⏳ 해석 생성 중…'; }
+  if (btn) { btn.disabled = true; btn.innerHTML = '해석 생성 중…'; }
   try {
     // 게임 컨텍스트(UA 전략 중심) — 파이프라인 JSON에서 직접 로드, 실패해도 진행
     let gameCtx = '';
@@ -2206,7 +2207,7 @@ async function runAiClusterInterpretation() {
       if (c && r.name) { _clusterInterpSet(c, { name: String(r.name).trim(), def: String(r.definition || '').trim() }); applied++; }
     });
     renderClusterCards(clusterResults.clusters);
-    showToast(`✨ AI 해석 적용: ${applied}개 군집`, 'success');
+    showToast(`AI 해석 적용: ${applied}개 군집`, 'success');
   } catch (e) {
     showToast('AI 해석 실패: ' + e.message, 'error');
   } finally {
