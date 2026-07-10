@@ -2036,9 +2036,10 @@ function buildLayeredClusters(baseClusters, layer) {
     extra.forEach(([k, ms]) => raw.push({ id: nid++, tags, materials: ms, _scores: ms.map(m => m.score || 0), _perfSplit: k }));
   });
   const en = enrichClusters(raw, (clusterResults && clusterResults.weightMap) || {});
+  // R18: '★ 고성과 ·' 이름 접두어가 태그와 혼동됨 → 이름은 태그 정체만, 성과 분리는 별도 칩(perfSplitLabel)으로 표시
   en.forEach(c => {
-    if (c._perfSplit === 'hi') c.name = '★ 고성과 · ' + c.name;
-    else if (c._perfSplit === 'lo') c.name = '▽ 저성과 · ' + c.name;
+    if (c._perfSplit === 'hi') c.perfSplitLabel = '성과 상위 분리';
+    else if (c._perfSplit === 'lo') c.perfSplitLabel = '성과 하위 분리';
   });
   return en;
 }
@@ -2180,7 +2181,7 @@ function renderClusterCards(clusters) {
         <div class="cc-num" style="background:${color};">${cl.displayId}</div>
         <div class="cc-title">
           <div class="cc-name">${escHtml(cl.name)}</div>
-          <div class="cc-count">${cl.materials.length}개 소재</div>
+          <div class="cc-count">${cl.materials.length}개 소재${cl.perfSplitLabel ? ` · <span style="display:inline-block;font-size:10px;font-weight:700;padding:1px 7px;border-radius:9999px;background:${cl._perfSplit === 'hi' ? 'rgba(220,40,40,.10)' : '#ECEAE6'};color:${cl._perfSplit === 'hi' ? 'var(--red)' : 'var(--mid)'};" title="같은 태그 군집을 성과 수준(±1σ)으로 분리한 그룹">${cl.perfSplitLabel}</span>` : ''}</div>
         </div>
         <span class="cc-grade grade-${cl.grade}">${cl.grade}등급</span>
       </div>
