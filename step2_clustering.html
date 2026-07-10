@@ -8,7 +8,8 @@
   <meta http-equiv="Expires" content="0">
   <title>군집화 분석 · 실행 & 결과 - Com2uS R팀</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+  <!-- Chart.js 제거 (R16): 차트 섹션 삭제로 미사용 -->
+
   <style>
     /* ═══════════ 리셋 & 변수 ═══════════ */
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -339,10 +340,12 @@
     .ti-col { width:100px; font-size:10px; color:var(--gray-text); white-space:nowrap; }
 
     /* ═══════════ 매핑 테이블 ═══════════ */
-    .table-wrap { overflow-x:auto; }
+    /* R16: 전 소재 세로 전개(~2,700px)가 스크롤 주범 → 내부 스크롤 + 헤더 고정 (검색·필터·CSV 유지) */
+    .table-wrap { overflow-x:auto; max-height:560px; overflow-y:auto; border:1px solid var(--gray-line); border-radius:8px; }
     table.mapping-table {
       width:100%; border-collapse:collapse; font-size:12px;
     }
+    .mapping-table thead th { position:sticky; top:0; z-index:2; }
     .mapping-table th {
       background:var(--gray-bg); padding:10px 12px; text-align:left;
       font-weight:700; color:var(--mid); border-bottom:2px solid var(--gray-line);
@@ -724,8 +727,15 @@
 
   <!-- ════ 페이지 헤더 ════ -->
   <div class="page-header">
-    <h1><i class="fas fa-sitemap"></i> 군집화 실행 & 결과 분석</h1>
-    <p>태그 기반 하이브리드 군집화 v4.0 — IQR 노이즈 필터 + Union-Find + 성과 기반 정제</p>
+    <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:240px;">
+        <h1><i class="fas fa-sitemap"></i> 군집화 실행 & 결과 분석</h1>
+        <p>소재를 태그 패턴으로 자동 군집화하고, 승리·중단 패턴과 확장 추천 태그를 도출합니다.</p>
+      </div>
+      <button onclick="runClustering()" style="padding:9px 16px;border-radius:8px;border:1.5px solid var(--red);background:#fff;color:var(--red);font-weight:700;font-size:13px;cursor:pointer;flex:none;margin-top:4px;">
+        <i class="fas fa-redo"></i> 재실행
+      </button>
+    </div>
     <div class="header-meta" id="headerMeta">
       <span class="meta-pill"><i class="fas fa-spinner fa-spin"></i> 설정 로딩 중...</span>
     </div>
@@ -742,7 +752,7 @@
           <h3>설정 데이터가 없습니다</h3>
           <p>군집화 컬럼 설정 페이지에서 CSV를 업로드하고 설정을 완료한 후 이 페이지로 이동하세요.</p>
           <a href="step2_column_selector.html" class="btn-goto">
-            <i class="fas fa-arrow-left"></i> Step 2 설정으로 돌아가기
+            <i class="fas fa-arrow-left"></i> 군집화 컬럼 설정으로 돌아가기
           </a>
         </div>
       </div>
@@ -817,17 +827,7 @@
         </div>
       </div>
 
-      <!-- 차트 -->
-      <div class="chart-grid">
-        <div class="chart-box">
-          <div class="chart-title"><i class="fas fa-chart-bar" style="color:var(--red);"></i> 군집별 평균 점수</div>
-          <div class="chart-wrap"><canvas id="scoreChart"></canvas></div>
-        </div>
-        <div class="chart-box">
-          <div class="chart-title"><i class="fas fa-chart-pie" style="color:var(--blue);"></i> 군집별 소재 수 분포</div>
-          <div class="chart-wrap"><canvas id="distChart"></canvas></div>
-        </div>
-      </div>
+      <!-- 차트 제거 (R16): 군집별 평균 점수·소재 수는 군집 카드에 이미 표시 — 정보 중복 -->
 
       <!-- 태그 영향도 -->
       <div class="section">
@@ -927,35 +927,8 @@
         </div>
       </div>
 
-      <!-- 결과 저장 -->
-      <div class="section" style="border-color:var(--green-mid);">
-        <div class="section-head" style="background:var(--green-pale);">
-          <div class="section-icon" style="background:var(--mid);">
-            <i class="fas fa-save"></i>
-          </div>
-          <h3 style="color:var(--green);">결과 저장 & 다음 단계</h3>
-        </div>
-        <div class="section-body">
-          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
-            <button class="run-btn" style="background:linear-gradient(135deg,var(--green) 0%,#48BB78 100%);
-                    box-shadow:0 4px 14px rgba(56,161,105,.4);" onclick="saveResults()">
-              <i class="fas fa-save"></i> localStorage에 저장
-            </button>
-            <button class="run-btn" style="background:linear-gradient(135deg,var(--blue) 0%,#63B3ED 100%);
-                    box-shadow:0 4px 14px rgba(49,130,206,.4);" onclick="exportCSV()">
-              <i class="fas fa-file-csv"></i> 전체 결과 CSV 저장
-            </button>
-            <button class="run-btn" style="background:linear-gradient(135deg,var(--orange) 0%,#F6AD55 100%);
-                    box-shadow:0 4px 14px rgba(221,107,32,.4);" onclick="runClustering()">
-              <i class="fas fa-redo"></i> 재실행
-            </button>
-          </div>
-          <p style="margin-top:12px;font-size:12px;color:var(--gray-text);">
-            <i class="fas fa-info-circle"></i>
-            저장된 결과는 Pipeline 페이지의 히스토리 분석 및 다음 라운드 비교에 활용됩니다.
-          </p>
-        </div>
-      </div>
+      <!-- 결과 저장 섹션 제거 (R16): localStorage 저장은 소비처 없음(죽은 기능),
+           CSV 저장은 매핑 테이블 컨트롤에 중복, 재실행은 페이지 헤더로 이동 -->
 
     </div><!-- /resultArea -->
   </div><!-- /main-area -->
@@ -2059,7 +2032,6 @@ function applyLayerAndRender(layer) {
   renderKPIStrip(c);
   renderQualityCard(c);                       // R2-B
   renderClusterCards(c);
-  renderCharts(c);
   renderMappingTable(c);
   renderTagImpact(clusterResults);            // R2-A
   renderInsights(c, clusterResults);          // R2-A
@@ -2187,65 +2159,7 @@ function calcGrade(score) {
   return score >= 75 ? 'S' : score >= 60 ? 'A' : score >= 45 ? 'B' : score >= 30 ? 'C' : 'D';
 }
 
-/* ── 차트 ── */
-let scoreChartInst = null;
-let distChartInst  = null;
-
-function renderCharts(clusters) {
-  const labels = clusters.map((c,i) => `#${c.displayId} ${c.name.substring(0,10)}...`);
-  const avgs   = clusters.map(c => c.avgScore);
-  const counts = clusters.map(c => c.materials.length);
-  const colors = clusters.map((_,i) => CLUSTER_COLORS[i % CLUSTER_COLORS.length]);
-
-  // 점수 차트
-  if (scoreChartInst) scoreChartInst.destroy();
-  const sCtx = document.getElementById('scoreChart').getContext('2d');
-  scoreChartInst = new Chart(sCtx, {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [{
-        label: '평균 점수',
-        data: avgs,
-        backgroundColor: colors.map(c => c + 'BB'),
-        borderColor: colors,
-        borderWidth: 2,
-        borderRadius: 6
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: { legend:{ display:false } },
-      scales: {
-        y: { beginAtZero:true, max:100, grid:{ color:'#f0f0f0' },
-             ticks:{ font:{ size:11 } } },
-        x: { ticks:{ font:{ size:10 }, maxRotation:30 } }
-      }
-    }
-  });
-
-  // 분포 도넛 차트
-  if (distChartInst) distChartInst.destroy();
-  const dCtx = document.getElementById('distChart').getContext('2d');
-  distChartInst = new Chart(dCtx, {
-    type: 'doughnut',
-    data: {
-      labels,
-      datasets: [{
-        data: counts,
-        backgroundColor: colors.map(c => c + 'BB'),
-        borderColor: colors,
-        borderWidth: 2
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      plugins: {
-        legend: { position:'right', labels:{ font:{ size:11 }, boxWidth:12 } }
-      }
-    }
-  });
-}
+/* ── 차트 제거 (R16): 군집 카드와 정보 중복 — renderCharts·Chart.js 의존 삭제 ── */
 
 /* ── 태그 영향도 ── */
 function renderTagImpact(data) {
@@ -2850,27 +2764,7 @@ function exportCSV() {
   showToast('CSV 파일을 저장했습니다.', 'success');
 }
 
-/* ══════════════════════════════════════════════════════════════
-   localStorage 저장
-══════════════════════════════════════════════════════════════ */
-function saveResults() {
-  if (!clusterResults) { showToast('먼저 군집화를 실행하세요.', 'error'); return; }
-  try {
-    const saveData = {
-      savedAt: Date.now(),
-      clusters: clusterResults.clusters.map(c => ({
-        id: c.id, name: c.name, avgScore: c.avgScore, grade: c.grade,
-        materialCount: c.materials.length, topTags: c.topTags
-      })),
-      params: clusterResults.params,
-      rowCount: csvData.rows.length
-    };
-    localStorage.setItem('r_team_cluster_result', JSON.stringify(saveData));
-    showToast('✅ 결과가 저장되었습니다. Pipeline에서 활용 가능합니다.', 'success');
-  } catch(e) {
-    showToast('저장 오류: ' + e.message, 'error');
-  }
-}
+/* saveResults 제거 (R16): r_team_cluster_result 를 읽는 소비처가 없음(죽은 기능) */
 
 /* ══════════════════════════════════════════════════════════════
    유틸리티
