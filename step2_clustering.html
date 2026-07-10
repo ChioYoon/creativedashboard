@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title>Step 2: 군집화 실행 & 결과 - Com2uS R팀</title>
+  <title>군집화 분석 · 실행 & 결과 - Com2uS R팀</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
   <style>
@@ -17,11 +17,13 @@
       --red:var(--brand-primary,#DC2828); --red-light:var(--red-200,#A51E1E); --red-pale:#FFF0F1; --red-mid:#FFCED1;
       --gray-bg:var(--surface-soft,#FAF9F7); --gray-line:var(--gray-05,#E5E5E5); --gray-text:var(--text-secondary,#666666);
       --dark:var(--text-primary,#191919); --mid:var(--gray-60,#4C4C4C); --white:var(--gray-00,#FFFFFF);
-      --green:#38A169; --green-pale:#F0FFF4; --green-mid:#C6F6D5;
-      --orange:#DD6B20; --orange-pale:#FFFAF0; --orange-mid:#FEEBC8;
-      --blue:#3182CE; --blue-pale:#EBF8FF; --blue-mid:#BEE3F8;
-      --purple:#6B46C1; --purple-pale:#FAF5FF; --purple-mid:#E9D8FD;
-      --gold:#D4A017; --gold-pale:#FFFBEA;
+      /* T7: DS 모노 램프 remap — 다색(초록/파랑/주황/보라) → 명도 구분 회색, 강조(gold)만 Red.
+         변수명 유지(값만 모노). 서수 등급/점수·히트맵은 이미 명시 모노. */
+      --green:#4C4C4C; --green-pale:#F4F2EF; --green-mid:#E4E1DC;
+      --orange:#767676; --orange-pale:#F7F4EE; --orange-mid:#E4E1DC;
+      --blue:#666666; --blue-pale:#F4F2EF; --blue-mid:#E4E1DC;
+      --purple:#595959; --purple-pale:#F4F2EF; --purple-mid:#E4E1DC;
+      --gold:#DC2828; --gold-pale:rgba(220,40,40,.06);
       --transition:all .2s ease;
     }
     body {
@@ -106,13 +108,13 @@
       font-size:11px; font-weight:700; color:var(--gray-text); z-index:1; position:relative;
       transition:var(--transition);
     }
-    .prog-step.done .prog-dot { background:var(--green); border-color:var(--green); color:#fff; }
-    .prog-step.done::after { background:var(--green); }
+    .prog-step.done .prog-dot { background:var(--mid); border-color:var(--mid); color:#fff; }
+    .prog-step.done::after { background:var(--mid); }
     .prog-step.active .prog-dot { background:var(--red); border-color:var(--red); color:#fff;
       box-shadow:0 0 0 4px rgba(220,40,40,.2); }
     .prog-label { font-size:11px; color:var(--gray-text); font-weight:500; white-space:nowrap; }
     .prog-step.active .prog-label { color:var(--red); font-weight:700; }
-    .prog-step.done .prog-label { color:var(--green); font-weight:600; }
+    .prog-step.done .prog-label { color:var(--mid); font-weight:600; }
 
     /* ═══════════ 페이지 헤더 ═══════════ */
     .page-header {
@@ -271,11 +273,11 @@
       font-size:13px; font-weight:800; padding:3px 10px;
       border-radius:10px; color:#fff;
     }
-    .grade-S { background:#9B2C2C; }
-    .grade-A { background:var(--green); }
-    .grade-B { background:var(--blue); }
-    .grade-C { background:var(--orange); }
-    .grade-D { background:var(--gray-text); }
+    .grade-S { background:#DC2828; }
+    .grade-A { background:#333333; }
+    .grade-B { background:#595959; }
+    .grade-C { background:#767676; }
+    .grade-D { background:#8C8C8C; }
     .cc-body { padding:14px 18px; }
     .cc-score-row { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
     .cc-score-val { font-size:28px; font-weight:800; }
@@ -377,11 +379,11 @@
     .insight-card {
       border-radius:var(--radius-md); padding:18px; border:1px solid;
     }
-    .insight-card.win    { background:var(--green-pale); border-color:var(--green-mid); }
-    .insight-card.stop   { background:#FFF5F5; border-color:var(--red-mid); }
-    .insight-card.info   { background:var(--blue-pale); border-color:var(--blue-mid); }
-    .insight-card.alert  { background:var(--orange-pale); border-color:var(--orange-mid); }
-    .insight-card.purple { background:var(--purple-pale); border-color:var(--purple-mid); }
+    .insight-card.win    { background:rgba(220,40,40,.05); border-color:rgba(220,40,40,.22); }
+    .insight-card.stop   { background:#F7F4EE; border-color:#E4E1DC; }
+    .insight-card.info   { background:#FAF9F7; border-color:#E4E1DC; }
+    .insight-card.alert  { background:#F7F4EE; border-color:#E4E1DC; }
+    .insight-card.purple { background:#F4F2EF; border-color:#E4E1DC; }
     .ic-header { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
     .ic-icon { font-size:18px; }
     .ic-title { font-size:14px; font-weight:700; }
@@ -738,7 +740,7 @@
         <div class="no-data-msg">
           <i class="fas fa-database"></i>
           <h3>설정 데이터가 없습니다</h3>
-          <p>Step 2 컬럼 선택 페이지에서 CSV를 업로드하고 설정을 완료한 후 이 페이지로 이동하세요.</p>
+          <p>군집화 컬럼 설정 페이지에서 CSV를 업로드하고 설정을 완료한 후 이 페이지로 이동하세요.</p>
           <a href="step2_column_selector.html" class="btn-goto">
             <i class="fas fa-arrow-left"></i> Step 2 설정으로 돌아가기
           </a>
@@ -749,7 +751,7 @@
     <!-- ── [1] 설정 요약 ── (auto-run 이후 불필요, 숨김) -->
     <div class="section" id="configSummarySection" style="display:none">
       <div class="section-head">
-        <div class="section-icon" style="background:var(--blue);">
+        <div class="section-icon" style="background:var(--mid);">
           <i class="fas fa-cog"></i>
         </div>
         <h3>군집화 설정 요약</h3>
@@ -795,7 +797,7 @@
       <!-- 군집 카드 -->
       <div class="section">
         <div class="section-head">
-          <div class="section-icon" style="background:var(--purple);">
+          <div class="section-icon" style="background:var(--mid);">
             <i class="fas fa-layer-group"></i>
           </div>
           <h3>군집 분석 결과</h3>
@@ -830,7 +832,7 @@
       <!-- 태그 영향도 -->
       <div class="section">
         <div class="section-head">
-          <div class="section-icon" style="background:var(--orange);">
+          <div class="section-icon" style="background:var(--mid);">
             <i class="fas fa-fire"></i>
           </div>
           <h3>태그-성과 히트맵</h3>
@@ -852,7 +854,7 @@
       <!-- 자동 인사이트 (Rule-based, 유지) -->
       <div class="section">
         <div class="section-head">
-          <div class="section-icon" style="background:var(--green);">
+          <div class="section-icon" style="background:var(--mid);">
             <i class="fas fa-lightbulb"></i>
           </div>
           <h3>자동 인사이트 도출</h3>
@@ -869,7 +871,7 @@
       <!-- 군집 트렌드 비교 (시점 간 비교, 클릭 시에만 실행) -->
       <div class="section">
         <div class="section-head">
-          <div class="section-icon" style="background:var(--blue);">
+          <div class="section-icon" style="background:var(--mid);">
             <i class="fas fa-clock-rotate-left"></i>
           </div>
           <h3>군집 트렌드 비교</h3>
@@ -928,7 +930,7 @@
       <!-- 결과 저장 -->
       <div class="section" style="border-color:var(--green-mid);">
         <div class="section-head" style="background:var(--green-pale);">
-          <div class="section-icon" style="background:var(--green);">
+          <div class="section-icon" style="background:var(--mid);">
             <i class="fas fa-save"></i>
           </div>
           <h3 style="color:var(--green);">결과 저장 & 다음 단계</h3>
@@ -972,10 +974,11 @@ let sortDir        = 'desc';
 let showTopOnly    = false;
 window.currentAnalysisLayer = window.currentAnalysisLayer || 'ads';  // 분석 레이어(Google Ads / MMP) — T5 토글
 
+// DS 모노 램프+Red — 클러스터는 이름/ID로 식별되므로 색은 명도 구분만(1번=Red, 이하 회색 하강)
 const CLUSTER_COLORS = [
-  '#DC2828','#3182CE','#38A169','#D4A017','#6B46C1',
-  '#DD6B20','#0BC5EA','#9B2C2C','#2C7A7B','#553C9A',
-  '#276749','#744210','#2A4365','#702459'
+  '#DC2828','#191919','#333333','#4C4C4C','#595959',
+  '#666666','#767676','#808080','#8C8C8C','#999999',
+  '#A6A6A6','#B2B2B2','#BFBFBF','#CCCCCC'
 ];
 
 /* ══════════════════════════════════════════════════════════════
@@ -1874,7 +1877,7 @@ function renderClusterTrendHtml(cmp) {
 
   const deltaRow = (m) => {
     const delta = Math.round((m.now.avgScore - m.prev.avgScore) * 10) / 10;
-    const color = delta > 0 ? '#059669' : delta < 0 ? 'var(--red)' : 'var(--gray-text)';
+    const color = delta > 0 ? '#191919' : delta < 0 ? '#999999' : 'var(--gray-text)';
     return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px dashed var(--gray-line);">
       <span style="flex:1;font-size:12.5px;font-weight:600;color:var(--dark);">${escHtml(m.now.name)}</span>
       <span style="font-size:10.5px;color:var(--gray-text);white-space:nowrap;">${m.prev.avgScore} → ${m.now.avgScore}</span>
@@ -2118,7 +2121,7 @@ function renderClusterCards(clusters) {
 
   clusters.forEach((cl, idx) => {
     const color = CLUSTER_COLORS[idx % CLUSTER_COLORS.length];
-    const gradeColor = { S:'#9B2C2C', A:CLUSTER_COLORS[2], B:CLUSTER_COLORS[1], C:CLUSTER_COLORS[4], D:CLUSTER_COLORS[6] };
+    const gradeColor = { S:'#DC2828', A:'#333333', B:'#595959', C:'#767676', D:'#8C8C8C' };
 
     const card = document.createElement('div');
     card.className = 'cluster-card fade-in';
@@ -2292,13 +2295,13 @@ function renderTagImpact(data) {
   const overallAvg = clusters.flatMap(c => c.materials)
     .reduce((s, m, _, arr) => s + m.score / arr.length, 0);
 
-  // ★ 히트맵 색상: 평균 대비 고성과면 초록, 저성과면 빨간 계열
+  // ★ 히트맵 색상(DS 모노 램프): 고성과=Red 강조, 이하 모노 명도 하강
   function heatColor(avg) {
     const ratio = (avg - minAvg) / (maxAvg - minAvg + 0.001);
-    if (ratio >= 0.75) return { bar:'#10b981', text:'#059669', bg:'rgba(16,185,129,.08)' };
-    if (ratio >= 0.50) return { bar:'#3b82f6', text:'#1d4ed8', bg:'rgba(59,130,246,.08)' };
-    if (ratio >= 0.25) return { bar:'#f59e0b', text:'#d97706', bg:'rgba(245,158,11,.08)' };
-    return { bar:'#ef4444', text:'#dc2626', bg:'rgba(239,68,68,.08)' };
+    if (ratio >= 0.75) return { bar:'#DC2828', text:'#DC2828', bg:'rgba(220,40,40,.08)' };
+    if (ratio >= 0.50) return { bar:'#767676', text:'#4C4C4C', bg:'rgba(102,102,102,.07)' };
+    if (ratio >= 0.25) return { bar:'#A6A6A6', text:'#808080', bg:'rgba(153,153,153,.07)' };
+    return { bar:'#CCCCCC', text:'#999999', bg:'rgba(204,204,204,.10)' };
   }
 
   // ★ 확장 추천 여부: 평균 이상 + 2개 이상 소재
@@ -2307,10 +2310,10 @@ function renderTagImpact(data) {
   document.getElementById('tagImpactList').innerHTML = `
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px;">
       <div style="font-size:11px;color:var(--gray-text);display:flex;align-items:center;gap:6px;">
-        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#10b981;"></span>고성과 태그 (상위 25%)
-        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#3b82f6;margin-left:6px;"></span>중상
-        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#f59e0b;margin-left:6px;"></span>중하
-        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ef4444;margin-left:6px;"></span>저성과
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#DC2828;"></span>고성과 태그 (상위 25%)
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#767676;margin-left:6px;"></span>중상
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#A6A6A6;margin-left:6px;"></span>중하
+        <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#CCCCCC;margin-left:6px;"></span>저성과
       </div>
       <div style="font-size:11px;color:var(--gray-text);text-align:right;">
         전체 평균 기준선: <strong style="color:var(--dark);">${overallAvg.toFixed(1)}점</strong>
@@ -2394,7 +2397,7 @@ function renderQualityCard(clusters) {
   const el = document.getElementById('qualityCard'); if (!el) return;
   const q = computeClusterQuality(clusters);
   if (!q) { el.innerHTML = ''; return; }
-  const gColor = { S: '#9B2C2C', A: '#059669', B: '#2563eb', C: '#dc2626' }[q.grade] || '#666';
+  const gColor = { S: '#DC2828', A: '#333333', B: '#595959', C: '#767676' }[q.grade] || '#8C8C8C';
   const interp = q.overall >= 70 ? '군집이 뚜렷합니다 — 결과 신뢰도 양호'
     : q.overall >= 55 ? '일부 군집이 불명확 — 참고용으로 활용'
     : '군집 변별이 약함 — 소재가 동질적이거나 태그 보강이 필요';
@@ -2456,7 +2459,7 @@ function buildPatternInsightsHtml(clusters) {
   const liftRow = (r, win) => `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px dashed var(--gray-line);">
       <span style="flex:1;font-size:12.5px;font-weight:600;color:var(--dark);">${escHtml(r.tag)}</span>
       <span style="font-size:10.5px;color:var(--gray-text);white-space:nowrap;">상위 ${r.topPct}% · 하위 ${r.botPct}%</span>
-      <span style="font-size:12px;font-weight:800;min-width:46px;text-align:right;color:${win ? '#059669' : 'var(--red)'};">${r.lift > 0 ? '+' : ''}${Math.round(r.lift * 100)}%p</span>
+      <span style="font-size:12px;font-weight:800;min-width:46px;text-align:right;color:${win ? '#DC2828' : '#999999'};">${r.lift > 0 ? '+' : ''}${Math.round(r.lift * 100)}%p</span>
     </div>`;
   const col = (title, rows, win, empty) => `<div style="flex:1;min-width:220px;">
       <div style="font-size:12px;font-weight:700;color:var(--mid);margin-bottom:6px;">${title}</div>
@@ -2641,7 +2644,7 @@ function buildMappingTable(rows) {
     </th>`).join('')}</tr>`;
 
   // 바디
-  const gradeColorMap = { S:'#9B2C2C', A:'var(--green)', B:'var(--blue)', C:'var(--orange)', D:'var(--gray-text)' };
+  const gradeColorMap = { S:'#DC2828', A:'#333333', B:'#595959', C:'#767676', D:'#8C8C8C' };
   document.getElementById('mappingBody').innerHTML = sorted.map((row, idx) => {
     const isTop  = row.grade === 'S' || row.score >= 75;
     const fmt    = (v, dec=0) => (v && v > 0) ? v.toFixed(dec).replace(/\B(?=(\d{3})+(?!\d))/g,',') : '-';
@@ -2701,7 +2704,7 @@ function buildMappingTable(rows) {
 }
 
 function scoreColor(s) {
-  return s >= 75 ? '#9B2C2C' : s >= 60 ? 'var(--green)' : s >= 45 ? 'var(--blue)' : s >= 30 ? 'var(--orange)' : 'var(--gray-text)';
+  return s >= 75 ? '#DC2828' : s >= 60 ? '#4C4C4C' : s >= 45 ? '#767676' : s >= 30 ? '#999999' : '#B2B2B2';
 }
 
 function sortTable(col) {
@@ -2740,7 +2743,7 @@ function openPreview(idx) {
   const row  = rows[idx];
   if (!row) return;
 
-  const gradeColorMap = { S:'#9B2C2C', A:'var(--green)', B:'var(--blue)', C:'var(--orange)', D:'var(--gray-text)' };
+  const gradeColorMap = { S:'#DC2828', A:'#333333', B:'#595959', C:'#767676', D:'#8C8C8C' };
   const fmt = (v, dec=0) => (v && v > 0) ? v.toFixed(dec).replace(/\B(?=(\d{3})+(?!\d))/g,',') : '-';
 
   // 헤더
