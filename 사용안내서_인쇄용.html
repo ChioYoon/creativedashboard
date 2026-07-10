@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Com2uS R팀 소재 분석 시스템 사용 안내서 v5.5</title>
+  <title>Com2uS R팀 소재 분석 시스템 사용 안내서 v5.6</title>
   <style>
     /* ===== Pretendard — self-hosted (Com2uS DS) ===== */
     @font-face { font-family:"Pretendard"; src:url("assets/fonts/PretendardVariable.woff2") format("woff2-variations"), url("assets/fonts/PretendardVariable.woff2") format("woff2"); font-weight:45 920; font-style:normal; font-display:swap; }
@@ -198,7 +198,7 @@
     <div class="cover-meta">
       <div class="cover-meta-item">
         <span class="cover-meta-label">Version</span>
-        <span class="cover-meta-value">v5.5 (시스템 v20)</span>
+        <span class="cover-meta-value">v5.6 (시스템 v21)</span>
       </div>
       <div class="cover-meta-item">
         <span class="cover-meta-label">Updated</span>
@@ -265,16 +265,15 @@
     </div>
 
     <div class="box box-blue" style="margin-top: 16px;">
-      <strong>최근 업데이트 (2026-07-10, v5.5)</strong>
-      · <strong>메뉴 명칭 개편</strong> — 'Step 1/Step 2' 표기 제거 → <strong>소재 분석 · 군집화 분석</strong> (전 페이지)<br>
-      · <strong>에셋별 성과 드릴다운</strong> — 소재 상세에서 규격/집행 에셋별 노출·전환·CPA·비중 (3절)<br>
-      · <strong>보고서 개편</strong> — '종합 인사이트' 통합 + <strong>라이브 소재 탭</strong> + 디자인 시스템 정렬 (3.3절)<br>
-      · <strong>군집 정의 명확화</strong> — 차별 태그 기반 이름·정의 + <strong>AI 군집 해석</strong>(게임 컨텍스트 반영) (4절)<br>
-      · <strong>라이브 대시보드 · 소재 사전평가</strong> — 상단 메뉴에서 상시 접속<br>
-      · <strong>디자인 시스템 정렬</strong> — 등급 뱃지 모노 램프 통일 · 메인 영역 밝은 미색(LTV 정합)
+      <strong>최근 업데이트 (2026-07-11, v5.6)</strong>
+      · <strong>데이터 신선도 배지</strong> — 소재 분석·라이브·군집화에서 <strong>기준일·생성 시각</strong> 표시, 오래된/미집행 데이터 즉시 식별 (1.5·3절)<br>
+      · <strong>피로도 임계 경보</strong> — '피로도' 탭 배지 + 상단 경보 카드로 CPA 급등(+20%↑) 소재를 탭 진입 없이 인지 (3.4절)<br>
+      · <strong>규격별 성과 드릴다운</strong> — 에셋별 성과에 <strong>'1200×628 · 가로형'</strong> 등 규격 라벨(이미지·파일명 영상) (3절)<br>
+      · <strong>AI 캐싱 + 오프라인 폴백</strong> — 보고서·군집 AI 결과 재사용(쿼터 절감), 키/쿼터 없어도 <strong>규칙기반 요약</strong> 자동 제공 (5절)<br>
+      · <strong>군집 시계열 · 시각 정돈</strong> — 군집 트렌드 DS 정렬(하락 강조), 소재 목록 테이블 폰트·줄바꿈·정렬 정돈
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.5 | Com2uS R Marketing Team</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.6 | Com2uS R Marketing Team</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -371,7 +370,7 @@
       </tbody>
     </table>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.5 | Page 3</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.6 | Page 3</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -384,6 +383,8 @@
     <p>담당 타이틀(제우스: 오만의 신·도원암귀·펩 히어로즈·갓앤데몬 등)이 시스템에 등록되어, 소재 분석 화면 상단 <strong>타이틀 선택</strong> 드롭다운에서 고르면 매일 밤 자동 파이프라인이 산출한 <strong>분석 데이터(소재 태그 + 실제 KPI)</strong>가 즉시 로드됩니다. CSV 수동 업로드도 그대로 가능합니다.</p>
     <div class="box box-green">· 아직 태깅 전인 타이틀을 선택하면 <strong>"아직 데이터 없음"</strong> 안내가 표시됩니다(오류 아님 — 소재 태깅 완료 후 자동 표시).</div>
 
+    <div class="box box-blue" style="margin-top:10px;"><strong>데이터 신선도 배지 <span class="badge badge-red" style="font-size:9px;padding:1px 6px;">v5.6</span></strong> — 타이틀 로드 시 <strong>데이터 기준일</strong>과 <strong>파이프라인 생성 시각</strong>이 배지로 표시됩니다. 최신 데이터가 오래됐거나(예: "오래된 데이터 · 357일 경과") 집행 데이터가 없으면 즉시 눈에 띄어, 낡은 데이터로 잘못 판단하는 것을 방지합니다. (소재 분석·라이브 대시보드·군집화 컬럼 설정 공통)</div>
+
     <div class="section-title">MMP 지표 연동 (AppsFlyer / Airbridge)</div>
     <p>Google Ads(광고비·노출·클릭)에 더해, 타이틀별로 연동된 <strong>MMP(AppsFlyer 또는 Airbridge)</strong>의 설치·전환 지표를 결합해 표시합니다. 광고 매체 데이터와 MMP 데이터를 소재 단위로 조인합니다.</p>
 
@@ -394,7 +395,7 @@
     <div class="section-title">캠페인 타입 필터</div>
     <p>캠페인을 타입(예: 선론칭·상시 등)별로 정규화해 결과를 필터링할 수 있습니다.</p>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.5 | 데이터 연동</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.6 | 데이터 연동</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -486,7 +487,7 @@
       · <strong>유료 AI 플랜</strong>: 원문 최대 200자 Gemini에 전달 → 깊은 인사이트
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.5 | Page 4</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.6 | Page 4</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -565,7 +566,7 @@
       · <strong>성과별 강·약점 태그</strong>(전체 성과 요약 탭): 종합점수 상위 소재의 <strong>공통 강점</strong>과 하위 소재의 <strong>공통 약점</strong> 태그를 Top 5로 분리 — "이긴 소재가 공유하는 강점 / 진 소재가 공유하는 약점"을 한눈에 파악.
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.5 | Page 5</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.6 | Page 5</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -615,7 +616,7 @@
       "전체 캠페인 / BNR+VID / 지난주" 필터 → 점수 계산 → HTML 추출 → 매주 월요일 정해진 채널에 첨부 한 번으로 <strong>주간 성과 리포트 발행</strong> 가능.
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.5 | Page 6</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.6 | Page 6</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -631,6 +632,8 @@
     <div class="step-row"><span class="step-num">2</span><div class="step-body"><strong>비교 기간</strong> 설정 — 현재 또는 최근 기간 입력 (예: 4/01~4/13)</div></div>
     <div class="step-row"><span class="step-num">3</span><div class="step-body"><strong>"자동 분할"</strong> 버튼 — 전체 데이터 기간을 자동으로 절반씩 나눠 설정</div></div>
     <div class="step-row"><span class="step-num">4</span><div class="step-body"><strong>"피로도 분석 실행"</strong> 버튼 클릭 → 결과 자동 표시</div></div>
+
+    <div class="box box-blue"><strong>임계 경보 <span class="badge badge-red" style="font-size:9px;padding:1px 6px;">v5.6</span></strong> — 데이터 로드 시 기본 기간(최근 7일↔이전 7일)으로 자동 선계산해, 상단 <strong>'피로도' 탭에 경보 배지</strong>(CPA 급등 소재 수)를 띄웁니다. 피로도 탭 상단에는 <strong>경보 카드</strong>(피로 경보/주의/신호 없음)가 표시돼, 탭에 들어가지 않아도 교체가 필요한 소재를 바로 인지할 수 있습니다.</div>
 
     <div class="section-title">피로도 상태 기준</div>
     <div class="fatigue-grid">
@@ -685,7 +688,7 @@
       · <strong>TXT 소재</strong>: 피로도 분석에서도 완전 제외 (BNR/VID만 분석)
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.5 | Page 7</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.6 | Page 7</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -725,7 +728,7 @@
       · 군집화 분석 ① 컬럼 설정에서 가중치 수동 조정도 가능
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.5 | Page 8</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.6 | Page 8</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -789,7 +792,7 @@
       다음 차수 분석 시 이전 군집과 자동 비교하여 신규 군집(NEW 배지)·기존 군집 연속성을 표시합니다.
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.5 | Page 9</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.6 | Page 9</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -797,6 +800,10 @@
   ════════════════════════════════════════════════════════ -->
   <div class="page">
     <div class="page-title">5. Gemini AI 인사이트</div>
+
+    <div class="box box-blue"><strong>결과 캐싱 · 오프라인 폴백 <span class="badge badge-red" style="font-size:9px;padding:1px 6px;">v5.6</span></strong><br>
+      · <strong>캐싱</strong> — 보고서 서술·군집 AI 해석 결과를 브라우저에 저장해, 같은 데이터를 다시 볼 때 재호출 없이 즉시 표시합니다(쿼터 절감). 데이터가 갱신되면 자동으로 다시 생성합니다.<br>
+      · <strong>오프라인 폴백</strong> — API 키가 없거나 쿼터가 소진돼도 보고서 인사이트가 비지 않고, KPI·차별 태그 기반 <strong>규칙기반 요약</strong>이 자동으로 채워집니다('규칙기반 요약' 라벨로 구분 표기).</div>
 
     <div class="section-title">5.1 API 키 설정 및 플랜 선택</div>
 
@@ -865,7 +872,7 @@
       · 신규 슬롯: <strong>losing · scaleUp · stopNow</strong> 추가
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.5 | Page 10</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.6 | Page 10</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -931,7 +938,7 @@
       · 모델: <strong>Gemini 2.5 Flash</strong> (thinking 모드 비활성화로 출력 토큰 100% 활용)
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.5 | Page 11</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.6 | Page 11</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -1020,7 +1027,7 @@
       <div class="faq-a">v5.0 신규 기능인 <strong>"유료 Pro 업그레이드 유도 카드"</strong>입니다. 무료 플랜에서는 잠긴 슬롯(losing/scaleUp/stopNow 등)을 아이콘으로 표시하며 클릭 한 번으로 API 키 모달이 열려 유료 키로 전환할 수 있습니다.</div>
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.5 | Page 12</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.6 | Page 12</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -1066,7 +1073,7 @@
       <li>※ KPI 보유 소재가 있는 <strong>타이틀 모드</strong>에서만 노출 (CSV 모드는 자동 숨김)</li>
     </ul>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.5 | Page 13</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.6 | Page 13</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -1167,7 +1174,12 @@
       <thead><tr><th style="width:16%">버전</th><th style="width:22%">날짜</th><th>주요 업데이트</th></tr></thead>
       <tbody>
         <tr>
-          <td><strong>v5.5</strong> <span class="badge badge-red">현재</span></td>
+          <td><strong>v5.6</strong> <span class="badge badge-red">현재</span></td>
+          <td>2026-07-11</td>
+          <td>① <strong>데이터 신선도 배지</strong>(소재 분석·라이브·군집화에서 기준일·생성 시각, 오래된/미집행 데이터 식별) · ② <strong>피로도 임계 경보</strong>(탭 배지 + 상단 카드, CPA +20%↑ 소재) · ③ <strong>규격별 성과 드릴다운</strong>(에셋별 성과에 '1200×628·가로형' 등 규격 라벨) · ④ <strong>AI 캐싱 + 오프라인 폴백</strong>(보고서·군집 AI 결과 재사용, 키/쿼터 없어도 규칙기반 요약) · ⑤ <strong>군집 시계열 DS 정렬</strong>(하락 강조) · ⑥ <strong>시각 정돈</strong>(소재 목록 테이블 폰트·줄바꿈·정렬)</td>
+        </tr>
+        <tr>
+          <td><strong>v5.5</strong></td>
           <td>2026-07-10</td>
           <td>① <strong>메뉴 명칭 개편</strong> — 'Step 1/Step 2' 제거 → 소재 분석·군집화 분석(전 페이지) · ② <strong>에셋별 성과 드릴다운</strong>(소재 상세에서 규격/집행 에셋별 노출·전환·CPA·비중, 최고 에셋 표시) · ③ <strong>보고서 개편</strong>(종합 인사이트 통합 + 라이브 소재 탭 + DS 정렬) · ④ <strong>군집 정의 명확화</strong>(차별 태그 기반 이름·정의 + AI 군집 해석, 게임 컨텍스트 반영) · ⑤ <strong>군집화 UI 간소화</strong>(빠른 실행·고급 설정 접기·중복 카드 정리) · ⑥ <strong>디자인 시스템 정렬</strong>(등급 뱃지 모노 램프 통일 · 메인 영역 밝은 미색, LTV 정합) · 국가/OS 필터 정합·라이브 대시보드 점검</td>
         </tr>
