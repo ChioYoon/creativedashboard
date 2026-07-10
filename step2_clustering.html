@@ -1571,7 +1571,10 @@ function enrichClusters(clusters, weightMap) {
       name: cl.id === -1 ? '기타 소재' : autoName,
       displayId: cl.id === -1 ? '?' : cl.id + 1
     };
-  }).sort((a,b) => b.avgScore - a.avgScore);
+  }).sort((a,b) => b.avgScore - a.avgScore)
+    // R17b: 카드 번호 = 표시 순위(평균 점수순)와 일치하게 재부여 — 내부 생성 ID(union-find 순번)는
+    //   차트 삭제 후 참조처가 없고, 정렬과 어긋난 번호(2,3,1)가 혼란만 유발. '기타'는 '?' 유지.
+    .map((c, i) => ({ ...c, displayId: c.id === -1 ? '?' : i + 1 }));
 }
 
 /* ── ⓐ 최소 군집 크기 적용: 크기 미만(materials < minSize) 군집을 가장 유사한(태그 Jaccard) 큰 군집에 흡수.
