@@ -1415,6 +1415,20 @@
             <svg class="sb-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
           </div>
           <div class="sb-section-body">
+            <span class="sb-label">날짜 범위</span>
+            <div class="sb-date-presets">
+              <button class="sb-date-preset active" data-preset="7d" onclick="setDatePreset('7d')">최근 7일</button>
+              <button class="sb-date-preset" data-preset="14d" onclick="setDatePreset('14d')">14일</button>
+              <button class="sb-date-preset" data-preset="21d" onclick="setDatePreset('21d')">21일</button>
+              <button class="sb-date-preset" data-preset="28d" onclick="setDatePreset('28d')">28일</button>
+              <button class="sb-date-preset" data-preset="all" onclick="setDatePreset('all')">전체</button>
+              <button class="sb-date-preset" data-preset="custom" onclick="setDatePreset('custom')">직접</button>
+            </div>
+            <div id="dateCustomInputs" style="display:none;">
+              <div class="sb-date-field"><span class="sb-date-flabel">시작일</span><input type="date" id="startDate" class="sb-input"></div>
+              <div class="sb-date-field"><span class="sb-date-flabel">종료일</span><input type="date" id="endDate" class="sb-input"></div>
+            </div>
+
             <span class="sb-label">분석 기준</span>
             <div class="sb-radio-group">
               <label class="sb-radio-item selected" id="sbGroupByName" onclick="setSbRadio('groupBy','소재명')">
@@ -1449,20 +1463,6 @@
               </div>
             </div>
             <div class="sb-selected-count" id="campaignSelectedCount">전체 캠페인 선택됨</div>
-
-            <span class="sb-label">날짜 범위</span>
-            <div class="sb-date-presets">
-              <button class="sb-date-preset active" data-preset="7d" onclick="setDatePreset('7d')">최근 7일</button>
-              <button class="sb-date-preset" data-preset="14d" onclick="setDatePreset('14d')">14일</button>
-              <button class="sb-date-preset" data-preset="21d" onclick="setDatePreset('21d')">21일</button>
-              <button class="sb-date-preset" data-preset="28d" onclick="setDatePreset('28d')">28일</button>
-              <button class="sb-date-preset" data-preset="all" onclick="setDatePreset('all')">전체</button>
-              <button class="sb-date-preset" data-preset="custom" onclick="setDatePreset('custom')">직접</button>
-            </div>
-            <div id="dateCustomInputs" style="display:none;">
-              <div class="sb-date-field"><span class="sb-date-flabel">시작일</span><input type="date" id="startDate" class="sb-input"></div>
-              <div class="sb-date-field"><span class="sb-date-flabel">종료일</span><input type="date" id="endDate" class="sb-input"></div>
-            </div>
 
             <!-- 저노출/저전환 소재 제외 토글 -->
             <div class="sb-toggle-row">
