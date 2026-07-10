@@ -232,6 +232,9 @@
       background: var(--gray-line);
       margin: 28px 0;
     }
+    /* 접힘 섹션(CSV 업로드·고급 설정) — summary 화살표 회전, 기본 마커 제거 */
+    details > summary::-webkit-details-marker { display: none; }
+    details[open] > summary > .fa-chevron-right { transform: rotate(90deg); }
 
     /* ═══════════════════════════════════════════
        업로드 영역
@@ -910,16 +913,9 @@
 
   <!-- ════ 헤더 ════ -->
   <div class="page-header">
-    <div class="header-badge"><i class="fas fa-object-group"></i> Step 2: 군집화 분석</div>
+    <div class="header-badge"><i class="fas fa-object-group"></i> 군집화 분석</div>
     <h1>군집화 컬럼 설정</h1>
-    <p>CSV를 업로드하면 컬럼이 자동 분류됩니다. 군집화에 사용할 컬럼을 선택하고 중요도(가중치)를 조정하세요.</p>
-    <div class="header-steps">
-      <div class="hstep"><div class="hstep-num">1</div> CSV 업로드</div>
-      <div class="hstep current"><div class="hstep-num">2</div> 컬럼 선택 &amp; 가중치</div>
-      <div class="hstep"><div class="hstep-num">3</div> 군집화 모드</div>
-      <div class="hstep"><div class="hstep-num">4</div> 군집화 실행</div>
-      <div class="hstep"><div class="hstep-num">5</div> 결과 &amp; 인사이트</div>
-    </div>
+    <p>타이틀을 선택하면 바로 실행할 수 있습니다. 필요하면 컬럼·가중치와 고급 설정을 조정하세요.</p>
   </div>
 
   <!-- ════ 메인 2컬럼 레이아웃 ════ -->
@@ -965,23 +961,35 @@
         </div>
       </div>
 
+      <!-- 빠른 실행 — 타이틀 선택 직후 스크롤 없이 실행 (btnProceed와 활성 상태 동기화) -->
+      <button class="btn btn-primary" id="btnProceedTop" disabled onclick="proceedToClustering()"
+        style="width:100%;justify-content:center;margin-bottom:4px;">
+        <i class="fas fa-arrow-right"></i> 군집화 실행하기
+      </button>
+      <div style="font-size:11.5px;color:var(--gray-text);text-align:center;margin-bottom:10px;">기본 설정(전체 태그 · 태그 우선)으로 바로 실행 — 아래에서 컬럼·가중치 조정 가능</div>
+
       <div class="section-divider"></div>
 
-      <!-- ① CSV 업로드 (대체) -->
-      <div class="section-title"><i class="fas fa-upload"></i> CSV 업로드 <span style="font-size:12px;font-weight:500;color:var(--gray-text);">(대체 입력)</span></div>
-      <div class="section-desc">파이프라인 타이틀이 없을 때 CSV 파일을 업로드하세요. 컬럼이 자동으로 분류됩니다.</div>
+      <!-- ① CSV 업로드 (대체 입력 · 사용 빈도 낮음 → 기본 접힘) -->
+      <details id="csvUploadDetails" style="margin-bottom:4px;">
+        <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;padding:6px 0;user-select:none;">
+          <i class="fas fa-chevron-right" style="font-size:10px;color:var(--gray-text);transition:transform .15s;"></i>
+          <span class="section-title" style="margin:0;"><i class="fas fa-upload"></i> CSV 업로드 <span style="font-size:12px;font-weight:500;color:var(--gray-text);">(대체 입력)</span></span>
+        </summary>
+        <div class="section-desc" style="margin-top:8px;">파이프라인 타이틀이 없을 때 CSV 파일을 업로드하세요. 컬럼이 자동으로 분류됩니다.</div>
 
-      <div class="upload-zone" id="uploadZone">
-        <input type="file" id="csvFile" accept=".csv">
-        <div class="upload-icon"><i class="fas fa-file-csv"></i></div>
-        <h3>CSV 파일을 드래그하거나 클릭해 선택</h3>
-        <p>UTF-8 인코딩 · 5MB 이하 권장</p>
-      </div>
-      <div class="upload-info-bar" id="uploadInfoBar">
-        <i class="fas fa-check-circle"></i>
-        <strong id="uploadFileName"></strong>
-        <span id="uploadFileMeta"></span>
-      </div>
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="csvFile" accept=".csv">
+          <div class="upload-icon"><i class="fas fa-file-csv"></i></div>
+          <h3>CSV 파일을 드래그하거나 클릭해 선택</h3>
+          <p>UTF-8 인코딩 · 5MB 이하 권장</p>
+        </div>
+        <div class="upload-info-bar" id="uploadInfoBar">
+          <i class="fas fa-check-circle"></i>
+          <strong id="uploadFileName"></strong>
+          <span id="uploadFileMeta"></span>
+        </div>
+      </details>
 
       <!-- 컬럼 분류 현황 배지 -->
       <div class="col-type-strip" id="colTypeStrip" style="display:none; margin-top:14px;">
@@ -1026,9 +1034,13 @@
 
       <div class="section-divider"></div>
 
-      <!-- ③ 군집화 모드 선택 -->
-      <div class="section-title"><i class="fas fa-th-large"></i> 군집화 모드</div>
-      <div class="section-desc">소재를 어떤 기준으로 묶을지 선택하세요. 모드에 따라 태그와 성과의 영향도가 달라집니다.</div>
+      <!-- ③ 고급 설정 (군집화 모드 + 파라미터 — 대부분 기본값 사용 → 기본 접힘) -->
+      <details id="advancedDetails" style="margin-bottom:4px;">
+        <summary style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;padding:6px 0;user-select:none;">
+          <i class="fas fa-chevron-right" style="font-size:10px;color:var(--gray-text);transition:transform .15s;"></i>
+          <span class="section-title" style="margin:0;"><i class="fas fa-th-large"></i> 고급 설정 <span style="font-size:12px;font-weight:500;color:var(--gray-text);">(군집화 모드 · 파라미터 — 기본: 태그 우선)</span></span>
+        </summary>
+      <div class="section-desc" style="margin-top:8px;">소재를 어떤 기준으로 묶을지 선택하세요. 모드에 따라 태그와 성과의 영향도가 달라집니다.</div>
       <div style="font-size:11.5px;color:var(--gray-text);background:var(--gray-bg);border-left:3px solid var(--red);padding:9px 11px;border-radius:6px;margin-bottom:12px;line-height:1.65;">
         <i class="fas fa-circle-info" style="color:var(--red);margin-right:4px;"></i>
         <b>'성과 우선'</b>은 <b>이미 나뉜 군집을 성과로 정제·정렬</b>할 때 성과를 얼마나 반영할지입니다. 위쪽 컬럼의 <b>'군집화 제외'</b>는 그 컬럼을 <b>묶는 기준(태그)</b>으로 쓰지 않는다는 뜻으로, <b>서로 다른 축</b>입니다(태그=무엇으로 묶나 / 성과가중=성과를 얼마나 반영하나).
@@ -1153,6 +1165,7 @@
           </div>
         </div>
       </div>
+      </details><!-- /advancedDetails -->
 
     </div><!-- /left-panel -->
 
@@ -2093,16 +2106,18 @@ function updateEstimate() {
 function updateActionBar() {
   const selCols = columnDefs.filter(c => c.selected);
   const btnProceed = document.getElementById('btnProceed');
+  const btnTop     = document.getElementById('btnProceedTop');  // 상단 빠른 실행 (활성 상태 동기화)
   const infoText   = document.getElementById('actionInfoText');
+  const setDisabled = (v) => { btnProceed.disabled = v; if (btnTop) btnTop.disabled = v; };
 
   if (!csvData) {
-    btnProceed.disabled = true;
-    infoText.textContent = 'CSV 파일을 업로드한 후 컬럼을 선택하세요.';
+    setDisabled(true);
+    infoText.textContent = '타이틀을 선택하거나 CSV를 업로드한 후 컬럼을 선택하세요.';
   } else if (!selCols.length) {
-    btnProceed.disabled = true;
+    setDisabled(true);
     infoText.textContent = '⚠️ 군집화에 사용할 컬럼을 1개 이상 선택하세요.';
   } else {
-    btnProceed.disabled = false;
+    setDisabled(false);
     infoText.innerHTML =
       `<i class="fas fa-check-circle" style="color:var(--green);"></i>` +
       ` ${selCols.length}개 컬럼 선택됨. 군집화를 실행할 준비가 되었습니다.`;
