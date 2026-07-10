@@ -199,7 +199,7 @@
     const img = window.__preEvalImage;
     if (!img) { status.textContent = '이미지를 먼저 업로드하세요.'; return; }
     if (typeof GeminiKeyManager === 'undefined' || !GeminiKeyManager.isSet()) {
-      result.innerHTML = '<div class="pe-card">Gemini API 키가 설정되지 않았습니다. Step 1 화면에서 키를 설정한 뒤 이용하세요.</div>';
+      result.innerHTML = '<div class="pe-card">Gemini API 키가 설정되지 않았습니다. 소재 분석 화면에서 키를 설정한 뒤 이용하세요.</div>';
       return;
     }
     status.textContent = '분석 중… (수 초 소요)'; document.getElementById('peRun').disabled = true; result.innerHTML = '';

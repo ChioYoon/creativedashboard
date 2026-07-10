@@ -225,19 +225,19 @@
       <div class="toc-item main"><div><span class="toc-num">2.</span>CSV 데이터 준비 &amp; 업로드</div><div class="toc-pg">4</div></div>
       <div class="toc-item sub"><div><span class="toc-num">2.1</span>필수 컬럼 및 자동 인식 컬럼</div><div class="toc-pg">4</div></div>
       <div class="toc-item sub"><div><span class="toc-num">2.2</span>업로드 방식 — 파일 / CSV 직접 붙여넣기 <span class="badge badge-red" style="font-size:9px;padding:1px 6px;">NEW</span></div><div class="toc-pg">4</div></div>
-      <div class="toc-item sub"><div><span class="toc-num">2.3</span>태그 컬럼 (Step 2 군집화용)</div><div class="toc-pg">4</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">2.3</span>태그 컬럼 (군집화 분석용)</div><div class="toc-pg">4</div></div>
     </div>
     <div class="toc-section">
-      <div class="toc-item main"><div><span class="toc-num">3.</span>Step 1 — 소재 성과 분석</div><div class="toc-pg">5</div></div>
+      <div class="toc-item main"><div><span class="toc-num">3.</span>소재 분석 — 소재 성과 분석</div><div class="toc-pg">5</div></div>
       <div class="toc-item sub"><div><span class="toc-num">3.1</span>점수 계산 (4개 지표 가중치)</div><div class="toc-pg">5</div></div>
       <div class="toc-item sub"><div><span class="toc-num">3.2</span>분석 결과 화면 구성 (저조 소재 카드·유형별 요약) <span class="badge badge-red" style="font-size:9px;padding:1px 6px;">NEW</span></div><div class="toc-pg">5</div></div>
       <div class="toc-item sub"><div><span class="toc-num">3.3</span>분석 결과 HTML 추출 (유관부서 공유용) <span class="badge badge-red" style="font-size:9px;padding:1px 6px;">NEW</span></div><div class="toc-pg">6</div></div>
       <div class="toc-item sub"><div><span class="toc-num">3.4</span>피로도 분석 (기간 비교)</div><div class="toc-pg">7</div></div>
     </div>
     <div class="toc-section">
-      <div class="toc-item main"><div><span class="toc-num">4.</span>Step 2 — 군집화 분석</div><div class="toc-pg">8</div></div>
-      <div class="toc-item sub"><div><span class="toc-num">4.1</span>Step 2-① 컬럼 설정 (step2_column_selector)</div><div class="toc-pg">8</div></div>
-      <div class="toc-item sub"><div><span class="toc-num">4.2</span>Step 2-② 군집화 실행 (step2_clustering)</div><div class="toc-pg">8</div></div>
+      <div class="toc-item main"><div><span class="toc-num">4.</span>군집화 분석</div><div class="toc-pg">8</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">4.1</span>① 컬럼 설정 (step2_column_selector)</div><div class="toc-pg">8</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">4.2</span>② 군집화 실행 (step2_clustering)</div><div class="toc-pg">8</div></div>
       <div class="toc-item sub"><div><span class="toc-num">4.3</span>군집 등급 및 결과 해석</div><div class="toc-pg">9</div></div>
     </div>
     <div class="toc-section">
@@ -305,22 +305,22 @@
       <tbody>
         <tr>
           <td><code style="font-size:11px;word-break:break-all;">…/creativedashboard/</code></td>
-          <td>홈 대시보드 — 워크플로우 안내, Step1/2 진입 버튼</td>
+          <td>홈 대시보드 — 워크플로우 안내, 소재 분석·군집화 분석 진입 버튼</td>
           <td><span class="badge badge-green">운영</span></td>
         </tr>
         <tr>
           <td><code style="font-size:11px;word-break:break-all;">…/step1_integrated.html</code></td>
-          <td><strong>Step 1</strong> — CSV 업로드 → 점수 계산 → 피로도 분석 → AI 인사이트</td>
+          <td><strong>소재 분석</strong> — CSV 업로드 → 점수 계산 → 피로도 분석 → AI 인사이트</td>
           <td><span class="badge badge-green">운영</span></td>
         </tr>
         <tr>
           <td><code style="font-size:11px;word-break:break-all;">…/step2_column_selector.html</code></td>
-          <td><strong>Step 2-①</strong> — 태그 컬럼 선택, 가중치 설정, 군집화 모드 결정</td>
+          <td><strong>군집화 분석 ①</strong> — 태그 컬럼 선택, 가중치 설정, 군집화 모드 결정</td>
           <td><span class="badge badge-green">운영</span></td>
         </tr>
         <tr>
           <td><code style="font-size:11px;word-break:break-all;">…/step2_clustering.html</code></td>
-          <td><strong>Step 2-②</strong> — 하이브리드 군집화 실행, 결과 시각화, AI 인사이트</td>
+          <td><strong>군집화 분석 ②</strong> — 하이브리드 군집화 실행, 결과 시각화, AI 인사이트</td>
           <td><span class="badge badge-green">운영</span></td>
         </tr>
       </tbody>
@@ -337,7 +337,7 @@
       <div class="wf-arrow">→</div>
       <div class="wf-step">
         <span class="wf-icon"></span>
-        Step 1<br><span style="font-weight:300;font-size:10px;">점수계산·피로도</span>
+        소재 분석<br><span style="font-weight:300;font-size:10px;">점수계산·피로도</span>
       </div>
       <div class="wf-arrow">→</div>
       <div class="wf-step">
@@ -347,12 +347,12 @@
       <div class="wf-arrow">→</div>
       <div class="wf-step step2">
         <span class="wf-icon"></span>
-        Step 2-①<br><span style="font-weight:300;font-size:10px;">컬럼·가중치 설정</span>
+        군집화 분석 ①<br><span style="font-weight:300;font-size:10px;">컬럼·가중치 설정</span>
       </div>
       <div class="wf-arrow">→</div>
       <div class="wf-step step2">
         <span class="wf-icon"></span>
-        Step 2-②<br><span style="font-weight:300;font-size:10px;">군집화·시각화</span>
+        군집화 분석 ②<br><span style="font-weight:300;font-size:10px;">군집화·시각화</span>
       </div>
       <div class="wf-arrow">→</div>
       <div class="wf-step step3">
@@ -381,14 +381,14 @@
     <div class="page-title">1.5 데이터 연동 &amp; 매칭 <span class="badge badge-red" style="font-size:11px;">2026-06 신규</span></div>
 
     <div class="section-title">타이틀 선택 → 자동 데이터 로드</div>
-    <p>담당 타이틀(제우스: 오만의 신·도원암귀·펩 히어로즈·갓앤데몬 등)이 시스템에 등록되어, Step 1 상단 <strong>타이틀 선택</strong> 드롭다운에서 고르면 매일 밤 자동 파이프라인이 산출한 <strong>분석 데이터(소재 태그 + 실제 KPI)</strong>가 즉시 로드됩니다. CSV 수동 업로드도 그대로 가능합니다.</p>
+    <p>담당 타이틀(제우스: 오만의 신·도원암귀·펩 히어로즈·갓앤데몬 등)이 시스템에 등록되어, 소재 분석 화면 상단 <strong>타이틀 선택</strong> 드롭다운에서 고르면 매일 밤 자동 파이프라인이 산출한 <strong>분석 데이터(소재 태그 + 실제 KPI)</strong>가 즉시 로드됩니다. CSV 수동 업로드도 그대로 가능합니다.</p>
     <div class="box box-green">· 아직 태깅 전인 타이틀을 선택하면 <strong>"아직 데이터 없음"</strong> 안내가 표시됩니다(오류 아님 — 소재 태깅 완료 후 자동 표시).</div>
 
     <div class="section-title">MMP 지표 연동 (AppsFlyer / Airbridge)</div>
     <p>Google Ads(광고비·노출·클릭)에 더해, 타이틀별로 연동된 <strong>MMP(AppsFlyer 또는 Airbridge)</strong>의 설치·전환 지표를 결합해 표시합니다. 광고 매체 데이터와 MMP 데이터를 소재 단위로 조인합니다.</p>
 
     <div class="section-title">소재명 별칭 매핑 + 미매칭 리포트</div>
-    <p>광고 매체의 소재명과 GDrive 파일명이 다를 때, Step 1 상단 <strong>미매칭 패널</strong>(기본 접힘 — 요약줄 클릭 시 펼침)에 "집행은 됐으나 매칭되지 않은 자산"이 표시됩니다. 매핑할 소재를 고른 뒤 <strong>"매핑 반영 파일 생성"</strong>을 누르면, 기존 설정을 보존한 <strong>완전한 <code>titles_overrides.json</code> 전체</strong>가 생성됩니다(클립보드 복사 또는 "파일 다운로드"). 이 내용을 시스템 담당자에게 전달해 반영하면 <strong>다음 야간 실행부터 자동으로 조인</strong>됩니다.</p>
+    <p>광고 매체의 소재명과 GDrive 파일명이 다를 때, 소재 분석 화면 상단 <strong>미매칭 패널</strong>(기본 접힘 — 요약줄 클릭 시 펼침)에 "집행은 됐으나 매칭되지 않은 자산"이 표시됩니다. 매핑할 소재를 고른 뒤 <strong>"매핑 반영 파일 생성"</strong>을 누르면, 기존 설정을 보존한 <strong>완전한 <code>titles_overrides.json</code> 전체</strong>가 생성됩니다(클립보드 복사 또는 "파일 다운로드"). 이 내용을 시스템 담당자에게 전달해 반영하면 <strong>다음 야간 실행부터 자동으로 조인</strong>됩니다.</p>
     <div class="box box-green">· 과거에는 일부 조각(snippet)만 생성돼 수동 병합 시 기존 설정이 지워질 위험이 있었으나, 이제 전체 파일을 안전하게 생성합니다.</div>
 
     <div class="section-title">캠페인 타입 필터</div>
@@ -464,8 +464,8 @@
       · 업로드 완료 시 <strong>"점수 계산 시작하기"</strong> 버튼이 나타나 다음 단계로 한 번에 이동
     </div>
 
-    <div class="section-title">2.3 태그 컬럼 (Step 2 군집화 전용)</div>
-    <p>Step 2 군집화 분석을 사용하려면 소재별 <strong>크리에이티브 태그 컬럼</strong>이 CSV에 포함되어야 합니다.</p>
+    <div class="section-title">2.3 태그 컬럼 (군집화 분석 전용)</div>
+    <p>군집화 분석을 사용하려면 소재별 <strong>크리에이티브 태그 컬럼</strong>이 CSV에 포함되어야 합니다.</p>
 
     <table>
       <thead><tr><th>태그 컬럼 예시</th><th>내용</th><th>예시 값</th></tr></thead>
@@ -490,10 +490,10 @@
   </div>
 
   <!-- ════════════════════════════════════════════════════════
-       3. Step 1 — 소재 성과 분석
+       3. 소재 분석 — 소재 성과 분석
   ════════════════════════════════════════════════════════ -->
   <div class="page">
-    <div class="page-title">3. Step 1 — 소재 성과 분석</div>
+    <div class="page-title">3. 소재 분석 — 소재 성과 분석</div>
 
     <div class="section-title">3.1 점수 계산 (4개 지표 가중치)</div>
     <p><strong>Total Score</strong>는 4개 지표를 Rank 기반으로 계산한 후 가중치를 적용하여 산출합니다.</p>
@@ -689,21 +689,21 @@
   </div>
 
   <!-- ════════════════════════════════════════════════════════
-       4. Step 2 — 군집화 분석
+       4. 군집화 분석
   ════════════════════════════════════════════════════════ -->
   <div class="page">
-    <div class="page-title">4. Step 2 — 군집화 분석</div>
+    <div class="page-title">4. 군집화 분석</div>
 
-    <div class="section-title">4.1 Step 2-① 컬럼 설정 (<code>step2_column_selector.html</code>)</div>
-    <p>Step 1에서 사용한 CSV를 그대로 업로드하고, 군집화에 사용할 태그 컬럼과 설정을 지정합니다.</p>
+    <div class="section-title">4.1 ① 컬럼 설정 (<code>step2_column_selector.html</code>)</div>
+    <p>소재 분석에서 사용한 CSV를 그대로 업로드하고, 군집화에 사용할 태그 컬럼과 설정을 지정합니다.</p>
 
-    <div class="step-row"><span class="step-num">1</span><div class="step-body"><strong>CSV 업로드</strong> — Step 1과 동일한 CSV 파일 드래그 앤 드롭</div></div>
+    <div class="step-row"><span class="step-num">1</span><div class="step-body"><strong>CSV 업로드</strong> — 소재 분석과 동일한 CSV 파일 드래그 앤 드롭</div></div>
     <div class="step-row"><span class="step-num">2</span><div class="step-body"><strong>태그 컬럼 선택</strong> — 자동 감지된 컬럼 목록에서 군집화에 사용할 태그 컬럼 체크</div></div>
     <div class="step-row"><span class="step-num">3</span><div class="step-body"><strong>컬럼 가중치 설정</strong> — [MI] marketer_insight 태그는 기본 1.5배 가중치 자동 적용</div></div>
     <div class="step-row"><span class="step-num">4</span><div class="step-body"><strong>군집화 설정</strong> — 코어 태그 지지율 기준 (기본 30%), 최소 동시출현 횟수 설정</div></div>
     <div class="step-row"><span class="step-num">5</span><div class="step-body"><strong>"군집화 시작 →"</strong> 버튼 클릭 → step2_clustering.html로 자동 이동</div></div>
 
-    <div class="section-title">4.2 Step 2-② 군집화 실행 (<code>step2_clustering.html</code>)</div>
+    <div class="section-title">4.2 ② 군집화 실행 (<code>step2_clustering.html</code>)</div>
     <p>태그 동시출현 기반 <strong>하이브리드 군집화 v4.0</strong>이 실행됩니다. Union-Find 알고리즘으로 유사 태그 조합을 가진 소재를 자동 분류합니다.</p>
 
     <table>
@@ -722,7 +722,7 @@
       <strong>marketer_insight [MI] 태그 우대 처리</strong>
       · 군집화 시 [MI] 태그는 <strong>1.5배 가중치</strong> 자동 적용<br>
       · 노이즈 필터링 면제 → 마케터 의도가 반영된 태그가 군집 핵심으로 우선 선정<br>
-      · Step 2-① 컬럼 설정에서 가중치 수동 조정도 가능
+      · 군집화 분석 ① 컬럼 설정에서 가중치 수동 조정도 가능
     </div>
 
     <div class="footer">Com2uS R팀 소재 분석 시스템 v5.5 | Page 8</div>
@@ -757,7 +757,7 @@
       </tbody>
     </table>
 
-    <div class="section-title">Step 2 AI 인사이트 — 3블록 구성</div>
+    <div class="section-title">군집화 분석 AI 인사이트 — 3블록 구성</div>
     <div class="ai-slot-grid">
       <div class="ai-slot" style="background:#FAF9F7;border-left:4px solid #DC2828;">
         <div class="slot-title" style="color:#DC2828;">Scale-up 전략</div>
@@ -986,7 +986,7 @@
     </div>
 
     <div class="faq-item">
-      <div class="faq-q">Step 2 군집화를 하려면 CSV에 태그 컬럼이 반드시 있어야 하나요?</div>
+      <div class="faq-q">군집화 분석을 하려면 CSV에 태그 컬럼이 반드시 있어야 하나요?</div>
       <div class="faq-a">네, 필수입니다. <code>hooking</code>, <code>emotion</code>, <code>mechanic</code> 등 태그 컬럼이 없으면 군집화가 실행되지 않습니다. CSV 생성 시 소재별 태그를 사전에 입력해두세요.</div>
     </div>
 
@@ -1126,11 +1126,11 @@
         <div class="cheat-title">주간 분석 루틴 (권장)</div>
         <ul>
           <li>① 전주 CSV 준비 (UTF-8 저장)</li>
-          <li>② Step 1 업로드 → 점수 계산</li>
+          <li>② 소재 분석 업로드 → 점수 계산</li>
           <li>③ 피로도 분석 (전전주 vs 전주)</li>
           <li>④ AI 인사이트 생성 → 교체 소재 결정</li>
           <li>⑤ HTML 추출 → 주간 리포트 공유</li>
-          <li>⑥ Step 2 군집화 → 승리 공식 도출</li>
+          <li>⑥ 군집화 분석 → 승리 공식 도출</li>
         </ul>
       </div>
       <div class="cheat-card">
