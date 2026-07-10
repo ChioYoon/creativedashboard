@@ -20,13 +20,13 @@
     return ` <span class="pctile-badge ${cls}">${label}</span>`;
   }
 
-  // 소재 품질(MMP) 등급 배지 색.
+  // 소재 품질(MMP) 등급 배지 색 — DS 모노 램프 + 양 끝만 Red (Google Ads .grade-* / 보고서 gradeStyle과 통일)
   const MMP_GRADE_STYLE = {
-    '최우수': 'background:#ccfbf1;color:#115e59;',
-    '우수':   'background:#d1fae5;color:#065f46;',
-    '양호':   'background:#fef9c3;color:#854d0e;',
-    '보통':   'background:#fed7aa;color:#9a3412;',
-    '개선필요': 'background:#fee2e2;color:#991b1b;',
+    '최우수': 'background:rgba(220,40,40,.10);color:#DC2828;',
+    '우수':   'background:#ECEAE6;color:#191919;',
+    '양호':   'background:#F4F2EF;color:#4C4C4C;',
+    '보통':   'background:#F7F4EE;color:#808080;',
+    '개선필요': 'background:#F7F4EE;color:#DC2828;',
   };
 
   // MMP 윈도우 집계 → 4 품질지표 (파이프라인 compute_mmp_quality 동일: 잔존0→cpi null, 비용0→roas null)
