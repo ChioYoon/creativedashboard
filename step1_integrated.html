@@ -5056,10 +5056,11 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       ];
 
       const passCount = conditions.filter(c => c.pass).length;
+      // DS: 모노 뉴트럴 + 낮음(미달)만 Red (신호등 색·이모지 대신 모노 도트 ●)
       let level, color, bg, border, icon, label;
-      if (passCount === 3)     { level = 'high';  color = '#059669'; bg = '#ecfdf5'; border = '#10b981'; icon = '🟢'; label = '높음'; }
-      else if (passCount >= 1) { level = 'med';   color = '#d97706'; bg = '#fffbeb'; border = '#f59e0b'; icon = '🟡'; label = '보통'; }
-      else                     { level = 'low';   color = '#dc2626'; bg = '#fef2f2'; border = '#ef4444'; icon = '🔴'; label = '낮음'; }
+      if (passCount === 3)     { level = 'high';  color = '#191919'; bg = '#F4F2EF'; border = '#E4E1DC'; icon = '●'; label = '높음'; }
+      else if (passCount >= 1) { level = 'med';   color = '#666666'; bg = '#F7F4EE'; border = '#E4E1DC'; icon = '●'; label = '보통'; }
+      else                     { level = 'low';   color = '#DC2828'; bg = 'rgba(220,40,40,.06)'; border = 'rgba(220,40,40,.30)'; icon = '●'; label = '낮음'; }
 
       return { conditions, level, color, bg, border, icon, label, passCount, total, days, revRatio };
     }
@@ -5067,9 +5068,9 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     function buildReliabilityBadgeHtml(rel) {
       const items = rel.conditions.map(c => `
         <div style="display:flex;align-items:center;gap:6px;font-size:12.5px;padding:4px 0;">
-          <span style="color:${c.pass ? '#059669' : '#9ca3af'};font-size:14px;">${c.pass ? '✓' : '✗'}</span>
-          <span style="color:#4b5563;">${c.key}:</span>
-          <strong style="color:${c.pass ? '#059669' : '#dc2626'};">${c.value}${c.suffix}</strong>
+          <span style="color:${c.pass ? '#191919' : '#DC2828'};font-size:14px;font-weight:700;">${c.pass ? '✓' : '✗'}</span>
+          <span style="color:#666666;">${c.key}:</span>
+          <strong style="color:${c.pass ? '#191919' : '#DC2828'};">${c.value}${c.suffix}</strong>
           <span style="color:#9ca3af;font-size:11.5px;">(${c.hint})</span>
         </div>
       `).join('');
@@ -5081,9 +5082,9 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       return `
         <div style="background:${rel.bg};border:1.5px solid ${rel.border};border-radius:10px;padding:14px 18px;margin-bottom:16px;">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-            <span style="font-size:22px;">${rel.icon}</span>
+            <span style="font-size:12px;line-height:1;color:${rel.color};">${rel.icon}</span>
             <span style="font-weight:700;color:${rel.color};font-size:15px;">분석 신뢰도: ${rel.label}</span>
-            <span style="font-size:12px;color:#6b7280;margin-left:auto;">${rel.passCount}/3 조건 충족</span>
+            <span style="font-size:12px;color:#666666;margin-left:auto;">${rel.passCount}/3 조건 충족</span>
           </div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:4px 16px;margin-bottom:8px;">
             ${items}
@@ -5324,6 +5325,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
 
       // 전역 변수에 저장 (모달에서 사용)
       window.currentCreatives = creatives;
+      // 보고서 '라이브 소재' 탭용 — 저노출 필터로 제외된 소재도 실제 노출중일 수 있어 전체 풀 보관
+      window._excludedCreatives = (excludeInfo && excludeInfo.excludedCreatives) || [];
 
       // ① 통계용 total (스코어카드 5종은 아래 switchAnalysisLayer→updateStatCards 가 활성 레이어 기준으로 세팅)
       const total = creatives.length;
@@ -5347,8 +5350,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
 
         const countLine = thresholdPct > 0
           ? `분석 기준 적용: 전체 <strong>${totalBeforeFilter}개</strong> →
-             ✅ 포함 <strong style="color:#10b981;">${total}개</strong> /
-             🚫 제외 <strong style="color:#ef4444;">${excludedCreatives.length}개</strong>
+             포함 <strong style="color:#191919;">${total}개</strong> /
+             제외 <strong style="color:#DC2828;">${excludedCreatives.length}개</strong>
              <span style="color:#9ca3af;font-size:12px;margin-left:6px;">(노출 기준 ${excludedByImp}개·전환 기준 ${excludedByConv}개 중복 포함 가능)</span>`
           : `총 <strong style="color:#DC2828;">${total}개</strong> 소재 분석 완료`;
 
@@ -5357,7 +5360,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         const rm = window._roasMeta;
         if (rm) {
           const pct = (rm.revenueRatio * 100).toFixed(0);
-          let icon = '[ROAS]', color = '#92400e', bg = '#fffbeb', border = '#fcd34d', text = '';
+          let icon = '[ROAS]', color = '#666666', bg = '#F7F4EE', border = '#E4E1DC', text = '';
           if (rm.effectiveMode === 'off') {
             icon = '[제외]';
             if (rm.offReason === 'prereg') {
@@ -5373,7 +5376,6 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             icon = '[공정]'; text = `매출 보유 ${rm.revenueCount}/${rm.totalCount}개 (${pct}%) → 매출=0 소재 ${rm.excludedFromRoas}개는 ROAS 평가에서 제외 (공정 모드)`;
           } else if (rm.effectiveMode === 'strict') {
             icon = '[엄격]'; text = `매출 보유 ${rm.revenueCount}/${rm.totalCount}개 (${pct}%) → 매출=0 소재도 ROAS 0점으로 평가 (엄격 모드)`;
-            color = '#1d4ed8'; bg = '#eff6ff'; border = '#93c5fd';
           }
           if (text) {
             roasNotice = `<div style="margin-top:10px;padding:10px 14px;background:${bg};border-left:3px solid ${border};border-radius:6px;font-size:12.5px;color:${color};">
@@ -5601,15 +5603,13 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const L = [];
       L.push('당신은 컴투스 R마케팅팀의 UA 소재 분석가입니다. 아래 데이터로 주간/월간 보고에 넣을 코멘트를 작성하세요.');
       L.push('작성 규칙: (1) 각 불릿은 핵심 판단을 명사형/음슴체로 먼저 쓰고, 데이터 근거가 있으면 " → " 뒤에 수치·태그·소재명으로 맥락이 전달되게 한 문장 덧붙임(근거 없으면 " → " 생략, 억지 금지). (2) 아래 섹션을 순서대로 사용하고, 섹션 제목 줄은 "■ "로 시작. (3) 각 섹션 2~4줄, 불릿 줄은 " - "로 시작. (4) 마크다운(**, ##)·서론·맺음말 금지, 섹션 제목과 불릿 줄만 출력. (5) 데이터 근거로만 작성, 과장 금지, 태그 인용 시 작은따옴표.');
-      const mkSections = note ? '■ 마케터 관점 (데이터 검증) / ' : '';
-      const orderTag = note ? ', 순서 유지' : '';
-      L.push(`섹션(제목 그대로 사용${orderTag}): ${mkSections}■ 핵심 요약 / ■ 성과 드라이버 / ■ 개선 포인트·액션`);
-      L.push('섹션 내용(중복 금지 — 같은 사실은 한 섹션에서만 언급): ■ 핵심 요약 = 이번 기간 KPI와 가장 큰 변화 1~2가지. ■ 성과 드라이버 = 우수 소재군(유형별 평균)과 잘 작동한 요소(lift 높은 강점 태그)를 함께. ■ 개선 포인트·액션 = 저효율 소재·공통 약점 태그와 다음 액션.');
+      L.push('섹션(제목 그대로 사용, 순서 유지): ■ 종합 인사이트 / ■ 개선 포인트·액션');
+      L.push('섹션 내용(중복 금지 — 같은 사실은 한 섹션에서만 언급): ■ 종합 인사이트 = 이번 기간 핵심 KPI와 가장 큰 변화(1~2가지), 우수 소재군(유형별 평균)과 잘 작동한 요소(lift 높은 강점 태그)를 하나의 흐름으로 통합해 서술. ■ 개선 포인트·액션 = 저효율 소재·공통 약점 태그와 다음 액션.');
       if (note) {
         L.push('마케터 의견 처리(검증 결합 + 계획 반영): [마케터 의견]을 (A)성과 관찰·판단 과 (B)향후 계획·액션 으로 구분해 처리.');
-        L.push('(A) 관찰·판단(예: 영상이 배너보다 우수): "■ 마케터 관점 (데이터 검증)" 아래에 각 주장을 개조식 불릿으로 정리하고 뒤에 " → "와 데이터 근거(지표·태그·소재명). 데이터로 뒷받침되면 근거 제시, 반대면 " → 데이터는 다르게 나타남: …"으로 교정, 데이터로 확인 안 되는(근거 없는) 관찰은 제외.');
-        L.push('(B) 향후 계획·액션(예: 컷다운·신규 소재 제작·캐릭터/카피 변경): 절대 제외하지 말 것. "■ 개선 포인트·액션" 안에 데이터 기반 액션과 함께 통합하고, 각 마케터 발(發) 액션 불릿은 문장 맨 끝에 정확히 " @MK@"를 붙일 것(다른 위치엔 쓰지 말 것). 가능하면 데이터 정합 여부를 같은 줄에 한 마디 덧붙임.');
-        L.push('원문 과장·추가해석 금지. 마케터 관점과 데이터 근거는 구분.');
+        L.push('(A) 관찰·판단(예: 영상이 배너보다 우수): "■ 종합 인사이트" 불릿에 자연스럽게 녹여 뒤에 " → "와 데이터 근거(지표·태그·소재명)를 붙임. 데이터로 뒷받침되면 근거 제시, 반대면 " → 데이터는 다르게 나타남: …"으로 교정, 데이터로 확인 안 되는(근거 없는) 관찰은 제외.');
+        L.push('(B) 향후 계획·액션(예: 컷다운·신규 소재 제작·캐릭터/카피 변경): 절대 제외하지 말 것. "■ 개선 포인트·액션" 안에 데이터 기반 액션과 함께 통합하고, 각 마케터 발(發) 액션 불릿은 문장 맨 끝에 정확히 " @MK@"를 붙일 것(다른 위치엔 쓰지 말 것).');
+        L.push('데이터로 확인되지 않는 계획도 그대로 반영하되, "(데이터 확인 불가)"·"(확인 불가)" 같은 표기는 절대 붙이지 말 것. 원문 과장·추가해석 금지.');
       }
       L.push('');
       if (sharedContext) {
@@ -5630,7 +5630,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         L.push(`우수-저효율 차별 강점 태그[lift = 우수군 출현율 − 저효율군 출현율, 높을수록 우수군 고유 요소]: ${ds || '없음'}`);
         L.push(`저효율 공통 약점 태그: ${tags.loserWeak.map(w => `'${w.tag}'(${w.count}건)`).join(', ') || '없음'}`);
         L.push(`유형별 평균 점수: ${tags.typePerf.map(t => `${t.type} ${t.avg}(${t.count}개)`).join(', ')}`);
-        L.push('해석 지침: lift가 0에 가까운 태그는 양 군 공통이라 차별 요소 아님(기본 요건). lift 높은 태그와 유형별 평균 격차를 "성과 드라이버"에 함께 제시.');
+        L.push('해석 지침: lift가 0에 가까운 태그는 양 군 공통이라 차별 요소 아님(기본 요건). lift 높은 태그와 유형별 평균 격차를 "종합 인사이트"에 함께 제시.');
       } else {
         L.push('태그 데이터 부족(소재 4개 미만) — 요소 인사이트는 지표 기반으로만 간략히.');
       }
@@ -5709,7 +5709,26 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const _fs = document.getElementById('filterSummarySlot');
       const filterHtml = (_fs && _fs.textContent.trim()) ? _fs.innerHTML : '';
 
-      return { titleName, period, layer, kpis, topN, typeRows, insightHtml, comparison: comparison || null, narrative: narrative || '', detailRows, filterHtml };
+      // '라이브 소재' 탭 — 필터 무관 전체 노출중(생성 시점). 저노출 필터로 제외된 소재도 실제 노출중이면 포함.
+      const _pool = cs.concat(window._excludedCreatives || []);
+      const _gmax = (typeof computeGlobalMaxDate === 'function') ? computeGlobalMaxDate(_pool) : null;
+      const _ovr = (typeof loadStatusOverrides === 'function') ? loadStatusOverrides() : {};
+      const _seen = new Set();
+      const liveRows = _pool.filter(c => {
+        if (!c || _seen.has(c.key)) return false;
+        const st = (typeof resolveStatus === 'function') ? resolveStatus(c, _gmax, _ovr) : 'stopped';
+        if (st !== 'live') return false;
+        _seen.add(c.key); return true;
+      }).map(c => {
+        const ads = c._ads || {}, mmp = c._mmp || {};
+        const useAds = (ads.imp || 0) >= (mmp.imp || 0);
+        const imp = Math.max(ads.imp || 0, mmp.imp || 0) || (c.노출수 || 0);
+        const conv = (useAds ? (ads.conv || 0) : (mmp.conv || 0)) || (c.전환 || 0);
+        return { thumb: _thumbUrl(c), name: c.key || '', type: c.유형 || '', imp, conv };
+      }).sort((a, b) => b.imp - a.imp);
+      const liveAsOf = _gmax || period;
+
+      return { titleName, period, layer, kpis, topN, typeRows, insightHtml, comparison: comparison || null, narrative: narrative || '', detailRows, filterHtml, liveRows, liveAsOf };
     }
 
     // ── YouTube 영상 썸네일 URL 추출 (watch / youtu.be / embed / shorts → hqdefault) ──
@@ -5743,11 +5762,12 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     function insightSectionsHtml(narrative) {
       if (!narrative) return '';
       const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
-      // 섹션 제목 키워드 → 색상(막대·배경·제목). 마케터=파랑 / 성과 드라이버=초록 / 개선=주황 / 기타(핵심 요약)=중립.
-      const styleFor = t => t.includes('마케터') ? { bar: '#3b82f6', tint: '#eff6ff', tc: '#1d4ed8' }
-        : t.includes('성과 드라이버') ? { bar: '#16a34a', tint: '#f0fdf4', tc: '#15803d' }
-        : t.includes('개선') ? { bar: '#f59e0b', tint: '#fffbeb', tc: '#b45309' }
-        : { bar: '#9ca3af', tint: '#faf9f7', tc: '#374151' };
+      // (데이터 확인 불가)·(확인 불가) 표기 제거 — 마케터 계획 불릿의 잉여 표기 숨김
+      const stripUnverif = s => String(s).replace(/\s*\((?:데이터\s*)?확인\s*불가\)/g, '').replace(/\s{2,}/g, ' ').trim();
+      // DS 규율: 모노 뉴트럴 카드 + 개선·액션 섹션만 Red 단일 액센트 (파랑/초록/주황 제거).
+      const styleFor = t => t.includes('개선') || t.includes('액션')
+        ? { bar: '#DC2828', tc: '#DC2828' }          // 개선 포인트·액션 = Red 액센트
+        : { bar: '#CCCCCC', tc: '#191919' };          // 종합 인사이트 = 모노 뉴트럴
       const mk = '<span title="[마케터 의견]" style="color:#DC2828;font-weight:700;cursor:help;">*</span>';
       const secs = []; let cur = null;
       String(narrative).split('\n').forEach(raw => {
@@ -5763,14 +5783,14 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         const items = sec.bullets.map(b => {
           const had = /@MK@/.test(b);
           if (had) hasMk = true;
-          const parts = b.split(/\s*→\s*/);
-          const claim = esc(parts[0].replace(/\s*@MK@/g, '').trim()) + (had ? ' ' + mk : '');
-          const ev = parts.slice(1).join(' → ').replace(/\s*@MK@/g, '').trim();
-          const evHtml = ev ? `<div style="color:#6b7280;font-size:12px;line-height:1.5;margin-top:2px;">${esc(ev)}</div>` : '';
+          const parts = stripUnverif(b.replace(/\s*@MK@/g, '')).split(/\s*→\s*/);
+          const claim = esc(parts[0].trim()) + (had ? ' ' + mk : '');
+          const ev = parts.slice(1).join(' → ').trim();
+          const evHtml = ev ? `<div style="color:#666666;font-size:12px;line-height:1.5;margin-top:2px;">${esc(ev)}</div>` : '';
           return `<li style="margin-bottom:9px;"><div style="color:#191919;font-weight:600;font-size:13px;line-height:1.45;">${claim}</div>${evHtml}</li>`;
         }).join('');
         const head = sec.title ? `<div style="font-size:13px;font-weight:700;color:${st.tc};margin-bottom:8px;">${esc(sec.title)}</div>` : '';
-        return `<div style="border:1px solid #eee;border-left:3px solid ${st.bar};border-radius:8px;padding:12px 14px;margin-bottom:10px;background:${st.tint};">${head}<ul style="list-style:none;margin:0;padding:0;">${items}</ul></div>`;
+        return `<div style="border:1px solid #E4E1DC;border-left:3px solid ${st.bar};border-radius:8px;padding:14px 16px;margin-bottom:10px;background:#FAF9F7;">${head}<ul style="list-style:none;margin:0;padding:0;">${items}</ul></div>`;
       }).join('');
       const foot = hasMk ? '<div style="font-size:11px;color:#9ca3af;margin-top:2px;">* 마케터 의견 반영 항목</div>' : '';
       return cards + foot;
@@ -5785,17 +5805,19 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const now = new Date();
       const p2 = n => String(n).padStart(2, '0');
       const gen = `${now.getFullYear()}-${p2(now.getMonth()+1)}-${p2(now.getDate())} ${p2(now.getHours())}:${p2(now.getMinutes())}`;
+      // DS 등급 뱃지 — 모노 뉴트럴 램프 + 양 끝(최우수·개선필요)만 Red 액센트.
       const gradeStyle = {
-        '최우수': 'background:#dcfce7;color:#15803d;', '우수': 'background:#dbeafe;color:#1d4ed8;',
-        '양호': 'background:#fef9c3;color:#a16207;', '보통': 'background:#f3f4f6;color:#374151;',
-        '개선필요': 'background:#fee2e2;color:#b91c1c;'
+        '최우수': 'background:rgba(220,40,40,.10);color:#DC2828;', '우수': 'background:#ECEAE6;color:#191919;',
+        '양호': 'background:#F4F2EF;color:#4C4C4C;', '보통': 'background:#F7F4EE;color:#808080;',
+        '개선필요': 'background:#F7F4EE;color:#DC2828;'
       };
       const k = data.kpis;
       const cmp = data.comparison;
+      // DS 증감 — 모노 글리프(▲/▼), 방향은 화살표·강조는 굵기로 (녹/적 금지)
       const deltaBadge = (d) => {
         if (!d || d.deltaPct == null) return '';
         const up = d.deltaAbs >= 0;
-        const col = up ? '#15803d' : '#b91c1c';
+        const col = up ? '#191919' : '#999999';
         const sign = up ? '+' : '';
         return `<div class="kd" style="color:${col};">${up ? '▲' : '▼'} ${sign}${Math.round(d.deltaAbs).toLocaleString()} (${sign}${d.deltaPct.toFixed(0)}%)</div>`;
       };
@@ -5804,8 +5826,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const kpiHtml = [
         kpiCard('소재 수', num(k.count)),
         kpiCard('평균 점수', sc(k.avgScore), null, cmp ? deltaBadge(cmp.kpiDeltas.avgScore) : ''),
-        kpiCard('최우수', num(k.excellent), '#15803d'),
-        kpiCard('개선필요', num(k.poor), '#6b7280'),
+        kpiCard('최우수', num(k.excellent), '#DC2828'),
+        kpiCard('개선필요', num(k.poor), '#666666'),
         kpiCard(`총 전환(${esc(k.convBasis)})`, num(k.totalConv), null, cmp ? deltaBadge(cmp.kpiDeltas.전환) : ''),
       ].join('');
       const moverRow = (m, tag, tagColor) => `
@@ -5816,9 +5838,9 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         </div>`;
       const moverBlock = (cmp && cmp.hasPrev)
         ? `<div class="sec"><div class="st">주목할 소재 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(전 기간 대비)</span></div>${
-            [...cmp.movers.risers.map(m => moverRow(m, '급등', 'background:#dcfce7;color:#15803d;')),
-             ...cmp.movers.fallers.map(m => moverRow(m, '급락', 'background:#fee2e2;color:#b91c1c;')),
-             ...cmp.movers.newcomers.map(m => moverRow({ ...m, scorePrev: null, delta: null }, '신규', 'background:#dbeafe;color:#1d4ed8;'))
+            [...cmp.movers.risers.map(m => moverRow(m, '▲ 급등', 'background:rgba(220,40,40,.10);color:#DC2828;')),
+             ...cmp.movers.fallers.map(m => moverRow(m, '▼ 급락', 'background:#F7F4EE;color:#808080;')),
+             ...cmp.movers.newcomers.map(m => moverRow({ ...m, scorePrev: null, delta: null }, '신규', 'background:#ECEAE6;color:#191919;'))
             ].join('') || '<div class="empty">변화가 두드러진 소재가 없습니다.</div>'
           }</div>`
         : '';
@@ -5841,7 +5863,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const pctBadge = (cur, prev) => {
         if (cur == null || prev == null || prev === 0) return '<span style="color:#9ca3af;">—</span>';
         const p = (cur - prev) / prev * 100, up = p >= 0;
-        return `<span style="color:${up ? '#15803d' : '#b91c1c'};font-weight:700;">${up ? '▲ +' : '▼ '}${Math.round(p)}%</span>`;
+        return `<span style="color:${up ? '#191919' : '#999999'};font-weight:700;">${up ? '▲ +' : '▼ '}${Math.round(p)}%</span>`;
       };
       const roasF = v => v != null ? Math.round(v * 100) + '%' : '—';
       const ctrF = v => v != null ? Number(v).toFixed(2) + '%' : '—';
@@ -5863,6 +5885,16 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         ? `<div class="sec"><div class="st">소재 상세 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(데이터 보유 소재${hasCmp ? ' · 표시 지표=현재 분석 기간 / 기준·비교 컬럼=보고서 비교 기간' : ''})</span></div><div class="dtwrap"><table class="dt"><thead>${dHead}</thead><tbody>${dBody}</tbody></table></div></div>`
         : '<div class="sec"><div class="st">소재 상세</div><div class="empty">표시할 소재가 없습니다.</div></div>';
 
+      // '라이브 소재' 탭 — 생성 시점 노출중 소재 스냅샷 (필터 무관 전체)
+      const liveRows = data.liveRows || [];
+      const liveListHtml = liveRows.length ? liveRows.map(t => `
+        <div class="tr">
+          ${creativeThumbHtml(t.thumb, t.type, 44, 44)}
+          <div class="tn"><div class="tnm">${esc(t.name)}</div><div class="tms">${esc(t.type)} · 노출 ${num(t.imp)} · 전환 ${num(t.conv)}</div></div>
+          <span class="gb" style="background:rgba(220,40,40,.10);color:#DC2828;">● 노출중</span>
+        </div>`).join('') : '<div class="empty">현재 노출중으로 판정된 소재가 없습니다.</div>';
+      const liveBlock = `<div class="livehead">현재 노출중인 소재 <strong>${liveRows.length}개</strong> <span style="font-weight:400;color:#9ca3af;">· 최신 실적일(${esc(data.liveAsOf)}) 기준 스냅샷 · 저노출 필터 무관 전체</span></div>${liveListHtml}`;
+
       return `<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8">
 <title>성과 보고서 · ${esc(data.titleName)}</title>
 <style>
@@ -5882,14 +5914,24 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
   .gb { font-size:11px; font-weight:700; padding:3px 10px; border-radius:10px; white-space:nowrap; }
   table { width:100%; border-collapse:collapse; font-size:13px; } th,td { padding:6px 8px; text-align:left; border-bottom:1px solid #eee; } td.r,th.r { text-align:right; } td.l,th.l { text-align:left; } thead th { color:#666; font-weight:600; }
   .dtwrap { overflow-x:auto; } .dt { font-size:12px; white-space:nowrap; } .dt td, .dt th { padding:6px 8px; }
-  .ins { font-size:13px; color:#374151; line-height:1.6; } .empty { color:#9ca3af; font-size:13px; padding:16px; text-align:center; }
+  .ins { font-size:13px; color:#666; line-height:1.6; } .empty { color:#9ca3af; font-size:13px; padding:16px; text-align:center; }
   .ft { font-size:11px; color:#9ca3af; text-align:center; margin-top:20px; }
-  @media print { body { background:#fff; } .toolbar { display:none; } .card { box-shadow:none; padding:0; } .wrap { padding:0; } }
+  .tabbar { display:flex; gap:2px; margin-bottom:20px; border-bottom:1px solid #E4E1DC; }
+  .tabbtn { font-size:13px; font-weight:700; padding:10px 16px; border:none; background:none; color:#666; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; }
+  .tabbtn.active { color:#DC2828; border-bottom-color:#DC2828; }
+  .tabpanel { display:none; } .tabpanel.active { display:block; }
+  .livehead { font-size:13px; color:#191919; margin-bottom:12px; }
+  @media print { body { background:#fff; } .toolbar,.tabbar { display:none; } .card { box-shadow:none; padding:0; } .wrap { padding:0; } .tabpanel { display:block !important; } }
 </style></head><body>
 <div class="wrap">
   <div class="toolbar"><button onclick="window.print()">인쇄 / PDF 저장</button></div>
   <div class="card">
     <div class="hd"><div><div class="ht">${esc(data.titleName)} 성과 보고서</div><div class="hs">${esc(data.period)} · ${esc(data.layer)}${(data.comparison && data.comparison.hasPrev && data.comparison.prevWin) ? ` · 전 기간 ${esc(data.comparison.prevWin.start)}~${esc(data.comparison.prevWin.end)}` : ''}</div></div><div class="hg">생성 ${gen}</div></div>
+    <div class="tabbar">
+      <button class="tabbtn active" onclick="reportTab('tab-report',this)">성과 보고서</button>
+      <button class="tabbtn" onclick="reportTab('tab-live',this)">라이브 소재</button>
+    </div>
+    <div id="tab-report" class="tabpanel active">
     <div class="kpis">${kpiHtml}</div>
     ${data.narrative ? `<div class="sec"><div class="st">인사이트 <span style="font-size:11px;color:#9ca3af;font-weight:400;" title="AI 분석이 포함된 요약입니다. 데이터 기반 참고용으로 활용하세요.">ⓘ AI 분석 포함 · 참고용</span></div>${insightSectionsHtml(data.narrative)}</div>` : ''}
     <div class="sec"><div class="st">Top 성과 소재</div>${topHtml}</div>
@@ -5898,9 +5940,21 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     ${filterBlock}
     ${detailBlock}
     ${insightBlock}
+    </div>
+    <div id="tab-live" class="tabpanel">
+      <div class="sec"><div class="st">라이브 소재 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(생성 시점 노출중 스냅샷)</span></div>${liveBlock}</div>
+    </div>
     <div class="ft">Com2uS R팀 소재 분석 대시보드 · 내부 참고용</div>
   </div>
 </div>
+<script>
+  function reportTab(id, btn){
+    document.querySelectorAll('.tabpanel').forEach(function(p){ p.classList.remove('active'); });
+    document.querySelectorAll('.tabbtn').forEach(function(b){ b.classList.remove('active'); });
+    var el = document.getElementById(id); if (el) el.classList.add('active');
+    if (btn) btn.classList.add('active');
+  }
+<\/script>
 </body></html>`;
     }
 
