@@ -1929,7 +1929,7 @@ async function runClustering() {
 
   // R18b: Gemini 키가 있으면 실행 시점에 AI 군집 해석 동시 진행 여부 확인 (승인 시 분석 완료 직후 자동 적용)
   const wantAi = (typeof GeminiKeyManager !== 'undefined' && GeminiKeyManager.isSet())
-    && confirm('Gemini API 키가 설정되어 있습니다.\n군집화 완료 후 AI 군집 해석(이름·한 줄 해석)을 바로 적용할까요?');
+    && confirm('AI 군집 해석을 바로 적용할까요?');
 
   const overlay = document.getElementById('loadingOverlay');
   overlay.classList.add('show');
