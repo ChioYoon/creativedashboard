@@ -1574,8 +1574,8 @@
     <main class="ds-main" id="mainContent">
 
       <!-- 업로드 상태 표시 (사이드바 업로드 후 피드백) -->
-      <div id="uploadStatus" style="display:none;margin:12px 20px;padding:10px 14px;background:#f0f9ff;border-radius:8px;font-size:13px;">
-        <strong>✅ 업로드 완료</strong>
+      <div id="uploadStatus" style="display:none;margin:12px 20px;padding:10px 14px;background:var(--surface-soft,#FAF9F7);border:1px solid var(--hairline-warm,#E4E1DC);border-radius:8px;font-size:13px;">
+        <strong>업로드 완료</strong>
         <div id="uploadInfo" style="margin-top:6px;font-size:12px;color:#374151;"></div>
       </div>
 
@@ -3658,7 +3658,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           }
         }
         const _kpiNoticeHtml = (!_hasKpi && !_hasMmp) ?
-          `<div style="padding: 10px 14px; background: #fff7ed; border-left: 3px solid #f59e0b; border-radius: 6px; font-size: 12.5px; color: #92400e; margin-bottom: 12px;">
+          `<div style="padding: 10px 14px; background: var(--surface-soft,#FAF9F7); border-left: 3px solid var(--brand-primary,#DC2828); border-radius: 6px; font-size: 12.5px; color: var(--text-secondary,#4C4C4C); margin-bottom: 12px;">
             KPI 미연동 — 소재 시각 분석(Gemini 태깅)만 제공됩니다. 광고 집행 후 운영 지표가 표시됩니다.
           </div>` : '';
         document.getElementById('uploadStatus').style.display = 'block';
@@ -3671,11 +3671,11 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             <div style="margin-top: 10px;">${(window.DataSource && DataSource.freshness) ? DataSource.freshness({ generatedAt: normalized._meta?.generated_at, pipelineVersion: normalized._meta?.pipeline_version, dataAsOf: normalized._meta?.data_as_of }).html : ''}</div>
           </div>
           ${_kpiNoticeHtml}
-          <div style="padding: 10px 14px; background: #ecfdf5; border-left: 3px solid #10b981; border-radius: 6px; font-size: 12.5px; color: #065f46; margin-bottom: 12px;">
+          <div style="padding: 10px 14px; background: var(--surface-card,#F4F2EF); border-left: 3px solid var(--text-tertiary,#767676); border-radius: 6px; font-size: 12.5px; color: var(--text-secondary,#4C4C4C); margin-bottom: 12px;">
             백엔드 산출 JSON 로드 완료
           </div>
           <button onclick="calculateScores()"
-                  style="width: 100%; padding: 12px; background: linear-gradient(135deg, #DC2828 0%, #FF6B6B 100%);
+                  style="width: 100%; padding: 12px; background: var(--brand-primary, #DC2828);
                          color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;
                          font-size: 15px;">
             분석 실행 →
@@ -3695,8 +3695,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           renderUnmatchedPanel();
           document.getElementById('uploadStatus').style.display = 'block';
           document.getElementById('uploadInfo').innerHTML = `
-            <div style="padding: 12px 14px; background: #fff7ed; border-left: 3px solid #f59e0b; border-radius: 6px; font-size: 13px; color: #92400e;">
-              <div style="font-weight:700; margin-bottom:4px;">⏳ 아직 데이터가 없습니다 — <strong>${escapeHtml(titleEntry.id)}</strong></div>
+            <div style="padding: 12px 14px; background: var(--surface-soft,#FAF9F7); border-left: 3px solid var(--brand-primary,#DC2828); border-radius: 6px; font-size: 13px; color: var(--text-secondary,#4C4C4C);">
+              <div style="font-weight:700; margin-bottom:4px; color: var(--text-primary,#191919);">아직 데이터가 없습니다 — <strong>${escapeHtml(titleEntry.id)}</strong></div>
               등록은 되어 있으나 소재 태깅(파이프라인) 산출 전이라 분석할 데이터가 없습니다. 태깅이 완료되면 자동으로 표시됩니다.
             </div>`;
           return;
@@ -3957,7 +3957,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           </div>
           
           <button onclick="calculateScores()"
-                  style="width: 100%; padding: 12px; background: linear-gradient(135deg, #DC2828 0%, #FF6B6B 100%);
+                  style="width: 100%; padding: 12px; background: var(--brand-primary, #DC2828);
                          color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;
                          font-size: 15px;">
             분석 실행 →
