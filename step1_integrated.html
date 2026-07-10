@@ -22,7 +22,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
   <!-- 데이터 소스 추상화 (v5.2 Stage 1) — CSV/JSON 단일 진입점, 타이틀 격리 -->
   <script src="js/layer-metrics.js?v=a4ec6d29"></script>
-  <script src="js/data-source.js?v=becd1f1e"></script>
+  <script src="js/data-source.js?v=80beadf3"></script>
   <!-- 캐노니컬(캠페인 유형) 필터 해석기 — 라이브 cv 미상-버킷 의미론 정합 -->
   <script src="js/canonical-filter.js?v=cbc66317"></script>
   <!-- Gemini AI 공통 모듈 -->
@@ -3668,7 +3668,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             <div style="margin-bottom: 8px;">데이터: <strong>${rawData.length}</strong>개 소재</div>
             <div style="margin-bottom: 8px;">캠페인: <strong>${campaigns.length}</strong>개</div>
             <div style="margin-bottom: 8px;">날짜 범위: <strong>${dateRangeInfo}</strong></div>
-            <div style="margin-bottom: 8px;">생성 시각: <strong>${normalized._meta?.generated_at || '미상'}</strong></div>
+            <div style="margin-top: 10px;">${(window.DataSource && DataSource.freshness) ? DataSource.freshness({ generatedAt: normalized._meta?.generated_at, pipelineVersion: normalized._meta?.pipeline_version, dataAsOf: normalized._meta?.data_as_of }).html : ''}</div>
           </div>
           ${_kpiNoticeHtml}
           <div style="padding: 10px 14px; background: #ecfdf5; border-left: 3px solid #10b981; border-radius: 6px; font-size: 12.5px; color: #065f46; margin-bottom: 12px;">

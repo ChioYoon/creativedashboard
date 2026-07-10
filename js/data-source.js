@@ -82,6 +82,104 @@
   }
 
   // ─────────────────────────────────────────────────────────────
+  // 2-b. 데이터 신선도 (freshness) 유틸
+  // ─────────────────────────────────────────────────────────────
+  /**
+   * creatives[] 의 kpi_daily / mmp_daily 를 훑어 가장 최근 데이터 날짜(YYYY-MM-DD)를 구한다.
+   * 집행 데이터가 하나도 없으면 빈 문자열.
+   * @param {Array} creatives
+   * @returns {string}
+   */
+  function computeDataAsOf(creatives) {
+    let max = '';
+    const scan = (arr) => {
+      if (!Array.isArray(arr)) return;
+      for (const d of arr) {
+        const dt = (d && (d.date || d.day)) || '';
+        if (typeof dt === 'string' && dt > max) max = dt;
+      }
+    };
+    (creatives || []).forEach((c) => {
+      if (!c) return;
+      scan(c.kpi_daily);
+      scan(c.mmp_daily);
+    });
+    return max;
+  }
+
+  function _fx_daysBetween(isoA, isoB) {
+    // 두 'YYYY-MM-DD' 사이 일수(정수, A가 과거면 양수). 파싱 실패 시 null.
+    const a = Date.parse((isoA || '').slice(0, 10) + 'T00:00:00Z');
+    const b = Date.parse((isoB || '').slice(0, 10) + 'T00:00:00Z');
+    if (isNaN(a) || isNaN(b)) return null;
+    return Math.round((b - a) / 86400000);
+  }
+
+  function _fx_esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, (ch) =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+  }
+
+  function _fx_shortGen(gen) {
+    // '2026-07-10T13:00:56+09:00' → '07-10 13:00'
+    const m = /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})/.exec(gen || '');
+    return m ? `${m[2]}-${m[3]} ${m[4]}:${m[5]}` : ((gen || '').slice(0, 10) || '미상');
+  }
+
+  /**
+   * 데이터 신선도 배지 정보 + DS(모노+Red) 인라인 HTML 을 만든다.
+   * 판정 기준: 파이프라인 생성일과 최신 데이터일의 간격(gap).
+   *   gap ≤ 2 → fresh / 3–14 → aging / >14 → stale / 데이터 없음 → empty
+   * @param {{generatedAt?:string, pipelineVersion?:string, dataAsOf?:string}} opts
+   * @returns {{level:string, gapDays:(number|null), asOf:string, generatedAt:string,
+   *            pipelineVersion:string, label:string, html:string}}
+   */
+  function freshness(opts) {
+    opts = opts || {};
+    const asOf = opts.dataAsOf || '';
+    const gen = opts.generatedAt || '';
+    const pv = opts.pipelineVersion || '';
+    const genDate = (gen || '').slice(0, 10);
+
+    let level, gapDays = null, label;
+    if (!asOf) {
+      level = 'empty';
+      label = '집행 데이터 없음';
+    } else {
+      gapDays = genDate ? _fx_daysBetween(asOf, genDate) : null;
+      if (gapDays == null) { level = 'fresh'; label = '데이터 로드됨'; }
+      else if (gapDays <= 2) { level = 'fresh'; label = '데이터 최신'; }
+      else if (gapDays <= 14) { level = 'aging'; label = `업데이트 지연 (${gapDays}일)`; }
+      else { level = 'stale'; label = `오래된 데이터 (${gapDays}일 경과)`; }
+    }
+
+    // DS 모노 + Red 램프
+    const TONE = {
+      fresh: { bg: '#F7F4EE', bd: '#E4E1DC', fg: '#4C4C4C', dot: '#767676' },
+      aging: { bg: '#FAF9F7', bd: '#E4E1DC', fg: '#4C4C4C', dot: '#999999' },
+      stale: { bg: 'rgba(220,40,40,.06)', bd: 'rgba(220,40,40,.28)', fg: '#DC2828', dot: '#DC2828' },
+      empty: { bg: '#F7F4EE', bd: '#E4E1DC', fg: '#808080', dot: '#CCCCCC' },
+    };
+    const t = TONE[level] || TONE.fresh;
+
+    // pipeline_version 은 개발 메타라 배지에는 노출하지 않는다(반환 객체에는 포함).
+    const detail = (level === 'empty')
+      ? '<span style="color:#808080;font-weight:500;">이 타이틀은 아직 집행(KPI) 데이터가 없습니다</span>'
+      : `<span style="color:var(--text-secondary,#767676);font-weight:500;">기준일 <strong style="color:inherit;">${_fx_esc(asOf)}</strong> · 생성 ${_fx_esc(_fx_shortGen(gen))}</span>`;
+
+    const html =
+      `<div class="ds-freshness ds-freshness-${level}" title="파이프라인 생성일과 최신 데이터일의 간격으로 신선도를 판정합니다." ` +
+      `style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;line-height:1.4;` +
+      `padding:7px 12px;border-radius:8px;border:1px solid ${t.bd};background:${t.bg};color:${t.fg};">` +
+      `<span style="display:inline-flex;align-items:center;gap:6px;font-weight:700;white-space:nowrap;">` +
+      `<span style="width:7px;height:7px;border-radius:50%;background:${t.dot};flex:none;"></span>${_fx_esc(label)}</span>` +
+      detail +
+      `</div>`;
+
+    return { level, gapDays, asOf, generatedAt: gen, pipelineVersion: pv, label, html };
+  }
+
+  // ─────────────────────────────────────────────────────────────
   // 3. JSON 스키마 v1 → 내부 normalizedData 변환
   // ─────────────────────────────────────────────────────────────
   /**
@@ -140,6 +238,8 @@
         source: 'json',
         title_id: data.title_id || '',
         generated_at: data.generated_at || '',
+        pipeline_version: data.pipeline_version || '',
+        data_as_of: computeDataAsOf(rows),
         schema_version: data.schema_version || DataSourceMeta.SCHEMA_VERSION,
         creative_count: rows.length,
         campaign_canonical: (data.campaign_canonical && typeof data.campaign_canonical === 'object') ? data.campaign_canonical : {},
@@ -254,6 +354,8 @@
     loadCreativeData,
     loadTitleManifest,
     normalizeFromJson,
+    computeDataAsOf,
+    freshness,
     getActiveTitleId,
     setActiveTitleId,
     readTitleFromUrl,

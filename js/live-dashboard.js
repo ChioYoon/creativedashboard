@@ -444,8 +444,22 @@
     // KPI 미연동 감지 — step1과 동일 기준
     LIVE.state.hasKpi = creatives.some(c =>
       (c.kpi_daily && c.kpi_daily.length) || (c.mmp_daily && c.mmp_daily.length));
+    // 데이터 신선도 배지 (KPI 유무와 무관하게 항상 표시)
+    LIVE.renderFreshness(data, creatives);
     LIVE.buildFilters();
     LIVE.render();
+  };
+
+  LIVE.renderFreshness = function (data, creatives) {
+    const box = document.getElementById('liveFreshness'); if (!box) return;
+    if (!(window.DataSource && DataSource.freshness)) { box.style.display = 'none'; return; }
+    const info = DataSource.freshness({
+      generatedAt: (data && data.generated_at) || '',
+      pipelineVersion: (data && data.pipeline_version) || '',
+      dataAsOf: DataSource.computeDataAsOf(creatives),
+    });
+    box.style.display = '';
+    box.innerHTML = info.html;
   };
 
   LIVE.renderDataBasis = function (agg) {

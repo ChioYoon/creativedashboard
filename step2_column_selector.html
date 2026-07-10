@@ -889,7 +889,7 @@
     }
   </style>
   <!-- v5.2 Stage 1: 데이터 소스 추상화 (DataSource.getActiveTitleId, getSessionKey) -->
-  <script src="js/data-source.js?v=becd1f1e"></script>
+  <script src="js/data-source.js?v=80beadf3"></script>
 </head>
 <body>
 
@@ -931,6 +931,8 @@
         style="width:100%;padding:9px 12px;border:1.5px solid var(--gray-line);border-radius:8px;font-size:13px;font-weight:600;color:var(--dark);background:var(--white);margin-bottom:14px;cursor:pointer;">
         <option value="">타이틀을 선택하세요…</option>
       </select>
+
+      <div id="step2Freshness" style="margin:0 0 14px;display:none;"></div>
 
       <!-- F1 군집화 대상 필터 (파이프라인 로드 시 표시) -->
       <div id="pipelineFilters" style="display:none;background:var(--gray-bg);border:1px solid var(--gray-line);border-radius:var(--radius-md);padding:14px;margin-bottom:14px;">
@@ -1469,6 +1471,7 @@ async function loadTitleById(tid) {
     const { normalized } = await window.DataSource.loadCreativeData('json-url', { url: entry.json_url, titleId: tid });
     if (!normalized || !normalized.rows || !normalized.rows.length) return false;
     ingestPipelineRows(normalized.columns, normalized.rows, tid);
+    renderStep2Freshness(normalized._meta);
     showToast(`✅ ${entry.name || tid} 로드 (${normalized.rows.length}개 소재)`, 'success');
     return true;
   } catch (e) {
@@ -1476,6 +1479,16 @@ async function loadTitleById(tid) {
     showToast('파이프라인 로드 실패: ' + e.message, 'error');
     return false;
   }
+}
+
+// 데이터 신선도 배지 렌더 (파이프라인 로드 시)
+function renderStep2Freshness(meta) {
+  const box = document.getElementById('step2Freshness'); if (!box) return;
+  if (!meta || !(window.DataSource && DataSource.freshness)) { box.style.display = 'none'; return; }
+  const info = DataSource.freshness({
+    generatedAt: meta.generated_at, pipelineVersion: meta.pipeline_version, dataAsOf: meta.data_as_of,
+  });
+  box.style.display = ''; box.innerHTML = info.html;
 }
 
 // ?title= 있으면 자동 로드. 미지정·실패 시 false(→ CSV 업로드 폴백)
