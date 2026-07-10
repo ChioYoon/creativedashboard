@@ -12,7 +12,8 @@ if command -v py >/dev/null 2>&1; then PY="py -3";
 elif command -v python3 >/dev/null 2>&1; then PY="python3";
 else PY="python"; fi
 
-changed="$($PY tools/bump_cache_busters.py --print-changed 2>/dev/null)"
+# --print-changed 는 LF 로 경로만 출력. 혹시 모를 CR 은 제거(Windows 방어).
+changed="$($PY tools/bump_cache_busters.py --print-changed 2>/dev/null | tr -d '\r')"
 
 if [ -n "$changed" ]; then
   printf '%s\n' "$changed" | while IFS= read -r f; do

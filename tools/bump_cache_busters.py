@@ -50,7 +50,10 @@ _EXCLUDE_DIRS = {".git", ".venv", "node_modules", "__pycache__", "archive"}
 
 
 def _short_hash(file_path: Path) -> str:
-    return hashlib.sha1(file_path.read_bytes()).hexdigest()[:8]
+    # 줄끝(CRLF/CR)을 LF로 정규화한 뒤 해시한다.
+    # → core.autocrlf 설정·OS·체크아웃 상태와 무관하게 항상 같은 해시(결정성 보장).
+    raw = file_path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha1(raw).hexdigest()[:8]
 
 
 def _iter_html_files():
@@ -116,15 +119,17 @@ def main(argv):
     print_changed = "--print-changed" in args
 
     if print_changed:
-        # 실제 갱신하되, 표준출력에는 변경된 HTML 경로만(줄바꿈 구분) 낸다.
+        # 실제 갱신하되, 표준출력에는 변경된 HTML 경로만(LF 구분) 낸다.
         # pre-commit 훅이 이 목록만 정확히 스테이징하는 용도.
+        # Windows에서도 CRLF 가 섞이지 않도록 buffer 로 LF 만 직접 쓴다.
         import io
         import contextlib
         buf = io.StringIO()
         with contextlib.redirect_stdout(buf):
             changed = process(check_only=False)
-        for name, _ in changed:
-            print(name)
+        out = "".join(name + "\n" for name, _ in changed)
+        sys.stdout.buffer.write(out.encode("utf-8"))
+        sys.stdout.buffer.flush()
         return 0
 
     changed = process(check_only=check_only)
