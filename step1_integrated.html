@@ -676,6 +676,7 @@
       border-radius: 12px;
       font-size: 12px;
       font-weight: 600;
+      white-space: nowrap;
     }
     .badge-bnr {
       background: #dbeafe;
@@ -861,6 +862,10 @@
     /* B: 분석 테이블 컬럼 확장 — 가로 스크롤 */
     .table-container { overflow-x: auto; }
     #resultTable { min-width: 1180px; }
+    /* 밀집 테이블 폰트·여백 정돈 (전역 td/th보다 스코프 우선) — 본문이 헤더보다 크던 역전 해소 */
+    #resultTable thead th { font-size: 12px; padding: 9px 12px; }
+    #resultTable tbody td { font-size: 13px; padding: 9px 12px; }
+    #resultTable .pctile-cell-key { font-size: 10.5px; }
     /* Stage 5-I QA: 모달 KPI 지표 테이블 (줄 글 행 → 그리드 카드) */
     .kpi-metric-grid {
       display: grid;
@@ -5306,7 +5311,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td style="text-align: right;">${mImp}</td>
           <td style="text-align: right;">${mClk}</td>
           <td style="text-align: right;">${mCtr}</td>
-          <td class="ds-cell-key" style="text-align: right; font-size: 16px;">${scoreCell}</td>
+          <td class="ds-cell-key" style="text-align: right; font-size: 14px;">${scoreCell}</td>
           <td>${gradeCell}</td>
           <td class="col-pctile" style="text-align:left;">${pctileCellHtml(c.meta && c.meta.kpi_percentiles)}</td>
           <td class="col-mmp" style="text-align:center;">${mmpCellHtml(c.meta)}</td>
