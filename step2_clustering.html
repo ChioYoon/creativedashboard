@@ -2160,7 +2160,7 @@ function renderClusterCards(clusters) {
     // R17: 정의 박스 + 차별 태그 바(보유율 vs 타 군집) + 공통 기반 라인
     const defBox = cl.defText ? `
       <div style="font-size:12px;color:var(--gray-text);line-height:1.6;background:var(--gray-bg);border-radius:8px;padding:9px 12px;margin-bottom:12px;">
-        <span style="color:var(--dark);font-weight:700;">정의</span> — ${escHtml(cl.defText)}
+        ${escHtml(cl.defText)}
       </div>` : '';
     const distinctiveBars = (cl.distinctiveTags && cl.distinctiveTags.length) ? `
       <div style="font-size:11px;font-weight:700;color:var(--dark);margin-bottom:5px;">이 군집만의 특징 <span style="font-weight:400;color:var(--gray-text);">(군집 내 보유율 − 타 군집)</span></div>
