@@ -27,7 +27,7 @@
   <script src="js/canonical-filter.js?v=cbc66317"></script>
   <!-- Gemini AI 공통 모듈 -->
   <link rel="stylesheet" href="css/gemini-ui.css?v=91d8def8">
-  <script src="js/gemini-api.js?v=d758b0f6"></script>
+  <script src="js/gemini-api.js?v=0f1c6c7c"></script>
   
   <style>
     * {
@@ -5557,18 +5557,19 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const prevWin = (ps && pe) ? { start: ps, end: pe } : null;
       const cmp = computeReportComparison(window.currentCreatives, curWin, prevWin, layer, getReportWeights());
       closeReportDialog();
-      let narrative = '';
+      let narrative = '', narrativeIsRule = false;
       if (typeof GeminiKeyManager !== 'undefined' && GeminiKeyManager.isSet()) {
         showLoadingIndicator('인사이트 생성 중...');
         const sharedContext = _extractUaContext(window.__gameContext || '');
-        try { narrative = await buildReportNarrative(cmp, window.currentCreatives, note, sharedContext); }
+        try { const r = await buildReportNarrative(cmp, window.currentCreatives, note, sharedContext); narrative = r.text; narrativeIsRule = r.isRule; }
         finally { hideLoadingIndicator(); }
       }
-      // 무키/실패 폴백: 내러티브 없고 노트 있으면 원문을 개조식 섹션으로만 표시(정리·검증 생략)
+      // 무키/실패 폴백: 내러티브 없고 노트 있으면 원문을 개조식 섹션으로만 표시(정리·검증 생략 = 규칙기반)
       if (!narrative && note) {
         narrative = '■ 마케터 관점\n' + note.split('\n').map(ln => ln.trim()).filter(Boolean).map(ln => ' - ' + ln).join('\n');
+        narrativeIsRule = true;
       }
-      exportSummaryReport(cmp, narrative);
+      exportSummaryReport(cmp, narrative, narrativeIsRule);
     }
 
     // ── 태그 코호트 요약(순수): 우수-저효율 차별 강점(lift) + 소재군 성과 ──
@@ -5647,8 +5648,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       if (note) { L.push(''); L.push('[마케터 의견]'); L.push(note); }
       return L.join('\n');
     }
-    // 규칙기반 서술 폴백 접두 sentinel (렌더 시 라벨 구분 + 스트립)
-    const RULE_NARRATIVE_TAG = '[[RULE]]';
+    // 반환: { text, isRule } — isRule=true면 규칙기반 요약(AI 미사용). 라벨/무효화는 이 플래그로 구분.
     async function buildReportNarrative(comparison, creatives, note = '', sharedContext = '') {
       const data = buildSummaryReportData(creatives, comparison);
       const tags = buildTagCohortSummary(comparison && comparison.cur, creatives);
@@ -5657,25 +5657,28 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         try {
           const prompt = buildReportNarrativePrompt(data, tags, note, sharedContext);
           const call = () => callGeminiAPI(prompt, { maxTokens: note ? 1100 : 800, temperature: 0.6 });
+          let text;
           if (typeof GeminiCache !== 'undefined') {
             const tid = (window.DataSource && DataSource.getActiveTitleId && DataSource.getActiveTitleId()) || '';
             const sig = GeminiCache._hash(tid + '|' + prompt);   // 프롬프트=데이터 지문 → 데이터 변경 시 자동 무효화
-            return await GeminiCache.wrap('report_narrative', sig, call);
+            text = await GeminiCache.wrap('report_narrative', sig, call);
+          } else {
+            text = await call();
           }
-          return await call();
+          return { text, isRule: false };
         } catch (e) {
           console.warn('AI 코멘트 생성 실패 — 규칙기반 폴백:', e && e.message);
-          return buildRuleBasedNarrative(data, tags, note);
+          return { text: buildRuleBasedNarrative(data, tags, note), isRule: true };
         }
       }
-      return buildRuleBasedNarrative(data, tags, note);   // 무키 폴백
+      return { text: buildRuleBasedNarrative(data, tags, note), isRule: true };   // 무키 폴백
     }
 
     // AI 미사용(무키·쿼터초과) 시 KPI·차별 태그(lift) 데이터로 결정론적 요약 생성.
     // buildReportNarrativePrompt와 동일한 2섹션(■) 포맷 → insightSectionsHtml이 그대로 렌더.
     function buildRuleBasedNarrative(data, tags, note = '') {
       const k = data.kpis, cmp = data.comparison;
-      const L = [RULE_NARRATIVE_TAG, '■ 종합 인사이트'];
+      const L = ['■ 종합 인사이트'];
       L.push(` - 소재 ${k.count}개 · 평균 점수 ${k.avgScore == null ? '-' : k.avgScore.toFixed(1)} · 총 전환(${k.convBasis}) ${Math.round(k.totalConv).toLocaleString()} · 최우수 ${k.excellent}개 / 개선필요 ${k.poor}개`);
       if (cmp && cmp.hasPrev && cmp.kpiDeltas && cmp.kpiDeltas.전환 && cmp.kpiDeltas.전환.deltaPct != null) {
         const dp = Math.round(cmp.kpiDeltas.전환.deltaPct);
@@ -5692,7 +5695,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     }
 
     // ── 성과 요약 리포트: 데이터 조립 (currentCreatives + 기존 집계 재사용) ──
-    function buildSummaryReportData(creatives, comparison, narrative) {
+    function buildSummaryReportData(creatives, comparison, narrative, narrativeIsRule) {
       const cs = creatives || [];
       const sel = document.getElementById('titleSelector');
       const titleName = (sel && sel.selectedOptions && sel.selectedOptions[0])
@@ -5769,7 +5772,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       }).sort((a, b) => b.imp - a.imp);
       const liveAsOf = _gmax || period;
 
-      return { titleName, period, layer, kpis, topN, typeRows, insightHtml, comparison: comparison || null, narrative: narrative || '', detailRows, filterHtml, liveRows, liveAsOf };
+      return { titleName, period, layer, kpis, topN, typeRows, insightHtml, comparison: comparison || null, narrative: narrative || '', narrativeIsRule: !!narrativeIsRule, detailRows, filterHtml, liveRows, liveAsOf };
     }
 
     // ── YouTube 영상 썸네일 URL 추출 (watch / youtu.be / embed / shorts → hqdefault) ──
@@ -5976,12 +5979,11 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     <div class="kpis">${kpiHtml}</div>
     ${(() => {
       if (!data.narrative) return '';
-      const isRule = typeof RULE_NARRATIVE_TAG !== 'undefined' && data.narrative.indexOf(RULE_NARRATIVE_TAG) === 0;
-      const body = isRule ? data.narrative.slice(RULE_NARRATIVE_TAG.length).replace(/^\s+/, '') : data.narrative;
-      const chip = isRule
-        ? `<span style="font-size:11px;color:#9ca3af;font-weight:400;" title="API 키·쿼터 없이 데이터로 자동 생성한 규칙기반 요약입니다.">ⓘ 규칙기반 요약 · 참고용</span>`
-        : `<span style="font-size:11px;color:#9ca3af;font-weight:400;" title="AI 분석이 포함된 요약입니다. 데이터 기반 참고용으로 활용하세요.">ⓘ AI 분석 포함 · 참고용</span>`;
-      return `<div class="sec"><div class="st">인사이트 ${chip}</div>${insightSectionsHtml(body)}</div>`;
+      const [label, tip] = data.narrativeIsRule
+        ? ['규칙기반 요약', 'API 키·쿼터 없이 데이터로 자동 생성한 규칙기반 요약입니다.']
+        : ['AI 분석 포함', 'AI 분석이 포함된 요약입니다. 데이터 기반 참고용으로 활용하세요.'];
+      const chip = `<span style="font-size:11px;color:#9ca3af;font-weight:400;" title="${tip}">ⓘ ${label} · 참고용</span>`;
+      return `<div class="sec"><div class="st">인사이트 ${chip}</div>${insightSectionsHtml(data.narrative)}</div>`;
     })()}
     <div class="sec"><div class="st">Top 성과 소재</div>${topHtml}</div>
     ${moverBlock}
@@ -6008,13 +6010,13 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     }
 
     // ── 성과 요약 리포트: 생성·다운로드 ──
-    function exportSummaryReport(comparison, narrative) {
+    function exportSummaryReport(comparison, narrative, narrativeIsRule) {
       const creatives = window.currentCreatives;
       if (!creatives || creatives.length === 0) {
         alert('분석 결과가 없습니다. 점수 계산을 먼저 실행해 주세요.');
         return;
       }
-      const data = buildSummaryReportData(creatives, comparison, narrative);
+      const data = buildSummaryReportData(creatives, comparison, narrative, narrativeIsRule);
       const html = renderSummaryReportHtml(data);
       const now = new Date();
       const p2 = n => String(n).padStart(2, '0');
@@ -6854,26 +6856,31 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
 
     function displayFatigueResults(results, silent) {
       _lastFatigueData = results;   // Gemini 분석용 캐싱
+
+      const tired = results.filter(r => r.fatigueStatus === 'tired').length;
+      const warning = results.filter(r => r.fatigueStatus === 'warning').length;
+
+      // 탭 배지 (탭 밖에서도 피로 경보 개수 인지) — tired 우선, 없으면 숨김. 항상 갱신.
+      const badgeEl = document.getElementById('fatigueTabBadge');
+      if (badgeEl) {
+        if (tired > 0) { badgeEl.textContent = tired; badgeEl.style.display = ''; }
+        else { badgeEl.textContent = ''; badgeEl.style.display = 'none'; }
+      }
+
+      // silent = 배지 선계산(로드 시). 배지만 갱신하고 나머지 렌더(통계·카드·표·탭전환)는
+      // 탭 진입 시 전체 실행 → 숨겨진 탭에 표를 매번 짓는 낭비 제거.
+      if (silent) return;
+
       document.getElementById('statistics').style.display = 'block';
 
       // 통계
       const total = results.length;
       const up = results.filter(r => r.rankStatus === 'up').length;
       const down = results.filter(r => r.rankStatus === 'down').length;
-      const tired = results.filter(r => r.fatigueStatus === 'tired').length;
-      const warning = results.filter(r => r.fatigueStatus === 'warning').length;
-
       document.getElementById('fatigueTotal').textContent = total;
       document.getElementById('fatigueUp').textContent = up;
       document.getElementById('fatigueDown').textContent = down;
       document.getElementById('fatigueTired').textContent = tired;
-
-      // 탭 배지 (탭 밖에서도 피로 경보 개수 인지) — tired 우선, 없으면 숨김
-      const badgeEl = document.getElementById('fatigueTabBadge');
-      if (badgeEl) {
-        if (tired > 0) { badgeEl.textContent = tired; badgeEl.style.display = ''; }
-        else { badgeEl.textContent = ''; badgeEl.style.display = 'none'; }
-      }
 
       // 상단 임계 경보 카드 (DS 모노+Red) — tired>0 Red / warning>0 중립 / 그 외 조용
       renderFatigueAlertCard(tired, warning, total);
@@ -6982,12 +6989,10 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       
       console.log('✅ 피로도 결과 표시 완료');
 
-      // 피로도 탭으로 전환 (silent=배지 선계산 시 탭바 노출·전환하지 않음 — 배지 값만 세팅)
-      if (!silent) {
-        const mainTabBar = document.getElementById('mainTabBar');
-        if (mainTabBar) mainTabBar.style.display = 'flex';
-        switchMainTab('fatigue');
-      }
+      // 피로도 탭으로 전환 (silent 모드는 위에서 early-return 되므로 여기는 항상 대화형 경로)
+      const mainTabBar = document.getElementById('mainTabBar');
+      if (mainTabBar) mainTabBar.style.display = 'flex';
+      switchMainTab('fatigue');
     }
 
     // 피로도 임계 경보 카드 — #statistics 상단에 삽입 (DS 모노+Red)

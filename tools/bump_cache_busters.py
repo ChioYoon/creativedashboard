@@ -98,17 +98,18 @@ def process(check_only: bool = False):
             if not check_only:
                 html.write_text(new_text, encoding="utf-8", newline="\n")
 
+    # 진단 로그는 stderr 로 (stdout 은 --print-changed 의 경로 목록 전용)
     for rel in sorted(missing):
-        print(f"  [warn] 참조 파일 없음 — 건너뜀: {rel}")
+        print(f"  [warn] 참조 파일 없음 — 건너뜀: {rel}", file=sys.stderr)
 
     if changed_files:
         verb = "갱신 필요" if check_only else "갱신됨"
         total = sum(n for _, n in changed_files)
-        print(f"캐시버스터 {verb}: {len(changed_files)}개 HTML, {total}개 참조")
+        print(f"캐시버스터 {verb}: {len(changed_files)}개 HTML, {total}개 참조", file=sys.stderr)
         for name, n in changed_files:
-            print(f"  {name}  ({n})")
+            print(f"  {name}  ({n})", file=sys.stderr)
     else:
-        print("캐시버스터 최신 상태 — 변경 없음")
+        print("캐시버스터 최신 상태 — 변경 없음", file=sys.stderr)
 
     return changed_files
 
@@ -119,17 +120,10 @@ def main(argv):
     print_changed = "--print-changed" in args
 
     if print_changed:
-        # 실제 갱신하되, 표준출력에는 변경된 HTML 경로만(LF 구분) 낸다.
-        # pre-commit 훅이 이 목록만 정확히 스테이징하는 용도.
-        # Windows에서도 CRLF 가 섞이지 않도록 buffer 로 LF 만 직접 쓴다.
-        import io
-        import contextlib
-        buf = io.StringIO()
-        with contextlib.redirect_stdout(buf):
-            changed = process(check_only=False)
-        out = "".join(name + "\n" for name, _ in changed)
-        sys.stdout.buffer.write(out.encode("utf-8"))
-        sys.stdout.buffer.flush()
+        # 실제 갱신하고, 표준출력에는 변경된 HTML 경로만 낸다(진단은 process()가 stderr로).
+        # pre-commit 훅이 이 목록만 스테이징. (훅이 CR 제거하므로 print 기본 개행으로 충분)
+        for name, _ in process(check_only=False):
+            print(name)
         return 0
 
     changed = process(check_only=check_only)

@@ -155,8 +155,8 @@ const GeminiCache = {
 
   // 캐시 우선 실행: 히트 시 fn 미호출. 비어있지 않은 결과만 저장.
   async wrap(ns, sig, fn) {
-    const hit = this.get(ns, sig);
-    if (hit !== null && hit !== undefined && hit !== '') return hit;
+    const hit = this.get(ns, sig);      // get()은 미스 시 null, set()은 빈 값 미저장 → null 체크로 충분
+    if (hit != null) return hit;
     const val = await fn();
     if (val != null && val !== '') this.set(ns, sig, val);
     return val;
