@@ -12,6 +12,14 @@
       "[제우스: 오만의 신] 사전예약 PV | 모두에게 허락된, 가장 거대한 신화": "P-Slogan-PreregPV30s-01-PV",
       "[제우스: 오만의 신] 사전예약 PV | 선택받은 자들만의 신화는 끝났다": "P-Slogan-CinematicPV30s-01-PV",
       "[제우스: 오만의 신] 게임 플레이 프리뷰": "P-Genre-GamePreview-01-PV"
+    },
+    "_creative_url_aliases": {
+      "https://www.youtube.com/watch?v=dy52O9ksFHg": "P-Ingame-ClassRanger-01-PV",
+      "https://www.youtube.com/watch?v=ldXg4gqq8tc": "P-Ingame-ClassRanger-01-SS",
+      "https://www.youtube.com/watch?v=cQf6iTbbuTw": "P-Ingame-ClassElimentalist-01-PV",
+      "https://www.youtube.com/watch?v=sdE93je8-5o": "P-Ingame-ClassElimentalist-01-SS",
+      "https://www.youtube.com/watch?v=6eEp0pwHDqg": "P-Ingame-ClassBerserker-01-SS",
+      "https://www.youtube.com/watch?v=9CmiYo06gOQ": "P-Ingame-ClassBerserker-01-PV"
     }
   }
 }
