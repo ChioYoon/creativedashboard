@@ -195,9 +195,12 @@ class GoogleAdsKpiSource(KpiSource):
                         date_str = row.segments.date
                         campaign_name = row.campaign.name or ""
                         ad_group_name = row.ad_group.name or ""
-                        key = (creative_name, campaign_name, ad_group_name, date_str)
-                        existing = agg.get(key)
                         new_daily = self._row_to_daily(row, customer_id, creative_name)
+                        # 키에 asset_url 포함 — 같은 제목(creative_name)의 서로 다른 영상이
+                        # 같은 캠페인·광고그룹·날짜에 집행돼도 병합되지 않도록(2번째 asset_url 유실 방지).
+                        key = (creative_name, campaign_name, ad_group_name, date_str,
+                               new_daily.asset_url or "")
+                        existing = agg.get(key)
                         if existing is None:
                             agg[key] = new_daily
                         else:
@@ -230,7 +233,11 @@ class GoogleAdsKpiSource(KpiSource):
                             cname = self._resolve_creative_name(row)
                             if not cname:
                                 continue
-                            key = (cname, row.campaign.name or "", row.ad_group.name or "", row.segments.date)
+                            # asset_url 포함 5-키 — agg(메인 루프)와 동일 키 체계라야
+                            # _apply_conversion_basis 매칭됨. 같은 제목 다른 영상 분리 보존.
+                            asset_url = self._resolve_asset_url(row, row.asset.type_.name)
+                            key = (cname, row.campaign.name or "", row.ad_group.name or "",
+                                   row.segments.date, asset_url or "")
                             act = row.segments.conversion_action_name or ""
                             conv_by_key[key][act] += float(row.metrics.conversions)
                 except GoogleAdsException as e:
@@ -328,6 +335,9 @@ class GoogleAdsKpiSource(KpiSource):
             SELECT
               segments.date,
               asset.name,
+              asset.type,
+              asset.image_asset.full_size.url,
+              asset.youtube_video_asset.youtube_video_id,
               asset.youtube_video_asset.youtube_video_title,
               ad_group.name,
               campaign.name,
@@ -451,10 +461,11 @@ class GoogleAdsKpiSource(KpiSource):
 # 2. Helpers — 외부에서 호출 가능
 # ─────────────────────────────────────────────────────────────
 def _apply_conversion_basis(agg: dict, conv_by_key: dict, prereg: set, install: set) -> dict:
-    """agg(4-key→CreativeKpiDaily)의 conversions 를 캠페인 ua_type별 타깃 액션 합으로 덮어씀.
+    """agg(5-key→CreativeKpiDaily)의 conversions 를 캠페인 ua_type별 타깃 액션 합으로 덮어씀.
 
     ua_type == 'NU-Pre' → prereg 액션 합, 그 외 → install 액션 합. 타깃 액션 없으면 0.
-    conv_by_key: 4-key(creative_name, campaign_name, ad_group_name, date) → {action_name: conversions}.
+    conv_by_key: 5-key(creative_name, campaign_name, ad_group_name, date, asset_url) → {action_name: conversions}.
+    key[1] == campaign_name (asset_url 추가 후에도 위치 불변).
     """
     for key, daily in agg.items():
         ua = campaign_ua_type(key[1])  # key[1] = campaign_name
