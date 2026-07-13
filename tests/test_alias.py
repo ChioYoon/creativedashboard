@@ -81,6 +81,47 @@ def test_build_kpi_index_unmatched_collects_distinct_urls():
     assert by_concept["단일 영상"]["asset_urls"] == [yt + "CCC"]
 
 
+class _KUrl:  # duck-typed CreativeKpiDaily (asset_url 포함)
+    def __init__(self, name, url=None, at="YOUTUBE_VIDEO", impr=10, cost=5.0):
+        self.creative_name = name; self.asset_type = at
+        self.impressions = impr; self.cost = cost; self.asset_url = url
+
+
+def test_build_kpi_index_url_alias_splits_same_name():
+    """같은 concept 이름의 두 영상을 asset_url(URL 별칭)로 각각 다른 소재에 라우팅."""
+    from pipeline.main import build_kpi_index
+
+    yt = "https://www.youtube.com/watch?v="
+    candidates = {"A-Ranger-01", "A-Ranger-02"}
+    rows = [
+        _KUrl("클래스 소개 레인저", url=yt + "AAA", impr=30),
+        _KUrl("클래스 소개 레인저", url=yt + "BBB", impr=20),  # 같은 이름·다른 영상
+    ]
+    url_aliases = {yt + "AAA": "A-Ranger-01", yt + "BBB": "A-Ranger-02"}
+    index, unmatched = build_kpi_index(rows, candidates, {}, url_aliases=url_aliases)
+    assert set(index.keys()) == {"A-Ranger-01", "A-Ranger-02"}
+    assert index["A-Ranger-01"][0].asset_url == yt + "AAA"
+    assert index["A-Ranger-02"][0].asset_url == yt + "BBB"
+    assert unmatched == []  # 둘 다 URL로 매핑됨
+
+
+def test_build_kpi_index_url_alias_precedence_and_fallthrough():
+    """URL 별칭이 이름 조인보다 우선. 타겟이 candidate에 없으면(스테일) 이름 경로로 폴백→미매칭."""
+    from pipeline.main import build_kpi_index
+
+    yt = "https://www.youtube.com/watch?v="
+    candidates = {"A-Ranger-01"}
+    rows = [
+        _KUrl("레인저", url=yt + "AAA", impr=30),  # url → A-Ranger-01 (candidate)
+        _KUrl("레인저", url=yt + "BBB", impr=20),  # url → GHOST(비-candidate) → 폴백 → 미매칭
+    ]
+    url_aliases = {yt + "AAA": "A-Ranger-01", yt + "BBB": "GHOST-99"}
+    index, unmatched = build_kpi_index(rows, candidates, {}, url_aliases=url_aliases)
+    assert index["A-Ranger-01"][0].asset_url == yt + "AAA"
+    assert [u["concept"] for u in unmatched] == ["레인저"]  # BBB 행만 미매칭에 남음
+    assert unmatched[0]["asset_urls"] == [yt + "BBB"]  # 매핑된 AAA는 미매칭에서 빠짐
+
+
 def test_inject_mmp_alias_and_unmatched():
     from pipeline.main import inject_mmp_into_records
 

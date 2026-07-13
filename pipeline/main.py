@@ -233,15 +233,24 @@ def _build_unmatched_list(acc: dict, source: str) -> list:
     ]
 
 
-def build_kpi_index(kpi_rows, candidate_concepts, aliases=None):
+def build_kpi_index(kpi_rows, candidate_concepts, aliases=None, url_aliases=None):
     """Google Ads KPI 행 → (concept→rows 인덱스, 미매칭 자산 리스트).
 
-    조인: resolve_concept → 별칭(apply_alias) → candidate 매칭.
+    조인 우선순위: ① asset_url(URL 별칭) → ② resolve_concept→이름 별칭(apply_alias) → candidate 매칭.
+    ①은 같은 concept 이름을 가진 서로 다른 영상(같은 youtube_video_title, 다른 video_id)을
+    각각 다른 소재로 라우팅하기 위한 것. URL 별칭 타겟이 candidate 에 없으면(스테일) ②로 폴백.
     미매칭: 매칭 실패 + impressions>0 + asset_type ∈ IMAGE/YOUTUBE_VIDEO (원본 concept 키로 집계).
     """
     index: dict = {}
-    unmatched: dict = {}  # raw concept -> {impr, cost, types}
+    unmatched: dict = {}  # raw concept -> {impr, cost, types, urls}
     for row in kpi_rows:
+        # ① URL(영상ID) 기준 별칭 최우선 — 이름이 같아도 asset_url 로 갈라 매핑
+        row_url = getattr(row, "asset_url", None)
+        url_target = (url_aliases or {}).get(row_url) if row_url else None
+        if url_target in candidate_concepts:
+            index.setdefault(url_target, []).append(row)
+            continue
+        # ② 이름 기준 조인(기존)
         raw = resolve_concept(row.creative_name)
         concept = apply_alias(raw, candidate_concepts, aliases)
         if concept in candidate_concepts:
@@ -259,8 +268,10 @@ def build_kpi_index(kpi_rows, candidate_concepts, aliases=None):
     return index, _build_unmatched_list(unmatched, "google_ads")
 
 
-def _load_creative_aliases(title: str, repo_root: Path) -> dict:
-    """js/titles_overrides.json 에서 {title}._creative_name_aliases 직접 로드(dict).
+def _load_creative_aliases(title: str, repo_root: Path,
+                           key: str = "_creative_name_aliases") -> dict:
+    """js/titles_overrides.json 에서 {title}.{key} 별칭 맵 직접 로드(dict).
+       key='_creative_name_aliases'(이름→소재) 또는 '_creative_url_aliases'(URL→소재).
        registry(CLOOP_REGISTRY_XLSX) 활성 여부와 무관하게 동작. 파일/키 부재 → {}."""
     if not title:
         return {}
@@ -271,7 +282,7 @@ def _load_creative_aliases(title: str, repo_root: Path) -> dict:
         return {}
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
-        al = (data.get(title) or {}).get("_creative_name_aliases") or {}
+        al = (data.get(title) or {}).get(key) or {}
         return al if isinstance(al, dict) else {}
     except Exception as e:
         print(f"   [경고] titles_overrides.json 별칭 로드 실패(무시): {e}")
@@ -594,6 +605,8 @@ def resolve_config(args, *, title_override: dict | None = None) -> dict:
         "appsflyer_exclude_media_sources": appsflyer_exclude,
         "conversion_actions": conversion_actions,
         "creative_name_aliases": _load_creative_aliases(title, _REPO_ROOT),
+        "creative_url_aliases": _load_creative_aliases(
+            title, _REPO_ROOT, key="_creative_url_aliases"),
     }
 
 
@@ -735,7 +748,8 @@ def run(cfg: dict) -> dict:
             )
             # 그룹핑: concept → rows (별칭 적용) + 미매칭(집행O·미조인) 수집
             _idx, ga_unmatched = build_kpi_index(
-                kpi_rows, candidate_concepts, cfg.get("creative_name_aliases")
+                kpi_rows, candidate_concepts, cfg.get("creative_name_aliases"),
+                url_aliases=cfg.get("creative_url_aliases"),
             )
             kpi_index.update(_idx)
             if ga_unmatched:

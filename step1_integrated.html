@@ -4209,6 +4209,15 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           ? (urls.length > 1 ? `<span style="color:var(--brand-primary,#DC2828);font-weight:600;">${urls.length}개 </span>` : '')
             + urls.map((url, i) => `<a href="${escapeHtml(url)}" target="_blank" rel="noopener" style="color:var(--brand-primary,#DC2828);text-decoration:underline;">링크${urls.length > 1 ? (i + 1) : ''}</a>`).join(' ')
           : '<span style="color:#999999;">—</span>';
+        // 매핑 셀: 항상 concept(합산) 드롭다운 + 링크 2개 이상이면 링크별(URL) 드롭다운.
+        // 파이프라인 우선순위 URL > 이름 → 링크별 지정이 합산보다 우선.
+        const perLink = urls.length >= 2
+          ? '<div style="margin-top:6px;display:flex;flex-direction:column;gap:4px;">'
+            + urls.map((url, i) => `<label style="font-size:10.5px;color:#6b7280;display:flex;align-items:center;gap:4px;white-space:nowrap;">링크${i + 1}<select data-unmatched-url="${escapeHtml(url)}" style="font-size:11px;max-width:180px;">${opts}</select></label>`).join('')
+            + '</div>'
+          : '';
+        const conceptHint = urls.length >= 2
+          ? '<div style="font-size:10.5px;color:#6b7280;margin-bottom:2px;">전체(합산)</div>' : '';
         return `<tr>
           <td style="font-family:monospace;font-size:12px;">${escapeHtml(u.concept)}</td>
           <td><span class="badge">${src}</span></td>
@@ -4216,7 +4225,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td style="text-align:right;">${won(u.cost)}</td>
           <td style="font-size:11px;color:#6b7280;">${escapeHtml(types)}</td>
           <td style="font-size:11px;white-space:nowrap;">${linkCell}</td>
-          <td><select data-unmatched-concept="${escapeHtml(u.concept)}" style="font-size:12px;max-width:220px;">${opts}</select></td>
+          <td style="vertical-align:top;">${conceptHint}<select data-unmatched-concept="${escapeHtml(u.concept)}" style="font-size:12px;max-width:220px;">${opts}</select>${perLink}</td>
         </tr>`;
       }).join('');
       panel.style.display = '';
@@ -4224,7 +4233,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         <details style="border:1px solid #f0c36d;background:#fffbeb;border-radius:8px;padding:10px 14px;margin:10px 0;">
           <summary style="font-weight:700;color:#92400e;cursor:pointer;">⚠️ 미매칭 집행 소재 ${items.length}건 — 매핑 필요 (펼쳐서 매핑)</summary>
           <div style="margin-top:8px;">
-            <div style="font-size:12px;color:#6b7280;margin-bottom:8px;">Google Ads/MMP 집행은 있으나 소재명이 GDrive와 달라 분석에 안 잡힌 자산입니다. 매핑할 소재를 고른 뒤 아래에서 반영 파일을 생성하세요. <b>링크</b> 컬럼으로 실제 집행 영상을 확인하세요 — 개수가 2개 이상이면 같은 이름이라도 서로 다른 영상이 집행된 것입니다.</div>
+            <div style="font-size:12px;color:#6b7280;margin-bottom:8px;">Google Ads/MMP 집행은 있으나 소재명이 GDrive와 달라 분석에 안 잡힌 자산입니다. 매핑할 소재를 고른 뒤 아래에서 반영 파일을 생성하세요. <b>링크</b> 컬럼으로 실제 집행 영상을 확인하세요 — 개수가 2개 이상이면 같은 이름이라도 서로 다른 영상이 집행된 것입니다. 이 경우 <b>링크별 드롭다운</b>으로 각 영상을 다른 소재에 매핑하세요(링크별 지정이 <b>전체(합산)</b>보다 우선). 같은 소재의 버전 차이면 <b>전체(합산)</b> 하나만 고르면 KPI가 합산됩니다.</div>
             <table class="ds-table" style="font-size:12px;"><thead><tr>
               <th>자산(concept)</th><th>소스</th><th style="text-align:right;">노출</th><th style="text-align:right;">비용</th><th>유형</th><th>링크</th><th>매핑 대상 소재</th>
             </tr></thead><tbody>${rows}</tbody></table>
@@ -4239,11 +4248,16 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
 
     // 선택 매핑을 현재 titles_overrides.json 에 딥 병합해 '완전한 파일' 생성 (기존 설정·타 타이틀 보존)
     async function buildAliasConfig() {
-      const sels = document.querySelectorAll('#unmatchedPanel select[data-unmatched-concept]');
-      const aliases = {};
-      sels.forEach(s => { if (s.value) aliases[s.dataset.unmatchedConcept] = s.value; });
+      const aliases = {};      // 이름(concept) → 소재 : 합산 매핑
+      document.querySelectorAll('#unmatchedPanel select[data-unmatched-concept]')
+        .forEach(s => { if (s.value) aliases[s.dataset.unmatchedConcept] = s.value; });
+      const urlAliases = {};   // 링크(URL) → 소재 : 영상별 개별 매핑 (URL 우선)
+      document.querySelectorAll('#unmatchedPanel select[data-unmatched-url]')
+        .forEach(s => { if (s.value) urlAliases[s.dataset.unmatchedUrl] = s.value; });
       const out = document.getElementById('aliasConfigOut');
-      if (!Object.keys(aliases).length) { out.style.display = ''; out.textContent = '매핑 대상을 1건 이상 선택하세요.'; return; }
+      if (!Object.keys(aliases).length && !Object.keys(urlAliases).length) {
+        out.style.display = ''; out.textContent = '매핑 대상을 1건 이상 선택하세요.'; return;
+      }
       const titleId = (window.DataSource && DataSource.getActiveTitleId && DataSource.getActiveTitleId()) || '<title>';
       let current = {}, fetchOk = false;
       try {
@@ -4252,8 +4266,12 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       } catch (_) {}
       const merged = { ...current };
       const prevTitle = merged[titleId] || {};
-      const prevAliases = prevTitle._creative_name_aliases || {};
-      merged[titleId] = { ...prevTitle, _creative_name_aliases: { ...prevAliases, ...aliases } };
+      const nextTitle = { ...prevTitle };
+      if (Object.keys(aliases).length)
+        nextTitle._creative_name_aliases = { ...(prevTitle._creative_name_aliases || {}), ...aliases };
+      if (Object.keys(urlAliases).length)
+        nextTitle._creative_url_aliases = { ...(prevTitle._creative_url_aliases || {}), ...urlAliases };
+      merged[titleId] = nextTitle;
       const fullJson = JSON.stringify(merged, null, 2);
       window._aliasConfigJson = fullJson;
       const note = fetchOk
