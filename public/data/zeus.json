@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "title_id": "zeus",
-  "generated_at": "2026-07-13T12:01:20+09:00",
+  "generated_at": "2026-07-13T13:00:59+09:00",
   "pipeline_version": "stage2-mvp",
   "gemini_model": "gemini-2.5-flash",
   "creatives": [
@@ -72,7 +72,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:00:38+09:00",
+      "tagged_at": "2026-07-13T13:00:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-01-PV\\260701_VID_P-Genre-DirInsight-01-PV_V_1080x1920_KR.mp4"
@@ -158,7 +158,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:00:39+09:00",
+      "tagged_at": "2026-07-13T13:00:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-02-PV\\260708_VID_P-Genre-DirInsight-02-PV_V_1080x1920_KR.mp4"
@@ -523,7 +523,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:00:45+09:00",
+      "tagged_at": "2026-07-13T13:00:32+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-GamePreview-01-PV\\260701_VID_P-Genre-GamePreview-01-PV_L_1920x1080_KR.mp4"
@@ -785,8 +785,8 @@
           "clicks": 125,
           "cost_micros": 47482026268,
           "cost": 47482.026268,
-          "conversions": 47.465204,
-          "conversions_value": 47.465204
+          "conversions": 47.498867,
+          "conversions_value": 47.498867
         }
       ],
       "mmp_source": null,
@@ -868,7 +868,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:00:48+09:00",
+      "tagged_at": "2026-07-13T13:00:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassArtisan-01-PV\\260710_VID_P-Ingame-ClassArtisan-01-PV_L_1920x1080_KR.mp4"
@@ -955,7 +955,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:00:48+09:00",
+      "tagged_at": "2026-07-13T13:00:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassArtisan-01-SS\\260710_VID_P-Ingame-ClassArtisan-01-SS_V_1080x1920_KR.mp4"
@@ -1045,7 +1045,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:00:52+09:00",
+      "tagged_at": "2026-07-13T13:00:38+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassAssassin-01-PV\\260710_VID_P-Ingame-ClassAssassin-01-PV_L_1920x1080_KR.mp4"
@@ -1135,7 +1135,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:00:53+09:00",
+      "tagged_at": "2026-07-13T13:00:38+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassAssassin-01-SS\\260710_VID_P-Ingame-ClassAssassin-01-SS_V_1080x1920_KR.mp4"
@@ -1227,7 +1227,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:00:55+09:00",
+      "tagged_at": "2026-07-13T13:00:40+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBerserker-01-PV\\260710_VID_P-Ingame-ClassBerserker-01-PV_L_1920x1080_KR.mp4"
@@ -1368,7 +1368,7 @@
         "roas": 93.1
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:00:56+09:00",
+      "tagged_at": "2026-07-13T13:00:41+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBerserker-01-SS\\260710_VID_P-Ingame-ClassBerserker-01-SS_V_1080x1920_KR.mp4"
@@ -1505,7 +1505,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:01:00+09:00",
+      "tagged_at": "2026-07-13T13:00:43+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBlessed-01-PV\\260710_VID_P-Ingame-ClassBlessed-01-PV_L_1920x1080_KR.mp4"
@@ -1593,7 +1593,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:01:01+09:00",
+      "tagged_at": "2026-07-13T13:00:44+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBlessed-01-SS\\260710_VID_P-Ingame-ClassBlessed-01-SS_V_1080x1920_KR.mp4"
@@ -1632,7 +1632,7 @@
       "전환": 67,
       "비용": 191656,
       "노출수": 22617,
-      "클릭수": 645,
+      "클릭수": 644,
       "Revenue": 0,
       "hooking_strategy": "캐릭터 외형 소구",
       "USP": "전략/경쟁형(상성/조합)",
@@ -1685,7 +1685,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:01:04+09:00",
+      "tagged_at": "2026-07-13T13:00:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassElimentalist-01-PV\\260710_VID_P-Ingame-ClassElimentalist-01-PV_L_1920x1080_KR.mp4"
@@ -1736,7 +1736,7 @@
           "asset_url": "https://www.youtube.com/watch?v=cQf6iTbbuTw",
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 8450,
-          "clicks": 225,
+          "clicks": 224,
           "cost_micros": 71943825639,
           "cost": 71943.825639,
           "conversions": 22.0,
@@ -1824,7 +1824,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:01:05+09:00",
+      "tagged_at": "2026-07-13T13:00:47+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassElimentalist-01-SS\\260710_VID_P-Ingame-ClassElimentalist-01-SS_V_1080x1920_KR.mp4"
@@ -1958,7 +1958,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:01:10+09:00",
+      "tagged_at": "2026-07-13T13:00:50+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassKnight-01-PV\\260710_VID_P-Ingame-ClassKnight-01-PV_L_1920x1080_KR.mp4"
@@ -2045,7 +2045,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:01:10+09:00",
+      "tagged_at": "2026-07-13T13:00:50+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassKnight-01-SS\\260710_VID_P-Ingame-ClassKnight-01-SS_V_1080x1920_KR.mp4"
@@ -2133,7 +2133,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:01:13+09:00",
+      "tagged_at": "2026-07-13T13:00:53+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassOracle-01-PV\\260710_VID_P-Ingame-ClassOracle-01-PV_L_1920x1080_KR.mp4"
@@ -2222,7 +2222,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:01:13+09:00",
+      "tagged_at": "2026-07-13T13:00:53+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassOracle-01-SS\\260710_VID_P-Ingame-ClassOracle-01-SS_V_1080x1920_KR.mp4"
@@ -2315,7 +2315,7 @@
         "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:01:16+09:00",
+      "tagged_at": "2026-07-13T13:00:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassRanger-01-PV\\260710_VID_P-Ingame-ClassRanger-01-PV_L_1920x1080_KR.mp4"
@@ -2369,8 +2369,8 @@
           "clicks": 65,
           "cost_micros": 31331857004,
           "cost": 31331.857004,
-          "conversions": 23.744703,
-          "conversions_value": 23.744703
+          "conversions": 23.747686,
+          "conversions_value": 23.747686
         }
       ],
       "mmp_source": null,
@@ -2458,7 +2458,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:01:16+09:00",
+      "tagged_at": "2026-07-13T13:00:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassRanger-01-SS\\260710_VID_P-Ingame-ClassRanger-01-SS_V_1080x1920_KR.mp4"
@@ -2599,7 +2599,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:01:16+09:00",
+      "tagged_at": "2026-07-13T13:00:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\BNR_P-Reward-PreReward03-DA\\원본\\260701_BNR_P-Reward-PreReward03-DA_L_1080x1920_KR.jpg",
@@ -3369,8 +3369,8 @@
       "링크": "https://www.youtube.com/watch?v=7nuthQJtx9c",
       "creative_concept": "P-Slogan-CinematicPV30s-01-PV",
       "전환": 3346,
-      "비용": 6008412,
-      "노출수": 2240549,
+      "비용": 6008411,
+      "노출수": 2240551,
       "클릭수": 17372,
       "Revenue": 1054,
       "hooking_strategy": "비주얼 임팩트",
@@ -3424,7 +3424,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:01:18+09:00",
+      "tagged_at": "2026-07-13T13:00:58+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-CinematicPV30s-01-PV\\260701_VID_P-Slogan-CinematicPV30s-01-PV_L_1920x1080_KR.mp4",
@@ -3924,7 +3924,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=7nuthQJtx9c",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 40953,
+          "impressions": 40954,
           "clicks": 193,
           "cost_micros": 100071668478,
           "cost": 100071.668478,
@@ -3974,8 +3974,8 @@
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 42501,
           "clicks": 255,
-          "cost_micros": 101259237925,
-          "cost": 101259.237925,
+          "cost_micros": 101259739671,
+          "cost": 101259.739671,
           "conversions": 24.0,
           "conversions_value": 0.0
         },
@@ -4004,7 +4004,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=9Gxgh5g4Pu0",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 61119,
+          "impressions": 61121,
           "clicks": 257,
           "cost_micros": 141535439253,
           "cost": 141535.439253,
@@ -4388,10 +4388,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=9Gxgh5g4Pu0",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 6391,
+          "impressions": 6390,
           "clicks": 42,
-          "cost_micros": 20667206128,
-          "cost": 20667.206128,
+          "cost_micros": 20665858561,
+          "cost": 20665.858561,
           "conversions": 24.496755,
           "conversions_value": 24.496755
         },
@@ -5402,7 +5402,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:01:18+09:00",
+      "tagged_at": "2026-07-13T13:00:58+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\BNR_P-Slogan-KeyVisual01-DA\\260701_BNR_P-Slogan-Keyvisual01-DA_L_1024x768_KR.jpg",
@@ -7506,7 +7506,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:01:18+09:00",
+      "tagged_at": "2026-07-13T13:00:58+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\BNR_P-Slogan-KeyVisual02-DA\\260701_BNR_P-Slogan-Keyvisual02-DA_L_1024x768_KR.jpg",
@@ -9373,8 +9373,8 @@
       "링크": "https://www.youtube.com/watch?v=sAf0F7ORrbQ",
       "creative_concept": "P-Slogan-PreregPV15s-01-PV",
       "전환": 2539,
-      "비용": 5078223,
-      "노출수": 2209272,
+      "비용": 5078243,
+      "노출수": 2209275,
       "클릭수": 12115,
       "Revenue": 274,
       "hooking_strategy": "캐릭터 외형 소구",
@@ -9424,7 +9424,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:01:19+09:00",
+      "tagged_at": "2026-07-13T13:00:58+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV15s-01-PV\\260701_VID_P-Slogan-PreregPV15s-01-PV_L_1920x1080_KR.mp4",
@@ -9972,10 +9972,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=sAf0F7ORrbQ",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 63791,
+          "impressions": 63792,
           "clicks": 151,
-          "cost_micros": 119153948088,
-          "cost": 119153.948088,
+          "cost_micros": 119168139242,
+          "cost": 119168.139242,
           "conversions": 49.0,
           "conversions_value": 0.0
         },
@@ -9988,7 +9988,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=AEvIhXc0aJM",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 65918,
+          "impressions": 65919,
           "clicks": 251,
           "cost_micros": 121960815155,
           "cost": 121960.815155,
@@ -10004,10 +10004,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=R5WWqFV605E",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 59175,
+          "impressions": 59176,
           "clicks": 117,
-          "cost_micros": 107064481091,
-          "cost": 107064.481091,
+          "cost_micros": 107069702258,
+          "cost": 107069.702258,
           "conversions": 60.0,
           "conversions_value": 0.0
         },
@@ -11321,9 +11321,9 @@
       "링크": "https://www.youtube.com/watch?v=YfJfrSFAB6w",
       "creative_concept": "P-Slogan-PreregPV15s-02-PV",
       "전환": 2171,
-      "비용": 4609225,
-      "노출수": 1878947,
-      "클릭수": 10591,
+      "비용": 4609228,
+      "노출수": 1878939,
+      "클릭수": 10590,
       "Revenue": 32,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "감성 유대형(교감/서사)",
@@ -11376,7 +11376,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:01:19+09:00",
+      "tagged_at": "2026-07-13T13:00:58+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV15s-02-PV\\260701_VID_P-Slogan-PreregPV15s-02-PV_L_1920x1080_KR (1).mp4",
@@ -11910,8 +11910,8 @@
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 45535,
           "clicks": 166,
-          "cost_micros": 94279019715,
-          "cost": 94279.019715,
+          "cost_micros": 94278524614,
+          "cost": 94278.524614,
           "conversions": 42.0,
           "conversions_value": 0.0
         },
@@ -11926,8 +11926,8 @@
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 58033,
           "clicks": 178,
-          "cost_micros": 107534425683,
-          "cost": 107534.425683,
+          "cost_micros": 107536168280,
+          "cost": 107536.16828,
           "conversions": 44.0,
           "conversions_value": 0.0
         },
@@ -11940,7 +11940,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=vY486VoOAjY",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 56911,
+          "impressions": 56907,
           "clicks": 121,
           "cost_micros": 108664274435,
           "cost": 108664.274435,
@@ -11956,10 +11956,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=79f2CKr_4oM",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 49169,
-          "clicks": 144,
-          "cost_micros": 97558498290,
-          "cost": 97558.49829,
+          "impressions": 49165,
+          "clicks": 143,
+          "cost_micros": 97559802092,
+          "cost": 97559.802092,
           "conversions": 46.0,
           "conversions_value": 0.0
         },
@@ -12758,7 +12758,7 @@
       "링크": "https://www.youtube.com/watch?v=Kc-JF2eSmt8",
       "creative_concept": "P-Slogan-PreregPV30s-01-PV",
       "전환": 2542,
-      "비용": 5360267,
+      "비용": 5360268,
       "노출수": 1865758,
       "클릭수": 16659,
       "Revenue": 199,
@@ -12813,7 +12813,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:01:19+09:00",
+      "tagged_at": "2026-07-13T13:00:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV30s-01-PV\\260701_VID_P-Slogan-PreregPV30s-01-PV_L_1920x1080_KR.mp4",
@@ -13313,10 +13313,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=Kc-JF2eSmt8",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 51095,
+          "impressions": 51096,
           "clicks": 256,
-          "cost_micros": 115162841016,
-          "cost": 115162.841016,
+          "cost_micros": 115158789359,
+          "cost": 115158.789359,
           "conversions": 42.0,
           "conversions_value": 0.0
         },
@@ -13363,8 +13363,8 @@
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 55296,
           "clicks": 253,
-          "cost_micros": 120097735721,
-          "cost": 120097.735721,
+          "cost_micros": 120103102739,
+          "cost": 120103.102739,
           "conversions": 35.0,
           "conversions_value": 0.0
         },
@@ -13377,7 +13377,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=lCgioDJVeac",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 50150,
+          "impressions": 50149,
           "clicks": 327,
           "cost_micros": 119264375048,
           "cost": 119264.375048,
@@ -14363,8 +14363,8 @@
       "링크": "https://www.youtube.com/watch?v=JqGApUxOczY",
       "creative_concept": "P-Slogan-PreregPV30s-02-PV",
       "전환": 2137,
-      "비용": 4532914,
-      "노출수": 1462901,
+      "비용": 4532898,
+      "노출수": 1462900,
       "클릭수": 15276,
       "Revenue": 73,
       "hooking_strategy": "비주얼 임팩트",
@@ -14416,7 +14416,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:01:19+09:00",
+      "tagged_at": "2026-07-13T13:00:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV30s-02-PV\\260701_VID_P-Slogan-PreregPV30s-02-PV_L_1920x1080_KR.mp4",
@@ -14932,10 +14932,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=2Ay0wT3LyAg",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 48774,
+          "impressions": 48773,
           "clicks": 207,
-          "cost_micros": 100845339657,
-          "cost": 100845.339657,
+          "cost_micros": 100828764579,
+          "cost": 100828.764579,
           "conversions": 46.0,
           "conversions_value": 0.0
         },
@@ -15982,7 +15982,7 @@
       "creative_concept": "P-Slogan-Universe02-DA",
       "전환": 474,
       "비용": 1207476,
-      "노출수": 384110,
+      "노출수": 384111,
       "클릭수": 6624,
       "Revenue": 154,
       "hooking_strategy": "캐릭터 외형 소구",
@@ -16036,7 +16036,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:01:19+09:00",
+      "tagged_at": "2026-07-13T13:00:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_1024x768_KR.jpg",
@@ -16606,7 +16606,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://tpc.googlesyndication.com/simgad/15208341403562725288",
           "asset_type": "IMAGE",
-          "impressions": 7258,
+          "impressions": 7259,
           "clicks": 134,
           "cost_micros": 24503277389,
           "cost": 24503.277389,
@@ -17903,7 +17903,7 @@
       "creative_concept": "P-Slogan-Universe03-DA",
       "전환": 455,
       "비용": 1113988,
-      "노출수": 364253,
+      "노출수": 364251,
       "클릭수": 6217,
       "Revenue": 165,
       "hooking_strategy": "비주얼 임팩트",
@@ -17955,7 +17955,7 @@
         "roas": 89.66
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T12:01:20+09:00",
+      "tagged_at": "2026-07-13T13:00:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_1024x768_KR.jpg",
@@ -18509,7 +18509,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://tpc.googlesyndication.com/simgad/13151017767964336358",
           "asset_type": "IMAGE",
-          "impressions": 8750,
+          "impressions": 8749,
           "clicks": 135,
           "cost_micros": 24881457211,
           "cost": 24881.457211,
@@ -18557,7 +18557,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://tpc.googlesyndication.com/simgad/13151017767964336358",
           "asset_type": "IMAGE",
-          "impressions": 6707,
+          "impressions": 6706,
           "clicks": 113,
           "cost_micros": 21137285390,
           "cost": 21137.28539,
@@ -19933,7 +19933,7 @@
     "cache_hits": 29,
     "cache_misses": 0,
     "failures": 0,
-    "duration_sec": 41.8,
+    "duration_sec": 35.2,
     "prompt_version": "v3.3-2026.06.13-character-split-single-mmorpg-v1",
     "fallback_used": false,
     "carried_forward": 0,
@@ -19952,12 +19952,33 @@
     "game_context_sha": "bbb760e0385d5662"
   },
   "campaign_canonical": {
-    "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701": {
+    "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACp"
+      "os": "전체",
+      "media": "Meta",
+      "product": "Conversion"
+    },
+    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Meta",
+      "product": "Conversion"
+    },
+    "Incross_HQ_ZEUS_KR_Criteo_NU-Pre_ALL_Display_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Criteo",
+      "product": "Display"
+    },
+    "Incross_HQ_ZEUS_KR-KR_Moloco_NU-Pre_ALL_Conversion_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Moloco",
+      "product": "Conversion"
     },
     "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701": {
       "ua_type": "NU-Pre",
@@ -19973,27 +19994,6 @@
       "media": "Meta",
       "product": "MAIA-CPP"
     },
-    "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "GA",
-      "product": "DemandGen"
-    },
-    "Incross_HQ_ZEUS_KR-KR_Moloco_NU-Pre_ALL_Conversion_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Moloco",
-      "product": "Conversion"
-    },
-    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Meta",
-      "product": "Conversion"
-    },
     "Incross_HQ_ZEUS_KR-KR_MSN_NU-Pre_ALL_Display_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
@@ -20001,19 +20001,19 @@
       "media": "MSN",
       "product": "Display"
     },
-    "Incross_HQ_ZEUS_KR_Criteo_NU-Pre_ALL_Display_260701": {
+    "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "전체",
-      "media": "Criteo",
-      "product": "Display"
+      "media": "GA",
+      "product": "DemandGen"
     },
-    "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701": {
+    "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
-      "os": "전체",
-      "media": "Meta",
-      "product": "Conversion"
+      "os": "Android",
+      "media": "GA",
+      "product": "ACp"
     }
   },
   "unmatched_assets": [
@@ -20021,7 +20021,7 @@
       "concept": "ZEUS_BI_제우스오만의신_최종안",
       "source": "google_ads",
       "impressions": 1865925,
-      "cost": 4371594.74,
+      "cost": 4371596.58,
       "asset_types": [
         "IMAGE"
       ],
@@ -20045,7 +20045,7 @@
       "concept": "[제우스: 오만의 신] 디렉터스 인사이트 1화 | 다시 찾고 싶은 MMORPG의 본질",
       "source": "google_ads",
       "impressions": 94148,
-      "cost": 626241.34,
+      "cost": 626240.44,
       "asset_types": [
         "YOUTUBE_VIDEO"
       ],
@@ -20056,8 +20056,8 @@
     {
       "concept": "[제우스: 오만의 신] 클래스 소개 | 나이트",
       "source": "google_ads",
-      "impressions": 60123,
-      "cost": 345318.96,
+      "impressions": 60124,
+      "cost": 345322.15,
       "asset_types": [
         "YOUTUBE_VIDEO"
       ],
@@ -20080,7 +20080,7 @@
     {
       "concept": "[제우스: 오만의 신] 클래스 소개 | 아티산",
       "source": "google_ads",
-      "impressions": 49040,
+      "impressions": 49041,
       "cost": 287052.12,
       "asset_types": [
         "YOUTUBE_VIDEO"
@@ -20130,7 +20130,7 @@
     {
       "concept": "P-Reward-PreReward02-DA",
       "source": "google_ads",
-      "impressions": 22686,
+      "impressions": 22685,
       "cost": 138549.13,
       "asset_types": [
         "IMAGE"
@@ -20158,7 +20158,7 @@
     {
       "concept": "P-Genre-MMORPG01-DA",
       "source": "google_ads",
-      "impressions": 22115,
+      "impressions": 22117,
       "cost": 144344.67,
       "asset_types": [
         "IMAGE"

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "title_id": "tougenanki",
-  "generated_at": "2026-07-12T13:01:07+09:00",
+  "generated_at": "2026-07-13T13:07:28+09:00",
   "pipeline_version": "stage2-mvp",
   "gemini_model": "gemini-2.5-flash",
   "creatives": [
@@ -68,7 +68,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:02+09:00",
+      "tagged_at": "2026-07-13T13:07:09+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-MudanoSSR01-DA\\260624_BNR_FGT-IP-MudanoSSR01-DA_L_1200x628_JP.jpg",
@@ -158,7 +158,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:02+09:00",
+      "tagged_at": "2026-07-13T13:07:10+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-OniMainTVA01-DA\\260624_BNR_FGT-IP-OniMainTVA01-DA_L_1200x628_JP.jpg",
@@ -250,7 +250,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:02+09:00",
+      "tagged_at": "2026-07-13T13:07:10+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-OniMomotaroTVA01-DA\\260518_BNR_FGT-IP-OniMomotaroTVA01-DA_L_1200x628_JP.jpg",
@@ -339,13 +339,12 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:02+09:00",
+      "tagged_at": "2026-07-13T13:07:10+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-Ingame-Friendship01-DA\\260623_BNR_FGT-Ingame-Friendship01-DA_L_1200x628_JP.jpg",
         "3. FGT\\1. 배너\\FGT-Ingame-Friendship01-DA\\260623_BNR_FGT-Ingame-Friendship01-DA_S_1200x1200_JP.jpg",
-        "3. FGT\\1. 배너\\FGT-Ingame-Friendship01-DA\\260623_BNR_FGT-Ingame-Friendship01-DA_V_1200x1500_JP.jpg",
-        "3. FGT\\1. 배너\\FGT-Ingame-Kyoyatcg01-DA\\260623_BNR_FGT-Ingame-Friendship01-DA_L_1200x628_JP.jpg"
+        "3. FGT\\1. 배너\\FGT-Ingame-Friendship01-DA\\260623_BNR_FGT-Ingame-Friendship01-DA_V_1200x1500_JP.jpg"
       ],
       "kpi_source": null,
       "kpi_window_start": null,
@@ -370,11 +369,11 @@
     {
       "creative_id": "FGT-Ingame-Kyoyatcg01-DA",
       "소재명": "FGT-Ingame-Kyoyatcg01-DA",
-      "파일명": "260623_BNR_FGT-Ingame-Kyoyatcg01-DA_S_1200x1200_JP.jpg",
+      "파일명": "260623_BNR_FGT-Ingame-Kyoyatcg01-DA_L_1200x628_JP.jpg",
       "유형": "BNR",
       "일": "2026-06-23",
       "캠페인": null,
-      "사이즈": "1200x1200",
+      "사이즈": "1200x628",
       "언어": "JP",
       "링크": null,
       "creative_concept": "FGT-Ingame-Kyoyatcg01-DA",
@@ -385,40 +384,39 @@
       "Revenue": 0,
       "hooking_strategy": "캐릭터 외형 소구",
       "USP": "전략/경쟁형(상성/조합)",
-      "art_style": "2D 일러스트",
+      "art_style": "3D 셀셰이딩",
       "strengths": [
         "단일 주인공 스포트라이트",
         "게임플레이 자체 매력",
-        "출시일·한정 강조"
+        "호기심/궁금증 유발"
       ],
       "weaknesses": [
         "정보 과적 (텍스트/UI 산만)",
         "초반 3초 안에 가치 전달 실패"
       ],
       "hypothesis": [
-        "특정 타겟에 강하게 반응"
+        "특정 타겟에 강하게 반응",
+        "낮은 전환 위험 — 행동 유도 약함"
       ],
       "test_ideas": [
         "카피 1줄로 축약",
-        "명시적 CTA 추가",
-        "15초 컷 테스트"
+        "명시적 CTA 추가"
       ],
-      "one_line_insight": "캐릭터 매력과 플레이테스트 기회 강조는 좋으나 정보 과적으로 메시지가 분산됨 — 핵심 캐릭터와 게임 플레이에 집중하고 CTA를 명확히 하여 전환율을 개선",
+      "one_line_insight": "캐릭터 외형과 다크 판타지 세계관으로 IP 팬덤의 시선을 끄는 데는 강하나, 정보 과적과 행동 유도 약점으로 전환율 저하 우려 — 메인 카피를 축약하고 CTA를 명확히 강조하여 전환율을 개선",
       "strength_evidence": [
-        "화면 좌측 2/3를 차지하는 '오이란자카 쿄우야' 캐릭터 일러스트가 시선을 압도하며 원작 IP 팬덤의 캐릭터 인지를 강화함",
-        "화면 중앙의 스마트폰 목업 내 실제 게임 플레이 화면이 턴제 카드 배틀 RPG의 핵심 전투 시스템을 직관적으로 보여줌",
-        "붉은색 배경에 '프리미엄 선행 플레이테스트' 문구가 크게 강조되어 한정된 기회라는 점을 명확히 전달함"
+        "화면 좌측 2/3를 차지하는 오이란자카 쿄우야 캐릭터 일러스트가 독특한 외형과 분위기로 시선을 강하게 끌어당김.",
+        "스마트폰 화면 내에 카드 기반의 턴제 전투 UI와 3D 캐릭터 액션이 명확하게 노출되어 장르와 게임성을 직관적으로 전달함.",
+        "캐릭터의 팔에 연결된 수액 튜브와 배경의 혈액 팩들이 다크 판타지 세계관에 대한 궁금증을 유발하며 시선을 붙잡음."
       ],
       "weakness_evidence": [
-        "캐릭터 정보, 게임 화면, 타이틀, 플레이테스트 문구 등 다양한 정보가 한 화면에 복잡하게 배치되어 시선 분산 및 핵심 메시지 인지 방해",
-        "캐릭터 외형 외에 게임의 핵심 재미나 가치 제안이 텍스트와 이미지에 분산되어 있어 첫 3초 내에 명확한 인상을 주기 어려움"
+        "캐릭터, 인게임 화면, 카드 일러스트, 일본어 카피 등 다양한 정보가 한 화면에 복잡하게 배치되어 시선이 분산될 우려가 있음.",
+        "다크 판타지 분위기와 캐릭터 외형은 강하지만, 게임의 핵심 가치 제안(USP)이 텍스트와 이미지에 분산되어 즉각적인 이해가 어려움."
       ],
       "improvement_actions": [
-        "플레이테스트 문구와 CTA를 제외한 모든 텍스트를 '오이란자카 쿄우야와 함께하는 다크 판타지 카드 배틀 RPG' 한 줄로 축약하여 간결하게 메시지를 전달",
-        "현재 '지금 바로 응모하기' 버튼을 '지금 사전등록하고 오이란자카 쿄우야 스킨 받기'와 같이 보상과 연계된 구체적인 CTA로 변경하여 전환율을 높임",
-        "캐릭터 일러스트를 줄이고 게임 플레이 화면을 확대하여 전투의 전략성과 인페르노 스킬 연출을 강조한 15초 영상 소재를 제작"
+        "메인 카피 '프리미엄 선행 플레이 테스트'를 '지금 바로 다크 판타지 카드 배틀 체험!'처럼 핵심 가치와 행동 유도로 축약하여 가독성을 높임.",
+        "하단의 '지금 바로 응모하기' 버튼을 더 크고 눈에 띄게 강조하고, '한정 보상' 등의 문구를 추가하여 클릭 유도를 강화함."
       ],
-      "creator_intent": "원작 IP의 인기 캐릭터와 실제 게임 플레이를 동시에 보여주며 선행 플레이테스트 참여를 유도하려는 의도",
+      "creator_intent": "원작 IP의 다크 판타지 분위기와 매력적인 캐릭터, 그리고 실제 게임플레이를 보여주며 사전 플레이 테스트 참여를 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
@@ -431,11 +429,12 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:02+09:00",
+      "tagged_at": "2026-07-13T13:07:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
-        "3. FGT\\1. 배너\\FGT-Ingame-Kyoyatcg01-DA\\260623_BNR_FGT-Ingame-Kyoyatcg01-DA_S_1200x1200_JP.jpg",
-        "3. FGT\\1. 배너\\FGT-Ingame-Kyoyatcg01-DA\\260623_BNR_FGT-Ingame-Kyoyatcg01-DA_V_1200x1500_JP.jpg"
+        "3. FGT\\1. 배너\\FGT-Ingame-Kyoyatcg01-DA\\스크린샷 수정 전\\260623_BNR_FGT-Ingame-Kyoyatcg01-DA_L_1200x628_JP.jpg",
+        "3. FGT\\1. 배너\\FGT-Ingame-Kyoyatcg01-DA\\스크린샷 수정 전\\260623_BNR_FGT-Ingame-Kyoyatcg01-DA_S_1200x1200_JP.jpg",
+        "3. FGT\\1. 배너\\FGT-Ingame-Kyoyatcg01-DA\\스크린샷 수정 전\\260623_BNR_FGT-Ingame-Kyoyatcg01-DA_V_1200x1500_JP.jpg"
       ],
       "kpi_source": null,
       "kpi_window_start": null,
@@ -522,7 +521,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:02+09:00",
+      "tagged_at": "2026-07-13T13:07:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\Tier2 배너 시안\\260928_BNR_P-Battle-Freindship02-DA_L_1200x628_JP.jpg"
@@ -610,7 +609,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:02+09:00",
+      "tagged_at": "2026-07-13T13:07:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\Tier1 배너 시안\\260928_BNR_P-Battle-OniVsMomotaro01-DA_L_1200x628_JP.jpg"
@@ -696,7 +695,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:02+09:00",
+      "tagged_at": "2026-07-13T13:07:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\Tier2 배너 시안\\260928_BNR_P-Character-Cutscene01-DA_L_1200x628_JP.jpg"
@@ -788,7 +787,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:02+09:00",
+      "tagged_at": "2026-07-13T13:07:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-HomarePV01-PV\\260421_VID_P-Character-HomarePV01-PV_S_1080x1080_JP.mp4",
@@ -877,7 +876,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:02+09:00",
+      "tagged_at": "2026-07-13T13:07:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-JinPV01-PV\\260421_VID_P-Character-JinPV01-PV_S_1080x1080_JP.mp4",
@@ -966,7 +965,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:03+09:00",
+      "tagged_at": "2026-07-13T13:07:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-KyoyaPV01-PV\\JP\\260421_VID_P-Character-KyoyaPV01-PV_S_1080x1080_JP.mp4",
@@ -1059,7 +1058,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:03+09:00",
+      "tagged_at": "2026-07-13T13:07:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-MudanoPV01-PV\\260401_VID_P-Character-MudanoPV01-PV_S_1080x1080_JP.mp4",
@@ -1148,7 +1147,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:03+09:00",
+      "tagged_at": "2026-07-13T13:07:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\Tier1 배너 시안\\260928_BNR_P-Character-NerimaOni01-DA_L_1200x628_JP.jpg"
@@ -1236,7 +1235,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:03+09:00",
+      "tagged_at": "2026-07-13T13:07:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\Tier1 배너 시안\\260928_BNR_P-Character-OniPopOut01-DA_L_1200x628_JP.jpg"
@@ -1324,7 +1323,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:03+09:00",
+      "tagged_at": "2026-07-13T13:07:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier1 영상 시안\\260928_VID_P-Character-OnivsMomotaro01-UA_L_1920x1080_JP.mp4"
@@ -1412,7 +1411,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:03+09:00",
+      "tagged_at": "2026-07-13T13:07:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-ShikiPV01-PV\\260421_VID_P-Character-ShikiPV01-PV_S_1080x1080_JP.mp4",
@@ -1501,7 +1500,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:04+09:00",
+      "tagged_at": "2026-07-13T13:07:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier1 영상 시안\\260928_VID_P-Character-Shikirage01-UA_L_1920x1080_JP.mp4"
@@ -1589,7 +1588,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:04+09:00",
+      "tagged_at": "2026-07-13T13:07:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\Tier1 배너 시안\\260928_BNR_P-Character-Skillcard01-DA_L_1200x628_JP.jpg"
@@ -1677,7 +1676,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:04+09:00",
+      "tagged_at": "2026-07-13T13:07:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-TsubakiriPV01-PV\\260421_VID_P-Character-TsubakiriPV01-PV_S_1080x1080_JP.mp4",
@@ -1765,7 +1764,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:04+09:00",
+      "tagged_at": "2026-07-13T13:07:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier2 영상 시안\\260928_VID_P-Gameplay-Onigroup01-UA_L_1920x1080_JP.mp4",
@@ -1858,7 +1857,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:04+09:00",
+      "tagged_at": "2026-07-13T13:07:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier2 영상 시안\\260928_VID_P-Gameplay-kyotostory01-UA_L_1920x1080_JP.mp4",
@@ -1947,7 +1946,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:05+09:00",
+      "tagged_at": "2026-07-13T13:07:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Gamer-IngamePV01-PV\\260421_VID_P-Gamer-IngamePV01-PV_S_1080x1080_JP.mp4",
@@ -2036,7 +2035,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:05+09:00",
+      "tagged_at": "2026-07-13T13:07:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Gamer-RasetsuBattle01-DA\\JP\\260209_BNR_P-Gamer-RasetsuBattle01-DA_L_1200x628_JP.jpg",
@@ -2133,7 +2132,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:05+09:00",
+      "tagged_at": "2026-07-13T13:07:26+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Cinematic01-PV\\260421_VID_P-IP-Cinematic01-PV_S_1080x1080_JP.mp4",
@@ -2222,7 +2221,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:06+09:00",
+      "tagged_at": "2026-07-13T13:07:26+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Cutscene01-UA\\JP\\260519_VID_P-IP-Cutscene0-UA_L_1920x1080_JP.mp4"
@@ -2312,7 +2311,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:06+09:00",
+      "tagged_at": "2026-07-13T13:07:26+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\0. 엔드카드\\P-IP-Endcard01-EC\\JP\\260127_VID_P-IP-Endcard01-EC_L_1080x1080_JP.mp4",
@@ -2402,7 +2401,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:06+09:00",
+      "tagged_at": "2026-07-13T13:07:26+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\0. 엔드카드\\(활용불가) P-IP-Endcard02-EC\\JP\\260127_VID_P-IP-Endcard02-EC_L_1920x1080_JP.mp4"
@@ -2490,7 +2489,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:06+09:00",
+      "tagged_at": "2026-07-13T13:07:26+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-OniMainTVA01-DA\\JP\\260928_BNR_P-IP-OniMainTVA01-DA_L_1200x628_JP.jpg",
@@ -2587,7 +2586,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:06+09:00",
+      "tagged_at": "2026-07-13T13:07:26+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-OniMomotaroTVA01-DA\\JP\\260223_BNR_P-IP-OniMomotaroTVA01-DA_L_1200x628_JP.jpg",
@@ -2679,7 +2678,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:06+09:00",
+      "tagged_at": "2026-07-13T13:07:26+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-RasetsuTVA01-DA\\JP\\260810_BNR_P-IP-RasetsuTVA01-DA_L_1200x628_JP.jpg",
@@ -2776,7 +2775,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:06+09:00",
+      "tagged_at": "2026-07-13T13:07:26+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Teaser01-PV\\260421_VID_P-IP-Teaser01-PV_S_1080x1080_JP.mp4",
@@ -2863,7 +2862,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:06+09:00",
+      "tagged_at": "2026-07-13T13:07:27+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR01-DA\\JP\\260928_BNR_P-Reward-MudanoSSR01-DA_L_1200x628_JP.jpg",
@@ -2960,7 +2959,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:06+09:00",
+      "tagged_at": "2026-07-13T13:07:27+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR01-DA\\JP\\수정 전\\260209_BNR_P-Reward-MudanoSSR01-DA-A_L_1200x628_JP.jpg",
@@ -3052,7 +3051,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:06+09:00",
+      "tagged_at": "2026-07-13T13:07:27+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR02-DA (CTA)\\JP\\260928_BNR_P-Reward-MudanoSSR02-DA_L_1200x628_JP.jpg",
@@ -3146,7 +3145,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:06+09:00",
+      "tagged_at": "2026-07-13T13:07:27+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-OniMomotaroSSR01-DA\\JP\\260928_BNR_P-Reward-OniMomotaroSSR01-DA_L_1200x628_JP.jpg",
@@ -3242,7 +3241,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:06+09:00",
+      "tagged_at": "2026-07-13T13:07:27+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR01-DA\\JP\\260928_BNR_P-Reward-RasetsuSSR01-DA_L_1200x628_JP.jpg",
@@ -3339,7 +3338,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:06+09:00",
+      "tagged_at": "2026-07-13T13:07:27+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR02-DA (CTA)\\JP\\260928_BNR_P-Reward-RasetsuSSR02-DA_L_1200x628_JP.jpg",
@@ -3430,7 +3429,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:06+09:00",
+      "tagged_at": "2026-07-13T13:07:27+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\Tier2 배너 시안\\260928_BNR_P-Reward-Skillcard02-DA_L_1200x628_JP.jpg"
@@ -3522,7 +3521,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:07+09:00",
+      "tagged_at": "2026-07-13T13:07:27+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Reward-SkillcardSSR01-UA\\JP\\260928_VID_P-Reward-SkillcardSSR01-UA_L_1920x1080_JP.mp4"
@@ -3610,7 +3609,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:07+09:00",
+      "tagged_at": "2026-07-13T13:07:27+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier1 영상 시안\\260928_VID_P-Story-Freindship01-UA_L_1920x1080_JP.mp4"
@@ -3698,7 +3697,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:07+09:00",
+      "tagged_at": "2026-07-13T13:07:27+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier1 영상 시안\\260928_VID_P-Story-IconicLines01-UA_L_1920x1080_JP.mp4",
@@ -3789,7 +3788,7 @@
         "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-12T13:01:07+09:00",
+      "tagged_at": "2026-07-13T13:07:28+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier2 영상 시안\\260928_VID_P-Story-OnivsMomotaro01-UA_L_1920x1080_JP.mp4",
@@ -3819,10 +3818,10 @@
   "metrics": {
     "scanned_folders": 42,
     "tagged_records": 42,
-    "cache_hits": 42,
-    "cache_misses": 0,
+    "cache_hits": 41,
+    "cache_misses": 1,
     "failures": 0,
-    "duration_sec": 5.8,
+    "duration_sec": 18.2,
     "prompt_version": "v3.3-2026.06.13-character-split-single-darkfantasy-v1",
     "fallback_used": false,
     "carried_forward": 0,
