@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "title_id": "zeus",
-  "generated_at": "2026-07-13T13:00:59+09:00",
+  "generated_at": "2026-07-13T13:54:11+09:00",
   "pipeline_version": "stage2-mvp",
   "gemini_model": "gemini-2.5-flash",
   "creatives": [
@@ -63,16 +63,16 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 32.76,
+        "total": 34.48,
         "grade": "보통",
         "rank": 18,
         "conv": 41.38,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:25+09:00",
+      "tagged_at": "2026-07-13T13:53:31+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-01-PV\\260701_VID_P-Genre-DirInsight-01-PV_V_1080x1920_KR.mp4"
@@ -149,16 +149,16 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 32.76,
+        "total": 34.48,
         "grade": "보통",
         "rank": 19,
         "conv": 41.38,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:25+09:00",
+      "tagged_at": "2026-07-13T13:53:32+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-02-PV\\260708_VID_P-Genre-DirInsight-02-PV_V_1080x1920_KR.mp4"
@@ -467,11 +467,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=-Z-uy52xbCA",
       "creative_concept": "P-Genre-GamePreview-01-PV",
-      "전환": 1270,
+      "전환": 1271,
       "비용": 2026174,
       "노출수": 180110,
       "클릭수": 5031,
-      "Revenue": 256,
+      "Revenue": 257,
       "hooking_strategy": "캐릭터 외형 소구",
       "USP": "감성 유대형(교감/서사)",
       "art_style": "시네마틱 실사 합성",
@@ -509,21 +509,21 @@
       "creator_intent": "고퀄리티 3D 캐릭터 모델링과 웅장한 BGM으로 그리스 신화 세계관의 비주얼적 매력을 초반에 강하게 어필하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": {
-        "ctr": 75,
+        "ctr": 94,
         "cvr": 100,
-        "cpa": 81
+        "cpa": 100
       },
       "scores": {
-        "total": 90.52,
+        "total": 94.83,
         "grade": "최우수",
         "rank": 1,
         "conv": 82.76,
-        "cpa": 89.66,
+        "cpa": 100.0,
         "ipm": 100.0,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:32+09:00",
+      "tagged_at": "2026-07-13T13:53:39+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-GamePreview-01-PV\\260701_VID_P-Genre-GamePreview-01-PV_L_1920x1080_KR.mp4"
@@ -753,8 +753,8 @@
           "clicks": 178,
           "cost_micros": 64115718929,
           "cost": 64115.718929,
-          "conversions": 84.161893,
-          "conversions_value": 84.161893
+          "conversions": 84.16192,
+          "conversions_value": 84.16192
         },
         {
           "creative_name": "[제우스: 오만의 신] 게임 플레이 프리뷰",
@@ -785,8 +785,8 @@
           "clicks": 125,
           "cost_micros": 47482026268,
           "cost": 47482.026268,
-          "conversions": 47.498867,
-          "conversions_value": 47.498867
+          "conversions": 48.373109,
+          "conversions_value": 48.373109
         }
       ],
       "mmp_source": null,
@@ -859,16 +859,16 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 32.76,
+        "total": 34.48,
         "grade": "보통",
         "rank": 20,
         "conv": 41.38,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:35+09:00",
+      "tagged_at": "2026-07-13T13:53:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassArtisan-01-PV\\260710_VID_P-Ingame-ClassArtisan-01-PV_L_1920x1080_KR.mp4"
@@ -946,16 +946,16 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 32.76,
+        "total": 34.48,
         "grade": "보통",
         "rank": 21,
         "conv": 41.38,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:35+09:00",
+      "tagged_at": "2026-07-13T13:53:43+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassArtisan-01-SS\\260710_VID_P-Ingame-ClassArtisan-01-SS_V_1080x1920_KR.mp4"
@@ -1036,16 +1036,16 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 32.76,
+        "total": 34.48,
         "grade": "보통",
         "rank": 22,
         "conv": 41.38,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:38+09:00",
+      "tagged_at": "2026-07-13T13:53:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassAssassin-01-PV\\260710_VID_P-Ingame-ClassAssassin-01-PV_L_1920x1080_KR.mp4"
@@ -1126,16 +1126,16 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 32.76,
+        "total": 34.48,
         "grade": "보통",
         "rank": 23,
         "conv": 41.38,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:38+09:00",
+      "tagged_at": "2026-07-13T13:53:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassAssassin-01-SS\\260710_VID_P-Ingame-ClassAssassin-01-SS_V_1080x1920_KR.mp4"
@@ -1171,11 +1171,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=9CmiYo06gOQ",
       "creative_concept": "P-Ingame-ClassBerserker-01-PV",
-      "전환": 74,
-      "비용": 215923,
-      "노출수": 26598,
-      "클릭수": 868,
-      "Revenue": 0,
+      "전환": 51,
+      "비용": 129341,
+      "노출수": 20800,
+      "클릭수": 479,
+      "Revenue": 9,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "전략/경쟁형(상성/조합)",
       "art_style": "시네마틱 실사 합성",
@@ -1213,21 +1213,21 @@
       "creator_intent": "고퀄리티 시네마틱과 버서커 클래스의 전투 연출로 MMORPG의 웅장함과 캐릭터의 강렬한 매력을 과시하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": {
-        "ctr": 94,
-        "cvr": 69,
-        "cpa": 0
+        "ctr": 88,
+        "cvr": 62,
+        "cpa": 19
       },
       "scores": {
         "total": 68.97,
         "grade": "우수",
-        "rank": 14,
-        "conv": 58.62,
-        "cpa": 44.83,
-        "ipm": 82.76,
-        "roas": 89.66
+        "rank": 15,
+        "conv": 44.83,
+        "cpa": 55.17,
+        "ipm": 79.31,
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:40+09:00",
+      "tagged_at": "2026-07-13T13:53:49+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBerserker-01-PV\\260710_VID_P-Ingame-ClassBerserker-01-PV_L_1920x1080_KR.mp4"
@@ -1245,11 +1245,11 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://www.youtube.com/watch?v=9CmiYo06gOQ",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 6709,
-          "clicks": 379,
-          "cost_micros": 56821857162,
-          "cost": 56821.857162,
-          "conversions": 22.0,
+          "impressions": 2855,
+          "clicks": 190,
+          "cost_micros": 28054805047,
+          "cost": 28054.805047,
+          "conversions": 14.0,
           "conversions_value": 0.0
         },
         {
@@ -1261,11 +1261,11 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://www.youtube.com/watch?v=9CmiYo06gOQ",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 9965,
-          "clicks": 257,
-          "cost_micros": 79878850557,
-          "cost": 79878.850557,
-          "conversions": 26.0,
+          "impressions": 4410,
+          "clicks": 128,
+          "cost_micros": 39703456262,
+          "cost": 39703.456262,
+          "conversions": 13.0,
           "conversions_value": 0.0
         },
         {
@@ -1277,12 +1277,60 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://www.youtube.com/watch?v=9CmiYo06gOQ",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 9924,
-          "clicks": 232,
-          "cost_micros": 79222748833,
-          "cost": 79222.74883299999,
-          "conversions": 26.0,
+          "impressions": 4191,
+          "clicks": 121,
+          "cost_micros": 37020306415,
+          "cost": 37020.306415,
+          "conversions": 15.0,
           "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 클래스 소개 | 버서커",
+          "date": "2026-07-10",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
+          "asset_url": "https://www.youtube.com/watch?v=9CmiYo06gOQ",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 2178,
+          "clicks": 6,
+          "cost_micros": 4266067158,
+          "cost": 4266.067158,
+          "conversions": 1.102888,
+          "conversions_value": 1.102888
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 클래스 소개 | 버서커",
+          "date": "2026-07-11",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
+          "asset_url": "https://www.youtube.com/watch?v=9CmiYo06gOQ",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 3732,
+          "clicks": 18,
+          "cost_micros": 8917451843,
+          "cost": 8917.451843,
+          "conversions": 6.96707,
+          "conversions_value": 6.96707
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 클래스 소개 | 버서커",
+          "date": "2026-07-12",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
+          "asset_url": "https://www.youtube.com/watch?v=9CmiYo06gOQ",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 3434,
+          "clicks": 16,
+          "cost_micros": 11378780879,
+          "cost": 11378.780879,
+          "conversions": 1.18404,
+          "conversions_value": 1.18404
         }
       ],
       "mmp_source": null,
@@ -1312,11 +1360,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=6eEp0pwHDqg",
       "creative_concept": "P-Ingame-ClassBerserker-01-SS",
-      "전환": 29,
-      "비용": 44051,
-      "노출수": 15760,
-      "클릭수": 74,
-      "Revenue": 29,
+      "전환": 52,
+      "비용": 130634,
+      "노출수": 21558,
+      "클릭수": 463,
+      "Revenue": 20,
       "hooking_strategy": "캐릭터 외형 소구",
       "USP": "전략/경쟁형(상성/조합)",
       "art_style": "시네마틱 실사 합성",
@@ -1354,21 +1402,21 @@
       "creator_intent": "강력한 버서커 클래스의 전투 연출과 고퀄리티 비주얼로 특정 캐릭터의 매력을 어필하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": {
-        "ctr": 0,
+        "ctr": 81,
         "cvr": 56,
-        "cpa": 88
+        "cpa": 25
       },
       "scores": {
-        "total": 76.72,
+        "total": 69.83,
         "grade": "우수",
-        "rank": 10,
-        "conv": 44.83,
-        "cpa": 93.1,
+        "rank": 14,
+        "conv": 48.28,
+        "cpa": 58.62,
         "ipm": 75.86,
-        "roas": 93.1
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:41+09:00",
+      "tagged_at": "2026-07-13T13:53:50+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBerserker-01-SS\\260710_VID_P-Ingame-ClassBerserker-01-SS_V_1080x1920_KR.mp4"
@@ -1382,16 +1430,64 @@
           "date": "2026-07-10",
           "source": "google_ads",
           "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
+          "asset_url": "https://www.youtube.com/watch?v=6eEp0pwHDqg",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 3854,
+          "clicks": 189,
+          "cost_micros": 28767052115,
+          "cost": 28767.052115,
+          "conversions": 8.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 클래스 소개 | 버서커",
+          "date": "2026-07-11",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
+          "asset_url": "https://www.youtube.com/watch?v=6eEp0pwHDqg",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 5555,
+          "clicks": 129,
+          "cost_micros": 40175394295,
+          "cost": 40175.394295,
+          "conversions": 13.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 클래스 소개 | 버서커",
+          "date": "2026-07-12",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
+          "asset_url": "https://www.youtube.com/watch?v=6eEp0pwHDqg",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 5733,
+          "clicks": 111,
+          "cost_micros": 42202442418,
+          "cost": 42202.442418,
+          "conversions": 11.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 클래스 소개 | 버서커",
+          "date": "2026-07-10",
+          "source": "google_ads",
+          "customer_id": "3250895166",
           "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701",
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=6eEp0pwHDqg",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 5075,
-          "clicks": 21,
-          "cost_micros": 12231205243,
-          "cost": 12231.205243,
-          "conversions": 15.993848,
-          "conversions_value": 15.993848
+          "impressions": 2897,
+          "clicks": 15,
+          "cost_micros": 7965138085,
+          "cost": 7965.138085,
+          "conversions": 14.89096,
+          "conversions_value": 14.89096
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 버서커",
@@ -1402,12 +1498,12 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=6eEp0pwHDqg",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 5495,
-          "clicks": 30,
-          "cost_micros": 14400474645,
-          "cost": 14400.474645000002,
-          "conversions": 10.097112,
-          "conversions_value": 10.097112
+          "impressions": 1763,
+          "clicks": 12,
+          "cost_micros": 5483022802,
+          "cost": 5483.022802,
+          "conversions": 3.130042,
+          "conversions_value": 3.130042
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 버서커",
@@ -1418,12 +1514,12 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=6eEp0pwHDqg",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 5190,
-          "clicks": 23,
-          "cost_micros": 17419582834,
-          "cost": 17419.582834,
-          "conversions": 3.1771909999999997,
-          "conversions_value": 3.1771909999999997
+          "impressions": 1756,
+          "clicks": 7,
+          "cost_micros": 6040801955,
+          "cost": 6040.801955,
+          "conversions": 1.993151,
+          "conversions_value": 1.993151
         }
       ],
       "mmp_source": null,
@@ -1496,16 +1592,16 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 32.76,
+        "total": 34.48,
         "grade": "보통",
         "rank": 24,
         "conv": 41.38,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:43+09:00",
+      "tagged_at": "2026-07-13T13:53:53+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBlessed-01-PV\\260710_VID_P-Ingame-ClassBlessed-01-PV_L_1920x1080_KR.mp4"
@@ -1584,16 +1680,16 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 32.76,
+        "total": 34.48,
         "grade": "보통",
         "rank": 25,
         "conv": 41.38,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:44+09:00",
+      "tagged_at": "2026-07-13T13:53:53+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBlessed-01-SS\\260710_VID_P-Ingame-ClassBlessed-01-SS_V_1080x1920_KR.mp4"
@@ -1629,11 +1725,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=cQf6iTbbuTw",
       "creative_concept": "P-Ingame-ClassElimentalist-01-PV",
-      "전환": 67,
-      "비용": 191656,
-      "노출수": 22617,
-      "클릭수": 644,
-      "Revenue": 0,
+      "전환": 76,
+      "비용": 138635,
+      "노출수": 23618,
+      "클릭수": 387,
+      "Revenue": 47,
       "hooking_strategy": "캐릭터 외형 소구",
       "USP": "전략/경쟁형(상성/조합)",
       "art_style": "시네마틱 실사 합성",
@@ -1671,21 +1767,21 @@
       "creator_intent": "고퀄리티 시네마틱 연출과 캐릭터의 강력한 원소 마법을 통해 엘리멘탈리스트 직업의 매력을 과시하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": {
-        "ctr": 88,
-        "cvr": 75,
-        "cpa": 6
+        "ctr": 38,
+        "cvr": 81,
+        "cpa": 75
       },
       "scores": {
-        "total": 68.97,
-        "grade": "우수",
-        "rank": 15,
-        "conv": 51.72,
-        "cpa": 48.28,
-        "ipm": 86.21,
-        "roas": 89.66
+        "total": 83.62,
+        "grade": "최우수",
+        "rank": 5,
+        "conv": 58.62,
+        "cpa": 86.21,
+        "ipm": 89.66,
+        "roas": 100.0
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:46+09:00",
+      "tagged_at": "2026-07-13T13:53:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassElimentalist-01-PV\\260710_VID_P-Ingame-ClassElimentalist-01-PV_L_1920x1080_KR.mp4"
@@ -1703,11 +1799,11 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://www.youtube.com/watch?v=cQf6iTbbuTw",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 5762,
-          "clicks": 224,
-          "cost_micros": 44529514337,
-          "cost": 44529.514337,
-          "conversions": 19.0,
+          "impressions": 2315,
+          "clicks": 79,
+          "cost_micros": 17692655508,
+          "cost": 17692.655508,
+          "conversions": 4.0,
           "conversions_value": 0.0
         },
         {
@@ -1719,11 +1815,11 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://www.youtube.com/watch?v=cQf6iTbbuTw",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 8405,
-          "clicks": 196,
-          "cost_micros": 75182537626,
-          "cost": 75182.537626,
-          "conversions": 26.0,
+          "impressions": 3334,
+          "clicks": 81,
+          "cost_micros": 34890185735,
+          "cost": 34890.185735,
+          "conversions": 13.0,
           "conversions_value": 0.0
         },
         {
@@ -1735,12 +1831,60 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://www.youtube.com/watch?v=cQf6iTbbuTw",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 8450,
-          "clicks": 224,
-          "cost_micros": 71943825639,
-          "cost": 71943.825639,
-          "conversions": 22.0,
+          "impressions": 3426,
+          "clicks": 121,
+          "cost_micros": 34749246115,
+          "cost": 34749.246115,
+          "conversions": 12.0,
           "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 클래스 소개 | 엘리멘탈리스트",
+          "date": "2026-07-10",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
+          "asset_url": "https://www.youtube.com/watch?v=cQf6iTbbuTw",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 2345,
+          "clicks": 15,
+          "cost_micros": 5562172882,
+          "cost": 5562.172882,
+          "conversions": 5.427854,
+          "conversions_value": 5.427854
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 클래스 소개 | 엘리멘탈리스트",
+          "date": "2026-07-11",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
+          "asset_url": "https://www.youtube.com/watch?v=cQf6iTbbuTw",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 6407,
+          "clicks": 57,
+          "cost_micros": 21500531087,
+          "cost": 21500.531087,
+          "conversions": 31.398768,
+          "conversions_value": 31.398768
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 클래스 소개 | 엘리멘탈리스트",
+          "date": "2026-07-12",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
+          "asset_url": "https://www.youtube.com/watch?v=cQf6iTbbuTw",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 5791,
+          "clicks": 34,
+          "cost_micros": 24240473016,
+          "cost": 24240.473016,
+          "conversions": 10.062787,
+          "conversions_value": 10.062787
         }
       ],
       "mmp_source": null,
@@ -1770,11 +1914,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=sdE93je8-5o",
       "creative_concept": "P-Ingame-ClassElimentalist-01-SS",
-      "전환": 74,
-      "비용": 80723,
-      "노출수": 24576,
-      "클릭수": 163,
-      "Revenue": 74,
+      "전환": 66,
+      "비용": 133744,
+      "노출수": 23575,
+      "클릭수": 420,
+      "Revenue": 27,
       "hooking_strategy": "캐릭터 외형 소구",
       "USP": "전략/경쟁형(상성/조합)",
       "art_style": "3D 셀셰이딩",
@@ -1810,21 +1954,21 @@
       "creator_intent": "엘리멘탈리스트 클래스의 신화적 외형과 다채로운 원소 전투 스킬을 고퀄리티로 보여주며 게임의 비주얼과 액션성을 과시하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": {
-        "ctr": 25,
-        "cvr": 81,
-        "cpa": 100
+        "ctr": 56,
+        "cvr": 69,
+        "cpa": 56
       },
       "scores": {
-        "total": 87.07,
-        "grade": "최우수",
-        "rank": 2,
-        "conv": 58.62,
-        "cpa": 100.0,
-        "ipm": 89.66,
-        "roas": 100.0
+        "total": 76.72,
+        "grade": "우수",
+        "rank": 10,
+        "conv": 51.72,
+        "cpa": 75.86,
+        "ipm": 82.76,
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:47+09:00",
+      "tagged_at": "2026-07-13T13:53:57+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassElimentalist-01-SS\\260710_VID_P-Ingame-ClassElimentalist-01-SS_V_1080x1920_KR.mp4"
@@ -1838,16 +1982,64 @@
           "date": "2026-07-10",
           "source": "google_ads",
           "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
+          "asset_url": "https://www.youtube.com/watch?v=sdE93je8-5o",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 3447,
+          "clicks": 145,
+          "cost_micros": 26836858829,
+          "cost": 26836.858829,
+          "conversions": 15.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 클래스 소개 | 엘리멘탈리스트",
+          "date": "2026-07-11",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
+          "asset_url": "https://www.youtube.com/watch?v=sdE93je8-5o",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 5071,
+          "clicks": 115,
+          "cost_micros": 40292351891,
+          "cost": 40292.351891,
+          "conversions": 13.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 클래스 소개 | 엘리멘탈리스트",
+          "date": "2026-07-12",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
+          "asset_url": "https://www.youtube.com/watch?v=sdE93je8-5o",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 5024,
+          "clicks": 103,
+          "cost_micros": 37194579524,
+          "cost": 37194.579524,
+          "conversions": 11.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 클래스 소개 | 엘리멘탈리스트",
+          "date": "2026-07-10",
+          "source": "google_ads",
+          "customer_id": "3250895166",
           "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701",
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=sdE93je8-5o",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 5864,
-          "clicks": 39,
-          "cost_micros": 15092581050,
-          "cost": 15092.58105,
-          "conversions": 19.335169,
-          "conversions_value": 19.335169
+          "impressions": 3519,
+          "clicks": 24,
+          "cost_micros": 9530408168,
+          "cost": 9530.408168,
+          "conversions": 13.907315,
+          "conversions_value": 13.907315
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 엘리멘탈리스트",
@@ -1858,12 +2050,12 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=sdE93je8-5o",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 9957,
-          "clicks": 71,
-          "cost_micros": 32120914561,
-          "cost": 32120.914560999998,
-          "conversions": 36.298981,
-          "conversions_value": 36.298981
+          "impressions": 3550,
+          "clicks": 14,
+          "cost_micros": 10620383474,
+          "cost": 10620.383474,
+          "conversions": 4.900213,
+          "conversions_value": 4.900213
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 엘리멘탈리스트",
@@ -1874,12 +2066,12 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=sdE93je8-5o",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 8755,
-          "clicks": 53,
-          "cost_micros": 33509692311,
-          "cost": 33509.692311,
-          "conversions": 17.913434000000002,
-          "conversions_value": 17.913434000000002
+          "impressions": 2964,
+          "clicks": 19,
+          "cost_micros": 9269219295,
+          "cost": 9269.219295,
+          "conversions": 7.850647,
+          "conversions_value": 7.850647
         }
       ],
       "mmp_source": null,
@@ -1949,16 +2141,16 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 32.76,
+        "total": 34.48,
         "grade": "보통",
         "rank": 26,
         "conv": 41.38,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:50+09:00",
+      "tagged_at": "2026-07-13T13:54:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassKnight-01-PV\\260710_VID_P-Ingame-ClassKnight-01-PV_L_1920x1080_KR.mp4"
@@ -2036,16 +2228,16 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 32.76,
+        "total": 34.48,
         "grade": "보통",
         "rank": 27,
         "conv": 41.38,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:50+09:00",
+      "tagged_at": "2026-07-13T13:54:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassKnight-01-SS\\260710_VID_P-Ingame-ClassKnight-01-SS_V_1080x1920_KR.mp4"
@@ -2124,16 +2316,16 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 32.76,
+        "total": 34.48,
         "grade": "보통",
         "rank": 28,
         "conv": 41.38,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:53+09:00",
+      "tagged_at": "2026-07-13T13:54:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassOracle-01-PV\\260710_VID_P-Ingame-ClassOracle-01-PV_L_1920x1080_KR.mp4"
@@ -2213,16 +2405,16 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 32.76,
+        "total": 34.48,
         "grade": "보통",
         "rank": 29,
         "conv": 41.38,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:53+09:00",
+      "tagged_at": "2026-07-13T13:54:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassOracle-01-SS\\260710_VID_P-Ingame-ClassOracle-01-SS_V_1080x1920_KR.mp4"
@@ -2258,11 +2450,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=dy52O9ksFHg",
       "creative_concept": "P-Ingame-ClassRanger-01-PV",
-      "전환": 61,
-      "비용": 75803,
-      "노출수": 26366,
-      "클릭수": 165,
-      "Revenue": 61,
+      "전환": 92,
+      "비용": 161383,
+      "노출수": 27821,
+      "클릭수": 523,
+      "Revenue": 32,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "전략/경쟁형(상성/조합)",
       "art_style": "시네마틱 실사 합성",
@@ -2301,21 +2493,21 @@
       "creator_intent": "고퀄리티 시네마틱과 레인저 클래스의 화려한 전투 연출로 MMORPG의 그래픽과 액션성을 과시하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": {
-        "ctr": 19,
-        "cvr": 62,
-        "cpa": 94
+        "ctr": 62,
+        "cvr": 88,
+        "cpa": 88
       },
       "scores": {
-        "total": 80.17,
+        "total": 87.07,
         "grade": "최우수",
-        "rank": 6,
-        "conv": 48.28,
-        "cpa": 96.55,
-        "ipm": 79.31,
+        "rank": 4,
+        "conv": 65.52,
+        "cpa": 93.1,
+        "ipm": 93.1,
         "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:56+09:00",
+      "tagged_at": "2026-07-13T13:54:07+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassRanger-01-PV\\260710_VID_P-Ingame-ClassRanger-01-PV_L_1920x1080_KR.mp4"
@@ -2329,16 +2521,64 @@
           "date": "2026-07-10",
           "source": "google_ads",
           "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
+          "asset_url": "https://www.youtube.com/watch?v=dy52O9ksFHg",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 2669,
+          "clicks": 110,
+          "cost_micros": 30446356359,
+          "cost": 30446.356359,
+          "conversions": 18.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 클래스 소개 | 레인저",
+          "date": "2026-07-11",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
+          "asset_url": "https://www.youtube.com/watch?v=dy52O9ksFHg",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 4074,
+          "clicks": 184,
+          "cost_micros": 43302628115,
+          "cost": 43302.628115,
+          "conversions": 21.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 클래스 소개 | 레인저",
+          "date": "2026-07-12",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
+          "asset_url": "https://www.youtube.com/watch?v=dy52O9ksFHg",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 4037,
+          "clicks": 129,
+          "cost_micros": 38140270881,
+          "cost": 38140.270881,
+          "conversions": 21.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 클래스 소개 | 레인저",
+          "date": "2026-07-10",
+          "source": "google_ads",
+          "customer_id": "3250895166",
           "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701",
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=dy52O9ksFHg",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 5966,
-          "clicks": 27,
-          "cost_micros": 15988655315,
-          "cost": 15988.655315,
-          "conversions": 13.019273,
-          "conversions_value": 13.019273
+          "impressions": 2980,
+          "clicks": 7,
+          "cost_micros": 7533483906,
+          "cost": 7533.483906,
+          "conversions": 4.077226,
+          "conversions_value": 4.077226
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 레인저",
@@ -2349,12 +2589,12 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=dy52O9ksFHg",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 10523,
-          "clicks": 73,
-          "cost_micros": 28482393308,
-          "cost": 28482.393308,
-          "conversions": 23.941794,
-          "conversions_value": 23.941794
+          "impressions": 7303,
+          "clicks": 46,
+          "cost_micros": 19721671368,
+          "cost": 19721.671368,
+          "conversions": 9.932648,
+          "conversions_value": 9.932648
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 레인저",
@@ -2365,12 +2605,12 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=dy52O9ksFHg",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 9877,
-          "clicks": 65,
-          "cost_micros": 31331857004,
-          "cost": 31331.857004,
-          "conversions": 23.747686,
-          "conversions_value": 23.747686
+          "impressions": 6758,
+          "clicks": 47,
+          "cost_micros": 22238925877,
+          "cost": 22238.925877,
+          "conversions": 17.52976,
+          "conversions_value": 17.52976
         }
       ],
       "mmp_source": null,
@@ -2400,11 +2640,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=ldXg4gqq8tc",
       "creative_concept": "P-Ingame-ClassRanger-01-SS",
-      "전환": 102,
-      "비용": 219279,
-      "노출수": 25855,
-      "클릭수": 727,
-      "Revenue": 0,
+      "전환": 71,
+      "비용": 133698,
+      "노출수": 24400,
+      "클릭수": 369,
+      "Revenue": 29,
       "hooking_strategy": "캐릭터 외형 소구",
       "USP": "전략/경쟁형(상성/조합)",
       "art_style": "시네마틱 실사 합성",
@@ -2444,21 +2684,21 @@
       "creator_intent": "레인저 클래스의 매력적인 외형과 화려한 전투 스킬 연출을 통해 캐릭터에 대한 기대감을 높이려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": {
-        "ctr": 81,
-        "cvr": 94,
-        "cpa": 38
+        "ctr": 31,
+        "cvr": 75,
+        "cpa": 69
       },
       "scores": {
-        "total": 79.31,
-        "grade": "우수",
+        "total": 80.17,
+        "grade": "최우수",
         "rank": 7,
-        "conv": 65.52,
-        "cpa": 65.52,
-        "ipm": 96.55,
-        "roas": 89.66
+        "conv": 55.17,
+        "cpa": 82.76,
+        "ipm": 86.21,
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:56+09:00",
+      "tagged_at": "2026-07-13T13:54:07+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassRanger-01-SS\\260710_VID_P-Ingame-ClassRanger-01-SS_V_1080x1920_KR.mp4"
@@ -2476,11 +2716,11 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://www.youtube.com/watch?v=ldXg4gqq8tc",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 6470,
-          "clicks": 202,
-          "cost_micros": 53012549396,
-          "cost": 53012.549396,
-          "conversions": 28.0,
+          "impressions": 3801,
+          "clicks": 92,
+          "cost_micros": 22566193037,
+          "cost": 22566.193037,
+          "conversions": 10.0,
           "conversions_value": 0.0
         },
         {
@@ -2492,11 +2732,11 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://www.youtube.com/watch?v=ldXg4gqq8tc",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 9778,
-          "clicks": 307,
-          "cost_micros": 85179956341,
-          "cost": 85179.956341,
-          "conversions": 38.0,
+          "impressions": 5704,
+          "clicks": 123,
+          "cost_micros": 41877328226,
+          "cost": 41877.328226,
+          "conversions": 17.0,
           "conversions_value": 0.0
         },
         {
@@ -2508,12 +2748,60 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://www.youtube.com/watch?v=ldXg4gqq8tc",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 9607,
-          "clicks": 218,
-          "cost_micros": 81086391725,
-          "cost": 81086.391725,
-          "conversions": 36.0,
+          "impressions": 5570,
+          "clicks": 89,
+          "cost_micros": 42946120844,
+          "cost": 42946.120844,
+          "conversions": 15.0,
           "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 클래스 소개 | 레인저",
+          "date": "2026-07-10",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
+          "asset_url": "https://www.youtube.com/watch?v=ldXg4gqq8tc",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 2986,
+          "clicks": 20,
+          "cost_micros": 8455171409,
+          "cost": 8455.171409,
+          "conversions": 8.942047,
+          "conversions_value": 8.942047
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 클래스 소개 | 레인저",
+          "date": "2026-07-11",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
+          "asset_url": "https://www.youtube.com/watch?v=ldXg4gqq8tc",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 3220,
+          "clicks": 27,
+          "cost_micros": 8760721940,
+          "cost": 8760.72194,
+          "conversions": 14.00923,
+          "conversions_value": 14.00923
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 클래스 소개 | 레인저",
+          "date": "2026-07-12",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
+          "asset_url": "https://www.youtube.com/watch?v=ldXg4gqq8tc",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 3119,
+          "clicks": 18,
+          "cost_micros": 9092931127,
+          "cost": 9092.931127,
+          "conversions": 6.217926,
+          "conversions_value": 6.217926
         }
       ],
       "mmp_source": null,
@@ -2586,20 +2874,20 @@
       "kpi_reality_check": null,
       "kpi_percentiles": {
         "ctr": 100,
-        "cvr": 88,
-        "cpa": 75
+        "cvr": 94,
+        "cpa": 94
       },
       "scores": {
-        "total": 82.76,
+        "total": 87.93,
         "grade": "최우수",
-        "rank": 4,
+        "rank": 3,
         "conv": 62.07,
-        "cpa": 86.21,
-        "ipm": 93.1,
-        "roas": 89.66
+        "cpa": 96.55,
+        "ipm": 96.55,
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:56+09:00",
+      "tagged_at": "2026-07-13T13:54:07+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\BNR_P-Reward-PreReward03-DA\\원본\\260701_BNR_P-Reward-PreReward03-DA_L_1080x1920_KR.jpg",
@@ -3369,9 +3657,9 @@
       "링크": "https://www.youtube.com/watch?v=7nuthQJtx9c",
       "creative_concept": "P-Slogan-CinematicPV30s-01-PV",
       "전환": 3346,
-      "비용": 6008411,
-      "노출수": 2240551,
-      "클릭수": 17372,
+      "비용": 6008417,
+      "노출수": 2240549,
+      "클릭수": 17373,
       "Revenue": 1054,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "감성 유대형(교감/서사)",
@@ -3410,21 +3698,21 @@
       "creator_intent": "고퀄리티 시네마틱 연출과 매력적인 캐릭터들로 그리스 신화 세계관의 웅장함과 서사적 몰입감을 강조하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": {
-        "ctr": 31,
+        "ctr": 12,
         "cvr": 50,
-        "cpa": 69
+        "cpa": 81
       },
       "scores": {
-        "total": 86.21,
+        "total": 89.66,
         "grade": "최우수",
-        "rank": 3,
+        "rank": 2,
         "conv": 100.0,
-        "cpa": 82.76,
+        "cpa": 89.66,
         "ipm": 72.41,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:58+09:00",
+      "tagged_at": "2026-07-13T13:54:10+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-CinematicPV30s-01-PV\\260701_VID_P-Slogan-CinematicPV30s-01-PV_L_1920x1080_KR.mp4",
@@ -3621,7 +3909,7 @@
           "asset_url": "https://www.youtube.com/watch?v=9Gxgh5g4Pu0",
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 44148,
-          "clicks": 490,
+          "clicks": 491,
           "cost_micros": 140688055636,
           "cost": 140688.055636,
           "conversions": 87.0,
@@ -3924,7 +4212,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=7nuthQJtx9c",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 40954,
+          "impressions": 40953,
           "clicks": 193,
           "cost_micros": 100071668478,
           "cost": 100071.668478,
@@ -4004,7 +4292,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=9Gxgh5g4Pu0",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 61121,
+          "impressions": 61119,
           "clicks": 257,
           "cost_micros": 141535439253,
           "cost": 141535.439253,
@@ -4388,10 +4676,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=9Gxgh5g4Pu0",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 6390,
+          "impressions": 6391,
           "clicks": 42,
-          "cost_micros": 20665858561,
-          "cost": 20665.858561,
+          "cost_micros": 20671916236,
+          "cost": 20671.916236,
           "conversions": 24.496755,
           "conversions_value": 24.496755
         },
@@ -5388,21 +5676,21 @@
       "creator_intent": "그리스 신화 기반의 압도적인 캐릭터 비주얼과 세계관 스케일을 과시하여 사전예약 참여를 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": {
-        "ctr": 62,
+        "ctr": 69,
         "cvr": 0,
-        "cpa": 19
+        "cpa": 6
       },
       "scores": {
         "total": 65.52,
         "grade": "우수",
         "rank": 17,
         "conv": 72.41,
-        "cpa": 55.17,
+        "cpa": 48.28,
         "ipm": 44.83,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:58+09:00",
+      "tagged_at": "2026-07-13T13:54:10+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\BNR_P-Slogan-KeyVisual01-DA\\260701_BNR_P-Slogan-Keyvisual01-DA_L_1024x768_KR.jpg",
@@ -7492,21 +7780,21 @@
       "creator_intent": "그리스 신화 기반의 압도적인 비주얼과 세계관으로 유저의 시선을 사로잡아 게임의 웅장한 스케일을 각인시키려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": {
-        "ctr": 69,
+        "ctr": 75,
         "cvr": 31,
-        "cpa": 12
+        "cpa": 0
       },
       "scores": {
         "total": 68.1,
         "grade": "우수",
         "rank": 16,
         "conv": 68.97,
-        "cpa": 51.72,
+        "cpa": 44.83,
         "ipm": 62.07,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:58+09:00",
+      "tagged_at": "2026-07-13T13:54:10+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\BNR_P-Slogan-KeyVisual02-DA\\260701_BNR_P-Slogan-Keyvisual02-DA_L_1024x768_KR.jpg",
@@ -9373,8 +9661,8 @@
       "링크": "https://www.youtube.com/watch?v=sAf0F7ORrbQ",
       "creative_concept": "P-Slogan-PreregPV15s-01-PV",
       "전환": 2539,
-      "비용": 5078243,
-      "노출수": 2209275,
+      "비용": 5078241,
+      "노출수": 2209273,
       "클릭수": 12115,
       "Revenue": 274,
       "hooking_strategy": "캐릭터 외형 소구",
@@ -9410,21 +9698,21 @@
       "creator_intent": "그리스 신화 기반의 압도적 비주얼과 서사적 몰입감을 강조하여 하드코어 MMORPG 유저들의 기대감을 높이려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": {
-        "ctr": 6,
+        "ctr": 0,
         "cvr": 6,
         "cpa": 62
       },
       "scores": {
-        "total": 77.59,
+        "total": 79.31,
         "grade": "우수",
         "rank": 9,
         "conv": 93.1,
         "cpa": 79.31,
         "ipm": 48.28,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:58+09:00",
+      "tagged_at": "2026-07-13T13:54:10+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV15s-01-PV\\260701_VID_P-Slogan-PreregPV15s-01-PV_L_1920x1080_KR.mp4",
@@ -9972,10 +10260,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=sAf0F7ORrbQ",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 63792,
+          "impressions": 63790,
           "clicks": 151,
-          "cost_micros": 119168139242,
-          "cost": 119168.139242,
+          "cost_micros": 119166618754,
+          "cost": 119166.618754,
           "conversions": 49.0,
           "conversions_value": 0.0
         },
@@ -9990,8 +10278,8 @@
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 65919,
           "clicks": 251,
-          "cost_micros": 121960815155,
-          "cost": 121960.815155,
+          "cost_micros": 121961473001,
+          "cost": 121961.473001,
           "conversions": 43.0,
           "conversions_value": 0.0
         },
@@ -10006,8 +10294,8 @@
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 59176,
           "clicks": 117,
-          "cost_micros": 107069702258,
-          "cost": 107069.702258,
+          "cost_micros": 107069488244,
+          "cost": 107069.488244,
           "conversions": 60.0,
           "conversions_value": 0.0
         },
@@ -11320,11 +11608,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=YfJfrSFAB6w",
       "creative_concept": "P-Slogan-PreregPV15s-02-PV",
-      "전환": 2171,
+      "전환": 2172,
       "비용": 4609228,
-      "노출수": 1878939,
+      "노출수": 1878940,
       "클릭수": 10590,
-      "Revenue": 32,
+      "Revenue": 33,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "감성 유대형(교감/서사)",
       "art_style": "시네마틱 실사 합성",
@@ -11362,21 +11650,21 @@
       "creator_intent": "고퀄리티 시네마틱 연출과 매력적인 캐릭터 비주얼로 그리스 신화 세계관의 웅장함과 서사적 몰입감을 강조하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": {
-        "ctr": 12,
+        "ctr": 6,
         "cvr": 12,
-        "cpa": 44
+        "cpa": 38
       },
       "scores": {
-        "total": 75.0,
+        "total": 75.86,
         "grade": "우수",
         "rank": 11,
         "conv": 89.66,
-        "cpa": 68.97,
+        "cpa": 65.52,
         "ipm": 51.72,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:58+09:00",
+      "tagged_at": "2026-07-13T13:54:10+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV15s-02-PV\\260701_VID_P-Slogan-PreregPV15s-02-PV_L_1920x1080_KR (1).mp4",
@@ -11828,7 +12116,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=YfJfrSFAB6w",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 57499,
+          "impressions": 57500,
           "clicks": 249,
           "cost_micros": 116615278414,
           "cost": 116615.278414,
@@ -12120,8 +12408,8 @@
           "clicks": 36,
           "cost_micros": 6309727555,
           "cost": 6309.727555,
-          "conversions": 4.52511,
-          "conversions_value": 4.52511
+          "conversions": 5.52511,
+          "conversions_value": 5.52511
         },
         {
           "creative_name": "260701_VID_P-Slogan-PreregPV15s-02-PV_V_1080x1920_KR",
@@ -12758,8 +13046,8 @@
       "링크": "https://www.youtube.com/watch?v=Kc-JF2eSmt8",
       "creative_concept": "P-Slogan-PreregPV30s-01-PV",
       "전환": 2542,
-      "비용": 5360268,
-      "노출수": 1865758,
+      "비용": 5360298,
+      "노출수": 1865759,
       "클릭수": 16659,
       "Revenue": 199,
       "hooking_strategy": "비주얼 임팩트",
@@ -12799,21 +13087,21 @@
       "creator_intent": "그리스 신화 기반의 웅장한 세계관과 고퀄리티 시네마틱 연출로 유저들의 감성적 몰입과 기대감을 높이려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": {
-        "ctr": 38,
+        "ctr": 19,
         "cvr": 38,
-        "cpa": 56
+        "cpa": 50
       },
       "scores": {
-        "total": 81.9,
+        "total": 82.76,
         "grade": "최우수",
-        "rank": 5,
+        "rank": 6,
         "conv": 96.55,
-        "cpa": 75.86,
+        "cpa": 72.41,
         "ipm": 65.52,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:59+09:00",
+      "tagged_at": "2026-07-13T13:54:11+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV30s-01-PV\\260701_VID_P-Slogan-PreregPV30s-01-PV_L_1920x1080_KR.mp4",
@@ -13313,7 +13601,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=Kc-JF2eSmt8",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 51096,
+          "impressions": 51095,
           "clicks": 256,
           "cost_micros": 115158789359,
           "cost": 115158.789359,
@@ -13377,10 +13665,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=lCgioDJVeac",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 50149,
+          "impressions": 50151,
           "clicks": 327,
-          "cost_micros": 119264375048,
-          "cost": 119264.375048,
+          "cost_micros": 119293837671,
+          "cost": 119293.837671,
           "conversions": 43.0,
           "conversions_value": 0.0
         },
@@ -13525,8 +13813,8 @@
           "clicks": 172,
           "cost_micros": 72495335573,
           "cost": 72495.335573,
-          "conversions": 59.39329,
-          "conversions_value": 59.39329
+          "conversions": 59.45977,
+          "conversions_value": 59.45977
         },
         {
           "creative_name": "[제우스: 오만의 신] 사전예약 PV | 모두에게 허락된, 가장 거대한 신화",
@@ -14362,9 +14650,9 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=JqGApUxOczY",
       "creative_concept": "P-Slogan-PreregPV30s-02-PV",
-      "전환": 2137,
+      "전환": 2138,
       "비용": 4532898,
-      "노출수": 1462900,
+      "노출수": 1462901,
       "클릭수": 15276,
       "Revenue": 73,
       "hooking_strategy": "비주얼 임팩트",
@@ -14402,21 +14690,21 @@
       "creator_intent": "그리스 신화 기반의 웅장한 세계관과 고퀄리티 캐릭터 비주얼을 통해 MMORPG의 서사적 몰입감을 강조하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": {
-        "ctr": 44,
+        "ctr": 25,
         "cvr": 44,
-        "cpa": 50
+        "cpa": 44
       },
       "scores": {
-        "total": 79.31,
-        "grade": "우수",
+        "total": 80.17,
+        "grade": "최우수",
         "rank": 8,
         "conv": 86.21,
-        "cpa": 72.41,
+        "cpa": 68.97,
         "ipm": 68.97,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:59+09:00",
+      "tagged_at": "2026-07-13T13:54:11+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV30s-02-PV\\260701_VID_P-Slogan-PreregPV30s-02-PV_L_1920x1080_KR.mp4",
@@ -14920,7 +15208,7 @@
           "clicks": 257,
           "cost_micros": 109841020036,
           "cost": 109841.020036,
-          "conversions": 58.0,
+          "conversions": 59.0,
           "conversions_value": 0.0
         },
         {
@@ -15172,10 +15460,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=2Ay0wT3LyAg",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 321,
+          "impressions": 322,
           "clicks": 4,
-          "cost_micros": 985613358,
-          "cost": 985.613358,
+          "cost_micros": 986071824,
+          "cost": 986.071824,
           "conversions": 2.0,
           "conversions_value": 2.0
         },
@@ -15981,9 +16269,9 @@
       "링크": "https://tpc.googlesyndication.com/simgad/15208341403562725288",
       "creative_concept": "P-Slogan-Universe02-DA",
       "전환": 474,
-      "비용": 1207476,
-      "노출수": 384111,
-      "클릭수": 6624,
+      "비용": 1207591,
+      "노출수": 384110,
+      "클릭수": 6625,
       "Revenue": 154,
       "hooking_strategy": "캐릭터 외형 소구",
       "USP": "감성 유대형(교감/서사)",
@@ -16022,21 +16310,21 @@
       "creator_intent": "고퀄리티 3D 캐릭터와 웅장한 세계관 비주얼로 유저의 시선을 사로잡고 게임의 서사적 깊이에 대한 호기심을 유발하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": {
-        "ctr": 56,
+        "ctr": 50,
         "cvr": 19,
-        "cpa": 25
+        "cpa": 12
       },
       "scores": {
         "total": 70.69,
         "grade": "우수",
         "rank": 13,
         "conv": 79.31,
-        "cpa": 58.62,
+        "cpa": 51.72,
         "ipm": 55.17,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:59+09:00",
+      "tagged_at": "2026-07-13T13:54:11+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_1024x768_KR.jpg",
@@ -16606,10 +16894,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://tpc.googlesyndication.com/simgad/15208341403562725288",
           "asset_type": "IMAGE",
-          "impressions": 7259,
-          "clicks": 134,
-          "cost_micros": 24503277389,
-          "cost": 24503.277389,
+          "impressions": 7258,
+          "clicks": 135,
+          "cost_micros": 24617650437,
+          "cost": 24617.650437,
           "conversions": 12.0,
           "conversions_value": 0.0
         },
@@ -17941,21 +18229,21 @@
       "creator_intent": "강렬한 비주얼과 도전적인 슬로건으로 MMORPG의 웅장한 세계관과 전투 경험을 강조하여 코어 유저의 관심을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": {
-        "ctr": 50,
+        "ctr": 44,
         "cvr": 25,
         "cpa": 31
       },
       "scores": {
-        "total": 71.55,
+        "total": 73.28,
         "grade": "우수",
         "rank": 12,
         "conv": 75.86,
         "cpa": 62.07,
         "ipm": 58.62,
-        "roas": 89.66
+        "roas": 96.55
       },
       "marketer_insight": null,
-      "tagged_at": "2026-07-13T13:00:59+09:00",
+      "tagged_at": "2026-07-13T13:54:11+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_1024x768_KR.jpg",
@@ -19933,25 +20221,39 @@
     "cache_hits": 29,
     "cache_misses": 0,
     "failures": 0,
-    "duration_sec": 35.2,
+    "duration_sec": 40.4,
     "prompt_version": "v3.3-2026.06.13-character-split-single-mmorpg-v1",
     "fallback_used": false,
     "carried_forward": 0,
     "score_summary": {
       "graded": 17,
       "grades": {
-        "최우수": 6,
-        "우수": 11
+        "최우수": 8,
+        "우수": 9
       },
       "top": {
         "name": "P-Genre-GamePreview-01-PV",
-        "total": 90.52,
+        "total": 94.83,
         "grade": "최우수"
       }
     },
     "game_context_sha": "bbb760e0385d5662"
   },
   "campaign_canonical": {
+    "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "GA",
+      "product": "DemandGen"
+    },
+    "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACp"
+    },
     "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
@@ -19966,26 +20268,12 @@
       "media": "Meta",
       "product": "Conversion"
     },
-    "Incross_HQ_ZEUS_KR_Criteo_NU-Pre_ALL_Display_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Criteo",
-      "product": "Display"
-    },
     "Incross_HQ_ZEUS_KR-KR_Moloco_NU-Pre_ALL_Conversion_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "전체",
       "media": "Moloco",
       "product": "Conversion"
-    },
-    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "Android",
-      "media": "Meta",
-      "product": "MAIA-CSL"
     },
     "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701": {
       "ua_type": "NU-Pre",
@@ -19994,6 +20282,13 @@
       "media": "Meta",
       "product": "MAIA-CPP"
     },
+    "Incross_HQ_ZEUS_KR_Criteo_NU-Pre_ALL_Display_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Criteo",
+      "product": "Display"
+    },
     "Incross_HQ_ZEUS_KR-KR_MSN_NU-Pre_ALL_Display_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
@@ -20001,27 +20296,20 @@
       "media": "MSN",
       "product": "Display"
     },
-    "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "GA",
-      "product": "DemandGen"
-    },
-    "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701": {
+    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "Android",
-      "media": "GA",
-      "product": "ACp"
+      "media": "Meta",
+      "product": "MAIA-CSL"
     }
   },
   "unmatched_assets": [
     {
       "concept": "ZEUS_BI_제우스오만의신_최종안",
       "source": "google_ads",
-      "impressions": 1865925,
-      "cost": 4371596.58,
+      "impressions": 1865926,
+      "cost": 4371599.91,
       "asset_types": [
         "IMAGE"
       ],
@@ -20056,13 +20344,14 @@
     {
       "concept": "[제우스: 오만의 신] 클래스 소개 | 나이트",
       "source": "google_ads",
-      "impressions": 60124,
-      "cost": 345322.15,
+      "impressions": 60123,
+      "cost": 345318.96,
       "asset_types": [
         "YOUTUBE_VIDEO"
       ],
       "asset_urls": [
-        "https://www.youtube.com/watch?v=Dk-GezaVboE"
+        "https://www.youtube.com/watch?v=Dk-GezaVboE",
+        "https://www.youtube.com/watch?v=QtCY_krRVpw"
       ]
     },
     {
@@ -20074,18 +20363,20 @@
         "YOUTUBE_VIDEO"
       ],
       "asset_urls": [
-        "https://www.youtube.com/watch?v=Yl5Apt_n6D0"
+        "https://www.youtube.com/watch?v=Yl5Apt_n6D0",
+        "https://www.youtube.com/watch?v=vWNe_fQoE_M"
       ]
     },
     {
       "concept": "[제우스: 오만의 신] 클래스 소개 | 아티산",
       "source": "google_ads",
-      "impressions": 49041,
+      "impressions": 49040,
       "cost": 287052.12,
       "asset_types": [
         "YOUTUBE_VIDEO"
       ],
       "asset_urls": [
+        "https://www.youtube.com/watch?v=KLEcX1iq0Ow",
         "https://www.youtube.com/watch?v=NfznwVeVvFY"
       ]
     },
@@ -20098,7 +20389,8 @@
         "YOUTUBE_VIDEO"
       ],
       "asset_urls": [
-        "https://www.youtube.com/watch?v=OEn5XNVhxA0"
+        "https://www.youtube.com/watch?v=OEn5XNVhxA0",
+        "https://www.youtube.com/watch?v=n8t40W9PY3Q"
       ]
     },
     {
@@ -20110,7 +20402,8 @@
         "YOUTUBE_VIDEO"
       ],
       "asset_urls": [
-        "https://www.youtube.com/watch?v=1a05iQ60UhU"
+        "https://www.youtube.com/watch?v=1a05iQ60UhU",
+        "https://www.youtube.com/watch?v=t-x1zioCkiM"
       ]
     },
     {
@@ -20158,7 +20451,7 @@
     {
       "concept": "P-Genre-MMORPG01-DA",
       "source": "google_ads",
-      "impressions": 22117,
+      "impressions": 22115,
       "cost": 144344.67,
       "asset_types": [
         "IMAGE"
