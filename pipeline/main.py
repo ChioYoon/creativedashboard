@@ -219,10 +219,16 @@ _UNMATCHED_GA_TYPES = ("IMAGE", "YOUTUBE_VIDEO")
 
 
 def _build_unmatched_list(acc: dict, source: str) -> list:
-    """미매칭 자산 집계 dict({concept: {impr, cost, types?}}) → impr 내림차순 항목 리스트 (KPI·MMP 공용)."""
+    """미매칭 자산 집계 dict({concept: {impr, cost, types?, urls?}}) → impr 내림차순 항목 리스트 (KPI·MMP 공용).
+
+    asset_urls: concept당 서로 다른 집행 링크의 중복 제거 집합(정렬). 같은 concept 이름에
+    영상이 여러 개면 여기에 여러 URL이 남아 '이름 같은데 영상 다른' 케이스를 드러낸다.
+    MMP 경로는 urls 를 안 담으므로 빈 리스트가 된다.
+    """
     return [
         {"concept": c, "source": source, "impressions": v["impr"],
-         "cost": round(v["cost"], 2), "asset_types": sorted(v.get("types") or [])}
+         "cost": round(v["cost"], 2), "asset_types": sorted(v.get("types") or []),
+         "asset_urls": sorted(v.get("urls") or [])}
         for c, v in sorted(acc.items(), key=lambda x: -x[1]["impr"])
     ]
 
@@ -243,10 +249,13 @@ def build_kpi_index(kpi_rows, candidate_concepts, aliases=None):
         else:
             at = getattr(row, "asset_type", "") or ""
             if (getattr(row, "impressions", 0) or 0) > 0 and at in _UNMATCHED_GA_TYPES:
-                e = unmatched.setdefault(raw, {"impr": 0, "cost": 0.0, "types": set()})
+                e = unmatched.setdefault(raw, {"impr": 0, "cost": 0.0, "types": set(), "urls": set()})
                 e["impr"] += row.impressions or 0
                 e["cost"] += getattr(row, "cost", 0) or 0
                 e["types"].add(at)
+                url = getattr(row, "asset_url", None)
+                if url:
+                    e["urls"].add(url)
     return index, _build_unmatched_list(unmatched, "google_ads")
 
 

@@ -55,6 +55,30 @@ def test_build_kpi_index_alias_and_unmatched():
     assert [u["concept"] for u in unmatched] == ["Rank1"]
     u = unmatched[0]
     assert u["source"] == "google_ads" and u["impressions"] == 100 and u["asset_types"] == ["IMAGE"]
+    assert u["asset_urls"] == []  # asset_url 없는 행 → 빈 리스트
+
+
+def test_build_kpi_index_unmatched_collects_distinct_urls():
+    """같은 concept 이름에 서로 다른 집행 영상 → asset_urls 에 중복 제거된 다중 링크."""
+    from pipeline.main import build_kpi_index
+
+    class K:
+        def __init__(self, name, url=None, at="YOUTUBE_VIDEO", impr=10, cost=5.0):
+            self.creative_name = name; self.asset_type = at
+            self.impressions = impr; self.cost = cost; self.asset_url = url
+
+    yt = "https://www.youtube.com/watch?v="
+    rows = [
+        K("클래스 소개", url=yt + "AAA", impr=30, cost=3.0),
+        K("클래스 소개", url=yt + "BBB", impr=20, cost=2.0),   # 같은 이름·다른 영상
+        K("클래스 소개", url=yt + "AAA", impr=10, cost=1.0),   # 중복 URL → 1건으로 합쳐짐
+        K("단일 영상", url=yt + "CCC", impr=5, cost=0.5),
+    ]
+    _index, unmatched = build_kpi_index(rows, {"기타"}, {})
+    by_concept = {u["concept"]: u for u in unmatched}
+    assert by_concept["클래스 소개"]["asset_urls"] == [yt + "AAA", yt + "BBB"]  # 정렬·중복 제거
+    assert by_concept["클래스 소개"]["impressions"] == 60  # 노출은 3행 합산
+    assert by_concept["단일 영상"]["asset_urls"] == [yt + "CCC"]
 
 
 def test_inject_mmp_alias_and_unmatched():
