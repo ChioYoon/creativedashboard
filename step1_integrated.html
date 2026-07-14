@@ -5797,7 +5797,18 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       }).sort((a, b) => b.imp - a.imp);
       const liveAsOf = _gmax || period;
 
-      return { titleName, period, layer, kpis, topN, typeRows, insightHtml, comparison: comparison || null, narrative: narrative || '', narrativeIsRule: !!narrativeIsRule, detailRows, filterHtml, liveRows, liveAsOf };
+      // 상위/하위 5 심층 — 기존 소재별 AI 필드(강점/약점/가설/변주/인사이트) 재사용, Gemini 호출 없음.
+      const _byScore = withData.slice().sort((a, b) => (b.v.score || 0) - (a.v.score || 0));
+      const _deep = ({ c, v }) => ({
+        name: c.key || '', type: c.유형 || '', thumb: _thumbUrl(c),
+        score: v.score, grade: v.grade || '', conv: v.전환, cpa: v.CPA, imp: v.노출수, cost: v.비용,
+        meta: c.meta || {},
+      });
+      const topDeep = _byScore.slice(0, 5).map(_deep);
+      const _topKeys = new Set(topDeep.map(d => d.name));
+      const bottomDeep = _byScore.slice().reverse().filter(x => !_topKeys.has(x.c.key)).slice(0, 5).map(_deep);
+
+      return { titleName, period, layer, kpis, topN, topDeep, bottomDeep, typeRows, insightHtml, comparison: comparison || null, narrative: narrative || '', narrativeIsRule: !!narrativeIsRule, detailRows, filterHtml, liveRows, liveAsOf };
     }
 
     // ── YouTube 영상 썸네일 URL 추출 (watch / youtu.be / embed / shorts → hqdefault) ──
@@ -5919,6 +5930,28 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <div class="tn"><div class="tnm">${esc(t.name)}</div><div class="tms">전환 ${num(t.conv)} · CPA ${won(t.cpa)} · 점수 ${sc(t.score)}</div></div>
           <span class="gb" style="${gradeStyle[t.grade] || gradeStyle['보통']}">${esc(t.grade || '—')}</span>
         </div>`).join('') : '<div class="empty">표시할 소재가 없습니다.</div>';
+      // 상/하위 심층 카드 — 소재별 AI 필드(자체 완결 인라인, 모달 CSS 비의존)
+      const dcGrp = (label, items, evid, evPrefix) => {
+        if (!Array.isArray(items) || !items.length) return '';
+        const lis = items.map((it, i) => {
+          const ev = ((evid && evid[i]) || '').trim();
+          return `<li>${esc(it)}${ev ? `<div class="ev">${esc((evPrefix || '') + ev)}</div>` : ''}</li>`;
+        }).join('');
+        return `<div class="dcg"><div class="dcgl">${esc(label)}</div><ul>${lis}</ul></div>`;
+      };
+      const deepCard = (d, rank) => {
+        const m = d.meta || {};
+        const insight = (m.one_line_insight || m.marketer_insight || '').trim();
+        const reality = (m.kpi_reality_check || '').trim();
+        const insHtml = `${insight ? `<div class="dci">${esc(insight)}</div>` : ''}${reality ? `<div class="dcr">${esc(reality)}</div>` : ''}`;
+        const sig = dcGrp('강점', m.strengths, m.strength_evidence)
+          + dcGrp('약점', m.weaknesses, m.weakness_evidence)
+          + dcGrp('가설', m.hypothesis, null)
+          + dcGrp('차주 변주', m.test_ideas, m.improvement_actions, '→ ');
+        return `<div class="dc"><div class="dch">${creativeThumbHtml(d.thumb, d.type, 40, 40)}<div class="dcn">#${rank} ${esc(d.name)}<div class="dck">점수 ${sc(d.score)} · 전환 ${num(d.conv)} · CPA ${won(d.cpa)} · 노출 ${num(d.imp)} · 비용 ${won(d.cost)}</div></div><span class="gb" style="${gradeStyle[d.grade] || gradeStyle['보통']}">${esc(d.grade || '—')}</span></div>${insHtml}${sig || '<div class="dcr" style="color:#9ca3af;">추가 분석 없음</div>'}</div>`;
+      };
+      const topDeepHtml = (data.topDeep || []).length ? data.topDeep.map((d, i) => deepCard(d, i + 1)).join('') : '<div class="empty">표시할 소재가 없습니다.</div>';
+      const bottomDeepHtml = (data.bottomDeep || []).length ? data.bottomDeep.map((d, i) => deepCard(d, i + 1)).join('') : '<div class="empty">표시할 소재가 없습니다.</div>';
       const typeHtml = data.typeRows.map(r =>
         `<tr><td>${esc(r.type)}</td><td class="r">${num(r.count)}</td><td class="r">${sc(r.avgScore)}</td></tr>`).join('');
       const insightBlock = data.insightHtml
@@ -5990,6 +6023,12 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
   .tabbtn.active { color:#DC2828; border-bottom-color:#DC2828; }
   .tabpanel { display:none; } .tabpanel.active { display:block; }
   .livehead { font-size:13px; color:#191919; margin-bottom:12px; }
+  .dc { background:#faf9f7; border:1px solid #E4E1DC; border-radius:8px; padding:12px 14px; margin-bottom:10px; }
+  .dch { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .dcn { flex:1; min-width:0; font-size:13px; font-weight:700; } .dck { font-size:11px; color:#666; font-weight:400; margin-top:2px; }
+  .dci { font-size:12px; color:#191919; line-height:1.5; margin:6px 0; font-weight:600; } .dcr { font-size:12px; color:#666; line-height:1.5; }
+  .dcg { margin-top:8px; } .dcgl { font-size:11px; font-weight:700; color:#4C4C4C; margin-bottom:3px; }
+  .dcg ul { margin:0; padding:0; } .dcg li { list-style:none; font-size:12px; color:#191919; line-height:1.45; margin-bottom:5px; } .dcg .ev { font-size:11px; color:#666; margin-top:1px; }
   @media print { body { background:#fff; } .toolbar,.tabbar { display:none; } .card { box-shadow:none; padding:0; } .wrap { padding:0; } .tabpanel { display:block !important; } }
 </style></head><body>
 <div class="wrap">
@@ -6011,6 +6050,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       return `<div class="sec"><div class="st">인사이트 ${chip}</div>${insightSectionsHtml(data.narrative)}</div>`;
     })()}
     <div class="sec"><div class="st">Top 성과 소재</div>${topHtml}</div>
+    <div class="sec"><div class="st">상위 5 심층 분석 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(강점·인사이트)</span></div>${topDeepHtml}</div>
+    <div class="sec"><div class="st">하위 5 심층 분석 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(약점·개선 방향)</span></div>${bottomDeepHtml}</div>
     ${moverBlock}
     <div class="sec"><div class="st">유형별 요약</div><table><thead><tr><th>유형</th><th class="r">소재 수</th><th class="r">평균 점수</th></tr></thead><tbody>${typeHtml}</tbody></table></div>
     ${filterBlock}
