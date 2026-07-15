@@ -12,17 +12,20 @@ from __future__ import annotations
 from typing import Optional
 
 from .scoring import _assign_rank_with_ties
+from .campaign_canonical import campaign_ua_type
 
 
 def aggregate_rows_total(rows: list) -> dict:
     """평탄 CreativeMmpDaily 리스트 전체를 1개 집계로 합산 (creative_name 무시).
 
     한 concept(폴더명)의 모든 변형(L/S/V·채널·일자)을 하나로 합칠 때 사용 — main.py inject.
-    Returns: {impressions, clicks, cost, installs, retained_d1, revenue_d7, conversions, channels:set}
+    conv_ua: ua_type별 전환 — Σ(NU-Pre 행 conversions=등록) + Σ(NU 행 retained_d1=D1잔존).
+    Returns: {impressions, clicks, cost, installs, retained_d1, revenue_d7, conversions, conv_ua, channels:set}
     """
     total = {
         "impressions": 0, "clicks": 0, "cost": 0,
-        "installs": 0, "retained_d1": 0, "revenue_d7": 0, "conversions": 0, "channels": set(),
+        "installs": 0, "retained_d1": 0, "revenue_d7": 0, "conversions": 0, "conv_ua": 0,
+        "channels": set(),
     }
     for d in rows:
         total["impressions"] += d.impressions
@@ -32,6 +35,8 @@ def aggregate_rows_total(rows: list) -> dict:
         total["retained_d1"] += d.retained_d1
         total["revenue_d7"] += d.revenue_d7
         total["conversions"] += d.conversions
+        ua = campaign_ua_type(getattr(d, "campaign_name", "") or "")
+        total["conv_ua"] += d.conversions if ua == "NU-Pre" else d.retained_d1 if ua == "NU" else 0
         if d.channel:
             total["channels"].add(d.channel)
     return total

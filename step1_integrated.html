@@ -2201,7 +2201,8 @@ function mmpFmt(m) {
 function mmpStdMetrics(m) {
   const q = m.mmp_quality_score;
   const isReg = !!(q && q.convBasis === '사전예약');
-  const inst = Number(isReg ? (m.mmp_conversions || 0) : (m.mmp_installs || 0)) || 0;
+  // 전환: ua_type별(mmp_conv_ua = NU-Pre 등록+NU D1잔존) 우선, 구 데이터 폴백=convBasis 분기
+  const inst = Number((m.mmp_conv_ua != null) ? m.mmp_conv_ua : (isReg ? (m.mmp_conversions || 0) : (m.mmp_installs || 0))) || 0;
   const cost = Number(m.mmp_cost) || 0, imp = Number(m.mmp_impressions) || 0,
         clk = Number(m.mmp_clicks) || 0, rev = Number(m.mmp_revenue) || 0;
   return { inst, cost, imp, clk, rev, isReg,
@@ -3081,7 +3082,7 @@ function aggregateCreativeData(rows, groupBy) {
         'one_line_insight','marketer_insight','improvement_actions','kpi_reality_check',
         'strength_evidence','weakness_evidence','creative_concept','사이즈','언어',
         'mmp_daily','mmp_channels','mmp_d1_ipm','mmp_d1_cpi','mmp_d7_roas',
-        'mmp_d1_retention','mmp_installs','mmp_conversions','mmp_retained_d1','mmp_cost','mmp_revenue',
+        'mmp_d1_retention','mmp_installs','mmp_conversions','mmp_conv_ua','mmp_impressions','mmp_retained_d1','mmp_cost','mmp_revenue',
         'mmp_currency','mmp_fx_rate','source_files'];
       creativeMap.set(key, {
         소재명: row['소재명'] || '', 파일명: row['파일명'] || '',
@@ -4713,7 +4714,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
               if (isReg ? (a.imp <= 0 && a.conversions <= 0) : (a.imp <= 0 && a.installs <= 0)) {
                 c.meta.mmp_quality_score = null;
                 c.meta.mmp_d1_ipm = null; c.meta.mmp_d1_cpi = null; c.meta.mmp_d7_roas = null; c.meta.mmp_d1_retention = null;
-                c.meta.mmp_installs = 0; c.meta.mmp_conversions = 0; c.meta.mmp_retained_d1 = 0; c.meta.mmp_impressions = 0; c.meta.mmp_clicks = 0;
+                c.meta.mmp_installs = 0; c.meta.mmp_conversions = 0; c.meta.mmp_conv_ua = 0; c.meta.mmp_retained_d1 = 0; c.meta.mmp_impressions = 0; c.meta.mmp_clicks = 0;
                 c.meta.mmp_cost = 0; c.meta.mmp_revenue = 0;
                 return;
               }

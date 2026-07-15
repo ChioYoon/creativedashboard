@@ -451,6 +451,8 @@ class CreativeRecord(BaseModel):
     mmp_quality_score: Optional[dict] = Field(None, description="4지표 rank 종합 {total,grade,rank,...} (phase-2)")
     mmp_installs: Optional[int] = None
     mmp_conversions: Optional[int] = None   # 등록 기준 타이틀의 MMP 전환수(사전예약). 설치 기준이면 None.
+    mmp_conv_ua: Optional[int] = None       # 전환(ua_type별): Σ(NU-Pre 등록) + Σ(NU D1잔존). 점수·표시 기준.
+    mmp_impressions: Optional[int] = None   # MMP 노출 합 (step2 CPA/IPM 표시 산출용)
     mmp_retained_d1: Optional[int] = None
     mmp_cost: Optional[int] = None      # 비용 (mmp_currency 기준 — 환율 변환 후)
     mmp_revenue: Optional[int] = None   # D7 누적매출 합 (mmp_currency 기준)

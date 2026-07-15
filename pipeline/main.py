@@ -327,27 +327,34 @@ def inject_mmp_into_records(records, mmp_daily, source_name="airbridge", currenc
         r.mmp_retained_d1 = a["retained_d1"]
         r.mmp_cost = a["cost"]
         r.mmp_revenue = a["revenue_d7"]
+        r.mmp_conv_ua = a["conv_ua"]
+        r.mmp_impressions = a["impressions"]
         r.mmp_daily = rows
 
-    # phase-2: 4지표 보유 소재들로 품질 종합점수 산출 후 주입 (대시보드 동일: 전환·D1 CPI·D1 IPM·D7 ROAS)
-    if conversion_basis == "registration":
-        scored_metrics = {
-            r.creative_id: {"conversions": r.mmp_conversions or 0,
-                            "d1_cpi": r.mmp_d1_cpi, "d1_ipm": r.mmp_d1_ipm}
-            for r in records if r.mmp_source
-        }
-    else:
-        scored_metrics = {
-            r.creative_id: {"installs": r.mmp_installs, "d1_cpi": r.mmp_d1_cpi,
-                            "d1_ipm": r.mmp_d1_ipm, "d7_roas": r.mmp_d7_roas}
-            for r in records if r.mmp_source
+    # phase-2: 품질 종합점수 — 전환(convUa: NU-Pre 등록+NU D1잔존) 4축(전환↑·CPA↓·IPM↑·D7 ROAS↑) rank.
+    # step1 클라 재계산(scoreMmpItems '설치' 4축 + convUa)과 동일 기준. convBasis 는 라벨로만 유지.
+    scored_metrics = {}
+    for r in records:
+        if not r.mmp_source:
+            continue
+        conv = r.mmp_conv_ua or 0
+        imp = r.mmp_impressions or 0
+        cost = r.mmp_cost or 0
+        scored_metrics[r.creative_id] = {
+            "installs": conv,
+            "d1_cpi": (cost / conv) if (conv > 0 and cost > 0) else None,
+            "d1_ipm": (conv / imp * 1000) if imp > 0 else None,
+            "d7_roas": r.mmp_d7_roas,
         }
     if scored_metrics:
         from .mmp_metrics import compute_mmp_quality_scores
-        qscores = compute_mmp_quality_scores(scored_metrics, conversion_basis)
+        qscores = compute_mmp_quality_scores(scored_metrics, "install")
+        label = "사전예약" if conversion_basis == "registration" else "설치"
         for r in records:
             if r.creative_id in qscores:
-                r.mmp_quality_score = qscores[r.creative_id]
+                q = qscores[r.creative_id]
+                q["convBasis"] = label
+                r.mmp_quality_score = q
 
     # 미매칭(활동O·미조인) 수집 — 별칭 매핑 대상
     unmatched: dict = {}
