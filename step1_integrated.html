@@ -21,7 +21,7 @@
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
   <!-- 데이터 소스 추상화 (v5.2 Stage 1) — CSV/JSON 단일 진입점, 타이틀 격리 -->
-  <script src="js/layer-metrics.js?v=a4ec6d29"></script>
+  <script src="js/layer-metrics.js?v=5107e0da"></script>
   <script src="js/data-source.js?v=80beadf3"></script>
   <!-- 캐노니컬(캠페인 유형) 필터 해석기 — 라이브 cv 미상-버킷 의미론 정합 -->
   <script src="js/canonical-filter.js?v=cbc66317"></script>
@@ -1673,15 +1673,15 @@
                 <th id="thM2" class="has-tooltip" data-sortkey="CPA" data-sorttype="num" data-tip="비용 ÷ 전환수 · 낮을수록 효율적">CPA <span class="th-info">?</span></th>
                 <th id="thM3" class="has-tooltip" data-sortkey="IPM" data-sorttype="num" data-tip="(전환수 ÷ 노출수) × 1,000 · 높을수록 우수">IPM <span class="th-info">?</span></th>
                 <th id="thM4" class="has-tooltip col-roas" data-sortkey="ROAS" data-sorttype="num" data-tip="(매출 ÷ 비용) × 100% · Revenue 컬럼 없으면 —">ROAS <span class="th-info">?</span></th>
-                <th class="num has-tooltip col-revenue" data-sortkey="매출" data-sorttype="num" data-tip="매출 · Google Ads=Revenue / MMP=D7 LTV(D0~D7 누적)">매출 <span class="th-info">?</span></th>
+                <th id="thRev" class="num has-tooltip col-revenue" data-sortkey="매출" data-sorttype="num" data-tip="매출 · Google Ads=Revenue / MMP=D7 LTV(D0~D7 누적)">매출 <span class="th-info">?</span></th>
                 <th class="num has-tooltip" data-sortkey="비용" data-sorttype="num" data-tip="광고 비용">비용 <span class="th-info">?</span></th>
                 <th class="num has-tooltip" data-sortkey="노출수" data-sorttype="num" data-tip="노출수">노출수 <span class="th-info">?</span></th>
                 <th class="num has-tooltip" data-sortkey="클릭수" data-sorttype="num" data-tip="클릭수">클릭수 <span class="th-info">?</span></th>
                 <th class="num has-tooltip" data-sortkey="CTR" data-sorttype="num" data-tip="클릭수 ÷ 노출수 × 100%">CTR <span class="th-info">?</span></th>
                 <th id="thScore" class="has-tooltip" data-sortkey="TotalScore" data-sorttype="num" data-tip="전환수·CPA·IPM·ROAS 점수의 가중치 합산 (Google Ads 기준)">총점 <span class="th-info">?</span></th>
                 <th class="has-tooltip" data-sortkey="TotalScore" data-sorttype="num" data-tip="총점 기준 등급 · 최우수≥80 / 우수≥60 / 양호≥40">등급 <span class="th-info">?</span></th>
-                <th class="col-pctile has-tooltip" data-tip="풀 대비 백분위 · CTR/CVR/CPA · Google Ads KPI 보유 소재">성과 <span class="th-info">?</span></th>
-                <th class="col-mmp has-tooltip" data-sortkey="__mmpscore" data-sorttype="num" data-tip="소재 품질(MMP) · D1 IPM·D1 CPI·D7 ROAS·D1 잔존 종합">MMP 점수 <span class="th-info">?</span></th>
+                <th id="thPctile" class="col-pctile has-tooltip" data-tip="풀 대비 백분위 · CTR/CVR/CPA · Google Ads KPI 보유 소재">성과 <span class="th-info">?</span></th>
+                <th id="thMmpCol" class="col-mmp has-tooltip" data-sortkey="__mmpscore" data-sorttype="num" data-tip="소재 품질(MMP) · D1 IPM·D1 CPI·D7 ROAS·D1 잔존 종합">MMP 점수 <span class="th-info">?</span></th>
               </tr>
             </thead>
             <tbody id="tableBody">
@@ -2269,6 +2269,14 @@ function mmpCellHtml(meta) {
   return `<span class="mmp-score-cell" style="${style}" title="${escapeHtml(tip)}">${qs.total} ${escapeHtml(qs.grade)}</span>`;
 }
 
+// col-mmp 컬럼(반대 레이어 점수) — MMP 레이어일 때 이 컬럼에 Google Ads 총점+등급 표시.
+function adsScoreCellHtml(c) {
+  const hasAds = c && c._ads && c._ads.imp > 0;
+  if (!hasAds || c.TotalScore == null) return '<span style="color:#d1d5db;font-size:11px;">—</span>';
+  const style = MMP_GRADE_STYLE[c.등급] || 'background:#f3f4f6;color:#374151;';
+  return `<span class="mmp-score-cell" style="${style}" title="Google Ads 총점·등급">${c.TotalScore.toFixed(1)} ${escapeHtml(c.등급)}</span>`;
+}
+
 // Stage 8: 분석 레이어 전환 — Google Ads 기준 / MMP 기준
 window.currentAnalysisLayer = 'ads';  // 기본값
 
@@ -2285,8 +2293,12 @@ function setLayerHeaders(layer) {
   set('thM2', L.m2, L.tip2);
   set('thM3', L.m3, L.tip3);
   set('thM4', L.m4, L.tip4);
-  // ② 총점 헤더는 레이어 무관 항상 '총점 (Google Ads 기준)' 고정 — layerLabels 상대변경 안 함(값도 항상 GA)
-  // set('thScore', L.score, L.tipScore);
+  const mmp = layer === 'mmp';
+  // 총점=레이어 기준(ads=Google Ads / mmp=MMP 품질), col-mmp 컬럼=반대 레이어 점수, 매출=MMP면 D7.
+  set('thScore', mmp ? '품질점수' : '총점', mmp ? 'MMP 품질 총점 · 전환(NU-Pre 등록+NU D1잔존)·CPA·IPM·D7 ROAS rank' : L.tipScore);
+  set('thRev', mmp ? 'D7 매출' : '매출', mmp ? 'D7 LTV 매출 (D0~D7 누적)' : '매출 · Google Ads=Revenue');
+  set('thMmpCol', mmp ? 'Google Ads 점수' : 'MMP 점수', mmp ? 'Google Ads 총점·등급' : '소재 품질(MMP) · D1 IPM·D1 CPI·D7 ROAS·D1 잔존');
+  set('thPctile', '성과', mmp ? '풀 대비 백분위 · CTR/CVR/CPA · MMP 기준' : '풀 대비 백분위 · CTR/CVR/CPA · Google Ads KPI 보유 소재');
 }
 
 // creativeLayerView → js/layer-metrics.js (공용 모듈)
@@ -2301,6 +2313,14 @@ function aggGadsWindow(kpiDaily, win, gcamps) {
     a.conv += k.conversions || 0; a.rev += k.conversions_value || 0; return a;
   }, { imp: 0, clk: 0, cost: 0, conv: 0, rev: 0 });
 }
+// campaign_ua_type JS 이식 (campaign_canonical.py) — '_' 세그 정확매칭, NU-Pre 우선. 없으면 ''.
+const _MMP_UA_TYPES = ['NU-Pre', 'NU', 'RT', 'Boosting'];
+function mmpUaType(name) {
+  if (!name) return '';
+  const segs = new Set(String(name).split('_'));
+  for (const ua of _MMP_UA_TYPES) if (segs.has(ua)) return ua;
+  return '';
+}
 function aggMmpWindow(mmpDaily, win, mcamps) {
   const inWin = d => !win || (d && d >= win.start && d <= win.end);
   const inCamp = x => !mcamps || mcamps.includes(x.campaign_name || x.channel);
@@ -2308,9 +2328,12 @@ function aggMmpWindow(mmpDaily, win, mcamps) {
     if (!inWin(x.date) || !inCamp(x)) return a;
     a.imp += x.impressions || 0; a.clk += x.clicks || 0; a.cost += x.cost || 0;
     a.installs += x.installs || 0; a.retained_d1 += x.retained_d1 || 0; a.revenue_d7 += x.revenue_d7 || 0;
-    a.conversions += x.conversions || 0;   // 웹 사전예약 등록수(사전예약 기준 타이틀) — 재계산 시 등록 3축 점수에 사용
+    a.conversions += x.conversions || 0;   // 웹 사전예약 등록수(사전예약 기준 타이틀)
+    // 전환(ua_type별): NU-Pre=등록(conversions), NU=D1잔존(retained_d1), 그 외=0
+    const ua = mmpUaType(x.campaign_name);
+    a.convUa += ua === 'NU-Pre' ? (x.conversions || 0) : ua === 'NU' ? (x.retained_d1 || 0) : 0;
     if (x.channel) a.channels.add(x.channel); return a;
-  }, { imp: 0, clk: 0, cost: 0, installs: 0, retained_d1: 0, revenue_d7: 0, conversions: 0, channels: new Set() });
+  }, { imp: 0, clk: 0, cost: 0, installs: 0, retained_d1: 0, revenue_d7: 0, conversions: 0, convUa: 0, channels: new Set() });
 }
 // mmpQualityMetrics → js/layer-metrics.js (공용 모듈)
 
@@ -2353,20 +2376,19 @@ function buildFatiguePeriodScores(creatives, winStart, winEnd, layer, weights, g
   if (layer === 'mmp') {
     // 타이틀 전환 기준(파이프라인 convBasis 파생): 등록 타이틀이면 사전예약(등록) 3축.
     const convBasis = (creatives || []).some(c => c.meta && c.meta.mmp_quality_score && c.meta.mmp_quality_score.convBasis === '사전예약') ? '사전예약' : '설치';
-    const isReg = convBasis === '사전예약';
     const items = [];
     (creatives || []).forEach(c => {
       const md = (c.meta && c.meta.mmp_source && Array.isArray(c.meta.mmp_daily)) ? c.meta.mmp_daily : [];
       if (!md.length) return;
       const a = aggMmpWindow(md, win, mcamps);
-      if (isReg ? (a.imp <= 0 && a.conversions <= 0) : (a.imp <= 0 && a.installs <= 0)) return;
-      const { d1_ipm, d1_cpi, d7_roas } = mmpQualityMetrics(a, convBasis);
-      const conv = isReg ? a.conversions : a.installs;
-      // 피로도 CPA(=D1 CPI / 등록 CPA): null 이면 비용/전환으로 폴백 — 0(=최저=신선) 오분류 방지
-      const fatigueCpa = (d1_cpi != null) ? d1_cpi : (conv > 0 ? a.cost / conv : 0);
-      items.push({ key: c.key, 유형: c.유형, 이미지링크: c.이미지링크, meta: c.meta, 전환: conv, CPA: fatigueCpa, installs: a.installs, conversions: a.conversions, d1_cpi, d1_ipm, d7_roas });
+      if (a.imp <= 0 && a.convUa <= 0) return;
+      const { d7_roas } = mmpQualityMetrics(a, convBasis);   // D7 ROAS 재사용
+      const conv = a.convUa;   // 전환: NU-Pre 등록 + NU D1잔존 (convUa 통일)
+      const cpaUa = (conv > 0 && a.cost > 0) ? a.cost / conv : null;
+      const ipmUa = a.imp > 0 ? conv / a.imp * 1000 : null;
+      items.push({ key: c.key, 유형: c.유형, 이미지링크: c.이미지링크, meta: c.meta, 전환: conv, CPA: cpaUa != null ? cpaUa : 0, installs: conv, d1_cpi: cpaUa, d1_ipm: ipmUa, d7_roas });
     });
-    const scores = scoreMmpItems(items, convBasis);
+    const scores = scoreMmpItems(items, '설치');   // convUa 4축(전환↑·CPA↓·IPM↑·D7ROAS↑)
     items.forEach((it, i) => { it.TotalScore = scores[i].total; it.등급 = scores[i].grade; });
     const ranked = [...items].sort((a, b) => b.TotalScore - a.TotalScore);
     ranked.forEach((it, i) => it.Rank = i + 1);
@@ -4705,14 +4727,32 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
               c.meta.mmp_impressions = a.imp; c.meta.mmp_clicks = a.clk;
               c.meta.mmp_cost = a.cost; c.meta.mmp_revenue = a.revenue_d7;
               c.meta.mmp_channels = Array.from(a.channels).sort();
-              mmpItems.push({ c, installs: a.installs, conversions: a.conversions, d1_ipm, d1_cpi, d1_ret, d7_roas });
+              // 새 전환 정의(ua_type별: NU-Pre 등록 + NU D1잔존) — MMP 레이어 표시·점수 기준
+              c.meta.mmp_conv_ua = a.convUa;
+              const cpaUa = (a.convUa > 0 && a.cost > 0) ? a.cost / a.convUa : null;
+              const ipmUa = a.imp > 0 ? a.convUa / a.imp * 1000 : null;
+              mmpItems.push({ c, installs: a.convUa, d1_cpi: cpaUa, d1_ipm: ipmUa, d7_roas,
+                _imp: a.imp, _clk: a.clk, _cost: a.cost, _conv: a.convUa });
             });
 
             const n = mmpItems.length;
             if (n > 0) {
-              const scores = scoreMmpItems(mmpItems, convBasis);          // 공용 스코어러 (파이프라인 동일 · 등록 타이틀은 사전예약 3축)
+              // 총점 = convUa 4축(전환↑·CPA↓·IPM↑·D7ROAS↑) — scoreMmpItems 설치 4축 재사용
+              const scores = scoreMmpItems(mmpItems, '설치');
               mmpItems.forEach((it, i) => { it.c.meta.mmp_quality_score = scores[i]; });
-              console.log(`🎯 MMP 품질점수 ${n}개 소재 기간 재계산 (${convBasis} · ${win ? win.start + '~' + win.end : '전체'})`);
+              // 성과 MMP 백분위(CTR/CVR/CPA) — kpi_percentiles 동일 convention: goodness 백분위(0-100, 높을수록 우수, CPA는 낮을수록 우수 반영)
+              const mmpPct = (getV, higherBetter) => {
+                const vals = mmpItems.map(getV).filter(v => v != null);
+                const nn = vals.length;
+                return (v) => { if (v == null || !nn) return null; const better = higherBetter ? vals.filter(x => x < v).length : vals.filter(x => x > v).length; return Math.round(better / nn * 100); };
+              };
+              const ctrOf = it => it._imp > 0 ? it._clk / it._imp * 100 : null;
+              const cvrOf = it => it._clk > 0 ? it._conv / it._clk * 100 : null;
+              const pCtr = mmpPct(ctrOf, true), pCvr = mmpPct(cvrOf, true), pCpa = mmpPct(it => it.d1_cpi, false);
+              mmpItems.forEach(it => {
+                it.c.meta.mmp_percentiles = { ctr: pCtr(ctrOf(it)), cvr: pCvr(cvrOf(it)), cpa: pCpa(it.d1_cpi) };
+              });
+              console.log(`🎯 MMP 품질점수 ${n}개 소재 기간 재계산 (convUa 기준 · ${win ? win.start + '~' + win.end : '전체'})`);
             }
           }
 
@@ -5311,10 +5351,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           mCtr = (c.CTR != null) ? c.CTR.toFixed(2) + '%' : dash;
         }
 
-        // ② 총점·등급은 레이어 무관 항상 Google Ads 기준 (MMP 점수는 별도 col-mmp 컬럼)
-        const _hasAdsScore = c._ads && c._ads.imp > 0;
-        scoreCell = _hasAdsScore ? c.TotalScore.toFixed(1) : dash;
-        gradeCell = _hasAdsScore ? `<span class="badge grade-${c.등급}">${c.등급}</span>` : dash;
+        // 총점·등급은 레이어 기준(ads=Google Ads / mmp=MMP 품질) — 위 브랜치서 이미 세팅됨. 반대 레이어 점수는 col-mmp 컬럼.
 
         tr.innerHTML = `
           <td style="text-align:center;"><input type="checkbox" class="row-select" data-rowkey="${escapeHtml(c.key)}" ${_selSet.has(c.key) ? 'checked' : ''}></td>
@@ -5338,8 +5375,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td style="text-align: right;">${mCtr}</td>
           <td class="ds-cell-key" style="text-align: right; font-size: 14px;">${scoreCell}</td>
           <td>${gradeCell}</td>
-          <td class="col-pctile" style="text-align:left;">${pctileCellHtml(c.meta && c.meta.kpi_percentiles)}</td>
-          <td class="col-mmp" style="text-align:center;">${mmpCellHtml(c.meta)}</td>
+          <td class="col-pctile" style="text-align:left;">${pctileCellHtml(c.meta && ((window.currentAnalysisLayer === 'mmp') ? c.meta.mmp_percentiles : c.meta.kpi_percentiles))}</td>
+          <td class="col-mmp" style="text-align:center;">${(window.currentAnalysisLayer === 'mmp') ? adsScoreCellHtml(c) : mmpCellHtml(c.meta)}</td>
         `;
 
         tbody.appendChild(tr);
