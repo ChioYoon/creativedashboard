@@ -5640,7 +5640,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       L.push('당신은 컴투스 R마케팅팀의 UA 소재 분석가입니다. 아래 데이터로 주간/월간 보고에 넣을 코멘트를 작성하세요.');
       L.push('작성 규칙: (1) 각 불릿은 핵심 판단을 명사형/음슴체로 먼저 쓰고, 데이터 근거가 있으면 " → " 뒤에 수치·태그·소재명으로 맥락이 전달되게 한 문장 덧붙임(근거 없으면 " → " 생략, 억지 금지). (2) 아래 섹션을 순서대로 사용하고, 섹션 제목 줄은 "■ "로 시작. (3) 각 섹션 2~4줄, 불릿 줄은 " - "로 시작. (4) 마크다운(**, ##)·서론·맺음말 금지, 섹션 제목과 불릿 줄만 출력. (5) 데이터 근거로만 작성, 과장 금지, 태그 인용 시 작은따옴표.');
       L.push('섹션(제목 그대로 사용, 순서 유지): ■ 종합 인사이트 / ■ 개선 포인트·액션');
-      L.push('섹션 내용(중복 금지 — 같은 사실은 한 섹션에서만 언급): ■ 종합 인사이트 = 이번 기간 핵심 KPI와 가장 큰 변화(1~2가지), 우수 소재군(유형별 평균)과 잘 작동한 요소(lift 높은 강점 태그)를 하나의 흐름으로 통합해 서술. ■ 개선 포인트·액션 = 저효율 소재·공통 약점 태그와 다음 액션.');
+      L.push('섹션 내용(중복 금지): ■ 종합 인사이트 = (a) 전 기간 대비 평균 점수 변화가 있으면 원인을 반드시 분해 — 아래 [평균점수 분해] 수치로 "지속 소재의 점수 하락/상승"인지 "신규 소재 편입에 따른 희석/상승"인지 주원인을 판단해 서술. (b) 우수 소재군 특징 = 아래 [상위5 강점 심층]의 공통 패턴을 근거로, 단순 태그 나열 말고 상위 소재들이 공유하는 특징을 문장으로 통합. (c) 유형별 평균 격차. ■ 개선 포인트·액션 = 아래 [하위5 약점 심층]의 공통 약점 패턴 + 데이터 기반 다음 액션.');
+      L.push('금지: 전환수 증감(증가·감소)은 Google Ads 단일 소스 지표이므로 인사이트·판단 근거로 쓰지 말 것. 총 전환 수치 자체를 인사이트 불릿으로 만들지 말 것.');
       if (note) {
         L.push('마케터 의견 처리(검증 결합 + 계획 반영): [마케터 의견]을 (A)성과 관찰·판단 과 (B)향후 계획·액션 으로 구분해 처리.');
         L.push('(A) 관찰·판단(예: 영상이 배너보다 우수): "■ 종합 인사이트" 불릿에 자연스럽게 녹여 뒤에 " → "와 데이터 근거(지표·태그·소재명)를 붙임. 데이터로 뒷받침되면 근거 제시, 반대면 " → 데이터는 다르게 나타남: …"으로 교정, 데이터로 확인 안 되는(근거 없는) 관찰은 제외.');
@@ -5656,9 +5657,18 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       L.push(`[데이터] 타이틀: ${data.titleName} / 기간: ${data.period} / 레이어: ${data.layer}`);
       L.push(`핵심 지표: 소재 ${k.count}개, 평균 점수 ${k.avgScore == null ? '-' : k.avgScore.toFixed(1)}, 최우수 ${k.excellent}개, 개선필요 ${k.poor}개, 총 전환(${k.convBasis}) ${Math.round(k.totalConv).toLocaleString()}`);
       if (cmp && cmp.hasPrev) {
-        L.push(`전 기간 대비: 전환 ${Math.round(cmp.kpiDeltas.전환.cur).toLocaleString()} ${dpct(cmp.kpiDeltas.전환)}, 평균점수 ${dpct(cmp.kpiDeltas.avgScore)}`);
+        // 평균점수 변화 원인 분해: 지속 소재(양 기간 존재) 점수 변화 vs 신규 소재 편입 희석
+        const prevByKey = {}; (cmp.prev || []).forEach(o => { prevByKey[o.key] = o; });
+        const cur = cmp.cur || [];
+        const cont = cur.filter(o => prevByKey[o.key]);
+        const neu = cur.filter(o => !prevByKey[o.key]);
+        const avg = a => a.length ? a.reduce((s, o) => s + (o.TotalScore || 0), 0) / a.length : null;
+        const f = v => v == null ? '-' : v.toFixed(1);
+        const contCur = avg(cont), contPrev = avg(cont.map(o => prevByKey[o.key])), newAvg = avg(neu);
+        L.push(`전 기간 대비 평균점수 ${dpct(cmp.kpiDeltas.avgScore)}`);
+        L.push(`[평균점수 분해] 지속 소재 ${cont.length}개: 전기 평균 ${f(contPrev)} → 현재 ${f(contCur)} · 신규 소재 ${neu.length}개: 평균 ${f(newAvg)} · 전체 현재 평균 ${f(k.avgScore)}`);
         const names = arr => (arr.map(m => m.key).slice(0, 3).join(', ') || '없음');
-        L.push(`급등: ${names(cmp.movers.risers)} / 급락: ${names(cmp.movers.fallers)} / 신규: ${names(cmp.movers.newcomers)}`);
+        L.push(`점수 급등: ${names(cmp.movers.risers)} / 급락: ${names(cmp.movers.fallers)} / 신규: ${names(cmp.movers.newcomers)}`);
       }
       L.push(`Top 소재: ${data.topN.slice(0, 3).map(t => `${t.name}(점수 ${t.score == null ? '-' : t.score.toFixed(1)})`).join(', ')}`);
       if (tags) {
@@ -5670,6 +5680,17 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       } else {
         L.push('태그 데이터 부족(소재 4개 미만) — 요소 인사이트는 지표 기반으로만 간략히.');
       }
+      // 상위/하위 5 소재의 강점·약점 심층 근거(prose) — '우수/저조 소재군 특징' 합성 근거
+      const _proseOf = (arr, field, evField) => (arr || []).slice(0, 5).map(d => {
+        const m = d.meta || {};
+        const items = (Array.isArray(m[field]) ? m[field] : []).slice(0, 3);
+        const evs = Array.isArray(m[evField]) ? m[evField] : [];
+        return items.length ? `${d.name}[${items.map((it, i) => `${it}${evs[i] ? `(${String(evs[i]).slice(0, 70)})` : ''}`).join('; ')}]` : '';
+      }).filter(Boolean).join(' / ');
+      const _topP = _proseOf(data.topDeep, 'strengths', 'strength_evidence');
+      const _botP = _proseOf(data.bottomDeep, 'weaknesses', 'weakness_evidence');
+      if (_topP) L.push(`[상위5 강점 심층] ${_topP}`);
+      if (_botP) L.push(`[하위5 약점 심층] ${_botP}`);
       if (note) { L.push(''); L.push('[마케터 의견]'); L.push(note); }
       return L.join('\n');
     }
@@ -5705,9 +5726,9 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const k = data.kpis, cmp = data.comparison;
       const L = ['■ 종합 인사이트'];
       L.push(` - 소재 ${k.count}개 · 평균 점수 ${k.avgScore == null ? '-' : k.avgScore.toFixed(1)} · 총 전환(${k.convBasis}) ${Math.round(k.totalConv).toLocaleString()} · 최우수 ${k.excellent}개 / 개선필요 ${k.poor}개`);
-      if (cmp && cmp.hasPrev && cmp.kpiDeltas && cmp.kpiDeltas.전환 && cmp.kpiDeltas.전환.deltaPct != null) {
-        const dp = Math.round(cmp.kpiDeltas.전환.deltaPct);
-        L.push(` - 전 기간 대비 전환 ${dp >= 0 ? '+' : ''}${dp}%`);
+      if (cmp && cmp.hasPrev && cmp.kpiDeltas && cmp.kpiDeltas.avgScore && cmp.kpiDeltas.avgScore.deltaPct != null) {
+        const dp = Math.round(cmp.kpiDeltas.avgScore.deltaPct);
+        L.push(` - 전 기간 대비 평균 점수 ${dp >= 0 ? '+' : ''}${dp}%`);
       }
       if (data.topN && data.topN.length) L.push(` - 상위 성과 소재: ${data.topN.slice(0, 3).map(t => t.name).join(', ')}`);
       if (tags && tags.diffStrengths && tags.diffStrengths.length) L.push(` - 우수군 차별 강점 태그: ${tags.diffStrengths.slice(0, 3).map(d => `'${d.tag}'(lift ${d.lift >= 0 ? '+' : ''}${d.lift})`).join(', ')}`);
@@ -5930,28 +5951,6 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <div class="tn"><div class="tnm">${esc(t.name)}</div><div class="tms">전환 ${num(t.conv)} · CPA ${won(t.cpa)} · 점수 ${sc(t.score)}</div></div>
           <span class="gb" style="${gradeStyle[t.grade] || gradeStyle['보통']}">${esc(t.grade || '—')}</span>
         </div>`).join('') : '<div class="empty">표시할 소재가 없습니다.</div>';
-      // 상/하위 심층 카드 — 소재별 AI 필드(자체 완결 인라인, 모달 CSS 비의존)
-      const dcGrp = (label, items, evid, evPrefix) => {
-        if (!Array.isArray(items) || !items.length) return '';
-        const lis = items.map((it, i) => {
-          const ev = ((evid && evid[i]) || '').trim();
-          return `<li>${esc(it)}${ev ? `<div class="ev">${esc((evPrefix || '') + ev)}</div>` : ''}</li>`;
-        }).join('');
-        return `<div class="dcg"><div class="dcgl">${esc(label)}</div><ul>${lis}</ul></div>`;
-      };
-      const deepCard = (d, rank) => {
-        const m = d.meta || {};
-        const insight = (m.one_line_insight || m.marketer_insight || '').trim();
-        const reality = (m.kpi_reality_check || '').trim();
-        const insHtml = `${insight ? `<div class="dci">${esc(insight)}</div>` : ''}${reality ? `<div class="dcr">${esc(reality)}</div>` : ''}`;
-        const sig = dcGrp('강점', m.strengths, m.strength_evidence)
-          + dcGrp('약점', m.weaknesses, m.weakness_evidence)
-          + dcGrp('가설', m.hypothesis, null)
-          + dcGrp('차주 변주', m.test_ideas, m.improvement_actions, '→ ');
-        return `<div class="dc"><div class="dch">${creativeThumbHtml(d.thumb, d.type, 40, 40)}<div class="dcn">#${rank} ${esc(d.name)}<div class="dck">점수 ${sc(d.score)} · 전환 ${num(d.conv)} · CPA ${won(d.cpa)} · 노출 ${num(d.imp)} · 비용 ${won(d.cost)}</div></div><span class="gb" style="${gradeStyle[d.grade] || gradeStyle['보통']}">${esc(d.grade || '—')}</span></div>${insHtml}${sig || '<div class="dcr" style="color:#9ca3af;">추가 분석 없음</div>'}</div>`;
-      };
-      const topDeepHtml = (data.topDeep || []).length ? data.topDeep.map((d, i) => deepCard(d, i + 1)).join('') : '<div class="empty">표시할 소재가 없습니다.</div>';
-      const bottomDeepHtml = (data.bottomDeep || []).length ? data.bottomDeep.map((d, i) => deepCard(d, i + 1)).join('') : '<div class="empty">표시할 소재가 없습니다.</div>';
       const typeHtml = data.typeRows.map(r =>
         `<tr><td>${esc(r.type)}</td><td class="r">${num(r.count)}</td><td class="r">${sc(r.avgScore)}</td></tr>`).join('');
       const insightBlock = data.insightHtml
@@ -6023,12 +6022,6 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
   .tabbtn.active { color:#DC2828; border-bottom-color:#DC2828; }
   .tabpanel { display:none; } .tabpanel.active { display:block; }
   .livehead { font-size:13px; color:#191919; margin-bottom:12px; }
-  .dc { background:#faf9f7; border:1px solid #E4E1DC; border-radius:8px; padding:12px 14px; margin-bottom:10px; }
-  .dch { display:flex; align-items:center; gap:10px; margin-bottom:6px; }
-  .dcn { flex:1; min-width:0; font-size:13px; font-weight:700; } .dck { font-size:11px; color:#666; font-weight:400; margin-top:2px; }
-  .dci { font-size:12px; color:#191919; line-height:1.5; margin:6px 0; font-weight:600; } .dcr { font-size:12px; color:#666; line-height:1.5; }
-  .dcg { margin-top:8px; } .dcgl { font-size:11px; font-weight:700; color:#4C4C4C; margin-bottom:3px; }
-  .dcg ul { margin:0; padding:0; } .dcg li { list-style:none; font-size:12px; color:#191919; line-height:1.45; margin-bottom:5px; } .dcg .ev { font-size:11px; color:#666; margin-top:1px; }
   @media print { body { background:#fff; } .toolbar,.tabbar { display:none; } .card { box-shadow:none; padding:0; } .wrap { padding:0; } .tabpanel { display:block !important; } }
 </style></head><body>
 <div class="wrap">
@@ -6050,8 +6043,6 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       return `<div class="sec"><div class="st">인사이트 ${chip}</div>${insightSectionsHtml(data.narrative)}</div>`;
     })()}
     <div class="sec"><div class="st">Top 성과 소재</div>${topHtml}</div>
-    <div class="sec"><div class="st">상위 5 심층 분석 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(강점·인사이트)</span></div>${topDeepHtml}</div>
-    <div class="sec"><div class="st">하위 5 심층 분석 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(약점·개선 방향)</span></div>${bottomDeepHtml}</div>
     ${moverBlock}
     <div class="sec"><div class="st">유형별 요약</div><table><thead><tr><th>유형</th><th class="r">소재 수</th><th class="r">평균 점수</th></tr></thead><tbody>${typeHtml}</tbody></table></div>
     ${filterBlock}
