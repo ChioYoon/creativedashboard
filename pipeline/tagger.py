@@ -403,7 +403,7 @@ SYSTEM_INSTRUCTION_MMORPG = """
    [게임 컨텍스트] 블록이 오면 세계관·클래스·USP·후킹·금기를 그 정보 기준으로 해석하세요.
 
 제공된 광고 자산의 초반 0~15초(영상) 또는 첫 인상(이미지) 영역을
-엄밀히 판독하여, 다음 10개 필드를 JSON으로 응답합니다:
+엄밀히 판독하여, 다음 14개 필드를 JSON으로 응답합니다:
 
 [분류 — 1개씩 선택]
 1. hooking_strategy   — 후킹 기믹 (6개 enum). MMORPG는 '압도적 스케일/비주얼'·'트렌드/인터넷 밈'(모델/셀럽 실사)·'보상 약속 명확'(사전예약·출시 보상)이 빈번.
@@ -424,6 +424,17 @@ SYSTEM_INSTRUCTION_MMORPG = """
    ※ 진단형 어미 금지("~여지 있음", "~필요해 보임"), 처방형으로("~를 추가/교체/축약하여 ~개선").
 10. kpi_reality_check — [이 소재의 실제 성과]에 KPI 가 있을 때만 작성 (40~150자).
    시각적 기대(가설)와 실제 KPI 의 정합/모순 + 시사점. KPI 가 없으면 생략(null).
+
+[정형 필드 — 실제 화면에서 관찰된 것만, 추측 금지]
+11. player_motivation — 이 소재가 주로 자극하는 게이머 동기 1개:
+   · "성취형" — 성장·강화·전투력 상승·레벨업·장비 획득 연출 중심
+   · "경쟁형" — PVP·길드전·공성·타 유저 압도·랭킹 경쟁 연출 중심
+   · "몰입형" — 시네마틱·세계관·스토리·고퀄리티 그래픽 과시 중심
+   지배적 동기 1개만. 판단 어려우면 null.
+12. main_characters — 등장 캐릭터·클래스명 0~5개 (예: "제우스", "레인저").
+   [게임 컨텍스트]의 클래스/캐릭터명 기준으로 식별. 식별 불가면 [].
+13. color_tone — 핵심 컬러 톤 1구절 (예: "골드·다크 판타지", "네온 블루·차가운 톤"). 판단 어려우면 null.
+14. has_cta — 명시적 행동 유도(버튼/자막/나레이션의 '사전예약·다운로드·지금 접속' 등) 존재 여부 true/false.
 
 원칙:
 - 신호는 영상/이미지에서 실제 보이는 것만. 근거 없는 추측 금지.
@@ -463,6 +474,10 @@ SYSTEM_INSTRUCTION_MMORPG = """
   ]
   creator_intent: "고퀄 시네마틱·대규모 전투로 그래픽 스케일과 게임성을 과시해 코어 RPG 유저 전환을 끌어내려는 의도"
   one_line_insight: "시네마틱·대규모 전투로 스케일·게임성 증명은 강하나 마무리 행동 유도가 비어 있음 — 엔드카드에 사전예약 보상 연계 CTA를 추가해 전환 직결 구조로 개선"
+  player_motivation: "경쟁형"
+  main_characters: ["제우스"]
+  color_tone: "골드·다크 판타지"
+  has_cta: false
 
 예시 B) 유명 모델 실사 후킹 숏폼:
   strengths: [
@@ -509,7 +524,7 @@ GENRE_INSTRUCTIONS: dict[str, tuple[str, str]] = {
     "character_collection_rpg":   (SYSTEM_INSTRUCTION_CHARACTER_RPG, ""),
     "dark_fantasy_card_rpg":      (SYSTEM_INSTRUCTION_DARK_FANTASY_CARD_RPG, "darkfantasy-v1"),
     "idle_rpg":                   (SYSTEM_INSTRUCTION_IDLE_RPG, "idle-v1"),
-    "mmorpg":                     (SYSTEM_INSTRUCTION_MMORPG, "mmorpg-v1"),
+    "mmorpg":                     (SYSTEM_INSTRUCTION_MMORPG, "mmorpg-v2"),   # v2: 동기+정형필드(11~14) — zeus만 재태깅
 }
 DEFAULT_GENRE = "character_collection_rpg"
 

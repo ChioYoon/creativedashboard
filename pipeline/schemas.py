@@ -120,6 +120,14 @@ class TestRecommendation(str, Enum):
     SWAP_USP_ANGLE              = "다른 core_usp 각도 변주"
 
 
+class PlayerMotivation(str, Enum):
+    """소재가 주로 자극하는 게이머 동기 (mmorpg 장르 한정 — 프롬프트 게이트, 단일 선택)."""
+
+    ACHIEVER  = "성취형"   # 성장·강화·전투력 상승·레벨업 연출
+    KILLER    = "경쟁형"   # PVP·길드전·타 유저 압도·랭킹 경쟁
+    IMMERSIVE = "몰입형"   # 시네마틱·세계관·스토리·고퀄리티 그래픽
+
+
 # ─────────────────────────────────────────────────────────────
 # Stage 5-E 보강: 가설 ↔ KPI 메타 매핑 (analyze-signals.py 가설3 검증용)
 #
@@ -325,6 +333,29 @@ class CreativeTag(BaseModel):
             "후킹이 클릭으로 이어지지 않아 첫 3초 강화 필요'."
         ),
     )
+    # v5.8 (mmorpg 장르 한정 — 프롬프트 게이트): 유저 동기 + 경량 정형 시각 필드.
+    # 타 장르 프롬프트는 이 필드들을 요구하지 않음 → 기본값(None/[])으로 하위 호환.
+    player_motivation: Optional[PlayerMotivation] = Field(
+        None,
+        description=(
+            "이 소재가 주로 자극하는 게이머 동기 1개: '성취형'(성장/강화/전투력), "
+            "'경쟁형'(PVP/길드전/랭킹), '몰입형'(시네마틱/세계관/그래픽). 판단 어려우면 null."
+        ),
+    )
+    main_characters: list[str] = Field(
+        default_factory=list,
+        max_length=5,
+        description="영상/이미지에 등장하는 캐릭터·클래스명 0-5개 (예: '제우스', '레인저'). 식별 불가면 빈 리스트.",
+    )
+    color_tone: Optional[str] = Field(
+        None,
+        max_length=40,
+        description="핵심 컬러 톤 1구절 (예: '골드·다크 판타지', '네온 블루'). 판단 어려우면 null.",
+    )
+    has_cta: Optional[bool] = Field(
+        None,
+        description="명시적 행동 유도(CTA — 버튼/자막/나레이션 '사전예약/다운로드' 등) 존재 여부.",
+    )
 
 
 # ─────────────────────────────────────────────────────────────
@@ -420,6 +451,12 @@ class CreativeRecord(BaseModel):
             "기존 대시보드 호환을 위해 동일 값이 자동 채워짐."
         ),
     )
+
+    # v5.8 (mmorpg 한정 태깅 산출 — 타 장르 None/[]): 유저 동기 + 경량 정형 시각 필드
+    player_motivation: Optional[str] = Field(None, description="게이머 동기: 성취형/경쟁형/몰입형 (mmorpg 한정)")
+    main_characters: list[str] = Field(default_factory=list, description="등장 캐릭터·클래스명 (mmorpg 한정)")
+    color_tone: Optional[str] = Field(None, description="핵심 컬러 톤 (mmorpg 한정)")
+    has_cta: Optional[bool] = Field(None, description="명시적 CTA 존재 여부 (mmorpg 한정)")
 
     # 부가 메타 (Pydantic v2는 leading underscore 필드명을 금지하므로 일반 이름 사용)
     tagged_at: Optional[str] = None  # ISO 8601 (Gemini 태깅 시각)

@@ -67,7 +67,8 @@ def test_get_system_instruction_mmorpg():
 
 
 def test_prompt_version_mmorpg_suffix():
-    assert prompt_version("mmorpg").endswith("-mmorpg-v1")
+    # v2: 동기+정형 필드(11~14) 추가 — zeus(mmorpg)만 재태깅 격리
+    assert prompt_version("mmorpg").endswith("-mmorpg-v2")
 
 
 def test_prompt_version_all_genres_distinct():

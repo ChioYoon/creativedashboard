@@ -1130,6 +1130,11 @@ def run(cfg: dict) -> dict:
             improvement_actions=[i.get("action", "") for i in _test_items],
             creator_intent=tag_dict.get("creator_intent"),
             one_line_insight=one_line,
+            # v5.8 (mmorpg 한정 태깅 산출 — 타 장르는 기본값): 동기 + 경량 정형 시각 필드
+            player_motivation=tag_dict.get("player_motivation"),
+            main_characters=tag_dict.get("main_characters", []) or [],
+            color_tone=tag_dict.get("color_tone"),
+            has_cta=tag_dict.get("has_cta"),
             # Stage 5-I: 실제 KPI 정합성 해석(AI) + 백분위(코드 산출).
             # 하드 가드: KPI 없는 소재는 모델 출력과 무관하게 강제 None —
             # flash-lite 폴백이 타 소재 수치를 베껴 환각 reality_check 를 쓴 사례 차단.
