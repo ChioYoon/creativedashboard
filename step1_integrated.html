@@ -6895,12 +6895,23 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       const roasWeight = parseInt(document.getElementById('roasWeight').value) / 100;
       const fatigueWeights = { conv: convWeight, cpa: cpaWeight, ipm: ipmWeight, roas: roasWeight };
 
-      // Phase 2 캐노니컬(캠페인 유형) 필터를 피로도에도 적용 (QA P0-C) — 일별 슬라이스 campaign_name 제한
-      // resolveCanonicalCampaigns() 는 {has(raw)} 술어 → 맵 키를 통과시켜 배열화(aggGadsWindow 는 .includes 사용)
+      // Phase 2 캐노니컬(캠페인 유형) + 사이드바 개별 캠페인 선택을 피로도 일별 슬라이스에 적용 —
+      // '분석 실행'(소재 목록)과 동일 캠페인 스코프로 기준/비교 CPA·순위 산출.
       const _canonFat = (typeof resolveCanonicalCampaigns === 'function') ? resolveCanonicalCampaigns() : null;
-      const _fcamps = _canonFat ? Object.keys(window.__campaignCanonical || {}).filter(cn => _canonFat.has(cn)) : null;
-      const baselineScored = buildFatiguePeriodScores(allAgg, baseStart, baseEnd, fatigueLayer, fatigueWeights, _fcamps, _fcamps);
-      const comparisonScored = buildFatiguePeriodScores(allAgg, compStart, compEnd, fatigueLayer, fatigueWeights, _fcamps, _fcamps);
+      const _canonList = _canonFat ? Object.keys(window.__campaignCanonical || {}).filter(cn => _canonFat.has(cn)) : null;
+      let _gFat = _canonList, _mFat = _canonList;
+      // 사이드바 캠페인 체크박스 — 부분 선택 시에만 스코프 제한. [MMP] 접두어로 소스 분리
+      // (라벨 의미 = aggMmpWindow 의 campaign_name 우선/channel 폴백과 동일 — 4015 생성부 참조)
+      const _sbBoxes = document.querySelectorAll('#campaignCheckboxGroup input[type="checkbox"]:not(#campaign_all)');
+      const _sbSel = Array.from(_sbBoxes).filter(cb => cb.checked).map(cb => cb.value);
+      if (_sbSel.length > 0 && _sbSel.length < _sbBoxes.length) {
+        const _sbGads = _sbSel.filter(v => !v.startsWith('[MMP] '));
+        const _sbMmp = _sbSel.filter(v => v.startsWith('[MMP] ')).map(v => v.slice(6));
+        _gFat = _canonList ? _canonList.filter(cn => _sbGads.includes(cn)) : _sbGads;
+        _mFat = _canonList ? _canonList.filter(cn => _sbMmp.includes(cn)) : _sbMmp;
+      }
+      const baselineScored = buildFatiguePeriodScores(allAgg, baseStart, baseEnd, fatigueLayer, fatigueWeights, _gFat, _mFat);
+      const comparisonScored = buildFatiguePeriodScores(allAgg, compStart, compEnd, fatigueLayer, fatigueWeights, _gFat, _mFat);
       console.log(`📅 피로도(${fatigueLayer === 'mmp' ? 'MMP 품질' : 'Google Ads'} · 실적일): 기준 ${baselineScored.length}개 / 비교 ${comparisonScored.length}개`);
       
       // 4. 비교 분석 (v1.7: Total Score 기준 순위, CPA 기준 피로도)
