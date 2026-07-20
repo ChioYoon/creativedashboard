@@ -128,6 +128,15 @@ class PlayerMotivation(str, Enum):
     IMMERSIVE = "몰입형"   # 시네마틱·세계관·스토리·고퀄리티 그래픽
 
 
+class CtaType(str, Enum):
+    """CTA(행동 유도) 설계 유형 (mmorpg 장르 한정 — 프롬프트 게이트, 단일 선택. 없으면 null)."""
+
+    COUPON   = "보상 보증형"      # 쿠폰코드·구체 보상 조건을 화면에 명시
+    MARKET   = "마켓 버튼 모사형"  # 스토어 설치/다운로드 버튼 UI 그래픽 노출
+    PROGRESS = "상태 변화 유도형"  # 진행도/성공률 등 완료 심리 자극
+    BRANDED  = "로고 정적 노출형"  # 혜택 없이 로고·CI만 노출하고 종료
+
+
 # ─────────────────────────────────────────────────────────────
 # Stage 5-E 보강: 가설 ↔ KPI 메타 매핑 (analyze-signals.py 가설3 검증용)
 #
@@ -352,9 +361,13 @@ class CreativeTag(BaseModel):
         max_length=40,
         description="핵심 컬러 톤 1구절 (예: '골드·다크 판타지', '네온 블루'). 판단 어려우면 null.",
     )
-    has_cta: Optional[bool] = Field(
+    cta_type: Optional[CtaType] = Field(
         None,
-        description="명시적 행동 유도(CTA — 버튼/자막/나레이션 '사전예약/다운로드' 등) 존재 여부.",
+        description=(
+            "CTA(행동 유도) 설계 유형 1개: '보상 보증형'(쿠폰/보상 조건 명시), "
+            "'마켓 버튼 모사형'(스토어 버튼 UI), '상태 변화 유도형'(진행도/성공률 심리), "
+            "'로고 정적 노출형'(로고만). 명시적 CTA가 없으면 null."
+        ),
     )
 
 
@@ -456,7 +469,7 @@ class CreativeRecord(BaseModel):
     player_motivation: Optional[str] = Field(None, description="게이머 동기: 성취형/경쟁형/몰입형 (mmorpg 한정)")
     main_characters: list[str] = Field(default_factory=list, description="등장 캐릭터·클래스명 (mmorpg 한정)")
     color_tone: Optional[str] = Field(None, description="핵심 컬러 톤 (mmorpg 한정)")
-    has_cta: Optional[bool] = Field(None, description="명시적 CTA 존재 여부 (mmorpg 한정)")
+    cta_type: Optional[str] = Field(None, description="CTA 설계 유형: 보상 보증형/마켓 버튼 모사형/상태 변화 유도형/로고 정적 노출형, 없으면 null (mmorpg 한정)")
 
     # 부가 메타 (Pydantic v2는 leading underscore 필드명을 금지하므로 일반 이름 사용)
     tagged_at: Optional[str] = None  # ISO 8601 (Gemini 태깅 시각)

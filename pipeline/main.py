@@ -1134,7 +1134,7 @@ def run(cfg: dict) -> dict:
             player_motivation=tag_dict.get("player_motivation"),
             main_characters=tag_dict.get("main_characters", []) or [],
             color_tone=tag_dict.get("color_tone"),
-            has_cta=tag_dict.get("has_cta"),
+            cta_type=tag_dict.get("cta_type"),
             # Stage 5-I: 실제 KPI 정합성 해석(AI) + 백분위(코드 산출).
             # 하드 가드: KPI 없는 소재는 모델 출력과 무관하게 강제 None —
             # flash-lite 폴백이 타 소재 수치를 베껴 환각 reality_check 를 쓴 사례 차단.

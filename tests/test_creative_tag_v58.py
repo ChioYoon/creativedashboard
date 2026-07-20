@@ -26,12 +26,12 @@ def test_new_fields_parse():
         player_motivation="경쟁형",
         main_characters=["제우스", "레인저"],
         color_tone="골드·다크 판타지",
-        has_cta=False,
+        cta_type="보상 보증형",
     ), ensure_ascii=False))
     assert tag.player_motivation == "경쟁형"
     assert tag.main_characters == ["제우스", "레인저"]
     assert tag.color_tone == "골드·다크 판타지"
-    assert tag.has_cta is False
+    assert tag.cta_type == "보상 보증형"
 
 
 def test_new_fields_absent_defaults():
@@ -40,9 +40,14 @@ def test_new_fields_absent_defaults():
     assert tag.player_motivation is None
     assert tag.main_characters == []
     assert tag.color_tone is None
-    assert tag.has_cta is None
+    assert tag.cta_type is None
 
 
 def test_invalid_motivation_rejected():
     with pytest.raises(ValidationError):
         CreativeTag.model_validate_json(json.dumps(_base(player_motivation="수집형"), ensure_ascii=False))
+
+
+def test_invalid_cta_type_rejected():
+    with pytest.raises(ValidationError):
+        CreativeTag.model_validate_json(json.dumps(_base(cta_type="팝업형"), ensure_ascii=False))
