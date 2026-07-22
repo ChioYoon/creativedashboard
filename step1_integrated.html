@@ -1720,10 +1720,10 @@
             <span class="sb-mode-chip" data-dim="product" onclick="setSegmentDim('product')">상품</span>
           </span>
         </div>
-        <div style="font-size:14px;font-weight:800;margin:0 0 6px;">세그먼트별 소재 순위 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(활성 레이어 점수 재계산 · 편차 큰 순)</span></div>
+        <div style="font-size:13px;font-weight:700;color:var(--text-primary);margin:0 0 6px;">세그먼트별 소재 순위 <span style="font-size:11px;color:var(--text-tertiary,#9ca3af);font-weight:400;">(활성 레이어 점수 재계산 · 편차 큰 순)</span></div>
         <div id="segmentCompareContainer"></div>
-        <div style="font-size:14px;font-weight:800;margin:20px 0 6px;">GA ↔ MMP 점수 괴리 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(같은 소재가 매체군별로 다르게 반응)</span></div>
-        <div style="font-size:12px;color:#666;margin-bottom:8px;">Google Ads 종합점수와 MMP 품질점수의 순위 차이가 큰 소재 — 한쪽 매체군에서만 잘 작동하는 소재입니다. 강점 태그를 함께 보고 원인을 해석하세요.</div>
+        <div style="font-size:13px;font-weight:700;color:var(--text-primary);margin:20px 0 6px;">GA ↔ MMP 점수 괴리 <span style="font-size:11px;color:var(--text-tertiary,#9ca3af);font-weight:400;">(같은 소재가 매체군별로 다르게 반응)</span></div>
+        <div style="font-size:12px;color:var(--text-secondary,#666);margin-bottom:8px;">Google Ads 종합점수와 MMP 품질점수의 순위 차이가 큰 소재 — 한쪽 매체군에서만 잘 작동하는 소재입니다. 강점 태그를 함께 보고 원인을 해석하세요.</div>
         <div id="scoreGapContainer"></div>
       </div>
 
@@ -5713,7 +5713,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         { id: 'partial', label: '일부 세그먼트만 집행 — 비교 불가', color: '#999999', sort: (a, b) => a.best - b.best },
       ];
       const colspan = segNames.length + 2;
-      const head = `<thead><tr><th style="text-align:left;white-space:nowrap;position:sticky;left:0;background:#fff;z-index:1;">소재명</th>${segNames.map(nm =>
+      const head = `<thead><tr><th style="text-align:left;white-space:nowrap;position:sticky;left:0;background:var(--bg-base,#fff);z-index:1;">소재명</th>${segNames.map(nm =>
         `<th style="text-align:center;white-space:nowrap;padding:6px 12px;" title="${escapeHtml(nm)}">${escapeHtml(nm.length > 24 ? '…' + nm.slice(-22) : nm)}<div style="font-weight:400;color:#999;font-size:10px;">${perSeg[nm].n}개 소재</div></th>`).join('')}<th style="text-align:center;white-space:nowrap;" title="세그먼트 간 최고-최저 순위 차 — 클수록 세그먼트마다 선호가 다른 소재">순위 편차</th></tr></thead>`;
       const rowHtml = r => {
         const tds = r.cells.map(o => o
@@ -5722,7 +5722,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         const sp = (r.nSeg >= 2 && r.spread >= 5)
           ? `<span style="color:var(--brand-primary,#DC2828);font-weight:700;">${r.spread}</span>`
           : (r.nSeg >= 2 ? String(r.spread) : '—');
-        return `<tr><td style="text-align:left;min-width:160px;max-width:240px;overflow-wrap:anywhere;position:sticky;left:0;background:#fff;">${escapeHtml(r.c.key)}</td>${tds}<td style="text-align:center;">${sp}</td></tr>`;
+        return `<tr><td style="text-align:left;min-width:160px;max-width:240px;overflow-wrap:anywhere;position:sticky;left:0;background:var(--bg-base,#fff);">${escapeHtml(r.c.key)}</td>${tds}<td style="text-align:center;">${sp}</td></tr>`;
       };
       // 그룹별 접이식(<details>) — 소재 많아도 요약만 보고 필요한 그룹만 펼침. 기본 닫힘.
       const body = GROUPS.map(g => {
