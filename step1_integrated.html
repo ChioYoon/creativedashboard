@@ -1603,6 +1603,7 @@
         <button class="ds-tab active" data-tab="creative-list" onclick="switchMainTab('creative-list')">소재 목록</button>
         <button class="ds-tab" data-tab="summary" onclick="switchMainTab('summary')">전체 성과 요약</button>
         <button class="ds-tab" data-tab="fatigue" onclick="switchMainTab('fatigue')">피로도 <span id="fatigueTabBadge" title="CPA가 기준 대비 +20% 넘게 상승한 피로 경보 소재 수" style="display:none;margin-left:4px;background:var(--brand-primary,#DC2828);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:9px;vertical-align:middle;"></span></button>
+        <button class="ds-tab" data-tab="segment" onclick="switchMainTab('segment')">세그먼트 비교</button>
       </nav>
 
       <!-- 탭 패널 1: 소재 목록 -->
@@ -1705,6 +1706,25 @@
         <div id="crossPerformanceContainer"></div>
         <!-- AI 태그 (Task 6에서 추가) -->
         <div id="signalDistributionPanel"></div>
+      </div>
+
+      <!-- 탭 패널 4: 세그먼트 비교 — 차원별 소재 순위 매트릭스 + GA↔MMP 점수 괴리 -->
+      <div id="tabSegment" class="ds-tab-panel hidden">
+        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:12px;">
+          <span style="font-size:12px;font-weight:700;color:var(--text-secondary);">비교 차원</span>
+          <span id="segDimChips" style="display:flex;gap:6px;">
+            <span class="sb-mode-chip active" data-dim="campaign" onclick="setSegmentDim('campaign')">캠페인</span>
+            <span class="sb-mode-chip" data-dim="country" onclick="setSegmentDim('country')">국가</span>
+            <span class="sb-mode-chip" data-dim="os" onclick="setSegmentDim('os')">OS</span>
+            <span class="sb-mode-chip" data-dim="media" onclick="setSegmentDim('media')">매체</span>
+            <span class="sb-mode-chip" data-dim="product" onclick="setSegmentDim('product')">상품</span>
+          </span>
+        </div>
+        <div style="font-size:14px;font-weight:800;margin:0 0 6px;">세그먼트별 소재 순위 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(활성 레이어 점수 재계산 · 편차 큰 순)</span></div>
+        <div id="segmentCompareContainer"></div>
+        <div style="font-size:14px;font-weight:800;margin:20px 0 6px;">GA ↔ MMP 점수 괴리 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(같은 소재가 매체군별로 다르게 반응)</span></div>
+        <div style="font-size:12px;color:#666;margin-bottom:8px;">Google Ads 종합점수와 MMP 품질점수의 순위 차이가 큰 소재 — 한쪽 매체군에서만 잘 작동하는 소재입니다. 강점 태그를 함께 보고 원인을 해석하세요.</div>
+        <div id="scoreGapContainer"></div>
       </div>
 
       <!-- 탭 패널 3: 피로도 (Task 7에서 채움) -->
@@ -1921,7 +1941,8 @@ function switchMainTab(tab) {
   const PANELS = {
     'creative-list': 'tabCreativeList',
     'summary': 'tabSummary',
-    'fatigue': 'tabFatigue'
+    'fatigue': 'tabFatigue',
+    'segment': 'tabSegment'
   };
   document.querySelectorAll('.ds-tab').forEach(b => {
     b.classList.toggle('active', b.dataset.tab === tab);
@@ -1935,6 +1956,10 @@ function switchMainTab(tab) {
   if (tab === 'fatigue' && (window.currentCreatives || []).length && !window._fatigueAutoGuard) {
     window._fatigueAutoGuard = true;
     try { runFatigueAnalysis(); } catch (e) {} finally { window._fatigueAutoGuard = false; }
+  }
+  // 세그먼트 비교 탭 진입 시 현재 상태(레이어·기간·차원)로 렌더
+  if (tab === 'segment' && (window.currentCreatives || []).length) {
+    try { renderSegmentCompare(); } catch (e) { console.error('세그먼트 비교 렌더 실패:', e); }
   }
 }
 
@@ -5613,6 +5638,142 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const iso = d => d.toISOString().slice(0, 10);
       return { start: iso(ps), end: iso(pe) };
     }
+    // ── 세그먼트 비교 탭: 차원별 소재 순위 매트릭스 + GA↔MMP 점수 괴리 ──
+    window._segDim = 'campaign';
+    function setSegmentDim(dim) {
+      window._segDim = dim;
+      document.querySelectorAll('#segDimChips .sb-mode-chip').forEach(ch => ch.classList.toggle('active', ch.dataset.dim === dim));
+      renderSegmentCompare();
+    }
+    // 활성 레이어 캠페인 목록 → {세그먼트 라벨: [campaign_name...]} (dim='campaign'이면 캠페인 그대로)
+    function _segmentsForDim(dim, layer) {
+      const all = (window._allCampaignsList || []).filter(c => (layer === 'mmp') === c.startsWith('[MMP] '));
+      const raw = c => c.startsWith('[MMP] ') ? c.slice(6) : c;
+      const map = {};
+      if (dim === 'campaign') { all.forEach(c => { map[raw(c)] = [raw(c)]; }); return map; }
+      const canon = window.__campaignCanonical || {};
+      all.forEach(c => {
+        const r = raw(c);
+        const v = (canon[r] && canon[r][dim]) || '미상';
+        (map[v] = map[v] || []).push(r);
+      });
+      return map;
+    }
+    function renderSegmentCompare() {
+      const host = document.getElementById('segmentCompareContainer');
+      if (!host) return;
+      const cs = window.currentCreatives || [];
+      if (!cs.length) { host.innerHTML = '<div style="color:#999;padding:20px;">분석 실행 후 확인할 수 있습니다.</div>'; return; }
+      const layer = window.currentAnalysisLayer || 'ads';
+      const dim = window._segDim || 'campaign';
+      const fr = window._fullDateRange || {};
+      const ws = document.getElementById('startDate')?.value || fr.min;
+      const we = document.getElementById('endDate')?.value || fr.max;
+      const segs = _segmentsForDim(dim, layer);
+      const segNames = Object.keys(segs);
+      if (segNames.length < 2) {
+        host.innerHTML = '<div style="color:#999;padding:20px;">이 차원의 세그먼트가 1개뿐이라 비교할 수 없습니다. 다른 차원을 선택하세요.</div>';
+        renderScoreGapTable();
+        return;
+      }
+      // 세그먼트별 점수 재계산 — 그 세그먼트 캠페인 데이터만으로 활성 레이어 점수·순위 산출 (피로도 엔진 재사용)
+      const weights = getReportWeights();
+      const perSeg = {};
+      segNames.forEach(nm => {
+        const scored = buildFatiguePeriodScores(cs, ws, we, layer, weights, segs[nm], segs[nm]);
+        const m = {}; scored.forEach(o => { m[o.key] = o; });
+        perSeg[nm] = { map: m, n: scored.length };
+      });
+      const rows = [];
+      cs.forEach(c => {
+        const cells = segNames.map(nm => perSeg[nm].map[c.key] || null);
+        const present = cells.filter(Boolean);
+        if (!present.length) return;
+        const ranks = present.map(o => o.Rank);
+        const spread = ranks.length >= 2 ? Math.max(...ranks) - Math.min(...ranks) : 0;
+        // 세그먼트별 소재 수가 달라 순위는 백분위(0=1위)로 정규화해 그룹 분류
+        const pcts = segNames.map((nm, i) => {
+          const o = cells[i]; if (!o) return null;
+          const n = perSeg[nm].n; return n > 1 ? (o.Rank - 1) / (n - 1) * 100 : 0;
+        }).filter(v => v != null);
+        const avgPct = pcts.reduce((s, v) => s + v, 0) / pcts.length;
+        const spreadPct = pcts.length >= 2 ? Math.max(...pcts) - Math.min(...pcts) : 0;
+        const group = (pcts.length < 2) ? 'partial'
+          : spreadPct >= 35 ? 'divergent'
+          : avgPct <= 35 ? 'good'
+          : avgPct >= 65 ? 'bad' : 'mid';
+        rows.push({ c, cells, spread, nSeg: present.length, best: Math.min(...ranks), avgPct, spreadPct, group });
+      });
+      const dimLabel = { campaign: '캠페인', country: '국가', os: 'OS', media: '매체', product: '상품' }[dim] || dim;
+      const GROUPS = [
+        { id: 'divergent', label: '세그먼트 편차형 — ' + dimLabel + '마다 선호가 다름', color: '#DC2828', sort: (a, b) => b.spreadPct - a.spreadPct },
+        { id: 'good', label: '공통 우수 — 전 세그먼트 상위권', color: '#191919', sort: (a, b) => a.avgPct - b.avgPct },
+        { id: 'bad', label: '공통 저조 — 전 세그먼트 하위권', color: '#808080', sort: (a, b) => b.avgPct - a.avgPct },
+        { id: 'mid', label: '중간', color: '#999999', sort: (a, b) => a.avgPct - b.avgPct },
+        { id: 'partial', label: '일부 세그먼트만 집행 — 비교 불가', color: '#999999', sort: (a, b) => a.best - b.best },
+      ];
+      const colspan = segNames.length + 2;
+      const head = `<thead><tr><th style="text-align:left;">소재명</th>${segNames.map(nm =>
+        `<th style="text-align:center;" title="${escapeHtml(nm)}">${escapeHtml(nm.length > 20 ? '…' + nm.slice(-20) : nm)}<div style="font-weight:400;color:#999;font-size:10px;">${perSeg[nm].n}개 소재</div></th>`).join('')}<th style="text-align:center;" title="세그먼트 간 최고-최저 순위 차 — 클수록 세그먼트마다 선호가 다른 소재">순위 편차</th></tr></thead>`;
+      const rowHtml = r => {
+        const tds = r.cells.map(o => o
+          ? `<td style="text-align:center;white-space:nowrap;"><b>#${o.Rank}</b> <span style="color:#666;font-size:11px;">${(o.TotalScore ?? 0).toFixed(1)}</span></td>`
+          : '<td style="text-align:center;color:#d1d5db;">—</td>').join('');
+        const sp = (r.nSeg >= 2 && r.spread >= 5)
+          ? `<span style="color:var(--brand-primary,#DC2828);font-weight:700;">${r.spread}</span>`
+          : (r.nSeg >= 2 ? String(r.spread) : '—');
+        return `<tr><td style="text-align:left;min-width:150px;max-width:240px;overflow-wrap:anywhere;">${escapeHtml(r.c.key)}</td>${tds}<td style="text-align:center;">${sp}</td></tr>`;
+      };
+      // 그룹별 접이식(<details>) — 소재 많아도 요약만 보고 필요한 그룹만 펼침. 기본 닫힘.
+      const body = GROUPS.map(g => {
+        const gr = rows.filter(r => r.group === g.id).sort(g.sort);
+        if (!gr.length) return '';
+        const summary = `<summary style="cursor:pointer;font-weight:700;color:${g.color};border-left:3px solid ${g.color};background:#F4F2EF;padding:8px 12px;border-radius:6px;list-style:revert;">${escapeHtml(g.label)} <span style="font-weight:400;color:#999;">${gr.length}개</span></summary>`;
+        return `<details style="margin-bottom:8px;">${summary}<div class="table-container" style="margin-top:6px;"><table class="ds-table" style="font-size:12px;table-layout:fixed;">${head}<tbody>${gr.map(rowHtml).join('')}</tbody></table></div></details>`;
+      }).join('');
+      host.innerHTML =
+        `<div style="font-size:12px;color:#666;margin-bottom:8px;">${dimLabel}별로 <b>그 세그먼트 데이터만으로</b> ${layer === 'mmp' ? 'MMP 품질점수' : 'Google Ads 종합점수'}(${escapeHtml(ws || '')}~${escapeHtml(we || '')})를 재계산한 순위입니다. 소재를 <b>공통 우수 / 공통 저조 / 세그먼트 편차형</b>으로 분리했습니다(순위 백분위 기준 — 세그먼트별 소재 수 차이 보정). 그룹을 클릭해 펼치세요.</div>` +
+        (body || '<div style="color:#999;padding:12px;">표시할 소재가 없습니다.</div>');
+      renderScoreGapTable();
+    }
+    // GA↔MMP 점수 괴리 — 양쪽 점수 보유 소재의 순위 백분위 차 (한쪽 매체군만 잘 되는 소재 발굴)
+    function renderScoreGapTable() {
+      const host = document.getElementById('scoreGapContainer');
+      if (!host) return;
+      const cs = (window.currentCreatives || []).filter(c =>
+        c._ads && c._ads.imp > 0 && typeof c.TotalScore === 'number' &&
+        c.meta && c.meta.mmp_quality_score && c.meta.mmp_quality_score.total != null);
+      if (cs.length < 4) { host.innerHTML = '<div style="color:#999;padding:12px;">Google Ads·MMP 점수를 모두 가진 소재가 부족합니다(4개 미만).</div>'; return; }
+      const n = cs.length;
+      const gaRank = new Map(), mmpRank = new Map();
+      [...cs].sort((a, b) => (b.TotalScore || 0) - (a.TotalScore || 0)).forEach((c, i) => gaRank.set(c.key, i + 1));
+      [...cs].sort((a, b) => b.meta.mmp_quality_score.total - a.meta.mmp_quality_score.total).forEach((c, i) => mmpRank.set(c.key, i + 1));
+      const rows = cs.map(c => {
+        const g = gaRank.get(c.key), m = mmpRank.get(c.key);
+        return { c, g, m, ga: c.TotalScore, mmp: c.meta.mmp_quality_score.total, gapPct: Math.round((m - g) / n * 100) };
+      }).sort((a, b) => Math.abs(b.gapPct) - Math.abs(a.gapPct));
+      const badge = gp => gp >= 25
+        ? '<span style="background:rgba(220,40,40,.10);color:#DC2828;font-weight:700;padding:2px 8px;border-radius:8px;font-size:11px;">GA만 우수 — MMP 주의</span>'
+        : gp <= -25
+          ? '<span style="background:#ECEAE6;color:#191919;font-weight:700;padding:2px 8px;border-radius:8px;font-size:11px;">MMP만 우수</span>'
+          : '<span style="color:#999;font-size:11px;">유사</span>';
+      const body = rows.map(r => {
+        const strength = (Array.isArray(r.c.meta?.strengths) && r.c.meta.strengths[0]) || '';
+        return `<tr>
+          <td style="text-align:left;min-width:150px;max-width:240px;overflow-wrap:anywhere;">${escapeHtml(r.c.key)}</td>
+          <td style="text-align:center;white-space:nowrap;"><b>${(r.ga || 0).toFixed(1)}</b> <span style="color:#666;font-size:11px;">#${r.g}</span></td>
+          <td style="text-align:center;white-space:nowrap;"><b>${r.mmp.toFixed(1)}</b> <span style="color:#666;font-size:11px;">#${r.m}</span></td>
+          <td style="text-align:center;font-weight:700;">${r.gapPct > 0 ? '+' : ''}${r.gapPct}%p</td>
+          <td style="text-align:center;">${badge(r.gapPct)}</td>
+          <td style="text-align:left;font-size:11px;color:#666;">${escapeHtml(strength)}</td>
+        </tr>`;
+      }).join('');
+      host.innerHTML = `<div class="table-container"><table class="ds-table" style="font-size:12px;"><thead><tr>
+        <th style="text-align:left;">소재명</th><th>Google Ads 점수·순위</th><th>MMP 점수·순위</th>
+        <th title="MMP 순위 − GA 순위 (소재 수 대비 %p). 양수=GA가 상대적으로 우수, 음수=MMP가 우수">순위 괴리</th><th>판정</th><th style="text-align:left;">강점 태그(참고)</th>
+      </tr></thead><tbody>${body}</tbody></table></div>`;
+    }
+
     function getReportWeights() {
       const g = id => { const el = document.getElementById(id); return el ? Number(el.value) : 0; };
       const c = g('conversionWeight'), p = g('cpaWeight'), i = g('ipmWeight'), r = g('roasWeight');
