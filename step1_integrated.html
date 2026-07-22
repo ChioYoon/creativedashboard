@@ -1412,6 +1412,14 @@
                   <option value="">타이틀 선택...</option>
                 </select>
               </div>
+              <!-- 분석 레이어 = 분석 전 데이터 단위 확정 (변경 시 캠페인 목록 재구성 + 재분석) -->
+              <div id="sidebarLayerToggle" style="padding:2px 0 8px;display:flex;gap:6px;align-items:center;">
+                <span style="font-size:11px;font-weight:700;color:var(--text-secondary);flex:none;">분석 레이어</span>
+                <span class="sb-mode-chip active" id="sbLayerAds" onclick="setSidebarLayer('ads')"
+                      title="데이터 단위 = Google Ads 매체 (캠페인·지표·점수·저노출 판정 전부 Google Ads 기준)">Google Ads</span>
+                <span class="sb-mode-chip" id="sbLayerMmp" onclick="setSidebarLayer('mmp')"
+                      title="데이터 단위 = MMP(비 Google) 매체 (캠페인·지표·품질점수 기준)">MMP</span>
+              </div>
             </div>
             <!-- 파일 업로드 -->
             <div id="panelFile">
@@ -1584,13 +1592,9 @@
         <div id="uploadInfo" style="margin-top:6px;font-size:12px;color:#374151;"></div>
       </div>
 
-      <!-- 분석 레이어 바 (MMP 연동 시만 노출) -->
+      <!-- 분석 레이어 바 — 상태 표시 전용 (레이어 선택은 좌측 사이드바 '분석 레이어' 토글, 변경 시 재분석) -->
       <div id="analysisLayerBar" class="analysis-layer-bar" style="padding:8px 20px;background:var(--bg-base);border-bottom:1px solid var(--hairline-warm);">
         <span style="font-size:12px;font-weight:700;color:var(--text-secondary);">분석 레이어</span>
-        <div class="layer-toggle-group">
-          <button id="layerBtnAds" class="layer-toggle-btn active-ads" onclick="switchAnalysisLayer('ads')">Google Ads 기준</button>
-          <button id="layerBtnMmp" class="layer-toggle-btn" onclick="switchAnalysisLayer('mmp')">MMP 기준</button>
-        </div>
         <span id="layerHint" class="layer-hint">Google Ads 종합점수 기준으로 정렬 중</span>
       </div>
 
@@ -2478,6 +2482,27 @@ function renderLayerScopeNotice() {
   } else {
     el.innerHTML = '';
     el.style.display = 'none';
+  }
+}
+
+// 레이어 우선 분석: 사이드바에서 데이터 단위(레이어) 확정 → 캠페인 목록 재구성 → 재분석.
+// switchAnalysisLayer(표시 렌더)와 분리 — 이 함수가 단일 진입점.
+function syncSidebarLayerUi(layer) {
+  window.currentAnalysisLayer = layer;
+  document.getElementById('sbLayerAds')?.classList.toggle('active', layer !== 'mmp');
+  document.getElementById('sbLayerMmp')?.classList.toggle('active', layer === 'mmp');
+  // 캠페인 필터를 레이어 맞춤으로 재구성 (전체선택 초기화 → updateCampaignFilter 가 currentCampaign 재동기화)
+  if (Array.isArray(window._allCampaignsList) && window._allCampaignsList.length) {
+    populateCampaignFilter(window._allCampaignsList);
+    if (typeof updateCampaignFilter === 'function') updateCampaignFilter();
+  }
+}
+function setSidebarLayer(layer) {
+  if ((window.currentAnalysisLayer || 'ads') === layer) return;
+  syncSidebarLayerUi(layer);
+  // 분석 결과가 있으면 전체 재분석 — 표시 전환이 아니라 풀·필터·점수를 확정 레이어 기준으로 재산출
+  if (window.currentCreatives && window.currentCreatives.length && typeof calculateScores === 'function') {
+    calculateScores();
   }
 }
 
@@ -4025,6 +4050,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     
     // 캠페인 필터 채우기
     function populateCampaignFilter(campaigns) {
+      // 레이어 우선 분석: 원본 목록 보관(레이어 전환 시 재구성용) + 활성 레이어 캠페인만 노출
+      window._allCampaignsList = campaigns.slice();
+      const _layer = window.currentAnalysisLayer || 'ads';
+      campaigns = campaigns.filter(c => (_layer === 'mmp') === c.startsWith('[MMP] '));
       // 점수 계산용 캠페인 필터 (체크박스)
       const container = document.getElementById('campaignCheckboxGroup');
 
@@ -4764,22 +4793,20 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           let excludedByImp = 0, excludedByConv = 0;
 
           if (thresholdPct > 0 && aggregated.length > 0) {
-            // 코호트별 자체 평균 임계값: Google Ads 와 MMP 는 매체 규모가 달라 한 평균으로 묶으면
-            // 부당 판정 → 각 코호트(소속 소재끼리)의 자체 평균 대비 저노출·저전환을 제외.
-            // 데이터 소스 완전 분리: 코호트·평균·판정 모두 그 매체의 윈도우 노출·전환(c._ads / c._mmp) 기준.
-            // 과거 Google Ads + 최근 MMP 처럼 시기가 다르면 기간에 따라 우세 매체로 코호트가 바뀜.
-            // 두 매체 모두 활동 0이면 미집행 → 항상 제외.
+            // 레이어 우선 분석: 활성 레이어 단일 코호트 — 캠페인 선택이 코호트를 못 바꿈(모수 안정).
+            // 판정·평균·임계 전부 확정 레이어 매체의 윈도우 노출·전환(c._ads / c._mmp) 기준.
+            // 활성 레이어 무활동 소재 = 미집행 → 항상 제외(제외 목록 '미집행' 표기).
+            const layerKey = (window.currentAnalysisLayer === 'mmp') ? 'mmp' : 'ads';
+            const layerLabel = layerKey === 'mmp' ? 'MMP' : 'Google Ads';
             const vol = (c, key) => key === 'mmp'
               ? { imp: (c._mmp && c._mmp.imp) || 0, conv: (c._mmp && c._mmp.conv) || 0 }
               : { imp: (c._ads && c._ads.imp) || 0, conv: (c._ads && c._ads.conv) || 0 };
-            const cohortOf = c => {
-              const g = (c._ads && c._ads.imp) || 0, m = (c._mmp && c._mmp.imp) || 0;
-              if (g === 0 && m === 0 && (c.노출수 || 0) === 0 && (c.전환 || 0) === 0) return 'none';
-              return (m > g) ? 'mmp' : 'ads';   // 윈도우 내 노출 우세 매체로 분류
-            };
 
-            const groups = { ads: [], mmp: [], none: [] };
-            aggregated.forEach(c => groups[cohortOf(c)].push(c));
+            const groups = { active: [], none: [] };
+            aggregated.forEach(c => {
+              const v = vol(c, layerKey);
+              groups[(v.imp > 0 || v.conv > 0) ? 'active' : 'none'].push(c);
+            });
 
             // 한 코호트를 그 매체의 자체 평균 대비 임계값으로 판정 → {passed, excluded}
             const applyThreshold = (cohort, label, key) => {
@@ -4804,19 +4831,17 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
               return { passed, excluded };
             };
 
-            const adsRes = applyThreshold(groups.ads, 'Google Ads', 'ads');
-            const mmpRes = applyThreshold(groups.mmp, 'MMP', 'mmp');
-            groups.none.forEach(c => { c._excludeReason = ['데이터 없음(미집행/선론칭)']; c._excludeCohort = 'none'; });
+            const res = applyThreshold(groups.active, layerLabel, layerKey);
+            groups.none.forEach(c => { c._excludeReason = [`${layerLabel} 데이터 없음(미집행/선론칭)`]; c._excludeCohort = 'none'; });
 
-            aggregated = [...adsRes.passed, ...mmpRes.passed];
-            excludedCreatives = [...adsRes.excluded, ...mmpRes.excluded, ...groups.none];
+            aggregated = res.passed;
+            excludedCreatives = [...res.excluded, ...groups.none];
 
-            console.log(`🚫 임계값(${thresholdPct}%) 코호트별: ` +
-              `Google Ads ${groups.ads.length}개→유지 ${adsRes.passed.length} · ` +
-              `MMP ${groups.mmp.length}개→유지 ${mmpRes.passed.length} · ` +
+            console.log(`🚫 임계값(${thresholdPct}%) ${layerLabel} 단일 코호트: ` +
+              `${groups.active.length}개→유지 ${res.passed.length} · ` +
               `미집행 ${groups.none.length}개 제외 | 총 제외 ${excludedCreatives.length}개`);
-            filterSummary.push(`저노출/저전환 ${thresholdPct}% 미만 제외(코호트별 자체평균): ` +
-              `-${excludedCreatives.length}개 (Google Ads ${adsRes.excluded.length} · MMP ${mmpRes.excluded.length} · 미집행 ${groups.none.length})`);
+            filterSummary.push(`저노출/저전환 ${thresholdPct}% 미만 제외(${layerLabel} 평균 기준): ` +
+              `-${excludedCreatives.length}개 (저성과 ${res.excluded.length} · 미집행 ${groups.none.length})`);
           }
           
           // 3. 점수 계산
@@ -5518,13 +5543,16 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       attachHeaderSort();
       attachRowSelection();
 
-      // 분석 레이어 바 + 기본 레이어 자동 선택: 기간 내 Google Ads 활동 없고 MMP만 있으면 MMP 레이어로 시작.
+      // 분석 레이어 바(상태 표시) + 레이어 확정: 사이드바 선택 레이어 우선, 그 레이어가 무활동이면 활동 레이어로 폴백(+사이드바 동기화).
       const _layerBar = document.getElementById('analysisLayerBar');
       if (_layerBar) _layerBar.classList.toggle('visible', hasMmp);
       const gAdsActive = creatives.some(c => c._ads && c._ads.imp > 0);
       const mmpActive  = creatives.some(c => c._mmp && c._mmp.imp > 0);
-      const defaultLayer = (hasMmp && !gAdsActive && mmpActive) ? 'mmp' : 'ads';
-      switchAnalysisLayer(defaultLayer);   // 헤더·셀·총점·등급·정렬·통계·위험신호·유형요약을 레이어 기준으로 렌더
+      let _layerPick = window.currentAnalysisLayer || 'ads';
+      if (_layerPick === 'ads' && !gAdsActive && mmpActive) _layerPick = 'mmp';
+      else if (_layerPick === 'mmp' && !mmpActive && gAdsActive) _layerPick = 'ads';
+      if (_layerPick !== (window.currentAnalysisLayer || 'ads') && typeof syncSidebarLayerUi === 'function') syncSidebarLayerUi(_layerPick);
+      switchAnalysisLayer(_layerPick);   // 헤더·셀·총점·등급·정렬·통계·위험신호·유형요약을 레이어 기준으로 렌더
 
       // ── v5.1: 캠페인 비교 표 렌더링 (2개 이상 캠페인 시 자동)
       if (window._lastFilteredRows) {
