@@ -1634,9 +1634,16 @@
               <option value="cpa">CPA 풀 백분위 높은 순</option>
               <option id="resultSortMmpOpt" value="mmpscore" style="display:none;">MMP 품질점수 높은 순</option>
             </select>
-            <label style="display:inline-flex;align-items:center;gap:4px;font-size:12px;margin-left:14px;cursor:pointer;">
+            <label style="display:inline-flex;align-items:center;gap:4px;font-size:12px;margin-left:14px;cursor:pointer;white-space:nowrap;">
               <input type="checkbox" id="selectedOnlyToggle"> 선택만 보기 <span id="selectedCount" style="color:#6b7280;"></span>
             </label>
+            <span style="display:inline-flex;align-items:center;gap:6px;margin-left:14px;">
+              <input type="search" id="selectByNameInput" placeholder="소재명 검색 (표 필터)" oninput="onSelectByNameInput()"
+                     title="입력하면 표가 검색 결과로 좁혀집니다. 결과를 헤더의 '전체 선택'으로 한 번에 선택하세요."
+                     style="font-size:12px;padding:4px 8px;border:1px solid var(--border-default);border-radius:var(--radius-md);width:180px;">
+              <span id="selectByNameHint" style="font-size:11px;color:#9ca3af;white-space:nowrap;"></span>
+              <button type="button" class="rt-btn" onclick="clearSelection()" title="체크한 선택을 전체 해제">선택 해제</button>
+            </span>
             <label class="rt-sort-label" style="margin-left:14px;">목표</label>
             <select id="objectiveSelect" onchange="onObjectiveChange(this.value)" class="rt-select">
               <option value="auto">자동감지</option>
@@ -2702,6 +2709,30 @@ function attachRowSelection() {
     tog.dataset.selBound = '1';
     tog.addEventListener('change', () => renderResultTableRows(window.currentCreatives || []));
   }
+}
+
+// 소재명 검색 = 표 필터. 공백 구분 다중 키워드 = OR. 결과는 헤더 '전체 선택'으로 일괄 선택.
+function _selectByNameMatchCount() {
+  const q = (document.getElementById('selectByNameInput')?.value || '').trim().toLowerCase();
+  if (!q) return 0;
+  const terms = q.split(/\s+/).filter(Boolean);
+  return (window.currentCreatives || []).filter(c =>
+    terms.some(t => String(c.key || c.소재명 || '').toLowerCase().includes(t))).length;
+}
+// 검색어 입력 즉시: 매칭 개수 힌트 + 표를 검색 결과로 필터(디바운스).
+function onSelectByNameInput() {
+  const el = document.getElementById('selectByNameHint');
+  const q = (document.getElementById('selectByNameInput')?.value || '').trim();
+  if (el) el.textContent = q ? `${_selectByNameMatchCount()}개` : '';
+  clearTimeout(window._selByNameTimer);
+  window._selByNameTimer = setTimeout(() => renderResultTableRows(window.currentCreatives || []), 180);
+}
+// 선택 해제 = 체크한 선택만 초기화(검색어는 유지 — 검색은 네이티브 ✕로 지움).
+function clearSelection() {
+  const s = window._selectedKeys || (window._selectedKeys = new Set());
+  s.clear();
+  renderResultTableRows(window.currentCreatives || []);
+  const cntEl = document.getElementById('selectedCount'); if (cntEl) cntEl.textContent = '';
 }
 
 function plParseCSV(text) {
@@ -5343,7 +5374,14 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const _selSet = window._selectedKeys || (window._selectedKeys = new Set());
       const _selOnlyEl = document.getElementById('selectedOnlyToggle');
       const _selOnly = !!(_selOnlyEl && _selOnlyEl.checked) && _selSet.size > 0;
-      const _rows = _selOnly ? creatives.filter(c => _selSet.has(c.key)) : creatives;
+      // 소재명 검색어 있으면 표를 미리 필터(공백 구분 OR) — '검색 선택'은 이 결과에 대해 동작
+      const _q = (document.getElementById('selectByNameInput')?.value || '').trim().toLowerCase();
+      const _terms = _q ? _q.split(/\s+/).filter(Boolean) : [];
+      let _rows = _selOnly ? creatives.filter(c => _selSet.has(c.key)) : creatives;
+      if (_terms.length) _rows = _rows.filter(c => {
+        const name = String(c.key || c.소재명 || '').toLowerCase();
+        return _terms.some(t => name.includes(t));
+      });
 
       _rows.forEach((c, index) => {
         const tr = document.createElement('tr');
