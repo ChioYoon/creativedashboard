@@ -5391,6 +5391,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         const imageUrl = c.meta?.['링크'] || c.이미지링크 || '';
         const isVideo = c.유형 === 'VID';
         const hasImage = imageUrl && imageUrl.startsWith('http');
+        // 모달은 소재 키로 오픈(openModalByName) — 검색·선택만보기 필터 시 행 인덱스↔전체배열 인덱스 어긋남 방지
+        const _kEsc = String(c.key || c.소재명 || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
 
         // 위험 신호 아이콘 HTML 생성
         const sigs = riskSignals[c.key] || [];
@@ -5402,11 +5404,11 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         // 썸네일 HTML 생성
         let previewHtml = '';
         if (isVideo) {
-          previewHtml = (yt => `<div class="preview-video"${yt ? ` style="background:linear-gradient(rgba(0,0,0,.30),rgba(0,0,0,.30)),url('${yt}'),linear-gradient(135deg,#DC2828 0%,#FF6B6B 100%);background-size:cover;background-position:center;"` : ''} onclick="openPreviewModal(${index})"></div>`)(youtubeThumb(imageUrl));
+          previewHtml = (yt => `<div class="preview-video"${yt ? ` style="background:linear-gradient(rgba(0,0,0,.30),rgba(0,0,0,.30)),url('${yt}'),linear-gradient(135deg,#DC2828 0%,#FF6B6B 100%);background-size:cover;background-position:center;"` : ''} onclick="openModalByName('${_kEsc}')"></div>`)(youtubeThumb(imageUrl));
         } else if (hasImage) {
-          previewHtml = `<img src="${imageUrl}" class="preview-thumbnail" onclick="openPreviewModal(${index})" alt="미리보기">`;
+          previewHtml = `<img src="${imageUrl}" class="preview-thumbnail" onclick="openModalByName('${_kEsc}')" alt="미리보기">`;
         } else {
-          previewHtml = `<span class="preview-placeholder-clickable" onclick="openPreviewModal(${index})" title="소재 상세 정보 보기" style="cursor:pointer; color:#9ca3af; font-size:24px; display:inline-block; padding:8px 12px; border:1.5px dashed #d1d5db; border-radius:8px; transition:all .15s;" onmouseover="this.style.background='#fef2f2'; this.style.borderColor='#DC2828';" onmouseout="this.style.background=''; this.style.borderColor='#d1d5db';">📷</span>`;
+          previewHtml = `<span class="preview-placeholder-clickable" onclick="openModalByName('${_kEsc}')" title="소재 상세 정보 보기" style="cursor:pointer; color:#9ca3af; font-size:24px; display:inline-block; padding:8px 12px; border:1.5px dashed #d1d5db; border-radius:8px; transition:all .15s;" onmouseover="this.style.background='#fef2f2'; this.style.borderColor='#DC2828';" onmouseout="this.style.background=''; this.style.borderColor='#d1d5db';">📷</span>`;
         }
 
         // 레이어별 4지표·총점·등급 (데이터 소스 분리: ads=순수 Google Ads / mmp=순수 MMP)
