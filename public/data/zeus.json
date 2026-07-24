@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "title_id": "zeus",
-  "generated_at": "2026-07-24T12:01:04+09:00",
+  "generated_at": "2026-07-24T13:01:16+09:00",
   "pipeline_version": "stage2-mvp",
   "gemini_model": "gemini-2.5-flash",
   "creatives": [
@@ -74,7 +74,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-24T12:00:21+09:00",
+      "tagged_at": "2026-07-24T13:00:37+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Event-CharacterName01-DA\\260807_BNR_P-Event-CharacterName01-DA_L_1080x1920_KR.jpg",
@@ -171,7 +171,7 @@
       "main_characters": [],
       "color_tone": "골드·화이트 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-24T12:00:21+09:00",
+      "tagged_at": "2026-07-24T13:00:38+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Event-LaunchDate01-DA\\260807_BNR_P-Event-LaunchDate01-DA_L_1200x628_KR.jpg",
@@ -276,7 +276,7 @@
       "main_characters": [],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-24T12:00:22+09:00",
+      "tagged_at": "2026-07-24T13:00:38+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-01-PV\\260701_VID_P-Genre-DirInsight-01-PV_V_1080x1920_KR.mp4"
@@ -778,8 +778,8 @@
           "clicks": 9,
           "cost_micros": 4797032074,
           "cost": 4797.032074,
-          "conversions": 1.77249,
-          "conversions_value": 1.77249
+          "conversions": 1.772544,
+          "conversions_value": 1.772544
         },
         {
           "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 1화 | 다시 찾고 싶은 MMORPG의 본질",
@@ -2314,9 +2314,9 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=dOkcBZxxOmU",
       "creative_concept": "P-Genre-DirInsight-02-PV",
-      "전환": 1512,
-      "비용": 2343466,
-      "노출수": 504216,
+      "전환": 1513,
+      "비용": 2343460,
+      "노출수": 504215,
       "클릭수": 6536,
       "Revenue": 1066,
       "hooking_strategy": "비주얼 임팩트",
@@ -2373,7 +2373,7 @@
       "main_characters": [],
       "color_tone": "다크 그레이",
       "cta_type": null,
-      "tagged_at": "2026-07-24T12:00:23+09:00",
+      "tagged_at": "2026-07-24T13:00:39+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-02-PV\\260708_VID_P-Genre-DirInsight-02-PV_V_1080x1920_KR.mp4"
@@ -2427,7 +2427,7 @@
           "clicks": 612,
           "cost_micros": 180750823314,
           "cost": 180750.823314,
-          "conversions": 84.0,
+          "conversions": 85.0,
           "conversions_value": 0.0
         },
         {
@@ -2887,12 +2887,12 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=dOkcBZxxOmU",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 22801,
+          "impressions": 22800,
           "clicks": 83,
-          "cost_micros": 76579547731,
-          "cost": 76579.547731,
-          "conversions": 20.075323,
-          "conversions_value": 20.075323
+          "cost_micros": 76574025109,
+          "cost": 76574.025109,
+          "conversions": 20.093756,
+          "conversions_value": 20.093756
         },
         {
           "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 2화 | 새로운 경쟁, 새로운 플레이",
@@ -4016,7 +4016,7 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=gAaWDsukpSE",
       "creative_concept": "P-Genre-DirInsight-03-PV",
-      "전환": 335,
+      "전환": 336,
       "비용": 1490069,
       "노출수": 320086,
       "클릭수": 5315,
@@ -4080,7 +4080,7 @@
       "main_characters": [],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:00:23+09:00",
+      "tagged_at": "2026-07-24T13:00:39+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-03-PV\\260715_VID_P-Genre-DirInsight-03-PV_V_1080x1920_KR.mp4"
@@ -4228,8 +4228,8 @@
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 21587,
           "clicks": 399,
-          "cost_micros": 50649995558,
-          "cost": 50649.995558,
+          "cost_micros": 50650433709,
+          "cost": 50650.433709,
           "conversions": 22.0,
           "conversions_value": 0.0
         },
@@ -4486,7 +4486,7 @@
           "clicks": 257,
           "cost_micros": 89730807642,
           "cost": 89730.807642,
-          "conversions": 18.0,
+          "conversions": 19.0,
           "conversions_value": 0.0
         },
         {
@@ -4979,7 +4979,7 @@
       "creative_concept": "P-Genre-DirInsight-04-PV",
       "전환": 644,
       "비용": 2496880,
-      "노출수": 304158,
+      "노출수": 304157,
       "클릭수": 7561,
       "Revenue": 39,
       "hooking_strategy": "캐릭터 외형 소구",
@@ -5042,7 +5042,7 @@
       ],
       "color_tone": "다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:00:24+09:00",
+      "tagged_at": "2026-07-24T13:00:40+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-04-PV\\260715_VID_P-Genre-DirInsight-04-PV_V_1080x1920_KR.mp4"
@@ -5188,7 +5188,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_3W_260715",
           "asset_url": "https://www.youtube.com/watch?v=dnvBMHJQxFw",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 13681,
+          "impressions": 13680,
           "clicks": 558,
           "cost_micros": 63730059118,
           "cost": 63730.059118,
@@ -6096,7 +6096,7 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=NPHcsI2dHQ0",
       "creative_concept": "P-Genre-DirInsight-05-PV",
-      "전환": 573,
+      "전환": 574,
       "비용": 2241086,
       "노출수": 282131,
       "클릭수": 7941,
@@ -6156,7 +6156,7 @@
       "main_characters": [],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:00:25+09:00",
+      "tagged_at": "2026-07-24T13:00:41+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-05-PV\\260715_VID_P-Genre-DirInsight-05-PV_V_1080x1920_KR.mp4"
@@ -6562,7 +6562,7 @@
           "clicks": 434,
           "cost_micros": 282297024813,
           "cost": 282297.024813,
-          "conversions": 57.0,
+          "conversions": 58.0,
           "conversions_value": 0.0
         },
         {
@@ -7067,11 +7067,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=-Z-uy52xbCA",
       "creative_concept": "P-Genre-GamePreview-01-PV",
-      "전환": 2678,
+      "전환": 2679,
       "비용": 5629404,
       "노출수": 857956,
       "클릭수": 11511,
-      "Revenue": 873,
+      "Revenue": 874,
       "hooking_strategy": "캐릭터 외형 소구",
       "USP": "전략/경쟁형(상성/조합)",
       "art_style": "시네마틱 실사 합성",
@@ -7134,7 +7134,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:00:32+09:00",
+      "tagged_at": "2026-07-24T13:00:47+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-GamePreview-01-PV\\260701_VID_P-Genre-GamePreview-01-PV_L_1920x1080_KR.mp4"
@@ -7700,8 +7700,8 @@
           "clicks": 246,
           "cost_micros": 121981312933,
           "cost": 121981.312933,
-          "conversions": 65.724461,
-          "conversions_value": 65.724461
+          "conversions": 66.825884,
+          "conversions_value": 66.825884
         },
         {
           "creative_name": "[제우스: 오만의 신] 게임 플레이 프리뷰",
@@ -7748,8 +7748,8 @@
           "clicks": 325,
           "cost_micros": 147366039768,
           "cost": 147366.039768,
-          "conversions": 56.681957,
-          "conversions_value": 56.681957
+          "conversions": 56.769065,
+          "conversions_value": 56.769065
         },
         {
           "creative_name": "[제우스: 오만의 신] 게임 플레이 프리뷰",
@@ -9084,7 +9084,7 @@
       "main_characters": [],
       "color_tone": "골드·화이트 판타지",
       "cta_type": "상태 변화 유도형",
-      "tagged_at": "2026-07-24T12:00:32+09:00",
+      "tagged_at": "2026-07-24T13:00:47+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Genre-MMORPG01-DA\\260708_BNR_P-Genre-MMORPG01-DA_L_1024x768_KR.jpg",
@@ -11884,7 +11884,7 @@
       "링크": "https://www.youtube.com/watch?v=NfznwVeVvFY",
       "creative_concept": "P-Ingame-ClassArtisan-01-PV",
       "전환": 427,
-      "비용": 1151719,
+      "비용": 1151717,
       "노출수": 216502,
       "클릭수": 3386,
       "Revenue": 174,
@@ -11947,7 +11947,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:00:36+09:00",
+      "tagged_at": "2026-07-24T13:00:50+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassArtisan-01-PV\\260710_VID_P-Ingame-ClassArtisan-01-PV_L_1920x1080_KR.mp4"
@@ -12159,8 +12159,8 @@
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 5010,
           "clicks": 176,
-          "cost_micros": 43261513304,
-          "cost": 43261.513304,
+          "cost_micros": 43259310609,
+          "cost": 43259.310609,
           "conversions": 13.0,
           "conversions_value": 0.0
         },
@@ -12321,8 +12321,8 @@
           "clicks": 32,
           "cost_micros": 19430729686,
           "cost": 19430.729686,
-          "conversions": 15.041125,
-          "conversions_value": 15.041125
+          "conversions": 15.05023,
+          "conversions_value": 15.05023
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 아티산",
@@ -12369,8 +12369,8 @@
           "clicks": 46,
           "cost_micros": 22556460361,
           "cost": 22556.460361,
-          "conversions": 11.023338,
-          "conversions_value": 11.023338
+          "conversions": 11.024599,
+          "conversions_value": 11.024599
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 아티산",
@@ -13104,7 +13104,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:00:36+09:00",
+      "tagged_at": "2026-07-24T13:00:51+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassArtisan-01-SS\\260710_VID_P-Ingame-ClassArtisan-01-SS_V_1080x1920_KR.mp4"
@@ -14306,8 +14306,8 @@
       "링크": "https://www.youtube.com/watch?v=vWNe_fQoE_M",
       "creative_concept": "P-Ingame-ClassAssassin-01-PV",
       "전환": 365,
-      "비용": 1075294,
-      "노출수": 175908,
+      "비용": 1075288,
+      "노출수": 175906,
       "클릭수": 3696,
       "Revenue": 125,
       "hooking_strategy": "비주얼 임팩트",
@@ -14369,7 +14369,7 @@
       ],
       "color_tone": "다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:00:39+09:00",
+      "tagged_at": "2026-07-24T13:00:53+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassAssassin-01-PV\\260710_VID_P-Ingame-ClassAssassin-01-PV_L_1920x1080_KR.mp4"
@@ -14581,8 +14581,8 @@
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 4490,
           "clicks": 131,
-          "cost_micros": 28670649035,
-          "cost": 28670.649035,
+          "cost_micros": 28669221741,
+          "cost": 28669.221741,
           "conversions": 12.0,
           "conversions_value": 0.0
         },
@@ -14595,10 +14595,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://www.youtube.com/watch?v=vWNe_fQoE_M",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 3926,
+          "impressions": 3924,
           "clicks": 162,
-          "cost_micros": 27729654014,
-          "cost": 27729.654014,
+          "cost_micros": 27725306705,
+          "cost": 27725.306705,
           "conversions": 11.0,
           "conversions_value": 0.0
         },
@@ -15500,7 +15500,7 @@
       ],
       "color_tone": "다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:00:40+09:00",
+      "tagged_at": "2026-07-24T13:00:54+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassAssassin-01-SS\\260710_VID_P-Ingame-ClassAssassin-01-SS_V_1080x1920_KR.mp4"
@@ -16701,7 +16701,7 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=9CmiYo06gOQ",
       "creative_concept": "P-Ingame-ClassBerserker-01-PV",
-      "전환": 316,
+      "전환": 315,
       "비용": 868714,
       "노출수": 129004,
       "클릭수": 2713,
@@ -16761,7 +16761,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:00:43+09:00",
+      "tagged_at": "2026-07-24T13:00:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBerserker-01-PV\\260710_VID_P-Ingame-ClassBerserker-01-PV_L_1920x1080_KR.mp4"
@@ -16975,7 +16975,7 @@
           "clicks": 195,
           "cost_micros": 28769064114,
           "cost": 28769.064114,
-          "conversions": 8.0,
+          "conversions": 7.0,
           "conversions_value": 0.0
         },
         {
@@ -17215,8 +17215,8 @@
           "clicks": 23,
           "cost_micros": 24919063266,
           "cost": 24919.063266,
-          "conversions": 6.175165,
-          "conversions_value": 6.175165
+          "conversions": 6.270871,
+          "conversions_value": 6.270871
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 버서커",
@@ -17788,7 +17788,7 @@
       ],
       "color_tone": "다크 브라운·골드",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:00:44+09:00",
+      "tagged_at": "2026-07-24T13:00:57+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBerserker-01-SS\\260710_VID_P-Ingame-ClassBerserker-01-SS_V_1080x1920_KR.mp4"
@@ -18924,8 +18924,8 @@
       "링크": "https://www.youtube.com/watch?v=OEn5XNVhxA0",
       "creative_concept": "P-Ingame-ClassBlessed-01-PV",
       "전환": 466,
-      "비용": 985503,
-      "노출수": 234868,
+      "비용": 985505,
+      "노출수": 234869,
       "클릭수": 3167,
       "Revenue": 270,
       "hooking_strategy": "캐릭터 외형 소구",
@@ -18985,7 +18985,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:00:46+09:00",
+      "tagged_at": "2026-07-24T13:01:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBlessed-01-PV\\260710_VID_P-Ingame-ClassBlessed-01-PV_L_1920x1080_KR.mp4"
@@ -19359,8 +19359,8 @@
           "clicks": 71,
           "cost_micros": 36786216225,
           "cost": 36786.216225,
-          "conversions": 21.422809,
-          "conversions_value": 21.422809
+          "conversions": 21.431917,
+          "conversions_value": 21.431917
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 블레스드",
@@ -19419,10 +19419,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=OEn5XNVhxA0",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 30331,
+          "impressions": 30332,
           "clicks": 149,
-          "cost_micros": 57929292217,
-          "cost": 57929.292217,
+          "cost_micros": 57930998050,
+          "cost": 57930.99805,
           "conversions": 35.234389,
           "conversions_value": 35.234389
         },
@@ -20080,9 +20080,9 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=n8t40W9PY3Q",
       "creative_concept": "P-Ingame-ClassBlessed-01-SS",
-      "전환": 391,
+      "전환": 390,
       "비용": 1020480,
-      "노출수": 183819,
+      "노출수": 183818,
       "클릭수": 2408,
       "Revenue": 163,
       "hooking_strategy": "캐릭터 외형 소구",
@@ -20144,7 +20144,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:00:47+09:00",
+      "tagged_at": "2026-07-24T13:01:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBlessed-01-SS\\260710_VID_P-Ingame-ClassBlessed-01-SS_V_1080x1920_KR.mp4"
@@ -20358,7 +20358,7 @@
           "clicks": 103,
           "cost_micros": 31536518078,
           "cost": 31536.518078,
-          "conversions": 11.0,
+          "conversions": 10.0,
           "conversions_value": 0.0
         },
         {
@@ -20370,7 +20370,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://www.youtube.com/watch?v=n8t40W9PY3Q",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 4121,
+          "impressions": 4120,
           "clicks": 104,
           "cost_micros": 22331378775,
           "cost": 22331.378775,
@@ -20598,8 +20598,8 @@
           "clicks": 20,
           "cost_micros": 18985338387,
           "cost": 18985.338387,
-          "conversions": 1.029614,
-          "conversions_value": 1.029614
+          "conversions": 1.116093,
+          "conversions_value": 1.116093
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 블레스드",
@@ -21393,7 +21393,7 @@
       "kpi_percentiles": {
         "ctr": 41,
         "cvr": 56,
-        "cpa": 15
+        "cpa": 13
       },
       "scores": {
         "total": 55.95,
@@ -21411,7 +21411,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-24T12:00:50+09:00",
+      "tagged_at": "2026-07-24T13:01:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassElimentalist-01-PV\\260710_VID_P-Ingame-ClassElimentalist-01-PV_L_1920x1080_KR.mp4"
@@ -21785,8 +21785,8 @@
           "clicks": 40,
           "cost_micros": 22025823188,
           "cost": 22025.823188,
-          "conversions": 13.653566,
-          "conversions_value": 13.653566
+          "conversions": 13.658996,
+          "conversions_value": 13.658996
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 엘리멘탈리스트",
@@ -21833,8 +21833,8 @@
           "clicks": 30,
           "cost_micros": 16580460442,
           "cost": 16580.460442,
-          "conversions": 3.623875,
-          "conversions_value": 3.623875
+          "conversions": 3.625137,
+          "conversions_value": 3.625137
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 엘리멘탈리스트",
@@ -22441,10 +22441,10 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=sdE93je8-5o",
       "creative_concept": "P-Ingame-ClassElimentalist-01-SS",
-      "전환": 214,
-      "비용": 649170,
+      "전환": 215,
+      "비용": 649353,
       "노출수": 120099,
-      "클릭수": 2627,
+      "클릭수": 2628,
       "Revenue": 62,
       "hooking_strategy": "캐릭터 외형 소구",
       "USP": "전략/경쟁형(상성/조합)",
@@ -22483,7 +22483,7 @@
       "kpi_percentiles": {
         "ctr": 77,
         "cvr": 38,
-        "cpa": 13
+        "cpa": 15
       },
       "scores": {
         "total": 43.45,
@@ -22501,7 +22501,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:00:50+09:00",
+      "tagged_at": "2026-07-24T13:01:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassElimentalist-01-SS\\260710_VID_P-Ingame-ClassElimentalist-01-SS_V_1080x1920_KR.mp4"
@@ -22715,7 +22715,7 @@
           "clicks": 117,
           "cost_micros": 19992543270,
           "cost": 19992.54327,
-          "conversions": 4.0,
+          "conversions": 5.0,
           "conversions_value": 0.0
         },
         {
@@ -22728,9 +22728,9 @@
           "asset_url": "https://www.youtube.com/watch?v=sdE93je8-5o",
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 4778,
-          "clicks": 94,
-          "cost_micros": 20081194582,
-          "cost": 20081.194582,
+          "clicks": 95,
+          "cost_micros": 20264228797,
+          "cost": 20264.228797,
           "conversions": 7.0,
           "conversions_value": 0.0
         },
@@ -23710,7 +23710,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:00:53+09:00",
+      "tagged_at": "2026-07-24T13:01:06+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassKnight-01-PV\\260710_VID_P-Ingame-ClassKnight-01-PV_L_1920x1080_KR.mp4"
@@ -24148,8 +24148,8 @@
           "clicks": 34,
           "cost_micros": 22740001226,
           "cost": 22740.001226,
-          "conversions": 12.071837,
-          "conversions_value": 12.071837
+          "conversions": 12.072033,
+          "conversions_value": 12.072033
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 나이트",
@@ -24856,7 +24856,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:00:53+09:00",
+      "tagged_at": "2026-07-24T13:01:07+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassKnight-01-SS\\260710_VID_P-Ingame-ClassKnight-01-SS_V_1080x1920_KR.mp4"
@@ -26067,7 +26067,7 @@
       ],
       "color_tone": "골드·퍼플 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-24T12:00:56+09:00",
+      "tagged_at": "2026-07-24T13:01:09+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassOracle-01-PV\\260710_VID_P-Ingame-ClassOracle-01-PV_L_1920x1080_KR.mp4"
@@ -26489,8 +26489,8 @@
           "clicks": 43,
           "cost_micros": 23953655047,
           "cost": 23953.655047,
-          "conversions": 6.381637,
-          "conversions_value": 6.381637
+          "conversions": 6.384453,
+          "conversions_value": 6.384453
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 오라클",
@@ -26521,8 +26521,8 @@
           "clicks": 48,
           "cost_micros": 36264463295,
           "cost": 36264.463295,
-          "conversions": 12.887704,
-          "conversions_value": 12.887704
+          "conversions": 12.913413,
+          "conversions_value": 12.913413
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 오라클",
@@ -27109,7 +27109,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-24T12:00:57+09:00",
+      "tagged_at": "2026-07-24T13:01:10+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassOracle-01-SS\\260710_VID_P-Ingame-ClassOracle-01-SS_V_1080x1920_KR.mp4"
@@ -28229,7 +28229,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:01:00+09:00",
+      "tagged_at": "2026-07-24T13:01:12+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassRanger-01-PV\\260710_VID_P-Ingame-ClassRanger-01-PV_L_1920x1080_KR.mp4"
@@ -29319,7 +29319,7 @@
       ],
       "color_tone": "다크 그린·골드 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:01:00+09:00",
+      "tagged_at": "2026-07-24T13:01:13+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassRanger-01-SS\\260710_VID_P-Ingame-ClassRanger-01-SS_V_1080x1920_KR.mp4"
@@ -30567,7 +30567,7 @@
       "main_characters": [],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:01:00+09:00",
+      "tagged_at": "2026-07-24T13:01:13+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Reward-PreReward01-DA\\260708_BNR_P-Reward-PreReward01-DA_L_1024x768_KR.jpg",
@@ -31330,7 +31330,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://tpc.googlesyndication.com/simgad/7628132397041124",
           "asset_type": "IMAGE",
-          "impressions": 2828,
+          "impressions": 2829,
           "clicks": 110,
           "cost_micros": 12924465920,
           "cost": 12924.46592,
@@ -31346,7 +31346,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://tpc.googlesyndication.com/simgad/2368163747813145402",
           "asset_type": "IMAGE",
-          "impressions": 5881,
+          "impressions": 5880,
           "clicks": 152,
           "cost_micros": 26110695215,
           "cost": 26110.695215,
@@ -33638,7 +33638,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-24T12:01:00+09:00",
+      "tagged_at": "2026-07-24T13:01:13+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Reward-PreReward02-DA\\260708_BNR_P-Reward-PreReward02-DA_L_1024x768_KR.jpg",
@@ -36594,7 +36594,7 @@
       "언어": "KR",
       "링크": "https://tpc.googlesyndication.com/simgad/4101507941330067727",
       "creative_concept": "P-Reward-PreReward03-DA",
-      "전환": 311,
+      "전환": 310,
       "비용": 648657,
       "노출수": 126094,
       "클릭수": 3917,
@@ -36656,7 +36656,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-24T12:01:00+09:00",
+      "tagged_at": "2026-07-24T13:01:13+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_1024x768_KR.jpg",
@@ -37396,7 +37396,7 @@
           "clicks": 128,
           "cost_micros": 19781408155,
           "cost": 19781.408155,
-          "conversions": 9.0,
+          "conversions": 8.0,
           "conversions_value": 0.0
         },
         {
@@ -39436,11 +39436,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=7nuthQJtx9c",
       "creative_concept": "P-Slogan-CinematicPV30s-01-PV",
-      "전환": 5318,
-      "비용": 11019777,
-      "노출수": 4550621,
+      "전환": 5319,
+      "비용": 11019782,
+      "노출수": 4550618,
       "클릭수": 28715,
-      "Revenue": 1221,
+      "Revenue": 1222,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "전략/경쟁형(상성/조합)",
       "art_style": "3D 셀셰이딩",
@@ -39502,7 +39502,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-24T12:01:02+09:00",
+      "tagged_at": "2026-07-24T13:01:15+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-CinematicPV30s-01-PV\\260701_VID_P-Slogan-CinematicPV30s-01-PV_L_1920x1080_KR.mp4",
@@ -40578,7 +40578,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=7nuthQJtx9c",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 70675,
+          "impressions": 70673,
           "clicks": 422,
           "cost_micros": 138582213568,
           "cost": 138582.213568,
@@ -40594,10 +40594,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=NkcGLT0Bfa8",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 80722,
+          "impressions": 80721,
           "clicks": 418,
-          "cost_micros": 156841011518,
-          "cost": 156841.011518,
+          "cost_micros": 156846146347,
+          "cost": 156846.146347,
           "conversions": 53.0,
           "conversions_value": 0.0
         },
@@ -40870,8 +40870,8 @@
           "clicks": 260,
           "cost_micros": 142844725180,
           "cost": 142844.72518,
-          "conversions": 190.136367,
-          "conversions_value": 190.136367
+          "conversions": 191.136367,
+          "conversions_value": 191.136367
         },
         {
           "creative_name": "260701_VID_P-Slogan-CinematicPV30s-01-PV_S_1080x1080_KR",
@@ -41542,8 +41542,8 @@
           "clicks": 5,
           "cost_micros": 5554414840,
           "cost": 5554.41484,
-          "conversions": 3.034342,
-          "conversions_value": 3.034342
+          "conversions": 3.036306,
+          "conversions_value": 3.036306
         },
         {
           "creative_name": "[제우스: 오만의 신] 사전예약 PV | 선택받은 자들만의 신화는 끝났다",
@@ -43909,7 +43909,7 @@
       "creative_concept": "P-Slogan-Keyvisual01-DA",
       "전환": 664,
       "비용": 1659845,
-      "노출수": 555787,
+      "노출수": 555784,
       "클릭수": 10528,
       "Revenue": 103,
       "hooking_strategy": "비주얼 임팩트",
@@ -43969,7 +43969,7 @@
       ],
       "color_tone": "골드·신화적",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-24T12:01:02+09:00",
+      "tagged_at": "2026-07-24T13:01:15+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Slogan-KeyVisual01-DA\\260701_BNR_P-Slogan-Keyvisual01-DA_L_1024x768_KR.jpg",
@@ -45051,7 +45051,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://tpc.googlesyndication.com/simgad/3613338158897016589",
           "asset_type": "IMAGE",
-          "impressions": 5633,
+          "impressions": 5632,
           "clicks": 135,
           "cost_micros": 18104058530,
           "cost": 18104.05853,
@@ -45067,7 +45067,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://tpc.googlesyndication.com/simgad/16974268002158052123",
           "asset_type": "IMAGE",
-          "impressions": 8730,
+          "impressions": 8729,
           "clicks": 187,
           "cost_micros": 30709699545,
           "cost": 30709.699545,
@@ -45099,10 +45099,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://tpc.googlesyndication.com/simgad/3613338158897016589",
           "asset_type": "IMAGE",
-          "impressions": 5930,
+          "impressions": 5929,
           "clicks": 193,
-          "cost_micros": 25793524314,
-          "cost": 25793.524314,
+          "cost_micros": 25793347986,
+          "cost": 25793.347986,
           "conversions": 8.0,
           "conversions_value": 0.0
         },
@@ -47807,7 +47807,7 @@
       "creative_concept": "P-Slogan-Keyvisual02-DA",
       "전환": 652,
       "비용": 1708121,
-      "노출수": 559590,
+      "노출수": 559589,
       "클릭수": 10030,
       "Revenue": 68,
       "hooking_strategy": "비주얼 임팩트",
@@ -47867,7 +47867,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-24T12:01:02+09:00",
+      "tagged_at": "2026-07-24T13:01:15+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Slogan-KeyVisual02-DA\\260701_BNR_P-Slogan-Keyvisual02-DA_L_1024x768_KR.jpg",
@@ -48997,7 +48997,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://tpc.googlesyndication.com/simgad/141055495241229754",
           "asset_type": "IMAGE",
-          "impressions": 4847,
+          "impressions": 4846,
           "clicks": 143,
           "cost_micros": 16346445797,
           "cost": 16346.445797,
@@ -51712,7 +51712,7 @@
       "main_characters": [],
       "color_tone": "골드·판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:01:02+09:00",
+      "tagged_at": "2026-07-24T13:01:15+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Slogan-KeyVisual03-DA\\260722_BNR_P-Slogan-Keyvisual03-DA_L_1024x768_KR.jpg",
@@ -52346,7 +52346,7 @@
       "main_characters": [],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:01:02+09:00",
+      "tagged_at": "2026-07-24T13:01:15+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Slogan-KeyVisual04-DA\\260722_BNR_P-Slogan-Keyvisual04-DA_L_1024x768_KR.jpg",
@@ -52934,10 +52934,10 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=sAf0F7ORrbQ",
       "creative_concept": "P-Slogan-PreregPV15s-01-PV",
-      "전환": 4530,
-      "비용": 10059660,
-      "노출수": 4836687,
-      "클릭수": 20779,
+      "전환": 4533,
+      "비용": 10059704,
+      "노출수": 4836688,
+      "클릭수": 20781,
       "Revenue": 337,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "혜택형(무료뽑기/보상)",
@@ -52998,7 +52998,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-24T12:01:03+09:00",
+      "tagged_at": "2026-07-24T13:01:15+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV15s-01-PV\\260701_VID_P-Slogan-PreregPV15s-01-PV_L_1920x1080_KR.mp4",
@@ -54046,7 +54046,7 @@
           "clicks": 322,
           "cost_micros": 150975849961,
           "cost": 150975.849961,
-          "conversions": 64.0,
+          "conversions": 65.0,
           "conversions_value": 0.0
         },
         {
@@ -54074,10 +54074,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=sAf0F7ORrbQ",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 84709,
+          "impressions": 84708,
           "clicks": 292,
-          "cost_micros": 153095271573,
-          "cost": 153095.271573,
+          "cost_micros": 153134135215,
+          "cost": 153134.135215,
           "conversions": 39.0,
           "conversions_value": 0.0
         },
@@ -54090,11 +54090,11 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=AEvIhXc0aJM",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 77665,
+          "impressions": 77668,
           "clicks": 293,
-          "cost_micros": 144519453087,
-          "cost": 144519.453087,
-          "conversions": 43.0,
+          "cost_micros": 144521910012,
+          "cost": 144521.910012,
+          "conversions": 44.0,
           "conversions_value": 0.0
         },
         {
@@ -54106,10 +54106,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=R5WWqFV605E",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 88251,
+          "impressions": 88250,
           "clicks": 214,
-          "cost_micros": 154609987179,
-          "cost": 154609.987179,
+          "cost_micros": 154612249097,
+          "cost": 154612.249097,
           "conversions": 57.0,
           "conversions_value": 0.0
         },
@@ -55486,7 +55486,7 @@
           "clicks": 10,
           "cost_micros": 4938159229,
           "cost": 4938.159229,
-          "conversions": 0.0,
+          "conversions": 1.0,
           "conversions_value": 0.0
         },
         {
@@ -55595,7 +55595,7 @@
           "asset_url": "https://www.youtube.com/watch?v=R5WWqFV605E",
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 2203,
-          "clicks": 41,
+          "clicks": 43,
           "cost_micros": 12087258472,
           "cost": 12087.258472,
           "conversions": 5.0,
@@ -57209,9 +57209,9 @@
       "링크": "https://www.youtube.com/watch?v=YfJfrSFAB6w",
       "creative_concept": "P-Slogan-PreregPV15s-02-PV",
       "전환": 4066,
-      "비용": 9202728,
-      "노출수": 4301621,
-      "클릭수": 18049,
+      "비용": 9202721,
+      "노출수": 4301620,
+      "클릭수": 18048,
       "Revenue": 98,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "감성 유대형(교감/서사)",
@@ -57272,7 +57272,7 @@
       "main_characters": [],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-24T12:01:03+09:00",
+      "tagged_at": "2026-07-24T13:01:15+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV15s-02-PV\\260701_VID_P-Slogan-PreregPV15s-02-PV_L_1920x1080_KR (1).mp4",
@@ -58333,9 +58333,9 @@
           "asset_url": "https://www.youtube.com/watch?v=79f2CKr_4oM",
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 78027,
-          "clicks": 302,
-          "cost_micros": 149949392692,
-          "cost": 149949.392692,
+          "clicks": 301,
+          "cost_micros": 149943356937,
+          "cost": 149943.356937,
           "conversions": 60.0,
           "conversions_value": 0.0
         },
@@ -58350,8 +58350,8 @@
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 82367,
           "clicks": 326,
-          "cost_micros": 153852257209,
-          "cost": 153852.257209,
+          "cost_micros": 153854333203,
+          "cost": 153854.333203,
           "conversions": 60.0,
           "conversions_value": 0.0
         },
@@ -58364,10 +58364,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=vY486VoOAjY",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 84802,
+          "impressions": 84801,
           "clicks": 206,
-          "cost_micros": 149621865075,
-          "cost": 149621.865075,
+          "cost_micros": 149622333067,
+          "cost": 149622.333067,
           "conversions": 56.0,
           "conversions_value": 0.0
         },
@@ -58382,8 +58382,8 @@
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 102375,
           "clicks": 296,
-          "cost_micros": 182056321004,
-          "cost": 182056.321004,
+          "cost_micros": 182053246566,
+          "cost": 182053.246566,
           "conversions": 56.0,
           "conversions_value": 0.0
         },
@@ -60982,8 +60982,8 @@
       "링크": "https://www.youtube.com/watch?v=Kc-JF2eSmt8",
       "creative_concept": "P-Slogan-PreregPV30s-01-PV",
       "전환": 3982,
-      "비용": 9144900,
-      "노출수": 3628049,
+      "비용": 9144903,
+      "노출수": 3628051,
       "클릭수": 26169,
       "Revenue": 245,
       "hooking_strategy": "비주얼 임팩트",
@@ -61047,7 +61047,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-24T12:01:03+09:00",
+      "tagged_at": "2026-07-24T13:01:16+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV30s-01-PV\\260701_VID_P-Slogan-PreregPV30s-01-PV_L_1920x1080_KR.mp4",
@@ -62123,10 +62123,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=Kc-JF2eSmt8",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 73819,
+          "impressions": 73820,
           "clicks": 364,
-          "cost_micros": 148488219447,
-          "cost": 148488.219447,
+          "cost_micros": 148489990383,
+          "cost": 148489.990383,
           "conversions": 49.0,
           "conversions_value": 0.0
         },
@@ -62139,10 +62139,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=lCgioDJVeac",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 74871,
+          "impressions": 74870,
           "clicks": 486,
-          "cost_micros": 157178677117,
-          "cost": 157178.677117,
+          "cost_micros": 157179944115,
+          "cost": 157179.944115,
           "conversions": 49.0,
           "conversions_value": 0.0
         },
@@ -62155,7 +62155,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=qLPTHnmb9QQ",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 9846,
+          "impressions": 9847,
           "clicks": 51,
           "cost_micros": 17003767478,
           "cost": 17003.767478,
@@ -62523,10 +62523,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=Kc-JF2eSmt8",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 4548,
+          "impressions": 4549,
           "clicks": 17,
-          "cost_micros": 12038414489,
-          "cost": 12038.414489,
+          "cost_micros": 12038564016,
+          "cost": 12038.564016,
           "conversions": 6.344593,
           "conversions_value": 6.344593
         },
@@ -64604,7 +64604,7 @@
       "링크": "https://www.youtube.com/watch?v=JqGApUxOczY",
       "creative_concept": "P-Slogan-PreregPV30s-02-PV",
       "전환": 3937,
-      "비용": 9302618,
+      "비용": 9302613,
       "노출수": 3643798,
       "클릭수": 27224,
       "Revenue": 190,
@@ -64669,7 +64669,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-24T12:01:04+09:00",
+      "tagged_at": "2026-07-24T13:01:16+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV30s-02-PV\\260701_VID_P-Slogan-PreregPV30s-02-PV_L_1920x1080_KR.mp4",
@@ -65715,8 +65715,8 @@
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 79309,
           "clicks": 426,
-          "cost_micros": 149534178383,
-          "cost": 149534.178383,
+          "cost_micros": 149529759471,
+          "cost": 149529.759471,
           "conversions": 53.0,
           "conversions_value": 0.0
         },
@@ -65761,7 +65761,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=2Ay0wT3LyAg",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 75504,
+          "impressions": 75506,
           "clicks": 313,
           "cost_micros": 133569560667,
           "cost": 133569.560667,
@@ -65777,7 +65777,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=JqGApUxOczY",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 75515,
+          "impressions": 75513,
           "clicks": 392,
           "cost_micros": 154197707606,
           "cost": 154197.707606,
@@ -68842,7 +68842,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-24T12:01:04+09:00",
+      "tagged_at": "2026-07-24T13:01:16+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Slogan-Universe01-DA\\260708_BNR_P-Slogan-Universe01-DA_L_1024x768_KR.jpg",
@@ -69572,10 +69572,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://tpc.googlesyndication.com/simgad/564143387041189865",
           "asset_type": "IMAGE",
-          "impressions": 3578,
+          "impressions": 3579,
           "clicks": 119,
-          "cost_micros": 11392224454,
-          "cost": 11392.224454,
+          "cost_micros": 11392402360,
+          "cost": 11392.40236,
           "conversions": 2.0,
           "conversions_value": 0.0
         },
@@ -69604,7 +69604,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://tpc.googlesyndication.com/simgad/15629433344837261464",
           "asset_type": "IMAGE",
-          "impressions": 6221,
+          "impressions": 6220,
           "clicks": 175,
           "cost_micros": 32074101231,
           "cost": 32074.101231,
@@ -71396,7 +71396,7 @@
       "creative_concept": "P-Slogan-Universe02-DA",
       "전환": 723,
       "비용": 1816203,
-      "노출수": 578943,
+      "노출수": 578941,
       "클릭수": 10156,
       "Revenue": 166,
       "hooking_strategy": "비주얼 임팩트",
@@ -71456,7 +71456,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-24T12:01:04+09:00",
+      "tagged_at": "2026-07-24T13:01:16+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_1024x768_KR.jpg",
@@ -72554,7 +72554,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://tpc.googlesyndication.com/simgad/15208341403562725288",
           "asset_type": "IMAGE",
-          "impressions": 4923,
+          "impressions": 4922,
           "clicks": 152,
           "cost_micros": 24079448909,
           "cost": 24079.448909,
@@ -72570,10 +72570,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://tpc.googlesyndication.com/simgad/1019220606271681111",
           "asset_type": "IMAGE",
-          "impressions": 8184,
+          "impressions": 8183,
           "clicks": 158,
-          "cost_micros": 20389092263,
-          "cost": 20389.092263,
+          "cost_micros": 20388560224,
+          "cost": 20388.560224,
           "conversions": 11.0,
           "conversions_value": 0.0
         },
@@ -75457,7 +75457,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-24T12:01:04+09:00",
+      "tagged_at": "2026-07-24T13:01:16+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_1024x768_KR.jpg",
@@ -79398,7 +79398,7 @@
       "creative_concept": "P-Slogan-Universe04-DA",
       "전환": 264,
       "비용": 659878,
-      "노출수": 200635,
+      "노출수": 200634,
       "클릭수": 4518,
       "Revenue": 10,
       "hooking_strategy": "비주얼 임팩트",
@@ -79458,7 +79458,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-24T12:01:04+09:00",
+      "tagged_at": "2026-07-24T13:01:16+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입예정\\BNR_P-Slogan-Universe04-DA\\260715_BNR_P-Slogan-Universe04-DA_L_1024x768_KR.jpg",
@@ -79900,7 +79900,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_3W_260715",
           "asset_url": "https://tpc.googlesyndication.com/simgad/3159664496058091820",
           "asset_type": "IMAGE",
-          "impressions": 10951,
+          "impressions": 10950,
           "clicks": 255,
           "cost_micros": 43046287933,
           "cost": 43046.287933,
@@ -81312,7 +81312,7 @@
       "언어": "KR",
       "링크": "https://tpc.googlesyndication.com/simgad/12410848377763307641",
       "creative_concept": "P-Slogan-Universe05-DA",
-      "전환": 313,
+      "전환": 312,
       "비용": 700481,
       "노출수": 227496,
       "클릭수": 4513,
@@ -81359,10 +81359,10 @@
         "cpa": 72
       },
       "scores": {
-        "total": 61.9,
+        "total": 61.31,
         "grade": "우수",
         "rank": 24,
-        "conv": 38.1,
+        "conv": 35.71,
         "cpa": 73.81,
         "ipm": 38.1,
         "roas": 97.62
@@ -81374,7 +81374,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-24T12:01:04+09:00",
+      "tagged_at": "2026-07-24T13:01:16+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입예정\\BNR_P-Slogan-Universe05-DA\\260715_BNR_P-Slogan-Universe05-DA_L_1024x768_KR.jpg",
@@ -81788,7 +81788,7 @@
           "clicks": 416,
           "cost_micros": 70329182621,
           "cost": 70329.182621,
-          "conversions": 37.0,
+          "conversions": 36.0,
           "conversions_value": 0.0
         },
         {
@@ -83210,7 +83210,7 @@
     "cache_hits": 42,
     "cache_misses": 0,
     "failures": 0,
-    "duration_sec": 42.8,
+    "duration_sec": 39.0,
     "prompt_version": "v3.3-2026.06.13-character-split-single-mmorpg-v2",
     "fallback_used": false,
     "carried_forward": 0,
@@ -83231,12 +83231,47 @@
     "game_context_sha": "bbb760e0385d5662"
   },
   "campaign_canonical": {
+    "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp-OO_260716": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACp-OO"
+    },
     "ZEUS_KR_Kakao_NU-Pre_AD_Install-Bizboard_260723": {
       "ua_type": "NU-Pre",
       "country": "NU",
       "os": "Android",
       "media": "AD",
       "product": ""
+    },
+    "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Pangle",
+      "product": "Conversion"
+    },
+    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Meta",
+      "product": "Conversion"
+    },
+    "Incross_HQ_ZEUS_KR_Criteo_NU-Pre_ALL_Display_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Criteo",
+      "product": "Display"
+    },
+    "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "iOS",
+      "media": "Tiktok",
+      "product": "Install-CPP"
     },
     "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701": {
       "ua_type": "NU-Pre",
@@ -83245,20 +83280,6 @@
       "media": "Meta",
       "product": "MAIA-CSL"
     },
-    "ZEUS_KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260723": {
-      "ua_type": "NU-Pre",
-      "country": "NU",
-      "os": "전체",
-      "media": "ALL",
-      "product": ""
-    },
-    "Incross_HQ_ZEUS_KR-KR_Appier_NU-Pre_ALL_Display_260715": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Appier",
-      "product": "Display"
-    },
     "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
@@ -83266,12 +83287,33 @@
       "media": "Meta",
       "product": "Conversion"
     },
-    "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp-OO_260716": {
+    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Display_260723": {
       "ua_type": "NU-Pre",
       "country": "KR",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACp-OO"
+      "os": "전체",
+      "media": "Kakao",
+      "product": "Conv-Display"
+    },
+    "ZEUS_KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260723": {
+      "ua_type": "NU-Pre",
+      "country": "NU",
+      "os": "전체",
+      "media": "ALL",
+      "product": ""
+    },
+    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "iOS",
+      "media": "Meta",
+      "product": "MAIA-CPP"
+    },
+    "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Tiktok",
+      "product": "Conversion"
     },
     "ZEUS_KR_Kakao_NU-Pre_iOS_Install-Display_260723": {
       "ua_type": "NU-Pre",
@@ -83287,33 +83329,12 @@
       "media": "Moloco",
       "product": "Conversion"
     },
-    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "iOS",
-      "media": "Meta",
-      "product": "MAIA-CPP"
-    },
-    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260722": {
+    "Incross_HQ_ZEUS_KR-KR_Appier_NU-Pre_ALL_Display_260715": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "전체",
-      "media": "Kakao",
-      "product": "Conv-Bizboard"
-    },
-    "Incross_HQ_ZEUS_KR_Criteo_NU-Pre_ALL_Display_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Criteo",
+      "media": "Appier",
       "product": "Display"
-    },
-    "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Pangle",
-      "product": "Conversion"
     },
     "ZEUS_KR_Kakao_NU-Pre_ALL_Conv-Display_260723": {
       "ua_type": "NU-Pre",
@@ -83322,19 +83343,19 @@
       "media": "ALL",
       "product": ""
     },
-    "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722": {
+    "ZEUS_KR_Kakao_NU-Pre_iOS_Install-Bizboard_260723": {
       "ua_type": "NU-Pre",
-      "country": "KR",
+      "country": "NU",
       "os": "iOS",
-      "media": "Tiktok",
-      "product": "Install-CPP"
+      "media": "iOS",
+      "product": ""
     },
-    "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701": {
+    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260723": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "전체",
-      "media": "GA",
-      "product": "DemandGen"
+      "media": "Kakao",
+      "product": "Conv-Bizboard"
     },
     "ZEUS_KR_Kakao_NU-Pre_AD_Install-Display_260723": {
       "ua_type": "NU-Pre",
@@ -83350,34 +83371,6 @@
       "media": "MSN",
       "product": "Display"
     },
-    "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "Android",
-      "media": "Tiktok",
-      "product": "Install-CSL"
-    },
-    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Meta",
-      "product": "Conversion"
-    },
-    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Display_260723": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Kakao",
-      "product": "Conv-Display"
-    },
-    "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Tiktok",
-      "product": "Conversion"
-    },
     "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
@@ -83385,27 +83378,34 @@
       "media": "GA",
       "product": "ACp"
     },
-    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260723": {
+    "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "Android",
+      "media": "Tiktok",
+      "product": "Install-CSL"
+    },
+    "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "GA",
+      "product": "DemandGen"
+    },
+    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260722": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "전체",
       "media": "Kakao",
       "product": "Conv-Bizboard"
-    },
-    "ZEUS_KR_Kakao_NU-Pre_iOS_Install-Bizboard_260723": {
-      "ua_type": "NU-Pre",
-      "country": "NU",
-      "os": "iOS",
-      "media": "iOS",
-      "product": ""
     }
   },
   "unmatched_assets": [
     {
       "concept": "ZEUS_BI_제우스오만의신_최종안",
       "source": "google_ads",
-      "impressions": 4056564,
-      "cost": 10839426.55,
+      "impressions": 4056565,
+      "cost": 10839422.88,
       "asset_types": [
         "IMAGE"
       ],
