@@ -4757,7 +4757,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
                 if (md.length) { c.노출수 = 0; c.클릭수 = 0; c.비용 = 0; c.전환 = 0; c.매출 = 0;
                   c.CTR = 0; c.IPM = 0; c.전환율 = 0; c.CPA = 0; c.ROAS = 0; }
                 c._ads = { imp: c.노출수 || 0, conv: c.전환 || 0 };  // 일별 배열 없는 타이틀은 탑레벨 유지
-                c._mmp = { imp: m.imp, conv: m.installs };
+                c._mmp = { imp: m.imp, conv: m.convUa };   // 전환=convUa(NU-Pre 등록+NU D1잔존) — installs는 웹 사전예약 타이틀서 0이라 임계 오판(v5.8 정합)
                 return;
               }
               // Google Ads 윈도우 합산 (선택 캠페인만)
@@ -4774,7 +4774,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
               c.CPA    = c.전환   > 0 ? c.비용   / c.전환  : 0;
               c.ROAS   = c.비용   > 0 ? c.매출   / c.비용  : 0;
               c._ads = { imp: g.imp, conv: Math.round(g.conv) };
-              c._mmp = { imp: m.imp, conv: m.installs };
+              c._mmp = { imp: m.imp, conv: m.convUa };   // 전환=convUa(NU-Pre 등록+NU D1잔존) — installs는 웹 사전예약 타이틀서 0이라 임계 오판(v5.8 정합)
             });
           }
 
