@@ -184,11 +184,11 @@ const GeminiCache = {
      → 재시도할수록 한도를 추가 소진하므로 즉시 에러 반환
    ※ 네트워크 오류(fetch 실패)만 1회 재시도
 ────────────────────────────────────── */
-async function callGeminiAPI(prompt, { maxTokens = GEMINI_CONFIG.MAX_TOKENS, temperature = GEMINI_CONFIG.TEMPERATURE, topP = GEMINI_CONFIG.TOP_P } = {}) {
+async function callGeminiAPI(prompt, { maxTokens = GEMINI_CONFIG.MAX_TOKENS, temperature = GEMINI_CONFIG.TEMPERATURE, topP = GEMINI_CONFIG.TOP_P, model = null } = {}) {
   const apiKey = GeminiKeyManager.get();
   if (!apiKey) throw new Error('API_KEY_MISSING');
 
-  const url = `${GEMINI_CONFIG.BASE_URL}/${GEMINI_CONFIG.MODEL}:generateContent?key=${apiKey}`;
+  const url = `${GEMINI_CONFIG.BASE_URL}/${model || GEMINI_CONFIG.MODEL}:generateContent?key=${apiKey}`;
   const body = {
     contents: [{ parts: [{ text: prompt }] }],
     generationConfig: {
@@ -198,7 +198,8 @@ async function callGeminiAPI(prompt, { maxTokens = GEMINI_CONFIG.MAX_TOKENS, tem
       // ★ thinkingBudget: 0 → thinking 모드 비활성화
       //   gemini-2.0-flash에서는 이 필드 무시됨 (무해)
       //   gemini-2.5-flash에서 thinking이 기본 활성화되면 출력 한도 대부분 소진 → JSON 잘림
-      thinkingConfig: { thinkingBudget: 0 },
+      //   model 오버라이드(예: pro, 프리텍스트 보고서) 시엔 thinking 허용 — pro는 budget 0 미지원
+      ...(model ? {} : { thinkingConfig: { thinkingBudget: 0 } }),
     },
     safetySettings: [
       { category: 'HARM_CATEGORY_HARASSMENT',        threshold: 'BLOCK_NONE' },
