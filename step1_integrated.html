@@ -5753,7 +5753,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         { id: 'partial', label: '일부 세그먼트만 집행 — 비교 불가', color: '#999999', sort: (a, b) => a.best - b.best },
       ];
       const colspan = segNames.length + 2;
-      const head = `<thead><tr><th style="text-align:left;white-space:nowrap;position:sticky;left:0;background:var(--bg-base,#fff);z-index:1;">소재명</th>${segNames.map(nm =>
+      const head = `<thead><tr style="font-size:12px;"><th style="text-align:left;white-space:nowrap;position:sticky;left:0;background:var(--bg-base,#fff);z-index:1;">소재명</th>${segNames.map(nm =>
         `<th style="text-align:center;white-space:nowrap;padding:6px 12px;" title="${escapeHtml(nm)}">${escapeHtml(nm.length > 24 ? '…' + nm.slice(-22) : nm)}<div style="font-weight:400;color:#999;font-size:10px;">${perSeg[nm].n}개 소재</div></th>`).join('')}<th style="text-align:center;white-space:nowrap;" title="세그먼트 간 최고-최저 순위 차 — 클수록 세그먼트마다 선호가 다른 소재">순위 편차</th></tr></thead>`;
       const rowHtml = r => {
         const tds = r.cells.map(o => o
@@ -5762,14 +5762,14 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         const sp = (r.nSeg >= 2 && r.spread >= 5)
           ? `<span style="color:var(--brand-primary,#DC2828);font-weight:700;">${r.spread}</span>`
           : (r.nSeg >= 2 ? String(r.spread) : '—');
-        return `<tr><td style="text-align:left;min-width:160px;max-width:240px;overflow-wrap:anywhere;position:sticky;left:0;background:var(--bg-base,#fff);">${escapeHtml(r.c.key)}</td>${tds}<td style="text-align:center;">${sp}</td></tr>`;
+        return `<tr><td style="text-align:left;min-width:160px;max-width:240px;overflow-wrap:anywhere;position:sticky;left:0;background:var(--bg-base,#fff);">${_segNameCell(r.c.key)}</td>${tds}<td style="text-align:center;">${sp}</td></tr>`;
       };
       // 그룹별 접이식(<details>) — 소재 많아도 요약만 보고 필요한 그룹만 펼침. 기본 닫힘.
       const body = GROUPS.map(g => {
         const gr = rows.filter(r => r.group === g.id).sort(g.sort);
         if (!gr.length) return '';
-        const summary = `<summary style="cursor:pointer;font-weight:700;color:${g.color};border-left:3px solid ${g.color};background:#F4F2EF;padding:8px 12px;border-radius:6px;list-style:revert;">${escapeHtml(g.label)} <span style="font-weight:400;color:#999;">${gr.length}개</span></summary>`;
-        return `<details style="margin-bottom:8px;">${summary}<div class="table-container" style="margin-top:6px;overflow-x:auto;"><table class="ds-table" style="font-size:12px;">${head}<tbody>${gr.map(rowHtml).join('')}</tbody></table></div></details>`;
+        const summary = `<summary style="cursor:pointer;font-size:13px;font-weight:700;color:${g.color};border-left:3px solid ${g.color};background:var(--surface-card,#F4F2EF);padding:8px 12px;border-radius:6px;list-style:revert;">${escapeHtml(g.label)} <span style="font-weight:400;font-size:12px;color:#999;">${gr.length}개</span></summary>`;
+        return `<details style="margin-bottom:8px;">${summary}<div class="table-container" style="margin-top:6px;overflow-x:auto;"><table class="ds-table" style="font-size:13px;">${head}<tbody>${gr.map(rowHtml).join('')}</tbody></table></div></details>`;
       }).join('');
       host.innerHTML =
         `<div style="font-size:12px;color:#666;margin-bottom:8px;">${dimLabel}별로 <b>그 세그먼트 데이터만으로</b> ${layer === 'mmp' ? 'MMP 품질점수' : 'Google Ads 종합점수'}(${escapeHtml(ws || '')}~${escapeHtml(we || '')})를 재계산한 순위입니다. 소재를 <b>공통 우수 / 공통 저조 / 세그먼트 편차형</b>으로 분리했습니다(순위 백분위 기준 — 세그먼트별 소재 수 차이 보정). 그룹을 클릭해 펼치세요.</div>` +
@@ -5777,40 +5777,69 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       renderScoreGapTable();
     }
     // GA↔MMP 점수 괴리 — 양쪽 점수 보유 소재의 순위 백분위 차 (한쪽 매체군만 잘 되는 소재 발굴)
+    // 소재명 셀(공용): 클릭 시 상세 모달 (전역 .clickable-name 핸들러 → openModalByName)
+    function _segNameCell(key) {
+      const k = escapeHtml(key || '');
+      return `<span class="clickable-name" data-name="${k}" title="소재 상세 보기" style="border-bottom:1px dashed var(--border-default,#d1d5db);">${k}</span>`;
+    }
     function renderScoreGapTable() {
       const host = document.getElementById('scoreGapContainer');
       if (!host) return;
       const cs = (window.currentCreatives || []).filter(c =>
         c._ads && c._ads.imp > 0 && typeof c.TotalScore === 'number' &&
         c.meta && c.meta.mmp_quality_score && c.meta.mmp_quality_score.total != null);
-      if (cs.length < 4) { host.innerHTML = '<div style="color:#999;padding:12px;">Google Ads·MMP 점수를 모두 가진 소재가 부족합니다(4개 미만).</div>'; return; }
+      if (cs.length < 4) { host.innerHTML = '<div style="color:#999;padding:12px;">Google Ads·MMP 점수를 모두 가진 소재가 부족합니다(4개 미만).</div>'; window._gapRows = null; return; }
       const n = cs.length;
       const gaRank = new Map(), mmpRank = new Map();
       [...cs].sort((a, b) => (b.TotalScore || 0) - (a.TotalScore || 0)).forEach((c, i) => gaRank.set(c.key, i + 1));
       [...cs].sort((a, b) => b.meta.mmp_quality_score.total - a.meta.mmp_quality_score.total).forEach((c, i) => mmpRank.set(c.key, i + 1));
-      const rows = cs.map(c => {
+      window._gapRows = cs.map(c => {
         const g = gaRank.get(c.key), m = mmpRank.get(c.key);
-        return { c, g, m, ga: c.TotalScore, mmp: c.meta.mmp_quality_score.total, gapPct: Math.round((m - g) / n * 100) };
-      }).sort((a, b) => Math.abs(b.gapPct) - Math.abs(a.gapPct));
+        return { key: c.key, g, m, ga: c.TotalScore || 0, mmp: c.meta.mmp_quality_score.total,
+          gapPct: Math.round((m - g) / n * 100),
+          strength: (Array.isArray(c.meta?.strengths) && c.meta.strengths[0]) || '' };
+      });
+      window._gapSort = { key: 'gap', dir: 'desc', abs: true };   // 기본: 괴리 절대값 큰 순
+      _renderGapTable();
+    }
+    // 헤더 클릭 정렬: 같은 컬럼 재클릭 = 방향 토글. 괴리는 절대값 기준 시작.
+    function sortGapTable(key) {
+      const st = window._gapSort || {};
+      if (st.key === key) window._gapSort = { key, dir: st.dir === 'desc' ? 'asc' : 'desc', abs: false };
+      else window._gapSort = { key, dir: key === 'name' || key === 'strength' ? 'asc' : 'desc', abs: key === 'gap' };
+      _renderGapTable();
+    }
+    function _renderGapTable() {
+      const host = document.getElementById('scoreGapContainer');
+      const rows = window._gapRows;
+      if (!host || !rows) return;
+      const st = window._gapSort || { key: 'gap', dir: 'desc', abs: true };
+      const val = r => st.key === 'name' ? r.key : st.key === 'ga' ? r.ga : st.key === 'mmp' ? r.mmp
+        : st.key === 'strength' ? r.strength : (st.abs ? Math.abs(r.gapPct) : r.gapPct);
+      const sorted = [...rows].sort((a, b) => {
+        const x = val(a), y = val(b);
+        const cmp = (typeof x === 'string') ? String(x).localeCompare(String(y)) : (x - y);
+        return st.dir === 'asc' ? cmp : -cmp;
+      });
+      const arrow = k => st.key === k ? (st.dir === 'desc' ? ' ▼' : ' ▲') : '';
+      const th = (k, label, extra = '', tip = '') =>
+        `<th style="cursor:pointer;white-space:nowrap;${extra}" ${tip ? `title="${tip}"` : ''} onclick="sortGapTable('${k}')">${label}${arrow(k)}</th>`;
       const badge = gp => gp >= 25
         ? '<span style="background:rgba(220,40,40,.10);color:#DC2828;font-weight:700;padding:2px 8px;border-radius:8px;font-size:11px;">GA만 우수 — MMP 주의</span>'
         : gp <= -25
           ? '<span style="background:#ECEAE6;color:#191919;font-weight:700;padding:2px 8px;border-radius:8px;font-size:11px;">MMP만 우수</span>'
           : '<span style="color:#999;font-size:11px;">유사</span>';
-      const body = rows.map(r => {
-        const strength = (Array.isArray(r.c.meta?.strengths) && r.c.meta.strengths[0]) || '';
-        return `<tr>
-          <td style="text-align:left;min-width:150px;max-width:240px;overflow-wrap:anywhere;">${escapeHtml(r.c.key)}</td>
-          <td style="text-align:center;white-space:nowrap;"><b>${(r.ga || 0).toFixed(1)}</b> <span style="color:#666;font-size:11px;">#${r.g}</span></td>
+      const body = sorted.map(r => `<tr>
+          <td style="text-align:left;min-width:150px;max-width:240px;overflow-wrap:anywhere;">${_segNameCell(r.key)}</td>
+          <td style="text-align:center;white-space:nowrap;"><b>${r.ga.toFixed(1)}</b> <span style="color:#666;font-size:11px;">#${r.g}</span></td>
           <td style="text-align:center;white-space:nowrap;"><b>${r.mmp.toFixed(1)}</b> <span style="color:#666;font-size:11px;">#${r.m}</span></td>
           <td style="text-align:center;font-weight:700;">${r.gapPct > 0 ? '+' : ''}${r.gapPct}%p</td>
           <td style="text-align:center;">${badge(r.gapPct)}</td>
-          <td style="text-align:left;font-size:11px;color:#666;">${escapeHtml(strength)}</td>
-        </tr>`;
-      }).join('');
-      host.innerHTML = `<div class="table-container"><table class="ds-table" style="font-size:12px;"><thead><tr>
-        <th style="text-align:left;">소재명</th><th>Google Ads 점수·순위</th><th>MMP 점수·순위</th>
-        <th title="MMP 순위 − GA 순위 (소재 수 대비 %p). 양수=GA가 상대적으로 우수, 음수=MMP가 우수">순위 괴리</th><th>판정</th><th style="text-align:left;">강점 태그(참고)</th>
+          <td style="text-align:left;font-size:11px;color:#666;">${escapeHtml(r.strength)}</td>
+        </tr>`).join('');
+      host.innerHTML = `<div class="table-container"><table class="ds-table" style="font-size:13px;"><thead><tr style="font-size:12px;">
+        ${th('name', '소재명', 'text-align:left;')}${th('ga', 'Google Ads 점수·순위')}${th('mmp', 'MMP 점수·순위')}
+        ${th('gap', '순위 괴리', '', 'MMP 순위 − GA 순위 (소재 수 대비 %p). 양수=GA가 상대적으로 우수, 음수=MMP가 우수. 클릭 정렬')}${th('gap', '판정')}${th('strength', '강점 태그(참고)', 'text-align:left;')}
       </tr></thead><tbody>${body}</tbody></table></div>`;
     }
 
