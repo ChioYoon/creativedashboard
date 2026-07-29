@@ -5937,15 +5937,18 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       L.push('당신은 컴투스 R마케팅팀의 UA 소재 분석가입니다. 아래 데이터로 주간/월간 보고에 넣을 코멘트를 작성하세요.');
       L.push('작성 규칙: (1) 각 불릿은 핵심 판단을 명사형/음슴체로 먼저 쓰고, 데이터 근거가 있으면 " → " 뒤에 수치·태그·소재명으로 맥락이 전달되게 한 문장 덧붙임(근거 없으면 " → " 생략, 억지 금지). (2) 아래 섹션을 순서대로 사용하고, 섹션 제목 줄은 "■ "로 시작. (3) 각 섹션 2~4줄, 불릿 줄은 " - "로 시작. (4) 마크다운(**, ##)·서론·맺음말 금지, 섹션 제목과 불릿 줄만 출력. (5) 데이터 근거로만 작성, 과장 금지, 태그 인용 시 작은따옴표.');
       const _hasCmp = !!(cmp && cmp.hasPrev);
-      L.push(`섹션(제목 그대로 사용, 순서 유지): ■ 종합 인사이트${_hasCmp ? ' / ■ 전 기간 대비 변화' : ''} / ■ 개선 포인트·액션`);
+      L.push('보고서 목적: ① 위닝 크리에이티브의 성공 요소를 극대화(확대 방향 제시) ② 저효율 원인을 신규 소재 제작에 반영 ③ 저효율 소재를 캠페인에서 제외해 위닝 노출을 확대. 모든 섹션이 이 3목적에 복무해야 함.');
+      L.push(`섹션(제목 그대로 사용, 순서 유지): ■ 종합 인사이트 / ■ 위닝 확대 전략${_hasCmp ? ' / ■ 전 기간 대비 변화' : ''} / ■ 제작 반영 포인트 / ■ 제외·재배분 제안`);
       L.push('섹션 내용(중복 금지): ■ 종합 인사이트 = (a) 우수 소재군 특징 = 아래 [상위5 강점 심층]의 공통 패턴을 근거로, 단순 태그 나열 말고 상위 소재들이 공유하는 특징을 문장으로 통합. (b) 유형별 평균 격차. (c) 이번 기간 핵심 상태 요약.');
+      L.push('■ 위닝 확대 전략 = 아래 [위닝 조합]의 소재별 성공 조합(동기·컬러톤·CTA·후킹)과 캠페인별 강세를 근거로 — (a) 어떤 조합을 어느 캠페인/세그먼트로 확대할지, (b) 위닝의 변주(파생) 방향 1~2개. 피로 경보가 붙은 위닝은 변주 시급으로 명시.');
       if (_hasCmp) L.push('■ 전 기간 대비 변화 = (a) 평균 점수 변화 원인을 반드시 분해 — 아래 [평균점수 분해] 수치로 "지속 소재의 점수 하락/상승"인지 "신규 소재 편입에 따른 희석/상승"인지 주원인을 판단해 서술. (b) 점수 급등·급락 소재를 짚고, 가능하면 그 소재의 강점/약점 요소로 변화 이유를 해석. (c) 신규 소재가 전체 평균에 준 영향. 이 섹션에서도 전환수 증감은 근거로 쓰지 말 것.');
-      L.push('■ 개선 포인트·액션 = 아래 [하위5 약점 심층]의 공통 약점 패턴 + 데이터 기반 다음 액션.');
+      L.push('■ 제작 반영 포인트 = 아래 [하위5 약점 심층]의 소재별 원인 + [회피 체크리스트]를 근거로, 신규 소재 기획 시 반영할 구체 지침(회피할 것/필수 포함할 것)을 불릿으로.');
+      L.push('■ 제외·재배분 제안 = 아래 [제외 후보]를 근거로 — (a) 제외 권고 소재와 그 근거(충분한 노출에도 저점수·피로), (b) 절감 비용을 어떤 위닝 소재로 재배분할지 구체 지목. [GA↔MMP 괴리]에서 "GA만 우수" 소재는 MMP 매체 확산 주의로 언급. 제외 후보가 없으면 "현재 제외 권고 없음 — 양호"로 1줄.');
       L.push('금지: 전환수 증감(증가·감소)은 Google Ads 단일 소스 지표이므로 인사이트·판단 근거로 쓰지 말 것. 총 전환 수치 자체를 인사이트 불릿으로 만들지 말 것.');
       if (note) {
         L.push('마케터 의견 처리(검증 결합 + 계획 반영): [마케터 의견]을 (A)성과 관찰·판단 과 (B)향후 계획·액션 으로 구분해 처리.');
         L.push('(A) 관찰·판단(예: 영상이 배너보다 우수): "■ 종합 인사이트" 불릿에 자연스럽게 녹여 뒤에 " → "와 데이터 근거(지표·태그·소재명)를 붙임. 데이터로 뒷받침되면 근거 제시, 반대면 " → 데이터는 다르게 나타남: …"으로 교정, 데이터로 확인 안 되는(근거 없는) 관찰은 제외.');
-        L.push('(B) 향후 계획·액션(예: 컷다운·신규 소재 제작·캐릭터/카피 변경): 절대 제외하지 말 것. "■ 개선 포인트·액션" 안에 데이터 기반 액션과 함께 통합하고, 각 마케터 발(發) 액션 불릿은 문장 맨 끝에 정확히 " @MK@"를 붙일 것(다른 위치엔 쓰지 말 것).');
+        L.push('(B) 향후 계획·액션(예: 컷다운·신규 소재 제작·캐릭터/카피 변경): 절대 제외하지 말 것. "■ 제작 반영 포인트" 안에 데이터 기반 지침과 함께 통합하고, 각 마케터 발(發) 액션 불릿은 문장 맨 끝에 정확히 " @MK@"를 붙일 것(다른 위치엔 쓰지 말 것).');
         L.push('데이터로 확인되지 않는 계획도 그대로 반영하되, "(데이터 확인 불가)"·"(확인 불가)" 같은 표기는 절대 붙이지 말 것. 원문 과장·추가해석 금지.');
       }
       L.push('');
@@ -6003,6 +6006,23 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         L.push(`[동기 분포 — 소재가 자극하는 게이머 심리] ${_ms}`);
         L.push('해석 지침: 전환 비중이 쏠린 동기 유형과 비용 대비 저조한 유형을 "■ 종합 인사이트"에 1불릿으로 서술 — 어떤 심리 자극 소재가 볼륨을 견인하는지, 확대/축소할 유형은 무엇인지.');
       }
+      // 위닝 조합·세그 강세 / 제외 후보 / 괴리 / 회피 체크리스트 — 목적 지향 섹션 근거
+      const _wc = (data.topDeep || []).map(d => {
+        const seg = (d.segRanks || []).map(s => `${s.camp.slice(-20)}#${s.rank}`).join('·');
+        return ` - ${d.name}(점수 ${d.score == null ? '-' : d.score.toFixed(1)}${d.tired ? '·피로경보' : ''}) 조합:[${(d.combo || []).join('/')}]${seg ? ` 캠페인강세:${seg}` : ''}`;
+      });
+      if (_wc.length) { L.push('[위닝 조합 — Top5 성공 요소·캠페인별 순위]'); _wc.forEach(x => L.push(x)); }
+      const _ex = (data.excludeCandidates || []).slice(0, 8).map(r =>
+        ` - ${r.name}: 점수 ${r.score.toFixed(1)} · 노출 ${Math.round(r.imp).toLocaleString()} · 비용 ${Math.round(r.cost).toLocaleString()}원${r.tired ? ' · 피로경보' : ''}`);
+      L.push(`[제외 후보 — 노출 5,000+ & 점수 40 미만, 절감 가능 비용 합계 ${Math.round(data.excludeCostSum || 0).toLocaleString()}원]`);
+      if (_ex.length) _ex.forEach(x => L.push(x)); else L.push(' - 없음');
+      if ((data.gapRows || []).length) {
+        L.push('[GA↔MMP 괴리 상위 — 양수=GA만 우수(MMP 확산 주의), 음수=MMP만 우수]');
+        data.gapRows.forEach(r => L.push(` - ${r.name}: GA ${r.ga.toFixed(1)}(#${r.g}) vs MMP ${r.mmp.toFixed(1)}(#${r.m}) → ${r.gapPct > 0 ? '+' : ''}${r.gapPct}%p`));
+      }
+      if ((data.avoidChecklist || []).length) {
+        L.push(`[회피 체크리스트 — 하위 절반 공통 약점] ${data.avoidChecklist.map(a => `'${a.tag}'(${a.n}건)`).join(', ')}`);
+      }
       if (note) { L.push(''); L.push('[마케터 의견]'); L.push(note); }
       return L.join('\n');
     }
@@ -6014,7 +6034,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       if (hasKey) {
         try {
           const prompt = buildReportNarrativePrompt(data, tags, note, sharedContext);
-          const call = () => callGeminiAPI(prompt, { maxTokens: note ? 1100 : 800, temperature: 0.6 });
+          const call = () => callGeminiAPI(prompt, { maxTokens: note ? 2200 : 1800, temperature: 0.6 });   // 목적 지향 5섹션 확장 — 토큰 증액 승인분
           let text;
           if (typeof GeminiCache !== 'undefined') {
             const tid = (window.DataSource && DataSource.getActiveTitleId && DataSource.getActiveTitleId()) || '';
@@ -6141,7 +6161,69 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const _topKeys = new Set(topDeep.map(d => d.name));
       const bottomDeep = _byScore.slice().reverse().filter(x => !_topKeys.has(x.c.key)).slice(0, 5).map(_deep);
 
-      return { titleName, period, layer, kpis, topN, topDeep, bottomDeep, typeRows, insightHtml, comparison: comparison || null, narrative: narrative || '', narrativeIsRule: !!narrativeIsRule, detailRows, filterHtml, liveRows, liveAsOf };
+      // ── 보고서 목적 3종(위닝 극대화·제작 반영·제외/재배분) 데이터 ──
+      // 피로도 tired 셋 (로드 시 선계산된 _lastFatigueData 재사용)
+      const _tired = new Set((window._lastFatigueData || []).filter(r => r.fatigueStatus === 'tired').map(r => r.key));
+      // 위닝 조합 칩 (동기·컬러톤·CTA·후킹) — topDeep/bottomDeep에 주입
+      const _combo = d => {
+        const m = d.meta || {};
+        d.combo = [m.player_motivation, m.color_tone, m.cta_type ? `CTA:${m.cta_type}` : null, m.hooking_strategy]
+          .filter(Boolean);
+        d.tired = _tired.has(d.name);
+        return d;
+      };
+      topDeep.forEach(_combo); bottomDeep.forEach(_combo);
+      // 위닝 세그먼트 강세 — 캠페인별 재계산 순위에서 top5의 위치 (활성 레이어 캠페인만)
+      try {
+        const _camps = (window._allCampaignsList || []).filter(cn => (layer === 'MMP 기준') === cn.startsWith('[MMP] ')).map(cn => cn.replace('[MMP] ', ''));
+        if (_camps.length >= 2 && _camps.length <= 8 && typeof buildFatiguePeriodScores === 'function') {
+          const _sw = (typeof getReportWeights === 'function') ? getReportWeights() : { conv: .25, cpa: .25, ipm: .25, roas: .25 };
+          const _lay = (window.currentAnalysisLayer || 'ads');
+          const _fr = window._fullDateRange || {};
+          const _ws = document.getElementById('startDate')?.value || _fr.min, _we = document.getElementById('endDate')?.value || _fr.max;
+          const _perCamp = {};
+          _camps.forEach(cn => {
+            const sc = buildFatiguePeriodScores(cs, _ws, _we, _lay, _sw, [cn], [cn]);
+            const mp = {}; sc.forEach(o => { mp[o.key] = o.Rank; });
+            _perCamp[cn] = { map: mp, n: sc.length };
+          });
+          topDeep.forEach(d => {
+            d.segRanks = _camps.map(cn => ({ camp: cn, rank: _perCamp[cn].map[d.name] || null, n: _perCamp[cn].n }))
+              .filter(x => x.rank != null);
+          });
+        }
+      } catch (e) { console.warn('세그 강세 산출 실패(생략):', e && e.message); }
+      // GA↔MMP 괴리 (세그먼트 탭과 동일 산식)
+      let gapRows = [];
+      {
+        const both = cs.filter(c => c._ads && c._ads.imp > 0 && typeof c.TotalScore === 'number' &&
+          c.meta && c.meta.mmp_quality_score && c.meta.mmp_quality_score.total != null);
+        const bn = both.length;
+        if (bn >= 4) {
+          const gr = new Map(), mr = new Map();
+          [...both].sort((a, b) => (b.TotalScore || 0) - (a.TotalScore || 0)).forEach((c, i) => gr.set(c.key, i + 1));
+          [...both].sort((a, b) => b.meta.mmp_quality_score.total - a.meta.mmp_quality_score.total).forEach((c, i) => mr.set(c.key, i + 1));
+          gapRows = both.map(c => ({ name: c.key, ga: c.TotalScore || 0, g: gr.get(c.key),
+            mmp: c.meta.mmp_quality_score.total, m: mr.get(c.key),
+            gapPct: Math.round((mr.get(c.key) - gr.get(c.key)) / bn * 100) }))
+            .sort((a, b) => Math.abs(b.gapPct) - Math.abs(a.gapPct)).slice(0, 6);
+        }
+      }
+      // 캠페인 제외 후보 — 합의 기준: GA 노출≥5,000 AND GA 총점<40, 피로도는 플래그.
+      const excludeCandidates = cs.filter(c => c._ads && c._ads.imp >= 5000 && typeof c.TotalScore === 'number' && c.TotalScore < 40)
+        .map(c => {
+          const camps = [...new Set((c.meta?.kpi_daily || []).map(k => k.campaign_name).filter(Boolean))];
+          return { name: c.key, type: c.유형 || '', score: c.TotalScore, imp: c.노출수 || 0, cost: c.비용 || 0,
+            cpa: c.CPA || 0, tired: _tired.has(c.key), camps };
+        }).sort((a, b) => b.cost - a.cost);
+      const excludeCostSum = excludeCandidates.reduce((s, r) => s + (r.cost || 0), 0);
+      // 차기 제작 회피 체크리스트 — 하위군 약점 태그 빈도 (전 소재 하위 절반)
+      const _lowerHalf = _byScore.slice(Math.ceil(_byScore.length / 2));
+      const _weakFreq = new Map();
+      _lowerHalf.forEach(({ c }) => (c.meta?.weaknesses || []).forEach(w => _weakFreq.set(w, (_weakFreq.get(w) || 0) + 1)));
+      const avoidChecklist = [..._weakFreq.entries()].map(([tag, n]) => ({ tag, n })).sort((a, b) => b.n - a.n).slice(0, 6);
+
+      return { titleName, period, layer, kpis, topN, topDeep, bottomDeep, gapRows, excludeCandidates, excludeCostSum, avoidChecklist, typeRows, insightHtml, comparison: comparison || null, narrative: narrative || '', narrativeIsRule: !!narrativeIsRule, detailRows, filterHtml, liveRows, liveAsOf };
     }
 
     // ── YouTube 영상 썸네일 URL 추출 (watch / youtu.be / embed / shorts → hqdefault) ──
@@ -6178,9 +6260,9 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       // (데이터 확인 불가)·(확인 불가) 표기 제거 — 마케터 계획 불릿의 잉여 표기 숨김
       const stripUnverif = s => String(s).replace(/\s*\((?:데이터\s*)?확인\s*불가\)/g, '').replace(/\s{2,}/g, ' ').trim();
       // DS 규율: 모노 뉴트럴 카드 + 개선·액션 섹션만 Red 단일 액센트 (파랑/초록/주황 제거).
-      const styleFor = t => t.includes('개선') || t.includes('액션')
-        ? { bar: '#DC2828', tc: '#DC2828' }          // 개선 포인트·액션 = Red 액센트
-        : { bar: '#CCCCCC', tc: '#191919' };          // 종합 인사이트 = 모노 뉴트럴
+      const styleFor = t => t.includes('개선') || t.includes('액션') || t.includes('반영') || t.includes('제외')
+        ? { bar: '#DC2828', tc: '#DC2828' }          // 액션성 섹션(제작 반영·제외·재배분) = Red 액센트
+        : { bar: '#CCCCCC', tc: '#191919' };          // 종합 인사이트·위닝 전략 = 모노 뉴트럴
       const mk = '<span title="[마케터 의견]" style="color:#DC2828;font-weight:700;cursor:help;">*</span>';
       const secs = []; let cur = null;
       String(narrative).split('\n').forEach(raw => {
@@ -6257,12 +6339,58 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             ].join('') || '<div class="empty">변화가 두드러진 소재가 없습니다.</div>'
           }</div>`
         : '';
-      const topHtml = data.topN.length ? data.topN.map(t => `
-        <div class="tr">
-          ${creativeThumbHtml(t.thumb, t.type, 44, 44)}
-          <div class="tn"><div class="tnm">${esc(t.name)}</div><div class="tms">전환 ${num(t.conv)} · CPA ${won(t.cpa)} · 점수 ${sc(t.score)}</div></div>
-          <span class="gb" style="${gradeStyle[t.grade] || gradeStyle['보통']}">${esc(t.grade || '—')}</span>
-        </div>`).join('') : '<div class="empty">표시할 소재가 없습니다.</div>';
+      // ── 목적 지향 섹션 빌더: 위닝 플레이북 / 저효율 제작 반영 / 제외 후보 / GA↔MMP 괴리 ──
+      const chip = t => `<span style="display:inline-block;font-size:11px;font-weight:600;background:#ECEAE6;color:#191919;padding:2px 8px;border-radius:8px;margin:0 4px 4px 0;">${esc(t)}</span>`;
+      const tiredBadge = '<span style="font-size:10px;font-weight:700;color:#DC2828;background:rgba(220,40,40,.10);padding:1px 6px;border-radius:8px;margin-left:6px;vertical-align:middle;">피로 경보</span>';
+      // A. 위닝 플레이북 — 성공 요소 조합 + 근거 + 세그먼트 강세 + MMP 교차
+      const playbookHtml = (data.topDeep || []).length ? data.topDeep.map((d, i) => {
+        const m = d.meta || {};
+        const st = (m.strengths || [])[0] || '', ev = (m.strength_evidence || [])[0] || '';
+        const seg = (d.segRanks || []).map(s => `${esc(s.camp.length > 16 ? '…' + s.camp.slice(-16) : s.camp)} <b>#${s.rank}</b>/${s.n}`).join(' · ');
+        const mmpQ = m.mmp_quality_score;
+        return `<div class="tr" style="align-items:flex-start;">
+          ${creativeThumbHtml(d.thumb, d.type, 52, 52)}
+          <div class="tn" style="white-space:normal;">
+            <div class="tnm" style="white-space:normal;">#${i + 1} ${esc(d.name)}${d.tired ? tiredBadge : ''}</div>
+            <div class="tms">점수 ${sc(d.score)} · 전환 ${num(d.conv)} · CPA ${won(d.cpa)} · 비용 ${won(d.cost)}${(mmpQ && mmpQ.total != null) ? ` · MMP 품질 ${sc(mmpQ.total)}` : ''}</div>
+            <div style="margin-top:5px;">${(d.combo || []).map(chip).join('') || ''}</div>
+            ${st ? `<div style="font-size:12px;margin-top:3px;line-height:1.5;"><b>성공 요소</b> ${esc(st)}${ev ? ` <span style="color:#666;">— ${esc(ev)}</span>` : ''}</div>` : ''}
+            ${seg ? `<div style="font-size:11px;color:#666;margin-top:3px;">캠페인별 순위: ${seg}</div>` : ''}
+          </div>
+          <span class="gb" style="${gradeStyle[d.grade] || gradeStyle['보통']}">${esc(d.grade || '—')}</span>
+        </div>`;
+      }).join('') : '<div class="empty">표시할 소재가 없습니다.</div>';
+      // B. 저효율 원인 + 차기 제작 회피 체크리스트
+      const lowCauseHtml = (data.bottomDeep || []).map(d => {
+        const m = d.meta || {};
+        const wk = (m.weaknesses || [])[0] || '', wev = (m.weakness_evidence || [])[0] || '';
+        return `<div class="tr" style="align-items:flex-start;">
+          <div class="tn" style="white-space:normal;">
+            <div class="tnm" style="white-space:normal;">${esc(d.name)}${d.tired ? tiredBadge : ''} <span style="font-weight:400;color:#999;font-size:11px;">점수 ${sc(d.score)} · 노출 ${num(d.imp)}</span></div>
+            ${wk ? `<div style="font-size:12px;margin-top:3px;line-height:1.5;"><b style="color:#DC2828;">원인</b> ${esc(wk)}${wev ? ` <span style="color:#666;">— ${esc(wev)}</span>` : ''}</div>` : '<div style="font-size:12px;color:#999;margin-top:3px;">약점 태그 없음</div>'}
+          </div>
+        </div>`;
+      }).join('');
+      const avoidHtml = (data.avoidChecklist || []).length
+        ? `<div style="margin-top:10px;padding:10px 14px;background:#FAF9F7;border-left:3px solid #DC2828;border-radius:6px;">
+            <div style="font-size:12px;font-weight:700;margin-bottom:6px;">차기 제작 회피 체크리스트 <span style="font-weight:400;color:#999;">(하위 절반 공통 약점)</span></div>
+            ${data.avoidChecklist.map(a => `<div style="font-size:12px;line-height:1.6;">· ${esc(a.tag)} <span style="color:#999;">(${a.n}건)</span></div>`).join('')}
+          </div>` : '';
+      // C. 캠페인 제외 후보 (노출≥5,000 & 총점<40, 피로도 플래그) + 재배분 기대
+      const exRows = data.excludeCandidates || [];
+      const excludeHtml = exRows.length
+        ? `<div style="font-size:12px;color:#666;margin-bottom:8px;">기준: 노출 5,000 이상인데 종합점수 40 미만(충분히 검증된 저효율). 제외 시 아래 비용이 위닝 소재 노출로 재배분됩니다 — <b>합계 ${won(data.excludeCostSum)}</b>. Google Ads에서 수기 반영하세요.</div>
+          <div class="dtwrap"><table class="dt"><thead><tr><th class="l">소재명</th><th>유형</th><th class="r">점수</th><th class="r">노출</th><th class="r">비용</th><th class="r">CPA</th><th>피로도</th><th class="l">캠페인</th></tr></thead><tbody>
+          ${exRows.map(r => `<tr><td class="l" style="max-width:200px;overflow-wrap:anywhere;white-space:normal;">${esc(r.name)}</td><td>${esc(r.type)}</td><td class="r" style="color:#DC2828;font-weight:700;">${sc(r.score)}</td><td class="r">${num(r.imp)}</td><td class="r">${won(r.cost)}</td><td class="r">${won(r.cpa)}</td><td>${r.tired ? '피로' : '—'}</td><td class="l" style="font-size:11px;max-width:220px;overflow-wrap:anywhere;white-space:normal;">${esc(r.camps.join(', '))}</td></tr>`).join('')}
+          </tbody></table></div>`
+        : '<div class="empty">제외 기준(노출 5,000+ · 점수 40 미만)에 해당하는 소재가 없습니다 — 양호.</div>';
+      // D. GA↔MMP 괴리 요약 (상위 6)
+      const gapHtml = (data.gapRows || []).length
+        ? `<div class="dtwrap"><table class="dt"><thead><tr><th class="l">소재명</th><th class="r">GA 점수·순위</th><th class="r">MMP 점수·순위</th><th class="r">괴리</th><th>판정</th></tr></thead><tbody>
+          ${data.gapRows.map(r => `<tr><td class="l" style="max-width:200px;overflow-wrap:anywhere;white-space:normal;">${esc(r.name)}</td><td class="r">${sc(r.ga)} <span style="color:#999;">#${r.g}</span></td><td class="r">${sc(r.mmp)} <span style="color:#999;">#${r.m}</span></td><td class="r" style="font-weight:700;">${r.gapPct > 0 ? '+' : ''}${r.gapPct}%p</td><td>${r.gapPct >= 25 ? '<span style="color:#DC2828;font-weight:700;">GA만 우수</span>' : r.gapPct <= -25 ? 'MMP만 우수' : '유사'}</td></tr>`).join('')}
+          </tbody></table></div>`
+        : '';
+      // (구 'Top 성과 소재' 목록은 위닝 플레이북으로 대체 — data.topN은 내러티브 프롬프트에서 계속 사용)
       const typeHtml = data.typeRows.map(r =>
         `<tr><td>${esc(r.type)}</td><td class="r">${num(r.count)}</td><td class="r">${sc(r.avgScore)}</td></tr>`).join('');
       const insightBlock = data.insightHtml
@@ -6354,7 +6482,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const chip = `<span style="font-size:11px;color:#9ca3af;font-weight:400;" title="${tip}">ⓘ ${label} · 참고용</span>`;
       return `<div class="sec"><div class="st">인사이트 ${chip}</div>${insightSectionsHtml(data.narrative)}</div>`;
     })()}
-    <div class="sec"><div class="st">Top 성과 소재</div>${topHtml}</div>
+    <div class="sec"><div class="st">위닝 크리에이티브 플레이북 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(성공 요소 조합 · 캠페인별 강세 · MMP 교차 검증)</span></div>${playbookHtml}</div>
+    <div class="sec"><div class="st">저효율 원인 진단 — 신규 제작 반영 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(하위 5 원인 + 회피 체크리스트)</span></div>${lowCauseHtml || '<div class="empty">표시할 소재가 없습니다.</div>'}${avoidHtml}</div>
+    <div class="sec"><div class="st">캠페인 제외 후보 — 위닝 노출 확대 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(검토·수기 반영용)</span></div>${excludeHtml}</div>
+    ${gapHtml ? `<div class="sec"><div class="st">GA ↔ MMP 점수 괴리 상위 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(한쪽 매체군만 잘 작동 — 매체 전략 참고)</span></div>${gapHtml}</div>` : ''}
     ${moverBlock}
     <div class="sec"><div class="st">유형별 요약</div><table><thead><tr><th>유형</th><th class="r">소재 수</th><th class="r">평균 점수</th></tr></thead><tbody>${typeHtml}</tbody></table></div>
     ${filterBlock}
