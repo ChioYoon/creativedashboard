@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "title_id": "zeus",
-  "generated_at": "2026-07-29T12:02:38+09:00",
+  "generated_at": "2026-07-29T13:02:37+09:00",
   "pipeline_version": "stage2-mvp",
   "gemini_model": "gemini-2.5-flash",
   "creatives": [
@@ -59,13 +59,13 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 27.22,
+        "total": 28.65,
         "grade": "보통",
         "rank": 41,
-        "conv": 11.11,
+        "conv": 16.67,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 97.78
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -74,7 +74,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-29T12:01:00+09:00",
+      "tagged_at": "2026-07-29T13:01:15+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Event-CharacterName01-DA\\260807_BNR_P-Event-CharacterName01-DA_L_1080x1920_KR.jpg",
@@ -158,20 +158,20 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 27.22,
+        "total": 28.65,
         "grade": "보통",
         "rank": 42,
-        "conv": 11.11,
+        "conv": 16.67,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 97.78
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
       "main_characters": [],
       "color_tone": "골드·화이트 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-29T12:01:00+09:00",
+      "tagged_at": "2026-07-29T13:01:15+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Event-LaunchDate01-DA\\260807_BNR_P-Event-LaunchDate01-DA_L_1200x628_KR.jpg",
@@ -212,7 +212,7 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=BXYOh_2j0Ts",
       "creative_concept": "P-Genre-DirInsight-01-PV",
-      "전환": 535,
+      "전환": 536,
       "비용": 1283586,
       "노출수": 266916,
       "클릭수": 7359,
@@ -263,20 +263,20 @@
         "cpa": 56
       },
       "scores": {
-        "total": 73.89,
+        "total": 75.52,
         "grade": "우수",
         "rank": 12,
-        "conv": 62.22,
-        "cpa": 62.22,
-        "ipm": 73.33,
-        "roas": 97.78
+        "conv": 64.58,
+        "cpa": 64.58,
+        "ipm": 75.0,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "경쟁형",
       "main_characters": [],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-29T12:01:00+09:00",
+      "tagged_at": "2026-07-29T13:01:16+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-01-PV\\260701_VID_P-Genre-DirInsight-01-PV_V_1080x1920_KR.mp4"
@@ -730,7 +730,7 @@
           "clicks": 210,
           "cost_micros": 27529693219,
           "cost": 27529.693219,
-          "conversions": 10.0,
+          "conversions": 11.0,
           "conversions_value": 0.0
         },
         {
@@ -1306,13 +1306,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 55.62,
+        "total": 56.98,
         "grade": "양호",
         "rank": 8,
         "convBasis": "사전예약",
-        "conv": 82.5,
-        "cpi": 65.0,
-        "ipm": 75.0,
+        "conv": 83.7,
+        "cpi": 67.4,
+        "ipm": 76.7,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -3191,10 +3191,10 @@
         "cpa": 100
       },
       "scores": {
-        "total": 96.67,
+        "total": 96.88,
         "grade": "최우수",
         "rank": 1,
-        "conv": 86.67,
+        "conv": 87.5,
         "cpa": 100.0,
         "ipm": 100.0,
         "roas": 100.0
@@ -3204,7 +3204,7 @@
       "main_characters": [],
       "color_tone": "다크 그레이",
       "cta_type": null,
-      "tagged_at": "2026-07-29T12:01:01+09:00",
+      "tagged_at": "2026-07-29T13:01:18+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-02-PV\\260708_VID_P-Genre-DirInsight-02-PV_V_1080x1920_KR.mp4"
@@ -3818,8 +3818,8 @@
           "clicks": 85,
           "cost_micros": 76869940640,
           "cost": 76869.94064,
-          "conversions": 38.309455,
-          "conversions_value": 38.309455
+          "conversions": 38.309579,
+          "conversions_value": 38.309579
         },
         {
           "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 2화 | 새로운 경쟁, 새로운 플레이",
@@ -3898,8 +3898,8 @@
           "clicks": 65,
           "cost_micros": 58321656647,
           "cost": 58321.656647,
-          "conversions": 25.050729,
-          "conversions_value": 25.050729
+          "conversions": 25.050769,
+          "conversions_value": 25.050769
         },
         {
           "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 2화 | 새로운 경쟁, 새로운 플레이",
@@ -4138,13 +4138,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 65.62,
+        "total": 66.28,
         "grade": "우수",
         "rank": 4,
         "convBasis": "사전예약",
-        "conv": 97.5,
-        "cpi": 82.5,
-        "ipm": 82.5,
+        "conv": 97.7,
+        "cpi": 83.7,
+        "ipm": 83.7,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -5768,20 +5768,20 @@
         "cpa": 0
       },
       "scores": {
-        "total": 46.11,
+        "total": 49.48,
         "grade": "양호",
         "rank": 39,
-        "conv": 53.33,
-        "cpa": 13.33,
-        "ipm": 20.0,
-        "roas": 97.78
+        "conv": 56.25,
+        "cpa": 18.75,
+        "ipm": 25.0,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "경쟁형",
       "main_characters": [],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:01:02+09:00",
+      "tagged_at": "2026-07-29T13:01:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-03-PV\\260715_VID_P-Genre-DirInsight-03-PV_V_1080x1920_KR.mp4"
@@ -6490,13 +6490,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 13.12,
+        "total": 12.21,
         "grade": "개선필요",
-        "rank": 38,
+        "rank": 41,
         "convBasis": "사전예약",
-        "conv": 7.5,
-        "cpi": 5.0,
-        "ipm": 40.0,
+        "conv": 7.0,
+        "cpi": 4.7,
+        "ipm": 37.2,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -7393,7 +7393,7 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=dnvBMHJQxFw",
       "creative_concept": "P-Genre-DirInsight-04-PV",
-      "전환": 963,
+      "전환": 964,
       "비용": 3862968,
       "노출수": 472580,
       "클릭수": 11401,
@@ -7440,13 +7440,13 @@
         "cpa": 5
       },
       "scores": {
-        "total": 68.89,
+        "total": 70.83,
         "grade": "우수",
         "rank": 17,
-        "conv": 84.44,
-        "cpa": 17.78,
-        "ipm": 75.56,
-        "roas": 97.78
+        "conv": 85.42,
+        "cpa": 22.92,
+        "ipm": 77.08,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "성취형",
@@ -7458,7 +7458,7 @@
       ],
       "color_tone": "다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:01:03+09:00",
+      "tagged_at": "2026-07-29T13:01:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-04-PV\\260715_VID_P-Genre-DirInsight-04-PV_V_1080x1920_KR.mp4"
@@ -7608,7 +7608,7 @@
           "clicks": 557,
           "cost_micros": 63623191273,
           "cost": 63623.191273,
-          "conversions": 20.0,
+          "conversions": 21.0,
           "conversions_value": 0.0
         },
         {
@@ -8167,13 +8167,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 54.38,
+        "total": 55.23,
         "grade": "양호",
         "rank": 9,
         "convBasis": "사전예약",
-        "conv": 72.5,
-        "cpi": 75.0,
-        "ipm": 70.0,
+        "conv": 72.1,
+        "cpi": 76.7,
+        "ipm": 72.1,
         "roas": 0.0
       },
       "mmp_installs": 6,
@@ -9330,9 +9330,9 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=NPHcsI2dHQ0",
       "creative_concept": "P-Genre-DirInsight-05-PV",
-      "전환": 757,
+      "전환": 758,
       "비용": 3103202,
-      "노출수": 397079,
+      "노출수": 397080,
       "클릭수": 11197,
       "Revenue": 55,
       "hooking_strategy": "비주얼 임팩트",
@@ -9377,20 +9377,20 @@
         "cpa": 3
       },
       "scores": {
-        "total": 63.33,
+        "total": 65.62,
         "grade": "우수",
         "rank": 25,
-        "conv": 73.33,
-        "cpa": 15.56,
-        "ipm": 66.67,
-        "roas": 97.78
+        "conv": 75.0,
+        "cpa": 20.83,
+        "ipm": 68.75,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
       "main_characters": [],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:01:04+09:00",
+      "tagged_at": "2026-07-29T13:01:37+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-05-PV\\260715_VID_P-Genre-DirInsight-05-PV_V_1080x1920_KR.mp4"
@@ -9616,11 +9616,11 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_3W_260715",
           "asset_url": "https://www.youtube.com/watch?v=NPHcsI2dHQ0",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 3982,
+          "impressions": 3983,
           "clicks": 306,
           "cost_micros": 30924857865,
           "cost": 30924.857865,
-          "conversions": 8.0,
+          "conversions": 9.0,
           "conversions_value": 0.0
         },
         {
@@ -10099,13 +10099,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 16.88,
+        "total": 15.7,
         "grade": "개선필요",
-        "rank": 35,
+        "rank": 38,
         "convBasis": "사전예약",
-        "conv": 12.5,
-        "cpi": 12.5,
-        "ipm": 42.5,
+        "conv": 11.6,
+        "cpi": 11.6,
+        "ipm": 39.5,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -11067,7 +11067,7 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=-Z-uy52xbCA",
       "creative_concept": "P-Genre-GamePreview-01-PV",
-      "전환": 3374,
+      "전환": 3375,
       "비용": 7957496,
       "노출수": 1310306,
       "클릭수": 15638,
@@ -11113,16 +11113,16 @@
       "kpi_percentiles": {
         "ctr": 21,
         "cvr": 97,
-        "cpa": 62
+        "cpa": 64
       },
       "scores": {
-        "total": 87.78,
+        "total": 88.54,
         "grade": "최우수",
         "rank": 2,
-        "conv": 88.89,
-        "cpa": 66.67,
-        "ipm": 97.78,
-        "roas": 97.78
+        "conv": 89.58,
+        "cpa": 68.75,
+        "ipm": 97.92,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -11134,7 +11134,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:01:13+09:00",
+      "tagged_at": "2026-07-29T13:01:47+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-GamePreview-01-PV\\260701_VID_P-Genre-GamePreview-01-PV_L_1920x1080_KR.mp4"
@@ -11652,8 +11652,8 @@
           "clicks": 178,
           "cost_micros": 64090120465,
           "cost": 64090.120465,
-          "conversions": 90.164065,
-          "conversions_value": 90.164065
+          "conversions": 90.164126,
+          "conversions_value": 90.164126
         },
         {
           "creative_name": "[제우스: 오만의 신] 게임 플레이 프리뷰",
@@ -11908,8 +11908,8 @@
           "clicks": 202,
           "cost_micros": 99117842202,
           "cost": 99117.842202,
-          "conversions": 66.062116,
-          "conversions_value": 66.062116
+          "conversions": 66.064769,
+          "conversions_value": 66.064769
         },
         {
           "creative_name": "[제우스: 오만의 신] 게임 플레이 프리뷰",
@@ -11940,8 +11940,8 @@
           "clicks": 268,
           "cost_micros": 146849646351,
           "cost": 146849.646351,
-          "conversions": 62.099386,
-          "conversions_value": 62.099386
+          "conversions": 62.106462,
+          "conversions_value": 62.106462
         },
         {
           "creative_name": "[제우스: 오만의 신] 게임 플레이 프리뷰",
@@ -12132,7 +12132,7 @@
           "clicks": 433,
           "cost_micros": 343161349877,
           "cost": 343161.349877,
-          "conversions": 67.0,
+          "conversions": 68.0,
           "conversions_value": 0.0
         },
         {
@@ -12161,12 +12161,12 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 74.38,
+        "total": 74.42,
         "grade": "우수",
         "rank": 1,
         "convBasis": "사전예약",
         "conv": 100.0,
-        "cpi": 97.5,
+        "cpi": 97.7,
         "ipm": 100.0,
         "roas": 0.0
       },
@@ -13560,7 +13560,7 @@
       "creative_concept": "P-Genre-MMORPG01-DA",
       "전환": 429,
       "비용": 877542,
-      "노출수": 190579,
+      "노출수": 190578,
       "클릭수": 5038,
       "Revenue": 20,
       "hooking_strategy": "캐릭터 외형 소구",
@@ -13603,20 +13603,20 @@
         "cpa": 95
       },
       "scores": {
-        "total": 83.33,
+        "total": 84.38,
         "grade": "최우수",
         "rank": 4,
-        "conv": 51.11,
-        "cpa": 95.56,
-        "ipm": 88.89,
-        "roas": 97.78
+        "conv": 54.17,
+        "cpa": 95.83,
+        "ipm": 89.58,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
       "main_characters": [],
       "color_tone": "골드·화이트 판타지",
       "cta_type": "상태 변화 유도형",
-      "tagged_at": "2026-07-29T12:01:13+09:00",
+      "tagged_at": "2026-07-29T13:01:47+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Genre-MMORPG01-DA\\260708_BNR_P-Genre-MMORPG01-DA_L_1024x768_KR.jpg",
@@ -14665,7 +14665,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://tpc.googlesyndication.com/simgad/7317718509668067017",
           "asset_type": "IMAGE",
-          "impressions": 2055,
+          "impressions": 2054,
           "clicks": 69,
           "cost_micros": 12735416608,
           "cost": 12735.416608,
@@ -15776,13 +15776,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 14.38,
+        "total": 13.37,
         "grade": "개선필요",
-        "rank": 37,
+        "rank": 40,
         "convBasis": "사전예약",
-        "conv": 30.0,
-        "cpi": 10.0,
-        "ipm": 17.5,
+        "conv": 27.9,
+        "cpi": 9.3,
+        "ipm": 16.3,
         "roas": 0.0
       },
       "mmp_installs": 28,
@@ -18258,13 +18258,13 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 27.22,
+        "total": 28.65,
         "grade": "보통",
         "rank": 43,
-        "conv": 11.11,
+        "conv": 16.67,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 97.78
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "성취형",
@@ -18273,7 +18273,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T12:01:14+09:00",
+      "tagged_at": "2026-07-29T13:01:47+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ArtisanReward-UA\\260729_VID_P-Ingame-ArtisanReward-UA_L_1920x1080_KR.mp4",
@@ -18354,13 +18354,13 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 27.22,
+        "total": 28.65,
         "grade": "보통",
         "rank": 44,
-        "conv": 11.11,
+        "conv": 16.67,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 97.78
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -18369,7 +18369,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:01:53+09:00",
+      "tagged_at": "2026-07-29T13:01:48+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-CineIngame01-UA\\260729_VID_P-Ingame-CineIngame01-UA_L_1920x1080_KR.mp4",
@@ -18409,7 +18409,7 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=NfznwVeVvFY",
       "creative_concept": "P-Ingame-ClassArtisan-01-PV",
-      "전환": 543,
+      "전환": 544,
       "비용": 1520340,
       "노출수": 300769,
       "클릭수": 4297,
@@ -18458,13 +18458,13 @@
         "cpa": 26
       },
       "scores": {
-        "total": 64.44,
+        "total": 66.67,
         "grade": "우수",
         "rank": 23,
-        "conv": 64.44,
-        "cpa": 35.56,
-        "ipm": 60.0,
-        "roas": 97.78
+        "conv": 66.67,
+        "cpa": 39.58,
+        "ipm": 62.5,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -18473,7 +18473,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:01:56+09:00",
+      "tagged_at": "2026-07-29T13:01:51+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassArtisan-01-PV\\260710_VID_P-Ingame-ClassArtisan-01-PV_L_1920x1080_KR.mp4"
@@ -19327,7 +19327,7 @@
           "clicks": 63,
           "cost_micros": 28510074396,
           "cost": 28510.074396,
-          "conversions": 4.0,
+          "conversions": 5.0,
           "conversions_value": 0.0
         }
       ],
@@ -19340,13 +19340,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 43.75,
+        "total": 41.86,
         "grade": "양호",
-        "rank": 17,
+        "rank": 20,
         "convBasis": "사전예약",
-        "conv": 65.0,
-        "cpi": 50.0,
-        "ipm": 60.0,
+        "conv": 62.8,
+        "cpi": 46.5,
+        "ipm": 58.1,
         "roas": 0.0
       },
       "mmp_installs": 4,
@@ -20074,7 +20074,7 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=KLEcX1iq0Ow",
       "creative_concept": "P-Ingame-ClassArtisan-01-SS",
-      "전환": 503,
+      "전환": 504,
       "비용": 1230123,
       "노출수": 231844,
       "클릭수": 3213,
@@ -20118,16 +20118,16 @@
       "kpi_percentiles": {
         "ctr": 26,
         "cvr": 77,
-        "cpa": 49
+        "cpa": 51
       },
       "scores": {
-        "total": 73.33,
+        "total": 75.52,
         "grade": "우수",
-        "rank": 14,
-        "conv": 60.0,
-        "cpa": 55.56,
-        "ipm": 80.0,
-        "roas": 97.78
+        "rank": 13,
+        "conv": 62.5,
+        "cpa": 60.42,
+        "ipm": 81.25,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "성취형",
@@ -20136,7 +20136,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:01:56+09:00",
+      "tagged_at": "2026-07-29T13:01:51+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassArtisan-01-SS\\260710_VID_P-Ingame-ClassArtisan-01-SS_V_1080x1920_KR.mp4"
@@ -20446,7 +20446,7 @@
           "clicks": 41,
           "cost_micros": 15323657801,
           "cost": 15323.657801,
-          "conversions": 1.0,
+          "conversions": 2.0,
           "conversions_value": 0.0
         },
         {
@@ -21005,13 +21005,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 68.12,
+        "total": 68.6,
         "grade": "우수",
         "rank": 2,
         "convBasis": "사전예약",
-        "conv": 95.0,
-        "cpi": 85.0,
-        "ipm": 92.5,
+        "conv": 95.3,
+        "cpi": 86.0,
+        "ipm": 93.0,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -22243,13 +22243,13 @@
         "cpa": 15
       },
       "scores": {
-        "total": 62.22,
+        "total": 64.58,
         "grade": "우수",
         "rank": 26,
-        "conv": 55.56,
-        "cpa": 26.67,
-        "ipm": 68.89,
-        "roas": 97.78
+        "conv": 58.33,
+        "cpa": 31.25,
+        "ipm": 70.83,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "성취형",
@@ -22258,7 +22258,7 @@
       ],
       "color_tone": "다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:02:00+09:00",
+      "tagged_at": "2026-07-29T13:01:54+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassAssassin-01-PV\\260710_VID_P-Ingame-ClassAssassin-01-PV_L_1920x1080_KR.mp4"
@@ -22888,8 +22888,8 @@
           "clicks": 19,
           "cost_micros": 13497585738,
           "cost": 13497.585738,
-          "conversions": 3.002031,
-          "conversions_value": 3.002031
+          "conversions": 3.002106,
+          "conversions_value": 3.002106
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 어쌔신",
@@ -23125,13 +23125,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 44.38,
+        "total": 44.77,
         "grade": "양호",
-        "rank": 16,
+        "rank": 17,
         "convBasis": "사전예약",
-        "conv": 20.0,
-        "cpi": 70.0,
-        "ipm": 87.5,
+        "conv": 18.6,
+        "cpi": 72.1,
+        "ipm": 88.4,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -23755,11 +23755,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=Yl5Apt_n6D0",
       "creative_concept": "P-Ingame-ClassAssassin-01-SS",
-      "전환": 309,
+      "전환": 310,
       "비용": 855929,
       "노출수": 181497,
       "클릭수": 2657,
-      "Revenue": 123,
+      "Revenue": 124,
       "hooking_strategy": "캐릭터 외형 소구",
       "USP": "전략/경쟁형(상성/조합)",
       "art_style": "시네마틱 실사 합성",
@@ -23802,13 +23802,13 @@
         "cpa": 28
       },
       "scores": {
-        "total": 53.33,
+        "total": 56.25,
         "grade": "양호",
         "rank": 34,
-        "conv": 24.44,
-        "cpa": 37.78,
-        "ipm": 53.33,
-        "roas": 97.78
+        "conv": 29.17,
+        "cpa": 41.67,
+        "ipm": 56.25,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -23817,7 +23817,7 @@
       ],
       "color_tone": "다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:02:00+09:00",
+      "tagged_at": "2026-07-29T13:01:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassAssassin-01-SS\\260710_VID_P-Ingame-ClassAssassin-01-SS_V_1080x1920_KR.mp4"
@@ -23839,8 +23839,8 @@
           "clicks": 1,
           "cost_micros": 599976119,
           "cost": 599.976119,
-          "conversions": 0.0,
-          "conversions_value": 0.0
+          "conversions": 0.99993,
+          "conversions_value": 0.99993
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 어쌔신",
@@ -24287,8 +24287,8 @@
           "clicks": 13,
           "cost_micros": 7941973970,
           "cost": 7941.97397,
-          "conversions": 5.270192,
-          "conversions_value": 5.270192
+          "conversions": 5.270781,
+          "conversions_value": 5.270781
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 어쌔신",
@@ -24686,13 +24686,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 40.62,
-        "grade": "양호",
-        "rank": 19,
+        "total": 38.37,
+        "grade": "보통",
+        "rank": 23,
         "convBasis": "사전예약",
-        "conv": 55.0,
-        "cpi": 52.5,
-        "ipm": 55.0,
+        "conv": 51.2,
+        "cpi": 48.8,
+        "ipm": 53.5,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -25810,9 +25810,9 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=9CmiYo06gOQ",
       "creative_concept": "P-Ingame-ClassBerserker-01-PV",
-      "전환": 421,
+      "전환": 422,
       "비용": 1145738,
-      "노출수": 180294,
+      "노출수": 180295,
       "클릭수": 3561,
       "Revenue": 192,
       "hooking_strategy": "비주얼 임팩트",
@@ -25855,13 +25855,13 @@
         "cpa": 31
       },
       "scores": {
-        "total": 68.33,
+        "total": 70.83,
         "grade": "우수",
         "rank": 18,
-        "conv": 44.44,
-        "cpa": 40.0,
-        "ipm": 91.11,
-        "roas": 97.78
+        "conv": 50.0,
+        "cpa": 43.75,
+        "ipm": 91.67,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -25870,7 +25870,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:02:03+09:00",
+      "tagged_at": "2026-07-29T13:01:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBerserker-01-PV\\260710_VID_P-Ingame-ClassBerserker-01-PV_L_1920x1080_KR.mp4"
@@ -26192,11 +26192,11 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://www.youtube.com/watch?v=9CmiYo06gOQ",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 1225,
+          "impressions": 1226,
           "clicks": 79,
           "cost_micros": 11651942507,
           "cost": 11651.942507,
-          "conversions": 5.0,
+          "conversions": 6.0,
           "conversions_value": 0.0
         },
         {
@@ -26484,8 +26484,8 @@
           "clicks": 37,
           "cost_micros": 25767082182,
           "cost": 25767.082182,
-          "conversions": 9.390684,
-          "conversions_value": 9.390684
+          "conversions": 9.390706,
+          "conversions_value": 9.390706
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 버서커",
@@ -26500,8 +26500,8 @@
           "clicks": 25,
           "cost_micros": 27751730977,
           "cost": 27751.730977,
-          "conversions": 4.55146,
-          "conversions_value": 4.55146
+          "conversions": 4.5515,
+          "conversions_value": 4.5515
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 버서커",
@@ -26737,13 +26737,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 36.25,
+        "total": 35.47,
         "grade": "보통",
-        "rank": 21,
+        "rank": 24,
         "convBasis": "사전예약",
-        "conv": 5.0,
-        "cpi": 45.0,
-        "ipm": 95.0,
+        "conv": 4.7,
+        "cpi": 41.9,
+        "ipm": 95.3,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -27276,7 +27276,7 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=6eEp0pwHDqg",
       "creative_concept": "P-Ingame-ClassBerserker-01-SS",
-      "전환": 282,
+      "전환": 283,
       "비용": 865813,
       "노출수": 183670,
       "클릭수": 2937,
@@ -27323,13 +27323,13 @@
         "cpa": 18
       },
       "scores": {
-        "total": 48.89,
+        "total": 52.08,
         "grade": "양호",
         "rank": 37,
-        "conv": 22.22,
-        "cpa": 28.89,
-        "ipm": 46.67,
-        "roas": 97.78
+        "conv": 27.08,
+        "cpa": 33.33,
+        "ipm": 50.0,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "성취형",
@@ -27338,7 +27338,7 @@
       ],
       "color_tone": "다크 브라운·골드",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:02:04+09:00",
+      "tagged_at": "2026-07-29T13:01:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBerserker-01-SS\\260710_VID_P-Ingame-ClassBerserker-01-SS_V_1080x1920_KR.mp4"
@@ -28192,7 +28192,7 @@
           "clicks": 103,
           "cost_micros": 24350671721,
           "cost": 24350.671721,
-          "conversions": 3.0,
+          "conversions": 4.0,
           "conversions_value": 0.0
         }
       ],
@@ -28206,13 +28206,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 40.0,
-        "grade": "양호",
-        "rank": 20,
+        "total": 39.53,
+        "grade": "보통",
+        "rank": 22,
         "convBasis": "사전예약",
-        "conv": 17.5,
-        "cpi": 57.5,
-        "ipm": 85.0,
+        "conv": 16.3,
+        "cpi": 55.8,
+        "ipm": 86.0,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -29227,9 +29227,9 @@
       "링크": "https://www.youtube.com/watch?v=OEn5XNVhxA0",
       "creative_concept": "P-Ingame-ClassBlessed-01-PV",
       "전환": 644,
-      "비용": 1472732,
-      "노출수": 391947,
-      "클릭수": 4667,
+      "비용": 1472731,
+      "노출수": 391945,
+      "클릭수": 4666,
       "Revenue": 394,
       "hooking_strategy": "캐릭터 외형 소구",
       "USP": "전략/경쟁형(상성/조합)",
@@ -29273,13 +29273,13 @@
         "cpa": 77
       },
       "scores": {
-        "total": 74.44,
+        "total": 76.04,
         "grade": "우수",
         "rank": 10,
-        "conv": 68.89,
-        "cpa": 80.0,
-        "ipm": 51.11,
-        "roas": 97.78
+        "conv": 70.83,
+        "cpa": 81.25,
+        "ipm": 54.17,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "경쟁형",
@@ -29288,7 +29288,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:02:07+09:00",
+      "tagged_at": "2026-07-29T13:02:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBlessed-01-PV\\260710_VID_P-Ingame-ClassBlessed-01-PV_L_1920x1080_KR.mp4"
@@ -29595,7 +29595,7 @@
           "asset_url": "https://www.youtube.com/watch?v=OEn5XNVhxA0",
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 1282,
-          "clicks": 112,
+          "clicks": 111,
           "cost_micros": 11239125719,
           "cost": 11239.125719,
           "conversions": 1.0,
@@ -29610,7 +29610,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://www.youtube.com/watch?v=OEn5XNVhxA0",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 1352,
+          "impressions": 1351,
           "clicks": 71,
           "cost_micros": 11293533694,
           "cost": 11293.533694,
@@ -29918,8 +29918,8 @@
           "clicks": 129,
           "cost_micros": 58088291376,
           "cost": 58088.291376,
-          "conversions": 26.526055,
-          "conversions_value": 26.526055
+          "conversions": 26.526125,
+          "conversions_value": 26.526125
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 블레스드",
@@ -29930,10 +29930,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=OEn5XNVhxA0",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 31164,
+          "impressions": 31163,
           "clicks": 136,
-          "cost_micros": 55485306730,
-          "cost": 55485.30673,
+          "cost_micros": 55484565037,
+          "cost": 55484.565037,
           "conversions": 17.633508,
           "conversions_value": 17.633508
         },
@@ -30155,13 +30155,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 68.12,
+        "total": 68.6,
         "grade": "우수",
         "rank": 3,
         "convBasis": "사전예약",
-        "conv": 85.0,
-        "cpi": 90.0,
-        "ipm": 97.5,
+        "conv": 86.0,
+        "cpi": 90.7,
+        "ipm": 97.7,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -30964,13 +30964,13 @@
         "cpa": 23
       },
       "scores": {
-        "total": 61.11,
+        "total": 63.54,
         "grade": "우수",
         "rank": 27,
-        "conv": 57.78,
-        "cpa": 33.33,
-        "ipm": 55.56,
-        "roas": 97.78
+        "conv": 60.42,
+        "cpa": 37.5,
+        "ipm": 58.33,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "경쟁형",
@@ -30979,7 +30979,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:02:07+09:00",
+      "tagged_at": "2026-07-29T13:02:05+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBlessed-01-SS\\260710_VID_P-Ingame-ClassBlessed-01-SS_V_1080x1920_KR.mp4"
@@ -31848,13 +31848,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 41.88,
+        "total": 41.28,
         "grade": "양호",
-        "rank": 18,
+        "rank": 21,
         "convBasis": "사전예약",
-        "conv": 42.5,
-        "cpi": 62.5,
-        "ipm": 62.5,
+        "conv": 39.5,
+        "cpi": 65.1,
+        "ipm": 60.5,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -33023,13 +33023,13 @@
         "cpa": 10
       },
       "scores": {
-        "total": 53.33,
+        "total": 56.25,
         "grade": "양호",
         "rank": 35,
-        "conv": 35.56,
-        "cpa": 22.22,
-        "ipm": 57.78,
-        "roas": 97.78
+        "conv": 39.58,
+        "cpa": 27.08,
+        "ipm": 60.42,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -33038,7 +33038,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-29T12:02:10+09:00",
+      "tagged_at": "2026-07-29T13:02:07+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassElimentalist-01-PV\\260710_VID_P-Ingame-ClassElimentalist-01-PV_L_1920x1080_KR.mp4"
@@ -33905,13 +33905,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 35.62,
+        "total": 35.47,
         "grade": "보통",
-        "rank": 22,
+        "rank": 25,
         "convBasis": "사전예약",
-        "conv": 22.5,
-        "cpi": 55.0,
-        "ipm": 65.0,
+        "conv": 20.9,
+        "cpi": 53.5,
+        "ipm": 67.4,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -34522,11 +34522,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=sdE93je8-5o",
       "creative_concept": "P-Ingame-ClassElimentalist-01-SS",
-      "전환": 264,
+      "전환": 265,
       "비용": 824934,
       "노출수": 167732,
       "클릭수": 3243,
-      "Revenue": 72,
+      "Revenue": 73,
       "hooking_strategy": "캐릭터 외형 소구",
       "USP": "전략/경쟁형(상성/조합)",
       "art_style": "시네마틱 실사 합성",
@@ -34567,13 +34567,13 @@
         "cpa": 13
       },
       "scores": {
-        "total": 47.78,
+        "total": 51.04,
         "grade": "양호",
         "rank": 38,
-        "conv": 20.0,
-        "cpa": 24.44,
-        "ipm": 48.89,
-        "roas": 97.78
+        "conv": 25.0,
+        "cpa": 29.17,
+        "ipm": 52.08,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -34582,7 +34582,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:02:11+09:00",
+      "tagged_at": "2026-07-29T13:02:08+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassElimentalist-01-SS\\260710_VID_P-Ingame-ClassElimentalist-01-SS_V_1080x1920_KR.mp4"
@@ -35228,8 +35228,8 @@
           "clicks": 5,
           "cost_micros": 5947134882,
           "cost": 5947.134882,
-          "conversions": 0.0,
-          "conversions_value": 0.0
+          "conversions": 0.99996,
+          "conversions_value": 0.99996
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 엘리멘탈리스트",
@@ -35451,13 +35451,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 28.75,
+        "total": 26.74,
         "grade": "보통",
-        "rank": 26,
+        "rank": 29,
         "convBasis": "사전예약",
-        "conv": 25.0,
-        "cpi": 37.5,
-        "ipm": 52.5,
+        "conv": 23.3,
+        "cpi": 34.9,
+        "ipm": 48.8,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -36552,16 +36552,16 @@
       "kpi_percentiles": {
         "ctr": 41,
         "cvr": 92,
-        "cpa": 64
+        "cpa": 62
       },
       "scores": {
-        "total": 81.67,
+        "total": 82.81,
         "grade": "최우수",
-        "rank": 6,
-        "conv": 66.67,
-        "cpa": 68.89,
-        "ipm": 93.33,
-        "roas": 97.78
+        "rank": 5,
+        "conv": 68.75,
+        "cpa": 70.83,
+        "ipm": 93.75,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -36570,7 +36570,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:02:14+09:00",
+      "tagged_at": "2026-07-29T13:02:12+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassKnight-01-PV\\260710_VID_P-Ingame-ClassKnight-01-PV_L_1920x1080_KR.mp4"
@@ -37200,8 +37200,8 @@
           "clicks": 61,
           "cost_micros": 36713304548,
           "cost": 36713.304548,
-          "conversions": 31.084412,
-          "conversions_value": 31.084412
+          "conversions": 31.085631,
+          "conversions_value": 31.085631
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 나이트",
@@ -37437,13 +37437,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 53.12,
+        "total": 53.49,
         "grade": "양호",
-        "rank": 11,
+        "rank": 10,
         "convBasis": "사전예약",
-        "conv": 60.0,
-        "cpi": 72.5,
-        "ipm": 80.0,
+        "conv": 58.1,
+        "cpi": 74.4,
+        "ipm": 81.4,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -38173,7 +38173,7 @@
       "creative_concept": "P-Ingame-ClassKnight-01-SS",
       "전환": 420,
       "비용": 1048648,
-      "노출수": 225588,
+      "노출수": 225587,
       "클릭수": 3103,
       "Revenue": 208,
       "hooking_strategy": "캐릭터 외형 소구",
@@ -38220,13 +38220,13 @@
         "cpa": 38
       },
       "scores": {
-        "total": 61.11,
+        "total": 63.54,
         "grade": "우수",
         "rank": 28,
-        "conv": 37.78,
-        "cpa": 46.67,
-        "ipm": 62.22,
-        "roas": 97.78
+        "conv": 41.67,
+        "cpa": 50.0,
+        "ipm": 64.58,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "경쟁형",
@@ -38235,7 +38235,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:02:15+09:00",
+      "tagged_at": "2026-07-29T13:02:13+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassKnight-01-SS\\260710_VID_P-Ingame-ClassKnight-01-SS_V_1080x1920_KR.mp4"
@@ -38557,7 +38557,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://www.youtube.com/watch?v=QtCY_krRVpw",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 1139,
+          "impressions": 1138,
           "clicks": 50,
           "cost_micros": 8364202352,
           "cost": 8364.202352,
@@ -38865,8 +38865,8 @@
           "clicks": 31,
           "cost_micros": 18487054163,
           "cost": 18487.054163,
-          "conversions": 11.040642,
-          "conversions_value": 11.040642
+          "conversions": 11.040683,
+          "conversions_value": 11.040683
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 나이트",
@@ -38881,8 +38881,8 @@
           "clicks": 30,
           "cost_micros": 24881346754,
           "cost": 24881.346754,
-          "conversions": 7.978127,
-          "conversions_value": 7.978127
+          "conversions": 8.155323,
+          "conversions_value": 8.155323
         },
         {
           "creative_name": "[제우스: 오만의 신] 클래스 소개 | 나이트",
@@ -39104,13 +39104,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 46.88,
+        "total": 47.09,
         "grade": "양호",
-        "rank": 13,
+        "rank": 14,
         "convBasis": "사전예약",
-        "conv": 32.5,
-        "cpi": 77.5,
-        "ipm": 77.5,
+        "conv": 30.2,
+        "cpi": 79.1,
+        "ipm": 79.1,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -40197,13 +40197,13 @@
         "cpa": 21
       },
       "scores": {
-        "total": 60.0,
+        "total": 62.5,
         "grade": "우수",
         "rank": 30,
-        "conv": 33.33,
-        "cpa": 31.11,
-        "ipm": 77.78,
-        "roas": 97.78
+        "conv": 37.5,
+        "cpa": 35.42,
+        "ipm": 79.17,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -40212,7 +40212,7 @@
       ],
       "color_tone": "골드·퍼플 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-29T12:02:18+09:00",
+      "tagged_at": "2026-07-29T13:02:16+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassOracle-01-PV\\260710_VID_P-Ingame-ClassOracle-01-PV_L_1920x1080_KR.mp4"
@@ -41079,13 +41079,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 22.5,
+        "total": 22.67,
         "grade": "보통",
-        "rank": 32,
+        "rank": 33,
         "convBasis": "사전예약",
-        "conv": 5.0,
-        "cpi": 17.5,
-        "ipm": 67.5,
+        "conv": 4.7,
+        "cpi": 16.3,
+        "ipm": 69.8,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -41680,13 +41680,13 @@
         "cpa": 8
       },
       "scores": {
-        "total": 45.0,
+        "total": 48.44,
         "grade": "양호",
         "rank": 40,
-        "conv": 17.78,
-        "cpa": 20.0,
-        "ipm": 44.44,
-        "roas": 97.78
+        "conv": 22.92,
+        "cpa": 25.0,
+        "ipm": 47.92,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -41695,7 +41695,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-29T12:02:18+09:00",
+      "tagged_at": "2026-07-29T13:02:16+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassOracle-01-SS\\260710_VID_P-Ingame-ClassOracle-01-SS_V_1080x1920_KR.mp4"
@@ -42564,13 +42564,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 21.88,
+        "total": 20.35,
         "grade": "보통",
-        "rank": 33,
+        "rank": 36,
         "convBasis": "사전예약",
-        "conv": 10.0,
-        "cpi": 27.5,
-        "ipm": 50.0,
+        "conv": 9.3,
+        "cpi": 25.6,
+        "ipm": 46.5,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -43527,13 +43527,13 @@
         "cpa": 69
       },
       "scores": {
-        "total": 84.44,
+        "total": 85.42,
         "grade": "최우수",
         "rank": 3,
-        "conv": 71.11,
-        "cpa": 73.33,
-        "ipm": 95.56,
-        "roas": 97.78
+        "conv": 72.92,
+        "cpa": 75.0,
+        "ipm": 95.83,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -43542,7 +43542,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:02:21+09:00",
+      "tagged_at": "2026-07-29T13:02:21+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassRanger-01-PV\\260710_VID_P-Ingame-ClassRanger-01-PV_L_1920x1080_KR.mp4"
@@ -44409,13 +44409,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 53.75,
+        "total": 53.49,
         "grade": "양호",
-        "rank": 10,
+        "rank": 11,
         "convBasis": "사전예약",
-        "conv": 45.0,
-        "cpi": 80.0,
-        "ipm": 90.0,
+        "conv": 41.9,
+        "cpi": 81.4,
+        "ipm": 90.7,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -45123,13 +45123,13 @@
         "cpa": 33
       },
       "scores": {
-        "total": 60.56,
+        "total": 63.02,
         "grade": "우수",
         "rank": 29,
-        "conv": 31.11,
-        "cpa": 42.22,
-        "ipm": 71.11,
-        "roas": 97.78
+        "conv": 35.42,
+        "cpa": 45.83,
+        "ipm": 72.92,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -45138,7 +45138,7 @@
       ],
       "color_tone": "다크 그린·골드 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:02:22+09:00",
+      "tagged_at": "2026-07-29T13:02:22+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassRanger-01-SS\\260710_VID_P-Ingame-ClassRanger-01-SS_V_1080x1920_KR.mp4"
@@ -46007,13 +46007,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 46.25,
+        "total": 45.93,
         "grade": "양호",
-        "rank": 14,
+        "rank": 15,
         "convBasis": "사전예약",
-        "conv": 52.5,
-        "cpi": 60.0,
-        "ipm": 72.5,
+        "conv": 48.8,
+        "cpi": 60.5,
+        "ipm": 74.4,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -47121,6 +47121,2746 @@
       ]
     },
     {
+      "creative_id": "P-Ingame-Region-Thebes-UA",
+      "소재명": "P-Ingame-Region-Thebes-UA",
+      "파일명": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR.mp4",
+      "유형": "VID",
+      "일": "2026-07-22",
+      "캠페인": null,
+      "사이즈": "1080x1920",
+      "언어": "KR",
+      "링크": null,
+      "creative_concept": "P-Ingame-Region-Thebes-UA",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "비주얼 임팩트",
+      "USP": "감성 유대형(교감/서사)",
+      "art_style": "시네마틱 실사 합성",
+      "strengths": [
+        "강한 비주얼 임팩트",
+        "게임플레이 자체 매력",
+        "호기심/궁금증 유발"
+      ],
+      "weaknesses": [
+        "장르/게임성 불분명",
+        "행동 유도 약함/부재"
+      ],
+      "hypothesis": [
+        "낮은 전환 위험 — 행동 유도 약함",
+        "피로도 빠를 위험 — 변주 필요"
+      ],
+      "test_ideas": [
+        "게임플레이 컷 추가",
+        "명시적 CTA 추가",
+        "다른 core_usp 각도 변주"
+      ],
+      "one_line_insight": "광활한 오픈필드와 고퀄리티 그래픽으로 몰입감은 높으나, MMORPG의 핵심 재미와 행동 유도가 부족함 — 초반에 대규모 전투 장면과 명확한 CTA를 추가하여 장르 인지와 전환율을 개선",
+      "strength_evidence": [
+        "0~25초간 언리얼 엔진 5로 구현된 광활한 오픈필드와 다양한 환경 변화를 시네마틱 연출로 보여주며 압도적인 그래픽 퀄리티를 과시합니다.",
+        "4초부터 캐릭터가 탈것을 타고 다양한 지형을 이동하는 실제 플레이 화면을 보여주며, 광활한 세계를 탐험하는 MMORPG의 재미를 간접적으로 전달합니다.",
+        "다양한 환경(초원, 호수, 비 오는 숲, 황폐한 지역, 마을)을 보여주며 이 세계에서 어떤 모험이 펼쳐질지 시청자의 탐험 욕구를 자극합니다."
+      ],
+      "weakness_evidence": [
+        "25초까지 전투나 대규모 콘텐츠가 거의 노출되지 않아 MMORPG의 핵심 재미인 경쟁이나 성장에 대한 단서가 부족하며, 풀 데이터 대비 CTR 하위 25% 위험이 있습니다.",
+        "엔드카드에서 게임 로고와 슬로건만 제시될 뿐, 다운로드나 사전예약 등 구체적인 행동을 유도하는 CTA가 없어 다음 단계로의 전환 기회가 약합니다."
+      ],
+      "improvement_actions": [
+        "15초 이내에 대규모 전투, 보스 레이드 등 MMORPG의 핵심 콘텐츠를 보여주는 컷을 추가하여 장르 인지와 게임성을 명확히 합니다.",
+        "엔드카드에 '지금 다운로드' 또는 '사전예약 참여' 버튼과 함께 출시 보상 문구를 삽입하여 즉각적인 행동을 유도합니다.",
+        "그래픽 과시 외에 '아티산 시스템'이나 '아카디아 제전' 등 게임의 핵심 차별화 요소를 직접적으로 보여주는 버전을 제작합니다."
+      ],
+      "creator_intent": "언리얼 엔진 5 기반의 압도적인 오픈필드 그래픽과 세계관을 과시하여 MMORPG 유저의 몰입과 탐험 욕구를 자극하려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "scores": {
+        "total": 28.65,
+        "grade": "보통",
+        "rank": 45,
+        "conv": 16.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 97.92
+      },
+      "marketer_insight": null,
+      "player_motivation": "몰입형",
+      "main_characters": [],
+      "color_tone": "밝은 그린·화이트 판타지",
+      "cta_type": "로고 정적 노출형",
+      "tagged_at": "2026-07-29T13:02:24+09:00",
+      "gemini_model": "gemini-2.5-flash",
+      "source_files": [
+        "2. 영상\\VID_P-Ingame-Region-Thebes-UA\\260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR.mp4"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": [],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "da",
+        "facebook.business",
+        "tiktok"
+      ],
+      "mmp_d1_ipm": 0.625,
+      "mmp_d1_cpi": 10119.0,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": {
+        "total": 43.02,
+        "grade": "양호",
+        "rank": 19,
+        "convBasis": "사전예약",
+        "conv": 69.8,
+        "cpi": 51.2,
+        "ipm": 51.2,
+        "roas": 0.0
+      },
+      "mmp_installs": 0,
+      "mmp_conversions": 214,
+      "mmp_conv_ua": 214,
+      "mmp_impressions": 342544,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 2165475,
+      "mmp_revenue": 0,
+      "mmp_currency": "KRW",
+      "mmp_fx_rate": 1500.0,
+      "mmp_daily": [
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-26",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 9298,
+          "clicks": 313,
+          "cost": 51750,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-25",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 11150,
+          "clicks": 326,
+          "cost": 78810,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-28",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 3256,
+          "clicks": 651,
+          "cost": 23145,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-27",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 3757,
+          "clicks": 407,
+          "cost": 23715,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-22",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 1870,
+          "clicks": 3,
+          "cost": 10230,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-24",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 16978,
+          "clicks": 126,
+          "cost": 91005,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-23",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 13237,
+          "clicks": 28,
+          "cost": 109485,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-24",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 6889,
+          "clicks": 699,
+          "cost": 27435,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-25",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 16110,
+          "clicks": 3305,
+          "cost": 67110,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-22",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 0,
+          "clicks": 85,
+          "cost": 2730,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-23",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 3752,
+          "clicks": 526,
+          "cost": 26190,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-28",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 52617,
+          "clicks": 10379,
+          "cost": 99210,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-26",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 39037,
+          "clicks": 8528,
+          "cost": 83910,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-27",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 61510,
+          "clicks": 10860,
+          "cost": 110040,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-27",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 13224,
+          "clicks": 130,
+          "cost": 196185,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-28",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 14958,
+          "clicks": 185,
+          "cost": 246840,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-25",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 12935,
+          "clicks": 152,
+          "cost": 166965,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-26",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 27127,
+          "clicks": 315,
+          "cost": 402615,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-23",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 9375,
+          "clicks": 92,
+          "cost": 98295,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-24",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 15008,
+          "clicks": 170,
+          "cost": 182190,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-22",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 1885,
+          "clicks": 20,
+          "cost": 19590,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-23",
+          "channel": "da",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 4
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-24",
+          "channel": "da",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 2
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-25",
+          "channel": "da",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 1
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-23",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 22
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-24",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 30
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-25",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 34
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-26",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 68
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-22",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 3
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-27",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 19
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_ALL_Mixed_KR",
+          "date": "2026-07-28",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 31
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-28",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 184,
+          "clicks": 1,
+          "cost": 1755,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-27",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 145,
+          "clicks": 0,
+          "cost": 1095,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-26",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 192,
+          "clicks": 4,
+          "cost": 1500,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-25",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 309,
+          "clicks": 0,
+          "cost": 2700,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-24",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 462,
+          "clicks": 4,
+          "cost": 4965,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-23",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 529,
+          "clicks": 6,
+          "cost": 4800,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-22",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 67,
+          "clicks": 1,
+          "cost": 1395,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-27",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 288,
+          "clicks": 2,
+          "cost": 1380,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-26",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 245,
+          "clicks": 1,
+          "cost": 1200,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-25",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 437,
+          "clicks": 3,
+          "cost": 1965,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-24",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 500,
+          "clicks": 4,
+          "cost": 1890,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-23",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 533,
+          "clicks": 6,
+          "cost": 3660,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-22",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 305,
+          "clicks": 1,
+          "cost": 1035,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-28",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 189,
+          "clicks": 0,
+          "cost": 945,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-27",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 984,
+          "clicks": 2,
+          "cost": 2895,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-28",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 89,
+          "clicks": 0,
+          "cost": 345,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-25",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 469,
+          "clicks": 1,
+          "cost": 2955,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-26",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 207,
+          "clicks": 0,
+          "cost": 915,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-23",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 869,
+          "clicks": 2,
+          "cost": 3060,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-24",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 570,
+          "clicks": 3,
+          "cost": 4425,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-22",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 335,
+          "clicks": 3,
+          "cost": 570,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-27",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260727",
+          "impressions": 25,
+          "clicks": 2,
+          "cost": 45,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-28",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260727",
+          "impressions": 15,
+          "clicks": 4,
+          "cost": 90,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-22",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722",
+          "impressions": 66,
+          "clicks": 5,
+          "cost": 180,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-25",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722",
+          "impressions": 78,
+          "clicks": 6,
+          "cost": 360,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-26",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722",
+          "impressions": 293,
+          "clicks": 63,
+          "cost": 1470,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-23",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722",
+          "impressions": 100,
+          "clicks": 2,
+          "cost": 195,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-24",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722",
+          "impressions": 32,
+          "clicks": 4,
+          "cost": 90,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR",
+          "date": "2026-07-27",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722",
+          "impressions": 54,
+          "clicks": 3,
+          "cost": 150,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        }
+      ]
+    },
+    {
+      "creative_id": "P-Ingame-Region-Thessaly-UA",
+      "소재명": "P-Ingame-Region-Thessaly-UA",
+      "파일명": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR.mp4",
+      "유형": "VID",
+      "일": "2026-07-22",
+      "캠페인": null,
+      "사이즈": "1080x1920",
+      "언어": "KR",
+      "링크": null,
+      "creative_concept": "P-Ingame-Region-Thessaly-UA",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "비주얼 임팩트",
+      "USP": "감성 유대형(교감/서사)",
+      "art_style": "시네마틱 실사 합성",
+      "strengths": [
+        "강한 비주얼 임팩트",
+        "호기심/궁금증 유발"
+      ],
+      "weaknesses": [
+        "장르/게임성 불분명",
+        "행동 유도 약함/부재"
+      ],
+      "hypothesis": [
+        "높은 CTR 예상 — 강한 후킹",
+        "낮은 전환 위험 — 행동 유도 약함"
+      ],
+      "test_ideas": [
+        "게임플레이 컷 추가",
+        "명시적 CTA 추가"
+      ],
+      "one_line_insight": "고퀄리티 그래픽과 탐험 연출로 세계관 몰입감은 강하나, 핵심 게임성 노출과 명확한 행동 유도가 부족함 — 초반에 대규모 전투 장면을 추가하고 엔드카드에 CTA를 명확히 하여 전환율을 개선",
+      "strength_evidence": [
+        "0~26초까지 언리얼 엔진 5 기반의 광활한 오픈필드와 다양한 환경(신전, 늪지, 황무지, 숲)이 실사풍으로 연출되어 압도적인 스케일과 몰입감을 제공합니다.",
+        "다양한 지형을 탐험하는 캐릭터의 여정을 보여주며, 앞으로 펼쳐질 모험에 대한 기대감과 세계관에 대한 궁금증을 자극합니다."
+      ],
+      "weakness_evidence": [
+        "초반 26초 동안 전투나 핵심 게임플레이 시스템이 전혀 노출되지 않아, MMORPG 장르의 핵심 재미 요소(경쟁, 성장)가 무엇인지 파악하기 어렵습니다.",
+        "영상 내내 플레이 장면만 이어지고, 마지막 로고 화면에서도 다운로드, 사전예약 등 명확한 행동을 유도하는 CTA가 부재하여 다음 단계로의 전환 기회가 약합니다."
+      ],
+      "improvement_actions": [
+        "초반 5초 이내에 대규모 전투, 길드전 등 MMORPG 핵심 게임플레이 장면을 삽입하여 장르의 재미를 명확히 전달하는 B버전 제작",
+        "엔드카드 마지막 3초에 '사전예약' 또는 '지금 다운로드' 버튼과 함께 핵심 보상 문구를 명시하여 전환을 유도하는 C버전 제작"
+      ],
+      "creator_intent": "언리얼 엔진 5 기반의 압도적인 비주얼 스케일과 광활한 세계관을 과시하여 유저의 몰입감과 탐험 욕구를 자극하려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "scores": {
+        "total": 28.65,
+        "grade": "보통",
+        "rank": 46,
+        "conv": 16.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 97.92
+      },
+      "marketer_insight": null,
+      "player_motivation": "몰입형",
+      "main_characters": [],
+      "color_tone": "그린·골드 판타지",
+      "cta_type": "로고 정적 노출형",
+      "tagged_at": "2026-07-29T13:02:26+09:00",
+      "gemini_model": "gemini-2.5-flash",
+      "source_files": [
+        "2. 영상\\VID_P-Ingame-Region-Thessaly-UA\\260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR.mp4"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": [],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "da",
+        "facebook.business",
+        "tiktok"
+      ],
+      "mmp_d1_ipm": 1.014,
+      "mmp_d1_cpi": 8211.1,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": {
+        "total": 52.33,
+        "grade": "양호",
+        "rank": 12,
+        "convBasis": "사전예약",
+        "conv": 81.4,
+        "cpi": 62.8,
+        "ipm": 65.1,
+        "roas": 0.0
+      },
+      "mmp_installs": 3,
+      "mmp_conversions": 410,
+      "mmp_conv_ua": 410,
+      "mmp_impressions": 404345,
+      "mmp_retained_d1": 2,
+      "mmp_cost": 3366540,
+      "mmp_revenue": 0,
+      "mmp_currency": "KRW",
+      "mmp_fx_rate": 1500.0,
+      "mmp_daily": [
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-23",
+          "channel": "da",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 15
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-25",
+          "channel": "da",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 4
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-24",
+          "channel": "da",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 7
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-27",
+          "channel": "da",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 9
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-26",
+          "channel": "da",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 6
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-28",
+          "channel": "da",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 5
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-27",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 0,
+          "clicks": 80,
+          "cost": 6930,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-28",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 0,
+          "clicks": 110,
+          "cost": 4200,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-22",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 3167,
+          "clicks": 29,
+          "cost": 12780,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-25",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 0,
+          "clicks": 29,
+          "cost": 5685,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-26",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 1290,
+          "clicks": 243,
+          "cost": 8955,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-23",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 10547,
+          "clicks": 88,
+          "cost": 54330,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-24",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 6330,
+          "clicks": 82,
+          "cost": 27825,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-26",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 56
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-25",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 109
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-28",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 9
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-27",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 19
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-22",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 18
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-24",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 1,
+          "retained_d1": 1,
+          "revenue_d7": 0,
+          "conversions": 66
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-23",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 2,
+          "retained_d1": 1,
+          "revenue_d7": 0,
+          "conversions": 87
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-28",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 4541,
+          "clicks": 65,
+          "cost": 55800,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-27",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 15181,
+          "clicks": 137,
+          "cost": 171180,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-22",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 9792,
+          "clicks": 118,
+          "cost": 111120,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-26",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 42156,
+          "clicks": 392,
+          "cost": 420795,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-25",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 77920,
+          "clicks": 736,
+          "cost": 856695,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-24",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 37774,
+          "clicks": 406,
+          "cost": 454425,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-23",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 47608,
+          "clicks": 511,
+          "cost": 521280,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-28",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 38557,
+          "clicks": 10000,
+          "cost": 87345,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-27",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 9904,
+          "clicks": 3407,
+          "cost": 35040,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-26",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 14693,
+          "clicks": 4238,
+          "cost": 57600,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-25",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 13968,
+          "clicks": 3688,
+          "cost": 51195,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-24",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 9182,
+          "clicks": 2746,
+          "cost": 21900,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-23",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 8535,
+          "clicks": 2931,
+          "cost": 31755,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_ALL_Mixed_KR",
+          "date": "2026-07-22",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 1145,
+          "clicks": 150,
+          "cost": 8175,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-25",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 851,
+          "clicks": 0,
+          "cost": 4515,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-26",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 596,
+          "clicks": 1,
+          "cost": 2295,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-27",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 1582,
+          "clicks": 3,
+          "cost": 5580,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-28",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 431,
+          "clicks": 2,
+          "cost": 1995,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-22",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 182,
+          "clicks": 3,
+          "cost": 630,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-23",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 1563,
+          "clicks": 7,
+          "cost": 9810,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-24",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 702,
+          "clicks": 1,
+          "cost": 6720,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-23",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 4177,
+          "clicks": 53,
+          "cost": 27360,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-22",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 652,
+          "clicks": 0,
+          "cost": 2040,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-25",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 4067,
+          "clicks": 22,
+          "cost": 19725,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-24",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 5982,
+          "clicks": 28,
+          "cost": 24315,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-27",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 4696,
+          "clicks": 21,
+          "cost": 23100,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-26",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 4050,
+          "clicks": 21,
+          "cost": 23385,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-28",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 4668,
+          "clicks": 24,
+          "cost": 24720,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-23",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 4282,
+          "clicks": 72,
+          "cost": 51960,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-22",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 276,
+          "clicks": 7,
+          "cost": 3495,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-28",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 3679,
+          "clicks": 44,
+          "cost": 35295,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-25",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 2804,
+          "clicks": 24,
+          "cost": 27015,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-24",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 2072,
+          "clicks": 21,
+          "cost": 25080,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-27",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 2330,
+          "clicks": 23,
+          "cost": 21705,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-26",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 2063,
+          "clicks": 22,
+          "cost": 19695,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-22",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722",
+          "impressions": 86,
+          "clicks": 8,
+          "cost": 165,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-23",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722",
+          "impressions": 76,
+          "clicks": 7,
+          "cost": 150,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-24",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722",
+          "impressions": 28,
+          "clicks": 5,
+          "cost": 60,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-25",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722",
+          "impressions": 52,
+          "clicks": 13,
+          "cost": 255,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-26",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722",
+          "impressions": 62,
+          "clicks": 8,
+          "cost": 210,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-27",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722",
+          "impressions": 28,
+          "clicks": 3,
+          "cost": 135,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-27",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260727",
+          "impressions": 13,
+          "clicks": 1,
+          "cost": 60,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR",
+          "date": "2026-07-28",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260727",
+          "impressions": 5,
+          "clicks": 0,
+          "cost": 60,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        }
+      ]
+    },
+    {
+      "creative_id": "P-Ingame-Region-Zahav-UA",
+      "소재명": "P-Ingame-Region-Zahav-UA",
+      "파일명": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR.mp4",
+      "유형": "VID",
+      "일": "2026-07-22",
+      "캠페인": null,
+      "사이즈": "1080x1920",
+      "언어": "KR",
+      "링크": null,
+      "creative_concept": "P-Ingame-Region-Zahav-UA",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "비주얼 임팩트",
+      "USP": "감성 유대형(교감/서사)",
+      "art_style": "시네마틱 실사 합성",
+      "strengths": [
+        "강한 비주얼 임팩트",
+        "게임플레이 자체 매력"
+      ],
+      "weaknesses": [
+        "장르/게임성 불분명",
+        "행동 유도 약함/부재"
+      ],
+      "hypothesis": [
+        "특정 타겟에 강하게 반응",
+        "낮은 전환 위험 — 행동 유도 약함"
+      ],
+      "test_ideas": [
+        "게임플레이 컷 추가",
+        "명시적 CTA 추가"
+      ],
+      "one_line_insight": "압도적인 비주얼과 탐험 요소로 세계관 몰입감은 강하나, 핵심 게임성과 행동 유도가 약함 — 초반 전투 연출과 명확한 CTA를 추가하여 장르 인지 및 전환율을 개선해야 합니다.",
+      "strength_evidence": [
+        "0~4초 광활한 사막 배경과 거대한 나무, 고대 유적 등 언리얼 엔진 5 기반의 실사풍 그래픽이 압도적인 스케일과 몰입감을 선사하며 시선을 사로잡습니다.",
+        "0~24초 동안 캐릭터가 탈것을 타고 다양한 오픈필드를 이동하며 탐험하는 모습을 보여주어, 실제 게임 플레이의 자유로운 이동과 세계관 경험을 직접적으로 어필합니다."
+      ],
+      "weakness_evidence": [
+        "초반 15초 동안 탐험 위주의 장면만 이어져 MMORPG의 핵심인 전투, 성장, 경쟁 요소가 명확히 드러나지 않아 장르 인지가 지연될 수 있습니다.",
+        "영상 전반에 걸쳐 명확한 CTA가 부재하며, 엔드카드 또한 로고 노출에 그쳐 시청자가 다음 행동으로 이어질 동기를 부여하지 못합니다."
+      ],
+      "improvement_actions": [
+        "초반 5초 이내에 대규모 전투나 캐릭터 스킬 연출 컷을 삽입하여 MMORPG의 핵심 게임성을 빠르게 인지시키도록 구성합니다.",
+        "엔드카드에 '사전예약' 또는 '지금 다운로드' 버튼과 함께 핵심 보상 문구를 명시하여 시청자의 행동을 직접적으로 유도합니다."
+      ],
+      "creator_intent": "언리얼 엔진 5 기반의 광활하고 아름다운 오픈필드를 과시하여 MMORPG의 세계관 몰입감을 어필하려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "scores": {
+        "total": 28.65,
+        "grade": "보통",
+        "rank": 47,
+        "conv": 16.67,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 97.92
+      },
+      "marketer_insight": null,
+      "player_motivation": "몰입형",
+      "main_characters": [],
+      "color_tone": "사막·황금빛",
+      "cta_type": "로고 정적 노출형",
+      "tagged_at": "2026-07-29T13:02:30+09:00",
+      "gemini_model": "gemini-2.5-flash",
+      "source_files": [
+        "2. 영상\\VID_P-Ingame-Region-Zahav-UA\\260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR.mp4"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": [],
+      "mmp_source": "airbridge",
+      "mmp_channels": [
+        "da",
+        "facebook.business",
+        "tiktok"
+      ],
+      "mmp_d1_ipm": 0.969,
+      "mmp_d1_cpi": 8551.4,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": {
+        "total": 43.6,
+        "grade": "양호",
+        "rank": 18,
+        "convBasis": "사전예약",
+        "conv": 53.5,
+        "cpi": 58.1,
+        "ipm": 62.8,
+        "roas": 0.0
+      },
+      "mmp_installs": 0,
+      "mmp_conversions": 115,
+      "mmp_conv_ua": 115,
+      "mmp_impressions": 118718,
+      "mmp_retained_d1": 0,
+      "mmp_cost": 983415,
+      "mmp_revenue": 0,
+      "mmp_currency": "KRW",
+      "mmp_fx_rate": 1500.0,
+      "mmp_daily": [
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-27",
+          "channel": "da",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 1
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-26",
+          "channel": "da",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 1
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-25",
+          "channel": "da",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 2
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-24",
+          "channel": "da",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 1
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-23",
+          "channel": "da",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 3
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-22",
+          "channel": "da",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 1
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-23",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 28558,
+          "clicks": 290,
+          "cost": 332460,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-22",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 5641,
+          "clicks": 65,
+          "cost": 69450,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-25",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 5975,
+          "clicks": 49,
+          "cost": 66450,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-24",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 8958,
+          "clicks": 111,
+          "cost": 104235,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-27",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 2266,
+          "clicks": 22,
+          "cost": 24975,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-26",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 5408,
+          "clicks": 67,
+          "cost": 64485,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-28",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 1125,
+          "clicks": 6,
+          "cost": 12840,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-28",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 2
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-27",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 1
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-26",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 8
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-25",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 5
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-24",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 18
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-23",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 63
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-22",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701",
+          "impressions": 0,
+          "clicks": 0,
+          "cost": 0,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 9
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-22",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 1062,
+          "clicks": 5,
+          "cost": 5520,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-23",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 5716,
+          "clicks": 34,
+          "cost": 59940,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-24",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 3660,
+          "clicks": 31,
+          "cost": 23355,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-25",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 0,
+          "clicks": 16,
+          "cost": 9435,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-26",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 1929,
+          "clicks": 52,
+          "cost": 11865,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-27",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 1340,
+          "clicks": 38,
+          "cost": 7245,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-28",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701",
+          "impressions": 0,
+          "clicks": 15,
+          "cost": 2250,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-26",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 8533,
+          "clicks": 2211,
+          "cost": 31590,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-25",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 4498,
+          "clicks": 713,
+          "cost": 14550,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-28",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 1103,
+          "clicks": 227,
+          "cost": 3495,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-27",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 3743,
+          "clicks": 807,
+          "cost": 11280,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-22",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 0,
+          "clicks": 42,
+          "cost": 2955,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-24",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 3264,
+          "clicks": 333,
+          "cost": 9780,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_ALL_Mixed_KR",
+          "date": "2026-07-23",
+          "channel": "facebook.business",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701",
+          "impressions": 3859,
+          "clicks": 605,
+          "cost": 19410,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-23",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 1533,
+          "clicks": 13,
+          "cost": 4860,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-24",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 457,
+          "clicks": 7,
+          "cost": 2385,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-25",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 321,
+          "clicks": 6,
+          "cost": 1890,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-26",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 503,
+          "clicks": 4,
+          "cost": 2565,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-27",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 485,
+          "clicks": 3,
+          "cost": 2370,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-28",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 511,
+          "clicks": 4,
+          "cost": 2490,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-22",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722",
+          "impressions": 7267,
+          "clicks": 25,
+          "cost": 22785,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-25",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 971,
+          "clicks": 9,
+          "cost": 7725,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-26",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 912,
+          "clicks": 10,
+          "cost": 6840,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-27",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 366,
+          "clicks": 1,
+          "cost": 2280,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-28",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 350,
+          "clicks": 2,
+          "cost": 2115,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-22",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 248,
+          "clicks": 3,
+          "cost": 3420,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-23",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 816,
+          "clicks": 9,
+          "cost": 7635,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-24",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722",
+          "impressions": 576,
+          "clicks": 4,
+          "cost": 4185,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-28",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 180,
+          "clicks": 2,
+          "cost": 435,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-27",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 1247,
+          "clicks": 2,
+          "cost": 3465,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-26",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 469,
+          "clicks": 0,
+          "cost": 1890,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-25",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 475,
+          "clicks": 2,
+          "cost": 2340,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-24",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 794,
+          "clicks": 1,
+          "cost": 4455,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-23",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 1040,
+          "clicks": 2,
+          "cost": 3990,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-22",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722",
+          "impressions": 961,
+          "clicks": 5,
+          "cost": 1785,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-28",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260727",
+          "impressions": 145,
+          "clicks": 5,
+          "cost": 345,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-27",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260727",
+          "impressions": 89,
+          "clicks": 13,
+          "cost": 585,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-25",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722",
+          "impressions": 79,
+          "clicks": 7,
+          "cost": 495,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-24",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722",
+          "impressions": 44,
+          "clicks": 8,
+          "cost": 585,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-23",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722",
+          "impressions": 338,
+          "clicks": 2,
+          "cost": 330,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-22",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722",
+          "impressions": 209,
+          "clicks": 12,
+          "cost": 420,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-27",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722",
+          "impressions": 103,
+          "clicks": 7,
+          "cost": 435,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        },
+        {
+          "creative_name": "260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR",
+          "date": "2026-07-26",
+          "channel": "tiktok",
+          "campaign_name": "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722",
+          "impressions": 591,
+          "clicks": 47,
+          "cost": 750,
+          "installs": 0,
+          "retained_d1": 0,
+          "revenue_d7": 0,
+          "conversions": 0
+        }
+      ]
+    },
+    {
       "creative_id": "P-Reward-PreReward01-DA",
       "소재명": "P-Reward-PreReward01-DA",
       "파일명": "260708_BNR_P-Reward-PreReward01-DA_L_1024x768_KR.jpg",
@@ -47178,20 +49918,20 @@
         "cpa": 41
       },
       "scores": {
-        "total": 59.44,
-        "grade": "양호",
+        "total": 61.98,
+        "grade": "우수",
         "rank": 31,
-        "conv": 26.67,
-        "cpa": 48.89,
-        "ipm": 64.44,
-        "roas": 97.78
+        "conv": 31.25,
+        "cpa": 52.08,
+        "ipm": 66.67,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "성취형",
       "main_characters": [],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:02:22+09:00",
+      "tagged_at": "2026-07-29T13:02:30+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Reward-PreReward01-DA\\260708_BNR_P-Reward-PreReward01-DA_L_1024x768_KR.jpg",
@@ -49353,13 +52093,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 45.62,
+        "total": 45.35,
         "grade": "양호",
-        "rank": 15,
+        "rank": 16,
         "convBasis": "사전예약",
-        "conv": 80.0,
-        "cpi": 67.5,
-        "ipm": 35.0,
+        "conv": 79.1,
+        "cpi": 69.8,
+        "ipm": 32.6,
         "roas": 0.0
       },
       "mmp_installs": 5,
@@ -52195,7 +54935,7 @@
       "creative_concept": "P-Reward-PreReward02-DA",
       "전환": 421,
       "비용": 856675,
-      "노출수": 188645,
+      "노출수": 188646,
       "클릭수": 5291,
       "Revenue": 5,
       "hooking_strategy": "압도적 보상",
@@ -52240,13 +54980,13 @@
         "cpa": 97
       },
       "scores": {
-        "total": 81.67,
+        "total": 82.29,
         "grade": "최우수",
-        "rank": 5,
-        "conv": 44.44,
-        "cpa": 97.78,
-        "ipm": 86.67,
-        "roas": 97.78
+        "rank": 6,
+        "conv": 45.83,
+        "cpa": 97.92,
+        "ipm": 87.5,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "성취형",
@@ -52255,7 +54995,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-29T12:02:22+09:00",
+      "tagged_at": "2026-07-29T13:02:30+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Reward-PreReward02-DA\\260708_BNR_P-Reward-PreReward02-DA_L_1024x768_KR.jpg",
@@ -53386,7 +56126,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/10985899480242851455",
           "asset_type": "IMAGE",
-          "impressions": 554,
+          "impressions": 555,
           "clicks": 2,
           "cost_micros": 603387045,
           "cost": 603.387045,
@@ -54416,13 +57156,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 25.0,
+        "total": 23.84,
         "grade": "보통",
-        "rank": 28,
+        "rank": 31,
         "convBasis": "사전예약",
-        "conv": 57.5,
-        "cpi": 30.0,
-        "ipm": 12.5,
+        "conv": 55.8,
+        "cpi": 27.9,
+        "ipm": 11.6,
         "roas": 0.0
       },
       "mmp_installs": 1,
@@ -57258,7 +59998,7 @@
       "creative_concept": "P-Reward-PreReward03-DA",
       "전환": 422,
       "비용": 896869,
-      "노출수": 193586,
+      "노출수": 193585,
       "클릭수": 5446,
       "Revenue": 10,
       "hooking_strategy": "압도적 보상",
@@ -57303,13 +60043,13 @@
         "cpa": 90
       },
       "scores": {
-        "total": 79.44,
-        "grade": "우수",
+        "total": 80.73,
+        "grade": "최우수",
         "rank": 9,
-        "conv": 46.67,
-        "cpa": 91.11,
-        "ipm": 82.22,
-        "roas": 97.78
+        "conv": 50.0,
+        "cpa": 91.67,
+        "ipm": 83.33,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "성취형",
@@ -57318,7 +60058,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T12:02:22+09:00",
+      "tagged_at": "2026-07-29T13:02:30+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_1024x768_KR.jpg",
@@ -58374,10 +61114,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://tpc.googlesyndication.com/simgad/4101507941330067727",
           "asset_type": "IMAGE",
-          "impressions": 2471,
+          "impressions": 2470,
           "clicks": 111,
-          "cost_micros": 11747186712,
-          "cost": 11747.186712,
+          "cost_micros": 11747011148,
+          "cost": 11747.011148,
           "conversions": 6.0,
           "conversions_value": 0.0
         },
@@ -59485,13 +62225,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 10.0,
+        "total": 9.3,
         "grade": "개선필요",
-        "rank": 39,
+        "rank": 42,
         "convBasis": "사전예약",
-        "conv": 27.5,
-        "cpi": 7.5,
-        "ipm": 5.0,
+        "conv": 25.6,
+        "cpi": 7.0,
+        "ipm": 4.7,
         "roas": 0.0
       },
       "mmp_installs": 2,
@@ -62065,9 +64805,9 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=7nuthQJtx9c",
       "creative_concept": "P-Slogan-CinematicPV30s-01-PV",
-      "전환": 6011,
-      "비용": 12677073,
-      "노출수": 5321011,
+      "전환": 6013,
+      "비용": 12677072,
+      "노출수": 5321007,
       "클릭수": 33944,
       "Revenue": 1298,
       "hooking_strategy": "비주얼 임팩트",
@@ -62112,13 +64852,13 @@
         "cpa": 92
       },
       "scores": {
-        "total": 80.0,
+        "total": 81.25,
         "grade": "최우수",
         "rank": 7,
         "conv": 100.0,
-        "cpa": 93.33,
-        "ipm": 28.89,
-        "roas": 97.78
+        "cpa": 93.75,
+        "ipm": 33.33,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "경쟁형",
@@ -62131,7 +64871,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-29T12:02:24+09:00",
+      "tagged_at": "2026-07-29T13:02:32+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-CinematicPV30s-01-PV\\260701_VID_P-Slogan-CinematicPV30s-01-PV_L_1920x1080_KR.mp4",
@@ -63307,7 +66047,7 @@
           "clicks": 297,
           "cost_micros": 85647515856,
           "cost": 85647.515856,
-          "conversions": 43.0,
+          "conversions": 44.0,
           "conversions_value": 0.0
         },
         {
@@ -63419,7 +66159,7 @@
           "clicks": 433,
           "cost_micros": 89621939427,
           "cost": 89621.939427,
-          "conversions": 42.0,
+          "conversions": 43.0,
           "conversions_value": 0.0
         },
         {
@@ -63447,10 +66187,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=7nuthQJtx9c",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 39487,
+          "impressions": 39483,
           "clicks": 281,
-          "cost_micros": 87434574760,
-          "cost": 87434.57476,
+          "cost_micros": 87434054106,
+          "cost": 87434.054106,
           "conversions": 46.0,
           "conversions_value": 0.0
         },
@@ -65565,13 +68305,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 58.12,
+        "total": 58.14,
         "grade": "양호",
         "rank": 6,
         "convBasis": "사전예약",
-        "conv": 87.5,
-        "cpi": 87.5,
-        "ipm": 57.5,
+        "conv": 88.4,
+        "cpi": 88.4,
+        "ipm": 55.8,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -68511,7 +71251,7 @@
       "creative_concept": "P-Slogan-Keyvisual01-DA",
       "전환": 767,
       "비용": 1897233,
-      "노출수": 628680,
+      "노출수": 628681,
       "클릭수": 12253,
       "Revenue": 103,
       "hooking_strategy": "비주얼 임팩트",
@@ -68556,13 +71296,13 @@
         "cpa": 46
       },
       "scores": {
-        "total": 66.11,
+        "total": 68.23,
         "grade": "우수",
         "rank": 21,
-        "conv": 75.56,
-        "cpa": 53.33,
-        "ipm": 37.78,
-        "roas": 97.78
+        "conv": 77.08,
+        "cpa": 56.25,
+        "ipm": 41.67,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -68571,7 +71311,7 @@
       ],
       "color_tone": "골드·신화적",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T12:02:24+09:00",
+      "tagged_at": "2026-07-29T13:02:32+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Slogan-KeyVisual01-DA\\260701_BNR_P-Slogan-Keyvisual01-DA_L_1024x768_KR.jpg",
@@ -69941,7 +72681,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://tpc.googlesyndication.com/simgad/3613338158897016589",
           "asset_type": "IMAGE",
-          "impressions": 4431,
+          "impressions": 4432,
           "clicks": 121,
           "cost_micros": 12657416672,
           "cost": 12657.416672,
@@ -71404,13 +74144,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 33.75,
+        "total": 31.98,
         "grade": "보통",
-        "rank": 25,
+        "rank": 28,
         "convBasis": "사전예약",
-        "conv": 67.5,
-        "cpi": 47.5,
-        "ipm": 20.0,
+        "conv": 65.1,
+        "cpi": 44.2,
+        "ipm": 18.6,
         "roas": 0.0
       },
       "mmp_installs": 54,
@@ -73452,7 +76192,7 @@
       "링크": "https://tpc.googlesyndication.com/simgad/14529096556118578239",
       "creative_concept": "P-Slogan-Keyvisual02-DA",
       "전환": 784,
-      "비용": 1979915,
+      "비용": 1979913,
       "노출수": 647739,
       "클릭수": 11722,
       "Revenue": 76,
@@ -73498,13 +76238,13 @@
         "cpa": 36
       },
       "scores": {
-        "total": 63.89,
+        "total": 66.15,
         "grade": "우수",
         "rank": 24,
-        "conv": 77.78,
-        "cpa": 44.44,
-        "ipm": 35.56,
-        "roas": 97.78
+        "conv": 79.17,
+        "cpa": 47.92,
+        "ipm": 39.58,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -73513,7 +76253,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T12:02:24+09:00",
+      "tagged_at": "2026-07-29T13:02:32+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Slogan-KeyVisual02-DA\\260701_BNR_P-Slogan-Keyvisual02-DA_L_1024x768_KR.jpg",
@@ -74885,8 +77625,8 @@
           "asset_type": "IMAGE",
           "impressions": 3288,
           "clicks": 94,
-          "cost_micros": 11537849234,
-          "cost": 11537.849234,
+          "cost_micros": 11536411910,
+          "cost": 11536.41191,
           "conversions": 6.0,
           "conversions_value": 0.0
         },
@@ -76347,13 +79087,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 20.62,
-        "grade": "보통",
-        "rank": 34,
+        "total": 19.19,
+        "grade": "개선필요",
+        "rank": 37,
         "convBasis": "사전예약",
-        "conv": 50.0,
-        "cpi": 22.5,
-        "ipm": 10.0,
+        "conv": 46.5,
+        "cpi": 20.9,
+        "ipm": 9.3,
         "roas": 0.0
       },
       "mmp_installs": 1,
@@ -79280,7 +82020,7 @@
       "creative_concept": "P-Slogan-Keyvisual03-DA",
       "전환": 103,
       "비용": 238589,
-      "노출수": 120726,
+      "노출수": 120725,
       "클릭수": 1785,
       "Revenue": 8,
       "hooking_strategy": "캐릭터 외형 소구",
@@ -79325,20 +82065,20 @@
         "cpa": 67
       },
       "scores": {
-        "total": 49.44,
+        "total": 52.6,
         "grade": "양호",
         "rank": 36,
-        "conv": 15.56,
-        "cpa": 71.11,
-        "ipm": 13.33,
-        "roas": 97.78
+        "conv": 20.83,
+        "cpa": 72.92,
+        "ipm": 18.75,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
       "main_characters": [],
       "color_tone": "골드·판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:02:24+09:00",
+      "tagged_at": "2026-07-29T13:02:33+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Slogan-KeyVisual03-DA\\260722_BNR_P-Slogan-Keyvisual03-DA_L_1024x768_KR.jpg",
@@ -79636,7 +82376,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260722",
           "asset_url": "https://tpc.googlesyndication.com/simgad/3811873081847032685",
           "asset_type": "IMAGE",
-          "impressions": 2616,
+          "impressions": 2615,
           "clicks": 61,
           "cost_micros": 5858217650,
           "cost": 5858.21765,
@@ -80107,13 +82847,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 24.38,
+        "total": 22.67,
         "grade": "보통",
-        "rank": 29,
+        "rank": 34,
         "convBasis": "사전예약",
-        "conv": 40.0,
-        "cpi": 32.5,
-        "ipm": 25.0,
+        "conv": 37.2,
+        "cpi": 30.2,
+        "ipm": 23.3,
         "roas": 0.0
       },
       "mmp_installs": 4,
@@ -82019,20 +84759,20 @@
         "cpa": 72
       },
       "scores": {
-        "total": 53.89,
+        "total": 56.77,
         "grade": "양호",
         "rank": 33,
-        "conv": 13.33,
-        "cpa": 77.78,
-        "ipm": 26.67,
-        "roas": 97.78
+        "conv": 18.75,
+        "cpa": 79.17,
+        "ipm": 31.25,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
       "main_characters": [],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:02:24+09:00",
+      "tagged_at": "2026-07-29T13:02:33+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Slogan-KeyVisual04-DA\\260722_BNR_P-Slogan-Keyvisual04-DA_L_1024x768_KR.jpg",
@@ -82800,13 +85540,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 5.62,
+        "total": 5.23,
         "grade": "개선필요",
-        "rank": 40,
+        "rank": 43,
         "convBasis": "사전예약",
-        "conv": 17.5,
-        "cpi": 2.5,
-        "ipm": 2.5,
+        "conv": 16.3,
+        "cpi": 2.3,
+        "ipm": 2.3,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -84638,13 +87378,13 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 27.22,
+        "total": 28.65,
         "grade": "보통",
-        "rank": 45,
-        "conv": 11.11,
+        "rank": 48,
+        "conv": 16.67,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 97.78
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -84653,7 +87393,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:02:37+09:00",
+      "tagged_at": "2026-07-29T13:02:33+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Slogan-PR-DA\\260729_BNR_P-Slogan-PR-DA_L_1024x768_KR.jpg",
@@ -84764,13 +87504,13 @@
         "cpa": 85
       },
       "scores": {
-        "total": 74.44,
+        "total": 76.04,
         "grade": "우수",
         "rank": 11,
-        "conv": 97.78,
-        "cpa": 86.67,
-        "ipm": 15.56,
-        "roas": 97.78
+        "conv": 97.92,
+        "cpa": 87.5,
+        "ipm": 20.83,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -84779,7 +87519,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T12:02:37+09:00",
+      "tagged_at": "2026-07-29T13:02:33+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV15s-01-PV\\260701_VID_P-Slogan-PreregPV15s-01-PV_L_1920x1080_KR.mp4",
@@ -86095,7 +88835,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=sAf0F7ORrbQ",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 47842,
+          "impressions": 47843,
           "clicks": 235,
           "cost_micros": 97727351897,
           "cost": 97727.351897,
@@ -86127,7 +88867,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=R5WWqFV605E",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 49695,
+          "impressions": 49694,
           "clicks": 194,
           "cost_micros": 91361989834,
           "cost": 91361.989834,
@@ -88213,13 +90953,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 59.38,
+        "total": 58.72,
         "grade": "양호",
         "rank": 5,
         "convBasis": "사전예약",
-        "conv": 92.5,
+        "conv": 93.0,
         "cpi": 100.0,
-        "ipm": 45.0,
+        "ipm": 41.9,
         "roas": 0.0
       },
       "mmp_installs": 1,
@@ -90871,10 +93611,10 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=YfJfrSFAB6w",
       "creative_concept": "P-Slogan-PreregPV15s-02-PV",
-      "전환": 4755,
-      "비용": 10789357,
-      "노출수": 5148189,
-      "클릭수": 22503,
+      "전환": 4757,
+      "비용": 10789344,
+      "노출수": 5148190,
+      "클릭수": 22505,
       "Revenue": 116,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "감성 유대형(교감/서사)",
@@ -90922,20 +93662,20 @@
         "cpa": 82
       },
       "scores": {
-        "total": 73.89,
+        "total": 75.52,
         "grade": "우수",
-        "rank": 13,
-        "conv": 95.56,
-        "cpa": 84.44,
-        "ipm": 17.78,
-        "roas": 97.78
+        "rank": 14,
+        "conv": 95.83,
+        "cpa": 85.42,
+        "ipm": 22.92,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
       "main_characters": [],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T12:02:37+09:00",
+      "tagged_at": "2026-07-29T13:02:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV15s-02-PV\\260701_VID_P-Slogan-PreregPV15s-02-PV_L_1920x1080_KR (1).mp4",
@@ -92095,7 +94835,7 @@
           "clicks": 273,
           "cost_micros": 140558804071,
           "cost": 140558.804071,
-          "conversions": 63.0,
+          "conversions": 64.0,
           "conversions_value": 0.0
         },
         {
@@ -92123,7 +94863,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=vY486VoOAjY",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 63049,
+          "impressions": 63050,
           "clicks": 200,
           "cost_micros": 100912853778,
           "cost": 100912.853778,
@@ -92251,11 +94991,11 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=YfJfrSFAB6w",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 51508,
-          "clicks": 457,
-          "cost_micros": 101790810741,
-          "cost": 101790.810741,
-          "conversions": 45.0,
+          "impressions": 51507,
+          "clicks": 459,
+          "cost_micros": 101775012632,
+          "cost": 101775.012632,
+          "conversions": 46.0,
           "conversions_value": 0.0
         },
         {
@@ -92283,10 +95023,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=79f2CKr_4oM",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 47332,
+          "impressions": 47333,
           "clicks": 248,
-          "cost_micros": 97987243635,
-          "cost": 97987.243635,
+          "cost_micros": 97989873166,
+          "cost": 97989.873166,
           "conversions": 49.0,
           "conversions_value": 0.0
         },
@@ -93985,13 +96725,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 24.38,
+        "total": 22.67,
         "grade": "보통",
-        "rank": 30,
+        "rank": 32,
         "convBasis": "사전예약",
-        "conv": 35.0,
-        "cpi": 35.0,
-        "ipm": 27.5,
+        "conv": 32.6,
+        "cpi": 32.6,
+        "ipm": 25.6,
         "roas": 0.0
       },
       "mmp_installs": 3,
@@ -96526,10 +99266,10 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=Kc-JF2eSmt8",
       "creative_concept": "P-Slogan-PreregPV30s-01-PV",
-      "전환": 4462,
-      "비용": 10305523,
-      "노출수": 4153518,
-      "클릭수": 30633,
+      "전환": 4464,
+      "비용": 10305758,
+      "노출수": 4153524,
+      "클릭수": 30634,
       "Revenue": 273,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "혜택형(무료뽑기/보상)",
@@ -96573,13 +99313,13 @@
         "cpa": 74
       },
       "scores": {
-        "total": 72.22,
+        "total": 73.96,
         "grade": "우수",
         "rank": 15,
-        "conv": 91.11,
-        "cpa": 75.56,
-        "ipm": 24.44,
-        "roas": 97.78
+        "conv": 91.67,
+        "cpa": 77.08,
+        "ipm": 29.17,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -96592,7 +99332,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T12:02:37+09:00",
+      "tagged_at": "2026-07-29T13:02:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV30s-01-PV\\260701_VID_P-Slogan-PreregPV30s-01-PV_L_1920x1080_KR.mp4",
@@ -97908,11 +100648,11 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=Kc-JF2eSmt8",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 43899,
-          "clicks": 349,
-          "cost_micros": 99601083548,
-          "cost": 99601.083548,
-          "conversions": 36.0,
+          "impressions": 43901,
+          "clicks": 350,
+          "cost_micros": 99835992743,
+          "cost": 99835.992743,
+          "conversions": 38.0,
           "conversions_value": 0.0
         },
         {
@@ -97924,7 +100664,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=lCgioDJVeac",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 40093,
+          "impressions": 40097,
           "clicks": 378,
           "cost_micros": 98034318337,
           "cost": 98034.318337,
@@ -98873,13 +101613,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 58.12,
+        "total": 57.56,
         "grade": "양호",
         "rank": 7,
         "convBasis": "사전예약",
-        "conv": 90.0,
-        "cpi": 95.0,
-        "ipm": 47.5,
+        "conv": 90.7,
+        "cpi": 95.3,
+        "ipm": 44.2,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -101792,7 +104532,7 @@
       "링크": "https://www.youtube.com/watch?v=JqGApUxOczY",
       "creative_concept": "P-Slogan-PreregPV30s-02-PV",
       "전환": 4607,
-      "비용": 10895285,
+      "비용": 10895286,
       "노출수": 4382013,
       "클릭수": 32779,
       "Revenue": 248,
@@ -101838,13 +104578,13 @@
         "cpa": 59
       },
       "scores": {
-        "total": 69.44,
+        "total": 71.35,
         "grade": "우수",
         "rank": 16,
-        "conv": 93.33,
-        "cpa": 64.44,
-        "ipm": 22.22,
-        "roas": 97.78
+        "conv": 93.75,
+        "cpa": 66.67,
+        "ipm": 27.08,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -101857,7 +104597,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-29T12:02:38+09:00",
+      "tagged_at": "2026-07-29T13:02:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV30s-02-PV\\260701_VID_P-Slogan-PreregPV30s-02-PV_L_1920x1080_KR.mp4",
@@ -103175,8 +105915,8 @@
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 42812,
           "clicks": 370,
-          "cost_micros": 90574436249,
-          "cost": 90574.436249,
+          "cost_micros": 90575314830,
+          "cost": 90575.31483,
           "conversions": 34.0,
           "conversions_value": 0.0
         },
@@ -104908,13 +107648,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 51.88,
+        "total": 51.16,
         "grade": "양호",
-        "rank": 12,
+        "rank": 13,
         "convBasis": "사전예약",
-        "conv": 77.5,
-        "cpi": 92.5,
-        "ipm": 37.5,
+        "conv": 76.7,
+        "cpi": 93.0,
+        "ipm": 34.9,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -107944,9 +110684,9 @@
       "링크": "https://tpc.googlesyndication.com/simgad/15629433344837261464",
       "creative_concept": "P-Slogan-Universe01-DA",
       "전환": 427,
-      "비용": 931032,
+      "비용": 931070,
       "노출수": 192733,
-      "클릭수": 5483,
+      "클릭수": 5484,
       "Revenue": 17,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "감성 유대형(교감/서사)",
@@ -107988,13 +110728,13 @@
         "cpa": 87
       },
       "scores": {
-        "total": 80.0,
+        "total": 81.25,
         "grade": "최우수",
         "rank": 8,
-        "conv": 48.89,
-        "cpa": 88.89,
-        "ipm": 84.44,
-        "roas": 97.78
+        "conv": 52.08,
+        "cpa": 89.58,
+        "ipm": 85.42,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -108003,7 +110743,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T12:02:38+09:00",
+      "tagged_at": "2026-07-29T13:02:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Slogan-Universe01-DA\\260708_BNR_P-Slogan-Universe01-DA_L_1024x768_KR.jpg",
@@ -109070,9 +111810,9 @@
           "asset_url": "https://tpc.googlesyndication.com/simgad/564143387041189865",
           "asset_type": "IMAGE",
           "impressions": 1860,
-          "clicks": 74,
-          "cost_micros": 9388091910,
-          "cost": 9388.09191,
+          "clicks": 75,
+          "cost_micros": 9426777039,
+          "cost": 9426.777039,
           "conversions": 4.0,
           "conversions_value": 0.0
         },
@@ -110179,13 +112919,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 16.25,
+        "total": 15.12,
         "grade": "개선필요",
-        "rank": 36,
+        "rank": 39,
         "convBasis": "사전예약",
-        "conv": 37.5,
-        "cpi": 20.0,
-        "ipm": 7.5,
+        "conv": 34.9,
+        "cpi": 18.6,
+        "ipm": 7.0,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -111499,8 +114239,8 @@
       "링크": "https://tpc.googlesyndication.com/simgad/15208341403562725288",
       "creative_concept": "P-Slogan-Universe02-DA",
       "전환": 832,
-      "비용": 2062428,
-      "노출수": 646894,
+      "비용": 2062431,
+      "노출수": 646895,
       "클릭수": 11781,
       "Revenue": 173,
       "hooking_strategy": "비주얼 임팩트",
@@ -111545,13 +114285,13 @@
         "cpa": 44
       },
       "scores": {
-        "total": 68.33,
+        "total": 70.31,
         "grade": "우수",
         "rank": 19,
-        "conv": 82.22,
-        "cpa": 51.11,
-        "ipm": 42.22,
-        "roas": 97.78
+        "conv": 83.33,
+        "cpa": 54.17,
+        "ipm": 45.83,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -111560,7 +114300,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T12:02:38+09:00",
+      "tagged_at": "2026-07-29T13:02:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_1024x768_KR.jpg",
@@ -112898,10 +115638,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://tpc.googlesyndication.com/simgad/15208341403562725288",
           "asset_type": "IMAGE",
-          "impressions": 3802,
+          "impressions": 3803,
           "clicks": 137,
-          "cost_micros": 18275934298,
-          "cost": 18275.934298,
+          "cost_micros": 18279043904,
+          "cost": 18279.043904,
           "conversions": 6.0,
           "conversions_value": 0.0
         },
@@ -114392,13 +117132,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 35.0,
+        "total": 33.72,
         "grade": "보통",
-        "rank": 24,
+        "rank": 26,
         "convBasis": "사전예약",
-        "conv": 75.0,
-        "cpi": 42.5,
-        "ipm": 22.5,
+        "conv": 74.4,
+        "cpi": 39.5,
+        "ipm": 20.9,
         "roas": 0.0
       },
       "mmp_installs": 1,
@@ -117453,11 +120193,11 @@
       "언어": "KR",
       "링크": "https://tpc.googlesyndication.com/simgad/6864141059419993465",
       "creative_concept": "P-Slogan-Universe03-DA",
-      "전환": 796,
+      "전환": 797,
       "비용": 1929514,
-      "노출수": 672042,
+      "노출수": 672043,
       "클릭수": 11081,
-      "Revenue": 217,
+      "Revenue": 218,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "혜택형(무료뽑기/보상)",
       "art_style": "3D 셀셰이딩",
@@ -117500,13 +120240,13 @@
         "cpa": 54
       },
       "scores": {
-        "total": 67.78,
+        "total": 69.79,
         "grade": "우수",
         "rank": 20,
-        "conv": 80.0,
-        "cpa": 60.0,
-        "ipm": 33.33,
-        "roas": 97.78
+        "conv": 81.25,
+        "cpa": 62.5,
+        "ipm": 37.5,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -117515,7 +120255,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T12:02:38+09:00",
+      "tagged_at": "2026-07-29T13:02:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_1024x768_KR.jpg",
@@ -118949,7 +121689,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/6864141059419993465",
           "asset_type": "IMAGE",
-          "impressions": 701,
+          "impressions": 702,
           "clicks": 11,
           "cost_micros": 1552361753,
           "cost": 1552.361753,
@@ -120329,8 +123069,8 @@
           "clicks": 2,
           "cost_micros": 1376514807,
           "cost": 1376.514807,
-          "conversions": 0.0,
-          "conversions_value": 0.0
+          "conversions": 0.817455,
+          "conversions_value": 0.817455
         }
       ],
       "mmp_source": "airbridge",
@@ -120347,13 +123087,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 35.62,
+        "total": 33.72,
         "grade": "보통",
-        "rank": 23,
+        "rank": 27,
         "convBasis": "사전예약",
-        "conv": 70.0,
-        "cpi": 40.0,
-        "ipm": 32.5,
+        "conv": 67.4,
+        "cpi": 37.2,
+        "ipm": 30.2,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -123436,7 +126176,7 @@
       "creative_concept": "P-Slogan-Universe04-DA",
       "전환": 357,
       "비용": 872159,
-      "노출수": 302792,
+      "노출수": 302791,
       "클릭수": 6340,
       "Revenue": 11,
       "hooking_strategy": "비주얼 임팩트",
@@ -123478,16 +126218,16 @@
       "kpi_percentiles": {
         "ctr": 77,
         "cvr": 21,
-        "cpa": 51
+        "cpa": 49
       },
       "scores": {
-        "total": 54.44,
+        "total": 56.77,
         "grade": "양호",
         "rank": 32,
-        "conv": 31.11,
-        "cpa": 57.78,
-        "ipm": 31.11,
-        "roas": 97.78
+        "conv": 35.42,
+        "cpa": 58.33,
+        "ipm": 35.42,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -123496,7 +126236,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T12:02:38+09:00",
+      "tagged_at": "2026-07-29T13:02:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입예정\\BNR_P-Slogan-Universe04-DA\\260715_BNR_P-Slogan-Universe04-DA_L_1024x768_KR.jpg",
@@ -124162,7 +126902,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_3W_260715",
           "asset_url": "https://tpc.googlesyndication.com/simgad/18259856049870960583",
           "asset_type": "IMAGE",
-          "impressions": 6411,
+          "impressions": 6410,
           "clicks": 176,
           "cost_micros": 16955267072,
           "cost": 16955.267072,
@@ -124985,13 +127725,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 26.25,
+        "total": 25.0,
         "grade": "보통",
-        "rank": 27,
+        "rank": 30,
         "convBasis": "사전예약",
-        "conv": 62.5,
-        "cpi": 25.0,
-        "ipm": 17.5,
+        "conv": 60.5,
+        "cpi": 23.3,
+        "ipm": 16.3,
         "roas": 0.0
       },
       "mmp_installs": 0,
@@ -127437,7 +130177,7 @@
       "creative_concept": "P-Slogan-Universe05-DA",
       "전환": 421,
       "비용": 958583,
-      "노출수": 340540,
+      "노출수": 340541,
       "클릭수": 6534,
       "Revenue": 44,
       "hooking_strategy": "비주얼 임팩트",
@@ -127482,13 +130222,13 @@
         "cpa": 79
       },
       "scores": {
-        "total": 66.11,
+        "total": 67.71,
         "grade": "우수",
         "rank": 22,
-        "conv": 44.44,
-        "cpa": 82.22,
-        "ipm": 40.0,
-        "roas": 97.78
+        "conv": 45.83,
+        "cpa": 83.33,
+        "ipm": 43.75,
+        "roas": 97.92
       },
       "marketer_insight": null,
       "player_motivation": "경쟁형",
@@ -127497,7 +130237,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T12:02:38+09:00",
+      "tagged_at": "2026-07-29T13:02:37+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입예정\\BNR_P-Slogan-Universe05-DA\\260715_BNR_P-Slogan-Universe05-DA_L_1024x768_KR.jpg",
@@ -128195,7 +130935,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_3W_260715",
           "asset_url": "https://tpc.googlesyndication.com/simgad/5252540795203771472",
           "asset_type": "IMAGE",
-          "impressions": 4984,
+          "impressions": 4985,
           "clicks": 127,
           "cost_micros": 16022217779,
           "cost": 16022.217779,
@@ -128984,13 +131724,13 @@
       "mmp_d7_roas": null,
       "mmp_d1_retention": null,
       "mmp_quality_score": {
-        "total": 23.12,
+        "total": 21.51,
         "grade": "보통",
-        "rank": 31,
+        "rank": 35,
         "convBasis": "사전예약",
-        "conv": 47.5,
-        "cpi": 15.0,
-        "ipm": 30.0,
+        "conv": 44.2,
+        "cpi": 14.0,
+        "ipm": 27.9,
         "roas": 0.0
       },
       "mmp_installs": 12,
@@ -131347,12 +134087,12 @@
     }
   ],
   "metrics": {
-    "scanned_folders": 45,
-    "tagged_records": 45,
-    "cache_hits": 43,
-    "cache_misses": 2,
+    "scanned_folders": 48,
+    "tagged_records": 48,
+    "cache_hits": 48,
+    "cache_misses": 0,
     "failures": 0,
-    "duration_sec": 98.6,
+    "duration_sec": 86.5,
     "prompt_version": "v3.3-2026.06.13-character-split-single-mmorpg-v2",
     "fallback_used": false,
     "carried_forward": 0,
@@ -131360,30 +134100,65 @@
       "graded": 40,
       "grades": {
         "우수": 22,
-        "최우수": 8,
-        "양호": 10
+        "최우수": 9,
+        "양호": 9
       },
       "top": {
         "name": "P-Genre-DirInsight-02-PV",
-        "total": 96.67,
+        "total": 96.88,
         "grade": "최우수"
       }
     },
     "game_context_sha": "bbb760e0385d5662"
   },
   "campaign_canonical": {
-    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260722": {
+    "ZEUS_KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260723": {
+      "ua_type": "NU-Pre",
+      "country": "NU",
+      "os": "전체",
+      "media": "ALL",
+      "product": ""
+    },
+    "Incross_HQ_ZEUS_KR_Criteo_NU-Pre_ALL_Display_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Criteo",
+      "product": "Display"
+    },
+    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260723": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "전체",
       "media": "Kakao",
       "product": "Conv-Bizboard"
     },
-    "ZEUS_KR_Kakao_NU-Pre_iOS_Install-Bizboard_260723": {
+    "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "iOS",
+      "media": "Tiktok",
+      "product": "Install-CPP"
+    },
+    "Incross_HQ_ZEUS_KR-KR_Appier_NU-Pre_ALL_Display_260715": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Appier",
+      "product": "Display"
+    },
+    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "iOS",
+      "media": "Meta",
+      "product": "MAIA-CPP"
+    },
+    "ZEUS_KR_Kakao_NU-Pre_AD_Install-Bizboard_260723": {
       "ua_type": "NU-Pre",
       "country": "NU",
-      "os": "iOS",
-      "media": "iOS",
+      "os": "Android",
+      "media": "AD",
       "product": ""
     },
     "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722": {
@@ -131393,75 +134168,12 @@
       "media": "Tiktok",
       "product": "Install-CSL"
     },
-    "Incross_HQ_ZEUS_KR-KR_Appier_NU-Pre_ALL_Display_260715": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Appier",
-      "product": "Display"
-    },
-    "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Pangle",
-      "product": "Conversion"
-    },
-    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "iOS",
-      "media": "Meta",
-      "product": "MAIA-CPP"
-    },
-    "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701": {
+    "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen-Preregi_260728": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "전체",
       "media": "GA",
-      "product": "DemandGen"
-    },
-    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "Android",
-      "media": "Meta",
-      "product": "MAIA-CSL"
-    },
-    "ZEUS_KR_Kakao_NU-Pre_AD_Install-Bizboard_260723": {
-      "ua_type": "NU-Pre",
-      "country": "NU",
-      "os": "Android",
-      "media": "AD",
-      "product": ""
-    },
-    "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp-OO_260716": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACp-OO"
-    },
-    "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACp"
-    },
-    "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Tiktok",
-      "product": "Conversion"
-    },
-    "ZEUS_KR_Kakao_NU-Pre_iOS_Install-Display_260723": {
-      "ua_type": "NU-Pre",
-      "country": "NU",
-      "os": "iOS",
-      "media": "iOS",
-      "product": ""
+      "product": "DemandGen-Preregi"
     },
     "ZEUS_KR_Kakao_NU-Pre_AD_Install-Display_260723": {
       "ua_type": "NU-Pre",
@@ -131470,12 +134182,12 @@
       "media": "AD",
       "product": ""
     },
-    "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen-Preregi_260728": {
+    "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "전체",
       "media": "GA",
-      "product": "DemandGen-Preregi"
+      "product": "DemandGen"
     },
     "ZEUS_KR_Kakao_NU-Pre_ALL_Conv-Display_260723": {
       "ua_type": "NU-Pre",
@@ -131484,11 +134196,39 @@
       "media": "ALL",
       "product": ""
     },
+    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260722": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Kakao",
+      "product": "Conv-Bizboard"
+    },
+    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Display_260723": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Kakao",
+      "product": "Conv-Display"
+    },
     "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "전체",
       "media": "Meta",
+      "product": "Conversion"
+    },
+    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "Android",
+      "media": "Meta",
+      "product": "MAIA-CSL"
+    },
+    "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Pangle",
       "product": "Conversion"
     },
     "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701": {
@@ -131498,32 +134238,39 @@
       "media": "Meta",
       "product": "Conversion"
     },
-    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Display_260723": {
+    "Incross_HQ_ZEUS_KR-KR_MSN_NU-Pre_ALL_Display_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "전체",
-      "media": "Kakao",
-      "product": "Conv-Display"
-    },
-    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260723": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Kakao",
-      "product": "Conv-Bizboard"
-    },
-    "Incross_HQ_ZEUS_KR_Criteo_NU-Pre_ALL_Display_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Criteo",
+      "media": "MSN",
       "product": "Display"
+    },
+    "ZEUS_KR_Kakao_NU-Pre_iOS_Install-Display_260723": {
+      "ua_type": "NU-Pre",
+      "country": "NU",
+      "os": "iOS",
+      "media": "iOS",
+      "product": ""
+    },
+    "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Tiktok",
+      "product": "Conversion"
     },
     "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260727": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "전체",
       "media": "Pangle",
+      "product": "Conversion"
+    },
+    "Incross_HQ_ZEUS_KR-KR_Moloco_NU-Pre_ALL_Conversion_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Moloco",
       "product": "Conversion"
     },
     "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen-Brand_260728": {
@@ -131533,41 +134280,34 @@
       "media": "GA",
       "product": "DemandGen-Brand"
     },
-    "Incross_HQ_ZEUS_KR-KR_MSN_NU-Pre_ALL_Display_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "MSN",
-      "product": "Display"
-    },
-    "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "iOS",
-      "media": "Tiktok",
-      "product": "Install-CPP"
-    },
-    "Incross_HQ_ZEUS_KR-KR_Moloco_NU-Pre_ALL_Conversion_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Moloco",
-      "product": "Conversion"
-    },
-    "ZEUS_KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260723": {
+    "ZEUS_KR_Kakao_NU-Pre_iOS_Install-Bizboard_260723": {
       "ua_type": "NU-Pre",
       "country": "NU",
-      "os": "전체",
-      "media": "ALL",
+      "os": "iOS",
+      "media": "iOS",
       "product": ""
+    },
+    "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACp"
+    },
+    "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp-OO_260716": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACp-OO"
     }
   },
   "unmatched_assets": [
     {
       "concept": "ZEUS_BI_제우스오만의신_최종안",
       "source": "google_ads",
-      "impressions": 5486505,
-      "cost": 14730939.92,
+      "impressions": 5486506,
+      "cost": 14730939.18,
       "asset_types": [
         "IMAGE"
       ],
@@ -131579,7 +134319,7 @@
       "concept": "[제우스: 오만의 신] 지역 소개 | 테베",
       "source": "google_ads",
       "impressions": 588049,
-      "cost": 1385681.61,
+      "cost": 1385680.86,
       "asset_types": [
         "YOUTUBE_VIDEO"
       ],
@@ -131591,7 +134331,7 @@
       "concept": "[제우스: 오만의 신] 지역 소개 | 테살리아",
       "source": "google_ads",
       "impressions": 580068,
-      "cost": 1468648.17,
+      "cost": 1468650.72,
       "asset_types": [
         "YOUTUBE_VIDEO"
       ],
@@ -131602,8 +134342,8 @@
     {
       "concept": "[제우스: 오만의 신] 지역 소개 | 자하브",
       "source": "google_ads",
-      "impressions": 506006,
-      "cost": 1227156.86,
+      "impressions": 506003,
+      "cost": 1227156.14,
       "asset_types": [
         "YOUTUBE_VIDEO"
       ],
@@ -131614,38 +134354,14 @@
     {
       "concept": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
       "source": "google_ads",
-      "impressions": 182136,
-      "cost": 756611.94,
+      "impressions": 182135,
+      "cost": 756609.96,
       "asset_types": [
         "YOUTUBE_VIDEO"
       ],
       "asset_urls": [
         "https://www.youtube.com/watch?v=FRDA_6FL4lI"
       ]
-    },
-    {
-      "concept": "P-Ingame-Region-Thessaly-UA",
-      "source": "mmp",
-      "impressions": 404345,
-      "cost": 3366540,
-      "asset_types": [],
-      "asset_urls": []
-    },
-    {
-      "concept": "P-Ingame-Region-Thebes-UA",
-      "source": "mmp",
-      "impressions": 342544,
-      "cost": 2165475,
-      "asset_types": [],
-      "asset_urls": []
-    },
-    {
-      "concept": "P-Ingame-Region-Zahav-UA",
-      "source": "mmp",
-      "impressions": 118718,
-      "cost": 983415,
-      "asset_types": [],
-      "asset_urls": []
     },
     {
       "concept": "P-Genre-DirInsight-06-PV",
