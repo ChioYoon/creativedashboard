@@ -6350,7 +6350,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <span class="gb" style="${tagColor}">${tag}</span>
         </div>`;
       const moverBlock = (cmp && cmp.hasPrev)
-        ? `<details class="sec" open><summary class="st">주목할 소재 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(전 기간 대비)</span></summary>${
+        ? `<details class="sec" open><summary class="st">주목할 소재 <span class="sts">(전 기간 대비 급등·급락·신규)</span></summary>${
             [...cmp.movers.risers.map(m => moverRow(m, '▲ 급등', 'background:rgba(220,40,40,.10);color:#DC2828;')),
              ...cmp.movers.fallers.map(m => moverRow(m, '▼ 급락', 'background:#F7F4EE;color:#808080;')),
              ...cmp.movers.newcomers.map(m => moverRow({ ...m, scorePrev: null, delta: null }, '신규', 'background:#ECEAE6;color:#191919;'))
@@ -6411,21 +6411,15 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           ${exRows.map(r => `<tr><td class="l" style="max-width:200px;overflow-wrap:anywhere;white-space:normal;">${nameA(r.name)}</td><td>${esc(r.type)}</td><td class="r" style="color:#DC2828;font-weight:700;">${sc(r.score)}</td><td class="r">${num(r.imp)}</td><td class="r">${won(r.cost)}</td><td class="r">${won(r.cpa)}</td><td>${r.tired ? '피로' : '—'}</td><td class="l" style="font-size:11px;max-width:220px;overflow-wrap:anywhere;white-space:normal;">${esc(r.camps.join(', '))}</td></tr>`).join('')}
           </tbody></table></div>`
         : '<div class="empty">제외 기준(노출 5,000+ · 점수 40 미만)에 해당하는 소재가 없습니다 — 양호.</div>';
-      // D. GA↔MMP 괴리 요약 (상위 6)
-      const gapHtml = (data.gapRows || []).length
-        ? `<div class="dtwrap"><table class="dt"><thead><tr><th class="l">소재명</th><th class="r">GA 점수·순위</th><th class="r">MMP 점수·순위</th><th class="r">괴리</th><th>판정</th></tr></thead><tbody>
-          ${data.gapRows.map(r => `<tr><td class="l" style="max-width:200px;overflow-wrap:anywhere;white-space:normal;">${nameA(r.name)}</td><td class="r">${sc(r.ga)} <span style="color:#999;">#${r.g}</span></td><td class="r">${sc(r.mmp)} <span style="color:#999;">#${r.m}</span></td><td class="r" style="font-weight:700;">${r.gapPct > 0 ? '+' : ''}${r.gapPct}%p</td><td>${r.gapPct >= 25 ? '<span style="color:#DC2828;font-weight:700;">GA만 우수</span>' : r.gapPct <= -25 ? 'MMP만 우수' : '유사'}</td></tr>`).join('')}
-          </tbody></table></div>`
-        : '';
+      // (GA↔MMP 괴리 표는 보고서에서 제외 — 07-29 사용자 요청. 데이터(gapRows)는 AI 프롬프트에서 계속 사용,
+      //  상세 확인은 대시보드 세그먼트 비교 탭.)
       // (구 'Top 성과 소재' 목록은 위닝 플레이북으로 대체 — data.topN은 내러티브 프롬프트에서 계속 사용)
-      const typeHtml = data.typeRows.map(r =>
-        `<tr><td>${esc(r.type)}</td><td class="r">${num(r.count)}</td><td class="r">${sc(r.avgScore)}</td></tr>`).join('');
       const insightBlock = data.insightHtml
         ? `<div class="sec"><div class="st">인사이트</div><div class="ins">${data.insightHtml}</div></div>` : '';
 
       // 통합 보고서: 필터 요약 섹션
       const filterBlock = data.filterHtml
-        ? `<details class="sec"><summary class="st">필터 조건 요약</summary>${data.filterHtml}</details>` : '';
+        ? `<details class="sec"><summary class="st">필터 조건 요약 <span class="sts">(이 보고서의 분석 조건)</span></summary>${data.filterHtml}</details>` : '';
       // 통합 보고서: 소재 상세표 (핵심 컬럼 + 비교 6컬럼)
       const hasCmp = !!(cmp && cmp.hasPrev);
       const pctBadge = (cur, prev) => {
@@ -6450,7 +6444,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           ${hasCmp ? `<td class="r">${sc(r.scoreBasis)}</td><td class="r" style="font-weight:700;">${sc(r.scoreCur)}</td><td class="r">${pctBadge(r.scoreCur, r.scoreBasis)}</td><td class="r">${num(r.convBasis)}</td><td class="r" style="font-weight:700;">${num(r.convCur)}</td><td class="r">${pctBadge(r.convCur, r.convBasis)}</td>` : ''}
         </tr>`).join('');
       const detailBlock = data.detailRows.length
-        ? `<details class="sec"><summary class="st">소재 상세 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(${data.detailRows.length}개 · 펼쳐서 확인${hasCmp ? ' · 표시 지표=현재 분석 기간 / 기준·비교 컬럼=보고서 비교 기간' : ''})</span></summary><div class="dtwrap"><table class="dt"><thead>${dHead}</thead><tbody>${dBody}</tbody></table></div></details>`
+        ? `<details class="sec"><summary class="st">소재 상세 <span class="sts">(${data.detailRows.length}개 전체 지표${hasCmp ? ' · 표시 지표=현재 분석 기간 / 기준·비교 컬럼=보고서 비교 기간' : ''})</span></summary><div class="dtwrap"><table class="dt"><thead>${dHead}</thead><tbody>${dBody}</tbody></table></div></details>`
         : '<div class="sec"><div class="st">소재 상세</div><div class="empty">표시할 소재가 없습니다.</div></div>';
 
       // '라이브 소재' 탭 — 생성 시점 노출중 소재 스냅샷 (필터 무관 전체)
@@ -6480,6 +6474,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
   details.sec > summary.st { cursor:pointer; user-select:none; list-style-position:outside; }
   details.sec > summary.st::marker { color:#DC2828; }
   details.sec[open] > summary.st { margin-bottom:10px; }
+  .sts { font-size:11px; color:#9ca3af; font-weight:400; }
+  .typestrip { font-size:12px; color:#666; background:#faf9f7; border-radius:8px; padding:8px 14px; margin:-12px 0 22px; }
   .tr { display:flex; align-items:center; gap:12px; background:#faf9f7; border-radius:8px; padding:9px 12px; margin-bottom:8px; }
   .tn { flex:1; min-width:0; } .tnm { font-size:13px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .tms { font-size:11px; color:#666; margin-top:2px; }
   .gb { font-size:11px; font-weight:700; padding:3px 10px; border-radius:10px; white-space:nowrap; }
@@ -6504,6 +6500,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
     </div>
     <div id="tab-report" class="tabpanel active">
     <div class="kpis">${kpiHtml}</div>
+    <div class="typestrip">유형별 평균 — ${data.typeRows.map(r => `<b>${esc(r.type)}</b> ${sc(r.avgScore)}점 <span style="color:#9ca3af;">(${num(r.count)}개)</span>`).join(' · ')}</div>
     ${(() => {
       if (!data.narrative) return '';
       const [label, tip] = data.narrativeIsRule
@@ -6512,15 +6509,13 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       const chip = `<span style="font-size:11px;color:#9ca3af;font-weight:400;" title="${tip}">ⓘ ${label} · 참고용</span>`;
       return `<div class="sec"><div class="st">인사이트 ${chip}</div>${linkifyNames(insightSectionsHtml(data.narrative))}</div>`;
     })()}
-    <details class="sec" open><summary class="st">위닝 크리에이티브 플레이북 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(성공 요소 조합 · 캠페인별 강세 · MMP 교차 검증)</span></summary>${playbookHtml}</details>
-    <details class="sec"><summary class="st">저효율 원인 진단 — 신규 제작 반영 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(하위 ${(data.bottomDeep || []).length}개 원인 + 회피 체크리스트 — 펼쳐서 확인)</span></summary>${lowCauseHtml || '<div class="empty">표시할 소재가 없습니다.</div>'}${avoidHtml}</details>
-    <details class="sec"${exRows.length ? ' open' : ''}><summary class="st">캠페인 제외 후보 — 위닝 노출 확대 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(${exRows.length}건 · 검토·수기 반영용)</span></summary>${excludeHtml}</details>
-    ${gapHtml ? `<details class="sec"><summary class="st">GA ↔ MMP 점수 괴리 상위 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(한쪽 매체군만 잘 작동 — 매체 전략 참고)</span></summary>${gapHtml}</details>` : ''}
+    <details class="sec" open><summary class="st">위닝 크리에이티브 플레이북 <span class="sts">(Top ${(data.topDeep || []).length} · 성공 요소·캠페인 강세·MMP 교차)</span></summary>${playbookHtml}</details>
+    <details class="sec"${exRows.length ? ' open' : ''}><summary class="st">캠페인 제외 후보 <span class="sts">(${exRows.length}건 · 분석 통과 소재 중 노출 5,000+ & 점수 40 미만 · 수기 반영용)</span></summary>${excludeHtml}</details>
+    <details class="sec"><summary class="st">저효율 원인 진단 <span class="sts">(하위 ${(data.bottomDeep || []).length}개 · 신규 제작 회피 체크리스트)</span></summary>${lowCauseHtml || '<div class="empty">표시할 소재가 없습니다.</div>'}${avoidHtml}</details>
     ${moverBlock}
-    <details class="sec"><summary class="st">유형별 요약</summary><table><thead><tr><th>유형</th><th class="r">소재 수</th><th class="r">평균 점수</th></tr></thead><tbody>${typeHtml}</tbody></table></details>
-    ${filterBlock}
     ${detailBlock}
     ${insightBlock}
+    ${filterBlock}
     </div>
     <div id="tab-live" class="tabpanel">
       <div class="sec"><div class="st">라이브 소재 <span style="font-size:11px;color:#9ca3af;font-weight:400;">(생성 시점 노출중 스냅샷)</span></div>${liveBlock}</div>
