@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "title_id": "zeus",
-  "generated_at": "2026-07-29T13:17:53+09:00",
+  "generated_at": "2026-07-29T13:52:42+09:00",
   "pipeline_version": "stage2-mvp",
   "gemini_model": "gemini-2.5-flash",
   "creatives": [
@@ -59,13 +59,13 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 27.55,
+        "total": 27.94,
         "grade": "보통",
-        "rank": 44,
-        "conv": 12.24,
+        "rank": 45,
+        "conv": 13.73,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 97.96
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -74,7 +74,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-29T13:15:40+09:00",
+      "tagged_at": "2026-07-29T13:51:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Event-CharacterName01-DA\\260807_BNR_P-Event-CharacterName01-DA_L_1080x1920_KR.jpg",
@@ -158,20 +158,20 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 27.55,
+        "total": 27.94,
         "grade": "보통",
-        "rank": 45,
-        "conv": 12.24,
+        "rank": 46,
+        "conv": 13.73,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 97.96
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
       "main_characters": [],
       "color_tone": "골드·화이트 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-29T13:15:40+09:00",
+      "tagged_at": "2026-07-29T13:51:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Event-LaunchDate01-DA\\260807_BNR_P-Event-LaunchDate01-DA_L_1200x628_KR.jpg",
@@ -259,24 +259,24 @@
       "kpi_reality_check": null,
       "kpi_percentiles": {
         "ctr": 88,
-        "cvr": 71,
+        "cvr": 72,
         "cpa": 60
       },
       "scores": {
-        "total": 75.51,
+        "total": 76.47,
         "grade": "우수",
         "rank": 11,
-        "conv": 63.27,
-        "cpa": 65.31,
-        "ipm": 75.51,
-        "roas": 97.96
+        "conv": 64.71,
+        "cpa": 66.67,
+        "ipm": 76.47,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "경쟁형",
       "main_characters": [],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-29T13:15:41+09:00",
+      "tagged_at": "2026-07-29T13:51:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-01-PV\\260701_VID_P-Genre-DirInsight-01-PV_V_1080x1920_KR.mp4"
@@ -3146,8 +3146,8 @@
       "링크": "https://www.youtube.com/watch?v=dOkcBZxxOmU",
       "creative_concept": "P-Genre-DirInsight-02-PV",
       "전환": 1742,
-      "비용": 2816775,
-      "노출수": 660317,
+      "비용": 2816772,
+      "노출수": 660316,
       "클릭수": 7520,
       "Revenue": 1242,
       "hooking_strategy": "비주얼 임팩트",
@@ -3191,10 +3191,10 @@
         "cpa": 100
       },
       "scores": {
-        "total": 96.94,
+        "total": 97.06,
         "grade": "최우수",
         "rank": 1,
-        "conv": 87.76,
+        "conv": 88.24,
         "cpa": 100.0,
         "ipm": 100.0,
         "roas": 100.0
@@ -3204,7 +3204,7 @@
       "main_characters": [],
       "color_tone": "다크 그레이",
       "cta_type": null,
-      "tagged_at": "2026-07-29T13:15:41+09:00",
+      "tagged_at": "2026-07-29T13:51:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-02-PV\\260708_VID_P-Genre-DirInsight-02-PV_V_1080x1920_KR.mp4"
@@ -3818,8 +3818,8 @@
           "clicks": 85,
           "cost_micros": 76869940640,
           "cost": 76869.94064,
-          "conversions": 38.309579,
-          "conversions_value": 38.309579
+          "conversions": 38.309703,
+          "conversions_value": 38.309703
         },
         {
           "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 2화 | 새로운 경쟁, 새로운 플레이",
@@ -3910,10 +3910,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=dOkcBZxxOmU",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 21354,
+          "impressions": 21353,
           "clicks": 63,
-          "cost_micros": 58144823652,
-          "cost": 58144.823652,
+          "cost_micros": 58141693712,
+          "cost": 58141.693712,
           "conversions": 16.025644,
           "conversions_value": 16.025644
         },
@@ -5717,7 +5717,7 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=gAaWDsukpSE",
       "creative_concept": "P-Genre-DirInsight-03-PV",
-      "전환": 430,
+      "전환": 431,
       "비용": 1885671,
       "노출수": 429023,
       "클릭수": 7277,
@@ -5763,25 +5763,25 @@
       "creator_intent": "개발자 인터뷰를 통해 게임의 핵심 가치인 '경쟁'에 대한 철학을 전달하고, MMORPG 유저의 공감대를 형성하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": {
-        "ctr": 55,
+        "ctr": 56,
         "cvr": 14,
         "cpa": 0
       },
       "scores": {
-        "total": 47.45,
+        "total": 48.53,
         "grade": "양호",
         "rank": 42,
-        "conv": 51.02,
-        "cpa": 14.29,
-        "ipm": 26.53,
-        "roas": 97.96
+        "conv": 52.94,
+        "cpa": 15.69,
+        "ipm": 27.45,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "경쟁형",
       "main_characters": [],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:15:42+09:00",
+      "tagged_at": "2026-07-29T13:51:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-03-PV\\260715_VID_P-Genre-DirInsight-03-PV_V_1080x1920_KR.mp4"
@@ -6475,7 +6475,7 @@
           "clicks": 194,
           "cost_micros": 62729249560,
           "cost": 62729.24956,
-          "conversions": 16.0,
+          "conversions": 17.0,
           "conversions_value": 0.0
         }
       ],
@@ -7393,7 +7393,7 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=dnvBMHJQxFw",
       "creative_concept": "P-Genre-DirInsight-04-PV",
-      "전환": 964,
+      "전환": 965,
       "비용": 3862968,
       "노출수": 472580,
       "클릭수": 11401,
@@ -7435,18 +7435,18 @@
       "creator_intent": "다양한 클래스 라인업과 특히 '파라곤' 클래스의 독특한 매력을 강조하여 유저들의 기대감을 높이려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": {
-        "ctr": 83,
+        "ctr": 84,
         "cvr": 74,
         "cpa": 5
       },
       "scores": {
-        "total": 69.9,
+        "total": 70.59,
         "grade": "우수",
         "rank": 19,
-        "conv": 85.71,
-        "cpa": 18.37,
-        "ipm": 77.55,
-        "roas": 97.96
+        "conv": 86.27,
+        "cpa": 19.61,
+        "ipm": 78.43,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "성취형",
@@ -7458,7 +7458,7 @@
       ],
       "color_tone": "다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:15:43+09:00",
+      "tagged_at": "2026-07-29T13:51:37+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-04-PV\\260715_VID_P-Genre-DirInsight-04-PV_V_1080x1920_KR.mp4"
@@ -8152,7 +8152,7 @@
           "clicks": 605,
           "cost_micros": 330647417661,
           "cost": 330647.417661,
-          "conversions": 69.0,
+          "conversions": 70.0,
           "conversions_value": 0.0
         }
       ],
@@ -9373,24 +9373,24 @@
       "kpi_reality_check": null,
       "kpi_percentiles": {
         "ctr": 95,
-        "cvr": 64,
+        "cvr": 65,
         "cpa": 2
       },
       "scores": {
-        "total": 64.8,
+        "total": 65.69,
         "grade": "우수",
         "rank": 25,
-        "conv": 75.51,
-        "cpa": 16.33,
-        "ipm": 69.39,
-        "roas": 97.96
+        "conv": 76.47,
+        "cpa": 17.65,
+        "ipm": 70.59,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
       "main_characters": [],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:15:44+09:00",
+      "tagged_at": "2026-07-29T13:51:38+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-05-PV\\260715_VID_P-Genre-DirInsight-05-PV_V_1080x1920_KR.mp4"
@@ -11065,13 +11065,13 @@
       "캠페인": null,
       "사이즈": "1080x1920",
       "언어": "KR",
-      "링크": null,
+      "링크": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
       "creative_concept": "P-Genre-DirInsight-06-PV",
-      "전환": 0,
-      "비용": 0,
-      "노출수": 0,
-      "클릭수": 0,
-      "Revenue": 0,
+      "전환": 191,
+      "비용": 756610,
+      "노출수": 182135,
+      "클릭수": 2638,
+      "Revenue": 39,
       "hooking_strategy": "질문/선택 상황 제시",
       "USP": "편의성형(방치/빠른성장)",
       "art_style": "시네마틱 실사 합성",
@@ -11110,30 +11110,371 @@
       ],
       "creator_intent": "MMORPG 유저들이 중요하게 생각하는 게임 경제와 지속적인 운영에 대한 개발 철학을 전달하여 신뢰를 구축하려는 의도",
       "kpi_reality_check": null,
-      "kpi_percentiles": null,
+      "kpi_percentiles": {
+        "ctr": 35,
+        "cvr": 16,
+        "cpa": 7
+      },
       "scores": {
-        "total": 27.55,
-        "grade": "보통",
-        "rank": 46,
-        "conv": 12.24,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 97.96
+        "total": 42.16,
+        "grade": "양호",
+        "rank": 44,
+        "conv": 19.61,
+        "cpa": 21.57,
+        "ipm": 29.41,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "성취형",
       "main_characters": [],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:01+09:00",
+      "tagged_at": "2026-07-29T13:51:40+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-06-PV\\260722_VID_P-Genre-DirInsight-06-PV_V_1080x1920_KR.mp4"
       ],
-      "kpi_source": null,
-      "kpi_window_start": null,
-      "kpi_window_end": null,
-      "kpi_daily": [],
+      "kpi_source": "google_ads",
+      "kpi_window_start": "2026-06-30",
+      "kpi_window_end": "2026-07-28",
+      "kpi_daily": [
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-23",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260722",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 683,
+          "clicks": 5,
+          "cost_micros": 2434412640,
+          "cost": 2434.41264,
+          "conversions": 1.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-24",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260722",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 5901,
+          "clicks": 174,
+          "cost_micros": 36035665159,
+          "cost": 36035.665159,
+          "conversions": 12.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-25",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260722",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 6180,
+          "clicks": 220,
+          "cost_micros": 29906422251,
+          "cost": 29906.422251,
+          "conversions": 13.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-26",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260722",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 6633,
+          "clicks": 229,
+          "cost_micros": 34579618657,
+          "cost": 34579.618657,
+          "conversions": 12.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-27",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260722",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 10530,
+          "clicks": 277,
+          "cost_micros": 52193882245,
+          "cost": 52193.882245,
+          "conversions": 20.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-28",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260722",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 11880,
+          "clicks": 450,
+          "cost_micros": 61956762323,
+          "cost": 61956.762323,
+          "conversions": 17.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-28",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen-Preregi_260728",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 284,
+          "clicks": 0,
+          "cost_micros": 1056692242,
+          "cost": 1056.692242,
+          "conversions": 0.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-23",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp-OO_260716",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260722",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 1010,
+          "clicks": 11,
+          "cost_micros": 7585120264,
+          "cost": 7585.120264,
+          "conversions": 1.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-24",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp-OO_260716",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260722",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 17326,
+          "clicks": 168,
+          "cost_micros": 74861130878,
+          "cost": 74861.130878,
+          "conversions": 16.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-25",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp-OO_260716",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260722",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 18773,
+          "clicks": 231,
+          "cost_micros": 89450679079,
+          "cost": 89450.679079,
+          "conversions": 12.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-26",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp-OO_260716",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260722",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 31027,
+          "clicks": 280,
+          "cost_micros": 122547905792,
+          "cost": 122547.905792,
+          "conversions": 11.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-27",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp-OO_260716",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260722",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 20763,
+          "clicks": 243,
+          "cost_micros": 82296978306,
+          "cost": 82296.978306,
+          "conversions": 18.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-28",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp-OO_260716",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260722",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 21794,
+          "clicks": 244,
+          "cost_micros": 80240427568,
+          "cost": 80240.427568,
+          "conversions": 19.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-28",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen-Brand_260728",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 233,
+          "clicks": 1,
+          "cost_micros": 600982797,
+          "cost": 600.982797,
+          "conversions": 0.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-22",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 3582,
+          "clicks": 13,
+          "cost_micros": 8047412271,
+          "cost": 8047.412271,
+          "conversions": 0.0,
+          "conversions_value": 0.0
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-23",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 7298,
+          "clicks": 20,
+          "cost_micros": 19238841096,
+          "cost": 19238.841096,
+          "conversions": 4.069705,
+          "conversions_value": 4.069705
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-24",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 5261,
+          "clicks": 19,
+          "cost_micros": 14601111648,
+          "cost": 14601.111648,
+          "conversions": 4.945201,
+          "conversions_value": 4.945201
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-25",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 5222,
+          "clicks": 15,
+          "cost_micros": 15341616521,
+          "cost": 15341.616521,
+          "conversions": 12.999803,
+          "conversions_value": 12.999803
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-26",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 4517,
+          "clicks": 22,
+          "cost_micros": 13054497661,
+          "cost": 13054.497661,
+          "conversions": 13.075646,
+          "conversions_value": 13.075646
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-27",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 1761,
+          "clicks": 7,
+          "cost_micros": 5756767769,
+          "cost": 5756.767769,
+          "conversions": 4.029442,
+          "conversions_value": 4.029442
+        },
+        {
+          "creative_name": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
+          "date": "2026-07-28",
+          "source": "google_ads",
+          "customer_id": "3250895166",
+          "campaign_name": "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
+          "asset_url": "https://www.youtube.com/watch?v=FRDA_6FL4lI",
+          "asset_type": "YOUTUBE_VIDEO",
+          "impressions": 1477,
+          "clicks": 9,
+          "cost_micros": 4823033487,
+          "cost": 4823.033487,
+          "conversions": 0.007115,
+          "conversions_value": 0.007115
+        }
+      ],
       "mmp_source": "airbridge",
       "mmp_channels": [
         "da",
@@ -11980,13 +12321,13 @@
         "cpa": 67
       },
       "scores": {
-        "total": 88.78,
+        "total": 89.22,
         "grade": "최우수",
         "rank": 2,
-        "conv": 89.8,
-        "cpa": 69.39,
-        "ipm": 97.96,
-        "roas": 97.96
+        "conv": 90.2,
+        "cpa": 70.59,
+        "ipm": 98.04,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -11998,7 +12339,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:09+09:00",
+      "tagged_at": "2026-07-29T13:51:50+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-GamePreview-01-PV\\260701_VID_P-Genre-GamePreview-01-PV_L_1920x1080_KR.mp4"
@@ -14424,7 +14765,7 @@
       "creative_concept": "P-Genre-MMORPG01-DA",
       "전환": 429,
       "비용": 877542,
-      "노출수": 190578,
+      "노출수": 190573,
       "클릭수": 5038,
       "Revenue": 20,
       "hooking_strategy": "캐릭터 외형 소구",
@@ -14467,20 +14808,20 @@
         "cpa": 95
       },
       "scores": {
-        "total": 83.16,
+        "total": 83.82,
         "grade": "최우수",
         "rank": 4,
-        "conv": 48.98,
-        "cpa": 95.92,
-        "ipm": 89.8,
-        "roas": 97.96
+        "conv": 50.98,
+        "cpa": 96.08,
+        "ipm": 90.2,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
       "main_characters": [],
       "color_tone": "골드·화이트 판타지",
       "cta_type": "상태 변화 유도형",
-      "tagged_at": "2026-07-29T13:17:09+09:00",
+      "tagged_at": "2026-07-29T13:51:50+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Genre-MMORPG01-DA\\260708_BNR_P-Genre-MMORPG01-DA_L_1024x768_KR.jpg",
@@ -14537,7 +14878,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/17892545000404405844",
           "asset_type": "IMAGE",
-          "impressions": 1494,
+          "impressions": 1493,
           "clicks": 5,
           "cost_micros": 1043416869,
           "cost": 1043.416869,
@@ -15593,7 +15934,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/17892545000404405844",
           "asset_type": "IMAGE",
-          "impressions": 15201,
+          "impressions": 15197,
           "clicks": 20,
           "cost_micros": 3814310122,
           "cost": 3814.310122,
@@ -19122,13 +19463,13 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 27.55,
+        "total": 27.94,
         "grade": "보통",
         "rank": 47,
-        "conv": 12.24,
+        "conv": 13.73,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 97.96
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "성취형",
@@ -19137,7 +19478,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T13:17:09+09:00",
+      "tagged_at": "2026-07-29T13:51:50+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ArtisanReward-UA\\260729_VID_P-Ingame-ArtisanReward-UA_L_1920x1080_KR.mp4",
@@ -19218,13 +19559,13 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 27.55,
+        "total": 27.94,
         "grade": "보통",
         "rank": 48,
-        "conv": 12.24,
+        "conv": 13.73,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 97.96
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -19233,7 +19574,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:10+09:00",
+      "tagged_at": "2026-07-29T13:51:51+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-CineIngame01-UA\\260729_VID_P-Ingame-CineIngame01-UA_L_1920x1080_KR.mp4",
@@ -19318,17 +19659,17 @@
       "kpi_reality_check": "캐릭터 비주얼 임팩트로 높은 CTR을 기대했으나 실제 CTR은 풀 하위 41%로 평이하며, CPA는 풀 하위 28%로 효율이 낮음 — 이는 장르/게임성 불분명과 CTA 부재가 복합적으로 작용한 결과이므로, 초반 15초 내 대규모 전투 장면을 삽입하고 명확한 CTA를 추가하여 후킹과 전환율을 동시에 개선할 필요가 있습니다.",
       "kpi_percentiles": {
         "ctr": 33,
-        "cvr": 57,
-        "cpa": 26
+        "cvr": 58,
+        "cpa": 28
       },
       "scores": {
-        "total": 66.33,
+        "total": 67.65,
         "grade": "우수",
         "rank": 24,
-        "conv": 67.35,
-        "cpa": 36.73,
-        "ipm": 63.27,
-        "roas": 97.96
+        "conv": 68.63,
+        "cpa": 39.22,
+        "ipm": 64.71,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -19337,7 +19678,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:13+09:00",
+      "tagged_at": "2026-07-29T13:51:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassArtisan-01-PV\\260710_VID_P-Ingame-ClassArtisan-01-PV_L_1920x1080_KR.mp4"
@@ -20980,18 +21321,18 @@
       "creator_intent": "경제 특화 클래스 '아티산'의 매력적인 외형과 전투 능력을 과시하여 신규 유저의 호기심을 자극하려는 의도",
       "kpi_reality_check": "캐릭터 비주얼로 높은 CTR을 기대했으나 실제 CTR 1.5%로 풀 하위 19%를 기록, 장르/게임성 불분명이 클릭을 저해했으므로 초반 10초 내 MMORPG 핵심 요소를 명확히 보여줄 필요가 있습니다.",
       "kpi_percentiles": {
-        "ctr": 31,
+        "ctr": 30,
         "cvr": 79,
-        "cpa": 55
+        "cpa": 56
       },
       "scores": {
-        "total": 75.0,
+        "total": 75.98,
         "grade": "우수",
-        "rank": 14,
-        "conv": 59.18,
-        "cpa": 61.22,
-        "ipm": 81.63,
-        "roas": 97.96
+        "rank": 13,
+        "conv": 60.78,
+        "cpa": 62.75,
+        "ipm": 82.35,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "성취형",
@@ -21000,7 +21341,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:14+09:00",
+      "tagged_at": "2026-07-29T13:51:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassArtisan-01-SS\\260710_VID_P-Ingame-ClassArtisan-01-SS_V_1080x1920_KR.mp4"
@@ -23058,7 +23399,7 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=vWNe_fQoE_M",
       "creative_concept": "P-Ingame-ClassAssassin-01-PV",
-      "전환": 471,
+      "전환": 472,
       "비용": 1456124,
       "노출수": 240103,
       "클릭수": 4766,
@@ -23102,18 +23443,18 @@
       "creator_intent": "고퀄리티 어쌔신 캐릭터의 화려한 전투 액션을 집중적으로 보여주어 캐릭터 매력과 게임의 액션성을 과시하려는 의도",
       "kpi_reality_check": "캐릭터 액션으로 높은 CTR을 기대했으나 실제 CTR은 풀 상위 19%로 준수했으나 CVR은 풀 하위 41%로 저조함 — 이는 강한 후킹에도 불구하고 게임의 핵심 가치 전달과 명확한 행동 유도가 부족했으므로, 엔드카드 CTA를 강화하고 MMORPG 핵심 콘텐츠를 명확히 보여줄 필요가 있음",
       "kpi_percentiles": {
-        "ctr": 76,
+        "ctr": 77,
         "cvr": 67,
-        "cpa": 14
+        "cpa": 16
       },
       "scores": {
-        "total": 62.76,
+        "total": 64.22,
         "grade": "우수",
         "rank": 27,
-        "conv": 55.1,
-        "cpa": 26.53,
-        "ipm": 71.43,
-        "roas": 97.96
+        "conv": 56.86,
+        "cpa": 29.41,
+        "ipm": 72.55,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "성취형",
@@ -23122,7 +23463,7 @@
       ],
       "color_tone": "다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:17+09:00",
+      "tagged_at": "2026-07-29T13:51:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassAssassin-01-PV\\260710_VID_P-Ingame-ClassAssassin-01-PV_L_1920x1080_KR.mp4"
@@ -23416,7 +23757,7 @@
           "clicks": 196,
           "cost_micros": 12177538773,
           "cost": 12177.538773,
-          "conversions": 7.0,
+          "conversions": 8.0,
           "conversions_value": 0.0
         },
         {
@@ -24661,18 +25002,18 @@
       "creator_intent": "고퀄리티 어쌔신 캐릭터의 외형과 역동적인 전투 연출을 통해 특정 클래스에 대한 매력을 어필하려는 의도",
       "kpi_reality_check": "캐릭터 매력으로 높은 CTR을 기대했으나 실제 CTR 1.6%로 풀 하위 34%에 머물러 초반 시선 집중력이 약함 — 어쌔신 캐릭터의 매력을 살리면서도 초반 3초에 대규모 전투 실연을 배치하여 MMORPG 장르 인지를 강화할 필요",
       "kpi_percentiles": {
-        "ctr": 38,
-        "cvr": 50,
-        "cpa": 29
+        "ctr": 40,
+        "cvr": 51,
+        "cpa": 30
       },
       "scores": {
-        "total": 54.59,
+        "total": 56.37,
         "grade": "양호",
-        "rank": 36,
-        "conv": 24.49,
-        "cpa": 38.78,
-        "ipm": 57.14,
-        "roas": 97.96
+        "rank": 35,
+        "conv": 27.45,
+        "cpa": 41.18,
+        "ipm": 58.82,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -24681,7 +25022,7 @@
       ],
       "color_tone": "다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:17+09:00",
+      "tagged_at": "2026-07-29T13:52:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassAssassin-01-SS\\260710_VID_P-Ingame-ClassAssassin-01-SS_V_1080x1920_KR.mp4"
@@ -26715,17 +27056,17 @@
       "kpi_reality_check": "강력한 비주얼 후킹으로 CTR 상위 25%를 달성했으나, CPA가 하위 16%로 비용 효율이 좋지 않음 — 게임의 핵심 재미인 대규모 전투를 초반에 명확히 보여주어 전환율을 개선해야 함",
       "kpi_percentiles": {
         "ctr": 74,
-        "cvr": 90,
-        "cpa": 31
+        "cvr": 91,
+        "cpa": 33
       },
       "scores": {
-        "total": 68.88,
+        "total": 70.1,
         "grade": "우수",
         "rank": 20,
-        "conv": 44.9,
-        "cpa": 40.82,
-        "ipm": 91.84,
-        "roas": 97.96
+        "conv": 47.06,
+        "cpa": 43.14,
+        "ipm": 92.16,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -26734,7 +27075,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:20+09:00",
+      "tagged_at": "2026-07-29T13:52:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBerserker-01-PV\\260710_VID_P-Ingame-ClassBerserker-01-PV_L_1920x1080_KR.mp4"
@@ -28182,18 +28523,18 @@
       "creator_intent": "고퀄리티 3D 그래픽으로 구현된 '버서커' 클래스의 강력한 전투 액션과 매력을 집중 조명하여 특정 클래스 선호 유저의 관심을 유도하려는 의도",
       "kpi_reality_check": "버서커 클래스에 집중한 연출로 특정 타겟의 높은 CTR을 기대했으나, 실제 CTR 1.9%로 풀 상위 34%를 기록하며 준수한 성과를 보였지만 CVR은 하위 44%로 저조했습니다. 명확한 CTA 부재가 전환을 저해했으므로 엔드카드에 다운로드 유도를 강화할 필요가 있습니다.",
       "kpi_percentiles": {
-        "ctr": 50,
-        "cvr": 43,
-        "cpa": 17
+        "ctr": 51,
+        "cvr": 44,
+        "cpa": 19
       },
       "scores": {
-        "total": 50.0,
+        "total": 51.96,
         "grade": "양호",
-        "rank": 40,
-        "conv": 22.45,
-        "cpa": 28.57,
-        "ipm": 51.02,
-        "roas": 97.96
+        "rank": 39,
+        "conv": 25.49,
+        "cpa": 31.37,
+        "ipm": 52.94,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "성취형",
@@ -28202,7 +28543,7 @@
       ],
       "color_tone": "다크 브라운·골드",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:21+09:00",
+      "tagged_at": "2026-07-29T13:52:05+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBerserker-01-SS\\260710_VID_P-Ingame-ClassBerserker-01-SS_V_1080x1920_KR.mp4"
@@ -30132,18 +30473,18 @@
       "creator_intent": "블레스드 클래스의 매력적인 외형과 실제 전투 연출을 통해 MMORPG의 핵심 게임성을 과시하려는 의도",
       "kpi_reality_check": "캐릭터 액션과 게임플레이 매력으로 높은 CVR을 기대했으나, 실제 CVR 0.25%로 풀 상위 28%에 머물러 전환율이 기대만큼 높지 않음 — 명확한 CTA 부재가 전환을 저해하므로 엔드카드에 행동 유도 장치를 추가할 필요가 있음.",
       "kpi_percentiles": {
-        "ctr": 24,
-        "cvr": 48,
+        "ctr": 23,
+        "cvr": 49,
         "cpa": 79
       },
       "scores": {
-        "total": 76.53,
+        "total": 77.45,
         "grade": "우수",
         "rank": 10,
-        "conv": 71.43,
-        "cpa": 81.63,
-        "ipm": 55.1,
-        "roas": 97.96
+        "conv": 72.55,
+        "cpa": 82.35,
+        "ipm": 56.86,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "경쟁형",
@@ -30152,7 +30493,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:23+09:00",
+      "tagged_at": "2026-07-29T13:52:09+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBlessed-01-PV\\260710_VID_P-Ingame-ClassBlessed-01-PV_L_1920x1080_KR.mp4"
@@ -31824,17 +32165,17 @@
       "kpi_reality_check": "캐릭터 외형 소구와 비주얼 임팩트로 높은 CTR을 기대했으나 실제 CTR 1.4%로 풀 하위 16%에 머물러 초반 후킹이 약했음 — 게임의 핵심 가치인 경쟁 요소를 초반에 명확히 제시하여 클릭을 유도할 필요가 있습니다.",
       "kpi_percentiles": {
         "ctr": 21,
-        "cvr": 52,
-        "cpa": 21
+        "cvr": 53,
+        "cpa": 23
       },
       "scores": {
-        "total": 61.73,
+        "total": 63.24,
         "grade": "우수",
         "rank": 28,
-        "conv": 57.14,
-        "cpa": 32.65,
-        "ipm": 59.18,
-        "roas": 97.96
+        "conv": 58.82,
+        "cpa": 35.29,
+        "ipm": 60.78,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "경쟁형",
@@ -31843,7 +32184,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:24+09:00",
+      "tagged_at": "2026-07-29T13:52:10+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBlessed-01-SS\\260710_VID_P-Ingame-ClassBlessed-01-SS_V_1080x1920_KR.mp4"
@@ -33882,18 +34223,18 @@
       "creator_intent": "엘리멘탈리스트 클래스의 압도적인 비주얼과 화려한 원소 마법 연출을 통해 게임의 그래픽 퀄리티와 캐릭터 매력을 과시하려는 의도",
       "kpi_reality_check": "엘리멘탈리스트의 비주얼 임팩트로 높은 CTR을 기대했으나 실제 CTR 1.6%로 풀 하위 38%에 머물러 초반 후킹이 약함 — 게임의 핵심 가치와 장르를 빠르게 보여주는 초반 3초 연출 강화가 필요",
       "kpi_percentiles": {
-        "ctr": 43,
-        "cvr": 55,
-        "cpa": 10
+        "ctr": 44,
+        "cvr": 56,
+        "cpa": 12
       },
       "scores": {
-        "total": 54.08,
+        "total": 55.88,
         "grade": "양호",
         "rank": 37,
-        "conv": 34.69,
-        "cpa": 22.45,
-        "ipm": 61.22,
-        "roas": 97.96
+        "conv": 37.25,
+        "cpa": 25.49,
+        "ipm": 62.75,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -33902,7 +34243,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-29T13:17:27+09:00",
+      "tagged_at": "2026-07-29T13:52:13+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassElimentalist-01-PV\\260710_VID_P-Ingame-ClassElimentalist-01-PV_L_1920x1080_KR.mp4"
@@ -35426,18 +35767,18 @@
       "creator_intent": "엘리멘탈리스트 클래스의 압도적인 비주얼과 화려한 원소 전투 스킬을 과시하여 특정 클래스에 대한 유저의 관심을 유도하려는 의도",
       "kpi_reality_check": "캐릭터 비주얼과 전투 연출이 강점이지만, 실제 CVR이 풀 하위 47%로 나타나 전환이 약함 — 엔드카드에 명확한 CTA를 추가하여 유저의 다음 행동을 유도하고 전환율을 개선해야 합니다.",
       "kpi_percentiles": {
-        "ctr": 69,
-        "cvr": 45,
-        "cpa": 12
+        "ctr": 70,
+        "cvr": 47,
+        "cpa": 14
       },
       "scores": {
-        "total": 48.98,
+        "total": 50.98,
         "grade": "양호",
         "rank": 41,
-        "conv": 20.41,
-        "cpa": 24.49,
-        "ipm": 53.06,
-        "roas": 97.96
+        "conv": 23.53,
+        "cpa": 27.45,
+        "ipm": 54.9,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -35446,7 +35787,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:27+09:00",
+      "tagged_at": "2026-07-29T13:52:14+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassElimentalist-01-SS\\260710_VID_P-Ingame-ClassElimentalist-01-SS_V_1080x1920_KR.mp4"
@@ -37414,18 +37755,18 @@
       "creator_intent": "고품질 3D 그래픽과 나이트 클래스의 방어/반격 전투 연출을 통해 게임의 핵심 재미와 클래스 매력을 과시하려는 의도",
       "kpi_reality_check": "강한 후킹으로 높은 CTR을 예상했으나 실제 CTR은 풀 하위 22%로 첫 시선 유지력이 약하고, CVR은 풀 상위 41%로 전환 자체는 나쁘지 않으므로, 초반 후킹을 더욱 강화하여 유입을 늘릴 필요가 있습니다.",
       "kpi_percentiles": {
-        "ctr": 45,
+        "ctr": 47,
         "cvr": 93,
-        "cpa": 64
+        "cpa": 65
       },
       "scores": {
-        "total": 83.16,
+        "total": 83.82,
         "grade": "최우수",
         "rank": 5,
-        "conv": 69.39,
-        "cpa": 71.43,
-        "ipm": 93.88,
-        "roas": 97.96
+        "conv": 70.59,
+        "cpa": 72.55,
+        "ipm": 94.12,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -37434,7 +37775,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:30+09:00",
+      "tagged_at": "2026-07-29T13:52:16+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassKnight-01-PV\\260710_VID_P-Ingame-ClassKnight-01-PV_L_1920x1080_KR.mp4"
@@ -39079,18 +39420,18 @@
       "creator_intent": "나이트 클래스의 방어 및 전투 능력을 고퀄리티 인게임 연출로 과시하여 특정 클래스에 대한 관심을 유도하려는 의도",
       "kpi_reality_check": "캐릭터 외형과 전투 연출로 높은 CTR을 기대했으나 실제 CTR 1.6%로 풀 하위 31%를 기록 — 초반 3초 내 게임 플레이 핵심 가치 전달이 부족하여 시청자 이탈이 발생했으므로 후킹 구간을 재구성할 필요가 있습니다.",
       "kpi_percentiles": {
-        "ctr": 29,
-        "cvr": 62,
-        "cpa": 43
+        "ctr": 28,
+        "cvr": 63,
+        "cpa": 44
       },
       "scores": {
-        "total": 64.29,
+        "total": 65.69,
         "grade": "우수",
         "rank": 26,
-        "conv": 40.82,
-        "cpa": 51.02,
-        "ipm": 67.35,
-        "roas": 97.96
+        "conv": 43.14,
+        "cpa": 52.94,
+        "ipm": 68.63,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "경쟁형",
@@ -39099,7 +39440,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:31+09:00",
+      "tagged_at": "2026-07-29T13:52:17+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassKnight-01-SS\\260710_VID_P-Ingame-ClassKnight-01-SS_V_1080x1920_KR.mp4"
@@ -41057,17 +41398,17 @@
       "kpi_reality_check": "캐릭터 비주얼 임팩트로 높은 CTR을 기록했으나, CVR이 풀 상위 44%로 상대적으로 낮음 — 이는 캐릭터 매력만으로는 게임의 핵심 가치를 충분히 전달하지 못했음을 시사하므로, 인게임 전투 장면을 초반에 배치하여 장르적 매력을 강화할 필요가 있음",
       "kpi_percentiles": {
         "ctr": 60,
-        "cvr": 76,
-        "cpa": 19
+        "cvr": 77,
+        "cpa": 21
       },
       "scores": {
-        "total": 60.2,
+        "total": 61.76,
         "grade": "우수",
         "rank": 31,
-        "conv": 32.65,
-        "cpa": 30.61,
-        "ipm": 79.59,
-        "roas": 97.96
+        "conv": 35.29,
+        "cpa": 33.33,
+        "ipm": 80.39,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -41076,7 +41417,7 @@
       ],
       "color_tone": "골드·퍼플 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-29T13:17:34+09:00",
+      "tagged_at": "2026-07-29T13:52:20+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassOracle-01-PV\\260710_VID_P-Ingame-ClassOracle-01-PV_L_1920x1080_KR.mp4"
@@ -42495,7 +42836,7 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=t-x1zioCkiM",
       "creative_concept": "P-Ingame-ClassOracle-01-SS",
-      "전환": 225,
+      "전환": 226,
       "비용": 836976,
       "노출수": 169494,
       "클릭수": 3007,
@@ -42539,18 +42880,18 @@
       "creator_intent": "오라클 캐릭터의 고결한 외형과 강력한 스킬 연출을 통해 게임의 비주얼 퀄리티와 캐릭터 매력을 과시하려는 의도",
       "kpi_reality_check": "캐릭터 외형 소구와 비주얼 임팩트로 CTR 2.2% (상위 22%)를 달성했으나, CVR은 0.18% (하위 34%)로 전환율이 낮음 — 이는 명확한 행동 유도 부재와 MMORPG 핵심 게임성 소구 부족이 원인이므로, CTA와 핵심 게임플레이 컷을 강화하여 전환율을 높여야 합니다.",
       "kpi_percentiles": {
-        "ctr": 57,
-        "cvr": 40,
-        "cpa": 7
+        "ctr": 58,
+        "cvr": 42,
+        "cpa": 9
       },
       "scores": {
-        "total": 46.43,
+        "total": 48.53,
         "grade": "양호",
         "rank": 43,
-        "conv": 18.37,
-        "cpa": 20.41,
-        "ipm": 48.98,
-        "roas": 97.96
+        "conv": 21.57,
+        "cpa": 23.53,
+        "ipm": 50.98,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -42559,7 +42900,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-29T13:17:35+09:00",
+      "tagged_at": "2026-07-29T13:52:21+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassOracle-01-SS\\260710_VID_P-Ingame-ClassOracle-01-SS_V_1080x1920_KR.mp4"
@@ -43413,7 +43754,7 @@
           "clicks": 78,
           "cost_micros": 20040554985,
           "cost": 20040.554985,
-          "conversions": 9.0,
+          "conversions": 10.0,
           "conversions_value": 0.0
         }
       ],
@@ -44386,18 +44727,18 @@
       "creator_intent": "고퀄리티 시네마틱 연출과 레인저 캐릭터의 매력을 강조하여 유저들의 시선을 사로잡으려는 의도",
       "kpi_reality_check": "캐릭터 비주얼 임팩트로 높은 CTR을 기대했으나 실제 CTR 1.6%로 풀 하위 28%에 머물러 첫 후킹이 클릭으로 이어지지 못했습니다. 이는 장르/게임성 단서 부족이 원인이므로 초반 3초 내에 대규모 전투 실연을 추가하여 장르 인지를 강화할 필요가 있습니다.",
       "kpi_percentiles": {
-        "ctr": 36,
+        "ctr": 37,
         "cvr": 95,
-        "cpa": 71
+        "cpa": 72
       },
       "scores": {
-        "total": 85.71,
+        "total": 86.27,
         "grade": "최우수",
         "rank": 3,
-        "conv": 73.47,
-        "cpa": 75.51,
-        "ipm": 95.92,
-        "roas": 97.96
+        "conv": 74.51,
+        "cpa": 76.47,
+        "ipm": 96.08,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -44406,7 +44747,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:39+09:00",
+      "tagged_at": "2026-07-29T13:52:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassRanger-01-PV\\260710_VID_P-Ingame-ClassRanger-01-PV_L_1920x1080_KR.mp4"
@@ -45982,18 +46323,18 @@
       "creator_intent": "레인저 클래스의 매력적인 외형과 강력한 전투 능력을 고품질 그래픽으로 과시하여 유저의 관심을 유도하려는 의도",
       "kpi_reality_check": "캐릭터 외형과 전투 연출로 높은 CTR을 기대했으나 실제 CTR 1.7%로 풀 중앙 수준에 머물렀고, CPA 2,454원으로 풀 하위 38%를 기록 — 명확한 CTA 부재가 전환 효율을 저해했으므로 엔드카드에 강력한 행동 유도 요소를 추가하여 CPA를 개선할 필요가 있습니다.",
       "kpi_percentiles": {
-        "ctr": 48,
-        "cvr": 69,
-        "cpa": 33
+        "ctr": 49,
+        "cvr": 70,
+        "cpa": 35
       },
       "scores": {
-        "total": 61.22,
+        "total": 62.75,
         "grade": "우수",
         "rank": 29,
-        "conv": 30.61,
-        "cpa": 42.86,
-        "ipm": 73.47,
-        "roas": 97.96
+        "conv": 33.33,
+        "cpa": 45.1,
+        "ipm": 74.51,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -46002,7 +46343,7 @@
       ],
       "color_tone": "다크 그린·골드 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:39+09:00",
+      "tagged_at": "2026-07-29T13:52:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassRanger-01-SS\\260710_VID_P-Ingame-ClassRanger-01-SS_V_1080x1920_KR.mp4"
@@ -47985,6 +48326,100 @@
       ]
     },
     {
+      "creative_id": "P-Ingame-GamePreview30s-UA",
+      "소재명": "P-Ingame-GamePreview30s-UA",
+      "파일명": "260729_VID_P-Ingame-GamePreview30s-UA_L_1920x1080_KR.mp4",
+      "유형": "VID",
+      "일": "2026-07-29",
+      "캠페인": null,
+      "사이즈": "1920x1080",
+      "언어": "KR",
+      "링크": null,
+      "creative_concept": "P-Ingame-GamePreview30s-UA",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "비주얼 임팩트",
+      "USP": "전략/경쟁형(상성/조합)",
+      "art_style": "시네마틱 실사 합성",
+      "strengths": [
+        "강한 비주얼 임팩트",
+        "캐릭터 액션/전투 연출",
+        "다수 캐릭터 라인업"
+      ],
+      "weaknesses": [
+        "행동 유도 약함/부재"
+      ],
+      "hypothesis": [
+        "높은 CTR 예상 — 강한 후킹",
+        "낮은 전환 위험 — 행동 유도 약함"
+      ],
+      "test_ideas": [
+        "명시적 CTA 추가",
+        "15초 컷 테스트"
+      ],
+      "one_line_insight": "매력적인 캐릭터 비주얼과 다채로운 전투 연출로 시각적 후킹은 강하나, 엔드카드에 구체적인 보상 정보가 없어 행동 유도가 약함 — 사전예약 보상 내용을 명확히 제시하여 전환율을 개선해야 합니다.",
+      "strength_evidence": [
+        "0~2초 및 23~26초에 등장하는 실사급 고퀄리티 3D 캐릭터 모델링과 표정 연출이 시선을 즉시 사로잡아 몰입감을 높입니다.",
+        "3~22초 실제 플레이 화면에서 다양한 클래스의 스킬 이펙트와 역동적인 전투 모션이 게임의 액션성을 효과적으로 보여줍니다.",
+        "26초에 4명의 매력적인 캐릭터가 한 화면에 등장하여 다양한 클래스와 외형 선택지를 시각적으로 제시합니다."
+      ],
+      "weakness_evidence": [
+        "33초부터 '사전예약 중' 문구와 버튼이 등장하지만, 구체적인 보상 정보가 없어 유저가 즉시 행동할 강력한 동기 부여가 부족합니다."
+      ],
+      "improvement_actions": [
+        "엔드카드 '사전예약 중' 버튼 옆에 '전설 장비 100% 지급'과 같은 구체적인 보상 문구를 추가하여 전환율을 높입니다.",
+        "초반 캐릭터 클로즈업과 전투 장면을 15초 내로 압축하고 엔드카드에 보상 CTA를 즉시 노출하는 버전을 제작하여 효율을 검증합니다."
+      ],
+      "creator_intent": "실사급 고퀄리티 캐릭터와 실제 플레이 전투 연출을 통해 게임의 비주얼과 액션성을 과시하려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "scores": {
+        "total": 27.94,
+        "grade": "보통",
+        "rank": 49,
+        "conv": 13.73,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 98.04
+      },
+      "marketer_insight": null,
+      "player_motivation": "몰입형",
+      "main_characters": [],
+      "color_tone": "골드·다크 판타지",
+      "cta_type": "로고 정적 노출형",
+      "tagged_at": "2026-07-29T13:52:27+09:00",
+      "gemini_model": "gemini-2.5-flash",
+      "source_files": [
+        "2. 영상\\VID_P-Ingame-GamePreview30s-UA\\260729_VID_P-Ingame-GamePreview30s-UA_L_1920x1080_KR.mp4",
+        "2. 영상\\VID_P-Ingame-GamePreview30s-UA\\991230_VID_P-Ingame-GamePreview30s-UA_S_1080x1080_KR.mp4",
+        "2. 영상\\VID_P-Ingame-GamePreview30s-UA\\991230_VID_P-Ingame-GamePreview30s-UA_V_1080x1920_KR.mp4"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_conversions": null,
+      "mmp_conv_ua": null,
+      "mmp_impressions": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
+    },
+    {
       "creative_id": "P-Ingame-Region-Thebes-UA",
       "소재명": "P-Ingame-Region-Thebes-UA",
       "파일명": "260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR.mp4",
@@ -47995,9 +48430,9 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=pmVJSElZEbg",
       "creative_concept": "P-Ingame-Region-Thebes-UA",
-      "전환": 539,
-      "비용": 1385681,
-      "노출수": 588048,
+      "전환": 541,
+      "비용": 1385682,
+      "노출수": 588049,
       "클릭수": 3446,
       "Revenue": 78,
       "hooking_strategy": "비주얼 임팩트",
@@ -48041,23 +48476,23 @@
       "kpi_percentiles": {
         "ctr": 5,
         "cvr": 7,
-        "cpa": 38
+        "cpa": 40
       },
       "scores": {
-        "total": 57.65,
+        "total": 58.82,
         "grade": "양호",
         "rank": 32,
-        "conv": 65.31,
-        "cpa": 46.94,
-        "ipm": 20.41,
-        "roas": 97.96
+        "conv": 66.67,
+        "cpa": 49.02,
+        "ipm": 21.57,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
       "main_characters": [],
       "color_tone": "밝은 그린·화이트 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:42+09:00",
+      "tagged_at": "2026-07-29T13:52:29+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-Region-Thebes-UA\\260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR.mp4"
@@ -48155,11 +48590,11 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260722",
           "asset_url": "https://www.youtube.com/watch?v=pmVJSElZEbg",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 142163,
+          "impressions": 142164,
           "clicks": 694,
-          "cost_micros": 283930249509,
-          "cost": 283930.249509,
-          "conversions": 119.0,
+          "cost_micros": 283931649726,
+          "cost": 283931.649726,
+          "conversions": 120.0,
           "conversions_value": 0.0
         },
         {
@@ -48271,7 +48706,7 @@
           "clicks": 159,
           "cost_micros": 53767347957,
           "cost": 53767.347957,
-          "conversions": 5.0,
+          "conversions": 6.0,
           "conversions_value": 0.0
         },
         {
@@ -49226,9 +49661,9 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=88VSs6Jr_is",
       "creative_concept": "P-Ingame-Region-Thessaly-UA",
-      "전환": 523,
-      "비용": 1468651,
-      "노출수": 580068,
+      "전환": 524,
+      "비용": 1468648,
+      "노출수": 580067,
       "클릭수": 3792,
       "Revenue": 105,
       "hooking_strategy": "비주얼 임팩트",
@@ -49268,23 +49703,23 @@
       "kpi_percentiles": {
         "ctr": 12,
         "cvr": 2,
-        "cpa": 24
+        "cpa": 26
       },
       "scores": {
-        "total": 52.55,
+        "total": 53.92,
         "grade": "양호",
         "rank": 38,
-        "conv": 61.22,
-        "cpa": 34.69,
-        "ipm": 16.33,
-        "roas": 97.96
+        "conv": 62.75,
+        "cpa": 37.25,
+        "ipm": 17.65,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
       "main_characters": [],
       "color_tone": "그린·골드 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:45+09:00",
+      "tagged_at": "2026-07-29T13:52:31+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-Region-Thessaly-UA\\260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR.mp4"
@@ -49382,10 +49817,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260722",
           "asset_url": "https://www.youtube.com/watch?v=88VSs6Jr_is",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 117047,
+          "impressions": 117046,
           "clicks": 617,
-          "cost_micros": 213410031492,
-          "cost": 213410.031492,
+          "cost_micros": 213407485474,
+          "cost": 213407.485474,
           "conversions": 79.0,
           "conversions_value": 0.0
         },
@@ -49498,7 +49933,7 @@
           "clicks": 275,
           "cost_micros": 86395499738,
           "cost": 86395.499738,
-          "conversions": 19.0,
+          "conversions": 20.0,
           "conversions_value": 0.0
         },
         {
@@ -50493,8 +50928,8 @@
       "링크": "https://www.youtube.com/watch?v=ugN-GnuNFKU",
       "creative_concept": "P-Ingame-Region-Zahav-UA",
       "전환": 468,
-      "비용": 1227156,
-      "노출수": 506001,
+      "비용": 1227170,
+      "노출수": 506004,
       "클릭수": 3141,
       "Revenue": 53,
       "hooking_strategy": "비주얼 임팩트",
@@ -50534,23 +50969,23 @@
       "kpi_percentiles": {
         "ctr": 7,
         "cvr": 12,
-        "cpa": 36
+        "cpa": 37
       },
       "scores": {
-        "total": 55.1,
+        "total": 56.37,
         "grade": "양호",
-        "rank": 35,
-        "conv": 53.06,
-        "cpa": 44.9,
-        "ipm": 24.49,
-        "roas": 97.96
+        "rank": 36,
+        "conv": 54.9,
+        "cpa": 47.06,
+        "ipm": 25.49,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
       "main_characters": [],
       "color_tone": "사막·황금빛",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:47+09:00",
+      "tagged_at": "2026-07-29T13:52:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-Region-Zahav-UA\\260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR.mp4"
@@ -50648,10 +51083,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260722",
           "asset_url": "https://www.youtube.com/watch?v=ugN-GnuNFKU",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 104766,
+          "impressions": 104769,
           "clicks": 545,
-          "cost_micros": 203647855953,
-          "cost": 203647.855953,
+          "cost_micros": 203661460132,
+          "cost": 203661.460132,
           "conversions": 94.0,
           "conversions_value": 0.0
         },
@@ -51760,7 +52195,7 @@
       "creative_concept": "P-Reward-PreReward01-DA",
       "전환": 334,
       "비용": 829402,
-      "노출수": 179200,
+      "노출수": 179199,
       "클릭수": 5128,
       "Revenue": 7,
       "hooking_strategy": "압도적 보상",
@@ -51802,23 +52237,23 @@
       "kpi_percentiles": {
         "ctr": 100,
         "cvr": 60,
-        "cpa": 45
+        "cpa": 47
       },
       "scores": {
-        "total": 60.71,
+        "total": 62.25,
         "grade": "우수",
         "rank": 30,
-        "conv": 26.53,
-        "cpa": 53.06,
-        "ipm": 65.31,
-        "roas": 97.96
+        "conv": 29.41,
+        "cpa": 54.9,
+        "ipm": 66.67,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "성취형",
       "main_characters": [],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:47+09:00",
+      "tagged_at": "2026-07-29T13:52:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Reward-PreReward01-DA\\260708_BNR_P-Reward-PreReward01-DA_L_1024x768_KR.jpg",
@@ -51861,7 +52296,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/7628132397041124",
           "asset_type": "IMAGE",
-          "impressions": 953,
+          "impressions": 952,
           "clicks": 5,
           "cost_micros": 1166026693,
           "cost": 1166.026693,
@@ -52549,7 +52984,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://tpc.googlesyndication.com/simgad/2368163747813145402",
           "asset_type": "IMAGE",
-          "impressions": 4942,
+          "impressions": 4943,
           "clicks": 114,
           "cost_micros": 22854058446,
           "cost": 22854.058446,
@@ -52917,7 +53352,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/7628132397041124",
           "asset_type": "IMAGE",
-          "impressions": 5953,
+          "impressions": 5952,
           "clicks": 9,
           "cost_micros": 1611065423,
           "cost": 1611.065423,
@@ -56820,10 +57255,10 @@
       "언어": "KR",
       "링크": "https://tpc.googlesyndication.com/simgad/12126292305881090542",
       "creative_concept": "P-Reward-PreReward02-DA",
-      "전환": 421,
-      "비용": 856675,
-      "노출수": 188646,
-      "클릭수": 5291,
+      "전환": 420,
+      "비용": 856747,
+      "노출수": 188642,
+      "클릭수": 5292,
       "Revenue": 5,
       "hooking_strategy": "압도적 보상",
       "USP": "혜택형(무료뽑기/보상)",
@@ -56862,18 +57297,18 @@
       "creator_intent": "풍성한 사전예약 보상을 강조하여 신규 유저의 사전예약 전환을 극대화하려는 의도",
       "kpi_reality_check": "CTR 3.2% (상위 3%)로 높은 클릭률을 기록했으나 CVR 0.26% (상위 22%)로 전환율은 기대에 미치지 못함 — 보상에 대한 기대감은 높으나 게임 자체에 대한 정보 부족으로 실제 행동 전환으로 이어지지 못하는 것으로 보이며, 게임플레이 연출 강화가 필요함",
       "kpi_percentiles": {
-        "ctr": 90,
+        "ctr": 91,
         "cvr": 86,
         "cpa": 98
       },
       "scores": {
-        "total": 81.12,
+        "total": 80.88,
         "grade": "최우수",
         "rank": 7,
-        "conv": 40.82,
-        "cpa": 97.96,
-        "ipm": 87.76,
-        "roas": 97.96
+        "conv": 39.22,
+        "cpa": 98.04,
+        "ipm": 88.24,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "성취형",
@@ -56882,7 +57317,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-29T13:17:47+09:00",
+      "tagged_at": "2026-07-29T13:52:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Reward-PreReward02-DA\\260708_BNR_P-Reward-PreReward02-DA_L_1024x768_KR.jpg",
@@ -56925,7 +57360,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/12126292305881090542",
           "asset_type": "IMAGE",
-          "impressions": 3450,
+          "impressions": 3449,
           "clicks": 21,
           "cost_micros": 2438988073,
           "cost": 2438.988073,
@@ -57601,7 +58036,7 @@
           "clicks": 97,
           "cost_micros": 11879548167,
           "cost": 11879.548167,
-          "conversions": 5.0,
+          "conversions": 4.0,
           "conversions_value": 0.0
         },
         {
@@ -57934,9 +58369,9 @@
           "asset_url": "https://tpc.googlesyndication.com/simgad/12126292305881090542",
           "asset_type": "IMAGE",
           "impressions": 2089,
-          "clicks": 100,
-          "cost_micros": 9956130682,
-          "cost": 9956.130682,
+          "clicks": 101,
+          "cost_micros": 10028352970,
+          "cost": 10028.35297,
           "conversions": 8.0,
           "conversions_value": 0.0
         },
@@ -57981,7 +58416,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/12126292305881090542",
           "asset_type": "IMAGE",
-          "impressions": 8439,
+          "impressions": 8437,
           "clicks": 12,
           "cost_micros": 4627102600,
           "cost": 4627.1026,
@@ -58013,7 +58448,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/10985899480242851455",
           "asset_type": "IMAGE",
-          "impressions": 555,
+          "impressions": 554,
           "clicks": 2,
           "cost_micros": 603387045,
           "cost": 603.387045,
@@ -61885,7 +62320,7 @@
       "creative_concept": "P-Reward-PreReward03-DA",
       "전환": 422,
       "비용": 896869,
-      "노출수": 193585,
+      "노출수": 193583,
       "클릭수": 5446,
       "Revenue": 10,
       "hooking_strategy": "압도적 보상",
@@ -61927,16 +62362,16 @@
       "kpi_percentiles": {
         "ctr": 93,
         "cvr": 81,
-        "cpa": 90
+        "cpa": 91
       },
       "scores": {
-        "total": 79.59,
-        "grade": "우수",
+        "total": 80.39,
+        "grade": "최우수",
         "rank": 9,
-        "conv": 44.9,
-        "cpa": 91.84,
-        "ipm": 83.67,
-        "roas": 97.96
+        "conv": 47.06,
+        "cpa": 92.16,
+        "ipm": 84.31,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "성취형",
@@ -61945,7 +62380,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T13:17:47+09:00",
+      "tagged_at": "2026-07-29T13:52:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_1024x768_KR.jpg",
@@ -61993,7 +62428,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/4101507941330067727",
           "asset_type": "IMAGE",
-          "impressions": 4038,
+          "impressions": 4036,
           "clicks": 8,
           "cost_micros": 2318312055,
           "cost": 2318.312055,
@@ -66692,9 +67127,9 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=7nuthQJtx9c",
       "creative_concept": "P-Slogan-CinematicPV30s-01-PV",
-      "전환": 6015,
-      "비용": 12677073,
-      "노출수": 5321009,
+      "전환": 6013,
+      "비용": 12677072,
+      "노출수": 5321007,
       "클릭수": 33944,
       "Revenue": 1299,
       "hooking_strategy": "비주얼 임팩트",
@@ -66734,18 +67169,18 @@
       "creator_intent": "신화적 스케일과 캐릭터의 압도적 비주얼로 시청자의 시선을 사로잡고 게임의 몰입감을 전달하려는 의도",
       "kpi_reality_check": "모델 실사 및 웅장한 연출로 높은 CTR을 기대했으나, 실제 CTR 0.7%(하위 6%) 및 CVR 0.13%(하위 28%)로 저조한 성과를 보임 — 시각적 후킹은 있으나 게임의 핵심 가치와 장르적 특징이 명확히 전달되지 않아 전환으로 이어지지 못함. 초반 3초 내 게임플레이 실연 추가 및 명확한 CTA 설계가 시급함.",
       "kpi_percentiles": {
-        "ctr": 10,
-        "cvr": 24,
+        "ctr": 9,
+        "cvr": 26,
         "cpa": 93
       },
       "scores": {
-        "total": 81.63,
+        "total": 82.35,
         "grade": "최우수",
         "rank": 6,
         "conv": 100.0,
-        "cpa": 93.88,
-        "ipm": 34.69,
-        "roas": 97.96
+        "cpa": 94.12,
+        "ipm": 37.25,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "경쟁형",
@@ -66758,7 +67193,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-29T13:17:50+09:00",
+      "tagged_at": "2026-07-29T13:52:39+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-CinematicPV30s-01-PV\\260701_VID_P-Slogan-CinematicPV30s-01-PV_L_1920x1080_KR.mp4",
@@ -67694,7 +68129,7 @@
           "clicks": 302,
           "cost_micros": 138552578197,
           "cost": 138552.578197,
-          "conversions": 59.0,
+          "conversions": 58.0,
           "conversions_value": 0.0
         },
         {
@@ -67710,7 +68145,7 @@
           "clicks": 341,
           "cost_micros": 159129622013,
           "cost": 159129.622013,
-          "conversions": 70.0,
+          "conversions": 69.0,
           "conversions_value": 0.0
         },
         {
@@ -68090,7 +68525,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=NkcGLT0Bfa8",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 48278,
+          "impressions": 48277,
           "clicks": 385,
           "cost_micros": 102996854597,
           "cost": 102996.854597,
@@ -68106,10 +68541,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=9Gxgh5g4Pu0",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 40239,
+          "impressions": 40238,
           "clicks": 280,
-          "cost_micros": 84897320499,
-          "cost": 84897.320499,
+          "cost_micros": 84896823605,
+          "cost": 84896.823605,
           "conversions": 37.0,
           "conversions_value": 0.0
         },
@@ -73138,7 +73573,7 @@
       "creative_concept": "P-Slogan-Keyvisual01-DA",
       "전환": 767,
       "비용": 1897233,
-      "노출수": 628681,
+      "노출수": 628676,
       "클릭수": 12253,
       "Revenue": 103,
       "hooking_strategy": "비주얼 임팩트",
@@ -73178,18 +73613,18 @@
       "creator_intent": "신화적 비주얼과 압도적 스케일로 시선을 사로잡아 사전예약 전환을 유도하려는 의도",
       "kpi_reality_check": "높은 CTR(1.9%, 상위 38%)은 시각적 후킹의 효과를 보여주나, 낮은 CVR(0.12%, 하위 9%)과 CPA(2,572원, 하위 31%)는 장르 및 보상에 대한 명확성 부족으로 전환이 일어나지 않음을 시사 — 초반 3초에 게임성 단서를 강화하고 CTA를 구체화하여 전환율 개선 필요",
       "kpi_percentiles": {
-        "ctr": 71,
-        "cvr": 33,
-        "cpa": 50
+        "ctr": 72,
+        "cvr": 35,
+        "cpa": 51
       },
       "scores": {
-        "total": 68.88,
+        "total": 70.1,
         "grade": "우수",
         "rank": 21,
-        "conv": 77.55,
-        "cpa": 57.14,
-        "ipm": 42.86,
-        "roas": 97.96
+        "conv": 78.43,
+        "cpa": 58.82,
+        "ipm": 45.1,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -73198,7 +73633,7 @@
       ],
       "color_tone": "골드·신화적",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T13:17:50+09:00",
+      "tagged_at": "2026-07-29T13:52:39+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Slogan-KeyVisual01-DA\\260701_BNR_P-Slogan-Keyvisual01-DA_L_1024x768_KR.jpg",
@@ -74568,7 +75003,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://tpc.googlesyndication.com/simgad/3613338158897016589",
           "asset_type": "IMAGE",
-          "impressions": 4432,
+          "impressions": 4431,
           "clicks": 121,
           "cost_micros": 12657416672,
           "cost": 12657.416672,
@@ -74616,7 +75051,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/3613338158897016589",
           "asset_type": "IMAGE",
-          "impressions": 1153,
+          "impressions": 1151,
           "clicks": 4,
           "cost_micros": 1246373211,
           "cost": 1246.373211,
@@ -74664,7 +75099,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/3613338158897016589",
           "asset_type": "IMAGE",
-          "impressions": 6728,
+          "impressions": 6726,
           "clicks": 17,
           "cost_micros": 3165278120,
           "cost": 3165.27812,
@@ -78080,7 +78515,7 @@
       "creative_concept": "P-Slogan-Keyvisual02-DA",
       "전환": 784,
       "비용": 1979913,
-      "노출수": 647740,
+      "노출수": 647734,
       "클릭수": 11722,
       "Revenue": 76,
       "hooking_strategy": "비주얼 임팩트",
@@ -78120,18 +78555,18 @@
       "creator_intent": "압도적인 신화 비주얼과 제우스 캐릭터로 시선을 사로잡아 사전예약 전환을 유도하려는 의도",
       "kpi_reality_check": "CTR 1.8% (상위 41%)로 기대치는 충족했으나, CVR 0.11% (하위 6%)로 매우 낮음 — 높은 클릭률에도 불구하고 전환이 저조한 것은 게임 플레이에 대한 기대감 부족 때문이므로, 게임 플레이 연출 강화가 시급함",
       "kpi_percentiles": {
-        "ctr": 62,
-        "cvr": 31,
-        "cpa": 40
+        "ctr": 63,
+        "cvr": 33,
+        "cpa": 42
       },
       "scores": {
-        "total": 66.84,
+        "total": 68.14,
         "grade": "우수",
         "rank": 22,
-        "conv": 79.59,
-        "cpa": 48.98,
-        "ipm": 40.82,
-        "roas": 97.96
+        "conv": 80.39,
+        "cpa": 50.98,
+        "ipm": 43.14,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -78140,7 +78575,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T13:17:50+09:00",
+      "tagged_at": "2026-07-29T13:52:39+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Slogan-KeyVisual02-DA\\260701_BNR_P-Slogan-Keyvisual02-DA_L_1024x768_KR.jpg",
@@ -79510,7 +79945,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://tpc.googlesyndication.com/simgad/141055495241229754",
           "asset_type": "IMAGE",
-          "impressions": 3288,
+          "impressions": 3287,
           "clicks": 94,
           "cost_micros": 11536411910,
           "cost": 11536.41191,
@@ -79606,7 +80041,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/141055495241229754",
           "asset_type": "IMAGE",
-          "impressions": 20771,
+          "impressions": 20767,
           "clicks": 36,
           "cost_micros": 9399508306,
           "cost": 9399.508306,
@@ -80934,7 +81369,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://tpc.googlesyndication.com/simgad/15174177034690407269",
           "asset_type": "IMAGE",
-          "impressions": 220,
+          "impressions": 219,
           "clicks": 6,
           "cost_micros": 7270945091,
           "cost": 7270.945091,
@@ -83907,7 +84342,7 @@
       "creative_concept": "P-Slogan-Keyvisual03-DA",
       "전환": 103,
       "비용": 238589,
-      "노출수": 120725,
+      "노출수": 120726,
       "클릭수": 1785,
       "Revenue": 8,
       "hooking_strategy": "캐릭터 외형 소구",
@@ -83947,25 +84382,25 @@
       "creator_intent": "고퀄리티 캐릭터 비주얼과 신화적 세계관으로 유저의 호기심을 자극하고 사전예약으로 유입하려는 의도",
       "kpi_reality_check": "캐릭터 매력으로 높은 CTR을 기대했으나 실제 CTR은 풀 상위 41%로 준수했으나 CVR은 풀 하위 1%로 매우 낮음 — 캐릭터 외형만으로 클릭은 유도했으나 게임성에 대한 정보 부족과 약한 CTA가 전환을 막았으므로, 게임성 단서와 CTA를 강화할 필요가 있습니다.",
       "kpi_percentiles": {
-        "ctr": 40,
+        "ctr": 42,
         "cvr": 0,
-        "cpa": 69
+        "cpa": 70
       },
       "scores": {
-        "total": 50.51,
+        "total": 51.47,
         "grade": "양호",
-        "rank": 39,
-        "conv": 16.33,
-        "cpa": 73.47,
-        "ipm": 14.29,
-        "roas": 97.96
+        "rank": 40,
+        "conv": 17.65,
+        "cpa": 74.51,
+        "ipm": 15.69,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
       "main_characters": [],
       "color_tone": "골드·판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:50+09:00",
+      "tagged_at": "2026-07-29T13:52:39+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Slogan-KeyVisual03-DA\\260722_BNR_P-Slogan-Keyvisual03-DA_L_1024x768_KR.jpg",
@@ -84199,7 +84634,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260722",
           "asset_url": "https://tpc.googlesyndication.com/simgad/6173000856773733287",
           "asset_type": "IMAGE",
-          "impressions": 3511,
+          "impressions": 3512,
           "clicks": 122,
           "cost_micros": 16463928687,
           "cost": 16463.928687,
@@ -86601,7 +87036,7 @@
       "creative_concept": "P-Slogan-Keyvisual04-DA",
       "전환": 100,
       "비용": 230827,
-      "노출수": 91487,
+      "노출수": 91486,
       "클릭수": 1920,
       "Revenue": 2,
       "hooking_strategy": "비주얼 임팩트",
@@ -86642,24 +87077,24 @@
       "kpi_reality_check": "캐릭터 비주얼로 높은 CTR을 기대했으나 실제 CTR 0.0%, CVR 0.00%로 모두 풀 하위 1%를 기록 — 게임플레이 단서 부재와 보상 정보 부족이 클릭과 전환을 막았으므로, 초반 3초 내 인게임 전투와 구체적 보상 혜택을 명확히 제시하는 소재로 재구성하여 검증 필요합니다.",
       "kpi_percentiles": {
         "ctr": 81,
-        "cvr": 21,
+        "cvr": 23,
         "cpa": 74
       },
       "scores": {
-        "total": 56.12,
+        "total": 56.86,
         "grade": "양호",
-        "rank": 33,
-        "conv": 14.29,
-        "cpa": 79.59,
-        "ipm": 32.65,
-        "roas": 97.96
+        "rank": 34,
+        "conv": 15.69,
+        "cpa": 78.43,
+        "ipm": 35.29,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
       "main_characters": [],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:50+09:00",
+      "tagged_at": "2026-07-29T13:52:39+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Slogan-KeyVisual04-DA\\260722_BNR_P-Slogan-Keyvisual04-DA_L_1024x768_KR.jpg",
@@ -87021,7 +87456,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/15720191750952438595",
           "asset_type": "IMAGE",
-          "impressions": 1364,
+          "impressions": 1363,
           "clicks": 8,
           "cost_micros": 1598328792,
           "cost": 1598.328792,
@@ -89265,13 +89700,13 @@
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
-        "total": 27.55,
+        "total": 27.94,
         "grade": "보통",
-        "rank": 49,
-        "conv": 12.24,
+        "rank": 50,
+        "conv": 13.73,
         "cpa": 0.0,
         "ipm": 0.0,
-        "roas": 97.96
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -89280,7 +89715,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:50+09:00",
+      "tagged_at": "2026-07-29T13:52:39+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Slogan-PR-DA\\260729_BNR_P-Slogan-PR-DA_L_1024x768_KR.jpg",
@@ -89332,6 +89767,102 @@
       "mmp_daily": []
     },
     {
+      "creative_id": "P-Slogan-PandoraMaking-SS",
+      "소재명": "P-Slogan-PandoraMaking-SS",
+      "파일명": "260729_VID_P-Slogan-PandoraMaking-SS_V_1080x1920_KR.mp4",
+      "유형": "VID",
+      "일": "2026-07-29",
+      "캠페인": null,
+      "사이즈": "1080x1920",
+      "언어": "KR",
+      "링크": null,
+      "creative_concept": "P-Slogan-PandoraMaking-SS",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "트렌드/인터넷 밈",
+      "USP": "감성 유대형(교감/서사)",
+      "art_style": "시네마틱 실사 합성",
+      "strengths": [
+        "강한 비주얼 임팩트",
+        "단일 주인공 스포트라이트",
+        "오디오 후킹(BGM/SFX/Voice)"
+      ],
+      "weaknesses": [
+        "장르/게임성 불분명",
+        "행동 유도 약함/부재"
+      ],
+      "hypothesis": [
+        "특정 타겟에 강하게 반응",
+        "낮은 전환 위험 — 행동 유도 약함"
+      ],
+      "test_ideas": [
+        "게임플레이 컷 추가",
+        "명시적 CTA 추가"
+      ],
+      "one_line_insight": "배우 박지현의 실사 기반 캐릭터 제작 과정으로 비주얼과 몰입감은 강하나, MMORPG 장르의 핵심 재미와 행동 유도가 약함 — 초반에 인게임 전투 장면을 추가하고 명확한 CTA를 삽입하여 장르 인지 및 전환율을 개선",
+      "strength_evidence": [
+        "0~4초 배우 박지현의 실사 얼굴이 고퀄리티 3D 캐릭터로 변환되는 연출로 시선을 강하게 사로잡으며, 게임의 포토리얼리즘 그래픽 수준을 과시함",
+        "0~15초 내내 배우 박지현과 그녀를 기반으로 한 판도라 캐릭터에 집중하여, 캐릭터의 매력과 서사적 중요성을 효과적으로 전달함",
+        "0초부터 서정적인 BGM과 차분한 내레이션이 몰입감을 높이고, 배우의 목소리 연기가 캐릭터에 대한 감성적 유대를 강화함"
+      ],
+      "weakness_evidence": [
+        "초반 15초 동안 캐릭터 제작 과정만 보여주고 실제 게임플레이나 전투 장면이 없어, MMORPG 장르의 핵심 재미 요소 인지가 지연됨",
+        "영상 전반에 걸쳐 게임 플레이 유도나 사전 등록, 다운로드 등 명확한 CTA가 없어 시청자의 다음 행동을 이끌어내기 어려움"
+      ],
+      "improvement_actions": [
+        "배우 실사 컷 전환 직후 5초 이내에 판도라 캐릭터의 인게임 전투 장면을 짧게 삽입하여 장르 인지도를 높임",
+        "엔드카드에 '지금 바로 제우스의 세계를 경험하세요'와 같은 명확한 행동 유도 문구를 추가하여 전환율을 개선함"
+      ],
+      "creator_intent": "유명 배우의 참여를 통해 캐릭터의 생동감과 세계관 몰입감을 강조하고, 게임의 고퀄리티 그래픽 기술력을 과시하려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "scores": {
+        "total": 27.94,
+        "grade": "보통",
+        "rank": 51,
+        "conv": 13.73,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 98.04
+      },
+      "marketer_insight": null,
+      "player_motivation": "몰입형",
+      "main_characters": [
+        "판도라"
+      ],
+      "color_tone": "다크 브라운·골드",
+      "cta_type": "로고 정적 노출형",
+      "tagged_at": "2026-07-29T13:52:41+09:00",
+      "gemini_model": "gemini-2.5-flash",
+      "source_files": [
+        "2. 영상\\VID_P-Slogan-PandoraMaking-SS\\260729_VID_P-Slogan-PandoraMaking-SS_V_1080x1920_KR.mp4"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_conversions": null,
+      "mmp_conv_ua": null,
+      "mmp_impressions": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
+    },
+    {
       "creative_id": "P-Slogan-PreregPV15s-01-PV",
       "소재명": "P-Slogan-PreregPV15s-01-PV",
       "파일명": "260701_VID_P-Slogan-PreregPV15s-01-PV_L_1920x1080_KR.mp4",
@@ -89343,8 +89874,8 @@
       "링크": "https://www.youtube.com/watch?v=sAf0F7ORrbQ",
       "creative_concept": "P-Slogan-PreregPV15s-01-PV",
       "전환": 5159,
-      "비용": 11664161,
-      "노출수": 5684024,
+      "비용": 11664174,
+      "노출수": 5684021,
       "클릭수": 24533,
       "Revenue": 365,
       "hooking_strategy": "비주얼 임팩트",
@@ -89391,13 +89922,13 @@
         "cpa": 86
       },
       "scores": {
-        "total": 75.51,
+        "total": 75.98,
         "grade": "우수",
-        "rank": 12,
-        "conv": 97.96,
-        "cpa": 87.76,
-        "ipm": 18.37,
-        "roas": 97.96
+        "rank": 14,
+        "conv": 98.04,
+        "cpa": 88.24,
+        "ipm": 19.61,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -89406,7 +89937,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T13:17:51+09:00",
+      "tagged_at": "2026-07-29T13:52:41+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV15s-01-PV\\260701_VID_P-Slogan-PreregPV15s-01-PV_L_1920x1080_KR.mp4",
@@ -90722,7 +91253,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=sAf0F7ORrbQ",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 47846,
+          "impressions": 47843,
           "clicks": 235,
           "cost_micros": 97730586194,
           "cost": 97730.586194,
@@ -90740,8 +91271,8 @@
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 42213,
           "clicks": 276,
-          "cost_micros": 95392745772,
-          "cost": 95392.745772,
+          "cost_micros": 95405489900,
+          "cost": 95405.4899,
           "conversions": 32.0,
           "conversions_value": 0.0
         },
@@ -95498,10 +96029,10 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=YfJfrSFAB6w",
       "creative_concept": "P-Slogan-PreregPV15s-02-PV",
-      "전환": 4757,
-      "비용": 10789344,
-      "노출수": 5148189,
-      "클릭수": 22504,
+      "전환": 4758,
+      "비용": 10789346,
+      "노출수": 5148187,
+      "클릭수": 22503,
       "Revenue": 116,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "감성 유대형(교감/서사)",
@@ -95545,24 +96076,24 @@
       "kpi_reality_check": "시네마틱 비주얼로 시선을 끌었으나 실제 CTR 0.4%, CVR 0.10%로 풀 최하위권 — 고퀄리티 연출만으로는 클릭과 전환을 유도하기 어려우므로, 초반에 게임의 핵심 재미를 명확히 보여주고 강력한 행동 유도를 추가해야 함",
       "kpi_percentiles": {
         "ctr": 2,
-        "cvr": 10,
-        "cpa": 83
+        "cvr": 9,
+        "cpa": 84
       },
       "scores": {
-        "total": 75.51,
+        "total": 75.98,
         "grade": "우수",
-        "rank": 13,
-        "conv": 95.92,
-        "cpa": 85.71,
-        "ipm": 22.45,
-        "roas": 97.96
+        "rank": 12,
+        "conv": 96.08,
+        "cpa": 86.27,
+        "ipm": 23.53,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
       "main_characters": [],
       "color_tone": "골드·다크 판타지",
       "cta_type": "로고 정적 노출형",
-      "tagged_at": "2026-07-29T13:17:51+09:00",
+      "tagged_at": "2026-07-29T13:52:41+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV15s-02-PV\\260701_VID_P-Slogan-PreregPV15s-02-PV_L_1920x1080_KR (1).mp4",
@@ -96750,7 +97281,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=vY486VoOAjY",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 63050,
+          "impressions": 63049,
           "clicks": 200,
           "cost_micros": 100912853778,
           "cost": 100912.853778,
@@ -96878,10 +97409,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=YfJfrSFAB6w",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 51508,
-          "clicks": 458,
-          "cost_micros": 101775604845,
-          "cost": 101775.604845,
+          "impressions": 51509,
+          "clicks": 457,
+          "cost_micros": 101776464491,
+          "cost": 101776.464491,
           "conversions": 46.0,
           "conversions_value": 0.0
         },
@@ -96894,7 +97425,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=vY486VoOAjY",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 49916,
+          "impressions": 49915,
           "clicks": 174,
           "cost_micros": 92216869463,
           "cost": 92216.869463,
@@ -96910,10 +97441,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=79f2CKr_4oM",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 47331,
+          "impressions": 47330,
           "clicks": 248,
-          "cost_micros": 97989873166,
-          "cost": 97989.873166,
+          "cost_micros": 97990848215,
+          "cost": 97990.848215,
           "conversions": 49.0,
           "conversions_value": 0.0
         },
@@ -98578,7 +99109,7 @@
           "clicks": 27,
           "cost_micros": 8566892322,
           "cost": 8566.892322,
-          "conversions": 3.0,
+          "conversions": 4.0,
           "conversions_value": 0.0
         },
         {
@@ -101153,9 +101684,9 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=Kc-JF2eSmt8",
       "creative_concept": "P-Slogan-PreregPV30s-01-PV",
-      "전환": 4464,
+      "전환": 4465,
       "비용": 10305758,
-      "노출수": 4153523,
+      "노출수": 4153519,
       "클릭수": 30634,
       "Revenue": 273,
       "hooking_strategy": "비주얼 임팩트",
@@ -101196,17 +101727,17 @@
       "kpi_reality_check": "압도적인 비주얼 임팩트와 보상 약속에도 불구하고 CTR 0.8%, CVR 0.12%로 풀 하위권 기록 — 게임성 단서 부족으로 인한 장르 불분명함이 클릭 및 전환을 저해하므로, 초반 3초에 게임플레이 연출을 강화하고 명확한 CTA를 추가하여 전환율 개선 필요",
       "kpi_percentiles": {
         "ctr": 14,
-        "cvr": 19,
-        "cpa": 76
+        "cvr": 21,
+        "cpa": 77
       },
       "scores": {
-        "total": 74.49,
+        "total": 75.98,
         "grade": "우수",
         "rank": 15,
-        "conv": 91.84,
-        "cpa": 77.55,
-        "ipm": 30.61,
-        "roas": 97.96
+        "conv": 92.16,
+        "cpa": 80.39,
+        "ipm": 33.33,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -101219,7 +101750,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T13:17:52+09:00",
+      "tagged_at": "2026-07-29T13:52:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV30s-01-PV\\260701_VID_P-Slogan-PreregPV30s-01-PV_L_1920x1080_KR.mp4",
@@ -101499,7 +102030,7 @@
           "clicks": 859,
           "cost_micros": 188278967024,
           "cost": 188278.967024,
-          "conversions": 95.0,
+          "conversions": 96.0,
           "conversions_value": 0.0
         },
         {
@@ -102537,8 +103068,8 @@
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 43900,
           "clicks": 350,
-          "cost_micros": 99835992743,
-          "cost": 99835.992743,
+          "cost_micros": 99836566535,
+          "cost": 99836.566535,
           "conversions": 38.0,
           "conversions_value": 0.0
         },
@@ -102551,7 +103082,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=lCgioDJVeac",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 40097,
+          "impressions": 40093,
           "clicks": 378,
           "cost_micros": 98034318337,
           "cost": 98034.318337,
@@ -106418,9 +106949,9 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=JqGApUxOczY",
       "creative_concept": "P-Slogan-PreregPV30s-02-PV",
-      "전환": 4607,
-      "비용": 10895286,
-      "노출수": 4382013,
+      "전환": 4608,
+      "비용": 10895288,
+      "노출수": 4382015,
       "클릭수": 32779,
       "Revenue": 248,
       "hooking_strategy": "비주얼 임팩트",
@@ -106460,18 +106991,18 @@
       "creator_intent": "압도적인 비주얼과 매력적인 캐릭터로 시청자의 시선을 사로잡고, 신화적 서사를 통해 게임 세계관에 대한 호기심을 자극하려는 의도",
       "kpi_reality_check": "CTR 0.8%로 풀 하위 12%, CVR 0.12%로 풀 하위 16%를 기록하여, 시각적 후킹 대비 실제 전환 성과가 매우 저조함. 이는 장르 및 게임성 전달 부족이 클릭 및 전환으로 이어지지 못한 결과로 해석되므로, 초반 3초 내 게임플레이 핵심(대규모 전투, 경쟁)을 명확히 노출하는 변주 테스트가 시급함.",
       "kpi_percentiles": {
-        "ctr": 17,
-        "cvr": 17,
-        "cpa": 62
+        "ctr": 16,
+        "cvr": 19,
+        "cpa": 63
       },
       "scores": {
-        "total": 71.94,
+        "total": 73.04,
         "grade": "우수",
         "rank": 16,
-        "conv": 93.88,
-        "cpa": 67.35,
-        "ipm": 28.57,
-        "roas": 97.96
+        "conv": 94.12,
+        "cpa": 68.63,
+        "ipm": 31.37,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -106484,7 +107015,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-07-29T13:17:52+09:00",
+      "tagged_at": "2026-07-29T13:52:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV30s-02-PV\\260701_VID_P-Slogan-PreregPV30s-02-PV_L_1920x1080_KR.mp4",
@@ -106524,7 +107055,7 @@
           "clicks": 180,
           "cost_micros": 72503364225,
           "cost": 72503.364225,
-          "conversions": 22.0,
+          "conversions": 23.0,
           "conversions_value": 0.0
         },
         {
@@ -107800,7 +108331,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://www.youtube.com/watch?v=02HWILksCvo",
           "asset_type": "YOUTUBE_VIDEO",
-          "impressions": 42812,
+          "impressions": 42814,
           "clicks": 370,
           "cost_micros": 90575314830,
           "cost": 90575.31483,
@@ -107818,8 +108349,8 @@
           "asset_type": "YOUTUBE_VIDEO",
           "impressions": 39180,
           "clicks": 269,
-          "cost_micros": 79479704147,
-          "cost": 79479.704147,
+          "cost_micros": 79481096514,
+          "cost": 79481.096514,
           "conversions": 25.0,
           "conversions_value": 0.0
         },
@@ -112570,9 +113101,9 @@
       "언어": "KR",
       "링크": "https://tpc.googlesyndication.com/simgad/15629433344837261464",
       "creative_concept": "P-Slogan-Universe01-DA",
-      "전환": 427,
+      "전환": 426,
       "비용": 931070,
-      "노출수": 192733,
+      "노출수": 192734,
       "클릭수": 5484,
       "Revenue": 17,
       "hooking_strategy": "비주얼 임팩트",
@@ -112611,17 +113142,17 @@
       "kpi_reality_check": "CTR 3.1% (상위 9%), CVR 0.27% (상위 6%)로 기대치 상회 — 높은 비주얼 임팩트가 클릭을 견인했으나, 게임성 단서 부족으로 전환율은 중간 수준에 머물러 개선 여지 존재",
       "kpi_percentiles": {
         "ctr": 98,
-        "cvr": 83,
+        "cvr": 84,
         "cpa": 88
       },
       "scores": {
-        "total": 80.1,
+        "total": 80.88,
         "grade": "최우수",
         "rank": 8,
-        "conv": 46.94,
-        "cpa": 89.8,
-        "ipm": 85.71,
-        "roas": 97.96
+        "conv": 49.02,
+        "cpa": 90.2,
+        "ipm": 86.27,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -112630,7 +113161,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T13:17:52+09:00",
+      "tagged_at": "2026-07-29T13:52:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Slogan-Universe01-DA\\260708_BNR_P-Slogan-Universe01-DA_L_1024x768_KR.jpg",
@@ -112688,7 +113219,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/564143387041189865",
           "asset_type": "IMAGE",
-          "impressions": 1434,
+          "impressions": 1433,
           "clicks": 14,
           "cost_micros": 2292479639,
           "cost": 2292.479639,
@@ -113348,7 +113879,7 @@
           "clicks": 155,
           "cost_micros": 27505921541,
           "cost": 27505.921541,
-          "conversions": 11.0,
+          "conversions": 10.0,
           "conversions_value": 0.0
         },
         {
@@ -113552,7 +114083,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_2W_260708",
           "asset_url": "https://tpc.googlesyndication.com/simgad/564143387041189865",
           "asset_type": "IMAGE",
-          "impressions": 2107,
+          "impressions": 2108,
           "clicks": 92,
           "cost_micros": 11065370401,
           "cost": 11065.370401,
@@ -114768,7 +115299,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_1W_260701",
           "asset_url": "https://tpc.googlesyndication.com/simgad/564143387041189865",
           "asset_type": "IMAGE",
-          "impressions": 26,
+          "impressions": 27,
           "clicks": 0,
           "cost_micros": 40792906,
           "cost": 40.792906,
@@ -116126,8 +116657,8 @@
       "링크": "https://tpc.googlesyndication.com/simgad/15208341403562725288",
       "creative_concept": "P-Slogan-Universe02-DA",
       "전환": 832,
-      "비용": 2062428,
-      "노출수": 646894,
+      "비용": 2062430,
+      "노출수": 646893,
       "클릭수": 11781,
       "Revenue": 173,
       "hooking_strategy": "비주얼 임팩트",
@@ -116167,18 +116698,18 @@
       "creator_intent": "고퀄리티 3D 그래픽과 신화적 비주얼로 시선을 사로잡아 사전예약 전환을 유도하려는 의도",
       "kpi_reality_check": "높은 CTR 기대했으나 실제 CTR 1.7% (상위 47%), CVR 0.12% (하위 25%) — 시각적 매력은 있으나 게임성 단서 부족으로 클릭 후 전환이 저조하므로, 게임플레이 연출 강화 및 명확한 보상 CTA로 전환율 개선 필요",
       "kpi_percentiles": {
-        "ctr": 64,
-        "cvr": 38,
-        "cpa": 48
+        "ctr": 65,
+        "cvr": 40,
+        "cpa": 49
       },
       "scores": {
-        "total": 70.92,
+        "total": 72.06,
         "grade": "우수",
         "rank": 17,
-        "conv": 83.67,
-        "cpa": 55.1,
-        "ipm": 46.94,
-        "roas": 97.96
+        "conv": 84.31,
+        "cpa": 56.86,
+        "ipm": 49.02,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -116187,7 +116718,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T13:17:52+09:00",
+      "tagged_at": "2026-07-29T13:52:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_1024x768_KR.jpg",
@@ -117589,10 +118120,10 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/1019220606271681111",
           "asset_type": "IMAGE",
-          "impressions": 1077,
+          "impressions": 1078,
           "clicks": 6,
-          "cost_micros": 1088799053,
-          "cost": 1088.799053,
+          "cost_micros": 1090486234,
+          "cost": 1090.486234,
           "conversions": 0.0,
           "conversions_value": 0.0
         },
@@ -117621,7 +118152,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/15208341403562725288",
           "asset_type": "IMAGE",
-          "impressions": 7001,
+          "impressions": 6999,
           "clicks": 9,
           "cost_micros": 1553099681,
           "cost": 1553.099681,
@@ -122082,7 +122613,7 @@
       "creative_concept": "P-Slogan-Universe03-DA",
       "전환": 798,
       "비용": 1929514,
-      "노출수": 672043,
+      "노출수": 672040,
       "클릭수": 11081,
       "Revenue": 219,
       "hooking_strategy": "비주얼 임팩트",
@@ -122122,18 +122653,18 @@
       "creator_intent": "신화 속 영웅의 압도적 비주얼로 시선을 사로잡고 사전예약 전환을 유도하려는 의도",
       "kpi_reality_check": "신화 영웅 비주얼로 높은 CTR 기대했으나 실제 CTR 1.6% (하위 25%) 기록 — 게임성 단서 부재로 클릭으로 이어지지 못해 초반 3초 내 장르 인지 강화 필요",
       "kpi_percentiles": {
-        "ctr": 52,
-        "cvr": 29,
-        "cpa": 57
+        "ctr": 53,
+        "cvr": 30,
+        "cpa": 58
       },
       "scores": {
-        "total": 70.41,
+        "total": 71.57,
         "grade": "우수",
         "rank": 18,
-        "conv": 81.63,
-        "cpa": 63.27,
-        "ipm": 38.78,
-        "roas": 97.96
+        "conv": 82.35,
+        "cpa": 64.71,
+        "ipm": 41.18,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -122142,7 +122673,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T13:17:52+09:00",
+      "tagged_at": "2026-07-29T13:52:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_1024x768_KR.jpg",
@@ -123560,7 +124091,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/13151017767964336358",
           "asset_type": "IMAGE",
-          "impressions": 1067,
+          "impressions": 1066,
           "clicks": 5,
           "cost_micros": 1067200162,
           "cost": 1067.200162,
@@ -123608,7 +124139,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/13151017767964336358",
           "asset_type": "IMAGE",
-          "impressions": 7511,
+          "impressions": 7509,
           "clicks": 30,
           "cost_micros": 4436337379,
           "cost": 4436.337379,
@@ -128063,7 +128594,7 @@
       "creative_concept": "P-Slogan-Universe04-DA",
       "전환": 357,
       "비용": 872159,
-      "노출수": 302792,
+      "노출수": 302789,
       "클릭수": 6340,
       "Revenue": 11,
       "hooking_strategy": "비주얼 임팩트",
@@ -128104,17 +128635,17 @@
       "kpi_reality_check": "CTR 2.0% (상위 31%)로 기대치를 상회했으나, CVR 0.14% (하위 31%)로 저조 — 시각적 후킹은 성공했으나 게임플레이 정보 부족으로 전환이 막혀 초반 3초 내 장르 인지 강화 및 명확한 CTA 보강 필요",
       "kpi_percentiles": {
         "ctr": 79,
-        "cvr": 26,
-        "cpa": 52
+        "cvr": 28,
+        "cpa": 53
       },
       "scores": {
-        "total": 56.12,
+        "total": 57.84,
         "grade": "양호",
-        "rank": 34,
-        "conv": 30.61,
-        "cpa": 59.18,
-        "ipm": 36.73,
-        "roas": 97.96
+        "rank": 33,
+        "conv": 33.33,
+        "cpa": 60.78,
+        "ipm": 39.22,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -128123,7 +128654,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T13:17:53+09:00",
+      "tagged_at": "2026-07-29T13:52:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입예정\\BNR_P-Slogan-Universe04-DA\\260715_BNR_P-Slogan-Universe04-DA_L_1024x768_KR.jpg",
@@ -128837,7 +129368,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/18259856049870960583",
           "asset_type": "IMAGE",
-          "impressions": 1408,
+          "impressions": 1407,
           "clicks": 4,
           "cost_micros": 812910536,
           "cost": 812.910536,
@@ -128885,7 +129416,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/18259856049870960583",
           "asset_type": "IMAGE",
-          "impressions": 20833,
+          "impressions": 20831,
           "clicks": 24,
           "cost_micros": 7957601680,
           "cost": 7957.60168,
@@ -132064,7 +132595,7 @@
       "creative_concept": "P-Slogan-Universe05-DA",
       "전환": 421,
       "비용": 958583,
-      "노출수": 340541,
+      "노출수": 340539,
       "클릭수": 6534,
       "Revenue": 44,
       "hooking_strategy": "비주얼 임팩트",
@@ -132105,17 +132636,17 @@
       "kpi_reality_check": "CTR 1.8% (상위 44%)로 준수하나 CVR 0.12% (하위 19%)로 부진 — 시각적 후킹은 효과적이나, 게임플레이 및 보상에 대한 명확한 정보 부재가 전환을 막아 초반 3초 내 장르 및 핵심 혜택 제시 강화 필요",
       "kpi_percentiles": {
         "ctr": 67,
-        "cvr": 36,
+        "cvr": 37,
         "cpa": 81
       },
       "scores": {
-        "total": 66.84,
+        "total": 68.14,
         "grade": "우수",
         "rank": 23,
-        "conv": 40.82,
-        "cpa": 83.67,
-        "ipm": 44.9,
-        "roas": 97.96
+        "conv": 43.14,
+        "cpa": 84.31,
+        "ipm": 47.06,
+        "roas": 98.04
       },
       "marketer_insight": null,
       "player_motivation": "경쟁형",
@@ -132124,7 +132655,7 @@
       ],
       "color_tone": "골드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-07-29T13:17:53+09:00",
+      "tagged_at": "2026-07-29T13:52:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입예정\\BNR_P-Slogan-Universe05-DA\\260715_BNR_P-Slogan-Universe05-DA_L_1024x768_KR.jpg",
@@ -132822,7 +133353,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_3W_260715",
           "asset_url": "https://tpc.googlesyndication.com/simgad/5252540795203771472",
           "asset_type": "IMAGE",
-          "impressions": 4985,
+          "impressions": 4984,
           "clicks": 127,
           "cost_micros": 16022217779,
           "cost": 16022.217779,
@@ -132854,7 +133385,7 @@
           "ad_group_name": "P_ALL_AUTO_AUTO_ALL_4W_260728",
           "asset_url": "https://tpc.googlesyndication.com/simgad/13857020917646844584",
           "asset_type": "IMAGE",
-          "impressions": 1527,
+          "impressions": 1526,
           "clicks": 6,
           "cost_micros": 2094069985,
           "cost": 2094.069985,
@@ -135974,58 +136505,51 @@
     }
   ],
   "metrics": {
-    "scanned_folders": 49,
-    "tagged_records": 49,
-    "cache_hits": 48,
-    "cache_misses": 1,
+    "scanned_folders": 51,
+    "tagged_records": 51,
+    "cache_hits": 51,
+    "cache_misses": 0,
     "failures": 0,
-    "duration_sec": 132.8,
+    "duration_sec": 69.0,
     "prompt_version": "v3.3-2026.06.13-character-split-single-mmorpg-v2",
     "fallback_used": false,
     "carried_forward": 0,
     "score_summary": {
-      "graded": 43,
+      "graded": 44,
       "grades": {
-        "우수": 23,
-        "최우수": 8,
-        "양호": 12
+        "우수": 22,
+        "최우수": 9,
+        "양호": 13
       },
       "top": {
         "name": "P-Genre-DirInsight-02-PV",
-        "total": 96.94,
+        "total": 97.06,
         "grade": "최우수"
       }
     },
     "game_context_sha": "bbb760e0385d5662"
   },
   "campaign_canonical": {
-    "ZEUS_KR_Kakao_NU-Pre_iOS_Install-Bizboard_260723": {
-      "ua_type": "NU-Pre",
-      "country": "NU",
-      "os": "iOS",
-      "media": "iOS",
-      "product": ""
-    },
-    "Incross_HQ_ZEUS_KR-KR_Appier_NU-Pre_ALL_Display_260715": {
+    "Incross_HQ_ZEUS_KR-KR_Moloco_NU-Pre_ALL_Conversion_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "전체",
-      "media": "Appier",
-      "product": "Display"
-    },
-    "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Tiktok",
+      "media": "Moloco",
       "product": "Conversion"
     },
-    "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722": {
+    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260722": {
       "ua_type": "NU-Pre",
       "country": "KR",
-      "os": "Android",
-      "media": "Tiktok",
-      "product": "Install-CSL"
+      "os": "전체",
+      "media": "Kakao",
+      "product": "Conv-Bizboard"
+    },
+    "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "GA",
+      "product": "DemandGen"
     },
     "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701": {
       "ua_type": "NU-Pre",
@@ -136034,26 +136558,19 @@
       "media": "GA",
       "product": "ACp"
     },
-    "ZEUS_KR_Kakao_NU-Pre_ALL_Conv-Display_260723": {
+    "ZEUS_KR_Kakao_NU-Pre_AD_Install-Bizboard_260723": {
       "ua_type": "NU-Pre",
       "country": "NU",
-      "os": "전체",
-      "media": "ALL",
+      "os": "Android",
+      "media": "AD",
       "product": ""
     },
-    "Incross_HQ_ZEUS_KR_Criteo_NU-Pre_ALL_Display_260701": {
+    "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722": {
       "ua_type": "NU-Pre",
       "country": "KR",
-      "os": "전체",
-      "media": "Criteo",
-      "product": "Display"
-    },
-    "Incross_HQ_ZEUS_KR-KR_MSN_NU-Pre_ALL_Display_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "MSN",
-      "product": "Display"
+      "os": "iOS",
+      "media": "Tiktok",
+      "product": "Install-CPP"
     },
     "ZEUS_KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260723": {
       "ua_type": "NU-Pre",
@@ -136062,12 +136579,19 @@
       "media": "ALL",
       "product": ""
     },
-    "ZEUS_KR_Kakao_NU-Pre_AD_Install-Bizboard_260723": {
+    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260723": {
       "ua_type": "NU-Pre",
-      "country": "NU",
-      "os": "Android",
-      "media": "AD",
-      "product": ""
+      "country": "KR",
+      "os": "전체",
+      "media": "Kakao",
+      "product": "Conv-Bizboard"
+    },
+    "Incross_HQ_ZEUS_KR-KR_MSN_NU-Pre_ALL_Display_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "MSN",
+      "product": "Display"
     },
     "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Display_260723": {
       "ua_type": "NU-Pre",
@@ -136076,25 +136600,11 @@
       "media": "Kakao",
       "product": "Conv-Display"
     },
-    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260723": {
+    "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "전체",
-      "media": "Kakao",
-      "product": "Conv-Bizboard"
-    },
-    "Incross_HQ_ZEUS_KR-KR_Moloco_NU-Pre_ALL_Conversion_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Moloco",
-      "product": "Conversion"
-    },
-    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Meta",
+      "media": "Pangle",
       "product": "Conversion"
     },
     "ZEUS_KR_Kakao_NU-Pre_iOS_Install-Display_260723": {
@@ -136104,18 +136614,18 @@
       "media": "iOS",
       "product": ""
     },
+    "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "Android",
+      "media": "Tiktok",
+      "product": "Install-CSL"
+    },
     "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "전체",
       "media": "Meta",
-      "product": "Conversion"
-    },
-    "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260727": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Pangle",
       "product": "Conversion"
     },
     "ZEUS_KR_Kakao_NU-Pre_AD_Install-Display_260723": {
@@ -136125,12 +136635,12 @@
       "media": "AD",
       "product": ""
     },
-    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260722": {
+    "ZEUS_KR_Kakao_NU-Pre_iOS_Install-Bizboard_260723": {
       "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Kakao",
-      "product": "Conv-Bizboard"
+      "country": "NU",
+      "os": "iOS",
+      "media": "iOS",
+      "product": ""
     },
     "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp-OO_260716": {
       "ua_type": "NU-Pre",
@@ -136139,6 +136649,13 @@
       "media": "GA",
       "product": "ACp-OO"
     },
+    "Incross_HQ_ZEUS_KR-KR_Appier_NU-Pre_ALL_Display_260715": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Appier",
+      "product": "Display"
+    },
     "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen-Brand_260728": {
       "ua_type": "NU-Pre",
       "country": "KR",
@@ -136146,19 +136663,19 @@
       "media": "GA",
       "product": "DemandGen-Brand"
     },
-    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "iOS",
-      "media": "Meta",
-      "product": "MAIA-CPP"
-    },
-    "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701": {
+    "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "전체",
-      "media": "GA",
-      "product": "DemandGen"
+      "media": "Tiktok",
+      "product": "Conversion"
+    },
+    "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260727": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Pangle",
+      "product": "Conversion"
     },
     "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701": {
       "ua_type": "NU-Pre",
@@ -136167,19 +136684,33 @@
       "media": "Meta",
       "product": "MAIA-CSL"
     },
-    "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722": {
+    "ZEUS_KR_Kakao_NU-Pre_ALL_Conv-Display_260723": {
+      "ua_type": "NU-Pre",
+      "country": "NU",
+      "os": "전체",
+      "media": "ALL",
+      "product": ""
+    },
+    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "전체",
-      "media": "Pangle",
+      "media": "Meta",
       "product": "Conversion"
     },
-    "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722": {
+    "Incross_HQ_ZEUS_KR_Criteo_NU-Pre_ALL_Display_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Criteo",
+      "product": "Display"
+    },
+    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "iOS",
-      "media": "Tiktok",
-      "product": "Install-CPP"
+      "media": "Meta",
+      "product": "MAIA-CPP"
     },
     "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen-Preregi_260728": {
       "ua_type": "NU-Pre",
@@ -136193,25 +136724,13 @@
     {
       "concept": "ZEUS_BI_제우스오만의신_최종안",
       "source": "google_ads",
-      "impressions": 5486507,
-      "cost": 14730942.31,
+      "impressions": 5486487,
+      "cost": 14730940.86,
       "asset_types": [
         "IMAGE"
       ],
       "asset_urls": [
         "https://tpc.googlesyndication.com/simgad/13255332313908444513"
-      ]
-    },
-    {
-      "concept": "[제우스: 오만의 신] 디렉터스 인사이트 4화 | 노력의 가치를 존중하다",
-      "source": "google_ads",
-      "impressions": 182135,
-      "cost": 756609.96,
-      "asset_types": [
-        "YOUTUBE_VIDEO"
-      ],
-      "asset_urls": [
-        "https://www.youtube.com/watch?v=FRDA_6FL4lI"
       ]
     },
     {
