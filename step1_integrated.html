@@ -1787,6 +1787,9 @@
           <div style="font-size:11.5px;color:var(--text-secondary);padding-bottom:14px;border-bottom:1px solid var(--hairline-warm);margin-bottom:16px;">비교 기간(최근)이 기준 기간(이전)보다 나빠지면 피로도가 높습니다.</div>
         </div>
 
+        <!-- 저효율 소재 제외 추천 (분석 실행 시 렌더) -->
+        <div id="fatigueExcludeReco"></div>
+
         <!-- 피로도 테이블 -->
         <div class="table-container">
           <table id="fatigueTable" class="ds-table">
@@ -2423,7 +2426,7 @@ function buildFatiguePeriodScores(creatives, winStart, winEnd, layer, weights, g
       const conv = a.convUa;   // 전환: NU-Pre 등록 + NU D1잔존 (convUa 통일)
       const cpaUa = (conv > 0 && a.cost > 0) ? a.cost / conv : null;
       const ipmUa = a.imp > 0 ? conv / a.imp * 1000 : null;
-      items.push({ key: c.key, 유형: c.유형, 이미지링크: c.이미지링크, meta: c.meta, 전환: conv, CPA: cpaUa != null ? cpaUa : 0, installs: conv, d1_cpi: cpaUa, d1_ipm: ipmUa, d7_roas });
+      items.push({ key: c.key, 유형: c.유형, 이미지링크: c.이미지링크, meta: c.meta, 전환: conv, 노출수: a.imp, CPA: cpaUa != null ? cpaUa : 0, installs: conv, d1_cpi: cpaUa, d1_ipm: ipmUa, d7_roas });
     });
     const scores = scoreMmpItems(items, '설치');   // convUa 4축(전환↑·CPA↓·IPM↑·D7ROAS↑)
     items.forEach((it, i) => { it.TotalScore = scores[i].total; it.등급 = scores[i].grade; });
@@ -7339,7 +7342,10 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       
       // 4. 비교 분석 (v1.7: Total Score 기준 순위, CPA 기준 피로도)
       const results = compareFatigue(baselineScored, comparisonScored);
-      
+
+      // 4-1. 저효율 소재 제외 추천 (기간별 독립 모수 기준 하위 % 판정)
+      window._fatigueReco = buildFatigueExcludeReco(results, baselineScored, comparisonScored, compEnd);
+
       // 5. 결과 표시 (silent=배지 선계산 시 탭 전환·차트 생략)
       displayFatigueResults(results, silent);
       if (!silent) displayFatigueChart(results);
@@ -7454,6 +7460,100 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       return results;
     }
     
+    // ── 저효율 소재 제외 추천 ──
+    // 각 기간의 순위 모수(n)가 다름: 기준 n=baseline.length, 비교 n=comparison.length —
+    // 하위 % 판정은 반드시 각 기간 자체 모수 대비. (예: 44/44위 & 45/48위 → 둘 다 하위 10%)
+    // 기준1: 양 기간 모두 하위 10% (저효율 지속) / 기준2: 피로 판정 + 비교 기간 하위 20%
+    // 평가 제외: 2주 미만 운영(투입일='일' 필드=파일명 선두 날짜, 비교 종료일 기준) ·
+    //            비교 기간 저노출/저전환(코호트 평균의 10% 미만 — 분석 탭과 동일 판정식)
+    function buildFatigueExcludeReco(results, baseline, comparison, compEnd) {
+      const nBase = baseline.length, nComp = comparison.length;
+      const avg = (arr, f) => arr.length ? arr.reduce((s, o) => s + (Number(o[f]) || 0), 0) / arr.length : 0;
+      const impT = avg(comparison, '노출수') * 0.1;
+      const convT = avg(comparison, '전환') * 0.1;
+      const compMap = {}; comparison.forEach(o => { compMap[o.key] = o; });
+      const endD = compEnd ? new Date(compEnd + 'T00:00:00') : null;
+      const rows = []; let shortRun = 0, lowVol = 0;
+      (results || []).forEach(r => {
+        if (typeof r.comparisonRank !== 'number') return;   // 비교 기간 미집행(사라짐) — 대상 아님
+        const launch = (r.meta && r.meta['일']) || null;
+        const runDays = (launch && endD) ? Math.floor((endD - new Date(launch + 'T00:00:00')) / 86400000) + 1 : null;
+        if (runDays == null || runDays < 14) { shortRun++; return; }   // 2주 미만(투입일 미상 포함) 판정 보류
+        const v = compMap[r.key] || {};
+        if ((impT > 0 && (Number(v.노출수) || 0) < impT) || (convT > 0 && (Number(v.전환) || 0) < convT)) { lowVol++; return; }
+        const reasons = [];
+        if (typeof r.baselineRank === 'number' && r.baselineRank > nBase * 0.9 && r.comparisonRank > nComp * 0.9)
+          reasons.push('저효율 지속 (양 기간 하위 10%)');
+        if (r.fatigueStatus === 'tired' && r.comparisonRank > nComp * 0.8)
+          reasons.push('피로 + 비교 하위 20%');
+        if (reasons.length) rows.push({ key: r.key, 유형: r.유형, meta: r.meta, 이미지링크: r.이미지링크, launch, runDays,
+          baselineRank: r.baselineRank, comparisonRank: r.comparisonRank, fatigueStatus: r.fatigueStatus,
+          cpaChangeRate: r.cpaChangeRate, reasons });
+      });
+      rows.sort((a, b) => b.comparisonRank - a.comparisonRank);
+      return { rows, nBase, nComp, shortRun, lowVol };
+    }
+
+    // C 스탯(좌측 요약) + B 카드 리스트(우측 소재별 카드) 레이아웃 — 07-29 사용자 선택
+    function renderFatigueExcludeReco(reco) {
+      const box = document.getElementById('fatigueExcludeReco');
+      if (!box) return;
+      if (!reco) { box.innerHTML = ''; return; }
+      const _e = s => escapeHtml(String(s == null ? '' : s));
+      const stat = `
+        <div style="flex:0 0 168px;display:flex;flex-direction:column;gap:8px;">
+          <div style="background:#fff;border:1px solid var(--hairline-warm,#E4E1DC);border-radius:8px;padding:12px 14px;">
+            <div style="font-size:11px;color:var(--text-secondary,#666);">캠페인 제외 추천</div>
+            <div style="font-size:24px;font-weight:800;color:${reco.rows.length ? '#DC2828' : 'var(--text-primary,#191919)'};">${reco.rows.length}건</div>
+          </div>
+          <div style="background:#fff;border:1px solid var(--hairline-warm,#E4E1DC);border-radius:8px;padding:12px 14px;">
+            <div style="font-size:11px;color:var(--text-secondary,#666);">평가 제외</div>
+            <div style="font-size:12.5px;line-height:1.6;color:var(--text-primary,#191919);">2주 미만 ${reco.shortRun}개<br>저노출/저전환 ${reco.lowVol}개</div>
+          </div>
+          <div style="font-size:10.5px;color:#9ca3af;line-height:1.5;">기준1 양 기간 하위 10% 지속<br>기준2 피로 + 비교 하위 20%</div>
+          ${reco.rows.length ? `<button onclick="exportFatigueRecoCsv()" style="font-size:12px;padding:7px 12px;border:1px solid var(--hairline-warm,#E4E1DC);background:#fff;border-radius:8px;cursor:pointer;">CSV 내보내기</button>` : ''}
+        </div>`;
+      const card = r => {
+        const url = (r.meta && r.meta['링크']) || r.이미지링크 || '';
+        const yt = (typeof youtubeThumb === 'function') ? youtubeThumb(url) : '';
+        const thumbSrc = yt || (url && url.startsWith('http') && r.유형 !== 'VID' ? url : '');
+        const thumb = thumbSrc
+          ? `<img src="${_e(thumbSrc)}" style="width:52px;height:38px;object-fit:cover;border-radius:6px;flex:none;" alt="">`
+          : `<div style="width:52px;height:38px;border-radius:6px;background:#ECEAE6;flex:none;display:flex;align-items:center;justify-content:center;font-size:10px;color:#9ca3af;">${_e(r.유형 || '')}</div>`;
+        const cpaTxt = (typeof r.cpaChangeRate === 'number' && r.fatigueStatus === 'tired')
+          ? ` · CPA ${r.cpaChangeRate > 0 ? '+' : ''}${r.cpaChangeRate.toFixed(0)}% (피로)` : '';
+        const rankTxt = `${typeof r.baselineRank === 'number' ? `${r.baselineRank}/${reco.nBase}위` : '신규'} → ${r.comparisonRank}/${reco.nComp}위`;
+        return `<div style="background:#fff;border:1px solid var(--hairline-warm,#E4E1DC);border-radius:8px;padding:10px 12px;display:flex;gap:10px;align-items:center;">
+          ${thumb}
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><span class="clickable-name" style="cursor:pointer;text-decoration:underline dotted #999;text-underline-offset:2px;" onclick="openModalByName('${_e(r.key).replace(/'/g, "\\'")}')">${_e(r.key)}</span></div>
+            <div style="font-size:12px;color:var(--text-secondary,#666);margin-top:2px;">${rankTxt}${cpaTxt} · 투입 ${r.runDays}일차</div>
+            <div style="margin-top:3px;">${r.reasons.map(x => `<span style="display:inline-block;font-size:10.5px;font-weight:600;background:rgba(220,40,40,.08);color:#DC2828;padding:1px 7px;border-radius:8px;margin-right:4px;">${_e(x)}</span>`).join('')}</div>
+          </div>
+          <span style="background:rgba(220,40,40,.10);color:#DC2828;font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;white-space:nowrap;flex:none;">제외 권고</span>
+        </div>`;
+      };
+      const list = reco.rows.length
+        ? `<div style="flex:1;min-width:260px;display:flex;flex-direction:column;gap:7px;">${reco.rows.map(card).join('')}</div>`
+        : `<div style="flex:1;display:flex;align-items:center;font-size:12.5px;color:var(--text-secondary,#666);">현재 제외 추천 없음 — 양호.</div>`;
+      box.innerHTML = `<div style="border:1px solid var(--hairline-warm,#E4E1DC);border-left:3px solid #DC2828;border-radius:8px;padding:14px 16px;margin-bottom:16px;background:var(--surface-soft,#FAF9F7);display:flex;gap:12px;flex-wrap:wrap;">${stat}${list}</div>`;
+    }
+
+    function exportFatigueRecoCsv() {
+      const reco = window._fatigueReco;
+      if (!reco || !reco.rows.length) return;
+      const esc = s => `"${String(s == null ? '' : s).replace(/"/g, '""')}"`;
+      const lines = [['소재명', '유형', '투입일', '운영일수', '기준 순위', '기준 모수', '비교 순위', '비교 모수', '피로도', '추천 사유'].join(',')];
+      reco.rows.forEach(r => lines.push([esc(r.key), esc(r.유형), esc(r.launch), r.runDays,
+        typeof r.baselineRank === 'number' ? r.baselineRank : '', reco.nBase, r.comparisonRank, reco.nComp,
+        esc(r.fatigueStatus), esc(r.reasons.join(' / '))].join(',')));
+      const blob = new Blob(['\uFEFF' + lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = `제외추천_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click(); URL.revokeObjectURL(url);
+    }
+
     // 피로도 결과 표시
     // ★ 피로도 결과 전역 저장 (Gemini AI 분석에서 참조)
     let _lastFatigueData = null;
@@ -7488,6 +7588,9 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
 
       // 상단 임계 경보 카드 (DS 모노+Red) — tired>0 Red / warning>0 중립 / 그 외 조용
       renderFatigueAlertCard(tired, warning, total);
+
+      // 저효율 소재 제외 추천 패널 (runFatigueAnalysis에서 선계산된 _fatigueReco)
+      renderFatigueExcludeReco(window._fatigueReco);
 
       // v5.1: 데이터 부족 경고 배너
       const baseStart = document.getElementById('baselineStart').value;
