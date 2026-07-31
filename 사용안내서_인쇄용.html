@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Com2uS R팀 소재 분석 시스템 사용 안내서 v5.8</title>
+  <title>Com2uS R팀 소재 분석 시스템 사용 안내서 v5.9</title>
   <style>
     /* ===== Pretendard — self-hosted (Com2uS DS) ===== */
     @font-face { font-family:"Pretendard"; src:url("assets/fonts/PretendardVariable.woff2") format("woff2-variations"), url("assets/fonts/PretendardVariable.woff2") format("woff2"); font-weight:45 920; font-style:normal; font-display:swap; }
@@ -198,7 +198,7 @@
     <div class="cover-meta">
       <div class="cover-meta-item">
         <span class="cover-meta-label">Version</span>
-        <span class="cover-meta-value">v5.8 (시스템 v23)</span>
+        <span class="cover-meta-value">v5.9 (시스템 v24)</span>
       </div>
       <div class="cover-meta-item">
         <span class="cover-meta-label">Updated</span>
@@ -232,7 +232,7 @@
       <div class="toc-item sub"><div><span class="toc-num">3.1</span>점수 계산 (4개 지표 가중치)</div><div class="toc-pg">5</div></div>
       <div class="toc-item sub"><div><span class="toc-num">3.2</span>분석 결과 화면 구성 (저조 소재 카드·유형별 요약) <span class="badge badge-red" style="font-size:9px;padding:1px 6px;">NEW</span></div><div class="toc-pg">5</div></div>
       <div class="toc-item sub"><div><span class="toc-num">3.3</span>분석 결과 HTML 추출 (유관부서 공유용) <span class="badge badge-red" style="font-size:9px;padding:1px 6px;">NEW</span></div><div class="toc-pg">6</div></div>
-      <div class="toc-item sub"><div><span class="toc-num">3.4</span>피로도 분석 (기간 비교)</div><div class="toc-pg">7</div></div>
+      <div class="toc-item sub"><div><span class="toc-num">3.4</span>피로도 분석·제외 추천 (기간 비교)</div><div class="toc-pg">7</div></div>
     </div>
     <div class="toc-section">
       <div class="toc-item main"><div><span class="toc-num">4.</span>군집화 분석</div><div class="toc-pg">8</div></div>
@@ -265,14 +265,13 @@
     </div>
 
     <div class="box box-blue" style="margin-top: 16px;">
-      <strong>최근 업데이트 (2026-07-22, v5.8)</strong>
-      · <strong>레이어 우선 분석</strong> — <strong>타이틀 선택 → 분석 레이어(Google Ads/MMP) 선택 → 분석</strong> 순서로 데이터 단위를 먼저 확정. 레이어 토글이 좌측 사이드바(타이틀 아래)로 이동, 변경 시 <strong>자동 재분석</strong>. 캠페인 필터는 확정 레이어의 캠페인만 표시되고, 저노출·저전환 제외도 그 레이어 평균 단일 기준 — 캠페인 선택에 따라 분석 모수가 출렁이던 문제 해소 (1.5·2절)<br>
-      · <strong>소재 태깅 확장(제우스)</strong> — AI가 소재별 <strong>게이머 동기</strong>(성취형/경쟁형/몰입형)·<strong>등장 캐릭터·컬러 톤·CTA 유형</strong>을 추가 판독. 보고서 인사이트에 <strong>동기 분포</strong>(어떤 심리 자극 소재가 전환을 견인하는지) 자동 반영 (5절)<br>
-      · <strong>제작 브리프 AI 가이드</strong> — 소재제작브리프에 <strong>카피라이팅 5안 · 차주 스토리보드(Hook/Body/CTA) · 이미지 생성 프롬프트</strong> 자동 생성 섹션 추가 (5절)<br>
-      · <strong>피로도 캠페인 스코프</strong> — 사이드바에서 선택한 캠페인이 피로도 기준/비교 CPA 계산에도 반영
+      <strong>최근 업데이트 (2026-07-30, v5.9)</strong>
+      · <strong>성과 보고서 전면 개편</strong> — 태그 나열이 아닌 <strong>소재 콘텐츠 이해 기반</strong> 인사이트(화면 묘사·KPI 해석·변주안을 AI가 추론, 보고서 전용 상위 모델). 구성: AI 인사이트 5섹션(종합/위닝 확대 전략/전 기간 대비/제작 반영 포인트/제외·재배분) + <strong>위닝 크리에이티브 플레이북</strong>(성공 요소·한줄 판단·변주 아이디어·캠페인별 강세) + <strong>저효율 원인 진단·회피 체크리스트</strong> + <strong>캠페인 제외 후보</strong>(노출 5,000+ &amp; 점수 40 미만, 절감 비용 합계). 보고서 내 <strong>소재명 클릭 시 집행 소재 링크</strong>, 섹션 접기, 유형별 평균 상시 표시<br>
+      · <strong>피로도 기반 캠페인 제외 추천</strong> — 기준1 <strong>양 기간 모두 하위 10%</strong>(각 기간 자체 모수 대비) / 기준2 <strong>피로 판정 + 비교 하위 20%</strong>. 2주 미만 운영·저노출 소재는 평가 제외. 요약 스탯 + 소재별 카드 + CSV 내보내기 (3.4절)<br>
+      · <strong>탭 명칭 개편</strong> — 소재 목록→<strong>분석 결과</strong> · 전체 성과 요약→<strong>성과 보고서</strong> · 피로도→<strong>피로도·제외 추천</strong>
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.8 | Com2uS R Marketing Team</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.9 | Com2uS R Marketing Team</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -369,7 +368,7 @@
       </tbody>
     </table>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.8 | Page 3</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.9 | Page 3</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -397,7 +396,7 @@
     <div class="section-title">캠페인 타입 필터</div>
     <p>캠페인을 타입(예: 선론칭·상시 등)별로 정규화해 결과를 필터링할 수 있습니다.</p>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.8 | 데이터 연동</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.9 | 데이터 연동</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -489,7 +488,7 @@
       · <strong>유료 AI 플랜</strong>: 원문 최대 200자 Gemini에 전달 → 깊은 인사이트
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.8 | Page 4</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.9 | Page 4</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -565,10 +564,10 @@
     <div class="box box-green" style="margin-top:12px;">
       <strong>2026-06 추가 — 표 상태 배지 &amp; 성과별 태그</strong>
       · <strong>라이브/중단/제외 상태 배지</strong>: 소재명 앞 색 점으로 표시. 자동 판정(최근 노출 유무) + 상세 모달에서 자동/라이브/제외 수동 지정(개인 브라우저 저장). <strong>표시 전용 — 점수·집계엔 영향 없음.</strong><br>
-      · <strong>성과별 강·약점 태그</strong>(전체 성과 요약 탭): 종합점수 상위 소재의 <strong>공통 강점</strong>과 하위 소재의 <strong>공통 약점</strong> 태그를 Top 5로 분리 — "이긴 소재가 공유하는 강점 / 진 소재가 공유하는 약점"을 한눈에 파악.
+      · <strong>성과별 강·약점 태그</strong>(성과 보고서 탭): 종합점수 상위 소재의 <strong>공통 강점</strong>과 하위 소재의 <strong>공통 약점</strong> 태그를 Top 5로 분리 — "이긴 소재가 공유하는 강점 / 진 소재가 공유하는 약점"을 한눈에 파악.
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.8 | Page 5</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.9 | Page 5</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -618,14 +617,14 @@
       "전체 캠페인 / BNR+VID / 지난주" 필터 → 점수 계산 → HTML 추출 → 매주 월요일 정해진 채널에 첨부 한 번으로 <strong>주간 성과 리포트 발행</strong> 가능.
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.8 | Page 6</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.9 | Page 6</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
        3.4 피로도 분석
   ════════════════════════════════════════════════════════ -->
   <div class="page">
-    <div class="page-title">3.4 피로도 분석 (기간 비교)</div>
+    <div class="page-title">3.4 피로도 분석·제외 추천 (기간 비교)</div>
 
     <p>두 기간의 소재 성과를 비교하여 <strong>순위 변동</strong>과 <strong>CPA 변화율</strong>을 추적합니다. 피로도를 조기 감지하여 교체 시점을 정확히 결정할 수 있습니다.</p>
 
@@ -635,7 +634,13 @@
     <div class="step-row"><span class="step-num">3</span><div class="step-body"><strong>"자동 분할"</strong> 버튼 — 전체 데이터 기간을 자동으로 절반씩 나눠 설정</div></div>
     <div class="step-row"><span class="step-num">4</span><div class="step-body"><strong>"피로도 분석 실행"</strong> 버튼 클릭 → 결과 자동 표시</div></div>
 
-    <div class="box box-blue"><strong>임계 경보 <span class="badge badge-red" style="font-size:9px;padding:1px 6px;">v5.6</span></strong> — 데이터 로드 시 기본 기간(최근 7일↔이전 7일)으로 자동 선계산해, 상단 <strong>'피로도' 탭에 경보 배지</strong>(CPA 급등 소재 수)를 띄웁니다. 피로도 탭 상단에는 <strong>경보 카드</strong>(피로 경보/주의/신호 없음)가 표시돼, 탭에 들어가지 않아도 교체가 필요한 소재를 바로 인지할 수 있습니다.</div>
+    <div class="box box-blue"><strong>임계 경보 <span class="badge badge-red" style="font-size:9px;padding:1px 6px;">v5.6</span></strong> — 데이터 로드 시 기본 기간(최근 7일↔이전 7일)으로 자동 선계산해, 상단 <strong>'피로도·제외 추천' 탭에 경보 배지</strong>(CPA 급등 소재 수)를 띄웁니다. 탭 상단에는 <strong>경보 카드</strong>(피로 경보/주의/신호 없음)가 표시돼, 탭에 들어가지 않아도 교체가 필요한 소재를 바로 인지할 수 있습니다.</div>
+
+    <div class="box box-blue"><strong>캠페인 제외 추천 <span class="badge badge-red" style="font-size:9px;padding:1px 6px;">v5.9</span></strong> — 기간 비교 결과로 <strong>캠페인에서 제외할 저효율 소재를 자동 추천</strong>합니다(순위 표 위 패널).<br>
+      · <strong>기준1 (저효율 지속)</strong>: 기준·비교 순위가 <strong>모두 각 기간 모수의 하위 10%</strong> — 기간마다 평가 소재 수가 달라, 예: 44/44위 &amp; 45/48위면 해당<br>
+      · <strong>기준2 (피로+저성과)</strong>: 피로(CPA +20%↑) 판정 소재 중 <strong>비교 순위 하위 20%</strong><br>
+      · <strong>평가 제외</strong>: 2주 미만 운영 소재(투입일=소재 파일명 선두 날짜, 비교 기간 종료일 기준) · 비교 기간 저노출/저전환 소재(코호트 평균의 10% 미만)<br>
+      · 패널: 추천 건수·평가 제외 요약 스탯 + 소재별 카드(썸네일·순위 변화·CPA 변화·투입일차·사유) + <strong>CSV 내보내기</strong>(매체 수기 반영용). 성과 보고서의 '캠페인 제외 후보'(단일 기간, 노출 5,000+ &amp; 점수 40 미만)와는 기준이 다른 <strong>기간 비교 기반</strong> 판단입니다.</div>
 
     <div class="section-title">피로도 상태 기준</div>
     <div class="fatigue-grid">
@@ -690,7 +695,7 @@
       · <strong>TXT 소재</strong>: 피로도 분석에서도 완전 제외 (BNR/VID만 분석)
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.8 | Page 7</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.9 | Page 7</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -730,7 +735,7 @@
       · 군집화 분석 ① 컬럼 설정에서 가중치 수동 조정도 가능
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.8 | Page 8</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.9 | Page 8</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -794,7 +799,7 @@
       다음 차수 분석 시 이전 군집과 자동 비교하여 신규 군집(NEW 배지)·기존 군집 연속성을 표시합니다.
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.8 | Page 9</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.9 | Page 9</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -874,7 +879,7 @@
       · 신규 슬롯: <strong>losing · scaleUp · stopNow</strong> 추가
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.8 | Page 10</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.9 | Page 10</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -940,7 +945,7 @@
       · 모델: <strong>Gemini 2.5 Flash</strong> (thinking 모드 비활성화로 출력 토큰 100% 활용)
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.8 | Page 11</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.9 | Page 11</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -1029,7 +1034,7 @@
       <div class="faq-a">v5.0 신규 기능인 <strong>"유료 Pro 업그레이드 유도 카드"</strong>입니다. 무료 플랜에서는 잠긴 슬롯(losing/scaleUp/stopNow 등)을 아이콘으로 표시하며 클릭 한 번으로 API 키 모달이 열려 유료 키로 전환할 수 있습니다.</div>
     </div>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.8 | Page 12</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.9 | Page 12</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -1075,7 +1080,7 @@
       <li>※ KPI 보유 소재가 있는 <strong>타이틀 모드</strong>에서만 노출 (CSV 모드는 자동 숨김)</li>
     </ul>
 
-    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.8 | Page 13</div>
+    <div class="footer">Com2uS R팀 소재 분석 시스템 v5.9 | Page 13</div>
   </div>
 
   <!-- ════════════════════════════════════════════════════════
@@ -1176,7 +1181,12 @@
       <thead><tr><th style="width:16%">버전</th><th style="width:22%">날짜</th><th>주요 업데이트</th></tr></thead>
       <tbody>
         <tr>
-          <td><strong>v5.8</strong> <span class="badge badge-red">현재</span></td>
+          <td><strong>v5.9</strong> <span class="badge badge-red">현재</span></td>
+          <td>2026-07-30</td>
+          <td>① <strong>성과 보고서 전면 개편</strong> — 보고서 3목적(위닝 극대화·제작 반영·제외/재배분) 재구성: AI 인사이트 5섹션(콘텐츠 심층 기반 — 소재 화면 묘사·KPI 해석·변주안을 상위 모델이 추론, 태그명 단독 서술 금지·동기 유형 정의 병기) · 위닝 크리에이티브 플레이북(성공 요소/한줄 판단/변주 아이디어 라벨 그리드) · 저효율 원인 진단+회피 체크리스트 · 캠페인 제외 후보(노출 5,000+ &amp; 점수&lt;40, 절감 합계) · 소재명 클릭=집행 링크 · 섹션 접기(인쇄 시 자동 펼침) · 유형별 평균 상시 스트립 · ② <strong>피로도 제외 추천</strong> — 기준1 양 기간 하위 10% 지속(기간별 독립 모수) / 기준2 피로+비교 하위 20%, 2주 미만·저노출 평가 제외, 스탯+카드 UI·CSV · ③ <strong>세그먼트 비교 탭</strong> — 캠페인/국가/OS/매체/상품별 소재 순위 매트릭스(공통 우수·저조·편차 그룹) + GA↔MMP 점수 괴리표 · ④ <strong>검색 필터·선택</strong>(소재명 검색 즉시 필터+전체 선택) · ⑤ <strong>탭 명칭 개편</strong>(분석 결과/성과 보고서/피로도·제외 추천)</td>
+        </tr>
+        <tr>
+          <td><strong>v5.8</strong></td>
           <td>2026-07-22</td>
           <td>① <strong>레이어 우선 분석</strong> — 타이틀 → 분석 레이어(사이드바 토글) → 분석 순서로 데이터 단위 확정, 레이어 변경 시 자동 재분석 · 캠페인 필터 레이어 맞춤(확정 레이어 캠페인만 표시) · 저노출·저전환 제외 = 활성 레이어 평균 단일 기준(캠페인 선택에 따른 모수 출렁 해소) · ② <strong>소재 태깅 확장(제우스)</strong> — 게이머 동기(성취/경쟁/몰입형)·등장 캐릭터·컬러 톤·CTA 유형(보상 보증/마켓 버튼/상태 변화/로고 노출형) 판독, 보고서 동기 분포 인사이트 · ③ <strong>제작 브리프 AI 가이드</strong>(카피 5안·차주 스토리보드·이미지 생성 프롬프트) · ④ <strong>피로도 캠페인 스코프</strong>(사이드바 캠페인 선택이 피로도 CPA에 반영) · 미매칭 확장자 누락 소재 복구</td>
         </tr>
