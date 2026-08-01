@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "title_id": "gd",
-  "generated_at": "2026-07-31T14:42:35+09:00",
+  "generated_at": "2026-08-01T13:07:02+09:00",
   "pipeline_version": "stage2-mvp",
   "gemini_model": "gemini-2.5-flash",
   "creatives": [
@@ -70,7 +70,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:31+09:00",
+      "tagged_at": "2026-08-01T13:06:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Character-copy-01\\KR\\old\\241211_BNR_Copy-Character-V1_V_1200x1500_NONE_KR_NONE.png"
@@ -164,7 +164,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:31+09:00",
+      "tagged_at": "2026-08-01T13:06:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "콜라보_개발사 제작 소재\\2기\\L-DA-Character-66666heroine-01\\250614_BNR_L-DA-Character-66666heroine-01_L_1200x628_CNT_NONE.png",
@@ -261,7 +261,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:31+09:00",
+      "tagged_at": "2026-08-01T13:06:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "콜라보_개발사 제작 소재\\2기\\L-DA-Character-66666ingame-01\\250614_BNR_L-DA-Character-66666ingame-01_L_1200x628_CNT_NONE.png",
@@ -357,7 +357,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:31+09:00",
+      "tagged_at": "2026-08-01T13:06:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "콜라보_개발사 제작 소재\\2기\\L-DA-Character-66666newoutfit-01\\250614_BNR_L-DA-Character-66666newoutfit-01_L_1200x628_CNT_NONE.png",
@@ -458,7 +458,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:32+09:00",
+      "tagged_at": "2026-08-01T13:06:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Character-66666skill-01\\EN\\250702_BNR_L-DA-Character-66666skill-01_L_1200x628_EN_NONE.png",
@@ -472,7 +472,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250702_BNR_L-DA-Character-66666skill-01_L_1200x628_KR_NONE.png",
@@ -1108,7 +1108,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:32+09:00",
+      "tagged_at": "2026-08-01T13:06:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "콜라보_개발사 제작 소재\\3, 4기\\L-DA-Character-66666summerskin-01\\EN\\250702_BNR_L-DA-Character-66666summerskin-01_L_1200x628_EN_NONE.png",
@@ -1120,7 +1120,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250702_BNR_L-DA-Character-66666summerskin-01_S_1200x1200_KR_NONE.png",
@@ -1472,7 +1472,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:32+09:00",
+      "tagged_at": "2026-08-01T13:06:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Character-66666volpir-01\\CNT\\250522_BNR_L-DA-Character-66666volpir-01_L_1200x628_CNT_NONE.jpg",
@@ -1503,7 +1503,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250522_BNR_L-DA-Character-66666volpir-01_L_1200x628_TH_NONE.jpg",
@@ -3580,7 +3580,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:32+09:00",
+      "tagged_at": "2026-08-01T13:06:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Character-66666vs-01\\EN\\250702_BNR_L-DA-Character-66666vs-01_L_1200x628_EN_NONE.jpg",
@@ -3594,7 +3594,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250702_BNR_L-DA-Character-66666vs-01_S_1200x1200_KR_NONE.jpg",
@@ -4180,7 +4180,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:32+09:00",
+      "tagged_at": "2026-08-01T13:06:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "콜라보_개발사 제작 소재\\3, 4기\\L-DA-Character-celitsummerskin-01\\EN\\250702_BNR_L-DA-Character-celitsummerskin-01_L_1200x628_EN_NONE.png",
@@ -4192,7 +4192,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250702_BNR_L-DA-Character-celitsummerskin-01_L_1200x628_KR_NONE.png",
@@ -4796,7 +4796,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:32+09:00",
+      "tagged_at": "2026-08-01T13:06:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Character-copy-01\\CNT\\250115_BNR_L-DA-Character-copy-01_L_1200x628_CNT_NONE.jpg",
@@ -4843,7 +4843,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_BNR_L-DA-Character-copy-01_L_1200x628_EN_NONE.jpg",
@@ -19406,7 +19406,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:33+09:00",
+      "tagged_at": "2026-08-01T13:06:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Character-goddess-01\\CNT\\250124_BNR_L-DA-Character-goddess-01_L_1200x628_CNT_NONE.jpg",
@@ -19437,7 +19437,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250124_BNR_L-DA-Character-goddess-01_L_1200x628_EN_NONE.png",
@@ -25923,7 +25923,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:33+09:00",
+      "tagged_at": "2026-08-01T13:06:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Character-goddess-02\\CNT\\250228_BNR_L-DA-Character-goddess-02_L_1200x628_CNT_NONE.jpg",
@@ -25954,7 +25954,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250228_BNR_L-DA-Character-goddess-02_L_1200x628_EN_NONE.jpg",
@@ -29665,7 +29665,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:33+09:00",
+      "tagged_at": "2026-08-01T13:06:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Character-growth-01\\CNT\\250118_BNR_L-DA-Character-growth-01_L_1200x628_CNT_NONE.jpg",
@@ -29711,7 +29711,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250118_BNR_L-DA-Character-growth-01_L_1200x628_EN_NONE.jpg",
@@ -37912,7 +37912,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:33+09:00",
+      "tagged_at": "2026-08-01T13:06:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Character-ingameillust-01\\CNT\\250118_BNR_L-DA-Character-ingameillust-01_L_1200x628_CNT_NONE.jpg",
@@ -37958,7 +37958,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250118_BNR_L-DA-Character-ingameillust-01_L_1200x628_EN_NONE.jpg",
@@ -44688,7 +44688,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:33+09:00",
+      "tagged_at": "2026-08-01T13:06:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "콜라보_개발사 제작 소재\\3, 4기\\L-DA-Character-ostarasummerskin-01\\EN\\250702_BNR_L-DA-Character-ostarasummerskin-01_L_1200x628_EN_NONE.png",
@@ -44700,7 +44700,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250702_BNR_L-DA-Character-ostarasummerskin-01_V_1200x1500_KR_NONE.png",
@@ -45314,7 +45314,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:34+09:00",
+      "tagged_at": "2026-08-01T13:06:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "대만 법인 제작 배너\\L-DA-Character-twbanner-01\\250212_BNR_L-DA-Character-twbanner-01_L_1920x1080_CNT_NONE.jpg",
@@ -45461,7 +45461,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:34+09:00",
+      "tagged_at": "2026-08-01T13:06:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "대만 법인 제작 배너\\L-DA-Character-twbanner-02\\250212_BNR_L-DA-Character-twbanner-02_L_1920x1080_CNT_NONE.jpg",
@@ -45608,7 +45608,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:34+09:00",
+      "tagged_at": "2026-08-01T13:06:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Event-applerank-01\\CNT\\250118_BNR_L-DA-Event-applerank-01_L_1200x628_CNT_NONE.jpg",
@@ -45755,7 +45755,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:34+09:00",
+      "tagged_at": "2026-08-01T13:06:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Event-googlerank-01\\CNT\\250118_BNR_L-DA-Event-googlerank-01_L_1200x628_CNT_NONE.jpg",
@@ -45811,7 +45811,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250117_BNR_L-DA-Event-googlerank-01_L_1200x628_KR_NONE.jpg",
@@ -46449,7 +46449,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:34+09:00",
+      "tagged_at": "2026-08-01T13:06:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Event-hosigi-01\\250324_BNR_L-DA-Event-hosigi-01_L_1200x628_KR_NONE.jpg",
@@ -46460,7 +46460,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250324_BNR_L-DA-Event-hosigi-01_L_1200x628_KR_NONE.jpg",
@@ -47350,7 +47350,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:34+09:00",
+      "tagged_at": "2026-08-01T13:06:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Event-rank-01\\CNT\\250118_BNR_L-DA-Event-rank-01_L_1200x628_CNT_NONE.jpg",
@@ -47382,7 +47382,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250118_BNR_L-DA-Event-rank-01_S_1080x1080_KR_NONE.jpg",
@@ -50150,7 +50150,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:35+09:00",
+      "tagged_at": "2026-08-01T13:06:24+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Event-specialcoupon-01\\CNT\\250124_BNR_L-DA-Event-specialcoupon-01_L_1200x628_CNT_NONE.jpg",
@@ -50176,7 +50176,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250124_BNR_L-DA-Event-specialcoupon-01_S_1080x1080_EN_NONE.jpg",
@@ -56126,7 +56126,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:35+09:00",
+      "tagged_at": "2026-08-01T13:06:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Event-specialcoupon-02\\CNT\\250211_BNR_L-DA-Event-specialcoupon-02_L_1200x628_CNT_NONE.jpg",
@@ -56152,7 +56152,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250213_BNR_L-DA-Event-specialcoupon-02_L_1200x628_EN_NONE.jpg",
@@ -58392,7 +58392,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:35+09:00",
+      "tagged_at": "2026-08-01T13:06:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "첫 빌드 업데이트 쿠폰\\CNT\\250331_BNR_L-DA-Event-specialcoupon-03_L_1200x628_CNT_NONE.jpg",
@@ -58443,7 +58443,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250401_BNR_L-DA-Event-specialcoupon-03_L_1200x628_KR_NONE.jpg",
@@ -58708,7 +58708,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:35+09:00",
+      "tagged_at": "2026-08-01T13:06:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Ingame-aso-01\\CNT\\250118_BNR_L-DA-Ingame-ASO-01_L_1200x628_CNT_NONE.jpg",
@@ -58754,7 +58754,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250118_BNR_L-DA-Ingame-ASO-01_S_1200x1200_EN_NONE.jpg",
@@ -65333,7 +65333,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:35+09:00",
+      "tagged_at": "2026-08-01T13:06:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Model-lee-04\\250115_BNR_L-DA-Model-lee-04_L_1200x627_KR_NONE.jpg",
@@ -65355,7 +65355,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_BNR_L-DA-Model-lee-04_V_1200x1500_KR_NONE.jpg",
@@ -71186,7 +71186,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:35+09:00",
+      "tagged_at": "2026-08-01T13:06:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Reward-100days-01\\EN\\250424_BNR_L-DA-Reward-100days-01_L_1200x628_EN_NONE.jpg",
@@ -71204,7 +71204,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250424_BNR_L-DA-Reward-100days-01_S_1200x1200_EN_NONE.jpg",
@@ -71744,7 +71744,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:36+09:00",
+      "tagged_at": "2026-08-01T13:06:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Reward-66666character-01\\CNT\\250428_BNR_L-DA-Reward-66666character-01_L_1200x628_CNT_NONE.jpg",
@@ -71803,7 +71803,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250522_BNR_L-DA-Reward-66666character-01_S_1200x1200_TH_NONE.jpg",
@@ -73946,7 +73946,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:36+09:00",
+      "tagged_at": "2026-08-01T13:06:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Reward-66666gnarly-01\\CNT\\250522_BNR_L-DA-Reward-66666gnarly-01_L_1200x628_CNT_NONE.jpg",
@@ -73977,7 +73977,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250522_BNR_L-DA-Reward-66666gnarly-01_L_1200x628_TH_NONE.jpg",
@@ -76202,7 +76202,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:36+09:00",
+      "tagged_at": "2026-08-01T13:06:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Reward-66666naverpay-01\\250522_BNR_L-DA-Reward-66666naverpay-01_L_1200x628_KR_NONE.jpg",
@@ -76212,7 +76212,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250522_BNR_L-DA-Reward-66666naverpay-01_L_1200x628_KR_NONE.jpg",
@@ -77308,7 +77308,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:36+09:00",
+      "tagged_at": "2026-08-01T13:06:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Reward-66666reward-01\\CNT\\250507_BNR_L-DA-Reward-66666reward-01_L_1200x628_CNT_NONE.jpg",
@@ -77358,7 +77358,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250522_BNR_L-DA-Reward-66666reward-01_L_1200x628_TH_NONE.jpg",
@@ -79082,7 +79082,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:36+09:00",
+      "tagged_at": "2026-08-01T13:06:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Reward-character-01\\CNT\\250402_BNR_L-DA-Reward-character-01_V_1080x1920_CNT_NONE.jpg",
@@ -79221,7 +79221,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:36+09:00",
+      "tagged_at": "2026-08-01T13:06:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Reward-character-02\\CNT\\250402_BNR_L-DA-Reward-character-02_V_1080x1920_CNT_NONE.jpg",
@@ -79272,7 +79272,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250402_BNR_L-DA-Reward-character-02_V_1200x628_EN_NONE.jpg",
@@ -80424,7 +80424,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:36+09:00",
+      "tagged_at": "2026-08-01T13:06:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Reward-gacha-01\\CNT\\250115_BNR_L-DA-Reward-gacha-01_L_1200x628_CNT_NONE.jpg",
@@ -80482,7 +80482,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_BNR_L-DA-Reward-gacha-01_S_1200x1200_EN_NONE.jpg",
@@ -92087,7 +92087,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:37+09:00",
+      "tagged_at": "2026-08-01T13:06:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Reward-gacha-02\\CNT\\250313_BNR_L-DA-Reward-gacha-02_L_1200x628_CNT_NONE.jpg",
@@ -92131,7 +92131,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250321_BNR_L-DA-Reward-gacha-02_L_1200x628_KR_NONE.jpg",
@@ -94039,7 +94039,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:37+09:00",
+      "tagged_at": "2026-08-01T13:06:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Reward-legendhero-01\\CNT\\250115_BNR_L-DA-Reward-legendhero-01_L_1200x628_CNT_NONE.jpg",
@@ -94090,7 +94090,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_BNR_L-DA-Reward-legendhero-01_S_1200x1200_EN_NONE.jpg",
@@ -104662,7 +104662,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:37+09:00",
+      "tagged_at": "2026-08-01T13:06:26+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Reward-legendhero-02\\CNT\\250228_BNR_L-DA-Reward-legendhero-02_L_1200x628_CNT_NONE.jpg",
@@ -104711,7 +104711,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250228_BNR_L-DA-Reward-legendhero-02_S_1200x1200_EN_NONE.jpg",
@@ -108422,7 +108422,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:38+09:00",
+      "tagged_at": "2026-08-01T13:06:26+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Creatorial\\L-FK-Character-attempt-01\\EN\\250304_VID_L-FK-Character-attempt-01_L_1920x1080_EN_NONE.mp4",
@@ -108434,7 +108434,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250304_VID_L-FK-Character-attempt-01_L_1920x1080_EN_NONE",
@@ -113086,7 +113086,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:38+09:00",
+      "tagged_at": "2026-08-01T13:06:26+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Creatorial\\L-FK-Character-sims-01\\EN\\250304_VID_L-FK-Character-sims-01_L_1920x1080_EN_NONE.mp4",
@@ -113098,7 +113098,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250304_VID_L-FK-Character-sims-01_L_1920x1080_EN_NONE",
@@ -117132,7 +117132,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:39+09:00",
+      "tagged_at": "2026-08-01T13:06:26+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-LA-Event-secretroom-01\\CNT\\250311_VID_L-LA-Event-secretroom-01_L_1920x1080_CNT_NONE.mp4",
@@ -117158,7 +117158,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250311_VID_L-LA-Event-secretroom-01_S_1080x1080_EN_NONE",
@@ -119687,7 +119687,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:39+09:00",
+      "tagged_at": "2026-08-01T13:06:27+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-LA-Event-secretroom-02\\CNT\\250311_VID_L-LA-Event-secretroom-02_L_1920x1080_CNT_NONE.mp4",
@@ -119713,7 +119713,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250311_VID_L-LA-Event-secretroom-02_L_1920x1080_EN_NONE",
@@ -120633,7 +120633,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:39+09:00",
+      "tagged_at": "2026-08-01T13:06:27+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "대만-인플루언서\\L-LA-Influencer-twugc-01\\250212_VID_L-LA-Influencer-twugc-01_L_1920x1080_CNT_NONE.mp4",
@@ -120793,7 +120793,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:40+09:00",
+      "tagged_at": "2026-08-01T13:06:27+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "대만-인플루언서\\L-LA-Influencer-twugc-02\\250212_VID_L-LA-Influencer-twugc-02_L_1920x1080_CNT_NONE.mp4",
@@ -120938,7 +120938,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:40+09:00",
+      "tagged_at": "2026-08-01T13:06:28+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "대만-인플루언서\\L-LA-Influencer-twugc-03\\250212_VID_L-LA-Influencer-twugc-03_L_1920x1080_CNT_NONE.mp4",
@@ -121085,7 +121085,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:41+09:00",
+      "tagged_at": "2026-08-01T13:06:28+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "대만-인플루언서\\L-LA-Influencer-twugc-04\\250212_VID_L-LA-Influencer-twugc-04_L_1920x1080_CNT_NONE.mp4",
@@ -121245,7 +121245,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:41+09:00",
+      "tagged_at": "2026-08-01T13:06:28+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "대만-인플루언서\\L-LA-Influencer-twugc-05\\250212_VID_L-LA-Influencer-twugc-05_L_1920x1080_CNT_NONE.mp4",
@@ -121396,7 +121396,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:42+09:00",
+      "tagged_at": "2026-08-01T13:06:28+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-LA-Model-grandopen-01\\KR\\250115_VID_L-LA-Model-grandopen-01_L_1920x1080_KR_NONE.mp4",
@@ -121406,7 +121406,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_VID_L-LA-Model-grandopen-01_S_1080x1080_KR_NONE",
@@ -124917,7 +124917,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:42+09:00",
+      "tagged_at": "2026-08-01T13:06:29+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-LA-Model-lee-01\\250115_VID_L-LA-Model-lee-01_L_1920x1080_KR_NONE.mp4",
@@ -124928,7 +124928,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_VID_L-LA-Model-lee-01_S_1080x1080_KR_NONE",
@@ -127056,7 +127056,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:43+09:00",
+      "tagged_at": "2026-08-01T13:06:30+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-LA-Model-lee-02\\250115_VID_L-LA-Model-lee-02_L_1920x1080_KR_NONE.mp4",
@@ -127067,7 +127067,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_VID_L-LA-Model-lee-02_V_1080x1920_KR_NONE",
@@ -129661,7 +129661,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:44+09:00",
+      "tagged_at": "2026-08-01T13:06:30+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-LA-Model-lee-03\\250115_VID_L-LA-Model-lee-03_L_1920x1080_KR_NONE.mp4",
@@ -130562,7 +130562,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:44+09:00",
+      "tagged_at": "2026-08-01T13:06:30+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-LA-Model-lee-04\\250115_VID_L-LA-Model-lee-04_L_1920x1080_KR_NONE.mp4",
@@ -131485,7 +131485,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:45+09:00",
+      "tagged_at": "2026-08-01T13:06:30+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-LA-Model-lee-05\\250115_VID_L-LA-Model-lee-05_L_1920x1080_KR_NONE.mp4",
@@ -131496,7 +131496,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_VID_L-LA-Model-lee-05_V_1080x1920_KR_NONE",
@@ -134181,7 +134181,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:46+09:00",
+      "tagged_at": "2026-08-01T13:06:31+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "이수지 모델 영상 컷편집건\\제작 완료\\L-LA-Model-lee15s-01 (1편_전설영웅 100%)\\250115_VID_L-LA-Model-lee15s-01_L_1920x1080_KR_NONE.mp4",
@@ -134191,7 +134191,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_VID_L-LA-Model-lee15s-01_V_1080x1920_KR_NONE",
@@ -137011,7 +137011,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:46+09:00",
+      "tagged_at": "2026-08-01T13:06:31+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "이수지 모델 영상 컷편집건\\제작 완료\\L-LA-Model-lee15s-02 (2편_손가락 노동)\\250115_VID_L-LA-Model-lee15s-02_L_1920x1080_KR_NONE.mp4",
@@ -137021,7 +137021,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_VID_L-LA-Model-lee15s-02_V_1080x1920_KR_NONE",
@@ -138961,7 +138961,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:46+09:00",
+      "tagged_at": "2026-08-01T13:06:31+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "이수지 모델 영상 컷편집건\\제작 완료\\L-LA-Model-lee15s-03 (3편_A안)\\250115_VID_L-LA-Model-lee15s-03_L_1920x1080_KR_NONE.mp4",
@@ -138971,7 +138971,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_VID_L-LA-Model-lee15s-03_V_1080x1920_KR_NONE",
@@ -141588,7 +141588,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:46+09:00",
+      "tagged_at": "2026-08-01T13:06:31+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "이수지 모델 영상 컷편집건\\제작 완료\\L-LA-Model-lee15s-04 (3편_B안)\\250115_VID_L-LA-Model-lee15s-04_L_1920x1080_KR_NONE.mp4",
@@ -141598,7 +141598,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_VID_L-LA-Model-lee15s-04_V_1080x1920_KR_NONE",
@@ -143571,7 +143571,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:47+09:00",
+      "tagged_at": "2026-08-01T13:06:31+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "이수지 모델 영상 컷편집건\\제작 완료\\L-LA-Model-lee6s-01 (1편_전설영웅 100%)\\250115_VID_L-LA-Model-lee6s-01_L_1920x1080_KR_NONE.mp4",
@@ -144213,7 +144213,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:47+09:00",
+      "tagged_at": "2026-08-01T13:06:32+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "이수지 모델 영상 컷편집건\\제작 완료\\L-LA-Model-lee6s-02 (2편_춤만춰도)\\250115_VID_L-LA-Model-lee6s-02_L_1920x1080_KR_NONE.mp4",
@@ -144911,7 +144911,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:47+09:00",
+      "tagged_at": "2026-08-01T13:06:32+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "이수지 모델 영상 컷편집건\\제작 완료\\L-LA-Model-lee6s-03 (3편_6초안)\\250115_VID_L-LA-Model-lee6s-03_L_1920x1080_KR_NONE.mp4",
@@ -144921,7 +144921,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_VID_L-LA-Model-lee6s-03_L_1920x1080_KR_NONE",
@@ -147800,7 +147800,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:48+09:00",
+      "tagged_at": "2026-08-01T13:06:32+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-LA-Reward-buster-01\\250320_VID_L-LA-Reward-buster-01_L_1920x1080_KR_NONE.mp4",
@@ -147811,7 +147811,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_VID_L-LA-Reward-buster-01_L_1920x1080_KR_NONE",
@@ -153787,7 +153787,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:48+09:00",
+      "tagged_at": "2026-08-01T13:06:33+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-LA-Reward-buster-02\\250115_VID_L-LA-Reward-buster-02_L_1920x1080_KR_NONE.mp4",
@@ -153796,7 +153796,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_VID_L-LA-Reward-buster-02_L_1920x1080_KR_NONE",
@@ -156652,7 +156652,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:49+09:00",
+      "tagged_at": "2026-08-01T13:06:33+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-LA-Reward-buster-03\\250320_VID_L-LA-Reward-buster-03_L_1920x1080_KR_NONE.mp4",
@@ -156663,7 +156663,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_VID_L-LA-Reward-buster-03_V_1080x1920_KR_NONE",
@@ -162370,7 +162370,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:50+09:00",
+      "tagged_at": "2026-08-01T13:06:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-LA-Reward-buster-04\\250115_VID_L-LA-Reward-buster-04_L_1920x1080_KR_NONE.mp4",
@@ -162379,7 +162379,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_VID_L-LA-Reward-buster-04_L_1920x1080_KR_NONE",
@@ -164486,7 +164486,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:50+09:00",
+      "tagged_at": "2026-08-01T13:06:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Reward-gacha-02\\CNT\\250115_VID_L-LA-Reward-gacha-02_L_1920x1080_CNT_NONE.mp4",
@@ -164516,7 +164516,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_VID_L-LA-Reward-gacha-02_L_1920x1080_EN_NONE",
@@ -172172,7 +172172,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:51+09:00",
+      "tagged_at": "2026-08-01T13:06:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-PV-Event-66666oopen-01\\CNT\\250522_VID_L-PV-Event-66666open-01_L_1920x1080_CNT_NONE.mp4",
@@ -172197,7 +172197,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250522_VID_L-PV-Event-66666open-01_S_1080x1080_TH_NONE",
@@ -174780,7 +174780,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:56+09:00",
+      "tagged_at": "2026-08-01T13:06:37+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-PV-Event-launchingopen-01\\CNT\\250117_VID_L-PV-Event-launchingopen-01_L_1920x1080_CNT_NONE.mov",
@@ -174814,7 +174814,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250117_VID_L-PV-Event-launchingopen-01_S_1080x1080_CNT_NONE",
@@ -183217,7 +183217,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:56+09:00",
+      "tagged_at": "2026-08-01T13:06:38+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "콜라보_개발사 소재\\2기\\6 11 선정 소재\\250614_VID_L-UA-Character-666662nd-01_L_1920x1080_CNT_NONE.mp4",
@@ -183317,7 +183317,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:57+09:00",
+      "tagged_at": "2026-08-01T13:06:38+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Character-66666rdgrowth-01\\EN\\250702_VID_L-UA-Character-66666rdgrowth-01_L_1920x1080_EN_NONE.mp4",
@@ -183329,7 +183329,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250702_VID_L-UA-Character-66666rdgrowth-01_L_1920x1080_KR_NONE",
@@ -183965,7 +183965,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:57+09:00",
+      "tagged_at": "2026-08-01T13:06:38+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "콜라보_개발사 소재\\3,4기\\L-UA-Character-66666summerskin-01\\EN\\250702_BNR_L-UA-Character-66666summerskin-01_L_1920x1080_EN_NONE.mp4",
@@ -183977,7 +183977,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250702_BNR_L-UA-Character-66666summerskin-01_L_1920x1080_KR_NONE",
@@ -184629,7 +184629,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:58+09:00",
+      "tagged_at": "2026-08-01T13:06:39+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Character-growth-01\\CNT\\250115_VID_L-UA-Character-growth-01_L_1920x1080_CNT_NONE.mp4",
@@ -184656,7 +184656,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250117_VID_L-UA-Character-growth-01_L_1920x1080_EN_NONE",
@@ -193396,7 +193396,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:41:58+09:00",
+      "tagged_at": "2026-08-01T13:06:39+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Character-growth-02\\250213_VID_L-UA-Character-growth-02_L_1920x1080_EN_NONE.mp4",
@@ -193406,7 +193406,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250214_VID_L-UA-Character-growth-02_L_1920x1080_EN_NONE",
@@ -195875,7 +195875,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:01+09:00",
+      "tagged_at": "2026-08-01T13:06:40+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Character-guide-01\\EN\\250312_VID_L-UA-Character-guide-01_V_1080x1920_EN_NONE.mp4",
@@ -196294,7 +196294,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:05+09:00",
+      "tagged_at": "2026-08-01T13:06:43+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Character-guide-02\\EN\\250312_VID_L-UA-Character-guide-02_V_1080x1920_EN_NONE.mp4",
@@ -196716,7 +196716,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:05+09:00",
+      "tagged_at": "2026-08-01T13:06:43+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Character-newskin-01\\EN\\250424_BNR_L-UA-Character-newskin-01_L_1200x628_EN_NONE.jpg",
@@ -196730,7 +196730,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250424_BNR_L-UA-Character-newskin-01_S_1080x1080_EN_NONE.jpg",
@@ -197527,7 +197527,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:05+09:00",
+      "tagged_at": "2026-08-01T13:06:43+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Character-newskin-02\\EN\\250424_BNR_L-UA-Character-newskin-02_L_1200x628_EN_NONE.jpg",
@@ -197541,7 +197541,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250424_BNR_L-UA-Character-newskin-02_S_1080x1080_EN_NONE.jpg",
@@ -198348,7 +198348,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:06+09:00",
+      "tagged_at": "2026-08-01T13:06:43+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Event-febupdate-01\\CNT\\250221_VID_L-UA-Event-febupdate-01_L_1920x1080_CNT_NONE.mp4",
@@ -198370,7 +198370,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250221_VID_L-UA-Event-febupdate-01_L_1920x1080_EN_NONE",
@@ -200335,7 +200335,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:06+09:00",
+      "tagged_at": "2026-08-01T13:06:44+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Event-hosigi-01\\250324_VID_L-UA-Event-hosigi-01_L_1920x1080_KR_NONE.mp4",
@@ -200343,7 +200343,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250324_VID_L-UA-Event-hosigi-01_V_1080x1920_KR_NONE",
@@ -200881,7 +200881,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:07+09:00",
+      "tagged_at": "2026-08-01T13:06:44+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Ingame-grandopen-01\\CNT\\250115_VID_L-UA-Ingame-grandopen-01_L_1920x1080_CNT_NONE.mp4",
@@ -200907,7 +200907,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_VID_L-UA-Ingame-grandopen-01_L_1920x1080_EN_NONE",
@@ -211824,7 +211824,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:07+09:00",
+      "tagged_at": "2026-08-01T13:06:44+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Ingame-successvsfail-01\\CNT\\250211_VID_L-UA-Ingame-successvsfail-01_L_1920x1080_CNT_NONE.mp4",
@@ -211850,7 +211850,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250307_VID_L-UA-Ingame-successvsfail-01_L_1920x1080_EN_NONE",
@@ -216642,7 +216642,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:08+09:00",
+      "tagged_at": "2026-08-01T13:06:45+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Ingame-successvsfail-02\\EN\\250331_VID_L-UA-Ingame-successvsfail-02_L_1920x1080_EN_NONE.mp4",
@@ -216656,7 +216656,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250331_VID_L-UA-Ingame-successvsfail-02_L_1920x1080_EN_NONE",
@@ -219161,7 +219161,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:12+09:00",
+      "tagged_at": "2026-08-01T13:06:47+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Playguide-characterchoice-01\\250304_VID_L-UA-Playguide-characterchoice-01_V_1080x1920_EN_NONE.mp4",
@@ -219254,7 +219254,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:15+09:00",
+      "tagged_at": "2026-08-01T13:06:49+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Playguide-levelup-01\\250221_VID_L-UA-Playguide-levelup-01_V_1080x1920_EN_NONE.mp4",
@@ -219353,7 +219353,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:18+09:00",
+      "tagged_at": "2026-08-01T13:06:51+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Playguide-newbie-01\\250311_VID_L-UA-Playguide-newbie-01_V_1080x1920_EN_NONE.mp4",
@@ -219456,7 +219456,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:19+09:00",
+      "tagged_at": "2026-08-01T13:06:51+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Reward-100days-01\\250424_VID_L-UA-Reward-100days-01_L_1920x1080_KR_NONE.mp4",
@@ -219466,7 +219466,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250417_VID_L-UA-Reward-100days-01_L_1920x1080_KR_NONE",
@@ -219892,7 +219892,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:19+09:00",
+      "tagged_at": "2026-08-01T13:06:52+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Reward-aggro-01\\CNT\\250115_VID_L-UA-Reward-aggro-01_L_1920x1080_CNT_NONE.mp4",
@@ -219921,7 +219921,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_VID_L-UA-Reward-aggro-01_L_1920x1080_EN_NONE",
@@ -233352,7 +233352,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:20+09:00",
+      "tagged_at": "2026-08-01T13:06:52+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Reward-aggro-02\\CNT\\250115_VID_L-UA-Reward-aggro-02_L_1920x1080_CNT_NONE.mp4",
@@ -233378,7 +233378,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_VID_L-UA-Reward-aggro-02_L_1920x1080_EN_NONE",
@@ -242191,7 +242191,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:20+09:00",
+      "tagged_at": "2026-08-01T13:06:52+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Reward-aggro-03\\CNT\\250115_VID_L-UA-Reward-aggro-03_L_1920x1080_CNT_NONE.mp4",
@@ -242219,7 +242219,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_VID_L-UA-Reward-aggro-03_L_1920x1080_EN_NONE",
@@ -255374,7 +255374,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:21+09:00",
+      "tagged_at": "2026-08-01T13:06:53+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Reward-aggrocoupon-01\\CNT\\250214_VID_L-UA-Reward-aggrocoupon-01_L_1920x1080_CNT_NONE.mp4",
@@ -255400,7 +255400,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250214_VID_L-UA-Reward-aggrocoupon-01_L_1920x1080_EN_NONE",
@@ -257646,7 +257646,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:21+09:00",
+      "tagged_at": "2026-08-01T13:06:53+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Reward-aggrov2-01\\CNT\\250312_VID_L-UA-Reward-aggrov2-01_L_1920x1080_CNT_NONE.mp4",
@@ -257672,7 +257672,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250312_VID_L-UA-Reward-aggrov2-01_V_1080x1920_EN_NONE",
@@ -260211,7 +260211,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:22+09:00",
+      "tagged_at": "2026-08-01T13:06:53+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Reward-aggrov2-02\\CNT\\250214_VID_L-UA-Reward-aggrov2-02_L_1920x1080_CNT_NONE.mp4",
@@ -260237,7 +260237,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250210_VID_L-UA-Reward-aggrov2-02_L_1920x1080_EN_NONE",
@@ -262670,7 +262670,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:22+09:00",
+      "tagged_at": "2026-08-01T13:06:54+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Reward-gacha-01\\CNT\\250115_VID_L-UA-Reward-gacha-01_L_1920x1080_CNT_NONE.mp4",
@@ -262696,7 +262696,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250115_VID_L-UA-Reward-gacha-01_L_1920x1080_EN_NONE",
@@ -270557,7 +270557,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:23+09:00",
+      "tagged_at": "2026-08-01T13:06:54+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-UA-Reward-noobvspro-01\\CNT\\250402_VID_L-UA-Reward-noobvspro-01_L_1920x1080_CNT_NONE.mp4",
@@ -270579,7 +270579,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250402_VID_L-UA-Reward-noobvspro-01_L_1920x1080_EN_NONE",
@@ -272388,7 +272388,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:23+09:00",
+      "tagged_at": "2026-08-01T13:06:54+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Model-lee-01\\사이즈 베리에이션\\250117_BNR_L_DA_Model-lee-01_L_1200x628_KR_NONE.jpg",
@@ -272403,7 +272403,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250117_BNR_L_DA_Model-lee-01_V_1200x1500_KR_NONE.jpg",
@@ -274691,7 +274691,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:23+09:00",
+      "tagged_at": "2026-08-01T13:06:54+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "L-DA-Character-copy-01\\TH\\250115_BNR_P-DA-Character-copy-01_L_480x320_TH_NONE.jpg",
@@ -274732,7 +274732,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241218_BNR_P-DA-Character-copy-01_V_1200x1500_CNT_NONE.jpg",
@@ -276177,7 +276177,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:23+09:00",
+      "tagged_at": "2026-08-01T13:06:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Character-firegirl-01\\CNT\\241224_BNR_P-DA-Character-firegirl-01_L_1200x628_CNT_NONE.jpg",
@@ -276195,7 +276195,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241224_BNR_P-DA-Character-firegirl-01_S_1200x1200_CNT_NONE.jpg",
@@ -277127,7 +277127,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:23+09:00",
+      "tagged_at": "2026-08-01T13:06:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Character-firegirl-02\\CNT\\241224_BNR_P-DA-Character-firegirl-02_L_1200x628_CNT_NONE.jpg",
@@ -277145,7 +277145,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241224_BNR_P-DA-Character-firegirl-02_S_1200x1200_CNT_NONE.jpg",
@@ -277866,7 +277866,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:24+09:00",
+      "tagged_at": "2026-08-01T13:06:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Character-group-01\\CNT\\241224_BNR_P-DA-Character-group-01_L_1200x628_CNT_NONE.jpg",
@@ -277884,7 +277884,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241224_BNR_P-DA-Character-group-01_V_1200x1500_CNT_NONE.jpg",
@@ -279103,7 +279103,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:24+09:00",
+      "tagged_at": "2026-08-01T13:06:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Character-magazine-01\\250110_BNR_P-DA-Character-magazine-01_S_1280x1280_TH_NONE.jpg",
@@ -279113,7 +279113,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250110_BNR_P-DA-Character-magazine-01_S_1280x1280_TH_NONE.jpg",
@@ -279535,7 +279535,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:24+09:00",
+      "tagged_at": "2026-08-01T13:06:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Character-magazine-02\\250110_BNR_P-DA-Character-magazine-02_S_1280x1280_TH_NONE.jpg",
@@ -279545,7 +279545,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250110_BNR_P-DA-Character-magazine-02_S_1280x1280_TH_NONE.jpg",
@@ -279811,7 +279811,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:24+09:00",
+      "tagged_at": "2026-08-01T13:06:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Character-magazine-03\\250110_BNR_P-DA-Character-magazine-03_S_1280x1280_TH_NONE.jpg",
@@ -279821,7 +279821,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250110_BNR_P-DA-Character-magazine-03_V_1200x1500_TH_NONE.jpg",
@@ -280245,7 +280245,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:24+09:00",
+      "tagged_at": "2026-08-01T13:06:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Character-magazine-04\\250110_BNR_P-DA-Character-magazine-04_S_1280x1280_TH_NONE.jpg",
@@ -280346,7 +280346,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:24+09:00",
+      "tagged_at": "2026-08-01T13:06:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Character-magazine-05\\250110_BNR_P-DA-Character-magazine-05_S_1280x1280_TH_NONE.jpg",
@@ -280445,7 +280445,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:24+09:00",
+      "tagged_at": "2026-08-01T13:06:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Character-neoncopy-01\\CNT\\241218_BNR_P-DA-Character-neoncopy-01_L_1200x628_CNT_NONE.jpg",
@@ -280480,7 +280480,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241218_BNR_P-DA-Character-neoncopy-01_L_1200x628_CNT_NONE.jpg",
@@ -281867,7 +281867,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:25+09:00",
+      "tagged_at": "2026-08-01T13:06:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Character-neoncopy-02\\CNT\\241218_BNR_P-DA-Character-neoncopy-02_L_1200x628_CNT_NONE.jpg",
@@ -281902,7 +281902,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241218_BNR_P-DA-Character-neoncopy-02_S_1200x1200_CNT_NONE.jpg",
@@ -283421,7 +283421,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:25+09:00",
+      "tagged_at": "2026-08-01T13:06:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Character-pet-01\\250110_BNR_P-DA-Character-pet-01_S_1280x1280_TH_NONE.jpg",
@@ -283431,7 +283431,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250110_BNR_P-DA-Character-pet-01_V_1200x1500_TH_NONE.jpg",
@@ -283857,7 +283857,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:25+09:00",
+      "tagged_at": "2026-08-01T13:06:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Model-lee-01\\241224_BNR_P-DA-Model-lee-01_L_1200x628_KR_NONE-.jpg",
@@ -283875,7 +283875,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241224_BNR_P-DA-Model-lee-01_V_1200x1500_KR_NONE.png",
@@ -284737,7 +284737,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:25+09:00",
+      "tagged_at": "2026-08-01T13:06:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Model-lee-02\\사이즈베리\\241224_BNR_P-DA-Model-lee-02_L_1200x628_KR_NONE.jpg",
@@ -284752,7 +284752,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241224_BNR_P-DA-Model-lee-02_S_1200x1200_KR_NONE.jpg",
@@ -285644,7 +285644,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:25+09:00",
+      "tagged_at": "2026-08-01T13:06:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Model-lee-03\\250108_BNR_P-DA-Model-lee-03_L_1200x628_KR_NONE.jpg",
@@ -285654,7 +285654,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250108_BNR_P-DA-Model-lee-03_V_1200x1500_KR_NONE.jpg",
@@ -286124,7 +286124,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:25+09:00",
+      "tagged_at": "2026-08-01T13:06:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Model-lee-04\\241220_BNR_P-DA-Model-lee-04_L_1200x628_KR_NONE.jpg",
@@ -286141,7 +286141,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241220_BNR_P-DA-Model-lee-04_V_1200x1500_KR_NONE.jpg",
@@ -286977,7 +286977,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:26+09:00",
+      "tagged_at": "2026-08-01T13:06:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Reward-gamefit-01\\241213_BNR_P-DA-Reward-event-01_S_320x320_KR_NONE.png"
@@ -287069,7 +287069,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:26+09:00",
+      "tagged_at": "2026-08-01T13:06:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Reward-gacha-01\\CNT\\241218_BNR_P-DA-Reward-gacha-01_L_1200x628_CNT_NONE.jpg",
@@ -287107,7 +287107,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241218_BNR_P-DA-Reward-gacha-01_S_1080x1080_EN_NONE.jpg",
@@ -288710,7 +288710,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:26+09:00",
+      "tagged_at": "2026-08-01T13:06:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Reward-cashplay-01\\241213_BNR_P-DA-Reward-keyvisual-01_L_526x296_KR_NONE.jpg",
@@ -288808,7 +288808,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:26+09:00",
+      "tagged_at": "2026-08-01T13:06:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Reward-legendhero-01\\CNT\\241218_BNR_P-DA-Reward-legendhero-01_L_1200x628_CNT_NONE.jpg",
@@ -288846,7 +288846,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241218_BNR_P-DA-Reward-legendhero-01_S_1080x1080_EN_NONE.jpg",
@@ -290448,7 +290448,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:26+09:00",
+      "tagged_at": "2026-08-01T13:06:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Reward-preregevent-01\\241218_BNR_P-DA-Reward-preregevent-01_L_1200x628_KR_NONE.jpg",
@@ -290463,7 +290463,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241218_BNR_P-DA-Reward-preregevent-01_L_1200x628_KR_NONE.jpg",
@@ -291075,7 +291075,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:26+09:00",
+      "tagged_at": "2026-08-01T13:06:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "TOP10 예약특전\\리스트배너\\241218_BNR_P-DA-Top10-preregevent-01_L_640x200_JP_NONE.jpg",
@@ -291168,7 +291168,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:27+09:00",
+      "tagged_at": "2026-08-01T13:06:57+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-LA-Model-lee-01\\250102_VID_P-LA-Model-lee-01_V_1200x1500_KR_NONE.mp4",
@@ -291178,7 +291178,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250106_VID_P-LA-Model-lee-01_S_1080x1080_KR_NONE",
@@ -291622,7 +291622,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:28+09:00",
+      "tagged_at": "2026-08-01T13:06:57+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-LA-Model-lee-02\\250106_VID_P-LA-Model-lee-02_L_1920x1080_KR_NONE.mp4",
@@ -291632,7 +291632,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250106_VID_P-LA-Model-lee-02_S_1080x1080_KR_NONE",
@@ -292076,7 +292076,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:29+09:00",
+      "tagged_at": "2026-08-01T13:06:58+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-LA-Model-lee-03\\250106_VID_P-LA-Model-lee-03_L_1920x1080_KR_NONE.mp4",
@@ -292086,7 +292086,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250106_VID_P-LA-Model-lee-03_L_1920x1080_KR_NONE",
@@ -292642,7 +292642,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:29+09:00",
+      "tagged_at": "2026-08-01T13:06:58+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-LA-Model-lee-04\\250106_VID_P-LA-Model-lee-04_L_1920x1080_KR_NONE.mp4",
@@ -292652,7 +292652,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250106_VID_P-LA-Model-lee-04_L_1920x1080_KR_NONE",
@@ -293208,7 +293208,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:30+09:00",
+      "tagged_at": "2026-08-01T13:06:58+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-LA-Reward-buster-01\\241224_VID_P-LA-Reward-buster-01_L_1920x1080_KR_NONE.mp4",
@@ -293217,7 +293217,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241224_VID_P-LA-Reward-buster-01_S_1080x1080_KR_NONE",
@@ -293820,7 +293820,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:31+09:00",
+      "tagged_at": "2026-08-01T13:06:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-PV-Event-launchingopen-01\\CNT\\250102_VID_P-PV-Event-launchingopen-01_L_1920x1080_CNT_NONE.mp4",
@@ -293838,7 +293838,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "250102_VID_P-PV-Event-launchingopen-01_S_1080x1080_CNT_NONE",
@@ -294564,7 +294564,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:31+09:00",
+      "tagged_at": "2026-08-01T13:06:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-PV-Event-preregopen-01\\CNT\\241218_VID_P-PV-Event-preregopen-01_L_1920x1080_CNT_NONE.mp4",
@@ -294586,7 +294586,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241218_VID_P-PV-Event-preregopen-01_S_1080x1080_CNT_NONE",
@@ -296615,7 +296615,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:32+09:00",
+      "tagged_at": "2026-08-01T13:07:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-UA-Character-ability-01\\CNT\\241218_VID_P-UA-Character-ability-01_L_1920x1080_CNT_NONE.mp4",
@@ -296641,7 +296641,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241218_VID_P-UA-Character-ability-01_L_1920x1080_CNT_NONE",
@@ -298668,7 +298668,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:32+09:00",
+      "tagged_at": "2026-08-01T13:07:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-UA-Character-ability-02\\CNT\\241218_VID_P-UA-Character-ability-02_L_1920x1080_CNT_NONE.mp4",
@@ -298690,7 +298690,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241218_VID_P-UA-Character-ability-02_L_1920x1080_EN_NONE",
@@ -299959,7 +299959,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:33+09:00",
+      "tagged_at": "2026-08-01T13:07:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-UA-Character-battle-01\\CNT\\241218_VID_P-UA-Character-battle-01_L_1920x1080_CNT_NONE.mp4",
@@ -299985,7 +299985,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241218_VID_P-UA-Character-battle-01_V_1080x1920_CNT_NONE",
@@ -301019,7 +301019,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:33+09:00",
+      "tagged_at": "2026-08-01T13:07:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-UA-Character-battle-02\\CNT\\241218_VID_P-UA-Character-battle-02_L_1920x1080_CNT_NONE.mp4",
@@ -301049,7 +301049,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241218_VID_P-UA-Character-battle-02_V_1080x1920_CNT_NONE",
@@ -302599,7 +302599,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:33+09:00",
+      "tagged_at": "2026-08-01T13:07:01+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-UA-Reward-gacha-01\\CNT\\241218_VID_P-UA-Reward-gacha-01_L_1920x1080_CNT_NONE.mp4",
@@ -302625,7 +302625,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241218_VID_P-UA-Reward-gacha-01_L_1920x1080_EN_NONE",
@@ -304726,7 +304726,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:34+09:00",
+      "tagged_at": "2026-08-01T13:07:01+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-UA-Reward-gacha-02\\CNT\\241231_VID_P-UA-Reward-gacha-02_L_1920x1080_CNT_NONE.mp4",
@@ -304748,7 +304748,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241226_VID_P-UA-Reward-gacha-02_V_1080x1920_EN_NONE",
@@ -306246,7 +306246,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:34+09:00",
+      "tagged_at": "2026-08-01T13:07:01+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-UA-Reward-goods-01\\KR\\241218_VID_P-UA-Reward-goods-01_L_1920x1080_KR_NONE.mp4",
@@ -306256,7 +306256,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241218_VID_P-UA-Reward-goods-01_L_1920x1080_KR_NONE",
@@ -306665,7 +306665,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:35+09:00",
+      "tagged_at": "2026-08-01T13:07:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-UA-Reward-typo-01\\CNT\\241218_VID_P-UA-Reward-typo-01_L_1920x1080_CNT_NONE.mp4",
@@ -306683,7 +306683,7 @@
       ],
       "kpi_source": "google_ads",
       "kpi_window_start": "2025-01-01",
-      "kpi_window_end": "2026-07-30",
+      "kpi_window_end": "2026-07-31",
       "kpi_daily": [
         {
           "creative_name": "241218_VID_P-UA-Reward-typo-01_L_1920x1080_EN_NONE",
@@ -308057,7 +308057,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:35+09:00",
+      "tagged_at": "2026-08-01T13:07:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Reward-gacha-01\\KR\\Old\\241211_BNR_Reward-Gacha-V1_V_1200x1500_NONE_KR_NONE.png"
@@ -308151,7 +308151,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-07-31T14:42:35+09:00",
+      "tagged_at": "2026-08-01T13:07:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "Pre-reg\\P-DA-Reward-legendhero-01\\KR\\Old\\241211_BNR_Reward-LegendHero-V1_V_1200x1500_NONE_KR_NONE (1).png",
@@ -308186,7 +308186,7 @@
     "cache_hits": 132,
     "cache_misses": 0,
     "failures": 0,
-    "duration_sec": 64.3,
+    "duration_sec": 39.2,
     "prompt_version": "v3.3-2026.06.13-character-split-single-idle-v1",
     "fallback_used": false,
     "carried_forward": 0,
@@ -308207,233 +308207,16 @@
     "game_context_sha": "58f96e422487bdac"
   },
   "campaign_canonical": {
-    "Maximizer_HQ_GD_WW-EN_FB_NU_iOS_AEO_250115": {
-      "ua_type": "NU",
-      "country": "WW",
-      "os": "iOS",
-      "media": "FB",
-      "product": "AEO"
-    },
-    "Maximizer_HQ_GD_TH-TH_TT_NU_AD_VO_250119": {
-      "ua_type": "NU",
-      "country": "TH",
-      "os": "Android",
-      "media": "TT",
-      "product": "VO"
-    },
-    "Maximizer_HQ_GD_KR-KR_GA_RT_AD_ACe_250522": {
-      "ua_type": "RT",
-      "country": "KR",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACe"
-    },
-    "Maximizer_HQ_GD_TWHK-CNT_GA_NU_AD_ACa_250124": {
-      "ua_type": "NU",
-      "country": "TWHK",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACa"
-    },
-    "Maximizer_HQ_GD_WW-EN_ML_NU_AD_ROAS_250124": {
-      "ua_type": "NU",
-      "country": "WW",
-      "os": "Android",
-      "media": "ML",
-      "product": "ROAS"
-    },
-    "Maximizer_HQ_GD_TWHK-CNT_FB_NU_iOS_AAA-MAIA_250127": {
-      "ua_type": "NU",
-      "country": "TWHK",
-      "os": "iOS",
-      "media": "FB",
-      "product": "AAA-MAIA"
-    },
-    "Maximizer_HQ_GD_KR-KR_ML_RT_AD_ROAS_250522": {
-      "ua_type": "RT",
-      "country": "KR",
-      "os": "Android",
-      "media": "ML",
-      "product": "ROAS"
-    },
-    "Maximizer_HQ_GD_KR-KR_GA_NU_AD_ACa_250606": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACa"
-    },
-    "Maximizer_HQ_GD_TH-TH_FB_NU_iOS_AEO_250115": {
-      "ua_type": "NU",
-      "country": "TH",
-      "os": "iOS",
-      "media": "FB",
-      "product": "AEO"
-    },
-    "Maximizer_HQ_GD_KR-KR_GA_NU_AD_tROAS_250327": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "Android",
-      "media": "GA",
-      "product": "tROAS"
-    },
-    "Maximizer_HQ_GD_WW-EN_TT-PG_NU_AD_Install_250124": {
-      "ua_type": "NU",
-      "country": "WW",
-      "os": "Android",
-      "media": "TT-PG",
-      "product": "Install"
-    },
-    "Maximizer_HQ_GD_TW-CNT_GA_NU-Pre_AD_ACp_241218": {
-      "ua_type": "NU-Pre",
-      "country": "TW",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACp"
-    },
-    "Maximizer_HQ_GD_KR-KR_TT_NU_AD_VO_250119": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "Android",
-      "media": "TT",
-      "product": "VO"
-    },
-    "Maximizer_HQ_GD_KR-KR_AP_NU_AD_AIBID_250118": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "Android",
-      "media": "AP",
-      "product": "AIBID"
-    },
-    "Maximizer_HQ_GD_TH-TH_FB_NU_AD_VO_250127": {
-      "ua_type": "NU",
-      "country": "TH",
-      "os": "Android",
-      "media": "FB",
-      "product": "VO"
-    },
-    "Maximizer_HQ_GD_WW-EN_FB_NU_AD_AEO_250305": {
+    "Maximizer_HQ_GD_WW-EN_FB_NU_AD_AEO_250124": {
       "ua_type": "NU",
       "country": "WW",
       "os": "Android",
       "media": "FB",
       "product": "AEO"
     },
-    "Maximizer_HQ_GD_TH-TH_GA_NU_AD_ROAS_250522": {
-      "ua_type": "NU",
-      "country": "TH",
-      "os": "Android",
-      "media": "GA",
-      "product": "ROAS"
-    },
-    "Maximizer_HQ_GD_KR-KR_FB_NU-Pre_AD_Install_241218": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "Android",
-      "media": "FB",
-      "product": "Install"
-    },
-    "Maximizer_HQ_GD_WW-EN_FB_NU_AD_AEO_250424": {
+    "Maximizer_HQ_GD_WW-EN_GA_NU_AD_ACa_250115": {
       "ua_type": "NU",
       "country": "WW",
-      "os": "Android",
-      "media": "FB",
-      "product": "AEO"
-    },
-    "Maximizer_HQ_GD_KR-KR_TT_NU_AD_Install_250115": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "Android",
-      "media": "TT",
-      "product": "Install"
-    },
-    "Maximizer_HQ_GD_KR-KR_ML_NU_AD_ROAS_250118": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "Android",
-      "media": "ML",
-      "product": "ROAS"
-    },
-    "Maximizer_HQ_GD_KR-KR_FB_NU_iOS_AAA-MAIA_250115": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "iOS",
-      "media": "FB",
-      "product": "AAA-MAIA"
-    },
-    "Maximizer_HQ_GD_WW-EN_TT_NU_AD_AEO_250115": {
-      "ua_type": "NU",
-      "country": "WW",
-      "os": "Android",
-      "media": "TT",
-      "product": "AEO"
-    },
-    "Maximizer_HQ_GD_KR-KR_ML_NU-Pre_AD_Install_241218": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "Android",
-      "media": "ML",
-      "product": "Install"
-    },
-    "Maximizer_HQ_GD_TH-TH_FB_NU_AD_AEO_250124": {
-      "ua_type": "NU",
-      "country": "TH",
-      "os": "Android",
-      "media": "FB",
-      "product": "AEO"
-    },
-    "Maximizer_HQ_GD_KR-KR_FB_NU_iOS_AAA-MAIA_250124": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "iOS",
-      "media": "FB",
-      "product": "AAA-MAIA"
-    },
-    "Maximizer_HQ_GD_WW-EN_FB_NU_AD_VO_250127": {
-      "ua_type": "NU",
-      "country": "WW",
-      "os": "Android",
-      "media": "FB",
-      "product": "VO"
-    },
-    "Maximizer_HQ_GD_WW-EN_ML_NU_AD_AEO_250115": {
-      "ua_type": "NU",
-      "country": "WW",
-      "os": "Android",
-      "media": "ML",
-      "product": "AEO"
-    },
-    "Maximizer_HQ_GD_KR-KR_FB_NU_AD_AEO_250526": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "Android",
-      "media": "FB",
-      "product": "AEO"
-    },
-    "Maximizer_HQ_GD_KR-KR_FB_NU_AD_VO_250118": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "Android",
-      "media": "FB",
-      "product": "VO"
-    },
-    "Maximizer_HQ_GD_KR-KR_FB_NU_AD_AEO_250328": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "Android",
-      "media": "FB",
-      "product": "AEO"
-    },
-    "Maximizer_HQ_GD_WW-EN_TT_NU_AD_AEO_250120": {
-      "ua_type": "NU",
-      "country": "WW",
-      "os": "Android",
-      "media": "TT",
-      "product": "AEO"
-    },
-    "Maximizer_HQ_GD_KR-KR_GA_NU_AD_ACa_250115": {
-      "ua_type": "NU",
-      "country": "KR",
       "os": "Android",
       "media": "GA",
       "product": "ACa"
@@ -308445,40 +308228,19 @@
       "media": "FB",
       "product": "Install"
     },
-    "Maximizer_HQ_GD_TH-TH_FB_NU_iOS_VO_250118": {
-      "ua_type": "NU",
-      "country": "TH",
-      "os": "iOS",
-      "media": "FB",
-      "product": "VO"
-    },
-    "Maximizer_HQ_GD_TH-TH_FB_NU_AD_VO_250522": {
-      "ua_type": "NU",
-      "country": "TH",
-      "os": "Android",
-      "media": "FB",
-      "product": "VO"
-    },
-    "Maximizer_HQ_GD_KR-KR_TT_NU_AD_AEO_250115": {
-      "ua_type": "NU",
+    "Maximizer_HQ_GD_KR-KR_ML_NU-Pre_AD_Install_241218": {
+      "ua_type": "NU-Pre",
       "country": "KR",
       "os": "Android",
-      "media": "TT",
+      "media": "ML",
+      "product": "Install"
+    },
+    "Maximizer_HQ_GD_KR-KR_FB_NU_iOS_AEO_250115": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "iOS",
+      "media": "FB",
       "product": "AEO"
-    },
-    "Maximizer_HQ_GD_TWHK-CNT_GA_NU_AD_ACi_250127": {
-      "ua_type": "NU",
-      "country": "TWHK",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACi"
-    },
-    "Maximizer_HQ_GD_TH-TH_GA_NU_AD_ACi_250124": {
-      "ua_type": "NU",
-      "country": "TH",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACi"
     },
     "Maximizer_HQ_GD_WW-EN_FB_NU_iOS_AAA-MAIA_250124": {
       "ua_type": "NU",
@@ -308487,61 +308249,19 @@
       "media": "FB",
       "product": "AAA-MAIA"
     },
-    "Maximizer_HQ_GD_KR-KR_GA_NU-Pre_AD_ACp_241218": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACp"
-    },
-    "Maximizer_HQ_GD_WW-EN_TT_RT_AD_AEO_250522": {
-      "ua_type": "RT",
+    "Maximizer_HQ_GD_WW-EN_TT_NU_AD_AEO_250119": {
+      "ua_type": "NU",
       "country": "WW",
       "os": "Android",
       "media": "TT",
       "product": "AEO"
     },
-    "Maximizer_HQ_GD_KR-KR_NaverGFA_NU_AD_Install_250522": {
+    "Maximizer_HQ_GD_KR-KR_FB_NU_iOS_AAA-MAIA_250115": {
       "ua_type": "NU",
       "country": "KR",
-      "os": "Android",
-      "media": "NaverGFA",
-      "product": "Install"
-    },
-    "Maximizer_HQ_GD_WW-EN_FB_NU_AD_AEO_250115": {
-      "ua_type": "NU",
-      "country": "WW",
-      "os": "Android",
+      "os": "iOS",
       "media": "FB",
-      "product": "AEO"
-    },
-    "Maximizer_HQ_GD_KR-KR_GA_NU_AD_ACa_250710": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACa"
-    },
-    "Maximizer_HQ_GD_KR-KR_ML_NU_AD_ROAS_250522": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "Android",
-      "media": "ML",
-      "product": "ROAS"
-    },
-    "Maximizer_HQ_GD_WW-EN_TT_NU_AD_Install_250124": {
-      "ua_type": "NU",
-      "country": "WW",
-      "os": "Android",
-      "media": "TT",
-      "product": "Install"
-    },
-    "Maximizer_HQ_GD_WW-EN_TT_NU_AD_VO_250119": {
-      "ua_type": "NU",
-      "country": "WW",
-      "os": "Android",
-      "media": "TT",
-      "product": "VO"
+      "product": "AAA-MAIA"
     },
     "Maximizer_HQ_GD_HK-CNT_GA_NU_AD_ACa_250124": {
       "ua_type": "NU",
@@ -308550,19 +308270,47 @@
       "media": "GA",
       "product": "ACa"
     },
-    "Maximizer_HQ_GD_WW-EN_GA_NU_AD_ACa_250710": {
+    "Maximizer_HQ_GD_TH-TH_GA_NU_AD_ACa_250115": {
       "ua_type": "NU",
-      "country": "WW",
+      "country": "TH",
       "os": "Android",
       "media": "GA",
       "product": "ACa"
     },
-    "Maximizer_HQ_GD_KR-KR_FB_NU_AD_AAA-MAIA_250115": {
+    "Maximizer_HQ_GD_KR-KR_FB_NU_AD_AEO_250526": {
       "ua_type": "NU",
       "country": "KR",
       "os": "Android",
       "media": "FB",
-      "product": "AAA-MAIA"
+      "product": "AEO"
+    },
+    "Maximizer_HQ_GD_WW-EN_TT_RT_AD_AEO_250522": {
+      "ua_type": "RT",
+      "country": "WW",
+      "os": "Android",
+      "media": "TT",
+      "product": "AEO"
+    },
+    "Maximizer_HQ_GD_TW-CNT_GA_NU-Pre_AD_ACp_241218": {
+      "ua_type": "NU-Pre",
+      "country": "TW",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACp"
+    },
+    "Maximizer_HQ_GD_TWHK-CNT_FB_NU_AD_AEO_250127": {
+      "ua_type": "NU",
+      "country": "TWHK",
+      "os": "Android",
+      "media": "FB",
+      "product": "AEO"
+    },
+    "Maximizer_HQ_GD_KR-KR_FB_NU_AD_AEO_250328": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "Android",
+      "media": "FB",
+      "product": "AEO"
     },
     "Maximizer_HQ_GD_WW-EN_GA_RT_AD_ACe_250522": {
       "ua_type": "RT",
@@ -308571,9 +308319,240 @@
       "media": "GA",
       "product": "ACe"
     },
+    "Maximizer_HQ_GD_WW-EN_TT_NU_AD_AEO_250115": {
+      "ua_type": "NU",
+      "country": "WW",
+      "os": "Android",
+      "media": "TT",
+      "product": "AEO"
+    },
+    "Maximizer_HQ_GD_TWHK-CNT_GA_NU_AD_ACa_250124": {
+      "ua_type": "NU",
+      "country": "TWHK",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACa"
+    },
+    "Maximizer_HQ_GD_TH-TH_TT_NU_AD_AEO_250115": {
+      "ua_type": "NU",
+      "country": "TH",
+      "os": "Android",
+      "media": "TT",
+      "product": "AEO"
+    },
+    "Maximizer_HQ_GD_WW-EN_FB_NU_AD_VO_250127": {
+      "ua_type": "NU",
+      "country": "WW",
+      "os": "Android",
+      "media": "FB",
+      "product": "VO"
+    },
+    "Maximizer_HQ_GD_KR-KR_FB_NU_iOS_VO_250118": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "iOS",
+      "media": "FB",
+      "product": "VO"
+    },
+    "Maximizer_HQ_GD_KR-KR_FB_NU_AD_AEO_250115": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "Android",
+      "media": "FB",
+      "product": "AEO"
+    },
+    "Maximizer_HQ_GD_TH-TH_FB_RT_AD_Traffic_250522": {
+      "ua_type": "RT",
+      "country": "TH",
+      "os": "Android",
+      "media": "FB",
+      "product": "Traffic"
+    },
+    "Maximizer_HQ_GD_WW-EN_FB_NU_AD_AEO_250424": {
+      "ua_type": "NU",
+      "country": "WW",
+      "os": "Android",
+      "media": "FB",
+      "product": "AEO"
+    },
+    "Maximizer_HQ_GD_TH-TH_FB_NU_AD_VO_250522": {
+      "ua_type": "NU",
+      "country": "TH",
+      "os": "Android",
+      "media": "FB",
+      "product": "VO"
+    },
+    "Maximizer_HQ_GD_KR-KR_GA_NU_AD_ACa_250606": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACa"
+    },
+    "Maximizer_HQ_GD_KR-KR_FB_NU_iOS_AAA-MAIA_250124": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "iOS",
+      "media": "FB",
+      "product": "AAA-MAIA"
+    },
+    "Maximizer_HQ_GD_KR-KR_AP_NU_AD_AIBID_250118": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "Android",
+      "media": "AP",
+      "product": "AIBID"
+    },
+    "Maximizer_HQ_GD_KR-KR_FB_NU_AD_VO_250127": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "Android",
+      "media": "FB",
+      "product": "VO"
+    },
+    "Maximizer_HQ_GD_KR-KR_GA_NU_AD_tROAS_250327": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "Android",
+      "media": "GA",
+      "product": "tROAS"
+    },
+    "Maximizer_HQ_GD_WW-EN_GA_NU_AD_ACa_250710": {
+      "ua_type": "NU",
+      "country": "WW",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACa"
+    },
+    "Maximizer_HQ_GD_JP-JP_GA_NU-Pre_AD_ACp_250108": {
+      "ua_type": "NU-Pre",
+      "country": "JP",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACp"
+    },
+    "Maximizer_HQ_GD_KR-KR_GA_NU-Pre_AD_ACp_241218": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACp"
+    },
+    "Maximizer_HQ_GD_TH-TH_FB_NU_iOS_VO_250118": {
+      "ua_type": "NU",
+      "country": "TH",
+      "os": "iOS",
+      "media": "FB",
+      "product": "VO"
+    },
     "Maximizer_HQ_GD_TH-TH_ML_NU_AD_ROAS_250127": {
       "ua_type": "NU",
       "country": "TH",
+      "os": "Android",
+      "media": "ML",
+      "product": "ROAS"
+    },
+    "Maximizer_HQ_GD_WW-EN_FB_NU_iOS_VO_250118": {
+      "ua_type": "NU",
+      "country": "WW",
+      "os": "iOS",
+      "media": "FB",
+      "product": "VO"
+    },
+    "Maximizer_HQ_GD_WW-EN_TT-PG_NU_AD_Install_250124": {
+      "ua_type": "NU",
+      "country": "WW",
+      "os": "Android",
+      "media": "TT-PG",
+      "product": "Install"
+    },
+    "Maximizer_HQ_GD_KR-KR_TT_NU_AD_Install_250115": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "Android",
+      "media": "TT",
+      "product": "Install"
+    },
+    "Maximizer_HQ_GD_KR-KR_GA_RT_AD_ACe_250522": {
+      "ua_type": "RT",
+      "country": "KR",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACe"
+    },
+    "Maximizer_HQ_GD_KR-KR_GA_NU_AD_ACa_250710": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACa"
+    },
+    "Maximizer_HQ_GD_KR-KR_ML_NU_AD_Install_250115": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "Android",
+      "media": "ML",
+      "product": "Install"
+    },
+    "Maximizer_HQ_GD_KR-KR_FB_NU_AD_VO_250118": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "Android",
+      "media": "FB",
+      "product": "VO"
+    },
+    "Maximizer_HQ_GD_KR-KR_GA_NU_AD_ACa_250115": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACa"
+    },
+    "Maximizer_HQ_GD_WW-EN_GA_NU_AD_ACi_250124": {
+      "ua_type": "NU",
+      "country": "WW",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACi"
+    },
+    "Maximizer_HQ_GD_WW-EN_FB_NU_AD_AEO_250115": {
+      "ua_type": "NU",
+      "country": "WW",
+      "os": "Android",
+      "media": "FB",
+      "product": "AEO"
+    },
+    "Maximizer_HQ_GD_TW-CNT_TT-TT_NU-Pre_AD_Pre_250101": {
+      "ua_type": "NU-Pre",
+      "country": "TW",
+      "os": "Android",
+      "media": "TT-TT",
+      "product": "Pre"
+    },
+    "Maximizer_HQ_GD_KR-KR_ML_NU_AD_AEO_250115": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "Android",
+      "media": "ML",
+      "product": "AEO"
+    },
+    "Maximizer_HQ_GD_TWHK-CNT_TT-PG_NU_AD_Install_250124": {
+      "ua_type": "NU",
+      "country": "TWHK",
+      "os": "Android",
+      "media": "TT-PG",
+      "product": "Install"
+    },
+    "Maximizer_HQ_GD_TH-TH_GA_NU-Pre_AD_ACp_250108": {
+      "ua_type": "NU-Pre",
+      "country": "TH",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACp"
+    },
+    "Maximizer_HQ_GD_KR-KR_ML_NU_AD_ROAS_250522": {
+      "ua_type": "NU",
+      "country": "KR",
       "os": "Android",
       "media": "ML",
       "product": "ROAS"
@@ -308585,124 +308564,12 @@
       "media": "FB",
       "product": "AEO"
     },
-    "Maximizer_HQ_GD_TWHK-CNT_TT-PG_NU_AD_Install_250124": {
+    "Maximizer_HQ_GD_KR-KR_FB_NU_AD_AAA-MAIA_250115": {
       "ua_type": "NU",
-      "country": "TWHK",
+      "country": "KR",
       "os": "Android",
-      "media": "TT-PG",
-      "product": "Install"
-    },
-    "Maximizer_HQ_GD_WW-EN_FB_NU_AD_VO_250118": {
-      "ua_type": "NU",
-      "country": "WW",
-      "os": "Android",
-      "media": "FB",
-      "product": "VO"
-    },
-    "Maximizer_HQ_GD_TWHK-CNT_FB_NU_AD_AEO_250127": {
-      "ua_type": "NU",
-      "country": "TWHK",
-      "os": "Android",
-      "media": "FB",
-      "product": "AEO"
-    },
-    "Maximizer_HQ_GD_TWHK-CNT_GA_NU_AD_ACa_250612": {
-      "ua_type": "NU",
-      "country": "TWHK",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACa"
-    },
-    "Maximizer_HQ_GD_TH-TH_FB_NU_iOS_AAA-MAIA_250124": {
-      "ua_type": "NU",
-      "country": "TH",
-      "os": "iOS",
       "media": "FB",
       "product": "AAA-MAIA"
-    },
-    "Maximizer_HQ_GD_TH-TH_TT_NU_AD_AEO_250115": {
-      "ua_type": "NU",
-      "country": "TH",
-      "os": "Android",
-      "media": "TT",
-      "product": "AEO"
-    },
-    "Maximizer_HQ_GD_KR-KR_FB_NU_AD_AAA-AEO_250324": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "Android",
-      "media": "FB",
-      "product": "AAA-AEO"
-    },
-    "Maximizer_HQ_GD_KR-KR_FB_NU_iOS_VO_250118": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "iOS",
-      "media": "FB",
-      "product": "VO"
-    },
-    "Maximizer_HQ_GD_KR-KR_GA_NU_AD_ACi_250115": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACi"
-    },
-    "Maximizer_HQ_GD_KR-KR_FB_NU_AD_AEO_250124": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "Android",
-      "media": "FB",
-      "product": "AEO"
-    },
-    "Maximizer_HQ_GD_WW-EN_TT_NU_AD_AEO_250522": {
-      "ua_type": "NU",
-      "country": "WW",
-      "os": "Android",
-      "media": "TT",
-      "product": "AEO"
-    },
-    "Maximizer_HQ_GD_TW-CNT_TT-TT_NU-Pre_AD_Pre_250101": {
-      "ua_type": "NU-Pre",
-      "country": "TW",
-      "os": "Android",
-      "media": "TT-TT",
-      "product": "Pre"
-    },
-    "Maximizer_HQ_GD_TH-TH_ML_NU_AD_AEO_250115": {
-      "ua_type": "NU",
-      "country": "TH",
-      "os": "Android",
-      "media": "ML",
-      "product": "AEO"
-    },
-    "Maximizer_HQ_GD_KR-KR_ML_NU_AD_AEO_250115": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "Android",
-      "media": "ML",
-      "product": "AEO"
-    },
-    "Maximizer_HQ_GD_WW-EN_FB_NU_AD_AEO_250124": {
-      "ua_type": "NU",
-      "country": "WW",
-      "os": "Android",
-      "media": "FB",
-      "product": "AEO"
-    },
-    "Maximizer_HQ_GD_WW-EN_TT_NU_AD_AEO_250119": {
-      "ua_type": "NU",
-      "country": "WW",
-      "os": "Android",
-      "media": "TT",
-      "product": "AEO"
-    },
-    "Maximizer_HQ_GD_WW-EN_GA_NU_AD_ACi_250124": {
-      "ua_type": "NU",
-      "country": "WW",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACi"
     },
     "Maximizer_HQ_GD_TH-TH_FB_NU_AD_VO_250118": {
       "ua_type": "NU",
@@ -308718,40 +308585,68 @@
       "media": "TT",
       "product": "VO"
     },
-    "Maximizer_HQ_GD_WW-EN_FB_NU_iOS_VO_250118": {
+    "Maximizer_HQ_GD_TWHK-CNT_GA_NU_AD_ACa_250612": {
       "ua_type": "NU",
-      "country": "WW",
-      "os": "iOS",
-      "media": "FB",
-      "product": "VO"
-    },
-    "Maximizer_HQ_GD_TW-CNT_FB_NU-Pre_AD_Install_241218": {
-      "ua_type": "NU-Pre",
-      "country": "TW",
-      "os": "Android",
-      "media": "FB",
-      "product": "Install"
-    },
-    "Maximizer_HQ_GD_TH-TH_FB_NU_AD_AEO_250115": {
-      "ua_type": "NU",
-      "country": "TH",
-      "os": "Android",
-      "media": "FB",
-      "product": "AEO"
-    },
-    "Maximizer_HQ_GD_WW-EN_GA_NU_AD_ACa_250115": {
-      "ua_type": "NU",
-      "country": "WW",
+      "country": "TWHK",
       "os": "Android",
       "media": "GA",
       "product": "ACa"
     },
-    "Maximizer_HQ_GD_KR-KR_FB_NU_AD_AEO_250115": {
+    "Maximizer_HQ_GD_KR-KR_NaverGFA_NU_AD_Install_250522": {
       "ua_type": "NU",
       "country": "KR",
       "os": "Android",
+      "media": "NaverGFA",
+      "product": "Install"
+    },
+    "Maximizer_HQ_GD_WW-EN_FB_NU_AD_VO_250118": {
+      "ua_type": "NU",
+      "country": "WW",
+      "os": "Android",
       "media": "FB",
+      "product": "VO"
+    },
+    "Maximizer_HQ_GD_WW-EN_ML_NU_AD_AEO_250115": {
+      "ua_type": "NU",
+      "country": "WW",
+      "os": "Android",
+      "media": "ML",
       "product": "AEO"
+    },
+    "Maximizer_HQ_GD_TWHK-CNT_FB_NU_iOS_AAA-MAIA_250127": {
+      "ua_type": "NU",
+      "country": "TWHK",
+      "os": "iOS",
+      "media": "FB",
+      "product": "AAA-MAIA"
+    },
+    "Maximizer_HQ_GD_KR-KR_TT_NU_AD_VO_250119": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "Android",
+      "media": "TT",
+      "product": "VO"
+    },
+    "Maximizer_HQ_GD_KR-KR_TT_NU_AD_AEO_250115": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "Android",
+      "media": "TT",
+      "product": "AEO"
+    },
+    "Maximizer_HQ_GD_WW-EN_TT_NU_AD_Install_250124": {
+      "ua_type": "NU",
+      "country": "WW",
+      "os": "Android",
+      "media": "TT",
+      "product": "Install"
+    },
+    "Maximizer_HQ_GD_TH-TH_GA_NU_AD_ROAS_250522": {
+      "ua_type": "NU",
+      "country": "TH",
+      "os": "Android",
+      "media": "GA",
+      "product": "ROAS"
     },
     "Maximizer_HQ_GD_WW-EN_FB_RT_AD_Traffic_250522": {
       "ua_type": "RT",
@@ -308760,47 +308655,131 @@
       "media": "FB",
       "product": "Traffic"
     },
-    "Maximizer_HQ_GD_JP-JP_GA_NU-Pre_AD_ACp_250108": {
-      "ua_type": "NU-Pre",
-      "country": "JP",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACp"
-    },
-    "Maximizer_HQ_GD_KR-KR_FB_NU_AD_VO_250127": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "Android",
-      "media": "FB",
-      "product": "VO"
-    },
-    "Maximizer_HQ_GD_TH-TH_FB_RT_AD_Traffic_250522": {
+    "Maximizer_HQ_GD_KR-KR_FB_RT_AD_Traffic_250522": {
       "ua_type": "RT",
-      "country": "TH",
+      "country": "KR",
       "os": "Android",
       "media": "FB",
       "product": "Traffic"
     },
-    "Maximizer_HQ_GD_TH-TH_GA_NU-Pre_AD_ACp_250108": {
-      "ua_type": "NU-Pre",
+    "Maximizer_HQ_GD_TH-TH_FB_NU_AD_AEO_250124": {
+      "ua_type": "NU",
+      "country": "TH",
+      "os": "Android",
+      "media": "FB",
+      "product": "AEO"
+    },
+    "Maximizer_HQ_GD_TH-TH_FB_NU_AD_AEO_250115": {
+      "ua_type": "NU",
+      "country": "TH",
+      "os": "Android",
+      "media": "FB",
+      "product": "AEO"
+    },
+    "Maximizer_HQ_GD_WW-EN_TT_NU_AD_AEO_250522": {
+      "ua_type": "NU",
+      "country": "WW",
+      "os": "Android",
+      "media": "TT",
+      "product": "AEO"
+    },
+    "Maximizer_HQ_GD_TH-TH_GA_NU_AD_ACi_250124": {
+      "ua_type": "NU",
       "country": "TH",
       "os": "Android",
       "media": "GA",
-      "product": "ACp"
+      "product": "ACi"
     },
-    "Maximizer_HQ_GD_KR-KR_ML_NU_AD_Install_250115": {
+    "Maximizer_HQ_GD_KR-KR_FB_NU_AD_AAA-AEO_250324": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "Android",
+      "media": "FB",
+      "product": "AAA-AEO"
+    },
+    "Maximizer_HQ_GD_KR-KR_ML_RT_AD_ROAS_250522": {
+      "ua_type": "RT",
+      "country": "KR",
+      "os": "Android",
+      "media": "ML",
+      "product": "ROAS"
+    },
+    "Maximizer_HQ_GD_TH-TH_ML_NU_AD_AEO_250115": {
+      "ua_type": "NU",
+      "country": "TH",
+      "os": "Android",
+      "media": "ML",
+      "product": "AEO"
+    },
+    "Maximizer_HQ_GD_WW-EN_TT_NU_AD_AEO_250120": {
+      "ua_type": "NU",
+      "country": "WW",
+      "os": "Android",
+      "media": "TT",
+      "product": "AEO"
+    },
+    "Maximizer_HQ_GD_WW-EN_FB_NU_AD_AEO_250305": {
+      "ua_type": "NU",
+      "country": "WW",
+      "os": "Android",
+      "media": "FB",
+      "product": "AEO"
+    },
+    "Maximizer_HQ_GD_TH-TH_TT_NU_AD_VO_250119": {
+      "ua_type": "NU",
+      "country": "TH",
+      "os": "Android",
+      "media": "TT",
+      "product": "VO"
+    },
+    "Maximizer_HQ_GD_WW-EN_ML_NU_AD_ROAS_250124": {
+      "ua_type": "NU",
+      "country": "WW",
+      "os": "Android",
+      "media": "ML",
+      "product": "ROAS"
+    },
+    "Maximizer_HQ_GD_KR-KR_FB_NU-Pre_AD_Install_241218": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "Android",
+      "media": "FB",
+      "product": "Install"
+    },
+    "Maximizer_HQ_GD_TH-TH_FB_NU_iOS_AEO_250115": {
+      "ua_type": "NU",
+      "country": "TH",
+      "os": "iOS",
+      "media": "FB",
+      "product": "AEO"
+    },
+    "Maximizer_HQ_GD_TW-CNT_FB_NU-Pre_AD_Install_241218": {
+      "ua_type": "NU-Pre",
+      "country": "TW",
+      "os": "Android",
+      "media": "FB",
+      "product": "Install"
+    },
+    "Maximizer_HQ_GD_TWHK-CNT_GA_NU_AD_ACi_250127": {
+      "ua_type": "NU",
+      "country": "TWHK",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACi"
+    },
+    "Maximizer_HQ_GD_TH-TH_FB_NU_AD_VO_250127": {
+      "ua_type": "NU",
+      "country": "TH",
+      "os": "Android",
+      "media": "FB",
+      "product": "VO"
+    },
+    "Maximizer_HQ_GD_KR-KR_ML_NU_AD_ROAS_250118": {
       "ua_type": "NU",
       "country": "KR",
       "os": "Android",
       "media": "ML",
-      "product": "Install"
-    },
-    "Maximizer_HQ_GD_TH-TH_GA_NU_AD_ACa_250115": {
-      "ua_type": "NU",
-      "country": "TH",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACa"
+      "product": "ROAS"
     },
     "Maximizer_HQ_GD_WW-EN_GA_NU-Pre_AD_ACp_250108": {
       "ua_type": "NU-Pre",
@@ -308809,19 +308788,40 @@
       "media": "GA",
       "product": "ACp"
     },
-    "Maximizer_HQ_GD_KR-KR_FB_RT_AD_Traffic_250522": {
-      "ua_type": "RT",
-      "country": "KR",
-      "os": "Android",
-      "media": "FB",
-      "product": "Traffic"
-    },
-    "Maximizer_HQ_GD_KR-KR_FB_NU_iOS_AEO_250115": {
+    "Maximizer_HQ_GD_WW-EN_FB_NU_iOS_AEO_250115": {
       "ua_type": "NU",
-      "country": "KR",
+      "country": "WW",
       "os": "iOS",
       "media": "FB",
       "product": "AEO"
+    },
+    "Maximizer_HQ_GD_WW-EN_TT_NU_AD_VO_250119": {
+      "ua_type": "NU",
+      "country": "WW",
+      "os": "Android",
+      "media": "TT",
+      "product": "VO"
+    },
+    "Maximizer_HQ_GD_KR-KR_FB_NU_AD_AEO_250124": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "Android",
+      "media": "FB",
+      "product": "AEO"
+    },
+    "Maximizer_HQ_GD_KR-KR_GA_NU_AD_ACi_250115": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACi"
+    },
+    "Maximizer_HQ_GD_TH-TH_FB_NU_iOS_AAA-MAIA_250124": {
+      "ua_type": "NU",
+      "country": "TH",
+      "os": "iOS",
+      "media": "FB",
+      "product": "AAA-MAIA"
     }
   },
   "unmatched_assets": [
