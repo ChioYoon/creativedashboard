@@ -1,9 +1,9 @@
 {
   "schema_version": "1.0",
   "title_id": "tougenanki",
-  "generated_at": "2026-08-04T13:11:31+09:00",
+  "generated_at": "2026-08-05T13:04:08+09:00",
   "pipeline_version": "stage2-mvp",
-  "gemini_model": "gemini-2.5-flash-lite",
+  "gemini_model": "gemini-2.5-flash",
   "creatives": [
     {
       "creative_id": "FGT-IP-MudanoSSR01-DA",
@@ -76,7 +76,7 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:08:07+09:00",
+      "tagged_at": "2026-08-05T13:03:17+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-MudanoSSR01-DA\\260624_BNR_FGT-IP-MudanoSSR01-DA_L_1200x628_JP.jpg",
@@ -178,7 +178,7 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:08:08+09:00",
+      "tagged_at": "2026-08-05T13:03:17+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-OniMainTVA01-DA\\260624_BNR_FGT-IP-OniMainTVA01-DA_L_1200x628_JP.jpg",
@@ -276,7 +276,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:08:08+09:00",
+      "tagged_at": "2026-08-05T13:03:17+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-OniMomotaroTVA01-DA\\260518_BNR_FGT-IP-OniMomotaroTVA01-DA_L_1200x628_JP.jpg",
@@ -374,7 +374,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:08:08+09:00",
+      "tagged_at": "2026-08-05T13:03:17+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\Tier 2 배너 시안\\260928_BNR_P-Battle-Freindship02-DA_L_1200x628_JP.jpg"
@@ -472,7 +472,7 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:08:08+09:00",
+      "tagged_at": "2026-08-05T13:03:17+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\FGT   사전예약 시안\\260928_BNR_P-Battle-Freindship03-DA_L_1200x628_JP.jpg"
@@ -569,104 +569,10 @@
       ],
       "color_tone": "레드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:08:20+09:00",
+      "tagged_at": "2026-08-05T13:03:17+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\Tier 1 배너 시안\\260928_BNR_P-Battle-Friendship01-DA_L_1200x628_JP.jpg"
-      ],
-      "kpi_source": null,
-      "kpi_window_start": null,
-      "kpi_window_end": null,
-      "kpi_daily": [],
-      "mmp_source": null,
-      "mmp_channels": [],
-      "mmp_d1_ipm": null,
-      "mmp_d1_cpi": null,
-      "mmp_d7_roas": null,
-      "mmp_d1_retention": null,
-      "mmp_quality_score": null,
-      "mmp_installs": null,
-      "mmp_conversions": null,
-      "mmp_conv_ua": null,
-      "mmp_impressions": null,
-      "mmp_retained_d1": null,
-      "mmp_cost": null,
-      "mmp_revenue": null,
-      "mmp_currency": null,
-      "mmp_fx_rate": null,
-      "mmp_daily": []
-    },
-    {
-      "creative_id": "P-Battle-OniVsMomotaro01-DA",
-      "소재명": "P-Battle-OniVsMomotaro01-DA",
-      "파일명": "260928_BNR_P-Battle-OniVsMomotaro01-DA_L_1200x628_JP.jpg",
-      "유형": "BNR",
-      "일": "2026-09-28",
-      "캠페인": null,
-      "사이즈": "1200x628",
-      "언어": "JP",
-      "링크": null,
-      "creative_concept": "P-Battle-OniVsMomotaro01-DA",
-      "전환": 0,
-      "비용": 0,
-      "노출수": 0,
-      "클릭수": 0,
-      "Revenue": 0,
-      "hooking_strategy": "비주얼 임팩트",
-      "USP": "대세감(출시일/사전등록수)",
-      "art_style": "2D 일러스트",
-      "strengths": [
-        "다수 캐릭터 라인업",
-        "강한 비주얼 임팩트",
-        "호기심/궁금증 유발"
-      ],
-      "weaknesses": [
-        "장르/게임성 불분명",
-        "초반 3초 안에 가치 전달 실패"
-      ],
-      "hypothesis": [
-        "특정 타겟에 강하게 반응",
-        "낮은 전환 위험 — 행동 유도 약함"
-      ],
-      "test_ideas": [
-        "게임플레이 컷 추가",
-        "다른 core_usp 각도 변주"
-      ],
-      "one_line_insight": "강렬한 캐릭터 비주얼과 대립 구도로 IP 팬덤의 시선을 사로잡지만, 신규 유저에게 게임성과 핵심 가치가 불분명함 — 사전등록 CTA와 함께 핵심 게임플레이 컷을 추가하여 장르 인지 및 전환율을 개선합니다.",
-      "strength_evidence": [
-        "화면 좌우로 대립하는 두 진영의 다수 캐릭터들이 역동적인 포즈로 전면 배치되어 수집형 RPG의 매력을 직관적으로 전달합니다.",
-        "중앙의 붉은색 배경과 '그 싸움이 지금 여기에 부활한다'는 강렬한 문구가 시선을 사로잡으며, 좌우의 대비되는 캐릭터 진영이 시각적 긴장감을 높입니다.",
-        "중앙의 '그 싸움이 지금 여기에 부활한다'는 문구와 대립하는 두 진영의 캐릭터들이 어떤 관계인지 궁금증을 유발합니다."
-      ],
-      "weakness_evidence": [
-        "캐릭터 일러스트만으로 구성되어 실제 카드 배틀이나 턴제 RPG의 게임플레이 요소가 전혀 보이지 않아 신규 유저가 장르를 파악하기 어렵습니다.",
-        "매력적인 캐릭터와 강렬한 비주얼은 있으나, 게임의 핵심 가치 제안(혜택, 전략 등)이 명확하게 드러나지 않아 첫 인상에서 이탈할 위험이 있습니다."
-      ],
-      "improvement_actions": [
-        "메인 카피 하단 또는 엔드카드에 실제 카드 배틀 UI나 인페르노 스킬 연출 컷을 작게 삽입하여 장르 인지를 돕습니다.",
-        "사전등록 CTA와 함께 '전략적 카드 배틀' 또는 '원작 스토리 완벽 구현' 등 핵심 USP를 1줄 카피로 추가하여 가치 제안을 명확히 합니다."
-      ],
-      "creator_intent": "원작 IP의 다수 캐릭터 라인업과 다크 판타지 세계관의 대립 구도를 강조하여 팬덤의 기대감을 높이려는 의도",
-      "kpi_reality_check": null,
-      "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 7,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
-      "marketer_insight": null,
-      "player_motivation": null,
-      "main_characters": [],
-      "color_tone": null,
-      "cta_type": null,
-      "tagged_at": "2026-08-04T13:08:20+09:00",
-      "gemini_model": "gemini-2.5-flash",
-      "source_files": [
-        "1. 사전예약\\1. BNR\\Tier 1 배너 시안\\260928_BNR_P-Battle-OniVsMomotaro01-DA_L_1200x628_JP.jpg"
       ],
       "kpi_source": null,
       "kpi_window_start": null,
@@ -744,7 +650,7 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 8,
+        "rank": 7,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
@@ -755,7 +661,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:08:21+09:00",
+      "tagged_at": "2026-08-05T13:03:17+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\Tier 2 배너 시안\\260928_BNR_P-Character-Cutscene01-DA_L_1200x628_JP.jpg"
@@ -842,7 +748,7 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 9,
+        "rank": 8,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
@@ -853,7 +759,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:08:21+09:00",
+      "tagged_at": "2026-08-05T13:03:17+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-HomarePV01-PV\\260421_VID_P-Character-HomarePV01-PV_S_1080x1080_JP.mp4",
@@ -937,7 +843,7 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 10,
+        "rank": 9,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
@@ -948,7 +854,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:08:21+09:00",
+      "tagged_at": "2026-08-05T13:03:17+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-JinPV01-PV\\260421_VID_P-Character-JinPV01-PV_S_1080x1080_JP.mp4",
@@ -1032,7 +938,7 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 11,
+        "rank": 10,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
@@ -1043,7 +949,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:08:21+09:00",
+      "tagged_at": "2026-08-05T13:03:18+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-KyoyaPV01-PV\\JP\\260421_VID_P-Character-KyoyaPV01-PV_S_1080x1080_JP.mp4",
@@ -1131,7 +1037,7 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 12,
+        "rank": 11,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
@@ -1142,11 +1048,107 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:08:21+09:00",
+      "tagged_at": "2026-08-05T13:03:18+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-MudanoPV01-PV\\260401_VID_P-Character-MudanoPV01-PV_S_1080x1080_JP.mp4",
         "1. 사전예약\\2. VID\\P-Character-MudanoPV01-PV\\260401_VID_P-Character-MudanoPV01-PV_V_1080x1920_JP.mp4"
+      ],
+      "kpi_source": null,
+      "kpi_window_start": null,
+      "kpi_window_end": null,
+      "kpi_daily": [],
+      "mmp_source": null,
+      "mmp_channels": [],
+      "mmp_d1_ipm": null,
+      "mmp_d1_cpi": null,
+      "mmp_d7_roas": null,
+      "mmp_d1_retention": null,
+      "mmp_quality_score": null,
+      "mmp_installs": null,
+      "mmp_conversions": null,
+      "mmp_conv_ua": null,
+      "mmp_impressions": null,
+      "mmp_retained_d1": null,
+      "mmp_cost": null,
+      "mmp_revenue": null,
+      "mmp_currency": null,
+      "mmp_fx_rate": null,
+      "mmp_daily": []
+    },
+    {
+      "creative_id": "P-Character-NerimaOni01-DA",
+      "소재명": "P-Character-NerimaOni01-DA",
+      "파일명": "260928_BNR_P-Character-NerimaOni01-DA_L_1200x628_JP.jpg",
+      "유형": "BNR",
+      "일": "2026-09-28",
+      "캠페인": null,
+      "사이즈": "1200x628",
+      "언어": "JP",
+      "링크": null,
+      "creative_concept": "P-Character-NerimaOni01-DA",
+      "전환": 0,
+      "비용": 0,
+      "노출수": 0,
+      "클릭수": 0,
+      "Revenue": 0,
+      "hooking_strategy": "캐릭터 외형 소구",
+      "USP": "감성 유대형(교감/서사)",
+      "art_style": "2D 일러스트",
+      "strengths": [
+        "다수 캐릭터 라인업",
+        "강한 비주얼 임팩트",
+        "호기심/궁금증 유발"
+      ],
+      "weaknesses": [
+        "장르/게임성 불분명"
+      ],
+      "hypothesis": [
+        "특정 타겟에 강하게 반응",
+        "낮은 전환 위험 — 행동 유도 약함"
+      ],
+      "test_ideas": [
+        "게임플레이 컷 추가",
+        "다른 core_usp 각도 변주"
+      ],
+      "one_line_insight": "매력적인 캐릭터 라인업과 다크한 비주얼로 IP 팬덤 후킹은 강하나 게임성이 불분명함 — 실제 카드 배틀 화면을 추가하여 신규 유저의 장르 인지도를 높여 전환율을 개선",
+      "strength_evidence": [
+        "화면 좌측에 3명의 주요 남성 캐릭터가 각자의 개성을 드러내는 포즈로 배치되어 수집형 RPG의 캐릭터 라인업을 효과적으로 소구함",
+        "붉은색 혈흔 이펙트와 다크한 배경, 그리고 캐릭터들의 날카로운 표정 연출이 다크 판타지 세계관의 강렬한 분위기를 조성함",
+        "캐릭터들의 독특한 외형(주사기, 피 묻은 우산)과 '다크 히어로'라는 문구가 어우러져 게임의 스토리에 대한 궁금증을 유발함"
+      ],
+      "weakness_evidence": [
+        "캐릭터 일러스트와 타이틀만으로 구성되어 실제 게임플레이나 전투 시스템에 대한 시각적 단서가 없어 신규 유저의 장르 인지가 어려움"
+      ],
+      "improvement_actions": [
+        "캐릭터 일러스트 하단 또는 우측에 실제 카드 배틀 UI나 인페르노 스킬 연출 컷을 작게 삽입하여 장르를 명확히 인지시킴",
+        "캐릭터 외형 소구는 유지하되, '전략/경쟁형' USP를 강조하는 문양 매칭 카드 배틀 스크린샷을 추가하여 게임성을 부각함"
+      ],
+      "creator_intent": "원작 IP 팬덤에게 주요 캐릭터들의 매력적인 외형과 다크 판타지 세계관을 강조하여 사전등록을 유도하려는 의도",
+      "kpi_reality_check": null,
+      "kpi_percentiles": null,
+      "scores": {
+        "total": 33.33,
+        "grade": "보통",
+        "rank": 12,
+        "conv": 100.0,
+        "cpa": 0.0,
+        "ipm": 0.0,
+        "roas": 100.0
+      },
+      "marketer_insight": null,
+      "player_motivation": null,
+      "main_characters": [
+        "오이란자카 쿄우야",
+        "이치노세 시키",
+        "무다노 나이토"
+      ],
+      "color_tone": "다크 레드·블랙",
+      "cta_type": null,
+      "tagged_at": "2026-08-05T13:03:33+09:00",
+      "gemini_model": "gemini-2.5-flash",
+      "source_files": [
+        "1. 사전예약\\1. BNR\\Tier 1 배너 시안\\260928_BNR_P-Character-NerimaOni01-DA_L_1200x628_JP.jpg"
       ],
       "kpi_source": null,
       "kpi_window_start": null,
@@ -1239,7 +1241,7 @@
       ],
       "color_tone": "다크 레드·블랙 판타지",
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:08:42+09:00",
+      "tagged_at": "2026-08-05T13:03:33+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\Tier 1 배너 시안\\260928_BNR_P-Character-OniPopOut01-DA_L_1200x628_JP.jpg"
@@ -1333,7 +1335,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:09:07+09:00",
+      "tagged_at": "2026-08-05T13:03:33+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier1 영상 시안\\260928_VID_P-Character-OnivsMomotaro01-UA_L_1920x1080_JP.mp4",
@@ -1428,7 +1430,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:09:08+09:00",
+      "tagged_at": "2026-08-05T13:03:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-ShikiPV01-PV\\260421_VID_P-Character-ShikiPV01-PV_S_1080x1080_JP.mp4",
@@ -1523,7 +1525,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:09:08+09:00",
+      "tagged_at": "2026-08-05T13:03:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier1 영상 시안\\260928_VID_P-Character-Shikirage01-UA_L_1920x1080_JP.mp4"
@@ -1623,7 +1625,7 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:09:20+09:00",
+      "tagged_at": "2026-08-05T13:03:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\Tier 1 배너 시안\\260928_BNR_P-Character-Skillcard01-DA_L_1200x628_JP.jpg"
@@ -1717,7 +1719,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:09:20+09:00",
+      "tagged_at": "2026-08-05T13:03:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-TsubakiriPV01-PV\\260421_VID_P-Character-TsubakiriPV01-PV_S_1080x1080_JP.mp4",
@@ -1811,7 +1813,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:09:21+09:00",
+      "tagged_at": "2026-08-05T13:03:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier2 영상 시안\\수정 전\\260928_VID_P-Gameplay-Onigroup01-UA_L_1920x1080_JP.mp4"
@@ -1909,7 +1911,7 @@
       ],
       "color_tone": "다크 그레이·레드",
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:09:21+09:00",
+      "tagged_at": "2026-08-05T13:03:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\FGT   사전예약 시안\\260928_BNR_P-Gameplay-SoloKyoya01-DA_L_1200x628_JP.jpg"
@@ -2007,7 +2009,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:09:21+09:00",
+      "tagged_at": "2026-08-05T13:03:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier2 영상 시안\\260928_VID_P-Gameplay-kyotostory01-UA_L_1920x1080_JP.mp4",
@@ -2102,7 +2104,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:09:21+09:00",
+      "tagged_at": "2026-08-05T13:03:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Gamer-IngamePV01-PV\\260421_VID_P-Gamer-IngamePV01-PV_S_1080x1080_JP.mp4",
@@ -2205,7 +2207,7 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:09:34+09:00",
+      "tagged_at": "2026-08-05T13:03:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Gamer-RasetsuBattle01-DA\\JP\\260928_BNR_P-Gamer-RasetsuBattle01-DA_L_1200x628_JP.jpg",
@@ -2303,7 +2305,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:09:35+09:00",
+      "tagged_at": "2026-08-05T13:03:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Cinematic01-PV\\260421_VID_P-IP-Cinematic01-PV_S_1080x1080_JP.mp4",
@@ -2398,7 +2400,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:09:35+09:00",
+      "tagged_at": "2026-08-05T13:03:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Cutscene01-UA\\JP\\260928_VID_P-IP-Cutscene0-UA_L_1920x1080_JP.mp4"
@@ -2494,7 +2496,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:09:35+09:00",
+      "tagged_at": "2026-08-05T13:03:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\0. 엔드카드\\P-IP-Endcard01-EC\\JP\\260127_VID_P-IP-Endcard01-EC_L_1080x1080_JP.mp4",
@@ -2590,7 +2592,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:09:35+09:00",
+      "tagged_at": "2026-08-05T13:03:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\0. 엔드카드\\(활용불가) P-IP-Endcard02-EC\\JP\\260127_VID_P-IP-Endcard02-EC_L_1920x1080_JP.mp4"
@@ -2690,7 +2692,7 @@
       ],
       "color_tone": "레드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:09:48+09:00",
+      "tagged_at": "2026-08-05T13:03:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-OniMainTVA01-DA\\JP\\260928_BNR_P-IP-OniMainTVA01-DA_L_1200x628_JP.jpg",
@@ -2794,7 +2796,7 @@
       ],
       "color_tone": "레드·다크 판타지",
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:09:59+09:00",
+      "tagged_at": "2026-08-05T13:03:37+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-OniMomotaroTVA01-DA\\JP\\260223_BNR_P-IP-OniMomotaroTVA01-DA_L_1200x628_JP.jpg",
@@ -2892,7 +2894,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:09:59+09:00",
+      "tagged_at": "2026-08-05T13:03:37+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-RasetsuTVA01-DA\\JP\\260810_BNR_P-IP-RasetsuTVA01-DA_L_1200x628_JP.jpg",
@@ -2990,7 +2992,7 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:10:00+09:00",
+      "tagged_at": "2026-08-05T13:03:37+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Teaser01-PV\\260421_VID_P-IP-Teaser01-PV_S_1080x1080_JP.mp4",
@@ -3087,7 +3089,7 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:10:11+09:00",
+      "tagged_at": "2026-08-05T13:03:37+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR01-DA\\JP\\260928_BNR_P-Reward-MudanoSSR01-DA_L_1200x628_JP.jpg",
@@ -3189,7 +3191,7 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-08-04T13:10:24+09:00",
+      "tagged_at": "2026-08-05T13:03:37+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR02-DA (CTA)\\JP\\260928_BNR_P-Reward-MudanoSSR02-DA_L_1200x628_JP.jpg",
@@ -3293,7 +3295,7 @@
       ],
       "color_tone": "레드·다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-08-04T13:10:38+09:00",
+      "tagged_at": "2026-08-05T13:03:37+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-OniMomotaroSSR01-DA\\JP\\260928_BNR_P-Reward-OniMomotaroSSR01-DA_L_1200x628_JP.jpg",
@@ -3391,8 +3393,8 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:10:52+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-08-05T13:03:37+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR01-DA\\JP\\260928_BNR_P-Reward-RasetsuSSR01-DA_L_1200x628_JP.jpg",
         "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR01-DA\\JP\\260928_BNR_P-Reward-RasetsuSSR01-DA_S_1080x1080_JP.jpg",
@@ -3495,8 +3497,8 @@
       ],
       "color_tone": "다크 판타지",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-08-04T13:11:03+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-08-05T13:03:37+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR02-DA (CTA)\\JP\\260928_BNR_P-Reward-RasetsuSSR02-DA_L_1200x628_JP.jpg",
         "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR02-DA (CTA)\\JP\\260928_BNR_P-Reward-RasetsuSSR02-DA_S_1080x1080_JP.jpg",
@@ -3587,8 +3589,8 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:11:03+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-08-05T13:03:37+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\Tier 2 배너 시안\\260928_BNR_P-Reward-Skillcard02-DA_L_1200x628_JP.jpg"
       ],
@@ -3685,8 +3687,8 @@
       ],
       "color_tone": "다크 레드",
       "cta_type": "보상 보증형",
-      "tagged_at": "2026-08-04T13:11:30+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-08-05T13:03:37+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Reward-SkillcardSSR01-UA\\JP\\260928_VID_P-Reward-SkillcardSSR01-UA_L_1920x1080_JP.mp4",
         "1. 사전예약\\2. VID\\P-Reward-SkillcardSSR01-UA\\JP\\수정 전\\260928_VID_P-Reward-SkillcardSSR01-UA_L_1920x1080_JP.mp4"
@@ -3780,8 +3782,8 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:11:30+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-08-05T13:03:38+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier1 영상 시안\\260928_VID_P-Story-Freindship01-UA_L_1920x1080_JP.mp4"
       ],
@@ -3825,11 +3827,11 @@
       "Revenue": 0,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "감성 유대형(교감/서사)",
-      "art_style": "2D 일러스트",
+      "art_style": "3D 셀셰이딩",
       "strengths": [
+        "강한 비주얼 임팩트",
         "캐릭터 액션/전투 연출",
-        "오디오 후킹(BGM/SFX/Voice)",
-        "강한 비주얼 임팩트"
+        "오디오 후킹(BGM/SFX/Voice)"
       ],
       "weaknesses": [
         "장르/게임성 불분명",
@@ -3840,24 +3842,24 @@
         "낮은 전환 위험 — 행동 유도 약함"
       ],
       "test_ideas": [
-        "게임플레이 컷 추가",
-        "명시적 CTA 추가"
+        "명시적 CTA 추가",
+        "게임플레이 컷 추가"
       ],
-      "one_line_insight": "강렬한 캐릭터 액션과 IP 보이스로 팬덤 후킹은 강하나, 게임 플레이 정보와 명확한 행동 유도가 부족함 — 핵심 게임성 컷과 구체적인 CTA를 추가하여 신규 유저 유입 및 전환을 개선",
+      "one_line_insight": "강렬한 비주얼 임팩트와 캐릭터 액션으로 IP 팬덤 후킹은 강하나, 게임 장르 및 행동 유도 단서가 부족함 — 초반 10초 내에 게임플레이 컷과 명확한 CTA를 추가하여 신규 유저 유입 및 전환을 개선",
       "strength_evidence": [
-        "4~11초 우산에서 피가 쏟아져 무기가 되는 연출과 15~23초 총에서 피가 뿜어져 강력한 스킬로 변하는 연출이 캐릭터의 혈식해방 능력을 강렬하게 보여줌.",
-        "초반부터 긴장감 넘치는 BGM과 효과음, 그리고 중간중간 삽입된 캐릭터의 대사가 원작 IP 팬덤의 몰입감을 높임.",
-        "붉은 피와 강렬한 이펙트가 화면을 지배하며 다크 판타지 세계관의 분위기를 조성하고 시각적 자극을 통해 시선을 사로잡음."
+        "0~2초의 붉은 텍스트와 파괴된 배경, 3초 캐릭터 등장 시 피 튀기는 듯한 강렬한 효과, 4~11초 우산에서 피가 쏟아져 무기로 변하는 연출이 시각적으로 압도적임.",
+        "4~11초 무다노 나이토의 우산이 피로 변해 활과 화살을 생성하고 공격하는 연출, 16~23초 이치노세 시키가 총을 피로 강화하여 발사하는 연출이 역동적이고 화려함.",
+        "초반부터 긴장감 있는 배경 음악과 일본어 음성 대사가 몰입감을 높이며, 피가 튀고 무기가 생성되는 효과음이 시각적 연출과 시너지를 이룸."
       ],
       "weakness_evidence": [
-        "23~25초에 짧게 게임 화면이 노출되지만, 전투 방식이나 카드 배틀 시스템 등 핵심 게임 플레이에 대한 정보가 부족하여 장르 인지가 어려움.",
-        "27초 이후 엔드카드에 '사전등록 접수 중' 문구만 있고, 다운로드 버튼이나 명확한 보상 제시가 없어 시청자의 다음 행동을 유도하는 힘이 약함."
+        "캐릭터 연출에 집중되어 실제 게임플레이 화면이나 카드 배틀 UI가 24초 이전까지 전혀 노출되지 않아 신규 유저가 어떤 장르의 게임인지 파악하기 어려움.",
+        "초반 15초 내에 사전등록이나 다운로드 등 구체적인 행동 유도 문구나 버튼이 없어 시청자가 다음 행동을 취할 단서가 없음."
       ],
       "improvement_actions": [
-        "23~25초 게임 플레이 화면을 5초 이상으로 늘려 카드 배틀 UI와 전략적 요소를 명확히 보여주는 컷을 추가하여 게임성을 강조.",
-        "엔드카드에 '지금 사전등록하고 한정 보상 받기' 문구와 함께 다운로드 버튼을 명확히 삽입하여 전환율을 높이도록 개선."
+        "초반 15초 내에 ‘지금 사전등록’과 같은 명확한 행동 유도 문구를 삽입하여 시청자의 다음 행동을 유도한다.",
+        "10초 이내에 실제 카드 배틀 UI나 전투 시스템이 짧게라도 노출되는 컷을 추가하여 게임 장르를 명확히 인지시킨다."
       ],
-      "creator_intent": "원작 IP의 다크 판타지 세계관과 주요 캐릭터들의 혈식해방 연출을 통해 팬덤의 감성을 자극하려는 의도",
+      "creator_intent": "원작 IP의 다크 판타지 세계관과 주요 캐릭터들의 강렬한 혈식 액션을 시네마틱 연출로 보여주어 팬덤을 후킹하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
@@ -3871,12 +3873,16 @@
       },
       "marketer_insight": null,
       "player_motivation": null,
-      "main_characters": [],
-      "color_tone": null,
+      "main_characters": [
+        "무다노 나이토",
+        "이치노세 시키"
+      ],
+      "color_tone": "다크 레드",
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:11:30+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-08-05T13:04:07+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
+        "1. 사전예약\\2. VID\\Tier1 영상 시안\\260928_VID_P-Story-IconicLines01-UA_L_1920x1080_JP.mp4",
         "1. 사전예약\\2. VID\\Tier1 영상 시안\\수정 전\\260928_VID_P-Story-IconicLines01-UA_L_1920x1080_JP.mp4"
       ],
       "kpi_source": null,
@@ -3976,8 +3982,8 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": null,
-      "tagged_at": "2026-08-04T13:11:31+09:00",
-      "gemini_model": "gemini-2.5-flash-lite",
+      "tagged_at": "2026-08-05T13:04:08+09:00",
+      "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier2 영상 시안\\260721_VID_P-Story-OnivsMomotaro01-UA_L_1920x1080_JP.mp4",
         "1. 사전예약\\2. VID\\Tier2 영상 시안\\수정 전\\260716_VID_P-Story-OnivsMomotaro01-UA_L_1920x1080_JP.mp4"
@@ -4008,12 +4014,12 @@
   "metrics": {
     "scanned_folders": 41,
     "tagged_records": 41,
-    "cache_hits": 28,
-    "cache_misses": 13,
+    "cache_hits": 39,
+    "cache_misses": 2,
     "failures": 0,
-    "duration_sec": 203.3,
+    "duration_sec": 51.1,
     "prompt_version": "v3.3-2026.06.13-character-split-single-darkfantasy-v1",
-    "fallback_used": true,
+    "fallback_used": false,
     "carried_forward": 0,
     "score_summary": {
       "graded": 0,
