@@ -6,7 +6,10 @@
     "description": "제우스: 오만의 신 UA Asset — MMORPG 신작(2026-07-01 출시). Airbridge MMP + Google Ads.",
     "_pipeline_creatives_root": "G:\\공유 드라이브\\[ZEUS_MKT] 컴투스 X 인크로스\\UA\\4. 크리에이티브\\2. UA 소재",
     "_pipeline_scan_mode": "by-filename",
-    "_pipeline_types": ["BNR", "VID"],
+    "_pipeline_types": [
+      "BNR",
+      "VID"
+    ],
     "_pipeline_enabled": true,
     "_pipeline_google_ads_customer_id": "3250895166",
     "_pipeline_google_ads_campaign_filter": [],
@@ -16,7 +19,13 @@
     "_pipeline_airbridge_enabled": true,
     "_pipeline_airbridge_app_name": "zeuskr",
     "_pipeline_airbridge_conversion_metric": "web_custom_complete_registration",
-    "_pipeline_airbridge_exclude_channels": ["google.adwords", "unattributed", "appstore", "sns", "airbridge_sdk_test"],
+    "_pipeline_airbridge_exclude_channels": [
+      "google.adwords",
+      "unattributed",
+      "appstore",
+      "sns",
+      "airbridge_sdk_test"
+    ],
     "_pipeline_airbridge_usd_to_krw": 1500,
     "_pipeline_genre": "mmorpg",
     "_pipeline_game_context_file": "pipeline/game_context/zeus.md",
@@ -29,12 +38,16 @@
     "description": "도원암귀 UA Asset — 시각 분석 전용(KPI 미연동). 파일명 기반 스캔(폴더 레이아웃 무관).",
     "_pipeline_creatives_root": "G:\\공유 드라이브\\[도원암귀_MKT] 외부 드라이브\\1. 소재\\0. 제작 완료 소재 (MKT Asset)\\0. UA Asset",
     "_pipeline_scan_mode": "by-filename",
-    "_pipeline_types": ["BNR", "VID"],
+    "_pipeline_types": [
+      "BNR",
+      "VID"
+    ],
     "_pipeline_enabled": true,
     "_pipeline_kpi_enabled": false,
     "_pipeline_genre": "dark_fantasy_card_rpg",
     "_pipeline_game_context_file": "pipeline/game_context/tougenanki.md",
-    "drive_folder_url": "https://drive.google.com/drive/folders/1N3lnsfKTeiYLfT-OWwZ1aI-ou74u9pDJ"
+    "drive_folder_url": "https://drive.google.com/drive/folders/1N3lnsfKTeiYLfT-OWwZ1aI-ou74u9pDJ",
+    "_ui_hidden": true
   },
   {
     "id": "pepp-us",
@@ -42,25 +55,43 @@
     "json_url": "public/data/pepp-us.json",
     "description": "Stage 2 MVP — BNR+VID 선론칭 자동 태깅 결과 (pipeline/main.py 산출)",
     "_pipeline_creatives_root": "G:\\공유 드라이브\\[펩 히어로즈] R마케팅실\\01. UA\\01. UA 소재",
-    "_pipeline_phases": ["선론칭", "상시", "사전예약"],
-    "_pipeline_types": ["BNR", "VID"],
+    "_pipeline_phases": [
+      "선론칭",
+      "상시",
+      "사전예약"
+    ],
+    "_pipeline_types": [
+      "BNR",
+      "VID"
+    ],
     "_pipeline_enabled": true,
     "_pipeline_google_ads_customer_id": "9572310245",
     "_pipeline_google_ads_campaign_filter": [],
     "_pipeline_conversion_actions": {
-      "prereg": ["App pre-registration(com.com2us.rheroes.android.google.global.normal)"],
-      "install": ["rheroes - com.com2us.rheroes.android.google.global.normal (Android) First open"]
+      "prereg": [
+        "App pre-registration(com.com2us.rheroes.android.google.global.normal)"
+      ],
+      "install": [
+        "rheroes - com.com2us.rheroes.android.google.global.normal (Android) First open"
+      ]
     },
     "_pipeline_google_ads_window_days": 159,
     "_pipeline_kpi_start_date": "2025-11-01",
     "_pipeline_scan_mode": "by-filename",
     "_pipeline_kpi_enabled": true,
     "_pipeline_airbridge_enabled": true,
-    "_pipeline_airbridge_exclude_channels": ["google.adwords", "unattributed", "appstore", "sns", "airbridge_sdk_test"],
+    "_pipeline_airbridge_exclude_channels": [
+      "google.adwords",
+      "unattributed",
+      "appstore",
+      "sns",
+      "airbridge_sdk_test"
+    ],
     "_pipeline_airbridge_usd_to_krw": 1500,
     "_pipeline_genre": "character_collection_rpg",
     "_pipeline_game_context_file": "pipeline/game_context/pepp-us.md",
-    "drive_folder_url": "https://drive.google.com/drive/folders/1Na6Ar_LC6R9aArZIaUJ4_aJv8NCPUUD3"
+    "drive_folder_url": "https://drive.google.com/drive/folders/1Na6Ar_LC6R9aArZIaUJ4_aJv8NCPUUD3",
+    "_ui_hidden": true
   },
   {
     "id": "gd",
@@ -72,13 +103,20 @@
       "G:\\공유 드라이브\\[GD] 갓앤데몬 외부 공유 드라이브\\0. Marketing Resources\\1. Video\\UA assets"
     ],
     "_pipeline_scan_mode": "by-filename",
-    "_pipeline_types": ["BNR", "VID"],
+    "_pipeline_types": [
+      "BNR",
+      "VID"
+    ],
     "_pipeline_enabled": true,
     "_pipeline_google_ads_customer_id": "5329912290",
     "_pipeline_google_ads_campaign_filter": [],
     "_pipeline_conversion_actions": {
-      "prereg": ["App pre-registration(com.com2us.gd.android.google.global.normal)"],
-      "install": ["Gods & Demons - Com2uS (Android) first_open"]
+      "prereg": [
+        "App pre-registration(com.com2us.gd.android.google.global.normal)"
+      ],
+      "install": [
+        "Gods & Demons - Com2uS (Android) first_open"
+      ]
     },
     "_pipeline_kpi_start_date": "2025-01-01",
     "_pipeline_kpi_enabled": true,
@@ -87,13 +125,15 @@
     "_pipeline_airbridge_usd_to_krw": 1500,
     "_pipeline_genre": "idle_rpg",
     "_pipeline_game_context_file": "pipeline/game_context/gd.md",
-    "drive_folder_url": "https://drive.google.com/drive/folders/18TRUsNoIdn9f-ZFFqGcLVbRHxRslshB7"
+    "drive_folder_url": "https://drive.google.com/drive/folders/18TRUsNoIdn9f-ZFFqGcLVbRHxRslshB7",
+    "_ui_hidden": true
   },
   {
     "id": "sample",
     "name": "📦 샘플 데이터 (Stage 1 검증용)",
     "json_url": "public/data/sample.json",
     "description": "Stage 1 JSON 로더 검증용 더미 데이터. 실제 분석에는 사용하지 마세요.",
-    "_pipeline_enabled": false
+    "_pipeline_enabled": false,
+    "_ui_hidden": true
   }
 ]

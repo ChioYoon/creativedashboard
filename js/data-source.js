@@ -340,7 +340,11 @@
       const res = await fetch('js/titles.json', { cache: 'no-store' });
       if (!res.ok) return [];
       const list = await res.json();
-      return Array.isArray(list) ? list : [];
+      if (!Array.isArray(list)) return [];
+      // 외부 공유(인크로스) 대비 UI 숨김: _ui_hidden 타이틀은 목록에서 제외.
+      // 내부 인원은 ?title=<id> 딥링크로 해당 타이틀만 예외 노출. 파이프라인 설정(_pipeline_*)은 영향 없음.
+      const urlTitle = readTitleFromUrl();
+      return list.filter(t => !t._ui_hidden || t.id === urlTitle);
     } catch (e) {
       console.warn('[data-source] js/titles.json 로드 실패:', e.message);
       return [];
