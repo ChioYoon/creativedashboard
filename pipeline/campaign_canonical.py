@@ -9,6 +9,14 @@ from __future__ import annotations
 
 import re
 
+from .media_normalize import normalize_media
+
+# 이름파싱 media가 '무효'(위치 밀림 잔재·오디언스/OS/ua 토큰·빈값)임을 판별 → MMP 폴백 트리거
+_NON_MEDIA_TOKENS = {
+    "all", "ios", "aos", "ad", "android", "web", "전체",
+    "nu-pre", "rt", "boosting", "nu", "",
+}
+
 _FIELDS = ["agency", "executor", "title", "country", "media", "ua_type", "os", "product"]
 _KNOWN_UA_TYPES = ("NU-Pre", "RT", "Boosting", "NU")  # NU-Pre 우선(NU 보다 앞)
 _DATE_RE = re.compile(r"^\d{6}$")
@@ -95,21 +103,49 @@ def campaign_media(name: str) -> str:
     return parse_campaign_canonical(name).get("media") or ""
 
 
-def build_campaign_canonical(campaign_names) -> dict:
-    """고유 campaign_name → {ua_type, country, os, media, product} 맵.
+def resolve_campaign_media(name: str, channel_hint: str = "") -> tuple[str, bool]:
+    """이름파싱 우선 + MMP channel 폴백 → (표준 매체명, 충돌여부).
 
-    중복 제거·빈/None 제외. 추출 실패 필드는 '' (대시보드가 '미상' 버킷 처리). 빈 입력 → {}.
+    - 이름파싱 media가 유효하면 그 값을 표준화해 채택(1순위).
+    - 이름파싱이 무효(위치 밀림·OS/ua 토큰·빈값)면 MMP channel 표준화값으로 폴백.
+    - 이름·MMP 둘 다 유효하고 표준값이 다르면 conflict=True(이름 채택, override 안 함).
     """
+    raw = campaign_media(name)
+    name_ok = bool(raw and raw.strip().lower() not in _NON_MEDIA_TOKENS)
+    name_std = normalize_media(raw) if name_ok else ""
+    ch_std = normalize_media(channel_hint) if channel_hint else ""
+    if name_std:
+        return name_std, bool(ch_std and ch_std != name_std)
+    if ch_std:
+        return ch_std, False                 # 이름파싱 실패 → MMP 폴백
+    return normalize_media(raw), False        # 빈값 등 원시 통과
+
+
+def build_campaign_canonical(campaign_names, channel_map: dict | None = None) -> dict:
+    """고유 campaign_name → {ua_type, country, os, media, product[, media_conflict]} 맵.
+
+    channel_map: {campaign_name: 대표 MMP channel}. media는 이름파싱 우선 + channel 폴백,
+    둘 다 표준화(normalize_media)해 매체 축을 단일값으로 수렴. 충돌 시 media_conflict 부착.
+    중복 제거·빈/None 제외. 빈 입력 → {}.
+    """
+    channel_map = channel_map or {}
     out: dict = {}
     for cn in {c for c in (campaign_names or []) if c}:
         pos = parse_campaign_canonical(cn)
-        out[cn] = {
+        media, conflict = resolve_campaign_media(cn, channel_map.get(cn, ""))
+        entry = {
             "ua_type": campaign_ua_type(cn),            # token (견고)
             "country": campaign_country(cn),            # XX-XX 스캔 (라이브 일치)
             "os": campaign_os(cn),                      # 토큰 스캔 (라이브 일치)
-            "media": campaign_media(cn),                # ua_type 앞 세그 앵커(접두 누락 견고)
+            "media": media,                             # 이름앵커 우선 + MMP 폴백, 표준화
             "product": pos["product"] or "",
         }
+        if conflict:
+            entry["media_conflict"] = {
+                "name": normalize_media(campaign_media(cn)),
+                "mmp": normalize_media(channel_map.get(cn, "")),
+            }
+        out[cn] = entry
     return out
 
 
@@ -121,4 +157,10 @@ if __name__ == "__main__":
     assert campaign_media("Foo_Bar_Title_KR_Meta_RT_ios_x_260101") == "Meta"             # RT 앵커
     assert campaign_media("Ag_Ex_Ti_KR_MediaX_UnknownUa_ios_prod") == "MediaX"           # ua 없음 → 위치폴백(index 4)
     assert campaign_media("") == ""
-    print("campaign_media self-check OK")
+    # resolve_campaign_media: 이름파싱 우선 + MMP 폴백 + 충돌
+    assert resolve_campaign_media("Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_x_260701") == ("GA", False)          # 이름 유효
+    assert resolve_campaign_media("ZEUS_KR_Kakao_NU-Pre_ALL_x_260723", "kakao") == ("Kakao", False)       # 이름=MMP
+    assert resolve_campaign_media("Foo_Bar_Ti_KR_FB_RT_ios_x", "") == ("Meta", False)                     # 이름토큰 표준화 FB→Meta
+    assert resolve_campaign_media("Ti_KR_ALL_NU_x_260101", "facebook.business") == ("Meta", False)         # 이름무효 → MMP 폴백
+    assert resolve_campaign_media("Foo_Bar_Ti_KR_Tiktok_RT_x", "moloco")[1] is True                        # 충돌(이름 채택)
+    print("campaign_media / resolve self-check OK")

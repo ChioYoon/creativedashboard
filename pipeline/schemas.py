@@ -510,6 +510,10 @@ class CreativeRecord(BaseModel):
     mmp_fx_rate: Optional[float] = Field(None, description="적용 환율(USD→KRW). 1.0=변환 안 함")
     mmp_daily: list["CreativeMmpDaily"] = Field(default_factory=list, description="채널별·일별(sparkline)")
 
+    # 소재 대표 매체(표준화) — 이름파싱 우선 + MMP channel 폴백(pipeline/media_normalize).
+    # 소재가 여러 캠페인/매체에 걸치면 노출 최다 매체. 귀속·추천용.
+    media_canonical: Optional[str] = Field(None, description="표준 매체명(Meta/TikTok/Kakao/GA…). 노출 최다 대표.")
+
     model_config = ConfigDict(populate_by_name=True)  # alias와 원본 이름 둘 다 허용
 
 
