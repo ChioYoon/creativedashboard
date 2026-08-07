@@ -1,10 +1,11 @@
 # Com2uS R팀 소재 분석 시스템 (대시보드 + 파이프라인)
 
 ## 프로젝트 개요
-Com2uS R마케팅팀 담당 모바일 게임들의 광고 소재(BNR/VID) 분석을 위한 **범용 분석 시스템**입니다.
-- `pipeline.html` — **분석 파이프라인**: CSV 업로드 → 검증 → 자동 군집화 → 차수 비교 → 인사이트 확정 (5단계)
-- `index.html` — **성과 대시보드**: 군집 인사이트, 소재 비교표, 미리보기, 태그 영향도 시각화
-- **사용 대상 타이틀**: R팀 담당 전체 타이틀 (특정 타이틀 전용 아님)
+Com2uS R마케팅팀 담당 모바일 게임들의 광고 소재(BNR/VID) 성과 분석 시스템입니다. 두 축으로 구성됩니다.
+
+- **정적 대시보드**(브라우저 단독 실행, 백엔드 없음) — CSV 업로드/붙여넣기 → Rank 기반 점수 계산 → 피로도 분석 → Gemini AI 인사이트. `step1_integrated.html`이 메인.
+- **백엔드 nightly 파이프라인**(`pipeline/`, Python) — 매일 밤 Google Ads + MMP(AppsFlyer/Airbridge) 지표를 자동 수집·소재 태깅(Gemini)·점수 산출해 `public/data/{title}.json`으로 저장. 대시보드가 이 JSON을 자동 로드(`live_dashboard.html`).
+- **사용 대상 타이틀**: R팀 담당 전체 타이틀 (`js/titles.json` 등록). 라이브 노출은 제우스(외부 대행사 공유용 접근 고지 게이트 적용, `js/access-gate.js`).
 
 ---
 
@@ -26,50 +27,29 @@ R팀 담당자별로 **개별 키**를 발급해서 사용합니다. (공용 키
 ## 진입점 (Entry Points)
 | URL | 설명 | 상태 |
 |-----|------|------|
-| `index.html` | **홈페이지 (v2.0)**: 컴투스 브랜드 디자인, 워크플로우 안내, Step 1/2 진입 | ✅ 완성 |
-| `step1_integrated.html` | **Step 1 소재 분석**: 4개 지표 Rank 기반 점수 계산 + 피로도 분석 + 필터 | ✅ 완성 |
-| **`step2_column_selector.html`** | **Step 2-① 컬럼 설정**: CSV 업로드 → 태그 컬럼 선택 & 가중치 → 군집화 모드 설정 | ✅ 완성 |
-| **`step2_clustering.html`** | **Step 2-② 군집화 실행**: 하이브리드 군집화 v4.0 + 결과 시각화 + 인사이트 | ✅ 완성 (NEW!) |
-| `pipeline.html` | 기존 분석 파이프라인 (레거시, 4단계 통합) | 🔸 참고용 |
-| `fatigue_analysis.html` | 피로도 분석 단독 페이지 (레거시) | 🔸 참고용 |
-| `test_step1_scoring.html` | Step 1 스코어링 테스트 (레거시) | 🧪 테스트용 |
+| `index.html` | **홈페이지**: 컴투스 브랜드 디자인, 워크플로우 안내, 소재 분석/군집화 진입 | ✅ 완성 |
+| `step1_integrated.html` | **소재 분석**(메인): 4지표 Rank 점수 계산 + 피로도 분석 + 성과 보고서 + 5차원 캐노니컬 필터 | ✅ 완성 |
+| `live_dashboard.html` | **라이브 대시보드**: 백엔드 nightly 산출 `public/data/{title}.json` 자동 로드 | ✅ 완성 |
+| `pre_eval.html` | **소재 사전 평가**: 집행 전 소재 이미지 기반 사전 진단(Gemini Vision) | ✅ 완성 |
+| `step2_column_selector.html` | **군집화 ①**: 태그 컬럼 선택 & 가중치 → 군집화 모드 설정 | ✅ 완성 |
+| `step2_clustering.html` | **군집화 ②**: 하이브리드 군집화 + 결과 시각화 + 인사이트 | ✅ 완성 |
+
+> 전 페이지에 외부 공유용 접근 고지 게이트(`js/access-gate.js`) 적용. `pipeline.html`·`fatigue_analysis.html`·`test_step1_scoring.html`(구 레거시 HTML)은 제거됨 — 현재 파이프라인은 아래 백엔드(`pipeline/`)로 대체.
 
 ---
 
-## 파이프라인 시스템 (pipeline.html) – 4단계
+## 백엔드 nightly 파이프라인 (`pipeline/`, Python)
 
-### STEP 1: 데이터 업로드
-- 차수명·담당자·메모 입력
-- CSV 드래그앤드롭 / 파일 선택 / 샘플 데이터 테스트
-- 파일 파싱 후 BNR+VID만 분석 대상으로 자동 분리
-- 업로드 전 6개 항목 체크리스트
-- **자동 컬럼 정규화**: 실제 UA CSV 헤더를 파이프라인 표준 컬럼명으로 자동 매핑
-- **마케터 인사이트 자동 탐지**: `marketer_insight` 컬럼 자동 인식 및 키워드 추출
+매일 밤 Windows 작업 스케줄러(`CLOOP-Nightly`, 13:00)가 `scripts/nightly.ps1` → `pipeline/main.py`를 실행해 타이틀별 소재 데이터를 자동 산출·커밋한다.
 
-### STEP 2: 데이터 품질 검증
-- 필수 컬럼 누락 자동 감지
-- 중복 소재명, 음수값, 전환 0 건 이상치 탐지
-- 태그 품질 (평균 태그 수, 누락 비율) 측정
-- **태그 컬럼 자동 탐지**: CSV 헤더에서 태그 컬럼과 인사이트 컬럼 자동 분리
-- **인사이트 키워드 고도화**: marketer_insight 필드에서 의미 있는 키워드만 추출하여 [MI] 태그로 변환
-- 검증 결과 통과/주의/실패 등급 표시
+- **소재 스캔** — `js/titles.json`의 타이틀별 `_pipeline_creatives_root`(GDrive)에서 BNR/VID 소재 스캔.
+- **성과 수집** — 커넥터(`pipeline/sources/`): Google Ads(GAQL 조회), MMP(Airbridge/AppsFlyer, 非Google 매체). 전부 **READ 전용**. 소재↔캠페인↔매체 귀속은 `pipeline/campaign_canonical.py`(매체 축은 이름파싱+MMP channel 정규화, `pipeline/media_normalize.py`).
+- **소재 태깅** — `pipeline/tagger.py`가 Gemini Files API로 소재 파일을 구조화 태그(`pipeline/schemas.py`의 `CreativeTag`: hooking/USP/visual/strengths/test_ideas 등)로 분석. 장르·게임 컨텍스트는 `pipeline/game_context/*.md` 주입.
+- **점수·품질 산출** — `pipeline/scoring.py`(Google Ads 4지표 Rank 점수, 대시보드 로직과 동일), `pipeline/mmp_metrics.py`(MMP 품질 4지표). KPI 백분위(CTR/CVR/CPA)도 계산.
+- **산출·배포** — `public/data/{title}.json` 저장 → git 커밋·push → GitHub Pages가 라이브 대시보드로 서빙. 실행 로그 `logs/`, 결과 메일 알림(`pipeline/notify.py`).
+- **캐시** — `cache/{title}_kpi.json`·`{title}_tags.json`(Gemini 태깅 캐시).
 
-### STEP 3: 자동 군집화 분석
-- **Total Score 산출**: 전환수(25%) · CPA 역가중(25%) · IPM(25%) · ROAS(25%) – 슬라이더로 조정 가능
-  - **전환수 점수**: Rank 기반 (n - Rank + 1) / n × 100 (v1.5 변경)
-  - **CPA 점수**: Rank 기반 (낮을수록 높은 점수)
-  - **IPM 점수**: Rank 기반 (높을수록 높은 점수)
-  - **ROAS 점수**: Rank 기반 (높을수록 높은 점수, v1.5 신규)
-- **태그 동시출현 기반 클러스터링**: Union-Find 알고리즘, 코어 태그 지지율·동시출현 기준 설정 가능
-- **마케터 인사이트 태그 우대**: [MI] 태그는 군집화 시 1.5배 가중치 적용 및 노이즈 필터링 면제
-- **이전 차수 군집과 유사성 비교** → 기존 군집명 유지 또는 NEW 배지 부여
-- 군집별 TOP3 소재, 성과 비교 차트, 소재-군집 매핑 테이블
-
-### STEP 4: 인사이트 확정 & 저장
-- 최종 KPI 요약 (소재 수, 군집 수, 평균/최고 Score, 최우수 소재 수)
-- 승리 공식·중단 패턴 텍스트 입력 (이전 차수 값 자동 노출)
-- 전체 차수 히스토리 테이블
-- **저장 시 localStorage에 누적** → 다음 차수 군집화에 자동 반영
+측정 기준·항목 상세: [`docs/measurement-reference.md`](docs/measurement-reference.md). 매체 축 정규화 설계: [`docs/mmp-channel-media-design.md`](docs/mmp-channel-media-design.md).
 
 ---
 
@@ -120,7 +100,20 @@ R팀 담당자별로 **개별 키**를 발급해서 사용합니다. (공용 키
 
 ---
 
-## 📌 최신 업데이트 (2026-06-30) — Step 1/2 UX 일괄 개선 + 미매칭 매칭 편의화
+## 📌 최신 업데이트 (2026-08-07, 사용안내서 v5.10) — 매체 축 정규화 · 라이브 파이프라인 안정화
+
+> 상세 변경 이력은 `사용안내서_인쇄용.html`의 버전 이력(v5.5~v5.10)을 정본으로 참조. 아래는 요약.
+
+- **매체 축 정규화** (v5.10) — 이름파싱 토큰(FB/ML/TT)과 MMP channel(Airbridge `facebook.business`·AppsFlyer `facebook ads`)의 상이 표기를 단일 표준 매체명(Meta/TikTok/Kakao…)으로 수렴. 이름파싱 우선 + MMP 폴백, 충돌 시 검수 플래그, 소재 대표 매체 `media_canonical` 산출 (`pipeline/media_normalize.py`, `pipeline/campaign_canonical.py`).
+- **캠페인명 media 파싱 개선** — ua_type 앵커 기반으로 변경, `agency_executor` 접두 누락 시 오파싱 해소.
+- **MMP 기준 레이어 재설계** (v5.7) — 분석 기준을 MMP로 전환 시 전환=캠페인 유형별 합산(NU-Pre 등록 + NU D1 잔존), 총점=MMP 품질점수(4지표 rank), 성과 백분위도 MMP 기준.
+- **레이어 우선 분석** (v5.8) — 타이틀 → 분석 레이어(Google Ads/MMP 토글) → 분석 순서로 데이터 단위 확정.
+- **성과 보고서 개편 + 피로도 제외 추천** (v5.9) — 콘텐츠 이해 기반 인사이트·위닝 플레이북·저효율 진단·캠페인 제외 후보.
+- **외부 공유 게이트** — 전 페이지 접근 고지 + 제우스 외 타이틀 UI 숨김(`js/access-gate.js`, `js/titles.json` `_ui_hidden`).
+
+---
+
+## 📌 이전 업데이트 (2026-06-30) — Step 1/2 UX 일괄 개선 + 미매칭 매칭 편의화
 
 > 11개 개선 항목(A~E) + 라이브/제외 상태 + 미매칭 매칭을 SDD로 적용. 전부 **표시/UX 전용 — 점수·집계·파이프라인 불변**. 상세는 `docs/superpowers/specs/2026-06-30-*`·`2026-06-29-batch*`.
 
@@ -1060,26 +1053,31 @@ iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
 
 ## 파일 구조
 ```
-index.html              성과 분석 대시보드
-pipeline.html           분석 파이프라인 시스템
-fatigue_analysis.html   🆕 소재 피로도 분석 페이지 (기간별 순위 변동 & 피로도 판정)
-test_pipeline.html      파이프라인 엔진 단위 테스트 페이지
-test_step1_scoring.html Step 1 스코어링 & 미리보기 테스트 페이지
-test_auto.html          자동 테스트 페이지 (소재명/파일명 비교)
-css/
-  style.css             대시보드 스타일
-  pipeline.css          파이프라인 전용 스타일
+index.html                 홈 (진입점)
+step1_integrated.html      소재 분석 (메인 — pipeline-engine 등 인라인 포함, CSP 회피)
+live_dashboard.html        라이브 대시보드 (public/data JSON 자동 로드)
+pre_eval.html              소재 사전 평가 (Gemini Vision)
+step2_column_selector.html 군집화 ① 컬럼·가중치 설정
+step2_clustering.html      군집화 ② 실행·시각화
+사용안내서_인쇄용.html      사용 안내서 (인쇄용)
 js/
-  data.js               대시보드 소재 데이터, 태그 영향도, 군집 인사이트
-  charts.js             Chart.js 기반 차트 렌더링
-  table.js              성과 비교표 렌더링/필터/정렬
-  preview.js            소재 미리보기 카드 & 모달
-  upload.js             CSV 업로드 · 수동 추가 · 군집 카드 렌더링
-  main.js               탭 네비게이션 · 앱 초기화
-  pipeline-data.js      파이프라인 데이터 스토어 (localStorage + 샘플 데이터)
-  pipeline-engine.js    CSV 파싱 · 컬럼 정규화 · 검증 · Total Score · 군집화 엔진 · 인사이트 키워드 추출 · 피로도 분석
-  pipeline-ui.js        파이프라인 스테이지 제어 · UI 렌더링 · 이벤트
-README.md
+  gemini-api.js            Gemini 프롬프트·파서·렌더러
+  data-source.js           titles.json / public/data JSON 로드
+  canonical-filter.js      5차원 캐노니컬 필터 (캠페인 목적/국가/OS/매체/상품)
+  access-gate.js           외부 공유용 접근 고지 게이트
+  layer-metrics.js         Google Ads / MMP 레이어 지표
+  live-dashboard.js        라이브 대시보드 로직
+  pipeline-engine.js       CSV 파싱·정규화·검증 (원본, step1에 인라인 복사됨)
+  titles.json              타이틀 등록 + 파이프라인 설정
+  titles_overrides.json    소재명 별칭 매핑
+css/gemini-ui.css          AI 인사이트 카드 스타일
+pipeline/                  백엔드 nightly 파이프라인 (Python)
+  main.py · sources/(google_ads·airbridge·appsflyer) · scoring.py
+  mmp_metrics.py · tagger.py · campaign_canonical.py · media_normalize.py
+  schemas.py · notify.py · game_context/*.md
+public/data/{title}.json   파이프라인 산출물 (대시보드가 로드)
+scripts/nightly.ps1        nightly 실행 스크립트 (작업 스케줄러 CLOOP-Nightly)
+docs/                      설계·레퍼런스 문서 (measurement-reference 등)
 ```
 
 ---
@@ -1093,7 +1091,7 @@ README.md
 | type | 'BNR'/'VID' | 소재 유형 |
 | score | number | Total Score (0~100) |
 | rank | number | 소재 순위 |
-| grade | string | 성과 등급 (최우수/우수/보통/미흡) |
+| grade | string | 성과 등급 (최우수/우수/양호/보통/개선필요) |
 | cluster | string | 소속 군집명 |
 | fileCount | number | 파일 수 |
 | tags | string[] | 태그 목록 (일반 태그 + [MI] 인사이트 키워드) |
