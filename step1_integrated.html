@@ -1530,6 +1530,16 @@
             <svg class="sb-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
           </div>
           <div class="sb-section-body">
+            <!-- [UX-B] 가중치 프리셋 — 반복 슬라이더 조정 없이 원클릭 적용 (A안 실시간 반영과 연동) -->
+            <span class="sb-label">프리셋</span>
+            <div class="sb-chip-group" id="weightPresetChips" style="margin-bottom:10px;">
+              <span class="sb-mode-chip active" onclick="applyWeightPreset(25,25,25,25,this)" title="전환·CPA·IPM·ROAS 균등 (일반 분석)">균형</span>
+              <span class="sb-mode-chip" onclick="applyWeightPreset(40,30,15,15,this)" title="전환 40·CPA 30·IPM 15·ROAS 15 (UA 캠페인 중점)">전환↑</span>
+              <span class="sb-mode-chip" onclick="applyWeightPreset(20,40,30,10,this)" title="전환 20·CPA 40·IPM 30·ROAS 10 (예산 제약 시)">효율</span>
+              <span class="sb-mode-chip" onclick="applyWeightPreset(15,15,10,60,this)" title="전환 15·CPA 15·IPM 10·ROAS 60 (LTV 높은 게임)">수익</span>
+              <span class="sb-mode-chip" id="weightPresetSaved" style="display:none;" title="저장한 내 프리셋 적용"></span>
+              <span class="sb-mode-chip" onclick="saveWeightPreset()" title="현재 가중치를 내 프리셋으로 저장" style="border-style:dashed;">＋저장</span>
+            </div>
             <div class="sb-slider-row">
               <span class="sb-slider-label">전환수</span>
               <input type="range" class="sb-slider" id="conversionWeight" name="conversionWeight" min="0" max="100" value="25" oninput="updateWeightDisplay(this,'conversionWeightValue')">
@@ -1975,6 +1985,37 @@ function wireReactiveFilters() {
     sec.addEventListener('change', scheduleRecompute);
     sec.addEventListener('input', scheduleRecompute);
   });
+  renderSavedPresetChip();
+}
+
+/* ── [UX-B] 가중치 프리셋 — 4종 내장 + 내 프리셋(localStorage) ── */
+function applyWeightPreset(conv, cpa, ipm, roas, chipEl) {
+  [['conversionWeight', conv], ['cpaWeight', cpa], ['ipmWeight', ipm], ['roasWeight', roas]].forEach(([id, v]) => {
+    const s = document.getElementById(id);
+    if (s) { s.value = v; updateWeightDisplay(s, id + 'Value'); }   // 히든 input·표시 동기화
+  });
+  if (chipEl && chipEl.parentElement) {
+    chipEl.parentElement.querySelectorAll('.sb-mode-chip').forEach(c => c.classList.remove('active'));
+    chipEl.classList.add('active');
+  }
+  if (typeof scheduleRecompute === 'function') scheduleRecompute();  // 실시간 반영
+}
+function saveWeightPreset() {
+  const g = id => parseInt((document.getElementById(id) || {}).value || '0', 10);
+  const p = { conv: g('conversionWeight'), cpa: g('cpaWeight'), ipm: g('ipmWeight'), roas: g('roasWeight') };
+  try { localStorage.setItem('cloop_weight_preset', JSON.stringify(p)); } catch (e) {}
+  renderSavedPresetChip();
+}
+function renderSavedPresetChip() {
+  const chip = document.getElementById('weightPresetSaved');
+  if (!chip) return;
+  let p = null;
+  try { p = JSON.parse(localStorage.getItem('cloop_weight_preset') || 'null'); } catch (e) {}
+  if (!p) { chip.style.display = 'none'; return; }
+  chip.style.display = '';
+  chip.textContent = '내 설정';
+  chip.title = `전환 ${p.conv}·CPA ${p.cpa}·IPM ${p.ipm}·ROAS ${p.roas} (저장한 프리셋)`;
+  chip.onclick = () => applyWeightPreset(p.conv, p.cpa, p.ipm, p.roas, chip);
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wireReactiveFilters);
 else wireReactiveFilters();
