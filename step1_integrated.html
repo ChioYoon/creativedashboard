@@ -1419,7 +1419,7 @@
                 <span class="sb-mode-chip active" id="sbLayerAds" onclick="setSidebarLayer('ads')"
                       title="데이터 단위 = Google Ads 매체 (캠페인·지표·점수·저노출 판정 전부 Google Ads 기준)">Google Ads</span>
                 <span class="sb-mode-chip" id="sbLayerMmp" onclick="setSidebarLayer('mmp')"
-                      title="데이터 단위 = MMP(비 Google) 매체 (캠페인·지표·품질점수 기준)">MMP</span>
+                      title="데이터 단위 = MMP(비 Google) 매체 (캠페인·지표·MMP 품질점수 기준)">MMP</span>
               </div>
             </div>
             <!-- 파일 업로드 -->
@@ -2336,7 +2336,7 @@ function buildMmpSectionHtml(creative) {
   const channels = (Array.isArray(m.mmp_channels) ? m.mmp_channels : [])
     .map((c) => `<span class="mmp-channel-badge">${escapeHtml(c)}</span>`).join('');
   const scoreBadge = (qs && qs.total != null)
-    ? `<span class="mmp-score-badge">품질점수 ${qs.total} · ${escapeHtml(qs.grade)} · #${qs.rank}</span>` : '';
+    ? `<span class="mmp-score-badge">MMP 품질점수 ${qs.total} · ${escapeHtml(qs.grade)} · #${qs.rank}</span>` : '';
   const cell = (label, val) =>
     `<div class="kpi-metric-cell"><div class="kpi-metric-label">${label}</div><div class="kpi-metric-value">${val}</div></div>`;
   const fxNote = (m.mmp_currency === 'KRW' && m.mmp_fx_rate)
