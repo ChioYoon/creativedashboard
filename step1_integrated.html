@@ -1577,10 +1577,14 @@
 
       </div>
       <div class="ds-sidebar-footer">
-        <button class="ds-pill ds-pill--primary" style="width:100%;" onclick="calculateScores()" title="분석 실행">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          <span class="ds-sidebar-footer-label">분석 실행</span>
-        </button>
+        <!-- [UX-A] 실행 버튼 제거 → 필터·가중치 변경 시 자동 반영. 클릭 시 즉시 새로고침(수동 폴백). -->
+        <div id="reactiveStatus" onclick="calculateScores()" role="status"
+             title="필터·가중치를 바꾸면 결과가 자동으로 갱신됩니다. (클릭 시 즉시 새로고침)"
+             style="width:100%;display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;
+                    border-radius:8px;background:var(--surface-card,#F4F2EF);border:1px solid var(--border-soft,#E5E2DD);
+                    color:var(--text-secondary,#4C4C4C);font-size:12.5px;font-weight:700;cursor:pointer;user-select:none;transition:opacity .15s;">
+          ⚡ 실시간 반영
+        </div>
       </div>
     </aside>
 
@@ -1936,6 +1940,7 @@ function setSbRoasMode(mode) {
     const radio = document.getElementById(`_roasMode${m.charAt(0).toUpperCase()+m.slice(1)}`);
     if (radio) radio.checked = m === mode;
   });
+  if (typeof scheduleRecompute === 'function') scheduleRecompute();  // [UX-A] 칩 클릭 → 자동 반영
 }
 
 /* ── 가중치 슬라이더 표시 업데이트 ── */
@@ -1946,6 +1951,33 @@ function updateWeightDisplay(slider, valId) {
   const inputEl = document.getElementById(slider.id + 'Input');
   if (inputEl) inputEl.value = slider.value;
 }
+
+/* ── [UX-A] 실시간 반영(Reactive) — 필터·가중치 변경 시 자동 재계산 ──
+   "분석 실행" 버튼 클릭 반복을 없앰. 데이터 없으면 조용히 무시. 250ms 디바운스로
+   슬라이더 연속 입력·다중 변경을 1회 계산으로 합침. AI 인사이트 등 무거운 동작은 제외. */
+let _recomputeTimer = null;
+function scheduleRecompute() {
+  if (typeof rawData === 'undefined' || rawData.length === 0) return;  // 데이터 로드 전엔 무시
+  setReactiveStatus('계산 중…', true);
+  clearTimeout(_recomputeTimer);
+  _recomputeTimer = setTimeout(() => { calculateScores(); setReactiveStatus('⚡ 실시간 반영', false); }, 250);
+}
+function setReactiveStatus(text, busy) {
+  const el = document.getElementById('reactiveStatus');
+  if (!el) return;
+  el.textContent = text;
+  el.style.opacity = busy ? '0.65' : '1';
+}
+function wireReactiveFilters() {
+  ['sbFilter','sbWeight'].forEach(id => {
+    const sec = document.getElementById(id);
+    if (!sec) return;                        // 위임: 섹션 내 체크박스·슬라이더·날짜·셀렉트 변경 포착
+    sec.addEventListener('change', scheduleRecompute);
+    sec.addEventListener('input', scheduleRecompute);
+  });
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wireReactiveFilters);
+else wireReactiveFilters();
 
 /* ── 메인 탭 전환 ── */
 function switchMainTab(tab) {
@@ -3096,6 +3128,7 @@ function setDatePreset(preset) {
   const endEl = document.getElementById('endDate');
   if (startEl) startEl.value = formatDate(startD);
   if (endEl) endEl.value = formatDate(endD);
+  if (typeof scheduleRecompute === 'function') scheduleRecompute();  // [UX-A] 프리셋 클릭은 프로그램적 값 설정 → change 미발생, 명시 호출
 }
 
 function filterByDateRange(rows, dateColumn, startDate, endDate) {
@@ -3786,17 +3819,18 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           </div>
           ${_kpiNoticeHtml}
           <div style="padding: 10px 14px; background: var(--surface-card,#F4F2EF); border-left: 3px solid var(--text-tertiary,#767676); border-radius: 6px; font-size: 12.5px; color: var(--text-secondary,#4C4C4C); margin-bottom: 12px;">
-            백엔드 산출 JSON 로드 완료
+            백엔드 산출 JSON 로드 완료 — 결과가 아래에 자동 표시됩니다
           </div>
           <button onclick="calculateScores()"
-                  style="width: 100%; padding: 12px; background: var(--brand-primary, #DC2828);
-                         color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;
-                         font-size: 15px;">
-            분석 실행 →
+                  style="width: 100%; padding: 10px; background: transparent;
+                         color: var(--text-secondary,#4C4C4C); border: 1px solid var(--border-soft,#E5E2DD); border-radius: 8px; cursor: pointer; font-weight: 600;
+                         font-size: 13px;">
+            결과 새로고침
           </button>
         `;
 
         hideLoadingIndicator();
+        if (typeof scheduleRecompute === 'function') scheduleRecompute();  // [UX-A] 로드 즉시 자동 분석
       } catch (e) {
         hideLoadingIndicator();
         if (e && e.httpStatus === 404) {
@@ -4071,14 +4105,15 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           </div>
           
           <button onclick="calculateScores()"
-                  style="width: 100%; padding: 12px; background: var(--brand-primary, #DC2828);
-                         color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;
-                         font-size: 15px;">
-            분석 실행 →
+                  style="width: 100%; padding: 10px; background: transparent;
+                         color: var(--text-secondary,#4C4C4C); border: 1px solid var(--border-soft,#E5E2DD); border-radius: 8px; cursor: pointer; font-weight: 600;
+                         font-size: 13px;">
+            결과 새로고침
           </button>
         `;
 
         console.log('✅ CSV 처리 완료!');
+        if (typeof scheduleRecompute === 'function') scheduleRecompute();  // [UX-A] 업로드 즉시 자동 분석
         
       } catch (error) {
         console.error('❌ CSV 처리 오류:', error);
