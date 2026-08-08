@@ -47,6 +47,28 @@
     .live-modal.active { display:flex; }
     .live-modal-box { background:#fff; border-radius:14px; max-width:680px; width:100%; padding:24px; position:relative; }
     .live-modal-close { position:absolute; top:14px; right:16px; cursor:pointer; font-size:22px; color:#9ca3af; background:none; border:none; }
+    /* [UX-C] 요약-우선 홈 */
+    .live-summary { margin:16px 0; display:grid; gap:12px; }
+    .live-kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+    @media (max-width:640px){ .live-kpis { grid-template-columns:repeat(2,1fr); } }
+    .live-kpi { background:#fff; border:1px solid var(--border-default,#e5e7eb); border-radius:10px; padding:12px 14px; }
+    .live-kpi .k { font-size:11px; color:var(--text-secondary,#6b7280); font-weight:600; }
+    .live-kpi .v { font-size:24px; font-weight:800; letter-spacing:-.02em; margin-top:2px; font-variant-numeric:tabular-nums; }
+    .live-reco-cols { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    @media (max-width:640px){ .live-reco-cols { grid-template-columns:1fr; } }
+    .live-reco { background:#fff; border:1px solid var(--border-default,#e5e7eb); border-radius:10px; padding:14px 16px; }
+    .live-reco h4 { margin:0 0 8px; font-size:13px; font-weight:800; display:flex; align-items:center; gap:6px; }
+    .live-reco-item { display:flex; align-items:center; gap:8px; padding:7px 0; border-top:1px solid #f3f4f6; cursor:pointer; }
+    .live-reco-item:first-of-type { border-top:0; }
+    .live-reco-item .rn { flex:1; font-size:12.5px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .live-reco-item:hover .rn { text-decoration:underline; }
+    .live-reco-item .rs { font-size:14px; font-weight:800; font-variant-numeric:tabular-nums; }
+    .live-gr { font-size:10.5px; font-weight:700; padding:1px 7px; border-radius:9999px; flex:0 0 auto; }
+    .live-gr.g { background:#ecfdf5; color:#10b981; } .live-gr.w { background:#fffbeb; color:#f59e0b; }
+    .live-gr.c { background:#fef2f2; color:#dc2626; } .live-gr.n { background:#f3f4f6; color:#6b7280; }
+    .live-insight { font-size:13px; color:var(--text-secondary,#4b5563); background:#fff; border:1px solid var(--border-default,#e5e7eb); border-radius:10px; padding:12px 16px; line-height:1.6; }
+    .live-insight b { color:var(--text-primary,#1f2937); }
+    .live-detail-label { font-size:12px; font-weight:700; color:var(--text-secondary,#6b7280); margin:10px 2px 2px; letter-spacing:.03em; }
   </style>
   <script src="js/access-gate.js?v=8bb8e442"></script>
 </head>
@@ -85,6 +107,11 @@
 
     <div id="liveDataBasis" class="cl-data-basis cl-data-basis-blue" style="margin:10px 0 0;"></div>
 
+    <!-- [UX-C] 요약-우선: 열자마자 확장/점검 추천 + 스코어. 상세(추이·목록)는 아래. -->
+    <div id="liveSummary"></div>
+
+    <div class="live-detail-label">상세 — 추이 · 소재 목록</div>
+
     <div class="live-chart-card">
       <div class="live-chart-toolbar" id="liveChartToolbar">
         <strong style="font-size:13px;">주요 소재 추이 (획득 상위)</strong>
@@ -107,6 +134,6 @@
 
   <script src="js/data-source.js?v=50c99d6c"></script>
   <script src="js/layer-metrics.js?v=5107e0da"></script>
-  <script src="js/live-dashboard.js?v=a5259906"></script>
+  <script src="js/live-dashboard.js?v=f9c234ff"></script>
 </body>
 </html>

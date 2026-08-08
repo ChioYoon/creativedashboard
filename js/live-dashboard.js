@@ -477,10 +477,55 @@
       + `<span title="Google Ads와 MMP를 같은 기간 동시 집행하면 동일 유저가 양쪽에 잡혀 중복 집계될 수 있습니다. 현재 타이틀은 집행 시기가 겹치지 않아 무관합니다." style="cursor:help;border-bottom:1px dotted #1e40af;">ⓘ 합산 주의</span>`;
   };
 
+  // [UX-C] 요약-우선 홈 — 확장/점검 추천 + 스코어 KPI를 상단에 먼저 렌더
+  LIVE.renderSummary = function (agg) {
+    const host = el('liveSummary'); if (!host) return;
+    const crs = LIVE.state.creatives || [];
+    if (!crs.length) { host.innerHTML = ''; return; }
+    const nameOf = c => c.소재명 || c.creative_id || '(이름없음)';
+    const gradeCls = g => (g === '최우수' || g === '우수') ? 'g' : (g === '개선필요') ? 'c' : (g === '보통') ? 'w' : 'n';
+    const scored = crs.filter(c => c.scores && typeof c.scores.total === 'number');
+    let kpisHtml, recosHtml, insightHtml;
+
+    if (scored.length) {
+      const byScore = [...scored].sort((a, b) => b.scores.total - a.scores.total);
+      const avg = Math.round(scored.reduce((s, c) => s + c.scores.total, 0) / scored.length);
+      const excellent = scored.filter(c => c.scores.grade === '최우수').length;
+      const poor = scored.filter(c => c.scores.grade === '개선필요').length;
+      const top = byScore.slice(0, 3);
+      const bottom = [...byScore].reverse().filter(c => c.scores.grade === '개선필요' || c.scores.grade === '보통').slice(0, 3);
+      const itemRow = c => {
+        const idx = crs.indexOf(c);
+        return `<div class="live-reco-item" data-i="${idx}"><span class="live-gr ${gradeCls(c.scores.grade)}">${escapeHtml(c.scores.grade || '')}</span><span class="rn">${escapeHtml(nameOf(c))}</span><span class="rs">${Math.round(c.scores.total)}</span></div>`;
+      };
+      kpisHtml = `
+        <div class="live-kpi"><div class="k">소재</div><div class="v">${crs.length}</div></div>
+        <div class="live-kpi"><div class="k">평균 종합점수</div><div class="v">${avg}</div></div>
+        <div class="live-kpi"><div class="k">최우수</div><div class="v" style="color:#10b981;">${excellent}</div></div>
+        <div class="live-kpi"><div class="k">개선필요</div><div class="v" style="color:#dc2626;">${poor}</div></div>`;
+      recosHtml = `<div class="live-reco-cols">
+        <div class="live-reco"><h4>🚀 확장 추천 <span style="color:#9ca3af;font-weight:600;font-size:11px;">종합점수 상위</span></h4>${top.map(itemRow).join('')}</div>
+        <div class="live-reco"><h4>⚠️ 점검 추천 <span style="color:#9ca3af;font-weight:600;font-size:11px;">하위·개선필요</span></h4>${bottom.length ? bottom.map(itemRow).join('') : '<div style="font-size:12px;color:#9ca3af;padding:8px 0;">개선필요 소재 없음 — 양호합니다 👍</div>'}</div>
+      </div>`;
+      insightHtml = `<div class="live-insight">평균 종합점수 <b>${avg}점</b> · 최우수 <b>${excellent}개</b>, 개선필요 <b>${poor}개</b>. 상위 <b>${escapeHtml(nameOf(byScore[0]))}</b>(${Math.round(byScore[0].scores.total)}점) 우선 확장 검토.</div>`;
+    } else {
+      kpisHtml = `
+        <div class="live-kpi"><div class="k">소재</div><div class="v">${crs.length}</div></div>
+        <div class="live-kpi"><div class="k">운영 데이터</div><div class="v" style="font-size:15px;">미연동</div></div>`;
+      recosHtml = '';
+      insightHtml = `<div class="live-insight">운영(KPI) 데이터가 아직 없어 점수 요약을 제공하지 않습니다. 아래 소재 목록에서 시각 분석을 확인하세요.</div>`;
+    }
+    host.innerHTML = `<div class="live-summary"><div class="live-kpis">${kpisHtml}</div>${recosHtml}${insightHtml}</div>`;
+    host.querySelectorAll('.live-reco-item').forEach(it => it.addEventListener('click', () => {
+      const c = crs[+it.dataset.i]; if (c) LIVE.openModal(c);
+    }));
+  };
+
   LIVE.render = function () {
     const agg = LIVE.aggregate(LIVE.applyFilters());
     LIVE._agg = agg;
     LIVE.renderDataBasis(agg);
+    LIVE.renderSummary(agg);
     if (!LIVE.state.hasKpi) {
       el('liveChartArea').innerHTML = '<div class="live-empty">이 타이틀은 운영(KPI) 데이터가 없어 추이를 표시할 수 없습니다. 아래 소재 목록과 분석은 확인할 수 있습니다.</div>';
     } else {
