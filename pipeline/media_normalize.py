@@ -14,8 +14,8 @@ MEDIA_ALIASES: dict[str, str] = {
     # Meta
     "meta": "Meta", "fb": "Meta", "facebook": "Meta",
     "facebook.business": "Meta", "facebook ads": "Meta", "facebook_ads": "Meta",
-    # TikTok
-    "tiktok": "TikTok", "tt": "TikTok", "tiktokglobal_int": "TikTok",
+    # TikTok  (TT-TT = TikTok 본매체 표기)
+    "tiktok": "TikTok", "tt": "TikTok", "tiktokglobal_int": "TikTok", "tt-tt": "TikTok",
     # Moloco
     "moloco": "Moloco", "ml": "Moloco", "moloco_int": "Moloco",
     # Appier
@@ -28,16 +28,17 @@ MEDIA_ALIASES: dict[str, str] = {
     "naver": "Naver", "navergfa": "Naver", "naver_int": "Naver",
     # Microsoft
     "msn": "MSN", "microsoft.ads": "MSN", "microsoft ads": "MSN",
-    # Pangle
-    "pangle": "Pangle",
+    # Pangle  (TT-PG = Pangle. TikTok 광고 플랫폼 경유라 MMP는 tiktok으로 보고 →
+    #          이름파싱 Pangle이 실구매 기준으로 우선, MMP tiktok과 media_conflict는 정상/예상)
+    "pangle": "Pangle", "tt-pg": "Pangle",
     # Google Ads
     "ga": "GA", "google": "GA", "googleads": "GA",
+    # DA — UA팀 외 브랜딩 조직 집행분(디스플레이)
+    "da": "DA",
 }
 
-# 확정 대기(마케터 확인) — 매핑 없이 원시값 통과. 확정되면 위 MEDIA_ALIASES로 이동.
-#   da        : Airbridge zeus 38건, 정체 불명(디스플레이 총칭? 특정 매체?)
-#   tt-pg,tt-tt: TikTok 계열 세부(Pangle 등?) 여부 불명 — 잘못 병합 방지 위해 보류
-PENDING = {"da", "tt-pg", "tt-tt"}
+# 마케터 확인 완료(2026-08-08): da=DA / tt-pg=Pangle / tt-tt=TikTok → 위 맵에 반영, 보류 없음.
+PENDING: set = set()
 
 
 def normalize_media(value: str) -> str:
@@ -70,8 +71,10 @@ if __name__ == "__main__":
     assert normalize_media("tiktokglobal_int") == "TikTok"
     assert normalize_media("moloco_int") == "Moloco" and normalize_media("ML") == "Moloco"
     assert normalize_media("Kakao") == "Kakao"
-    assert normalize_media("da") == "da"           # 보류 → 원시값
+    assert normalize_media("da") == "DA" and normalize_media("DA") == "DA"   # 브랜딩 조직 디스플레이
+    assert normalize_media("TT-PG") == "Pangle"    # TikTok 플랫폼 경유 Pangle
+    assert normalize_media("TT-TT") == "TikTok"
     assert normalize_media("우주매체") == "우주매체"  # 미매핑 → 원시값(통과)
     assert normalize_media("") == ""
-    assert unmapped_media(["FB", "da", "우주매체"]) == {"da", "우주매체"}
+    assert unmapped_media(["FB", "da", "우주매체"]) == {"우주매체"}   # da 매핑됨
     print("media_normalize self-check OK")
