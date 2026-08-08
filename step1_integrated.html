@@ -2388,7 +2388,7 @@ function adsScoreCellHtml(c) {
   const hasAds = c && c._ads && c._ads.imp > 0;
   if (!hasAds || c.TotalScore == null) return '<span style="color:#d1d5db;font-size:11px;">—</span>';
   const style = MMP_GRADE_STYLE[c.등급] || 'background:#f3f4f6;color:#374151;';
-  return `<span class="mmp-score-cell" style="${style}" title="Google Ads 총점·등급">${c.TotalScore.toFixed(1)} ${escapeHtml(c.등급)}</span>`;
+  return `<span class="mmp-score-cell" style="${style}" title="Google Ads 종합점수·등급">${c.TotalScore.toFixed(1)} ${escapeHtml(c.등급)}</span>`;
 }
 
 // Stage 8: 분석 레이어 전환 — Google Ads 기준 / MMP 기준
@@ -2409,9 +2409,9 @@ function setLayerHeaders(layer) {
   set('thM4', L.m4, L.tip4);
   const mmp = layer === 'mmp';
   // 총점=레이어 기준(ads=Google Ads / mmp=MMP 품질), col-mmp 컬럼=반대 레이어 점수, 매출=MMP면 D7.
-  set('thScore', mmp ? '품질점수' : '총점', mmp ? 'MMP 품질 총점 · 전환(NU-Pre 등록+NU D1잔존)·CPA·IPM·D7 ROAS rank' : L.tipScore);
+  set('thScore', mmp ? 'MMP 품질점수' : '종합점수', mmp ? 'MMP 품질점수 · 전환(NU-Pre 등록+NU D1잔존)·CPA·IPM·D7 ROAS rank' : L.tipScore);
   set('thRev', mmp ? 'D7 매출' : '매출', mmp ? 'D7 LTV 매출 (D0~D7 누적)' : '매출 · Google Ads=Revenue');
-  set('thMmpCol', mmp ? 'Google Ads 점수' : 'MMP 점수', mmp ? 'Google Ads 총점·등급' : '소재 품질(MMP) · D1 IPM·D1 CPI·D7 ROAS·D1 잔존');
+  set('thMmpCol', mmp ? 'Google Ads 종합점수' : 'MMP 품질점수', mmp ? 'Google Ads 종합점수·등급' : '소재 품질(MMP) · D1 IPM·D1 CPI·D7 ROAS·D1 잔존');
   set('thPctile', '성과', mmp ? '풀 대비 백분위 · CTR/CVR/CPA · MMP 기준' : '풀 대비 백분위 · CTR/CVR/CPA · Google Ads KPI 보유 소재');
 }
 
