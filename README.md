@@ -85,12 +85,10 @@ R팀 담당자별로 **개별 키**를 발급해서 사용합니다. (공용 키
 
 ### 📌 문제 해결
 **Q: CSV 파일이 업로드되지 않아요!**
-- A1: **✅ v1.2에서 수정됨!** "Cannot read properties of undefined (reading 'length')" 오류 해결
-- A2: 브라우저 콘솔(F12)을 열어 오류 메시지 확인
-- A3: `js/pipeline-engine.js`와 `js/analysis-engine-v2.js` 파일이 같은 폴더에 있는지 확인
-- A4: CSV 파일이 UTF-8 인코딩인지 확인
-- A5: 파일 크기가 너무 크지 않은지 확인 (권장: 5MB 이하)
-- A6: `test_step1_csv_upload.html`을 열어 자동 테스트 실행 (모든 단계가 ✅이어야 함)
+- A1: 브라우저 콘솔(F12)을 열어 오류 메시지 확인 (정상 로드 시 "✅ Step 1 통합 페이지 로드 완료" 로그)
+- A2: CSV 파일이 UTF-8 인코딩인지 확인
+- A3: 파일 크기가 너무 크지 않은지 확인 (권장: 5MB 이하)
+- A4: `step1_integrated.html`은 파싱·분석 엔진(pipeline-engine 등)을 HTML 내부에 인라인 포함한 자립형 파일이라 별도 js 의존이 없습니다. 파일이 손상됐다면 저장소에서 다시 받으세요.
 
 **Q: 날짜 범위가 자동 설정되지 않아요!**
 - A: CSV에 "일", "날짜", "일자", "date", "day" 등의 날짜 컬럼이 있는지 확인
