@@ -979,24 +979,48 @@ function _sessKey() {
   return tid ? `r_team_cluster_session_${tid}` : 'r_team_cluster_session';
 }
 
-function loadSession() {
+// ?title 의 파이프라인 JSON을 직접 로드해 csvData 형태로 반환 (없으면 null).
+// column_selector가 용량 초과로 csvData를 sessionStorage에 못 담아도(6MB+ > ~5MB 한도)
+// clustering이 타이틀 데이터를 스스로 재수급 → 빈 '설정 데이터가 없습니다' 방지.
+async function hydrateCsvFromTitle(tid) {
+  try {
+    if (!window.DataSource || !tid) return null;
+    const manifest = await window.DataSource.loadTitleManifest();
+    const entry = (manifest || []).find(t => t.id === tid);
+    if (!entry || !entry.json_url) return null;
+    const { normalized } = await window.DataSource.loadCreativeData('json-url', { url: entry.json_url, titleId: tid });
+    if (!normalized || !normalized.rows || !normalized.rows.length) return null;
+    return { headers: normalized.columns, rows: normalized.rows };
+  } catch (e) { return null; }
+}
+
+async function loadSession() {
   try {
     const raw = sessionStorage.getItem(_sessKey());
-    if (!raw) throw new Error('세션 없음');
+    const cfg = raw ? JSON.parse(raw) : null;
+    let csv = cfg && cfg.csvData;
 
-    sessionConfig = JSON.parse(raw);
-    csvData = sessionConfig.csvData;
+    // csvData 부재(용량 초과 lightConfig 저장 / 세션 없음) + ?title 있으면 타이틀 JSON 직접 수급
+    if (!csv || !csv.rows || !csv.rows.length) {
+      csv = await hydrateCsvFromTitle(_activeTitleId());
+    }
+    if (!csv || !csv.rows || !csv.rows.length) throw new Error('CSV 데이터 없음');
 
-    if (!csvData || !csvData.rows || !csvData.rows.length) {
-      throw new Error('CSV 데이터 없음');
+    // 설정(컬럼·가중치)이 없으면(세션 자체 부재) 컬럼 설정에서 기본 설정으로 재구성 후 복귀.
+    // 1회성 플래그로 무한 리다이렉트 방지.
+    if (!cfg || !Array.isArray(cfg.columnConfig) || !cfg.columnConfig.length) {
+      const tid = _activeTitleId();
+      if (tid && !sessionStorage.getItem('_clusterRecoverTried')) {
+        sessionStorage.setItem('_clusterRecoverTried', '1');
+        window.location.replace(`step2_column_selector.html?title=${encodeURIComponent(tid)}&run=1`);
+        return;
+      }
+      throw new Error('설정 없음');
     }
 
-    // TXT 제외 후 실제 분석 대상 수 계산
-    const bnrVidCount = csvData.rows.filter(row => {
-      const t = (row['유형'] || row['앱 확장 소재 유형'] || '').toUpperCase().trim();
-      return t === 'BNR' || t === 'VID';
-    }).length;
-    const txtCount = csvData.rows.length - bnrVidCount;
+    sessionConfig = cfg;
+    sessionConfig.csvData = csv;   // 하이드레이션된 데이터 주입
+    csvData = csv;
 
     document.getElementById('noDataMsg').style.display = 'none';
     document.getElementById('runBtn').disabled = false;
@@ -1004,15 +1028,6 @@ function loadSession() {
     runClustering();
 
   } catch (e) {
-    // 세션(탭 스코프) 유실이지만 ?title 이 있으면 타이틀 데이터로 복구 가능
-    // (새로고침·직접 링크·새 탭·재방문 시 sessionStorage 부재). 컬럼 설정에서
-    // 기본 설정으로 자동 재구성 후 복귀. 1회성 플래그로 무한 리다이렉트 방지.
-    const tid = _activeTitleId();
-    if (tid && !sessionStorage.getItem('_clusterRecoverTried')) {
-      sessionStorage.setItem('_clusterRecoverTried', '1');
-      window.location.replace(`step2_column_selector.html?title=${encodeURIComponent(tid)}&run=1`);
-      return;
-    }
     sessionStorage.removeItem('_clusterRecoverTried');
     document.getElementById('noDataMsg').style.display = 'block';
     document.getElementById('configSummarySection').style.display = 'none';
