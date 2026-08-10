@@ -2330,7 +2330,12 @@ function showToast(msg, type = '') {
   updateSummaryMode();
   // F2: 타이틀 셀렉터 채우기 + ?title= 자동 로드(없으면 CSV 업로드 UI 유지)
   populateTitleSelect();
-  loadFromPipeline();
+  // ?title= 자동 로드. run=1(clustering 세션 복구 리다이렉트)이면 로드 후 자동 실행.
+  loadFromPipeline().then(ok => {
+    if (ok && new URLSearchParams(location.search).get('run') === '1') {
+      proceedToClustering();   // 기본 설정으로 군집화 실행 → 세션 저장 후 clustering 복귀
+    }
+  });
 })();
 
 /* ═══════════════════════════════════════════════

@@ -1000,9 +1000,20 @@ function loadSession() {
 
     document.getElementById('noDataMsg').style.display = 'none';
     document.getElementById('runBtn').disabled = false;
+    sessionStorage.removeItem('_clusterRecoverTried');   // 복구 성공 → 1회성 플래그 해제
     runClustering();
 
   } catch (e) {
+    // 세션(탭 스코프) 유실이지만 ?title 이 있으면 타이틀 데이터로 복구 가능
+    // (새로고침·직접 링크·새 탭·재방문 시 sessionStorage 부재). 컬럼 설정에서
+    // 기본 설정으로 자동 재구성 후 복귀. 1회성 플래그로 무한 리다이렉트 방지.
+    const tid = _activeTitleId();
+    if (tid && !sessionStorage.getItem('_clusterRecoverTried')) {
+      sessionStorage.setItem('_clusterRecoverTried', '1');
+      window.location.replace(`step2_column_selector.html?title=${encodeURIComponent(tid)}&run=1`);
+      return;
+    }
+    sessionStorage.removeItem('_clusterRecoverTried');
     document.getElementById('noDataMsg').style.display = 'block';
     document.getElementById('configSummarySection').style.display = 'none';
     document.querySelector('.run-area').style.display = 'none';
