@@ -106,6 +106,7 @@ def ad_id_from_agad(ad_group_ad_resource: str) -> str:
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--asset-name", required=True)
+    p.add_argument("--campaign-name", default=None, help="특정 캠페인만 스코핑")
     p.add_argument("--ad", default=None, help="대상 ad_group_ad resource_name(제거/복원 시 필수)")
     p.add_argument("--field-type", default="YOUTUBE_VIDEO")
     p.add_argument("--title", default="zeus")
@@ -134,16 +135,25 @@ def main():
     target_ids = set(target_ids)
     print(f"  대상 asset id: {sorted(target_ids)}")
 
-    # 발견: 이 소재가 붙은 광고들
+    # 발견: 이 소재가 붙은 광고들 (+ 캠페인·광고 타입). 특정 캠페인 스코핑 옵션.
     ids_csv = ", ".join(sorted(target_ids))
-    q_ads = (f"SELECT ad_group_ad.resource_name FROM ad_group_ad_asset_view "
+    camp_where = ""
+    if args.campaign_name:
+        camp_where = f" AND campaign.name = '{args.campaign_name.replace(chr(39), chr(92)+chr(39))}'"
+    q_ads = (f"SELECT ad_group_ad.resource_name, campaign.name, ad_group_ad.ad.type "
+             f"FROM ad_group_ad_asset_view "
              f"WHERE segments.date BETWEEN '{args.start}' AND '{args.end}' "
              f"AND asset.id IN ({ids_csv}) "
-             f"AND ad_group_ad_asset_view.field_type = '{args.field_type}'")
-    ads = sorted({r.ad_group_ad.resource_name for r in _rows(ga, cid, q_ads)})
-    print(f"\n  이 소재가 붙은 광고(ad_group_ad): {len(ads)}건")
+             f"AND ad_group_ad_asset_view.field_type = '{args.field_type}'{camp_where}")
+    ad_rows = {}
+    for r in _rows(ga, cid, q_ads):
+        ad_rows[r.ad_group_ad.resource_name] = (r.campaign.name, r.ad_group_ad.ad.type_.name)
+    ads = sorted(ad_rows)
+    scope = f" (캠페인='{args.campaign_name}')" if args.campaign_name else ""
+    print(f"\n  이 소재가 붙은 광고(ad_group_ad): {len(ads)}건{scope}")
     for a in ads:
-        print(f"    - {a}")
+        camp, adtype = ad_rows[a]
+        print(f"    - {a}\n        캠페인={camp} · 광고타입={adtype}")
 
     if not args.ad:
         print("\n(발견만 완료. 실제 제거는 --ad <광고 하나> + --apply. 위 목록에서 1개 골라 테스트.)")
@@ -152,6 +162,21 @@ def main():
 
     if args.ad not in ads:
         print(f"\n⚠️ --ad 가 발견 목록에 없음: {args.ad}")
+
+    # 광고 타입 확인 — 제거 메커니즘이 타입별로 다름(App=app_ad, Demand Gen=별도)
+    ar = args.ad.replace("'", "\\'")
+    try:
+        trows = _rows(ga, cid, f"SELECT ad_group_ad.ad.type FROM ad_group_ad WHERE ad_group_ad.resource_name = '{ar}'")
+        ad_type = trows[0].ad_group_ad.ad.type_.name if trows else "UNKNOWN"
+    except Exception as e:
+        ad_type = "UNKNOWN"
+        print(f"  [광고 타입 조회 오류] {_short(e)}")
+    print(f"  대상 광고 타입: {ad_type}")
+    if ad_type != "APP_AD":
+        print(f"  ⚠️ 이 PoC의 제거 경로는 App Ad(app_ad.youtube_videos) 전용. {ad_type} 는 제거 필드가 다름"
+              f"(예: Demand Gen = demand_gen_video_responsive_ad). 이 타입 확인되면 그에 맞는 경로로 구현/테스트 필요.")
+        if args.apply:
+            sys.exit("  → APP_AD 아니라 --apply 중단(잘못된 mutate 방지). 타입 알려주면 맞춰 구현할게.")
 
     # 대상 광고의 현재 영상 목록 → 대상 제거(또는 복원) 후 새 목록 구성
     current = ad_videos(ga, cid, args.ad, args.field_type, args.start, args.end)
