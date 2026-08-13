@@ -60,22 +60,29 @@ def _rows(ga, customer_id: str, query: str):
 
 
 def discover(ga, customer_id: str, asset_name: str, start: str, end: str) -> dict:
-    """대상 asset의 asset.id 확보 후, 캠페인/광고그룹 레벨 pause 링크 발견."""
-    name = asset_name.replace("'", "\\'")
-    result = {"asset_ids": set(), "campaign_asset": [], "ad_group_asset": []}
+    """대상 asset의 asset.id 확보 후, 캠페인/광고그룹 레벨 pause 링크 발견.
 
-    # 1) asset.id — 커넥터가 검증한 IN(...)+괄호 패턴(= ... OR 은 GAQL 미지원). VIDEO는 title로도 매칭.
-    q_view = (
-        "SELECT asset.id, asset.name, ad_group_ad_asset_view.enabled, campaign.name "
-        "FROM ad_group_ad_asset_view "
-        f"WHERE segments.date BETWEEN '{start}' AND '{end}' "
-        f"AND (asset.name IN ('{name}') OR asset.youtube_video_asset.youtube_video_title IN ('{name}'))"
-    )
-    try:
-        for r in _rows(ga, customer_id, q_view):
-            result["asset_ids"].add(str(r.asset.id))
-    except Exception as e:
-        print(f"  [asset_view 조회 오류] {_short(e)}")
+    GAQL의 OR(특히 '= ... OR ...')은 이 컨텍스트서 거부됨 → 단일 필드 IN 쿼리로 분리.
+    IMAGE는 asset.name, VIDEO는 youtube_video_title(확장자 없는 파일명)로 각각 조회.
+    """
+    result = {"asset_ids": set(), "campaign_asset": [], "ad_group_asset": []}
+    # 파일명 확장자 제거본도 후보(VIDEO youtube_video_title = 확장자 없는 파일명)
+    import re
+    no_ext = re.sub(r"\.(mp4|jpg|jpeg|png|gif)$", "", asset_name, flags=re.I)
+    cands = {asset_name, no_ext}
+    date_where = f"segments.date BETWEEN '{start}' AND '{end}'"
+
+    for cand in cands:
+        c = cand.replace("'", "\\'")
+        # IMAGE: asset.name 정확 매칭
+        for field in ("asset.name", "asset.youtube_video_asset.youtube_video_title"):
+            q = (f"SELECT asset.id, asset.name FROM ad_group_ad_asset_view "
+                 f"WHERE {date_where} AND {field} IN ('{c}')")
+            try:
+                for r in _rows(ga, customer_id, q):
+                    result["asset_ids"].add(str(r.asset.id))
+            except Exception as e:
+                print(f"  [asset_view {field} 조회 오류] {_short(e)}")
 
     if not result["asset_ids"]:
         return result
@@ -155,8 +162,10 @@ def main():
     p.add_argument("--resume", action="store_true")
     args = p.parse_args()
 
-    if args.asset_name.strip() in ("", "실제_소재이름", "실제파일명", "..."):
-        sys.exit("⚠️ --asset-name 에 실제 소재명을 넣으세요 (public/data/zeus.json 의 소재명/파일명).")
+    _an = args.asset_name.strip()
+    if (not _an) or ("여기에" in _an) or ("실제" in _an) or ("zeus.json" in _an) or _an == "...":
+        sys.exit("⚠️ --asset-name 에 실제 소재명을 넣으세요 (public/data/zeus.json 의 파일명/소재명, 예: "
+                 "260701_VID_P-Slogan-PreregPV15s-01-PV_L_1920x1080_KR).")
 
     cid = _customer_id(args.title, args.customer_id)
     client = GoogleAdsClient.load_from_storage(".secrets/google_ads.yaml")
