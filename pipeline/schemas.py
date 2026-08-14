@@ -572,6 +572,9 @@ class CreativeKpiDaily(BaseModel):
     asset_type: Optional[str] = Field(
         None, description="IMAGE | YOUTUBE_VIDEO | MEDIA_BUNDLE"
     )
+    asset_id: Optional[str] = Field(
+        None, description="Google Ads asset id — 저효율 소재 제외(pause_tool)에서 대상 지정용"
+    )
 
     impressions: int = 0
     clicks: int = 0

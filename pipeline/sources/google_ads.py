@@ -294,6 +294,7 @@ class GoogleAdsKpiSource(KpiSource):
         query = f"""
             SELECT
               segments.date,
+              asset.id,
               asset.name,
               asset.type,
               asset.image_asset.full_size.url,
@@ -334,6 +335,7 @@ class GoogleAdsKpiSource(KpiSource):
         query = f"""
             SELECT
               segments.date,
+              asset.id,
               asset.name,
               asset.type,
               asset.image_asset.full_size.url,
@@ -407,6 +409,7 @@ class GoogleAdsKpiSource(KpiSource):
             ad_group_name=row.ad_group.name or "",
             asset_url=asset_url,
             asset_type=asset_type_name,
+            asset_id=(str(getattr(row.asset, "id", "") or "") or None),
             impressions=int(row.metrics.impressions),
             clicks=int(row.metrics.clicks),
             cost_micros=cost_micros,
