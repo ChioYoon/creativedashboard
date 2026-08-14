@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>저효율 소재 제외 도구 (localhost)</title>
+<style>
+  :root { --red:#DC2828; --line:#E4E1DC; --soft:#FAF9F7; --muted:#666; --ink:#191919; }
+  * { box-sizing:border-box; }
+  body { font-family:system-ui,"Segoe UI",sans-serif; color:var(--ink); margin:0; background:#fff; }
+  header { border-bottom:1px solid var(--line); padding:14px 20px; display:flex; align-items:center; gap:12px; }
+  header h1 { font-size:16px; margin:0; }
+  .tag { font-size:11px; background:var(--red); color:#fff; padding:2px 8px; border-radius:9px; }
+  main { max-width:960px; margin:0 auto; padding:20px; }
+  .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:12px; }
+  label { font-size:13px; color:var(--muted); }
+  select, textarea, input { font:inherit; border:1px solid var(--line); border-radius:8px; padding:8px 10px; }
+  textarea { width:100%; min-height:110px; font-size:12px; font-family:ui-monospace,monospace; }
+  button { font:inherit; border:1px solid var(--line); background:#fff; border-radius:8px; padding:8px 14px; cursor:pointer; }
+  button.primary { background:var(--red); color:#fff; border-color:var(--red); }
+  button:disabled { opacity:.5; cursor:default; }
+  .card { border:1px solid var(--line); border-left:3px solid var(--red); border-radius:8px; padding:12px 14px; margin-bottom:8px; background:var(--soft); }
+  .card .key { font-weight:700; font-size:13.5px; }
+  .meta { font-size:12px; color:var(--muted); margin-top:3px; }
+  .warn { color:var(--red); font-weight:600; }
+  .pill { display:inline-block; font-size:10.5px; font-weight:600; background:rgba(220,40,40,.08); color:var(--red); padding:1px 7px; border-radius:8px; margin-right:4px; }
+  .ok { color:#1f7a34; }
+  pre { background:#fff; border:1px solid var(--line); border-radius:8px; padding:10px; font-size:11.5px; overflow:auto; white-space:pre-wrap; }
+  .hint { font-size:11.5px; color:#9ca3af; line-height:1.6; }
+  .status-applied { color:#1f7a34; font-weight:700; }
+  .status-skip { color:#9ca3af; }
+  .status-error { color:var(--red); font-weight:700; }
+  .status-dry-run { color:#2563eb; }
+</style>
+</head>
+<body>
+<header>
+  <h1>저효율 소재 제외 도구</h1><span class="tag">localhost</span>
+  <span class="hint" style="margin-left:auto;">라이브 광고 변경 — dry-run 먼저 · 승인 후 실행</span>
+</header>
+<main>
+  <div class="row">
+    <label>타이틀</label>
+    <select id="title"></select>
+    <span class="hint">대시보드 → 피로도·제외 추천 → <b>CSV 내보내기</b> → 아래에 붙여넣기</span>
+  </div>
+  <textarea id="csv" placeholder="제외추천_YYYY-MM-DD.csv 내용을 붙여넣으세요 (소재명 컬럼 포함)"></textarea>
+  <div class="row" style="margin-top:8px;">
+    <button class="primary" onclick="loadCandidates()">후보 불러오기</button>
+    <span id="loadMsg" class="hint"></span>
+  </div>
+
+  <div id="candBox"></div>
+
+  <div class="row" id="actionBar" style="display:none; margin-top:14px;">
+    <button onclick="run('dry')">① 선택 dry-run (미리보기)</button>
+    <button class="primary" onclick="run('apply')">② 실제 제거 (승인)</button>
+    <button onclick="run('resume-apply')">복원 (재추가)</button>
+    <span class="hint">dry-run으로 before→after 확인 후 실제 제거하세요.</span>
+  </div>
+  <div id="resultBox" style="margin-top:14px;"></div>
+</main>
+
+<script>
+let CANDS = [];
+const $ = s => document.querySelector(s);
+
+async function api(path, body) {
+  const r = await fetch(path, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
+  return r.json();
+}
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+async function initTitles() {
+  const r = await (await fetch('/api/titles')).json();
+  $('#title').innerHTML = (r.titles||[]).map(t=>`<option>${esc(t)}</option>`).join('');
+}
+
+async function loadCandidates() {
+  const title = $('#title').value, csv_text = $('#csv').value;
+  if (!csv_text.trim()) { $('#loadMsg').textContent = 'CSV를 붙여넣으세요.'; return; }
+  $('#loadMsg').textContent = '불러오는 중…';
+  const r = await api('/api/candidates', { title, csv_text });
+  if (r.error) { $('#loadMsg').innerHTML = `<span class="warn">${esc(r.error)}</span>`; return; }
+  CANDS = r.candidates || [];
+  $('#loadMsg').textContent = `${r.count}개 추천 소재`;
+  renderCands();
+}
+
+function renderCands() {
+  const box = $('#candBox');
+  if (!CANDS.length) { box.innerHTML = '<p class="hint">후보 없음.</p>'; $('#actionBar').style.display='none'; return; }
+  box.innerHTML = CANDS.map((c,i) => {
+    if (!c.found) return `<div class="card" style="border-left-color:#9ca3af;">
+      <div class="key">${esc(c.key)}</div>
+      <div class="meta warn">public/data에서 소재 못 찾음 (오래된 CSV일 수 있음)</div></div>`;
+    const removable = c.video_count > 0;
+    const idNote = c.missing_asset_id ? `<span class="pill">asset_id 미확보 ${c.missing_asset_id} — 이름으로 조회</span>` : '';
+    const imgNote = c.image_count ? `<span class="pill">이미지 ${c.image_count} 못 끔(영상만)</span>` : '';
+    return `<div class="card">
+      <label style="display:flex; gap:10px; align-items:flex-start; cursor:pointer;">
+        <input type="checkbox" data-i="${i}" ${removable?'checked':'disabled'} style="margin-top:3px;">
+        <div style="flex:1; min-width:0;">
+          <div class="key">${esc(c.key)} <span class="meta">· ${esc(c.유형||'')}</span></div>
+          <div class="meta">제거 대상 영상 ${c.video_count}개 ${idNote}${imgNote}
+            ${!removable?'<span class="warn">— 제거할 영상 asset 없음</span>':''}</div>
+        </div>
+      </label></div>`;
+  }).join('');
+  $('#actionBar').style.display = 'flex';
+}
+
+function selected() {
+  return [...document.querySelectorAll('#candBox input[type=checkbox]:checked')]
+    .map(cb => CANDS[+cb.dataset.i])
+    .map(c => ({ key:c.key, video_asset_ids:c.video_asset_ids, video_names:c.video_names }));
+}
+
+async function run(mode) {
+  const items = selected();
+  if (!items.length) { alert('선택된 소재가 없습니다.'); return; }
+  if (mode === 'apply' && !confirm(`실제로 ${items.length}개 소재의 영상을 라이브 광고에서 제거합니다.\n서빙·비용에 영향하며 복원 버튼으로 되돌릴 수 있습니다.\n계속할까요?`)) return;
+  if (mode === 'resume-apply' && !confirm(`선택 ${items.length}개 소재의 영상을 광고에 다시 추가(복원)합니다. 계속할까요?`)) return;
+  const title = $('#title').value;
+  $('#resultBox').innerHTML = '<p class="hint">실행 중… (라이브 API 조회)</p>';
+  const r = await api('/api/change', { title, items, mode });
+  renderResults(r);
+}
+
+function renderResults(r) {
+  if (r.error) { $('#resultBox').innerHTML = `<pre class="warn">${esc(r.error)}</pre>`; return; }
+  const head = `<div class="row"><b>${r.apply?'✅ 실제 적용':'👀 DRY-RUN'} · mode=${esc(r.mode)}</b></div>`;
+  const blocks = (r.results||[]).map(row => {
+    if (row.error) return `<div class="card"><div class="key">${esc(row.key)}</div><div class="meta warn">${esc(row.error)}</div></div>`;
+    const ads = (row.ads||[]).map(a => {
+      const st = `status-${a.status}`;
+      const ba = a.before ? ` · <span class="hint">${(a.before||[]).length}→${(a.after||[]).length}</span>` : '';
+      const rs = a.reason ? ` · ${esc(a.reason)}` : '';
+      return `<div class="meta"><span class="${st}">[${esc(a.status)}]</span> ${esc(a.ad_type)} ${esc((a.ad_group_ad||'').split('/').pop())}${ba}${rs}</div>`;
+    }).join('') || '<div class="meta hint">붙은 광고 없음</div>';
+    return `<div class="card"><div class="key">${esc(row.key)}</div>
+      <div class="meta">asset ${(row.asset_ids||[]).length}개</div>${ads}</div>`;
+  }).join('');
+  $('#resultBox').innerHTML = head + blocks;
+}
+
+initTitles();
+</script>
+</body>
+</html>
