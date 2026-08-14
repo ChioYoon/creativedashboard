@@ -23,7 +23,8 @@ from typing import Optional
 
 from google.ads.googleads.client import GoogleAdsClient
 
-# 광고 타입 → (Ad 하위 필드, 영상 리스트 필드). PoC로 Demand Gen 검증됨.
+# 광고 타입 → (Ad 하위 필드, 영상 리스트 필드).
+# Demand Gen: apply 양방향 검증(2026-08-14). APP_PRE_REG: 라이브 읽기 검증(동일). APP_AD: 미검증.
 TYPE_FIELD = {
     "APP_AD": ("app_ad", "youtube_videos"),
     "APP_PRE_REGISTRATION_AD": ("app_pre_registration_ad", "youtube_videos"),
@@ -188,6 +189,27 @@ def change_asset(client, ga, cid: str, asset_ids: set[str], ads: list[dict], *,
     return results
 
 
+def scan_campaign_ad_types(ga, cid: str, campaign_name: str) -> list[dict]:
+    """캠페인의 광고를 타입별 집계 + TYPE_FIELD 커버리지 표시(타입 테스트 준비용).
+
+    ad_group_ad는 config 리소스라 segments.date 불필요. 각 타입이 제거 대상 필드 있는지 반환.
+    """
+    q = (f"SELECT ad_group_ad.ad.type, ad_group_ad.resource_name FROM ad_group_ad "
+         f"WHERE campaign.name = '{_esc(campaign_name)}'")
+    counts: dict[str, int] = {}
+    sample: dict[str, str] = {}
+    for r in _rows(ga, cid, q):
+        t = r.ad_group_ad.ad.type_.name
+        counts[t] = counts.get(t, 0) + 1
+        sample.setdefault(t, r.ad_group_ad.resource_name)
+    out = []
+    for t, n in sorted(counts.items(), key=lambda kv: -kv[1]):
+        out.append({"ad_type": t, "count": n, "supported": t in TYPE_FIELD,
+                    "field": ".".join(TYPE_FIELD[t]) if t in TYPE_FIELD else None,
+                    "sample_ad": sample[t]})
+    return out
+
+
 def _cli():
     p = argparse.ArgumentParser(description="Google Ads 저효율 소재 제외(제거/복원)")
     p.add_argument("--title", default="zeus")
@@ -200,11 +222,26 @@ def _cli():
     p.add_argument("--min-keep", type=int, default=1)
     p.add_argument("--apply", action="store_true")
     p.add_argument("--resume", action="store_true", help="제거가 아니라 재추가(복원)")
+    p.add_argument("--scan-campaign", action="store_true",
+                   help="--campaign-name의 광고 타입·커버리지만 진단(mutate 안 함)")
     a = p.parse_args()
 
     cid = a.customer_id.replace("-", "").strip() if a.customer_id else customer_id_for_title(a.title)
     client = load_client()
     ga = client.get_service("GoogleAdsService")
+
+    if a.scan_campaign:
+        if not a.campaign_name:
+            sys.exit("⚠️ --scan-campaign 은 --campaign-name 필요.")
+        rows = scan_campaign_ad_types(ga, cid, a.campaign_name)
+        print(f"cid={cid} · 캠페인={a.campaign_name} · 광고 타입 {len(rows)}종")
+        for r in rows:
+            mark = "✅" if r["supported"] else "❌ 미지원"
+            fld = f" · {r['field']}" if r["field"] else ""
+            print(f"  {mark} {r['ad_type']} ({r['count']}건){fld}")
+        if any(not r["supported"] for r in rows):
+            print("(❌ 타입은 TYPE_FIELD에 필드 추가 필요 — 영상 리스트 필드명 확인 후 등록.)")
+        return
 
     asset_ids = set(a.asset_id or [])
     if not asset_ids:
