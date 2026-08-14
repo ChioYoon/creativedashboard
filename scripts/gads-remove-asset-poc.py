@@ -172,11 +172,18 @@ def main():
         ad_type = "UNKNOWN"
         print(f"  [광고 타입 조회 오류] {_short(e)}")
     print(f"  대상 광고 타입: {ad_type}")
-    if ad_type != "APP_AD":
-        print(f"  ⚠️ 이 PoC의 제거 경로는 App Ad(app_ad.youtube_videos) 전용. {ad_type} 는 제거 필드가 다름"
-              f"(예: Demand Gen = demand_gen_video_responsive_ad). 이 타입 확인되면 그에 맞는 경로로 구현/테스트 필요.")
+    # 광고 타입별 영상 asset 리스트 필드 (제거/복원 시 이 리스트를 재구성)
+    TYPE_FIELD = {
+        "APP_AD": ("app_ad", "youtube_videos"),
+        "DEMAND_GEN_VIDEO_RESPONSIVE_AD": ("demand_gen_video_responsive_ad", "videos"),
+    }
+    if ad_type not in TYPE_FIELD:
+        print(f"  ⚠️ 이 PoC 미지원 광고타입: {ad_type} (지원: {list(TYPE_FIELD)}). 필드 확인 후 추가 필요.")
         if args.apply:
-            sys.exit("  → APP_AD 아니라 --apply 중단(잘못된 mutate 방지). 타입 알려주면 맞춰 구현할게.")
+            sys.exit("  → 미지원 타입이라 --apply 중단(잘못된 mutate 방지).")
+        return
+    ad_field, list_field = TYPE_FIELD[ad_type]
+    mask_path = f"{ad_field}.{list_field}"
 
     # 대상 광고의 현재 영상 목록 → 대상 제거(또는 복원) 후 새 목록 구성
     current = ad_videos(ga, cid, args.ad, args.field_type, args.start, args.end)
@@ -195,30 +202,31 @@ def main():
         print("  (대상이 이미 이 광고에 없음 — 변경 불필요)")
         return
     if not args.resume and not new_ids:
-        print("  ⚠️ 제거 후 영상 0개 — App 캠페인 최소개수 위반 가능(API가 거부할 수 있음).")
+        print("  ⚠️ 제거 후 영상 0개 — 최소개수 위반 가능(API가 거부할 수 있음).")
 
     if not args.apply:
-        print(f"\n[dry-run] AdService.mutate_ads 로 {ad_res} 의 app_ad.youtube_videos 를 위 목록으로 설정 예정(변경 안 함).")
-        print("(실제 적용: --apply. App 캠페인이 이 업데이트를 허용하는지가 이 PoC의 핵심 답.)")
+        print(f"\n[dry-run] AdService.mutate_ads 로 {ad_res} 의 {mask_path} 를 위 목록으로 설정 예정(변경 안 함).")
+        print("(실제 적용: --apply. 이 업데이트를 API가 허용하는지가 P0 핵심 답.)")
         return
 
-    # 실제 mutate
+    # 실제 mutate — 타입별 영상 리스트 필드 재구성
     try:
         svc = client.get_service("AdService")
         op = client.get_type("AdOperation")
         ad = op.update
         ad.resource_name = ad_res
-        del ad.app_ad.youtube_videos[:]
+        vids = getattr(getattr(ad, ad_field), list_field)   # 예: ad.demand_gen_video_responsive_ad.videos
+        del vids[:]
         for aid in new_ids:
             v = client.get_type("AdVideoAsset")
             v.asset = f"customers/{cid}/assets/{aid}"
-            ad.app_ad.youtube_videos.append(v)
-        op.update_mask.paths.append("app_ad.youtube_videos")
+            vids.append(v)
+        op.update_mask.paths.append(mask_path)
         resp = svc.mutate_ads(customer_id=cid, operations=[op])
         print(f"\n  ✅ {act} 성공: {resp.results[0].resource_name}")
     except Exception as e:
         print(f"\n  ❌ {act} 실패: {_short(e)}")
-        print("  (이 오류가 App 캠페인 asset 제거 제약을 보여줌 — P0-A 판정 근거.)")
+        print("  (이 오류가 제거 제약을 보여줌 — P0 판정 근거.)")
 
 
 if __name__ == "__main__":
