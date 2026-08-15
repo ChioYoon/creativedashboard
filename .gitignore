@@ -51,3 +51,6 @@ desktop.ini
 /_design_system_temp/
 /_ds_read/
 /.superpowers/
+
+# pause_tool 런타임 원장(운영 데이터, 커밋 안 함)
+pause_tool/pause_ledger.jsonl

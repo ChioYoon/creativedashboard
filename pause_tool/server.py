@@ -13,11 +13,12 @@ from __future__ import annotations
 
 import json
 import sys
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
 
-from pause_tool import mapping
+from pause_tool import ledger, mapping
 from pipeline import pause as P
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -84,10 +85,22 @@ def do_change(body: dict) -> dict:
             ads = P.find_ads_for_assets(ga, cid, ids, start, end)
             row["ads"] = P.change_asset(client, ga, cid, ids, ads,
                                         remove=not resume, apply=apply, min_keep=min_keep)
+            # 실제 적용된 게 있으면 원장 기록(감사·복원·상태용)
+            if apply and any(a.get("status") == "applied" for a in row["ads"]):
+                ledger.append({"ts": datetime.now().isoformat(timespec="seconds"),
+                               "title": title, "key": item.get("key"),
+                               "mode": "resume" if resume else "remove",
+                               "asset_ids": sorted(ids)})
         except Exception as e:
             row["error"] = str(e)
         out.append(row)
     return {"title": title, "mode": mode, "apply": apply, "results": out}
+
+
+def do_ledger(title: str) -> dict:
+    """현재 중단 중인 소재(복원 대상) — 원장 리듀스."""
+    paused = ledger.reduce_paused(ledger.read_events(), title)
+    return {"title": title, "paused": paused, "count": len(paused)}
 
 
 ROUTES = {"/api/candidates": do_candidates, "/api/change": do_change}
@@ -105,8 +118,12 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path in ("/", "/index.html"):
             return self._send(200, HTML.read_bytes(), "text/html; charset=utf-8")
-        if self.path == "/api/titles":
+        parsed = urlparse(self.path)
+        if parsed.path == "/api/titles":
             return self._send(200, {"titles": list_titles()})
+        if parsed.path == "/api/ledger":
+            title = (parse_qs(parsed.query).get("title") or [""])[0]
+            return self._send(200, do_ledger(title))
         self._send(404, {"error": "not found"})
 
     def do_POST(self):

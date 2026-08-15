@@ -50,6 +50,15 @@
     <span id="loadMsg" class="hint"></span>
   </div>
 
+  <div class="row" style="margin-top:6px;">
+    <b style="font-size:13px;">현재 중단됨</b>
+    <button onclick="loadLedger()">새로고침</button>
+    <button onclick="restoreLedger()">선택 복원</button>
+    <span id="ledgerMsg" class="hint"></span>
+  </div>
+  <div id="ledgerBox"></div>
+  <hr style="border:none;border-top:1px solid var(--line);margin:14px 0;">
+
   <div id="candBox"></div>
 
   <div class="row" id="actionBar" style="display:none; margin-top:14px;">
@@ -74,6 +83,34 @@ function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g, c=>({'&':'&amp;'
 async function initTitles() {
   const r = await (await fetch('/api/titles')).json();
   $('#title').innerHTML = (r.titles||[]).map(t=>`<option>${esc(t)}</option>`).join('');
+  $('#title').onchange = loadLedger;
+  loadLedger();
+}
+
+let LEDGER = [];
+async function loadLedger() {
+  const title = $('#title').value;
+  const r = await (await fetch('/api/ledger?title=' + encodeURIComponent(title))).json();
+  LEDGER = r.paused || [];
+  $('#ledgerMsg').textContent = LEDGER.length ? `${LEDGER.length}개 소재 중단 중` : '중단 중인 소재 없음';
+  $('#ledgerBox').innerHTML = LEDGER.map((g,i) => `<div class="card" style="border-left-color:#9ca3af;">
+    <label style="display:flex; gap:10px; align-items:center; cursor:pointer;">
+      <input type="checkbox" data-li="${i}" checked>
+      <div style="flex:1;"><div class="key">${esc(g.key)}</div>
+        <div class="meta">중단 영상 ${g.asset_ids.length}개 · ${esc((g.last_ts||'').replace('T',' '))}</div></div>
+    </label></div>`).join('');
+}
+
+async function restoreLedger() {
+  const items = [...document.querySelectorAll('#ledgerBox input:checked')]
+    .map(cb => LEDGER[+cb.dataset.li])
+    .map(g => ({ key:g.key, video_asset_ids:g.asset_ids, video_names:[] }));
+  if (!items.length) { alert('선택된 소재가 없습니다.'); return; }
+  if (!confirm(`중단된 ${items.length}개 소재의 영상을 광고에 다시 추가(복원)합니다. 계속할까요?`)) return;
+  $('#resultBox').innerHTML = '<p class="hint">복원 중…</p>';
+  const r = await api('/api/change', { title: $('#title').value, items, mode: 'resume-apply' });
+  renderResults(r);
+  loadLedger();
 }
 
 async function loadCandidates() {
@@ -125,6 +162,7 @@ async function run(mode) {
   $('#resultBox').innerHTML = '<p class="hint">실행 중… (라이브 API 조회)</p>';
   const r = await api('/api/change', { title, items, mode });
   renderResults(r);
+  if (mode.endsWith('apply')) loadLedger();
 }
 
 function renderResults(r) {
