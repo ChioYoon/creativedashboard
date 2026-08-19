@@ -1804,6 +1804,12 @@
         <!-- 저효율 소재 제외 추천 (분석 실행 시 렌더) -->
         <div id="fatigueExcludeReco"></div>
 
+        <!-- 캠페인별 제외 추천 (접이식 · 펼칠 때 지연 계산) -->
+        <details id="fatigueByCampDetails" style="margin-bottom:16px;" ontoggle="onFatigueByCampToggle(this)">
+          <summary style="cursor:pointer;font-size:13px;font-weight:700;color:#191919;border-left:3px solid #DC2828;background:var(--surface-card,#F4F2EF);padding:8px 12px;border-radius:6px;list-style:revert;">캠페인별 상세 — 어느 캠페인에서 빼야 하는지 <span style="font-weight:400;font-size:12px;color:#999;">(펼치면 캠페인별 재계산)</span></summary>
+          <div id="fatigueExcludeByCamp" style="margin-top:8px;"></div>
+        </details>
+
         <!-- 피로도 테이블 -->
         <div class="table-container">
           <table id="fatigueTable" class="ds-table">
@@ -7422,6 +7428,12 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       // 4-1. 저효율 소재 제외 추천 (기간별 독립 모수 기준 하위 % 판정)
       window._fatigueReco = buildFatigueExcludeReco(results, baselineScored, comparisonScored, compEnd);
 
+      // 4-2. 캠페인별 제외 추천 입력 stash + 캐시 무효화 (실제 계산은 섹션 펼칠 때 지연)
+      window._perCampInputs = { allAgg, baseStart, baseEnd, compStart, compEnd, layer: fatigueLayer, weights: fatigueWeights };
+      window._perCampReco = null;
+      const _pcDet = document.getElementById('fatigueByCampDetails');
+      if (_pcDet && _pcDet.open) onFatigueByCampToggle(_pcDet);   // 이미 열려있으면 즉시 갱신
+
       // 5. 결과 표시 (silent=배지 선계산 시 탭 전환·차트 생략)
       displayFatigueResults(results, silent);
       if (!silent) displayFatigueChart(results);
@@ -7627,6 +7639,102 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url; a.download = `제외추천_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click(); URL.revokeObjectURL(url);
+    }
+
+    // ── 캠페인별 제외 추천 (기존 피로도 엔진을 캠페인 단독 모수로 N회 재실행) ──
+    var MIN_CAMP_N = 8;   // 비교 기간 소재 수 이 미만인 캠페인은 백분위 판정 보류(오탐 방지)
+
+    // 활성 레이어 각 캠페인 단독으로 2기간 재스코어 → 제외 추천. buildFatigueExcludeReco 재사용.
+    function buildPerCampaignExcludeReco(allAgg, baseStart, baseEnd, compStart, compEnd, layer, weights) {
+      const segs = _segmentsForDim('campaign', layer);   // {campRaw: [campRaw]} — 레이어별 필터됨
+      const perCamp = {}, skipped = [], matrix = {}, campNames = [];
+      Object.keys(segs).forEach(cn => {
+        const gc = layer === 'mmp' ? null : segs[cn];
+        const mc = layer === 'mmp' ? segs[cn] : null;
+        const base = buildFatiguePeriodScores(allAgg, baseStart, baseEnd, layer, weights, gc, mc);
+        const comp = buildFatiguePeriodScores(allAgg, compStart, compEnd, layer, weights, gc, mc);
+        if (comp.length < MIN_CAMP_N) { skipped.push({ name: cn, n: comp.length }); return; }
+        const reco = buildFatigueExcludeReco(compareFatigue(base, comp), base, comp, compEnd);
+        const excl = {}; reco.rows.forEach(r => { excl[r.key] = r.reasons.join(' / '); });
+        perCamp[cn] = { reco, n: comp.length };
+        campNames.push(cn);
+        comp.forEach(o => { (matrix[o.key] = matrix[o.key] || {})[cn] = { rank: o.Rank, excluded: excl[o.key] || null }; });
+      });
+      return { layer, campNames, skipped, perCamp, matrix };
+    }
+
+    // 접이식 섹션 펼칠 때 지연 계산 + 캐시(입력 동일하면 재계산 생략)
+    function onFatigueByCampToggle(det) {
+      if (!det.open) return;
+      const box = document.getElementById('fatigueExcludeByCamp');
+      const inp = window._perCampInputs;
+      if (!inp) { box.innerHTML = '<div style="color:#999;padding:16px;">피로도 분석 실행 후 확인할 수 있습니다.</div>'; return; }
+      const key = [inp.layer, inp.baseStart, inp.baseEnd, inp.compStart, inp.compEnd,
+        inp.weights.conv, inp.weights.cpa, inp.weights.ipm, inp.weights.roas].join('|');
+      if (window._perCampReco && window._perCampReco._key === key) { renderPerCampaignExcludeReco(window._perCampReco); return; }
+      if (typeof showLoadingIndicator === 'function') showLoadingIndicator('캠페인별 재계산 중...');
+      setTimeout(() => {   // UI 페인트 후 무거운 계산
+        try {
+          const data = buildPerCampaignExcludeReco(inp.allAgg, inp.baseStart, inp.baseEnd, inp.compStart, inp.compEnd, inp.layer, inp.weights);
+          data._key = key;
+          window._perCampReco = data;
+          renderPerCampaignExcludeReco(data);
+        } finally {
+          if (typeof hideLoadingIndicator === 'function') hideLoadingIndicator();
+        }
+      }, 30);
+    }
+
+    // 소재(행) × 캠페인(열) 매트릭스 — 제외추천 걸린 소재만. 셀 3-state.
+    function renderPerCampaignExcludeReco(data) {
+      const box = document.getElementById('fatigueExcludeByCamp');
+      if (!box) return;
+      const _e = s => escapeHtml(String(s == null ? '' : s));
+      const layerNote = data && data.layer === 'mmp'
+        ? '<div style="font-size:12px;color:#DC2828;margin-bottom:8px;">MMP 기준 — 파악용입니다. 실제 제외(pause)는 Google Ads 기준으로 전환하세요.</div>' : '';
+      if (!data || !data.campNames.length) {
+        box.innerHTML = layerNote + '<div style="color:#999;padding:16px;">계산 가능한 캠페인이 없습니다(모수 부족 또는 데이터 없음).</div>';
+        return;
+      }
+      const camps = data.campNames;
+      const rows = Object.keys(data.matrix).map(k => {
+        const cells = camps.map(cn => data.matrix[k][cn] || null);
+        return { key: k, cells, exCount: cells.filter(c => c && c.excluded).length };
+      }).filter(r => r.exCount > 0).sort((a, b) => b.exCount - a.exCount || a.key.localeCompare(b.key));
+      const skippedNote = data.skipped.length
+        ? `<div style="font-size:11px;color:#9ca3af;margin-top:8px;">모수 부족 제외(&lt;${MIN_CAMP_N}개 소재): ${data.skipped.map(s => `${_e(s.name)}(${s.n})`).join(', ')}</div>` : '';
+      if (!rows.length) {
+        box.innerHTML = layerNote + '<div style="color:#666;padding:12px;font-size:12.5px;">캠페인별 추가 제외 추천 없음 — 양호.</div>' + skippedNote;
+        return;
+      }
+      const head = `<thead><tr style="font-size:12px;"><th style="text-align:left;position:sticky;left:0;background:var(--bg-base,#fff);z-index:1;">소재명</th>${camps.map(cn =>
+        `<th style="text-align:center;white-space:nowrap;padding:6px 10px;" title="${_e(cn)}">${_e(cn.length > 22 ? '…' + cn.slice(-20) : cn)}<div style="font-weight:400;color:#999;font-size:10px;">${data.perCamp[cn].n}개</div></th>`).join('')}</tr></thead>`;
+      const cell = c => !c ? '<td style="text-align:center;color:#d1d5db;">—</td>'
+        : c.excluded ? `<td style="text-align:center;"><span title="사유: ${_e(c.excluded)}" style="display:inline-block;background:rgba(220,40,40,.12);color:#DC2828;font-weight:700;font-size:11px;padding:2px 8px;border-radius:8px;">제외 #${c.rank}</span></td>`
+        : `<td style="text-align:center;color:#666;font-size:12px;">#${c.rank}</td>`;
+      const body = rows.map(r => `<tr><td style="text-align:left;min-width:160px;max-width:260px;overflow-wrap:anywhere;position:sticky;left:0;background:var(--bg-base,#fff);">${_segNameCell(r.key)} <span style="color:#DC2828;font-size:11px;font-weight:700;">${r.exCount}개</span></td>${r.cells.map(cell).join('')}</tr>`).join('');
+      box.innerHTML = layerNote +
+        `<div style="font-size:12px;color:#666;margin-bottom:8px;">캠페인별로 <b>그 캠페인 데이터만으로</b> 제외 추천을 재계산했습니다. <b style="color:#DC2828;">제외 #N</b>=그 캠페인서 저효율 판정, <b>#N</b>=집행했으나 추천 아님, —=미집행. 전체 합산 추천과 다를 수 있습니다(특정 캠페인만 저조).</div>` +
+        `<div style="margin-bottom:8px;"><button onclick="exportPerCampaignRecoCsv()" style="font-size:12px;padding:7px 12px;border:1px solid var(--hairline-warm,#E4E1DC);background:#fff;border-radius:8px;cursor:pointer;">CSV 내보내기(캠페인별)</button></div>` +
+        `<div class="table-container" style="overflow-x:auto;"><table class="ds-table" style="font-size:13px;">${head}<tbody>${body}</tbody></table></div>${skippedNote}`;
+    }
+
+    function exportPerCampaignRecoCsv() {
+      const data = window._perCampReco;
+      if (!data || !data.campNames.length) return;
+      const esc = s => `"${String(s == null ? '' : s).replace(/"/g, '""')}"`;
+      const lines = [['소재명', '캠페인', '유형', '투입일', '운영일수', '기준순위', '기준모수', '비교순위', '비교모수', '피로도', '추천사유'].join(',')];
+      data.campNames.forEach(cn => {
+        const reco = data.perCamp[cn].reco;
+        reco.rows.forEach(r => lines.push([esc(r.key), esc(cn), esc(r.유형), esc(r.launch), r.runDays,
+          typeof r.baselineRank === 'number' ? r.baselineRank : '', reco.nBase, r.comparisonRank, reco.nComp,
+          esc(r.fatigueStatus), esc(r.reasons.join(' / '))].join(',')));
+      });
+      const blob = new Blob(['﻿' + lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = `제외추천_캠페인별_${new Date().toISOString().slice(0, 10)}.csv`;
       a.click(); URL.revokeObjectURL(url);
     }
 
