@@ -5,7 +5,8 @@
     state: { titleId: '', creatives: [], driveFolderUrl: '', hasKpi: false, manifest: [] },
     canon: {},
     metric: 'impr',
-    topN: 7,
+    topN: 7,          // 0 = 전체 소재
+    groupBy: 'creative',   // 'creative' | 'type' (BNR/VID 유형별)
     chart: null,
   };
   window.LIVE = LIVE;
@@ -218,6 +219,19 @@
     }
     return { perCreative, dates: [...dateSet].sort() };
   };
+  // 유형별(BNR/VID…) 일별 합산 — 소재별 byDate를 유형으로 합침
+  LIVE.aggByType = function (agg) {
+    const types = new Map();   // 유형 → byDate Map(date→{impr,acq,cost})
+    for (const [c, e] of agg.perCreative) {
+      const t = (c.유형 || '기타').toUpperCase();
+      let m = types.get(t); if (!m) { m = new Map(); types.set(t, m); }
+      for (const [dt, bd] of e.byDate) {
+        let x = m.get(dt); if (!x) { x = { impr:0, acq:0, cost:0 }; m.set(dt, x); }
+        x.impr += bd.impr; x.acq += bd.acq; x.cost += bd.cost;
+      }
+    }
+    return types;
+  };
   // 지표값 (CPI=cost/acq, 획득 0이면 null=gap)
   LIVE.metricVal = function (cell, metric) {
     if (!cell) return null;
@@ -233,30 +247,45 @@
     const area = el('liveChartArea');
     if (!agg.dates.length) { area.innerHTML = '<div class="live-empty">선택한 필터에 해당하는 추이 데이터가 없습니다.</div>'; LIVE.chart = null; return; }
     if (!area.querySelector('canvas')) area.innerHTML = '<canvas id="liveChart"></canvas>';
-    // 획득 상위 Top N
-    const top = [...agg.perCreative.entries()].sort((a,b) => b[1].acq - a[1].acq).slice(0, LIVE.topN);
+    // 시리즈 구성: 유형별(BNR/VID) 또는 소재별(획득 상위 Top N / 전체)
+    let series;   // [{label, byDate:Map}]
+    if (LIVE.groupBy === 'type') {
+      series = [...LIVE.aggByType(agg).entries()]
+        .sort((a,b) => a[0].localeCompare(b[0]))
+        .map(([t, byDate]) => ({ label: t, byDate }));
+    } else {
+      let list = [...agg.perCreative.entries()].sort((a,b) => b[1].acq - a[1].acq);
+      if (LIVE.topN > 0) list = list.slice(0, LIVE.topN);   // 0 = 전체
+      series = list.map(([c, e], i) => ({ label: c.소재명 || c.creative_id || ('소재'+i), byDate: e.byDate }));
+    }
     const stacked = LIVE.metric !== 'cpi';   // 노출·획득은 누적, CPI(비율)는 중첩만
-    const datasets = top.map(([c, e], i) => {
+    const datasets = series.map((s, i) => {
       const col = CHART_COLORS[i % CHART_COLORS.length];
       return {
-        label: c.소재명 || c.creative_id || ('소재'+i),
+        label: s.label,
         data: agg.dates.map(dt => {
-          const v = LIVE.metricVal(e.byDate.get(dt), LIVE.metric);
+          const v = LIVE.metricVal(s.byDate.get(dt), LIVE.metric);
           return (stacked && v == null) ? 0 : v;   // 누적은 결측=0
         }),
         borderColor: col, backgroundColor: col + '55',
         fill: stacked, tension: 0.25, pointRadius: 1, spanGaps: !stacked,
       };
     });
+    // 소재 많으면(전체) 범례 숨김 — 툴팁으로 확인
+    const showLegend = datasets.length <= 12;
     if (LIVE.chart) LIVE.chart.destroy();
     LIVE.chart = new Chart(el('liveChart').getContext('2d'), {
       type: 'line',
       data: { labels: agg.dates, datasets },
       options: { responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{ position:'bottom', labels:{ boxWidth:12, font:{ size:11 } } },
+        plugins:{ legend:{ display: showLegend, position:'bottom', labels:{ boxWidth:12, font:{ size:11 } } },
           tooltip:{ mode:'index', intersect:false } },
         scales:{ y:{ beginAtZero:true, stacked }, x:{ stacked } } },
     });
+    // 툴바 제목 동기화
+    const ttl = el('liveChartTitle');
+    if (ttl) ttl.textContent = LIVE.groupBy === 'type' ? '소재 유형별 추이 (BNR·VID)'
+      : LIVE.topN > 0 ? `주요 소재 추이 (획득 상위 ${LIVE.topN})` : '전체 소재 추이';
   };
 
   function wireToolbar() {
@@ -265,6 +294,13 @@
       b.classList.add('active'); LIVE.metric = b.dataset.metric; LIVE.renderChart(LIVE._agg);
     }));
     el('liveTopN').addEventListener('change', e => { LIVE.topN = +e.target.value; LIVE.renderChart(LIVE._agg); });
+    // 소재별 / 유형별 그룹 토글
+    document.querySelectorAll('.live-metric-btn[data-group]').forEach(b => b.addEventListener('click', () => {
+      document.querySelectorAll('.live-metric-btn[data-group]').forEach(x => x.classList.remove('active'));
+      b.classList.add('active'); LIVE.groupBy = b.dataset.group;
+      const tn = el('liveTopN'); if (tn) tn.disabled = (LIVE.groupBy === 'type');   // 유형별은 Top N 무의미
+      LIVE.renderChart(LIVE._agg);
+    }));
   }
 
   // ── 분석 모달 순수 헬퍼 (step1 미변경 — 복제) ───────────────
