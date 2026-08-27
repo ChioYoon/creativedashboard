@@ -28,7 +28,19 @@
       "[제우스: 오만의 신] D-DAY! 캐릭터명 선점 이벤트 안내 | 8월 13일(목) 저녁 8시": "P-Ingame-CharacterNameEvent01-PV",
       "[제우스: 오만의 신] 정식 오픈일 공개 PV | 8월 26일 낮 12시 정식 오픈": "P-Slogan-LaunchDatePV-PV",
       "P-Reward-CharacterNameEvent01-PV": "P-Ingame-CharacterNameEvent01-PV",
-      "[제우스: 오만의 신] 스페셜 PV | 단언컨대, 현존하는 최고의 AI 모드": "P-Genre-AImodePV-UA"
+      "[제우스: 오만의 신] 스페셜 PV | 단언컨대, 현존하는 최고의 AI 모드": "P-Genre-AImodePV-UA",
+      "L-Genre-Dirguide-Artisan-01-UA": "L-Genre-Dirguide-Artisan-UA",
+      "[제우스: 오만의 신] 게임 플레이 비하인드 | 배우 박지현": "P-Ingame-ModelGamePlay-SS",
+      "[제우스: 오만의 신] 사전 다운로드 오픈 안내": "P-Event-PreDownload-01-SS",
+      "L-Genre-MMORPG01-DA": "P-Genre-MMORPG01-DA",
+      "[제우스: 오만의 신] 정식 오픈 PV | MMORPG의 정점, 제우스를 마주하라": "L-Slogan-LaunchPV-01-PV",
+      "[제우스: 오만의 신] 정식 오픈 PV | MMORPG의 정점, 제우스를 마주하라 (15s)": "L-Slogan-LaunchPV15s-01-PV",
+      "[제우스: 오만의 신] 론칭 이벤트 총정리 | 인게임 이벤트 편": "L-Reward-LaunchEvent-01-PV",
+      "1200x628_A": "L-Reward-LaunchReward-01-DA",
+      "1200x1500_B": "L-Reward-LaunchReward-02-DA",
+      "1200x1500_A": "L-Reward-LaunchReward-01-DA",
+      "1200x628_B": "L-Reward-LaunchReward-02-DA",
+      "1200x1200_A": "L-Reward-LaunchReward-01-DA"
     },
     "_creative_url_aliases": {
       "https://www.youtube.com/watch?v=dy52O9ksFHg": "P-Ingame-ClassRanger-01-PV",
@@ -46,7 +58,9 @@
       "https://www.youtube.com/watch?v=OEn5XNVhxA0": "P-Ingame-ClassBlessed-01-PV",
       "https://www.youtube.com/watch?v=n8t40W9PY3Q": "P-Ingame-ClassBlessed-01-SS",
       "https://www.youtube.com/watch?v=1a05iQ60UhU": "P-Ingame-ClassOracle-01-PV",
-      "https://www.youtube.com/watch?v=t-x1zioCkiM": "P-Ingame-ClassOracle-01-SS"
+      "https://www.youtube.com/watch?v=t-x1zioCkiM": "P-Ingame-ClassOracle-01-SS",
+      "https://www.youtube.com/watch?v=fD7XpdC0FwE": "P-Event-ModelID-01-PV",
+      "https://www.youtube.com/watch?v=pExIuM2LgOk": "P-Event-ModelID-01-SS"
     }
   }
 }
