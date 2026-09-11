@@ -1,12 +1,15 @@
 # CLAUDE.md — Com2uS R팀 소재 분석 대시보드
-> Claude Code 작업 가이드 | 최종 업데이트: 2026-05-21
+> Claude Code 작업 가이드 | 최종 업데이트: 2026-08-10
 
 ---
 
 ## 1. 프로젝트 한 줄 요약
 
-모바일 게임 광고 소재(BNR/VID) 성과를 CSV로 업로드 → Rank 기반 점수 계산 → 피로도 분석 → Gemini AI 인사이트까지 제공하는 **순수 정적(Static) 단일 파일 대시보드**.
-백엔드 없음. 서버 없음. 브라우저에서 직접 실행.
+모바일 게임 광고 소재(BNR/VID) 성과 분석 시스템. 두 축:
+- **정적 대시보드**(브라우저 단독): CSV 업로드/붙여넣기 → Rank 점수 → 피로도 → Gemini AI 인사이트. `step1_integrated.html` 메인.
+- **백엔드 nightly 파이프라인**(`pipeline/`, Python): 매일 밤 Google Ads + MMP(Airbridge/AppsFlyer) 수집·소재 태깅(Gemini)·점수 산출 → `public/data/{title}.json` → GitHub Pages 라이브 서빙(`live_dashboard.html`).
+
+> ⚠️ 예전 "백엔드 없음" 설명은 옛말 — 이제 nightly 파이프라인이 데이터를 생성함(작업 스케줄러 `CLOOP-Nightly`, 13:00).
 
 ---
 
@@ -14,33 +17,47 @@
 
 ```
 프로젝트 루트/
-├── step1_integrated.html   ★ 메인 작업 파일 (186KB, 약 4,200줄)
-│                             — pipeline-engine.js + analysis-engine-v2.js 인라인 포함
+├── index.html                  홈(랜딩) — 진입점
+├── step1_integrated.html   ★ 소재 분석(메인, ~8,700줄) — 파싱·분석 엔진 인라인 포함
+├── live_dashboard.html         라이브 대시보드 (public/data JSON 자동 로드)
+├── pre_eval.html               소재 사전 평가 (Gemini Vision)
+├── step2_column_selector.html  군집화 ① 컬럼·가중치
+├── step2_clustering.html       군집화 ② 실행·결과
+├── 사용안내서_인쇄용.html       사용 안내서(인쇄용, v5.11)
 ├── js/
-│   ├── gemini-api.js       ★ Gemini AI 프롬프트·파서·렌더러 (75KB)
-│   └── analysis-engine-v2.js  (외부 파일 원본, step1에 인라인 복사됨)
-│   └── pipeline-engine.js     (외부 파일 원본, step1에 인라인 복사됨)
-├── css/
-│   └── gemini-ui.css       AI 인사이트 카드 전용 스타일
-├── index.html              홈 (Step1/Step2 진입점)
-├── step2_column_selector.html  Step2-① 컬럼 선택
-├── step2_clustering.html       Step2-② 군집화 실행
-└── sample_data/            테스트용 CSV 파일들
+│   ├── gemini-api.js       ★ Gemini 프롬프트·파서·렌더러 (외부 <script src>, step1도 이걸 로드)
+│   ├── data-source.js          titles.json / public/data JSON 로드·정규화
+│   ├── canonical-filter.js     5차원 캐노니컬 필터(캠페인목적/국가/OS/매체/상품)
+│   ├── layer-metrics.js        Google Ads / MMP 레이어 지표·라벨(layerLabels)
+│   ├── live-dashboard.js       라이브 대시보드 로직(LIVE.*)
+│   ├── access-gate.js          외부 공유용 접근 고지 게이트
+│   ├── pipeline-engine.js      CSV 파싱·정규화·검증(원본, step1에 인라인 복사됨)
+│   ├── titles.json             타이틀 등록 + _pipeline_* 설정 + _ui_hidden
+│   └── titles_overrides.json   소재명 별칭 매핑
+├── css/gemini-ui.css           AI 인사이트 카드 스타일
+├── pipeline/               ★ 백엔드 nightly (Python): main.py · sources/(google_ads·airbridge·appsflyer)
+│                             · scoring.py · mmp_metrics.py · tagger.py · campaign_canonical.py
+│                             · media_normalize.py · schemas.py · notify.py · game_context/*.md
+├── public/data/{title}.json    파이프라인 산출물(대시보드가 fetch)
+├── scripts/nightly.ps1         nightly 실행(작업 스케줄러 CLOOP-Nightly)
+├── docs/                       설계·레퍼런스(measurement-reference·mmp-channel-media-design 등)
+└── sample_data/                테스트용 CSV
 ```
 
-### ⚠️ 중요: 인라인화 규칙
-`step1_integrated.html`은 **Genspark sandbox CSP** 환경에서 외부 `<script src>` 로드가 차단되어,
-`pipeline-engine.js`와 `analysis-engine-v2.js`의 내용이 HTML 내부 `<script>` 블록에 인라인으로 복사되어 있음.
+### ⚠️ 중요: step1 인라인화 규칙
+`step1_integrated.html`은 파싱·분석 엔진(pipeline-engine 등)을 HTML 내부 `<script>` 블록에 **인라인 복사**해 자립 실행함(과거 CSP 회피 잔재. live_dashboard·step2 등 다른 페이지는 외부 `<script src>` 정상 사용).
 
-- **수정 시 반드시 HTML 내 인라인 블록을 직접 수정**
-- 외부 js 파일(원본)을 수정해도 step1_integrated.html에는 반영 안 됨
-- `gemini-api.js`는 예외 — 외부 `<script src>` 방식 유지 (AI 기능만 관련, CSP 통과 확인됨)
+- **step1 로직 수정 시 반드시 HTML 내 인라인 블록을 직접 수정** — 외부 원본 js 수정은 step1에 반영 안 됨
+- `gemini-api.js`는 예외 — step1도 외부 `<script src>`로 로드(인라인 아님)
+- ⚠️ `analysis-engine-v2.js`는 외부 원본 파일이 이제 없음(step1 인라인본만 존재)
 
 ---
 
-## 3. step1_integrated.html 내부 구조 (라인 가이드)
+## 3. step1_integrated.html 내부 구조 (함수 인덱스)
 
-| 라인 범위 | 내용 |
+> ⚠️ 아래 **라인 번호는 옛 버전 기준으로 크게 어긋남**(파일이 ~8,700줄로 성장). 라인 범위는 참고만 하고, **함수명으로 `grep` 해서 찾을 것**(예: `function calculateScores`, `setLayerHeaders`, `runClustering`). 컬럼 정렬은 `data-sortkey`(TotalScore/__mmpscore 등), 점수 표시명은 GA=종합점수 / MMP=MMP 품질점수(로직 키와 분리됨).
+
+| 라인 범위(옛값·부정확) | 내용 |
 |-----------|------|
 | 1 ~ 13 | `<head>`: Chart.js CDN, gemini-ui.css, gemini-api.js |
 | 14 ~ 759 | `<style>` CSS 전체 |

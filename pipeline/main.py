@@ -40,8 +40,11 @@ from typing import Optional
 from dotenv import load_dotenv
 from tqdm import tqdm
 
+from collections import defaultdict
+
 from .cache import TagCache, file_sha256
-from .campaign_canonical import build_campaign_canonical
+from .campaign_canonical import build_campaign_canonical, resolve_campaign_media
+from .media_normalize import normalize_media, unmapped_media
 from .mmp_metrics import aggregate_rows_total, compute_mmp_quality
 from .scanner import scan_creative_folders, scan_by_filename, summarize
 from .schemas import CreativeDataset, CreativeRecord
@@ -71,6 +74,38 @@ def _collect_campaign_names(records) -> set:
             if cn:
                 names.add(cn)
     return names
+
+
+def _build_campaign_channel_map(records) -> dict:
+    """campaign_name → 노출 최다 MMP channel(원시값). mmp_daily만(Google 제외)."""
+    acc: dict = defaultdict(lambda: defaultdict(int))  # campaign -> channel -> impressions
+    for r in records:
+        for m in (getattr(r, "mmp_daily", None) or []):
+            cn = getattr(m, "campaign_name", "") or ""
+            ch = getattr(m, "channel", "") or ""
+            if cn and ch:
+                acc[cn][ch] += getattr(m, "impressions", 0) or 0
+    return {cn: max(chs.items(), key=lambda kv: kv[1])[0] for cn, chs in acc.items()}
+
+
+def _resolve_creative_media(r, channel_map: dict) -> Optional[str]:
+    """소재 대표 매체(표준) — 소재의 캠페인들을 resolve, 노출 최다 매체. 없으면 None."""
+    imp: dict = defaultdict(int)
+    for k in (getattr(r, "kpi_daily", None) or []):
+        cn = getattr(k, "campaign_name", "") or ""
+        if cn:
+            media, _ = resolve_campaign_media(cn, channel_map.get(cn, ""))
+            imp[media] += getattr(k, "impressions", 0) or 0
+    for m in (getattr(r, "mmp_daily", None) or []):
+        cn = getattr(m, "campaign_name", "") or ""
+        ch = getattr(m, "channel", "") or ""
+        if cn:
+            media, _ = resolve_campaign_media(cn, ch)
+        else:
+            media = normalize_media(ch)   # 캠페인명 없는 MMP 행 → 채널 표준화
+        imp[media] += getattr(m, "impressions", 0) or 0
+    imp.pop("", None)
+    return max(imp.items(), key=lambda kv: kv[1])[0] if imp else None
 
 
 def _load_game_context(rel_path: str, repo_root: Path) -> str:
@@ -1200,6 +1235,15 @@ def run(cfg: dict) -> dict:
     # ── 4) 산출물 저장 ──
     cache.save()
     duration = time.time() - started_at
+
+    # 매체 정합: campaign→대표채널 맵 → 캠페인/소재 media 표준화(이름파싱 우선 + MMP 폴백)
+    channel_map = _build_campaign_channel_map(records)
+    for r in records:
+        r.media_canonical = _resolve_creative_media(r, channel_map)
+    _unmapped = unmapped_media(channel_map.values())
+    if _unmapped:
+        print(f"⚠️  미매핑/보류 매체(원시값 통과): {sorted(_unmapped)}")
+
     dataset = CreativeDataset(
         title_id=cfg["title"],
         generated_at=datetime.now(KST).isoformat(timespec="seconds"),
@@ -1218,7 +1262,7 @@ def run(cfg: dict) -> dict:
             "score_summary": score_summary,  # Stage 6: 기본 가중치 점수 요약
             "game_context_sha": cur_ctx_sha,  # 1b: 태깅 시점 컨텍스트 식별 해시
         },
-        campaign_canonical=build_campaign_canonical(_collect_campaign_names(records)),
+        campaign_canonical=build_campaign_canonical(_collect_campaign_names(records), channel_map),
         unmatched_assets=unmatched_all,
         game_context=game_ctx,  # 1b: 팀 공유 게임/마케터 컨텍스트 전문
     )

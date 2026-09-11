@@ -1341,7 +1341,6 @@
     .ai-selected-badges { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
     .ai-selected-badge { padding: 2px 8px; border-radius: var(--radius-full); font-size: 10px; font-weight: 700; background: var(--text-primary); color: #fff; }
   </style>
-  <script src="js/access-gate.js?v=8bb8e442"></script>
 </head>
 <body>
   <!-- ── Top Navigation Bar ── -->
@@ -1419,7 +1418,7 @@
                 <span class="sb-mode-chip active" id="sbLayerAds" onclick="setSidebarLayer('ads')"
                       title="데이터 단위 = Google Ads 매체 (캠페인·지표·점수·저노출 판정 전부 Google Ads 기준)">Google Ads</span>
                 <span class="sb-mode-chip" id="sbLayerMmp" onclick="setSidebarLayer('mmp')"
-                      title="데이터 단위 = MMP(비 Google) 매체 (캠페인·지표·품질점수 기준)">MMP</span>
+                      title="데이터 단위 = MMP(비 Google) 매체 (캠페인·지표·MMP 품질점수 기준)">MMP</span>
               </div>
             </div>
             <!-- 파일 업로드 -->
@@ -1530,6 +1529,16 @@
             <svg class="sb-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
           </div>
           <div class="sb-section-body">
+            <!-- [UX-B] 가중치 프리셋 — 반복 슬라이더 조정 없이 원클릭 적용 (A안 실시간 반영과 연동) -->
+            <span class="sb-label">프리셋</span>
+            <div class="sb-chip-group" id="weightPresetChips" style="margin-bottom:10px;">
+              <span class="sb-mode-chip active" onclick="applyWeightPreset(25,25,25,25,this)" title="전환·CPA·IPM·ROAS 균등 (일반 분석)">균형</span>
+              <span class="sb-mode-chip" onclick="applyWeightPreset(40,30,15,15,this)" title="전환 40·CPA 30·IPM 15·ROAS 15 (UA 캠페인 중점)">전환↑</span>
+              <span class="sb-mode-chip" onclick="applyWeightPreset(20,40,30,10,this)" title="전환 20·CPA 40·IPM 30·ROAS 10 (예산 제약 시)">효율</span>
+              <span class="sb-mode-chip" onclick="applyWeightPreset(15,15,10,60,this)" title="전환 15·CPA 15·IPM 10·ROAS 60 (LTV 높은 게임)">수익</span>
+              <span class="sb-mode-chip" id="weightPresetSaved" style="display:none;" title="저장한 내 프리셋 적용"></span>
+              <span class="sb-mode-chip" onclick="saveWeightPreset()" title="현재 가중치를 내 프리셋으로 저장" style="border-style:dashed;">＋저장</span>
+            </div>
             <div class="sb-slider-row">
               <span class="sb-slider-label">전환수</span>
               <input type="range" class="sb-slider" id="conversionWeight" name="conversionWeight" min="0" max="100" value="25" oninput="updateWeightDisplay(this,'conversionWeightValue')">
@@ -1577,10 +1586,14 @@
 
       </div>
       <div class="ds-sidebar-footer">
-        <button class="ds-pill ds-pill--primary" style="width:100%;" onclick="calculateScores()" title="분석 실행">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          <span class="ds-sidebar-footer-label">분석 실행</span>
-        </button>
+        <!-- [UX-A] 실행 버튼 제거 → 필터·가중치 변경 시 자동 반영. 클릭 시 즉시 새로고침(수동 폴백). -->
+        <div id="reactiveStatus" onclick="calculateScores()" role="status"
+             title="필터·가중치를 바꾸면 결과가 자동으로 갱신됩니다. (클릭 시 즉시 새로고침)"
+             style="width:100%;display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;
+                    border-radius:8px;background:var(--surface-card,#F4F2EF);border:1px solid var(--border-soft,#E5E2DD);
+                    color:var(--text-secondary,#4C4C4C);font-size:12.5px;font-weight:700;cursor:pointer;user-select:none;transition:opacity .15s;">
+          ⚡ 실시간 반영
+        </div>
       </div>
     </aside>
 
@@ -1691,10 +1704,10 @@
                 <th class="num has-tooltip" data-sortkey="노출수" data-sorttype="num" data-tip="노출수">노출수 <span class="th-info">?</span></th>
                 <th class="num has-tooltip" data-sortkey="클릭수" data-sorttype="num" data-tip="클릭수">클릭수 <span class="th-info">?</span></th>
                 <th class="num has-tooltip" data-sortkey="CTR" data-sorttype="num" data-tip="클릭수 ÷ 노출수 × 100%">CTR <span class="th-info">?</span></th>
-                <th id="thScore" class="has-tooltip" data-sortkey="TotalScore" data-sorttype="num" data-tip="전환수·CPA·IPM·ROAS 점수의 가중치 합산 (Google Ads 기준)">총점 <span class="th-info">?</span></th>
-                <th class="has-tooltip" data-sortkey="TotalScore" data-sorttype="num" data-tip="총점 기준 등급 · 최우수≥80 / 우수≥60 / 양호≥40">등급 <span class="th-info">?</span></th>
+                <th id="thScore" class="has-tooltip" data-sortkey="TotalScore" data-sorttype="num" data-tip="전환수·CPA·IPM·ROAS 점수의 가중치 합산 (Google Ads 기준)">종합점수 <span class="th-info">?</span></th>
+                <th class="has-tooltip" data-sortkey="TotalScore" data-sorttype="num" data-tip="종합점수 기준 등급 · 최우수≥80 / 우수≥60 / 양호≥40">등급 <span class="th-info">?</span></th>
                 <th id="thPctile" class="col-pctile has-tooltip" data-tip="풀 대비 백분위 · CTR/CVR/CPA · Google Ads KPI 보유 소재">성과 <span class="th-info">?</span></th>
-                <th id="thMmpCol" class="col-mmp has-tooltip" data-sortkey="__mmpscore" data-sorttype="num" data-tip="소재 품질(MMP) · D1 IPM·D1 CPI·D7 ROAS·D1 잔존 종합">MMP 점수 <span class="th-info">?</span></th>
+                <th id="thMmpCol" class="col-mmp has-tooltip" data-sortkey="__mmpscore" data-sorttype="num" data-tip="소재 품질(MMP) · D1 IPM·D1 CPI·D7 ROAS·D1 잔존 종합">MMP 품질점수 <span class="th-info">?</span></th>
               </tr>
             </thead>
             <tbody id="tableBody">
@@ -1790,6 +1803,12 @@
 
         <!-- 저효율 소재 제외 추천 (분석 실행 시 렌더) -->
         <div id="fatigueExcludeReco"></div>
+
+        <!-- 캠페인별 제외 추천 (접이식 · 펼칠 때 지연 계산) -->
+        <details id="fatigueByCampDetails" style="margin-bottom:16px;" ontoggle="onFatigueByCampToggle(this)">
+          <summary style="cursor:pointer;font-size:13px;font-weight:700;color:#191919;border-left:3px solid #DC2828;background:var(--surface-card,#F4F2EF);padding:8px 12px;border-radius:6px;list-style:revert;">캠페인별 상세 — 어느 캠페인에서 빼야 하는지 <span style="font-weight:400;font-size:12px;color:#999;">(펼치면 캠페인별 재계산)</span></summary>
+          <div id="fatigueExcludeByCamp" style="margin-top:8px;"></div>
+        </details>
 
         <!-- 피로도 테이블 -->
         <div class="table-container">
@@ -1936,6 +1955,7 @@ function setSbRoasMode(mode) {
     const radio = document.getElementById(`_roasMode${m.charAt(0).toUpperCase()+m.slice(1)}`);
     if (radio) radio.checked = m === mode;
   });
+  if (typeof scheduleRecompute === 'function') scheduleRecompute();  // [UX-A] 칩 클릭 → 자동 반영
 }
 
 /* ── 가중치 슬라이더 표시 업데이트 ── */
@@ -1946,6 +1966,64 @@ function updateWeightDisplay(slider, valId) {
   const inputEl = document.getElementById(slider.id + 'Input');
   if (inputEl) inputEl.value = slider.value;
 }
+
+/* ── [UX-A] 실시간 반영(Reactive) — 필터·가중치 변경 시 자동 재계산 ──
+   "분석 실행" 버튼 클릭 반복을 없앰. 데이터 없으면 조용히 무시. 250ms 디바운스로
+   슬라이더 연속 입력·다중 변경을 1회 계산으로 합침. AI 인사이트 등 무거운 동작은 제외. */
+let _recomputeTimer = null;
+function scheduleRecompute() {
+  if (typeof rawData === 'undefined' || rawData.length === 0) return;  // 데이터 로드 전엔 무시
+  setReactiveStatus('계산 중…', true);
+  clearTimeout(_recomputeTimer);
+  _recomputeTimer = setTimeout(() => { calculateScores(); setReactiveStatus('⚡ 실시간 반영', false); }, 250);
+}
+function setReactiveStatus(text, busy) {
+  const el = document.getElementById('reactiveStatus');
+  if (!el) return;
+  el.textContent = text;
+  el.style.opacity = busy ? '0.65' : '1';
+}
+function wireReactiveFilters() {
+  ['sbFilter','sbWeight'].forEach(id => {
+    const sec = document.getElementById(id);
+    if (!sec) return;                        // 위임: 섹션 내 체크박스·슬라이더·날짜·셀렉트 변경 포착
+    sec.addEventListener('change', scheduleRecompute);
+    sec.addEventListener('input', scheduleRecompute);
+  });
+  renderSavedPresetChip();
+}
+
+/* ── [UX-B] 가중치 프리셋 — 4종 내장 + 내 프리셋(localStorage) ── */
+function applyWeightPreset(conv, cpa, ipm, roas, chipEl) {
+  [['conversionWeight', conv], ['cpaWeight', cpa], ['ipmWeight', ipm], ['roasWeight', roas]].forEach(([id, v]) => {
+    const s = document.getElementById(id);
+    if (s) { s.value = v; updateWeightDisplay(s, id + 'Value'); }   // 히든 input·표시 동기화
+  });
+  if (chipEl && chipEl.parentElement) {
+    chipEl.parentElement.querySelectorAll('.sb-mode-chip').forEach(c => c.classList.remove('active'));
+    chipEl.classList.add('active');
+  }
+  if (typeof scheduleRecompute === 'function') scheduleRecompute();  // 실시간 반영
+}
+function saveWeightPreset() {
+  const g = id => parseInt((document.getElementById(id) || {}).value || '0', 10);
+  const p = { conv: g('conversionWeight'), cpa: g('cpaWeight'), ipm: g('ipmWeight'), roas: g('roasWeight') };
+  try { localStorage.setItem('cloop_weight_preset', JSON.stringify(p)); } catch (e) {}
+  renderSavedPresetChip();
+}
+function renderSavedPresetChip() {
+  const chip = document.getElementById('weightPresetSaved');
+  if (!chip) return;
+  let p = null;
+  try { p = JSON.parse(localStorage.getItem('cloop_weight_preset') || 'null'); } catch (e) {}
+  if (!p) { chip.style.display = 'none'; return; }
+  chip.style.display = '';
+  chip.textContent = '내 설정';
+  chip.title = `전환 ${p.conv}·CPA ${p.cpa}·IPM ${p.ipm}·ROAS ${p.roas} (저장한 프리셋)`;
+  chip.onclick = () => applyWeightPreset(p.conv, p.cpa, p.ipm, p.roas, chip);
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wireReactiveFilters);
+else wireReactiveFilters();
 
 /* ── 메인 탭 전환 ── */
 function switchMainTab(tab) {
@@ -2263,7 +2341,7 @@ function buildMmpSectionHtml(creative) {
   const channels = (Array.isArray(m.mmp_channels) ? m.mmp_channels : [])
     .map((c) => `<span class="mmp-channel-badge">${escapeHtml(c)}</span>`).join('');
   const scoreBadge = (qs && qs.total != null)
-    ? `<span class="mmp-score-badge">품질점수 ${qs.total} · ${escapeHtml(qs.grade)} · #${qs.rank}</span>` : '';
+    ? `<span class="mmp-score-badge">MMP 품질점수 ${qs.total} · ${escapeHtml(qs.grade)} · #${qs.rank}</span>` : '';
   const cell = (label, val) =>
     `<div class="kpi-metric-cell"><div class="kpi-metric-label">${label}</div><div class="kpi-metric-value">${val}</div></div>`;
   const fxNote = (m.mmp_currency === 'KRW' && m.mmp_fx_rate)
@@ -2315,7 +2393,7 @@ function adsScoreCellHtml(c) {
   const hasAds = c && c._ads && c._ads.imp > 0;
   if (!hasAds || c.TotalScore == null) return '<span style="color:#d1d5db;font-size:11px;">—</span>';
   const style = MMP_GRADE_STYLE[c.등급] || 'background:#f3f4f6;color:#374151;';
-  return `<span class="mmp-score-cell" style="${style}" title="Google Ads 총점·등급">${c.TotalScore.toFixed(1)} ${escapeHtml(c.등급)}</span>`;
+  return `<span class="mmp-score-cell" style="${style}" title="Google Ads 종합점수·등급">${c.TotalScore.toFixed(1)} ${escapeHtml(c.등급)}</span>`;
 }
 
 // Stage 8: 분석 레이어 전환 — Google Ads 기준 / MMP 기준
@@ -2336,9 +2414,9 @@ function setLayerHeaders(layer) {
   set('thM4', L.m4, L.tip4);
   const mmp = layer === 'mmp';
   // 총점=레이어 기준(ads=Google Ads / mmp=MMP 품질), col-mmp 컬럼=반대 레이어 점수, 매출=MMP면 D7.
-  set('thScore', mmp ? '품질점수' : '총점', mmp ? 'MMP 품질 총점 · 전환(NU-Pre 등록+NU D1잔존)·CPA·IPM·D7 ROAS rank' : L.tipScore);
+  set('thScore', mmp ? 'MMP 품질점수' : '종합점수', mmp ? 'MMP 품질점수 · 전환(NU-Pre 등록+NU D1잔존)·CPA·IPM·D7 ROAS rank' : L.tipScore);
   set('thRev', mmp ? 'D7 매출' : '매출', mmp ? 'D7 LTV 매출 (D0~D7 누적)' : '매출 · Google Ads=Revenue');
-  set('thMmpCol', mmp ? 'Google Ads 점수' : 'MMP 점수', mmp ? 'Google Ads 총점·등급' : '소재 품질(MMP) · D1 IPM·D1 CPI·D7 ROAS·D1 잔존');
+  set('thMmpCol', mmp ? 'Google Ads 종합점수' : 'MMP 품질점수', mmp ? 'Google Ads 종합점수·등급' : '소재 품질(MMP) · D1 IPM·D1 CPI·D7 ROAS·D1 잔존');
   set('thPctile', '성과', mmp ? '풀 대비 백분위 · CTR/CVR/CPA · MMP 기준' : '풀 대비 백분위 · CTR/CVR/CPA · Google Ads KPI 보유 소재');
 }
 
@@ -3112,6 +3190,7 @@ function setDatePreset(preset) {
   const endEl = document.getElementById('endDate');
   if (startEl) startEl.value = formatDate(startD);
   if (endEl) endEl.value = formatDate(endD);
+  if (typeof scheduleRecompute === 'function') scheduleRecompute();  // [UX-A] 프리셋 클릭은 프로그램적 값 설정 → change 미발생, 명시 호출
 }
 
 function filterByDateRange(rows, dateColumn, startDate, endDate) {
@@ -3802,17 +3881,18 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           </div>
           ${_kpiNoticeHtml}
           <div style="padding: 10px 14px; background: var(--surface-card,#F4F2EF); border-left: 3px solid var(--text-tertiary,#767676); border-radius: 6px; font-size: 12.5px; color: var(--text-secondary,#4C4C4C); margin-bottom: 12px;">
-            백엔드 산출 JSON 로드 완료
+            백엔드 산출 JSON 로드 완료 — 결과가 아래에 자동 표시됩니다
           </div>
           <button onclick="calculateScores()"
-                  style="width: 100%; padding: 12px; background: var(--brand-primary, #DC2828);
-                         color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;
-                         font-size: 15px;">
-            분석 실행 →
+                  style="width: 100%; padding: 10px; background: transparent;
+                         color: var(--text-secondary,#4C4C4C); border: 1px solid var(--border-soft,#E5E2DD); border-radius: 8px; cursor: pointer; font-weight: 600;
+                         font-size: 13px;">
+            결과 새로고침
           </button>
         `;
 
         hideLoadingIndicator();
+        if (typeof scheduleRecompute === 'function') scheduleRecompute();  // [UX-A] 로드 즉시 자동 분석
       } catch (e) {
         hideLoadingIndicator();
         if (e && e.httpStatus === 404) {
@@ -4087,14 +4167,15 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           </div>
           
           <button onclick="calculateScores()"
-                  style="width: 100%; padding: 12px; background: var(--brand-primary, #DC2828);
-                         color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;
-                         font-size: 15px;">
-            분석 실행 →
+                  style="width: 100%; padding: 10px; background: transparent;
+                         color: var(--text-secondary,#4C4C4C); border: 1px solid var(--border-soft,#E5E2DD); border-radius: 8px; cursor: pointer; font-weight: 600;
+                         font-size: 13px;">
+            결과 새로고침
           </button>
         `;
 
         console.log('✅ CSV 처리 완료!');
+        if (typeof scheduleRecompute === 'function') scheduleRecompute();  // [UX-A] 업로드 즉시 자동 분석
         
       } catch (error) {
         console.error('❌ CSV 처리 오류:', error);
@@ -7377,6 +7458,12 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       // 4-1. 저효율 소재 제외 추천 (기간별 독립 모수 기준 하위 % 판정)
       window._fatigueReco = buildFatigueExcludeReco(results, baselineScored, comparisonScored, compEnd);
 
+      // 4-2. 캠페인별 제외 추천 입력 stash + 캐시 무효화 (실제 계산은 섹션 펼칠 때 지연)
+      window._perCampInputs = { allAgg, baseStart, baseEnd, compStart, compEnd, layer: fatigueLayer, weights: fatigueWeights };
+      window._perCampReco = null;
+      const _pcDet = document.getElementById('fatigueByCampDetails');
+      if (_pcDet && _pcDet.open) onFatigueByCampToggle(_pcDet);   // 이미 열려있으면 즉시 갱신
+
       // 5. 결과 표시 (silent=배지 선계산 시 탭 전환·차트 생략)
       displayFatigueResults(results, silent);
       if (!silent) displayFatigueChart(results);
@@ -7582,6 +7669,102 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url; a.download = `제외추천_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click(); URL.revokeObjectURL(url);
+    }
+
+    // ── 캠페인별 제외 추천 (기존 피로도 엔진을 캠페인 단독 모수로 N회 재실행) ──
+    var MIN_CAMP_N = 8;   // 비교 기간 소재 수 이 미만인 캠페인은 백분위 판정 보류(오탐 방지)
+
+    // 활성 레이어 각 캠페인 단독으로 2기간 재스코어 → 제외 추천. buildFatigueExcludeReco 재사용.
+    function buildPerCampaignExcludeReco(allAgg, baseStart, baseEnd, compStart, compEnd, layer, weights) {
+      const segs = _segmentsForDim('campaign', layer);   // {campRaw: [campRaw]} — 레이어별 필터됨
+      const perCamp = {}, skipped = [], matrix = {}, campNames = [];
+      Object.keys(segs).forEach(cn => {
+        const gc = layer === 'mmp' ? null : segs[cn];
+        const mc = layer === 'mmp' ? segs[cn] : null;
+        const base = buildFatiguePeriodScores(allAgg, baseStart, baseEnd, layer, weights, gc, mc);
+        const comp = buildFatiguePeriodScores(allAgg, compStart, compEnd, layer, weights, gc, mc);
+        if (comp.length < MIN_CAMP_N) { skipped.push({ name: cn, n: comp.length }); return; }
+        const reco = buildFatigueExcludeReco(compareFatigue(base, comp), base, comp, compEnd);
+        const excl = {}; reco.rows.forEach(r => { excl[r.key] = r.reasons.join(' / '); });
+        perCamp[cn] = { reco, n: comp.length };
+        campNames.push(cn);
+        comp.forEach(o => { (matrix[o.key] = matrix[o.key] || {})[cn] = { rank: o.Rank, excluded: excl[o.key] || null }; });
+      });
+      return { layer, campNames, skipped, perCamp, matrix };
+    }
+
+    // 접이식 섹션 펼칠 때 지연 계산 + 캐시(입력 동일하면 재계산 생략)
+    function onFatigueByCampToggle(det) {
+      if (!det.open) return;
+      const box = document.getElementById('fatigueExcludeByCamp');
+      const inp = window._perCampInputs;
+      if (!inp) { box.innerHTML = '<div style="color:#999;padding:16px;">피로도 분석 실행 후 확인할 수 있습니다.</div>'; return; }
+      const key = [inp.layer, inp.baseStart, inp.baseEnd, inp.compStart, inp.compEnd,
+        inp.weights.conv, inp.weights.cpa, inp.weights.ipm, inp.weights.roas].join('|');
+      if (window._perCampReco && window._perCampReco._key === key) { renderPerCampaignExcludeReco(window._perCampReco); return; }
+      if (typeof showLoadingIndicator === 'function') showLoadingIndicator('캠페인별 재계산 중...');
+      setTimeout(() => {   // UI 페인트 후 무거운 계산
+        try {
+          const data = buildPerCampaignExcludeReco(inp.allAgg, inp.baseStart, inp.baseEnd, inp.compStart, inp.compEnd, inp.layer, inp.weights);
+          data._key = key;
+          window._perCampReco = data;
+          renderPerCampaignExcludeReco(data);
+        } finally {
+          if (typeof hideLoadingIndicator === 'function') hideLoadingIndicator();
+        }
+      }, 30);
+    }
+
+    // 소재(행) × 캠페인(열) 매트릭스 — 제외추천 걸린 소재만. 셀 3-state.
+    function renderPerCampaignExcludeReco(data) {
+      const box = document.getElementById('fatigueExcludeByCamp');
+      if (!box) return;
+      const _e = s => escapeHtml(String(s == null ? '' : s));
+      const layerNote = data && data.layer === 'mmp'
+        ? '<div style="font-size:12px;color:#DC2828;margin-bottom:8px;">MMP 기준 — 파악용입니다. 실제 제외(pause)는 Google Ads 기준으로 전환하세요.</div>' : '';
+      if (!data || !data.campNames.length) {
+        box.innerHTML = layerNote + '<div style="color:#999;padding:16px;">계산 가능한 캠페인이 없습니다(모수 부족 또는 데이터 없음).</div>';
+        return;
+      }
+      const camps = data.campNames;
+      const rows = Object.keys(data.matrix).map(k => {
+        const cells = camps.map(cn => data.matrix[k][cn] || null);
+        return { key: k, cells, exCount: cells.filter(c => c && c.excluded).length };
+      }).filter(r => r.exCount > 0).sort((a, b) => b.exCount - a.exCount || a.key.localeCompare(b.key));
+      const skippedNote = data.skipped.length
+        ? `<div style="font-size:11px;color:#9ca3af;margin-top:8px;">모수 부족 제외(&lt;${MIN_CAMP_N}개 소재): ${data.skipped.map(s => `${_e(s.name)}(${s.n})`).join(', ')}</div>` : '';
+      if (!rows.length) {
+        box.innerHTML = layerNote + '<div style="color:#666;padding:12px;font-size:12.5px;">캠페인별 추가 제외 추천 없음 — 양호.</div>' + skippedNote;
+        return;
+      }
+      const head = `<thead><tr style="font-size:12px;"><th style="text-align:left;position:sticky;left:0;background:var(--bg-base,#fff);z-index:1;">소재명</th>${camps.map(cn =>
+        `<th style="text-align:center;white-space:nowrap;padding:6px 10px;" title="${_e(cn)}">${_e(cn.length > 22 ? '…' + cn.slice(-20) : cn)}<div style="font-weight:400;color:#999;font-size:10px;">${data.perCamp[cn].n}개</div></th>`).join('')}</tr></thead>`;
+      const cell = c => !c ? '<td style="text-align:center;color:#d1d5db;">—</td>'
+        : c.excluded ? `<td style="text-align:center;"><span title="사유: ${_e(c.excluded)}" style="display:inline-block;background:rgba(220,40,40,.12);color:#DC2828;font-weight:700;font-size:11px;padding:2px 8px;border-radius:8px;">제외 #${c.rank}</span></td>`
+        : `<td style="text-align:center;color:#666;font-size:12px;">#${c.rank}</td>`;
+      const body = rows.map(r => `<tr><td style="text-align:left;min-width:160px;max-width:260px;overflow-wrap:anywhere;position:sticky;left:0;background:var(--bg-base,#fff);">${_segNameCell(r.key)} <span style="color:#DC2828;font-size:11px;font-weight:700;">${r.exCount}개</span></td>${r.cells.map(cell).join('')}</tr>`).join('');
+      box.innerHTML = layerNote +
+        `<div style="font-size:12px;color:#666;margin-bottom:8px;">캠페인별로 <b>그 캠페인 데이터만으로</b> 제외 추천을 재계산했습니다. <b style="color:#DC2828;">제외 #N</b>=그 캠페인서 저효율 판정, <b>#N</b>=집행했으나 추천 아님, —=미집행. 전체 합산 추천과 다를 수 있습니다(특정 캠페인만 저조).</div>` +
+        `<div style="margin-bottom:8px;"><button onclick="exportPerCampaignRecoCsv()" style="font-size:12px;padding:7px 12px;border:1px solid var(--hairline-warm,#E4E1DC);background:#fff;border-radius:8px;cursor:pointer;">CSV 내보내기(캠페인별)</button></div>` +
+        `<div class="table-container" style="overflow-x:auto;"><table class="ds-table" style="font-size:13px;">${head}<tbody>${body}</tbody></table></div>${skippedNote}`;
+    }
+
+    function exportPerCampaignRecoCsv() {
+      const data = window._perCampReco;
+      if (!data || !data.campNames.length) return;
+      const esc = s => `"${String(s == null ? '' : s).replace(/"/g, '""')}"`;
+      const lines = [['소재명', '캠페인', '유형', '투입일', '운영일수', '기준순위', '기준모수', '비교순위', '비교모수', '피로도', '추천사유'].join(',')];
+      data.campNames.forEach(cn => {
+        const reco = data.perCamp[cn].reco;
+        reco.rows.forEach(r => lines.push([esc(r.key), esc(cn), esc(r.유형), esc(r.launch), r.runDays,
+          typeof r.baselineRank === 'number' ? r.baselineRank : '', reco.nBase, r.comparisonRank, reco.nComp,
+          esc(r.fatigueStatus), esc(r.reasons.join(' / '))].join(',')));
+      });
+      const blob = new Blob(['﻿' + lines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = `제외추천_캠페인별_${new Date().toISOString().slice(0, 10)}.csv`;
       a.click(); URL.revokeObjectURL(url);
     }
 
