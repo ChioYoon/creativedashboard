@@ -8131,6 +8131,75 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       </div>`;
     }
 
+    // #15 프로토타입: 위닝 소재 → 제작 브리프(이터레이션 지시서) 자동 조립.
+    //   슬롯 1·2·3 = meta 태그·실적 자동 채움 / 4·5·6 = 사람 확정 플레이스홀더.
+    //   규격: docs/제작브리프_템플릿_v0.md · 태그축: docs/위닝요소_태그스키마_v0.md
+    function buildProductionBrief(creative) {
+      const m = creative.meta || {};
+      const arr = v => Array.isArray(v) ? v.filter(Boolean).join(' · ') : (v || '');
+      const val = v => { const s = (typeof v === 'string' ? v.trim() : v); return (s || s === 0) ? s : '—'; };
+      const won = n => '₩' + Math.round(Number(n) || 0).toLocaleString();
+      const num = n => (Number(n) || 0).toLocaleString();
+      const 유형 = creative.유형 || '-';
+      const isVid = 유형 === 'VID';
+      const 사유 = `코호트 대비 ${val(creative.등급) || '미평가'}${creative.Rank ? ` · Rank #${creative.Rank}` : ''}`;
+      const chars = arr(m.main_characters);
+      const tone = val(m.color_tone || m.title_specific_theme);
+      const cta = val(m.cta_type);
+      const asset = m['링크'] || creative.이미지링크 || creative.파일명 || (m['파일명'] || '') || '—';
+      const 비율 = isVid ? '9:16 · 15s(원본 길이 기준 컷 변주 테스트)' : '1200x628 / 1200x1500 등 사이즈 배리';
+      return [
+        '────────────────────────────────────────',
+        `제작 브리프 — ${creative.소재명 || creative.key || '(소재명)'}`,
+        '────────────────────────────────────────',
+        '',
+        '[1] 원본 위닝 근거',
+        `  · 소재명/유형 : ${creative.소재명 || '-'} / ${유형}`,
+        `  · 실적        : 전환 ${num(creative.전환)} · CPA ${won(creative.CPA)} · IPM ${(Number(creative.IPM)||0).toFixed(2)} · 등급 ${val(creative.등급)}`,
+        `  · 선정 사유   : ${사유}`,
+        '',
+        '[2] 재현할 위닝 요소 (유지)',
+        `  · 훅          : ${val(m.hooking_strategy)}`,
+        `  · 소구점(USP) : ${val(m.USP)}`,
+        `  · 아트 스타일 : ${val(m.art_style)}`,
+        `  · 플레이어 동기: ${val(m.player_motivation)}`,
+        `  · 강점        : ${arr(m.strengths) || '—'}`,
+        '',
+        '[3] 보완 지시 (변주)',
+        `  · 약점        : ${arr(m.weaknesses) || '—'}`,
+        `  · 실험 방향   : ${arr(m.test_ideas) || '—'}`,
+        `  · 개선 인사이트: ${val(m.one_line_insight)}`,
+        '',
+        '[4] 브랜드 결합 슬롯  ※ 브랜드 브리프에서 주입',
+        `  · 등장 캐릭터 : ${chars || '(브랜드 브리프)'}`,
+        `  · 세계관/톤   : ${tone === '—' ? '(브랜드 브리프)' : tone}`,
+        `  · IP 세이프   : (원본 리소스 변형 금지선 · 금칙 표현 — 브랜드 브리프)`,
+        '',
+        '[5] 에셋 지정',
+        `  · 원본 에셋   : ${asset}`,
+        `  · 사용 에셋   : (드라이브 폴더/컷 — 담당자 지정)`,
+        '',
+        '[6] 생성 파라미터',
+        `  · 비율/길이   : ${비율}`,
+        `  · 언어        : ${val(m['언어']) === '—' ? 'KR' : val(m['언어'])}`,
+        `  · CTA 문구    : ${cta === '—' ? '(cta_type 미태깅 — 담당자 지정)' : cta + ' 기반'}`,
+        '────────────────────────────────────────',
+      ].join('\n');
+    }
+
+    function copyProductionBrief(btn) {
+      const pre = document.getElementById('briefText');
+      if (!pre) return;
+      const txt = pre.textContent;
+      const done = ok => { if (btn) { const o = btn.textContent; btn.textContent = ok ? '복사됨 ✓' : '복사 실패'; setTimeout(() => { btn.textContent = o; }, 1500); } };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(() => done(true), () => done(false));
+      } else {
+        try { const t = document.createElement('textarea'); t.value = txt; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); done(true); }
+        catch (e) { done(false); }
+      }
+    }
+
     function openPreviewModal(index) {
       if (!window.currentCreatives || !window.currentCreatives[index]) {
         alert('소재 정보를 찾을 수 없습니다.');
@@ -8269,6 +8338,16 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
           ${insightBlocks}
           ${metricsHtml}
           ${signalsBlock}
+          <details class="modal-collapse" style="margin-top:16px;">
+            <summary>📋 제작 브리프 생성 (이터레이션 지시서)</summary>
+            <div style="margin-top:8px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                <span style="font-size:11.5px;color:#9ca3af;">슬롯 1·2·3 = 태그·실적 자동 · 4·5·6 = 담당자/브랜드브리프 확정</span>
+                <button type="button" onclick="copyProductionBrief(this)" style="padding:4px 12px;font-size:12px;font-weight:600;border:1px solid #e5e7eb;border-radius:6px;background:#fff;color:#374151;cursor:pointer;">복사</button>
+              </div>
+              <pre id="briefText" style="margin:0;padding:12px 14px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;line-height:1.55;white-space:pre-wrap;word-break:break-word;font-family:ui-monospace,Menlo,Consolas,monospace;color:#1f2937;">${escapeHtml(buildProductionBrief(creative))}</pre>
+            </div>
+          </details>
           ${trendBlock}
           ${hasUrl ? `
           <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e5e7eb;">
