@@ -8131,6 +8131,10 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       </div>`;
     }
 
+    // 브랜드 브리프(타이틀별) 1회 로드 — 제작 브리프 슬롯 4·6 주입원. 실패 시 무시(플레이스홀더 폴백).
+    window._brandBriefs = window._brandBriefs || null;
+    fetch('js/brand_briefs.json').then(r => r.ok ? r.json() : null).then(d => { if (d) window._brandBriefs = d; }).catch(() => {});
+
     // #15 프로토타입: 위닝 소재 → 제작 브리프(이터레이션 지시서) 자동 조립.
     //   슬롯 1·2·3 = meta 태그·실적 자동 채움 / 4·5·6 = 사람 확정 플레이스홀더.
     //   규격: docs/제작브리프_템플릿_v0.md · 태그축: docs/위닝요소_태그스키마_v0.md
@@ -8143,9 +8147,16 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       const 유형 = creative.유형 || '-';
       const isVid = 유형 === 'VID';
       const 사유 = `코호트 대비 ${val(creative.등급) || '미평가'}${creative.Rank ? ` · Rank #${creative.Rank}` : ''}`;
-      const chars = arr(m.main_characters);
-      const tone = val(m.color_tone || m.title_specific_theme);
+      // 슬롯 4·6 = 브랜드 브리프(js/brand_briefs.json, 타이틀별) 우선 → meta 폴백 → 플레이스홀더.
+      const _tid = (window.DataSource && DataSource.getActiveTitleId && DataSource.getActiveTitleId()) || '';
+      const bb = (window._brandBriefs && window._brandBriefs[_tid]) || {};
+      const chars = arr(m.main_characters) || (bb.characters || '');
+      const tone = val(bb.tone || m.color_tone || m.title_specific_theme);
+      const ipSafe = Array.isArray(bb.ip_safe) && bb.ip_safe.length
+        ? bb.ip_safe.map(s => `\n                  · ${s}`).join('')
+        : ' (원본 리소스 변형 금지선 · 금칙 표현 — 브랜드 브리프)';
       const cta = val(m.cta_type);
+      const ctaTone = bb.cta_tone ? ` · 톤: ${bb.cta_tone}` : '';
       const asset = m['링크'] || creative.이미지링크 || creative.파일명 || (m['파일명'] || '') || '—';
       const 비율 = isVid ? '9:16 · 15s(원본 길이 기준 컷 변주 테스트)' : '1200x628 / 1200x1500 등 사이즈 배리';
       return [
@@ -8173,7 +8184,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         '[4] 브랜드 결합 슬롯  ※ 브랜드 브리프에서 주입',
         `  · 등장 캐릭터 : ${chars || '(브랜드 브리프)'}`,
         `  · 세계관/톤   : ${tone === '—' ? '(브랜드 브리프)' : tone}`,
-        `  · IP 세이프   : (원본 리소스 변형 금지선 · 금칙 표현 — 브랜드 브리프)`,
+        `  · IP 세이프   :${ipSafe}`,
         '',
         '[5] 에셋 지정',
         `  · 원본 에셋   : ${asset}`,
@@ -8182,7 +8193,8 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         '[6] 생성 파라미터',
         `  · 비율/길이   : ${비율}`,
         `  · 언어        : ${val(m['언어']) === '—' ? 'KR' : val(m['언어'])}`,
-        `  · CTA 문구    : ${cta === '—' ? '(cta_type 미태깅 — 담당자 지정)' : cta + ' 기반'}`,
+        `  · CTA 문구    : ${cta === '—' ? '(cta_type 미태깅 — 담당자 지정)' : cta + ' 기반'}${ctaTone}`,
+        ...(bb.slogan ? [`  · 슬로건 참고 : ${bb.slogan}`] : []),
         '────────────────────────────────────────',
       ].join('\n');
     }
