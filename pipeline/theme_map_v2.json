@@ -1,0 +1,352 @@
+{
+ "map": {
+  "AImodePV": {
+   "primary": "편의성(자동·방치)",
+   "secondary": [],
+   "core_usp": "편의성형",
+   "review": ""
+  },
+  "USPAIMode": {
+   "primary": "편의성(자동·방치)",
+   "secondary": [],
+   "core_usp": "편의성형",
+   "review": ""
+  },
+  "USPArtisan": {
+   "primary": "수집·육성",
+   "secondary": [
+    "전투 쾌감"
+   ],
+   "core_usp": "전략경쟁형",
+   "review": ""
+  },
+  "USPVaultofMidas": {
+   "primary": "보상·혜택",
+   "secondary": [
+    "수집·육성"
+   ],
+   "core_usp": "혜택형",
+   "review": "검수"
+  },
+  "ArtisanReward": {
+   "primary": "보상·혜택",
+   "secondary": [
+    "수집·육성"
+   ],
+   "core_usp": "혜택형",
+   "review": ""
+  },
+  "CharacterName": {
+   "primary": "N/A:CTA",
+   "secondary": [],
+   "core_usp": "혜택형",
+   "review": ""
+  },
+  "CharacterNameEvent": {
+   "primary": "N/A:CTA",
+   "secondary": [],
+   "core_usp": "혜택형",
+   "review": ""
+  },
+  "CineIngame": {
+   "primary": "전투 쾌감",
+   "secondary": [
+    "그래픽·비주얼"
+   ],
+   "core_usp": "감성유대형",
+   "review": ""
+  },
+  "CinematicPV": {
+   "primary": "스토리·세계관",
+   "secondary": [
+    "그래픽·비주얼"
+   ],
+   "core_usp": "감성유대형",
+   "review": ""
+  },
+  "ClassKnight": {
+   "primary": "전투 쾌감",
+   "secondary": [
+    "IP·캐릭터"
+   ],
+   "core_usp": "전략경쟁형",
+   "review": ""
+  },
+  "ClassBerserker": {
+   "primary": "전투 쾌감",
+   "secondary": [
+    "IP·캐릭터"
+   ],
+   "core_usp": "전략경쟁형",
+   "review": ""
+  },
+  "ClassAssassin": {
+   "primary": "전투 쾌감",
+   "secondary": [
+    "IP·캐릭터"
+   ],
+   "core_usp": "전략경쟁형",
+   "review": ""
+  },
+  "ClassRanger": {
+   "primary": "전투 쾌감",
+   "secondary": [
+    "IP·캐릭터"
+   ],
+   "core_usp": "전략경쟁형",
+   "review": ""
+  },
+  "ClassElimentalist": {
+   "primary": "전투 쾌감",
+   "secondary": [
+    "IP·캐릭터"
+   ],
+   "core_usp": "전략경쟁형",
+   "review": ""
+  },
+  "ClassOracle": {
+   "primary": "전투 쾌감",
+   "secondary": [
+    "IP·캐릭터"
+   ],
+   "core_usp": "전략경쟁형",
+   "review": ""
+  },
+  "ClassBlessed": {
+   "primary": "전투 쾌감",
+   "secondary": [
+    "IP·캐릭터"
+   ],
+   "core_usp": "전략경쟁형",
+   "review": ""
+  },
+  "ClassArtisan": {
+   "primary": "수집·육성",
+   "secondary": [
+    "전투 쾌감",
+    "IP·캐릭터"
+   ],
+   "core_usp": "전략경쟁형",
+   "review": ""
+  },
+  "DirInsight": {
+   "primary": "전투 쾌감",
+   "secondary": [
+    "스토리·세계관"
+   ],
+   "core_usp": "감성유대형",
+   "review": ""
+  },
+  "Dirguide": {
+   "primary": "수집·육성",
+   "secondary": [
+    "전투 쾌감"
+   ],
+   "core_usp": "전략경쟁형",
+   "review": ""
+  },
+  "Dirguide-Artisan": {
+   "primary": "수집·육성",
+   "secondary": [
+    "전투 쾌감"
+   ],
+   "core_usp": "전략경쟁형",
+   "review": ""
+  },
+  "GamePreview": {
+   "primary": "전투 쾌감",
+   "secondary": [
+    "그래픽·비주얼"
+   ],
+   "core_usp": "전략경쟁형",
+   "review": ""
+  },
+  "Grandopen": {
+   "primary": "N/A:고지",
+   "secondary": [],
+   "core_usp": "대세감",
+   "review": ""
+  },
+  "GrowthEvent": {
+   "primary": "보상·혜택",
+   "secondary": [
+    "수집·육성"
+   ],
+   "core_usp": "혜택형",
+   "review": ""
+  },
+  "Keyvisual": {
+   "primary": "그래픽·비주얼",
+   "secondary": [
+    "IP·캐릭터"
+   ],
+   "core_usp": "감성유대형",
+   "review": ""
+  },
+  "LaunchDate": {
+   "primary": "N/A:고지",
+   "secondary": [],
+   "core_usp": "대세감",
+   "review": ""
+  },
+  "LaunchDatePV": {
+   "primary": "N/A:고지",
+   "secondary": [
+    "스토리·세계관"
+   ],
+   "core_usp": "대세감",
+   "review": "검수"
+  },
+  "LaunchEvent": {
+   "primary": "보상·혜택",
+   "secondary": [],
+   "core_usp": "혜택형",
+   "review": ""
+  },
+  "LaunchPV": {
+   "primary": "스토리·세계관",
+   "secondary": [
+    "전투 쾌감"
+   ],
+   "core_usp": "감성유대형",
+   "review": ""
+  },
+  "LaunchReward": {
+   "primary": "보상·혜택",
+   "secondary": [],
+   "core_usp": "혜택형",
+   "review": ""
+  },
+  "MMORPG": {
+   "primary": "커뮤니티·길드",
+   "secondary": [
+    "경쟁(PvP)"
+   ],
+   "core_usp": "대세감",
+   "review": "검수"
+  },
+  "Market1st": {
+   "primary": "N/A:고지",
+   "secondary": [],
+   "core_usp": "대세감",
+   "review": ""
+  },
+  "ModelID": {
+   "primary": "IP·캐릭터",
+   "secondary": [
+    "스토리·세계관"
+   ],
+   "core_usp": "감성유대형",
+   "review": "검수"
+  },
+  "ModelGamePlay": {
+   "primary": "IP·캐릭터",
+   "secondary": [
+    "전투 쾌감"
+   ],
+   "core_usp": "감성유대형",
+   "review": "검수"
+  },
+  "PandoraMaking": {
+   "primary": "스토리·세계관",
+   "secondary": [
+    "IP·캐릭터"
+   ],
+   "core_usp": "감성유대형",
+   "review": ""
+  },
+  "Pandorastory": {
+   "primary": "스토리·세계관",
+   "secondary": [
+    "그래픽·비주얼"
+   ],
+   "core_usp": "감성유대형",
+   "review": ""
+  },
+  "NewServer": {
+   "primary": "N/A:고지",
+   "secondary": [],
+   "core_usp": "대세감",
+   "review": ""
+  },
+  "PR": {
+   "primary": "N/A:고지",
+   "secondary": [],
+   "core_usp": "대세감",
+   "review": "검수"
+  },
+  "Showcase": {
+   "primary": "N/A:고지",
+   "secondary": [],
+   "core_usp": "대세감",
+   "review": "검수"
+  },
+  "PreDownload": {
+   "primary": "N/A:CTA",
+   "secondary": [],
+   "core_usp": "혜택형",
+   "review": ""
+  },
+  "PreReward": {
+   "primary": "보상·혜택",
+   "secondary": [],
+   "core_usp": "혜택형",
+   "review": ""
+  },
+  "PreregPV": {
+   "primary": "스토리·세계관",
+   "secondary": [
+    "그래픽·비주얼",
+    "전투 쾌감"
+   ],
+   "core_usp": "감성유대형",
+   "review": "검수"
+  },
+  "Region": {
+   "primary": "그래픽·비주얼",
+   "secondary": [
+    "스토리·세계관"
+   ],
+   "core_usp": "감성유대형",
+   "review": ""
+  },
+  "Universe": {
+   "primary": "스토리·세계관",
+   "secondary": [
+    "그래픽·비주얼"
+   ],
+   "core_usp": "감성유대형",
+   "review": ""
+  }
+ },
+ "counts": {
+  "total": 153,
+  "primary": {
+   "N/A:고지": 19,
+   "편의성(자동·방치)": 3,
+   "보상·혜택": 20,
+   "전투 쾌감": 39,
+   "수집·육성": 10,
+   "스토리·세계관": 33,
+   "그래픽·비주얼": 15,
+   "N/A:CTA": 6,
+   "IP·캐릭터": 5,
+   "커뮤니티·길드": 3
+  },
+  "secondary": {
+   "수집·육성": 8,
+   "스토리·세계관": 21,
+   "전투 쾌감": 23,
+   "그래픽·비주얼": 35,
+   "IP·캐릭터": 37,
+   "경쟁(PvP)": 3
+  },
+  "core_usp": {
+   "대세감": 22,
+   "편의성형": 3,
+   "혜택형": 26,
+   "감성유대형": 63,
+   "전략경쟁형": 39
+  }
+ }
+}
