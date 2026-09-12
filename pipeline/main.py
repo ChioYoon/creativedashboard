@@ -44,6 +44,7 @@ from collections import defaultdict
 
 from .cache import TagCache, file_sha256
 from .campaign_canonical import build_campaign_canonical, resolve_campaign_media
+from .content_theme import assign_theme as assign_content_theme
 from .media_normalize import normalize_media, unmapped_media
 from .mmp_metrics import aggregate_rows_total, compute_mmp_quality
 from .scanner import scan_creative_folders, scan_by_filename, summarize
@@ -1142,6 +1143,8 @@ def run(cfg: dict) -> dict:
         _strength_items = tag_dict.get("strengths", []) or []
         _weakness_items = tag_dict.get("weaknesses", []) or []
         _test_items = tag_dict.get("test_ideas", []) or []
+        _concept = filename_to_concept(rep.name) or c.creative_name
+        _ct = assign_content_theme(_concept)  # 훅 매핑 결정적 룩업(무Gemini). 신규 훅=N/A:미상+검수
         record = CreativeRecord(
             creative_id=c.creative_name,
             소재명=c.creative_name,
@@ -1151,7 +1154,10 @@ def run(cfg: dict) -> dict:
             사이즈=meta.get("resolution"),
             언어=meta.get("lang"),
             링크=preview_url,  # Stage 5-D: Google Ads image_asset.full_size.url / youtube URL 자동 주입
-            creative_concept=filename_to_concept(rep.name) or c.creative_name,  # T열 정규화 (fallback=폴더명)
+            creative_concept=_concept,  # T열 정규화 (fallback=폴더명)
+            theme_primary=_ct["theme_primary"],
+            theme_secondary=_ct["theme_secondary"],
+            theme_reviewed=_ct["theme_reviewed"],
             hooking_strategy=tag_dict.get("hooking_strategy"),
             USP=tag_dict.get("core_usp"),
             art_style=tag_dict.get("visual_style"),
@@ -1275,6 +1281,22 @@ def run(cfg: dict) -> dict:
     out_path.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
     )
+
+    # content_theme 축 판정 산출(R팀 브랜드브리프 §5-1 연동). 파일럿·실패 시 스킵 — 본 파이프라인 무영향.
+    if not cfg.get("pilot"):
+        try:
+            from .axis_verdict import build_for_title
+            _today = datetime.now(KST).date()
+            _wf = (_today - timedelta(days=37)).isoformat()
+            _wt = (_today - timedelta(days=8)).isoformat()
+            axis = build_for_title(payload["creatives"], cfg["title"], win_from=_wf, win_to=_wt)
+            axis["active"] = any(axis["stages"].get(s) for s in ("P", "L"))
+            axis_path = cfg["output_dir"] / f"{cfg['title']}_axis.json"
+            axis_path.write_text(json.dumps(axis, ensure_ascii=False, indent=2), encoding="utf-8")
+            _nax = sum(len(axis["stages"].get(s, [])) for s in ("P", "L"))
+            print(f"   축 판정:       {axis_path.name} (활성 {axis['active']} · 축 {_nax} · 제외 {axis['excluded_ratio']})")
+        except Exception as e:  # noqa: BLE001 — 축 산출 실패가 태깅 결과를 막지 않도록
+            print(f"   [축 판정 스킵] {e}")
 
     print()
     print(f"✅ 완료 ({duration:.1f}초)")

@@ -471,6 +471,12 @@ class CreativeRecord(BaseModel):
     color_tone: Optional[str] = Field(None, description="핵심 컬러 톤 (mmorpg 한정)")
     cta_type: Optional[str] = Field(None, description="CTA 설계 유형: 보상 보증형/마켓 버튼 모사형/상태 변화 유도형/로고 정적 노출형, 없으면 null (mmorpg 한정)")
 
+    # content_theme (콘텐츠 테마 10축, core_usp와 병존 — R팀 정의서 v2.0). 훅 매핑(content_theme.py) 산출.
+    #   theme_primary=1개(N/A:사유 가능) · theme_secondary=0~2 · theme_reviewed=검수 여부(판정 투입 게이트)
+    theme_primary: Optional[str] = Field(None, description="콘텐츠 테마 primary (축 판정 기준). N/A:고지/CTA/미상 가능")
+    theme_secondary: list[str] = Field(default_factory=list, description="콘텐츠 테마 secondary 0~2 (조회·교차분석 전용)")
+    theme_reviewed: bool = Field(False, description="content_theme 인간 검수 여부. False면 축 판정 집계 제외(정의서 §6)")
+
     # 부가 메타 (Pydantic v2는 leading underscore 필드명을 금지하므로 일반 이름 사용)
     tagged_at: Optional[str] = None  # ISO 8601 (Gemini 태깅 시각)
     gemini_model: Optional[str] = None
