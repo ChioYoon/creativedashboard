@@ -9,6 +9,7 @@ CLOOP은 `status: frozen` 브랜드 브리프만 소비해야 함(미승인 작�
 - 드리프트 감지: frozen 브리프 버전 ↔ brand_briefs.json `_source` 버전 불일치 시 경고.
 """
 from __future__ import annotations
+import json
 import re
 from pathlib import Path
 
@@ -63,6 +64,62 @@ def drift_warning(path: str | Path, brand_briefs_source: str | None) -> str | No
     ver = st.get("version") or ""
     if ver and ver not in (brand_briefs_source or ""):
         return f"[brand_brief 드리프트] frozen {ver} — brand_briefs.json _source='{brand_briefs_source}' 미반영. 수동 동기화 필요"
+    return None
+
+
+def load_structured(json_path: str | Path) -> dict | None:
+    """구조화 브랜드브리프 JSON(회신 v1.5 §3, brief_{title}.json) 로드 — frozen 만 반환.
+
+    prose .txt frontmatter 게이트보다 우선(1순위). 파일/frozen 아니면 None → txt 폴백.
+    """
+    p = Path(json_path)
+    if not p.exists():
+        return None
+    try:
+        d = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    return d if (d.get("status") or "").lower() == "frozen" else None
+
+
+def to_brand_brief_entry(d: dict) -> dict:
+    """구조화 브리프 → js/brand_briefs.json 엔트리(제작 브리프 슬롯4·6 주입원)로 변환."""
+    tone = d.get("tone", {}) or {}
+    pal = tone.get("palette", {}) or {}
+    ch = d.get("characters", {}) or {}
+    slog = d.get("slogan", {}) or {}
+    ip = list(d.get("ip_safe", []) or [])
+    for b in (d.get("content_boundary", {}) or {}).get("blocked", []) or []:
+        ip.append("미출시 콘텐츠 소구 금지: %s(%s)" % (b.get("name"), b.get("opens_at", "")))
+    chars = " / ".join(ch.get("classes", []))
+    if ch.get("key_npc"):
+        chars += " · NPC " + "·".join(ch["key_npc"])
+    if ch.get("player_role"):
+        chars += " · 역할 " + ch["player_role"]
+    palette = "/".join(v for v in (pal.get("background"), pal.get("main"), pal.get("point")) if v)
+    tone_s = " · ".join(tone.get("art", []))
+    if palette:
+        tone_s += " · 컬러 " + palette
+    cta = " · ".join(tone.get("keywords", []))
+    if tone.get("avoid_format"):
+        cta += " · 지양: " + tone["avoid_format"]
+    return {
+        "_source": "%s (frozen %s, structured brief)" % (d.get("version"), d.get("frozen_at")),
+        "characters": chars,
+        "tone": tone_s,
+        "slogan": " = ".join(slog.get("current", [])),
+        "cta_tone": cta,
+        "ip_safe": ip,
+    }
+
+
+def get_brief_entry(title, json_path=None, txt_path=None):
+    """구조화 JSON 1순위 → txt frontmatter 폴백(게이트만). 둘 다 없으면 None."""
+    d = load_structured(json_path) if json_path else None
+    if d:
+        return to_brand_brief_entry(d)
+    if txt_path and should_fetch(txt_path):
+        return None  # frozen 확인되나 콘텐츠 파싱 미지원 → 기존 brand_briefs.json 유지 신호
     return None
 
 

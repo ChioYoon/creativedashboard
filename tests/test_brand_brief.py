@@ -48,3 +48,37 @@ def test_drift_warning(tmp_path):
 def test_missing_file():
     assert brief_status("no/such/brief.txt") is None
     assert should_fetch("no/such/brief.txt") is False
+
+
+_STRUCT = {
+    "status": "frozen", "version": "v1.1", "frozen_at": "2026-09-12",
+    "slogan": {"current": ["A", "B"], "deprecated": ["old"]},
+    "tone": {"keywords": ["웅장"], "art": ["UE5", "포토리얼"],
+             "palette": {"background": "백색", "main": "황금색", "point": "청록색"},
+             "avoid_format": "린나류"},
+    "characters": {"classes": ["나이트", "아티산"], "key_npc": ["판도라"], "player_role": "아르콘"},
+    "ip_safe": ["연령 19세"],
+    "content_boundary": {"blocked": [{"name": "아카디아 제전", "opens_at": "2026-10-28"}]},
+}
+
+
+def test_load_structured_frozen_gate(tmp_path):
+    import json
+    fp = tmp_path / "brief.json"; fp.write_text(json.dumps(_STRUCT, ensure_ascii=False), encoding="utf-8")
+    from pipeline.brand_brief import load_structured
+    assert load_structured(fp)["version"] == "v1.1"
+    # draft → None
+    draft = dict(_STRUCT, status="draft")
+    fp.write_text(json.dumps(draft, ensure_ascii=False), encoding="utf-8")
+    assert load_structured(fp) is None
+
+
+def test_to_brand_brief_entry():
+    from pipeline.brand_brief import to_brand_brief_entry
+    e = to_brand_brief_entry(_STRUCT)
+    assert e["slogan"] == "A = B"
+    assert "나이트" in e["characters"] and "판도라" in e["characters"]
+    assert "백색/황금색/청록색" in e["tone"]
+    assert "린나류" in e["cta_tone"]
+    # content_boundary.blocked → ip_safe 가드로 편입
+    assert any("아카디아 제전" in s for s in e["ip_safe"])
