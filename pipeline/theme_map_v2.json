@@ -317,6 +317,22 @@
    ],
    "core_usp": "감성유대형",
    "review": ""
+  },
+  "Colosseum": {
+   "primary": "경쟁(PvP)",
+   "secondary": [
+    "전투 쾌감"
+   ],
+   "core_usp": "전략경쟁형",
+   "review": ""
+  },
+  "Hermesstory": {
+   "primary": "스토리·세계관",
+   "secondary": [
+    "IP·캐릭터"
+   ],
+   "core_usp": "감성유대형",
+   "review": "검수"
   }
  },
  "counts": {
