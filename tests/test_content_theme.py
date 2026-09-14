@@ -35,6 +35,34 @@ def test_new_hook_flagged():
     assert r["review_flag"] == "검수"
 
 
+def test_typo_alias_resolves(tmp_path):
+    # 오타 훅 → 별칭 → 정규 매핑 (theme_map v2.1)
+    m = load_map()
+    assert assign_theme("L-Genre-MarketReveiw-01-UA", m)["theme_primary"] == "N/A:고지"       # Reveiw→Review
+    assert assign_theme("P-Ingame-ClassElimentalist-01-PV", m)["theme_primary"] == "전투 쾌감"  # Elimentalist→Elementalist
+    # 정규 철자도 동일 매핑
+    assert assign_theme("P-Ingame-ClassElementalist-01-PV", m)["theme_primary"] == "전투 쾌감"
+
+
+def test_colosseum_pvp():
+    # 미제작이던 경쟁(PvP) 축이 신규 훅으로 채워짐
+    assert assign_theme("L-Event-Colosseum-01-DA", load_map())["theme_primary"] == "경쟁(PvP)"
+
+
+def test_ld_launch_date_variant_flag():
+    # LD = Launch Date 변형: theme 통합 + launch_date_variant 플래그 보존 (패치 v2.1 correction)
+    r = assign_theme("L-Ingame-ClassRangerLD-01-PV", load_map())
+    assert r["theme_primary"] == "전투 쾌감" and r["launch_date_variant"] is True
+    r2 = assign_theme("P-Ingame-ClassRanger-01-PV", load_map())
+    assert r2["theme_primary"] == "전투 쾌감" and r2["launch_date_variant"] is False
+
+
+def test_partner_field_preserved():
+    # 컬쳐랜드 제휴 소재 — partner 필드 보존, 판정 대상 유지
+    assert assign_theme("L-Genre-CL-Cash-PV", load_map())["partner"] == "cultureland"
+    assert assign_theme("L-Genre-CL-Brand-PV", load_map())["partner"] == "cultureland"
+
+
 def test_reviewed_defaults_false():
     # §6 검수 전 판정 미투입 — 항상 False 시작
     assert assign_theme("P-Slogan-CinematicPV30s-01-PV", load_map())["theme_reviewed"] is False

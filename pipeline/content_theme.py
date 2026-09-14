@@ -13,6 +13,12 @@ import re
 from pathlib import Path
 
 _MAP_CACHE: dict | None = None
+_ALIAS_CACHE: dict | None = None
+
+
+def _load_raw(repo_root: str | Path | None = None) -> dict:
+    p = (Path(repo_root) if repo_root else Path(__file__).parent) / "theme_map_v2.json"
+    return json.loads(p.read_text(encoding="utf-8"))
 
 
 def load_map(repo_root: str | Path | None = None) -> dict:
@@ -20,24 +26,39 @@ def load_map(repo_root: str | Path | None = None) -> dict:
     global _MAP_CACHE
     if _MAP_CACHE is not None and repo_root is None:
         return _MAP_CACHE
-    p = (Path(repo_root) if repo_root else Path(__file__).parent) / "theme_map_v2.json"
-    m = json.loads(p.read_text(encoding="utf-8")).get("map", {})
+    m = _load_raw(repo_root).get("map", {})
     if repo_root is None:
         _MAP_CACHE = m
     return m
 
 
-def normalize_hook(tok: str) -> str:
-    """정의서 §2-4 정규화: 길이(15s/30s)·LD·2자리번호 접미 제거. 반복 적용."""
+def load_alias(repo_root: str | Path | None = None) -> dict:
+    """오타→정규 훅 별칭(theme_map v2.1 §alias). 정규화 직후·맵조회 직전 적용."""
+    global _ALIAS_CACHE
+    if _ALIAS_CACHE is not None and repo_root is None:
+        return _ALIAS_CACHE
+    a = _load_raw(repo_root).get("alias", {})
+    if repo_root is None:
+        _ALIAS_CACHE = a
+    return a
+
+
+def normalize_hook(tok: str, return_flags: bool = False):
+    """정규화(v2.1 순서): LD(Launch Date)·길이(15s/30s)·2자리번호 접미 제거. 반복 적용.
+    LD 접미는 '기존 소재 + 론칭일 부가' → theme 통합하되 launch_date_variant 플래그 보존(패치 correction)."""
     t = str(tok).strip()
+    ld = False
     prev = None
     while t != prev:
         prev = t
+        t2 = re.sub(r"LD$", "", t)
+        if t2 != t:
+            ld = True
+        t = t2
         t = re.sub(r"(?:15s|30s)$", "", t)
-        t = re.sub(r"LD$", "", t)
         t = re.sub(r"\d{2}$", "", t)
         t = t.rstrip("-")
-    return t
+    return (t, ld) if return_flags else t
 
 
 def _hook_candidates(concept: str) -> list[str]:
@@ -58,19 +79,25 @@ def assign_theme(concept: str, m: dict | None = None) -> dict:
     theme_reviewed 는 항상 False 로 시작(§6 검수 절차 통과 전 판정 미투입).
     """
     m = m if m is not None else load_map()
+    alias = load_alias()
     for cand in _hook_candidates(concept):
-        for key in (cand, normalize_hook(cand)):
-            if key and key in m:
-                e = m[key]
-                return {
-                    "theme_primary": e["primary"],
-                    "theme_secondary": list(e.get("secondary", [])),
-                    "core_usp": e.get("core_usp"),
-                    "theme_reviewed": False,
-                    "matched_hook": key,
-                    "new_hook": False,
-                    "review_flag": e.get("review", ""),
-                }
+        # v2.1 순서: ① alias(오타→정규) 최우선 → ② LD/길이/번호 접미 제거(+LD 플래그) → ③ 조회
+        a = alias.get(cand, cand)
+        base, ld = normalize_hook(a, return_flags=True)
+        key = base if base in m else alias.get(base)
+        if key and key in m:
+            e = m[key]
+            return {
+                "theme_primary": e["primary"],
+                "theme_secondary": list(e.get("secondary", [])),
+                "core_usp": e.get("core_usp"),
+                "theme_reviewed": False,
+                "matched_hook": key,
+                "new_hook": False,
+                "review_flag": e.get("review", ""),
+                "launch_date_variant": ld,
+                "partner": e.get("partner"),
+            }
     return {
         "theme_primary": "N/A:미상",
         "theme_secondary": [],
@@ -79,6 +106,8 @@ def assign_theme(concept: str, m: dict | None = None) -> dict:
         "matched_hook": None,
         "new_hook": True,
         "review_flag": "검수",
+        "launch_date_variant": False,
+        "partner": None,
     }
 
 
