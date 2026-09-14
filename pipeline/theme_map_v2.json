@@ -333,6 +333,54 @@
    ],
    "core_usp": "감성유대형",
    "review": "검수"
+  },
+  "NewServerDio": {
+   "primary": "N/A:고지",
+   "secondary": [],
+   "core_usp": "대세감",
+   "review": ""
+  },
+  "MarketReview": {
+   "primary": "N/A:고지",
+   "secondary": [],
+   "core_usp": "대세감",
+   "review": ""
+  },
+  "TOPMMORPG": {
+   "primary": "N/A:고지",
+   "secondary": [
+    "커뮤니티·길드"
+   ],
+   "core_usp": "대세감",
+   "review": "검수"
+  },
+  "YourMMORPG": {
+   "primary": "커뮤니티·길드",
+   "secondary": [],
+   "core_usp": "대세감",
+   "review": "검수"
+  },
+  "CL-Brand": {
+   "primary": "그래픽·비주얼",
+   "secondary": [
+    "스토리·세계관"
+   ],
+   "core_usp": "감성유대형",
+   "review": "검수"
+  },
+  "CL-Cash": {
+   "primary": "보상·혜택",
+   "secondary": [],
+   "core_usp": "혜택형",
+   "review": "검수"
+  },
+  "ClassElementalist": {
+   "primary": "전투 쾌감",
+   "secondary": [
+    "IP·캐릭터"
+   ],
+   "core_usp": "전략경쟁형",
+   "review": ""
   }
  },
  "counts": {
@@ -364,5 +412,10 @@
    "감성유대형": 63,
    "전략경쟁형": 39
   }
- }
+ },
+ "alias": {
+  "MarketReveiw": "MarketReview",
+  "ClassElimentalist": "ClassElementalist"
+ },
+ "schema_version": "theme_map-2.1"
 }
