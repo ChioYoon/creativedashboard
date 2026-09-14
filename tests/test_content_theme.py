@@ -66,3 +66,40 @@ def test_partner_field_preserved():
 def test_reviewed_defaults_false():
     # §6 검수 전 판정 미투입 — 항상 False 시작
     assert assign_theme("P-Slogan-CinematicPV30s-01-PV", load_map())["theme_reviewed"] is False
+
+
+# ── 도원암귀 전용 훅맵 (theme_map_tougenanki.json, R팀 회신 v1) ──
+
+def test_tougenanki_title_map():
+    # 도원암귀 네이밍은 zeus 맵서 전부 미매핑 → 전용 맵으로 매칭
+    assert assign_theme("FGT-IP-MudanoSSR01-DA")["new_hook"] is True                    # 기본(zeus) 맵: 미매핑
+    r = assign_theme("FGT-IP-MudanoSSR01-DA", title="tougenanki")
+    assert r["theme_primary"] == "IP·캐릭터" and r["new_hook"] is False
+
+
+def test_tougenanki_one_digit_variation():
+    # 도원암귀 정규화: \d{1,2}$ — 1자리 번호(Cutscene0)도 제거. zeus \d{2}$ 였으면 미매칭
+    assert assign_theme("P-Character-Cutscene0-DA", title="tougenanki")["theme_primary"] == "스토리·세계관"
+
+
+def test_tougenanki_alias_typo_and_case():
+    # alias 3종: 오타 + 대소문자
+    assert assign_theme("P-Battle-Freindship02-DA", title="tougenanki")["theme_primary"] == "스토리·세계관"   # Freindship→Friendship
+    assert assign_theme("L-Story-OnivsMomotaro01-DA", title="tougenanki")["theme_primary"] == "스토리·세계관"  # 대소문자
+    assert assign_theme("L-Story-kyotostory01-DA", title="tougenanki")["theme_primary"] == "스토리·세계관"     # 선두 소문자
+
+
+def test_tougenanki_intent_axis_and_flags():
+    # intent_axis(2번째 세그) 보존 + 훅 flags(ssr_grade 등) 보존
+    r = assign_theme("P-Reward-MudanoSSR01-DA", title="tougenanki")
+    assert r["intent_axis"] == "Reward"                 # content_theme 판정엔 미사용, 별도 보존
+    assert "ssr_grade" in r["theme_flags"]
+    # zeus 소재는 intent_axis 없음(2번째 세그=Category)
+    assert assign_theme("P-Ingame-Region-Thebes-UA")["intent_axis"] is None
+
+
+def test_tougenanki_new_hook_review_queue():
+    # gate_binding.new_hook_policy=REVIEW_QUEUE — 미등록 훅은 자동분류 없이 N/A:미상+검수
+    r = assign_theme("P-Battle-TotallyUnknownHook-01-DA", title="tougenanki")
+    assert r["theme_primary"] == "N/A:미상" and r["review_flag"] == "검수"
+    assert r["intent_axis"] == "Battle"                 # intent는 세그먼트라 미등록 훅에도 잡힘

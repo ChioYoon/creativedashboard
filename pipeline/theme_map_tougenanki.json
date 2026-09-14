@@ -1,0 +1,541 @@
+{
+  "meta": {
+    "title": "tougenanki",
+    "title_kr": "도원암귀 크림슨 인페르노",
+    "version": "1.0",
+    "issued": "2026-09-14",
+    "issuer": "R마케팅팀 (UA 총괄)",
+    "basis": "tougenanki_소재목록.csv 41건 / 훅_추출 37종 (2026-09-14 CLOOP 제공)",
+    "vocabulary": "통제어휘_content_theme_정의서 v2.0 (10축) + v2.1 패치",
+    "brief_ref": "brief_tougenanki.json v1.1 (frozen 2026-09-11)",
+    "normalized_hooks": 28,
+    "scope_note": "본 맵은 도원암귀 전용이다. 제우스 theme_map_v2와 훅 네임스페이스가 완전히 분리되므로 병합하지 않는다.",
+    "coverage": "41/41 (100%) · 미매핑 0"
+  },
+  "normalization": {
+    "note": "제우스와 규칙이 다르다. 도원암귀는 LD·15s/30s 접미가 없고, 배리에이션 번호가 1자리인 사례(Cutscene0)가 존재한다.",
+    "order": [
+      "1. 포맷 접미 확인 — 훅_추출 단계에서 이미 제거됨(-DA/-PV/-UA/-EC). 재제거 금지",
+      "2. alias 적용 (오타·대소문자 정규화) — 최우선",
+      "3. 말미 숫자 1~2자리 제거 (배리에이션 번호)",
+      "4. 맵 조회. 미등록이면 review_queue 로 이관 — 자동 분류 금지 (§gate_binding)"
+    ],
+    "variation_regex": "\\d{1,2}$",
+    "removed_suffixes": [],
+    "preserved_tokens": {
+      "TVA": "TV Animation 소재. 원작 애니 영상·컷 사용분. 판권 검수 경로가 게임 자체 에셋과 다르므로 tva_source=true 플래그로 별도 보존",
+      "SSR": "가챠 최고 등급. 캐릭터 카드 비주얼 신호. ssr_grade=true 로 보존",
+      "PV": "캐릭터 개별 프로모션 영상. 훅명 일부이므로 제거하지 않음(예: ShikiPV)"
+    }
+  },
+  "alias": {
+    "Freindship": "Friendship",
+    "OnivsMomotaro": "OniVsMomotaro",
+    "kyotostory": "KyotoStory"
+  },
+  "intent_axis": {
+    "note": "도원암귀 소재명 2번째 세그먼트는 제작 의도 축이다(제우스에 없는 구조). content_theme 판정에는 사용하지 않되(정의서 §2-2 '보이는 것 기준'), 별도 필드로 보존한다. 동일 훅이 서로 다른 intent_axis 로 제작된 충돌 4종은 실물 검수 대상이다.",
+    "values": [
+      "IP",
+      "Battle",
+      "Character",
+      "Gameplay",
+      "Gamer",
+      "Reward",
+      "Story"
+    ],
+    "conflicts": [
+      {
+        "hook": "MudanoSSR",
+        "axes": [
+          "IP",
+          "Reward"
+        ],
+        "count": 3
+      },
+      {
+        "hook": "Friendship",
+        "axes": [
+          "Battle",
+          "Story"
+        ],
+        "count": 4
+      },
+      {
+        "hook": "OniVsMomotaro",
+        "axes": [
+          "Battle",
+          "Character",
+          "Story"
+        ],
+        "count": 3
+      },
+      {
+        "hook": "Skillcard",
+        "axes": [
+          "Character",
+          "Reward"
+        ],
+        "count": 2
+      },
+      {
+        "hook": "Cutscene",
+        "axes": [
+          "Character",
+          "IP"
+        ],
+        "count": 2
+      }
+    ]
+  },
+  "hooks": {
+    "MudanoSSR": {
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "수집·육성"
+      ],
+      "core_usp": "감성유대형",
+      "review": true,
+      "flags": [
+        "ssr_grade",
+        "ip_guard:11항_무다노_웃는표정_금지"
+      ]
+    },
+    "MudanoPV": {
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "전투 쾌감",
+        "그래픽·비주얼"
+      ],
+      "core_usp": "감성유대형",
+      "review": false,
+      "flags": [
+        "ip_guard:11항_무다노_웃는표정_금지"
+      ]
+    },
+    "ShikiPV": {
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "전투 쾌감",
+        "그래픽·비주얼"
+      ],
+      "core_usp": "감성유대형",
+      "review": false,
+      "flags": [
+        "ip_guard:10항_시키_중앙전면_배치"
+      ]
+    },
+    "Shikirage": {
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "전투 쾌감",
+        "스토리·세계관"
+      ],
+      "core_usp": "감성유대형",
+      "review": false,
+      "flags": [
+        "ip_guard:10항_시키_중앙전면_배치"
+      ]
+    },
+    "JinPV": {
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "전투 쾌감",
+        "그래픽·비주얼"
+      ],
+      "core_usp": "감성유대형",
+      "review": false,
+      "flags": [
+        "ip_guard:14항_진172_시키174_스케일차_반영"
+      ]
+    },
+    "HomarePV": {
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "전투 쾌감",
+        "그래픽·비주얼"
+      ],
+      "core_usp": "감성유대형",
+      "review": false,
+      "flags": []
+    },
+    "KyoyaPV": {
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "전투 쾌감",
+        "그래픽·비주얼"
+      ],
+      "core_usp": "감성유대형",
+      "review": true,
+      "flags": [
+        "ip_guard:10항_우선순위_목록외_캐릭터"
+      ]
+    },
+    "TsubakiriPV": {
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "전투 쾌감",
+        "그래픽·비주얼"
+      ],
+      "core_usp": "감성유대형",
+      "review": true,
+      "flags": [
+        "ip_guard:10항_우선순위_목록외_캐릭터",
+        "faction:모모타로"
+      ]
+    },
+    "NerimaOni": {
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "스토리·세계관"
+      ],
+      "core_usp": "감성유대형",
+      "review": false,
+      "flags": [
+        "ip_guard:10항_시키_중앙전면_배치",
+        "faction:오니"
+      ]
+    },
+    "OniPopOut": {
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "그래픽·비주얼"
+      ],
+      "core_usp": "감성유대형",
+      "review": true,
+      "flags": [
+        "ip_guard:12항_일러스트_변경금지"
+      ]
+    },
+    "OniMainTVA": {
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "스토리·세계관"
+      ],
+      "core_usp": "감성유대형",
+      "review": true,
+      "flags": [
+        "tva_source",
+        "ip_guard:원작_애니_영상_별도검수"
+      ]
+    },
+    "RasetsuTVA": {
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "스토리·세계관"
+      ],
+      "core_usp": "감성유대형",
+      "review": true,
+      "flags": [
+        "tva_source",
+        "unknown_referent:Rasetsu"
+      ]
+    },
+    "RasetsuSSR": {
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "수집·육성"
+      ],
+      "core_usp": "감성유대형",
+      "review": true,
+      "flags": [
+        "ssr_grade",
+        "unknown_referent:Rasetsu"
+      ]
+    },
+    "OniMomotaroSSR": {
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "수집·육성",
+        "스토리·세계관"
+      ],
+      "core_usp": "감성유대형",
+      "review": true,
+      "flags": [
+        "ssr_grade",
+        "ip_guard:13항_대립구도_필수"
+      ]
+    },
+    "OniMomotaroTVA": {
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "IP·캐릭터"
+      ],
+      "core_usp": "감성유대형",
+      "review": false,
+      "flags": [
+        "tva_source",
+        "ip_guard:13항_대립구도_필수"
+      ]
+    },
+    "OniVsMomotaro": {
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "전투 쾌감",
+        "IP·캐릭터"
+      ],
+      "core_usp": "감성유대형",
+      "review": false,
+      "flags": [
+        "ip_guard:13항_대립구도_필수",
+        "ip_guard:선악규정_표현_금지"
+      ]
+    },
+    "Friendship": {
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "IP·캐릭터"
+      ],
+      "core_usp": "감성유대형",
+      "review": false,
+      "flags": [
+        "brief:§5-1_서사·관계성"
+      ]
+    },
+    "Cutscene": {
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "그래픽·비주얼"
+      ],
+      "core_usp": "감성유대형",
+      "review": false,
+      "flags": []
+    },
+    "Cinematic": {
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "그래픽·비주얼"
+      ],
+      "core_usp": "감성유대형",
+      "review": false,
+      "flags": []
+    },
+    "KyotoStory": {
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "그래픽·비주얼"
+      ],
+      "core_usp": "감성유대형",
+      "review": true,
+      "flags": [
+        "unknown_referent:교토편_출처확인"
+      ]
+    },
+    "IconicLines": {
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "IP·캐릭터"
+      ],
+      "core_usp": "감성유대형",
+      "review": false,
+      "flags": [
+        "brief:§5-5_VO_수급불가_텍스트연출만",
+        "brief:§5-3_진지한대사_희화화_금지"
+      ]
+    },
+    "Teaser": {
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "그래픽·비주얼"
+      ],
+      "core_usp": "감성유대형",
+      "review": true,
+      "flags": [
+        "conditional:출시고지_요소_있으면_N/A:고지"
+      ]
+    },
+    "Skillcard": {
+      "theme_primary": "전투 쾌감",
+      "theme_secondary": [
+        "수집·육성"
+      ],
+      "core_usp": "전략경쟁형",
+      "review": false,
+      "flags": [
+        "brief:§5-1_전략성_축_결손",
+        "axis_gap:전략성"
+      ]
+    },
+    "SoloKyoya": {
+      "theme_primary": "전투 쾌감",
+      "theme_secondary": [
+        "IP·캐릭터"
+      ],
+      "core_usp": "전략경쟁형",
+      "review": false,
+      "flags": [
+        "ip_guard:10항_우선순위_목록외_캐릭터"
+      ]
+    },
+    "IngamePV": {
+      "theme_primary": "전투 쾌감",
+      "theme_secondary": [
+        "그래픽·비주얼"
+      ],
+      "core_usp": "전략경쟁형",
+      "review": false,
+      "flags": []
+    },
+    "RasetsuBattle": {
+      "theme_primary": "전투 쾌감",
+      "theme_secondary": [
+        "IP·캐릭터"
+      ],
+      "core_usp": "전략경쟁형",
+      "review": true,
+      "flags": [
+        "unknown_referent:Rasetsu"
+      ]
+    },
+    "SkillcardSSR": {
+      "theme_primary": "수집·육성",
+      "theme_secondary": [
+        "전투 쾌감"
+      ],
+      "core_usp": "전략경쟁형",
+      "review": true,
+      "flags": [
+        "ssr_grade",
+        "axis_gap:전략성"
+      ]
+    },
+    "Endcard": {
+      "theme_primary": "N/A:CTA",
+      "theme_secondary": [],
+      "core_usp": "혜택형",
+      "review": false,
+      "flags": [
+        "format_hook",
+        "naming:EC_포맷접미와_중복"
+      ]
+    }
+  },
+  "gate_binding": {
+    "modification_level": "원본유지only",
+    "new_hook_policy": "REVIEW_QUEUE",
+    "rationale": "브리프 §6에서 TrackB(신규 훅)가 blocked_axes 다. 맵에 없는 훅을 Gemini가 §3 판별 기준으로 임의 분류하면 차단된 축을 사후 정당화하는 경로가 된다. 제우스와 정반대 정책이다.",
+    "on_unmapped_hook": [
+      "theme_primary = N/A:미상",
+      "review = true",
+      "축 판정 집계에서 제외",
+      "R마케팅팀 검수 큐로 통보"
+    ]
+  },
+  "stage": {
+    "current": "pre_campaign",
+    "launch_date": null,
+    "axis_judgement": "SKIP — 집행 전. 본 맵은 태깅·분포 조회 전용이며 축 판정(검증/후보/소진)에 투입하지 않는다"
+  },
+  "distribution_41": {
+    "primary": {
+      "IP·캐릭터": {
+        "count": 18,
+        "share": "43.9%"
+      },
+      "스토리·세계관": {
+        "count": 15,
+        "share": "36.6%"
+      },
+      "전투 쾌감": {
+        "count": 5,
+        "share": "12.2%"
+      },
+      "수집·육성": {
+        "count": 1,
+        "share": "2.4%"
+      },
+      "N/A:CTA": {
+        "count": 2,
+        "share": "4.9%"
+      },
+      "그래픽·비주얼": {
+        "count": 0,
+        "share": "0%"
+      },
+      "보상·혜택": {
+        "count": 0,
+        "share": "0%"
+      },
+      "경쟁(PvP)": {
+        "count": 0,
+        "share": "0%"
+      },
+      "편의성(자동·방치)": {
+        "count": 0,
+        "share": "0%"
+      },
+      "향수(레트로)": {
+        "count": 0,
+        "share": "0%"
+      },
+      "커뮤니티·길드": {
+        "count": 0,
+        "share": "0%"
+      }
+    },
+    "core_usp": {
+      "감성유대형": {
+        "count": 33,
+        "share": "80.5%"
+      },
+      "전략경쟁형": {
+        "count": 6,
+        "share": "14.6%"
+      },
+      "혜택형": {
+        "count": 2,
+        "share": "4.9%"
+      },
+      "대세감": {
+        "count": 0,
+        "share": "0%"
+      },
+      "편의성형": {
+        "count": 0,
+        "share": "0%"
+      }
+    },
+    "na_share": "4.9%",
+    "intent_axis": {
+      "Character": 12,
+      "IP": 11,
+      "Reward": 7,
+      "Battle": 4,
+      "Story": 3,
+      "Gameplay": 2,
+      "Gamer": 2
+    }
+  },
+  "open_items": [
+    {
+      "id": "T1",
+      "item": "Rasetsu 지시 대상 확인",
+      "detail": "소재 4건(RasetsuTVA·RasetsuBattle·RasetsuSSR×2). 브랜드 가이드 캐릭터 글로서리·신장 대비표 21명에 없음. 조직명인지 캐릭터명인지 미상",
+      "owner": "R마케팅팀"
+    },
+    {
+      "id": "T2",
+      "item": "KyotoStory 출처 확인",
+      "detail": "교토편이 TV애니 방영분인지 게임 오리지널인지에 따라 tva_source 플래그와 검수 경로가 달라짐",
+      "owner": "R마케팅팀"
+    },
+    {
+      "id": "T3",
+      "item": "SSR 4종 실물 확인",
+      "detail": "보상 아이콘·수량 표기가 있으면 theme_primary 를 보상·혜택으로 전환. 현재는 캐릭터 카드 비주얼로 보고 IP·캐릭터 배정",
+      "owner": "R마케팅팀"
+    },
+    {
+      "id": "T4",
+      "item": "Teaser 성격 확인",
+      "detail": "출시일·사전예약 고지가 주제면 N/A:고지로 전환",
+      "owner": "R마케팅팀"
+    },
+    {
+      "id": "T5",
+      "item": "통제 어휘 '전략성' 축 신설 검토",
+      "detail": "브리프 §5-1 강도 '상' 축인데 10축에 대응값 없음. Skillcard 계열 3건을 전투 쾌감/수집·육성으로 분산 수용 중",
+      "owner": "R마케팅팀 · 분기 개정 회의"
+    }
+  ]
+}

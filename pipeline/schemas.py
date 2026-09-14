@@ -478,6 +478,9 @@ class CreativeRecord(BaseModel):
     theme_reviewed: bool = Field(False, description="content_theme 인간 검수 여부. False면 축 판정 집계 제외(정의서 §6)")
     launch_date_variant: bool = Field(False, description="LD(Launch Date) 접미 변형 여부 — 축 판정 통합, 분석 시 구분(패치 v2.1)")
     theme_partner: Optional[str] = Field(None, description="제휴 소재 파트너(예: cultureland) — 분리 분석용")
+    # 도원암귀 등 intent_axis 구조 맵 전용(그 외 None/[]). content_theme 판정엔 미사용, 조회·검수 신호용.
+    intent_axis: Optional[str] = Field(None, description="제작 의도 축(소재명 2번째 세그, 도원암귀류). '보이는 것' theme와 괴리 측정용")
+    theme_flags: list[str] = Field(default_factory=list, description="훅맵 플래그(tva_source·ssr_grade·ip_guard:*·axis_gap:* 등) — IP검수 경로·결손 축 신호")
 
     # 부가 메타 (Pydantic v2는 leading underscore 필드명을 금지하므로 일반 이름 사용)
     tagged_at: Optional[str] = None  # ISO 8601 (Gemini 태깅 시각)
