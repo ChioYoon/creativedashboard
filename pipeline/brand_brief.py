@@ -82,8 +82,22 @@ def load_structured(json_path: str | Path) -> dict | None:
     return d if (d.get("status") or "").lower() == "frozen" else None
 
 
+def get_cloop_gate(d: dict) -> dict | None:
+    """구조화 브리프의 CLOOP 생성 게이트(modification_level·allowed/blocked_axes). 없으면 None.
+    ⚠️ 소재 생성 자동화(Higgsfield)는 이 게이트를 반드시 준수 — blocked_axes(축4 에셋조합·축5 신규생성·
+    TrackB 신규훅)는 원본유지only IP(도원암귀 등)에서 판권 사고·트레이싱 리스크."""
+    return d.get("cloop_gate")
+
+
+def generation_allowed(gate: dict | None, axis: str) -> bool:
+    """gate.blocked_axes 에 걸리면 False. gate 없으면(제약 없는 IP) True."""
+    if not gate:
+        return True
+    return axis not in (gate.get("blocked_axes") or [])
+
+
 def to_brand_brief_entry(d: dict) -> dict:
-    """구조화 브리프 → js/brand_briefs.json 엔트리(제작 브리프 슬롯4·6 주입원)로 변환."""
+    """구조화 브리프 → js/brand_briefs.json 엔트리. zeus/tougenanki 등 다른 스키마 형태에 견고."""
     tone = d.get("tone", {}) or {}
     pal = tone.get("palette", {}) or {}
     ch = d.get("characters", {}) or {}
@@ -91,11 +105,21 @@ def to_brand_brief_entry(d: dict) -> dict:
     ip = list(d.get("ip_safe", []) or [])
     for b in (d.get("content_boundary", {}) or {}).get("blocked", []) or []:
         ip.append("미출시 콘텐츠 소구 금지: %s(%s)" % (b.get("name"), b.get("opens_at", "")))
-    chars = " / ".join(ch.get("classes", []))
-    if ch.get("key_npc"):
-        chars += " · NPC " + "·".join(ch["key_npc"])
-    if ch.get("player_role"):
-        chars += " · 역할 " + ch["player_role"]
+    for w in (d.get("forbidden_words") or []):
+        pass  # 금지어는 별도 필드로 보존(아래), ip_safe 비대화 방지
+    gate = get_cloop_gate(d)
+    if gate:
+        ip.insert(0, "🔴 CLOOP 생성 게이트: modification_level=%s · 차단축 %s (소재 생성 자동화 시 준수)"
+                  % (gate.get("modification_level"), ",".join(gate.get("blocked_axes") or [])))
+    # 캐릭터: classes(제우스) 또는 priority(도원암귀)
+    if ch.get("classes"):
+        chars = " / ".join(ch["classes"])
+        if ch.get("key_npc"):
+            chars += " · NPC " + "·".join(ch["key_npc"])
+        if ch.get("player_role"):
+            chars += " · 역할 " + ch["player_role"]
+    else:
+        chars = " / ".join(ch.get("priority", [])[:8])
     palette = "/".join(v for v in (pal.get("background"), pal.get("main"), pal.get("point")) if v)
     tone_s = " · ".join(tone.get("art", []))
     if palette:
@@ -103,14 +127,19 @@ def to_brand_brief_entry(d: dict) -> dict:
     cta = " · ".join(tone.get("keywords", []))
     if tone.get("avoid_format"):
         cta += " · 지양: " + tone["avoid_format"]
-    return {
+    entry = {
         "_source": "%s (frozen %s, structured brief)" % (d.get("version"), d.get("frozen_at")),
         "characters": chars,
         "tone": tone_s,
-        "slogan": " = ".join(slog.get("current", [])),
+        "slogan": " = ".join(slog.get("current", [])) if slog else "",
         "cta_tone": cta,
         "ip_safe": ip,
     }
+    if d.get("forbidden_words"):
+        entry["forbidden_words"] = list(d["forbidden_words"])
+    if gate:
+        entry["cloop_gate"] = gate
+    return entry
 
 
 def get_brief_entry(title, json_path=None, txt_path=None):
