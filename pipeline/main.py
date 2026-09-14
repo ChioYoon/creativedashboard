@@ -1158,6 +1158,8 @@ def run(cfg: dict) -> dict:
             theme_primary=_ct["theme_primary"],
             theme_secondary=_ct["theme_secondary"],
             theme_reviewed=_ct["theme_reviewed"],
+            launch_date_variant=_ct.get("launch_date_variant", False),
+            theme_partner=_ct.get("partner"),
             hooking_strategy=tag_dict.get("hooking_strategy"),
             USP=tag_dict.get("core_usp"),
             art_style=tag_dict.get("visual_style"),

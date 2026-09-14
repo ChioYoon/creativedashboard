@@ -476,6 +476,8 @@ class CreativeRecord(BaseModel):
     theme_primary: Optional[str] = Field(None, description="콘텐츠 테마 primary (축 판정 기준). N/A:고지/CTA/미상 가능")
     theme_secondary: list[str] = Field(default_factory=list, description="콘텐츠 테마 secondary 0~2 (조회·교차분석 전용)")
     theme_reviewed: bool = Field(False, description="content_theme 인간 검수 여부. False면 축 판정 집계 제외(정의서 §6)")
+    launch_date_variant: bool = Field(False, description="LD(Launch Date) 접미 변형 여부 — 축 판정 통합, 분석 시 구분(패치 v2.1)")
+    theme_partner: Optional[str] = Field(None, description="제휴 소재 파트너(예: cultureland) — 분리 분석용")
 
     # 부가 메타 (Pydantic v2는 leading underscore 필드명을 금지하므로 일반 이름 사용)
     tagged_at: Optional[str] = None  # ISO 8601 (Gemini 태깅 시각)
