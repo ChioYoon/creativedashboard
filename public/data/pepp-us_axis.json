@@ -1,0 +1,41 @@
+{
+  "schema_version": "axis-1.1",
+  "title": "pepp-us",
+  "launch_date": "2026-08-26",
+  "period": {
+    "from": "2026-08-08",
+    "to": "2026-09-06"
+  },
+  "prior_period": {
+    "from": "2026-07-09",
+    "to": "2026-08-07"
+  },
+  "baseline_used": {
+    "P": {
+      "ipm": null,
+      "cvr": null,
+      "roas7": null,
+      "mode": "cohort_weighted"
+    },
+    "L": {
+      "ipm": null,
+      "cvr": null,
+      "roas7": null,
+      "mode": "cohort_weighted"
+    }
+  },
+  "baseline_mode": "cohort_weighted",
+  "gates": {
+    "min_n": 3,
+    "min_cost": 100000
+  },
+  "excluded_ratio": 0.0,
+  "excluded_note": "N/A·미검수 소재 제외 비중(판정 대상 외)",
+  "stages": {
+    "P": [],
+    "L": []
+  },
+  "generated_at": "2026-09-14T13:05:02",
+  "note": "baseline=코호트 가중평균. P품질=사전예약 전환율(전환/클릭), L품질=D7 ROAS(등록기준 부재→후보cap). ga_roas=Google conversions_value/cost(참고).",
+  "active": false
+}
