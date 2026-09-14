@@ -2,7 +2,7 @@
   "meta": {
     "title": "tougenanki",
     "title_kr": "도원암귀 크림슨 인페르노",
-    "version": "1.0",
+    "version": "1.1",
     "issued": "2026-09-14",
     "issuer": "R마케팅팀 (UA 총괄)",
     "basis": "tougenanki_소재목록.csv 41건 / 훅_추출 37종 (2026-09-14 CLOOP 제공)",
@@ -10,7 +10,11 @@
     "brief_ref": "brief_tougenanki.json v1.1 (frozen 2026-09-11)",
     "normalized_hooks": 28,
     "scope_note": "본 맵은 도원암귀 전용이다. 제우스 theme_map_v2와 훅 네임스페이스가 완전히 분리되므로 병합하지 않는다.",
-    "coverage": "41/41 (100%) · 미매핑 0"
+    "coverage": "41/41 (100%) · 미매핑 0",
+    "changelog": [
+      "v1.0 2026-09-14 제정. 41건 → 정규화 훅 28종 · alias 3 · 커버리지 100%",
+      "v1.1 2026-09-14 팀장 확정. Rasetsu = 라세츠학원 등장인물(집단 훅)로 확정 — unknown_referent 해소. 의사결정 3건 확정 표기"
+    ]
   },
   "normalization": {
     "note": "제우스와 규칙이 다르다. 도원암귀는 LD·15s/30s 접미가 없고, 배리에이션 번호가 1자리인 사례(Cutscene0)가 존재한다.",
@@ -228,7 +232,9 @@
       "review": true,
       "flags": [
         "tva_source",
-        "unknown_referent:Rasetsu"
+        "entity:라세츠학원_집단훅",
+        "ip_guard:10항_우선순위_직접적용",
+        "ip_guard:14항_신장비율"
       ]
     },
     "RasetsuSSR": {
@@ -240,7 +246,9 @@
       "review": true,
       "flags": [
         "ssr_grade",
-        "unknown_referent:Rasetsu"
+        "entity:라세츠학원_집단훅",
+        "ip_guard:10항_우선순위_직접적용",
+        "ip_guard:14항_신장비율"
       ]
     },
     "OniMomotaroSSR": {
@@ -382,9 +390,11 @@
         "IP·캐릭터"
       ],
       "core_usp": "전략경쟁형",
-      "review": true,
+      "review": false,
       "flags": [
-        "unknown_referent:Rasetsu"
+        "entity:라세츠학원_집단훅",
+        "ip_guard:10항_우선순위_직접적용",
+        "ip_guard:14항_신장비율"
       ]
     },
     "SkillcardSSR": {
@@ -510,32 +520,93 @@
     {
       "id": "T1",
       "item": "Rasetsu 지시 대상 확인",
-      "detail": "소재 4건(RasetsuTVA·RasetsuBattle·RasetsuSSR×2). 브랜드 가이드 캐릭터 글로서리·신장 대비표 21명에 없음. 조직명인지 캐릭터명인지 미상",
-      "owner": "R마케팅팀"
+      "status": "CLOSED (2026-09-14 팀장 확정)",
+      "detail": "라세츠학원 등장인물. 집단 훅으로 확정. §6 10항 우선순위 직접 적용",
+      "owner": "—"
     },
     {
       "id": "T2",
       "item": "KyotoStory 출처 확인",
-      "detail": "교토편이 TV애니 방영분인지 게임 오리지널인지에 따라 tva_source 플래그와 검수 경로가 달라짐",
-      "owner": "R마케팅팀"
+      "status": "OPEN",
+      "detail": "교토편이 TV애니 방영분이면 tva_source=true → 판권 검수 경로가 달라짐",
+      "owner": "코디네이터"
     },
     {
       "id": "T3",
       "item": "SSR 4종 실물 확인",
-      "detail": "보상 아이콘·수량 표기가 있으면 theme_primary 를 보상·혜택으로 전환. 현재는 캐릭터 카드 비주얼로 보고 IP·캐릭터 배정",
-      "owner": "R마케팅팀"
+      "status": "OPEN",
+      "detail": "D3에 따라 IP·캐릭터 잠정 확정. 보상 아이콘·수량 표기 확인 시 보상·혜택 전환",
+      "owner": "최종인"
     },
     {
       "id": "T4",
       "item": "Teaser 성격 확인",
+      "status": "OPEN",
       "detail": "출시일·사전예약 고지가 주제면 N/A:고지로 전환",
-      "owner": "R마케팅팀"
+      "owner": "최종인"
     },
     {
       "id": "T5",
-      "item": "통제 어휘 '전략성' 축 신설 검토",
-      "detail": "브리프 §5-1 강도 '상' 축인데 10축에 대응값 없음. Skillcard 계열 3건을 전투 쾌감/수집·육성으로 분산 수용 중",
-      "owner": "R마케팅팀 · 분기 개정 회의"
+      "item": "통제 어휘 '전략성' 축 신설",
+      "status": "DEFERRED (D2)",
+      "detail": "분기 개정 회의 안건. 그때까지 분산 수용",
+      "owner": "대장"
+    },
+    {
+      "id": "T6",
+      "item": "쿄우야·츠바키리 배치 기준 확인",
+      "status": "OPEN",
+      "detail": "§6 10항 우선순위 8명에 없는 캐릭터가 단독 주연인 소재 3건(KyoyaPV·SoloKyoya·TsubakiriPV). 라세츠학원 멤버 여부 및 배치 허용 범위 확인 필요",
+      "owner": "코디네이터"
     }
-  ]
+  ],
+  "decisions": {
+    "approved_by": "팀장(윤치오)",
+    "approved_at": "2026-09-14",
+    "items": [
+      {
+        "id": "D1",
+        "topic": "intent_axis 필드",
+        "decision": "신설 확정",
+        "detail": "소재명 2번째 세그먼트를 별도 필드로 보존. content_theme 판정에는 미사용(정의서 §2-2)"
+      },
+      {
+        "id": "D2",
+        "topic": "통제 어휘 '전략성' 축",
+        "decision": "분산 수용 후 분기 개정 회의 안건",
+        "detail": "즉시 신설하지 않는다. Skillcard→전투 쾌감 / SkillcardSSR→수집·육성 으로 운용하며 axis_gap:전략성 플래그로 추적"
+      },
+      {
+        "id": "D3",
+        "topic": "SSR 4종 판정",
+        "decision": "IP·캐릭터 잠정 확정",
+        "detail": "정의서 §2-2 '보이는 것 기준'. 실물에서 보상 아이콘·수량 표기 확인 시 보상·혜택으로 전환"
+      }
+    ]
+  },
+  "entities": {
+    "Rasetsu": {
+      "resolved": "라세츠학원(羅刹学園) 등장인물",
+      "type": "집단·소속 훅 — 개별 캐릭터명이 아니다",
+      "impact": "브리프 §6 10항 캐릭터 우선순위(시키 > 무다노 > 진 > 호마레 > 이카리 > 쥬우지 > 로쿠로 > 쿠이나)가 **직접 적용**되는 훅이다. 해당 8명이 학원 멤버이며, 브리프 원문에도 '쿠이나는 학원 멤버 중 우선도 최하위로 배제 가능'으로 기재돼 있다.",
+      "ip_guards": [
+        "10항 시키 중앙·전면 배치 필수",
+        "10항 로쿠로·쿠이나 근접 배치",
+        "10항 쿠이나 배제 가능",
+        "14항 신장 비율 준수 — 로쿠로186/쿄우야184 지적 이력"
+      ],
+      "hooks": [
+        "RasetsuTVA",
+        "RasetsuBattle",
+        "RasetsuSSR"
+      ]
+    },
+    "NerimaOni": {
+      "resolved": "네리마편 오니 진영 집결",
+      "type": "집단·진영 훅",
+      "ip_guards": [
+        "10항 시키 중앙·전면 배치 필수"
+      ]
+    }
+  }
 }

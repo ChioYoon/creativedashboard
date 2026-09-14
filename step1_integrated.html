@@ -3262,6 +3262,7 @@ function aggregateCreativeData(rows, groupBy) {
         'one_line_insight','marketer_insight','improvement_actions','kpi_reality_check',
         'strength_evidence','weakness_evidence','creative_concept','사이즈','언어',
         'player_motivation','main_characters','color_tone','cta_type',
+        'theme_primary','theme_secondary','theme_flags','intent_axis',
         'mmp_daily','mmp_channels','mmp_d1_ipm','mmp_d1_cpi','mmp_d7_roas',
         'mmp_d1_retention','mmp_installs','mmp_conversions','mmp_conv_ua','mmp_impressions','mmp_retained_d1','mmp_cost','mmp_revenue',
         'mmp_currency','mmp_fx_rate','source_files'];
@@ -8208,6 +8209,14 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         : ' (원본 리소스 변형 금지선 · 금칙 표현 — 브랜드 브리프)';
       const cta = val(m.cta_type);
       const ctaTone = bb.cta_tone ? ` · 톤: ${bb.cta_tone}` : '';
+      // 훅별 IP 가드(theme_flags) — 도원암귀 등 원본유지only IP. ip_guard/entity/tva/조건 플래그를 제작자에게 노출.
+      //   집단 훅(예: Rasetsu=라세츠학원)은 10항 우선순위·14항 신장비율이 직접 적용돼 검수 리스크가 높음.
+      const _flags = Array.isArray(m.theme_flags) ? m.theme_flags : [];
+      const hookGuards = _flags
+        .filter(f => /^(ip_guard:|entity:|tva_source|conditional:)/.test(f))
+        .map(f => f.replace(/^ip_guard:/, '').replace(/^entity:/, '[엔티티] ').replace(/^conditional:/, '[조건] ').replace(/^tva_source$/, '[TVA] 원작 애니 영상 — 판권 검수 경로 별도').replace(/_/g, ' '));
+      const hookGuardBlock = hookGuards.length ? hookGuards.map(s => `\n                  · ${s}`).join('') : '';
+      const intentNote = m.intent_axis ? `  · 제작 의도축: ${m.intent_axis} (content_theme 판정 미반영 · 참고용)` : '';
       const asset = m['링크'] || creative.이미지링크 || creative.파일명 || (m['파일명'] || '') || '—';
       const 비율 = isVid ? '9:16 · 15s(원본 길이 기준 컷 변주 테스트)' : '1200x628 / 1200x1500 등 사이즈 배리';
       return [
@@ -8236,6 +8245,8 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         `  · 등장 캐릭터 : ${chars || '(브랜드 브리프)'}`,
         `  · 세계관/톤   : ${tone === '—' ? '(브랜드 브리프)' : tone}`,
         `  · IP 세이프   :${ipSafe}`,
+        ...(hookGuardBlock ? [`  · 훅 IP 가드  :${hookGuardBlock}`] : []),
+        ...(intentNote ? [intentNote] : []),
         '',
         '[5] 에셋 지정',
         `  · 원본 에셋   : ${asset}`,
