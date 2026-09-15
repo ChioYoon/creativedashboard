@@ -76,3 +76,21 @@ def test_rt_excluded_and_na_ratio():
     assert r["excluded_ratio"] > 0
     axes = {a["axis"]: a for a in r["stages"]["L"]}
     assert "N/A:고지" not in axes  # N/A 축은 집계 제외
+
+
+def test_unlaunched_title_all_stage_p():
+    """launch_date=None(미런칭) → 성과일과 무관하게 전량 P 단계. L 집계는 비어야 한다."""
+    r = compute_axis_verdict(_base(), title="tougenanki", launch_date=None,
+                             win_from="2026-08-01", win_to="2026-09-30")
+    assert r["launch_date"] is None
+    assert r["stages"]["P"] and not r["stages"]["L"]
+
+
+def test_fallback_does_not_inherit_zeus_launch_date():
+    """폴백 파라미터가 특정 타이틀 런칭일을 상속하면 L/P 분류가 통째로 틀어진다."""
+    from pipeline.axis_verdict import DEFAULT_PARAMS, _FALLBACK, build_for_title
+    assert _FALLBACK["launch_date"] is None
+    assert DEFAULT_PARAMS["tougenanki"]["launch_date"] is None
+    for t in ("tougenanki", "gd", "pepp-us"):
+        assert build_for_title(_base(), t, win_from="2026-08-01", win_to="2026-09-30")["launch_date"] is None
+    assert build_for_title(_base(), "zeus", win_from="2026-08-01", win_to="2026-09-30")["launch_date"] == "2026-08-26"

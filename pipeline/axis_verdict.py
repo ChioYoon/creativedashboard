@@ -18,10 +18,14 @@ import datetime
 from .content_theme import assign_theme, load_map
 
 # 타이틀별 파라미터. baseline_mode='cohort_weighted'(v1.5 확정). 런칭일=타이틀별.
+#   launch_date=None → 미런칭. 소재 단계는 전량 P(런칭 전)로 집계한다.
+#   ⚠️ 폴백에 특정 타이틀의 런칭일을 두면 다른 타이틀이 그 날짜를 상속해 L/P 분류가 통째로 틀어진다.
+#      (브리프 정본 stage.launch_date 연동 전까지 여기서 관리 — 도원암귀는 일본 2026-12/2027-02 검토 중 미확정)
 DEFAULT_PARAMS = {
     "zeus": {"launch_date": "2026-08-26", "min_n": 3, "min_cost": 100000},
+    "tougenanki": {"launch_date": None, "min_n": 3, "min_cost": 100000},
 }
-_FALLBACK = {"launch_date": "2026-08-26", "min_n": 3, "min_cost": 100000}
+_FALLBACK = {"launch_date": None, "min_n": 3, "min_cost": 100000}
 
 
 def _purpose(cn: str) -> str:
@@ -63,7 +67,7 @@ def _agg_window(creatives, m, L, wf, wt, require_reviewed):
             excluded += 1
             continue
         for dd, x in rows:
-            stage = "P" if dd < L else "L"
+            stage = "L" if (L is not None and dd >= L) else "P"
             a = agg[stage].setdefault(axis, {"impr": 0, "conv": 0.0, "clicks": 0, "cost": 0.0, "val": 0.0, "keys": set()})
             a["impr"] += x.get("impressions") or 0
             a["conv"] += x.get("conversions") or 0.0
@@ -91,7 +95,7 @@ def compute_axis_verdict(creatives, *, title, launch_date, win_from, win_to,
                          min_n=3, min_cost=100000, prior_from=None, prior_to=None,
                          require_reviewed=False, theme_map=None):
     m = theme_map if theme_map is not None else load_map()
-    L = datetime.date.fromisoformat(launch_date)
+    L = datetime.date.fromisoformat(launch_date) if launch_date else None   # None=미런칭 → 전량 P
     wf = datetime.date.fromisoformat(win_from); wt = datetime.date.fromisoformat(win_to)
     agg, total, excluded = _agg_window(creatives, m, L, wf, wt, require_reviewed)
 
@@ -171,6 +175,6 @@ def compute_axis_verdict(creatives, *, title, launch_date, win_from, win_to,
 def build_for_title(creatives, title, *, win_from, win_to, params=None):
     p = params or DEFAULT_PARAMS.get(title, _FALLBACK)
     return compute_axis_verdict(
-        creatives, title=title, launch_date=p.get("launch_date", "2026-08-26"),
+        creatives, title=title, launch_date=p.get("launch_date"),
         win_from=win_from, win_to=win_to,
         min_n=p.get("min_n", 3), min_cost=p.get("min_cost", 100000))
