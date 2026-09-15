@@ -453,6 +453,27 @@ function compressTagText(text, maxLen = 25) {
 ────────────────────────────────────── */
 const GeminiPrompts = {
 
+  // 게임 성격 맥락 — brand_briefs 압축본을 분석 배경으로. oneLine=인사이트 인라인 / false=보고서 블록.
+  // 순수 함수(window 접근 없음). 로어 아님 — brand_briefs 가 이미 distillation.
+  buildGameCharacterContext(bb, oneLine = false) {
+    if (!bb || typeof bb !== 'object') return '';
+    const parts = [];
+    const genreLoop = [bb.genre, bb.core_loop].filter(Boolean).join(' · ');
+    if (genreLoop) parts.push(['장르/핵심 루프', genreLoop]);
+    if (bb.tone) parts.push(['브랜드 톤', bb.tone]);
+    if (bb.core_appeals) parts.push(['핵심 소구', bb.core_appeals]);
+    if (bb.cta_tone) parts.push(['CTA 톤', bb.cta_tone]);
+    if (bb.characters) parts.push(['등장 캐릭터', String(bb.characters).slice(0, 80)]);
+    if (!parts.length) return '';
+    if (oneLine) {
+      const s = '게임 성격: ' + parts.map(p => p[1]).join(' · ');
+      return s.length > 300 ? s.slice(0, 300) : s;
+    }
+    const body = '[게임 성격 — 분석 배경. 소재가 무엇을 소구하는지 해석에만 사용, 데이터 판단이 우선]\n'
+      + parts.map(p => `- ${p[0]}: ${p[1]}`).join('\n');
+    return body.length > 500 ? body.slice(0, 500) : body;
+  },
+
   /**
    * 소재 성과 분석 — 플랜별 슬롯 JSON 출력
    * ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
