@@ -481,6 +481,9 @@ class CreativeRecord(BaseModel):
     # 도원암귀 등 intent_axis 구조 맵 전용(그 외 None/[]). content_theme 판정엔 미사용, 조회·검수 신호용.
     intent_axis: Optional[str] = Field(None, description="제작 의도 축(소재명 2번째 세그, 도원암귀류). '보이는 것' theme와 괴리 측정용")
     theme_flags: list[str] = Field(default_factory=list, description="훅맵 플래그(tva_source·ssr_grade·ip_guard:*·axis_gap:* 등) — IP검수 경로·결손 축 신호")
+    # 제작 자산 ≠ 집행 예정 소재(훅맵 v1.7 execution_status). 축 판정 분모는 planned 기준, 제작 집계엔 전량 포함.
+    execution_status: str = Field("planned", description="planned | not_planned — not_planned는 축 판정 집계 제외(제작 자산 집계엔 잔류)")
+    duplicate_of: Optional[str] = Field(None, description="동일 파일이 두 축으로 중복 등록된 경우 정본 소재명. 소재 수 집계에서 1건으로 계산")
 
     # 부가 메타 (Pydantic v2는 leading underscore 필드명을 금지하므로 일반 이름 사용)
     tagged_at: Optional[str] = None  # ISO 8601 (Gemini 태깅 시각)

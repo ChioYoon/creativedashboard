@@ -44,7 +44,7 @@ from collections import defaultdict
 
 from .cache import TagCache, file_sha256
 from .campaign_canonical import build_campaign_canonical, resolve_campaign_media
-from .content_theme import assign_theme as assign_content_theme
+from .content_theme import assign_theme as assign_content_theme, execution_of
 from .media_normalize import normalize_media, unmapped_media
 from .mmp_metrics import aggregate_rows_total, compute_mmp_quality
 from .scanner import scan_creative_folders, scan_by_filename, summarize
@@ -1145,6 +1145,7 @@ def run(cfg: dict) -> dict:
         _test_items = tag_dict.get("test_ideas", []) or []
         _concept = filename_to_concept(rep.name) or c.creative_name
         _ct = assign_content_theme(_concept, title=cfg["title"])  # 타이틀별 훅맵 결정적 룩업(무Gemini). 신규 훅=N/A:미상+검수
+        _ex = execution_of(c.creative_name, title=cfg["title"])   # 미집행·중복 등록 표기(훅맵 execution_status·duplicates)
         record = CreativeRecord(
             creative_id=c.creative_name,
             소재명=c.creative_name,
@@ -1162,6 +1163,8 @@ def run(cfg: dict) -> dict:
             theme_partner=_ct.get("partner"),
             intent_axis=_ct.get("intent_axis"),
             theme_flags=_ct.get("theme_flags", []),
+            execution_status=_ex["execution_status"],
+            duplicate_of=_ex["duplicate_of"],
             hooking_strategy=tag_dict.get("hooking_strategy"),
             USP=tag_dict.get("core_usp"),
             art_style=tag_dict.get("visual_style"),

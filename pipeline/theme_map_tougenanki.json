@@ -2,8 +2,8 @@
   "meta": {
     "title": "tougenanki",
     "title_kr": "도원암귀 크림슨 인페르노",
-    "version": "1.1",
-    "issued": "2026-09-14",
+    "version": "1.7",
+    "issued": "2026-09-15",
     "issuer": "R마케팅팀 (UA 총괄)",
     "basis": "tougenanki_소재목록.csv 41건 / 훅_추출 37종 (2026-09-14 CLOOP 제공)",
     "vocabulary": "통제어휘_content_theme_정의서 v2.0 (10축) + v2.1 패치",
@@ -13,8 +13,15 @@
     "coverage": "41/41 (100%) · 미매핑 0",
     "changelog": [
       "v1.0 2026-09-14 제정. 41건 → 정규화 훅 28종 · alias 3 · 커버리지 100%",
-      "v1.1 2026-09-14 팀장 확정. Rasetsu = 라세츠학원 등장인물(집단 훅)로 확정 — unknown_referent 해소. 의사결정 3건 확정 표기"
-    ]
+      "v1.1 2026-09-14 팀장 확정. Rasetsu = 라세츠학원 등장인물(집단 훅)로 확정 — unknown_referent 해소. 의사결정 3건 확정 표기",
+      "v1.2 2026-09-15 R팀 회신 반영. T2 KyotoStory(TVA1기 서사·게임 구현) · T4 Teaser→N/A:고지 전환 · T6 우선순위 외 캐릭터 배치 규정 확정. review 11종 → 5종",
+      "v1.3 2026-09-15 T3 확정. SSR 3훅 → 보상·혜택 전환 · SkillcardSSR 수집·육성 유지(보상 secondary) · MudanoSSR 중복 등록 1건 확인(FGT-IP = P-Reward 동일 파일) → 소재 41 → 40건",
+      "v1.4 2026-09-15 T8 확정. OniPopOut IP·캐릭터 유지 · §6 12항 미저촉(원본 유지·배치만 변경) 확인. review 3종 → 2종",
+      "v1.5 2026-09-15 T7 확정 · 🔴 TVA 해석 정정. TVA = 'TV Animation 영상'이 아니라 '공식 오리지널 라이선스 기반' 표기. 도원암귀 소재에 원작 애니 영상·컷 사용분은 0건 → tva_source 플래그 전량 폐기. asset_type 을 포맷 접미 기반 규칙으로 전환. **review 0종 — 훅 28종 전량 확정**",
+      "v1.6 2026-09-15 T9 확정. FGT-IP TVA 2쌍은 중복이 아니라 **축1 카피 파생**(FGT 취소 → 사전예약 전환, 비주얼 동일·문구 변경). 소재 40건 유지. variants 블록 신설 · intent_axis 에 FGT 단계 접두 정의 추가",
+      "v1.7 2026-09-15 T10 확정. FGT = 사전예약 이전 테스트(CBT류) 기간용 소재 · 계획 취소 → FGT 원본 2건 미집행 확정. execution_status 필드 신설 · 집계를 제작 자산(40) / 집행 예정(38) 2종으로 분리. **축 판정 분모는 집행 예정 38건**"
+    ],
+    "status": "✅ 종결 — 훅 28종 전량 확정(review 0) · 집행 예정 38건 / 제작 자산 40건 확정 · open 0건 (T5만 분기 이월)"
   },
   "normalization": {
     "note": "제우스와 규칙이 다르다. 도원암귀는 LD·15s/30s 접미가 없고, 배리에이션 번호가 1자리인 사례(Cutscene0)가 존재한다.",
@@ -27,9 +34,33 @@
     "variation_regex": "\\d{1,2}$",
     "removed_suffixes": [],
     "preserved_tokens": {
-      "TVA": "TV Animation 소재. 원작 애니 영상·컷 사용분. 판권 검수 경로가 게임 자체 에셋과 다르므로 tva_source=true 플래그로 별도 보존",
+      "TVA": "🔴 **'TV Animation 영상'이 아니다.** 공식 오리지널 라이선스 기반 소재임을 나타내는 IP 출처 표기다. 훅 이름에 TVA가 있어도 원작 애니 영상·컷을 쓴 것이 아니다 (2026-09-15 정정). v1.0~v1.4에서 'TV Animation 소재'로 오해석했으며 tva_source 플래그는 폐기됨",
       "SSR": "가챠 최고 등급. 캐릭터 카드 비주얼 신호. ssr_grade=true 로 보존",
       "PV": "캐릭터 개별 프로모션 영상. 훅명 일부이므로 제거하지 않음(예: ShikiPV)"
+    },
+    "asset_type_rule": {
+      "confirmed_at": "2026-09-15",
+      "note": "에셋 종류는 훅이 아니라 **소재명 포맷 접미**로 결정된다. 훅 단위 플래그가 아니다",
+      "map": {
+        "-DA": "일러스트 (배너). 감수 완료 원본 → §6 12항 일러스트 변경·수정 금지 적용",
+        "-PV": "영상 — 인게임 구현 플레이 컷신",
+        "-UA": "영상 — 인게임 구현 플레이 컷신",
+        "-EC": "영상 — 엔드카드"
+      },
+      "implication": "도원암귀 소재에 **원작 애니 영상·컷 사용분은 0건**이다. 전 소재가 게임 에셋 경로로 검수된다. 판권 검수 경로 분리가 불요하다"
+    },
+    "deprecated_flags": {
+      "tva_source": {
+        "deprecated_at": "2026-09-15",
+        "reason": "TVA 접미를 'TV Animation 영상'으로 오해석해 신설한 플래그. 실제로는 라이선스 출처 표기였고, 원작 애니 영상 사용분이 0건이라 플래그가 가리킬 대상이 없다",
+        "replacement": "에셋 종류는 asset_type_rule(포맷 접미)로, 서사 출처는 narrative_source 로 판단한다"
+      }
+    },
+    "source_distinction": {
+      "note": "서사 출처와 에셋 종류는 별개다. 둘 다 훅 이름으로 판단하지 않는다",
+      "narrative_source": "서사가 어디서 왔는가 — 카피의 「TVアニメ」 표기 근거 · 원작 설정 해석 리스크 판단",
+      "asset_type": "화면에 쓰인 리소스가 무엇인가 — **소재명 포맷 접미로 결정** (asset_type_rule 참조)",
+      "removed": "tva_source — 판권 검수 경로를 가르는 플래그였으나, 해당 소재가 0건이라 폐기(2026-09-15)"
     }
   },
   "alias": {
@@ -49,14 +80,6 @@
       "Story"
     ],
     "conflicts": [
-      {
-        "hook": "MudanoSSR",
-        "axes": [
-          "IP",
-          "Reward"
-        ],
-        "count": 3
-      },
       {
         "hook": "Friendship",
         "axes": [
@@ -90,18 +113,34 @@
         ],
         "count": 2
       }
-    ]
+    ],
+    "resolved_conflicts": [
+      {
+        "hook": "MudanoSSR",
+        "resolution": "중복 등록이었음. 축 충돌 아님 (2026-09-15)"
+      }
+    ],
+    "stage_prefix": {
+      "note": "소재명 첫 세그먼트는 캠페인 단계다",
+      "values": {
+        "P": "사전예약(Pre-registration) 단계 소재 — 집행 예정",
+        "FGT": "사전예약 **이전** 테스트 기간(CBT류) 활용 예정이던 소재. **계획 취소됨** → 문구만 바꿔 P 소재로 전환. 🔴 FGT 원본은 **미집행 확정**"
+      },
+      "warning": "FGT- 접두 소재는 집행하지 않는다. 동일 비주얼의 P- 버전이 집행 대상이다"
+    }
   },
   "hooks": {
     "MudanoSSR": {
-      "theme_primary": "IP·캐릭터",
+      "theme_primary": "보상·혜택",
       "theme_secondary": [
-        "수집·육성"
+        "IP·캐릭터"
       ],
-      "core_usp": "감성유대형",
-      "review": true,
+      "core_usp": "혜택형",
+      "review": false,
       "flags": [
         "ssr_grade",
+        "reward_notice:실물확인_지급고지_확인됨(2026-09-15)",
+        "ip_guard:11항_무다노_웃는표정_금지",
         "ip_guard:11항_무다노_웃는표정_금지"
       ]
     },
@@ -170,9 +209,9 @@
         "그래픽·비주얼"
       ],
       "core_usp": "감성유대형",
-      "review": true,
+      "review": false,
       "flags": [
-        "ip_guard:10항_우선순위_목록외_캐릭터"
+        "ip_guard:10항_우선순위외_단독제작가능_동시배치시_외곽"
       ]
     },
     "TsubakiriPV": {
@@ -182,10 +221,10 @@
         "그래픽·비주얼"
       ],
       "core_usp": "감성유대형",
-      "review": true,
+      "review": false,
       "flags": [
-        "ip_guard:10항_우선순위_목록외_캐릭터",
-        "faction:모모타로"
+        "faction:모모타로",
+        "ip_guard:10항_우선순위외_단독제작가능_동시배치시_외곽"
       ]
     },
     "NerimaOni": {
@@ -206,9 +245,10 @@
         "그래픽·비주얼"
       ],
       "core_usp": "감성유대형",
-      "review": true,
+      "review": false,
       "flags": [
-        "ip_guard:12항_일러스트_변경금지"
+        "ip_check:12항_미저촉_확인됨(2026-09-15)",
+        "modification:원본유지_배치변경만"
       ]
     },
     "OniMainTVA": {
@@ -217,10 +257,11 @@
         "스토리·세계관"
       ],
       "core_usp": "감성유대형",
-      "review": true,
+      "review": false,
       "flags": [
-        "tva_source",
-        "ip_guard:원작_애니_영상_별도검수"
+        "license:공식_오리지널_라이선스_기반",
+        "asset_type:일러스트(배너)",
+        "ip_guard:12항_일러스트_변경금지"
       ]
     },
     "RasetsuTVA": {
@@ -229,38 +270,46 @@
         "스토리·세계관"
       ],
       "core_usp": "감성유대형",
-      "review": true,
+      "review": false,
       "flags": [
-        "tva_source",
+        "license:공식_오리지널_라이선스_기반",
         "entity:라세츠학원_집단훅",
         "ip_guard:10항_우선순위_직접적용",
-        "ip_guard:14항_신장비율"
+        "ip_guard:14항_신장비율",
+        "asset_type:일러스트(배너)",
+        "ip_guard:12항_일러스트_변경금지"
       ]
     },
     "RasetsuSSR": {
-      "theme_primary": "IP·캐릭터",
+      "theme_primary": "보상·혜택",
       "theme_secondary": [
-        "수집·육성"
+        "IP·캐릭터"
       ],
-      "core_usp": "감성유대형",
-      "review": true,
+      "core_usp": "혜택형",
+      "review": false,
       "flags": [
         "ssr_grade",
+        "reward_notice:실물확인_지급고지_확인됨(2026-09-15)",
+        "entity:라세츠학원_집단훅",
+        "ip_guard:10항_우선순위_직접적용",
+        "ip_guard:14항_신장비율",
         "entity:라세츠학원_집단훅",
         "ip_guard:10항_우선순위_직접적용",
         "ip_guard:14항_신장비율"
       ]
     },
     "OniMomotaroSSR": {
-      "theme_primary": "IP·캐릭터",
+      "theme_primary": "보상·혜택",
       "theme_secondary": [
-        "수집·육성",
+        "IP·캐릭터",
         "스토리·세계관"
       ],
-      "core_usp": "감성유대형",
-      "review": true,
+      "core_usp": "혜택형",
+      "review": false,
       "flags": [
         "ssr_grade",
+        "reward_notice:실물확인_지급고지_확인됨(2026-09-15)",
+        "ip_guard:13항_대립구도_필수",
         "ip_guard:13항_대립구도_필수"
       ]
     },
@@ -272,8 +321,10 @@
       "core_usp": "감성유대형",
       "review": false,
       "flags": [
-        "tva_source",
-        "ip_guard:13항_대립구도_필수"
+        "license:공식_오리지널_라이선스_기반",
+        "ip_guard:13항_대립구도_필수",
+        "asset_type:일러스트(배너)",
+        "ip_guard:12항_일러스트_변경금지"
       ]
     },
     "OniVsMomotaro": {
@@ -324,9 +375,11 @@
         "그래픽·비주얼"
       ],
       "core_usp": "감성유대형",
-      "review": true,
+      "review": false,
       "flags": [
-        "unknown_referent:교토편_출처확인"
+        "narrative_source:TVA_1기",
+        "asset_type:인게임_컷신(영상)",
+        "ip_guard:원작_서사_재현_설정해석_주의"
       ]
     },
     "IconicLines": {
@@ -342,14 +395,13 @@
       ]
     },
     "Teaser": {
-      "theme_primary": "스토리·세계관",
-      "theme_secondary": [
-        "그래픽·비주얼"
-      ],
-      "core_usp": "감성유대형",
-      "review": true,
+      "theme_primary": "N/A:고지",
+      "theme_secondary": [],
+      "core_usp": "대세감",
+      "review": false,
       "flags": [
-        "conditional:출시고지_요소_있으면_N/A:고지"
+        "notice_type:출시예정_고지",
+        "stage_note:사전예약_오픈_전"
       ]
     },
     "Skillcard": {
@@ -372,7 +424,7 @@
       "core_usp": "전략경쟁형",
       "review": false,
       "flags": [
-        "ip_guard:10항_우선순위_목록외_캐릭터"
+        "ip_guard:10항_우선순위외_단독제작가능_동시배치시_외곽"
       ]
     },
     "IngamePV": {
@@ -400,13 +452,15 @@
     "SkillcardSSR": {
       "theme_primary": "수집·육성",
       "theme_secondary": [
+        "보상·혜택",
         "전투 쾌감"
       ],
       "core_usp": "전략경쟁형",
-      "review": true,
+      "review": false,
       "flags": [
         "ssr_grade",
-        "axis_gap:전략성"
+        "axis_gap:전략성",
+        "reward_notice:지급고지_있으나_화면중심은_스킬카드UI(2026-09-15)"
       ]
     },
     "Endcard": {
@@ -436,128 +490,76 @@
     "launch_date": null,
     "axis_judgement": "SKIP — 집행 전. 본 맵은 태깅·분포 조회 전용이며 축 판정(검증/후보/소진)에 투입하지 않는다"
   },
-  "distribution_41": {
-    "primary": {
-      "IP·캐릭터": {
-        "count": 18,
-        "share": "43.9%"
-      },
-      "스토리·세계관": {
-        "count": 15,
-        "share": "36.6%"
-      },
-      "전투 쾌감": {
-        "count": 5,
-        "share": "12.2%"
-      },
-      "수집·육성": {
-        "count": 1,
-        "share": "2.4%"
-      },
-      "N/A:CTA": {
-        "count": 2,
-        "share": "4.9%"
-      },
-      "그래픽·비주얼": {
-        "count": 0,
-        "share": "0%"
-      },
-      "보상·혜택": {
-        "count": 0,
-        "share": "0%"
-      },
-      "경쟁(PvP)": {
-        "count": 0,
-        "share": "0%"
-      },
-      "편의성(자동·방치)": {
-        "count": 0,
-        "share": "0%"
-      },
-      "향수(레트로)": {
-        "count": 0,
-        "share": "0%"
-      },
-      "커뮤니티·길드": {
-        "count": 0,
-        "share": "0%"
-      }
-    },
-    "core_usp": {
-      "감성유대형": {
-        "count": 33,
-        "share": "80.5%"
-      },
-      "전략경쟁형": {
-        "count": 6,
-        "share": "14.6%"
-      },
-      "혜택형": {
-        "count": 2,
-        "share": "4.9%"
-      },
-      "대세감": {
-        "count": 0,
-        "share": "0%"
-      },
-      "편의성형": {
-        "count": 0,
-        "share": "0%"
-      }
-    },
-    "na_share": "4.9%",
-    "intent_axis": {
-      "Character": 12,
-      "IP": 11,
-      "Reward": 7,
-      "Battle": 4,
-      "Story": 3,
-      "Gameplay": 2,
-      "Gamer": 2
-    }
-  },
   "open_items": [
     {
       "id": "T1",
-      "item": "Rasetsu 지시 대상 확인",
-      "status": "CLOSED (2026-09-14 팀장 확정)",
-      "detail": "라세츠학원 등장인물. 집단 훅으로 확정. §6 10항 우선순위 직접 적용",
+      "item": "Rasetsu 지시 대상",
+      "status": "CLOSED (2026-09-14)",
+      "detail": "라세츠학원 등장인물. 집단 훅",
       "owner": "—"
     },
     {
       "id": "T2",
-      "item": "KyotoStory 출처 확인",
-      "status": "OPEN",
-      "detail": "교토편이 TV애니 방영분이면 tva_source=true → 판권 검수 경로가 달라짐",
-      "owner": "코디네이터"
+      "item": "KyotoStory 출처",
+      "status": "CLOSED (2026-09-15)",
+      "detail": "TV애니 1기 서사를 인게임 컷씬으로 구현한 리소스. 서사 출처는 애니, 에셋 출처는 게임 → tva_source=false. 판권 검수는 게임 에셋 경로 (2026-09-15 보강 확인)",
+      "owner": "—"
     },
     {
       "id": "T3",
       "item": "SSR 4종 실물 확인",
-      "status": "OPEN",
-      "detail": "D3에 따라 IP·캐릭터 잠정 확정. 보상 아이콘·수량 표기 확인 시 보상·혜택 전환",
-      "owner": "최종인"
+      "status": "CLOSED (2026-09-15)",
+      "detail": "SSR 3훅 지급 고지 확인 → 보상·혜택 전환. SkillcardSSR 는 화면 중심이 스킬카드 UI라 수집·육성 유지. MudanoSSR 중복 등록 확인",
+      "owner": "—"
     },
     {
       "id": "T4",
-      "item": "Teaser 성격 확인",
-      "status": "OPEN",
-      "detail": "출시일·사전예약 고지가 주제면 N/A:고지로 전환",
-      "owner": "최종인"
+      "item": "Teaser 성격",
+      "status": "CLOSED (2026-09-15)",
+      "detail": "사전예약 오픈 전 '출시 계획' 고지. N/A:고지 · 대세감 전환",
+      "owner": "—"
     },
     {
       "id": "T5",
       "item": "통제 어휘 '전략성' 축 신설",
       "status": "DEFERRED (D2)",
-      "detail": "분기 개정 회의 안건. 그때까지 분산 수용",
+      "detail": "분기 개정 회의 안건",
       "owner": "대장"
     },
     {
       "id": "T6",
-      "item": "쿄우야·츠바키리 배치 기준 확인",
-      "status": "OPEN",
-      "detail": "§6 10항 우선순위 8명에 없는 캐릭터가 단독 주연인 소재 3건(KyoyaPV·SoloKyoya·TsubakiriPV). 라세츠학원 멤버 여부 및 배치 허용 범위 확인 필요",
-      "owner": "코디네이터"
+      "item": "쿄우야·츠바키리 배치 기준",
+      "status": "CLOSED (2026-09-15)",
+      "detail": "단독 제작 가능 · 동시 배치 시 외곽. entities.out_of_priority 참조",
+      "owner": "—"
+    },
+    {
+      "id": "T7",
+      "item": "TVA 계열 tva_source 판정",
+      "status": "CLOSED (2026-09-15)",
+      "detail": "TVA = 공식 오리지널 라이선스 기반 표기. 배너(DA)는 전부 일러스트 제작, 영상은 인게임 구현 컷신. 원작 애니 영상·컷 사용분 0건 → tva_source 폐기",
+      "owner": "—"
+    },
+    {
+      "id": "T8",
+      "item": "OniPopOut 연출 중심",
+      "status": "CLOSED (2026-09-15)",
+      "detail": "캐릭터 개체가 화면 지배 → IP·캐릭터 유지. §6 12항(일러스트 변경·수정 금지) 미저촉 — 원본 그대로 배치만 변경",
+      "owner": "—"
+    },
+    {
+      "id": "T9",
+      "item": "FGT-IP 계열 중복 등록 여부",
+      "status": "CLOSED (2026-09-15)",
+      "detail": "중복이 아니라 축1 카피 파생. FGT 취소 → 문구만 변경해 사전예약 전환. 소재 40건 유지. 단 MudanoSSR 1쌍은 완전 동일 파일이라 중복 유지(39건 아님)",
+      "owner": "—"
+    },
+    {
+      "id": "T10",
+      "item": "FGT 약자 의미 · 전환 소재 문구 잔존 여부",
+      "status": "CLOSED (2026-09-15)",
+      "detail": "FGT = 사전예약 이전 테스트(CBT류) 기간 활용 예정 소재. 계획 취소로 FGT 원본 2건 미집행 확정. 카피 변경본(P-)이 집행 대상. 문구 잔존 리스크는 미집행이므로 해소",
+      "owner": "—"
     }
   ],
   "decisions": {
@@ -607,6 +609,189 @@
       "ip_guards": [
         "10항 시키 중앙·전면 배치 필수"
       ]
+    },
+    "out_of_priority": {
+      "resolved": "우선순위 목록(8명) 밖 캐릭터의 배치 규정",
+      "confirmed_at": "2026-09-15",
+      "members": [
+        {
+          "name": "오이란자카 쿄우야",
+          "faction": "오니",
+          "height_cm": 184,
+          "hooks": [
+            "KyoyaPV",
+            "SoloKyoya"
+          ]
+        },
+        {
+          "name": "츠바키리",
+          "faction": "모모타로",
+          "height_cm": 178,
+          "hooks": [
+            "TsubakiriPV"
+          ]
+        }
+      ],
+      "rule": "단독 소재 제작은 가능하다. 단 우선순위 캐릭터와 동시 등장할 경우 외곽에 배치한다",
+      "caution": "'외곽 배치'는 복수 캐릭터 동시 등장 시에만 적용된다. 단독 소재에는 해당하지 않는다"
+    }
+  },
+  "duplicates": {
+    "confirmed_at": "2026-09-15",
+    "items": [
+      {
+        "canonical": "P-Reward-MudanoSSR01-DA",
+        "duplicate_of": "FGT-IP-MudanoSSR01-DA",
+        "note": "동일 파일이 FGT-IP · P-Reward 두 축으로 중복 등록됨. 소재 집계에서 1건으로 계산한다",
+        "resolution": "P-Reward 를 정본으로 둔다. 실물에 지급 고지가 있어 content_theme 이 보상·혜택이며, intent_axis 도 Reward 가 정합"
+      }
+    ],
+    "impact": "소재 41건 → 40건"
+  },
+  "variants": {
+    "confirmed_at": "2026-09-15",
+    "note": "비주얼이 동일하고 문구만 다른 소재 관계. **중복이 아니라 축1(카피) 파생이다.** 별개 소재로 집계한다",
+    "axis": "축1_카피 — 도원암귀 allowed_axes 중 유일하게 완전히 안전한 축",
+    "pairs": [
+      {
+        "origin": "FGT-IP-OniMainTVA01-DA",
+        "derived": "P-IP-OniMainTVA01-DA",
+        "relation": "copy_variant",
+        "reason": "FGT 취소 → 문구만 변경해 사전예약 소재로 전환"
+      },
+      {
+        "origin": "FGT-IP-OniMomotaroTVA01-DA",
+        "derived": "P-IP-OniMomotaroTVA01-DA",
+        "relation": "copy_variant",
+        "reason": "FGT 취소 → 문구만 변경해 사전예약 소재로 전환"
+      }
+    ],
+    "distinction": {
+      "copy_variant": "비주얼 동일 · 문구 상이 → **2건으로 집계**. 성과는 각각 측정 (FGT-IP-MudanoSSR 제외한 TVA 2쌍)",
+      "duplicate": "완전 동일 파일 → **1건으로 집계** (FGT-IP-MudanoSSR01-DA ↔ P-Reward-MudanoSSR01-DA)"
+    },
+    "caution": "🔴 소재명에 FGT- 접두가 그대로 남아 있다. 실제로는 사전예약 소재이므로 이름만 보고 FGT 소재로 오인할 수 있다"
+  },
+  "execution_status": {
+    "confirmed_at": "2026-09-15",
+    "note": "제작된 소재와 집행 예정 소재는 다르다. **축 판정 분모는 집행 예정 기준**이다",
+    "not_planned": [
+      {
+        "asset": "FGT-IP-OniMainTVA01-DA",
+        "reason": "FGT 계획 취소. 카피 변경본 P-IP-OniMainTVA01-DA 가 집행 대상"
+      },
+      {
+        "asset": "FGT-IP-OniMomotaroTVA01-DA",
+        "reason": "FGT 계획 취소. 카피 변경본 P-IP-OniMomotaroTVA01-DA 가 집행 대상"
+      }
+    ],
+    "rule": "execution_status = planned | not_planned. not_planned 는 축 판정 집계에서 제외하되 제작 자산 집계에는 남긴다",
+    "rationale": "미집행 소재를 판정 분모에 넣으면 축별 비중이 실제 집행 구성과 어긋난다. 제우스처럼 집행 중인 타이틀에서 더 크게 작용한다"
+  },
+  "distribution": {
+    "assets_produced": 40,
+    "assets_planned": 38,
+    "excluded_duplicate": 1,
+    "excluded_not_planned": 2,
+    "basis": "축 판정·갭 분석은 **집행 예정 38건** 기준. 제작 자산 40건은 참고값",
+    "recounted_at": "2026-09-15 (T10 확정)",
+    "planned_38": {
+      "primary": {
+        "스토리·세계관": {
+          "count": 13,
+          "share": "34.2%"
+        },
+        "IP·캐릭터": {
+          "count": 11,
+          "share": "28.9%"
+        },
+        "전투 쾌감": {
+          "count": 5,
+          "share": "13.2%"
+        },
+        "보상·혜택": {
+          "count": 5,
+          "share": "13.2%"
+        },
+        "수집·육성": {
+          "count": 1,
+          "share": "2.6%"
+        },
+        "그래픽·비주얼": {
+          "count": 0,
+          "share": "0.0%"
+        },
+        "경쟁(PvP)": {
+          "count": 0,
+          "share": "0.0%"
+        },
+        "편의성(자동·방치)": {
+          "count": 0,
+          "share": "0.0%"
+        },
+        "향수(레트로)": {
+          "count": 0,
+          "share": "0.0%"
+        },
+        "커뮤니티·길드": {
+          "count": 0,
+          "share": "0.0%"
+        },
+        "N/A:CTA": {
+          "count": 2,
+          "share": "5.3%"
+        },
+        "N/A:고지": {
+          "count": 1,
+          "share": "2.6%"
+        }
+      },
+      "core_usp": {
+        "감성유대형": {
+          "count": 24,
+          "share": "63.2%"
+        },
+        "혜택형": {
+          "count": 7,
+          "share": "18.4%"
+        },
+        "전략경쟁형": {
+          "count": 6,
+          "share": "15.8%"
+        },
+        "대세감": {
+          "count": 1,
+          "share": "2.6%"
+        },
+        "편의성형": {
+          "count": 0,
+          "share": "0.0%"
+        }
+      },
+      "na_share": "7.9%"
+    },
+    "produced_40": {
+      "primary": {
+        "스토리·세계관": 14,
+        "IP·캐릭터": 12,
+        "전투 쾌감": 5,
+        "보상·혜택": 5,
+        "수집·육성": 1,
+        "그래픽·비주얼": 0,
+        "경쟁(PvP)": 0,
+        "편의성(자동·방치)": 0,
+        "향수(레트로)": 0,
+        "커뮤니티·길드": 0,
+        "N/A:CTA": 2,
+        "N/A:고지": 1
+      },
+      "core_usp": {
+        "감성유대형": 26,
+        "혜택형": 7,
+        "전략경쟁형": 6,
+        "대세감": 1,
+        "편의성형": 0
+      }
     }
   }
 }

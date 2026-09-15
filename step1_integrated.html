@@ -2542,7 +2542,10 @@ function updateStatCards(layer) {
     : (layer === 'mmp' ? c.meta.mmp_quality_score.grade : c.등급);
   const scored = cs.map(scoreOf).filter(v => v != null);
   const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
-  set('statTotal', cs.length);
+  // 제작 자산 ≠ 집행 예정 (훅맵 execution_status·duplicates). 중복 등록·미집행이 있을 때만 병기.
+  const _dup = cs.filter(c => (c.meta || {}).duplicate_of).length;
+  const _np = cs.filter(c => ((c.meta || {}).execution_status) === 'not_planned' && !(c.meta || {}).duplicate_of).length;
+  set('statTotal', (_dup || _np) ? `${cs.length - _dup - _np} (제작 ${cs.length - _dup})` : cs.length);
   set('statMax', scored.length ? Math.max(...scored).toFixed(1) : '—');
   set('statAvg', scored.length ? (scored.reduce((s, v) => s + v, 0) / scored.length).toFixed(1) : '—');
   set('statExcellent', cs.filter(c => gradeOf(c) === '최우수').length);
@@ -3262,7 +3265,7 @@ function aggregateCreativeData(rows, groupBy) {
         'one_line_insight','marketer_insight','improvement_actions','kpi_reality_check',
         'strength_evidence','weakness_evidence','creative_concept','사이즈','언어',
         'player_motivation','main_characters','color_tone','cta_type',
-        'theme_primary','theme_secondary','theme_flags','intent_axis',
+        'theme_primary','theme_secondary','theme_flags','intent_axis','execution_status','duplicate_of',
         'mmp_daily','mmp_channels','mmp_d1_ipm','mmp_d1_cpi','mmp_d7_roas',
         'mmp_d1_retention','mmp_installs','mmp_conversions','mmp_conv_ua','mmp_impressions','mmp_retained_d1','mmp_cost','mmp_revenue',
         'mmp_currency','mmp_fx_rate','source_files'];
@@ -5515,6 +5518,14 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         const sigIconsHtml = sigs.length > 0
           ? sigs.map(s => `<span class="has-tooltip" data-tip="${s.label}: ${s.detail}" style="font-size:14px;cursor:help;margin-right:2px;">${s.icon}</span>`).join('')
           : '';
+
+        // 미집행·중복 등록 배지 — 실수 집행 방지(훅맵 execution_status·duplicates)
+        const _exM = c.meta || {};
+        const _exBadge = _exM.duplicate_of
+          ? `<span class="has-tooltip" data-tip="중복 등록 — 정본 ${escapeHtml(_exM.duplicate_of)}. 소재 수 집계에서 1건으로 계산" style="flex:none;font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#EEF2F7;color:#64748B;">중복</span>`
+          : (_exM.execution_status === 'not_planned'
+            ? `<span class="has-tooltip" data-tip="미집행 확정 — 집행하지 마세요. 동일 비주얼의 카피 변경본이 집행 대상입니다" style="flex:none;font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#FEE2E2;color:#B91C1C;">미집행</span>`
+            : '');
         const _rowStatus = resolveStatus(c, _statusGMax, _statusOvr);
 
         // 썸네일 HTML 생성
@@ -5567,6 +5578,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <td style="max-width: 250px;">
             <div style="display:flex;align-items:center;gap:6px;">
               ${statusBadgeHtml(_rowStatus)}
+              ${_exBadge}
               ${sigIconsHtml}
               <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.key}</span>
             </div>
@@ -8264,6 +8276,9 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         `  · 소재명/유형 : ${creative.소재명 || '-'} / ${유형}`,
         `  · 실적        : 전환 ${num(creative.전환)} · CPA ${won(creative.CPA)} · IPM ${(Number(creative.IPM)||0).toFixed(2)} · 등급 ${val(creative.등급)}`,
         `  · 선정 사유   : ${사유}`,
+        ...(m.execution_status === 'not_planned'
+          ? ['  · 🔴 미집행    : 집행 대상이 아닙니다. 동일 비주얼의 카피 변경본(P- 접두)이 집행 대상입니다'] : []),
+        ...(m.duplicate_of ? [`  · 중복 등록   : 정본 ${m.duplicate_of} — 소재 수는 1건으로 계산`] : []),
         '',
         '[2] 재현할 위닝 요소 (유지)',
         `  · 훅          : ${val(m.hooking_strategy)}`,

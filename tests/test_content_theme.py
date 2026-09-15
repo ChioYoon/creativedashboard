@@ -74,7 +74,25 @@ def test_tougenanki_title_map():
     # 도원암귀 네이밍은 zeus 맵서 전부 미매핑 → 전용 맵으로 매칭
     assert assign_theme("FGT-IP-MudanoSSR01-DA")["new_hook"] is True                    # 기본(zeus) 맵: 미매핑
     r = assign_theme("FGT-IP-MudanoSSR01-DA", title="tougenanki")
-    assert r["theme_primary"] == "IP·캐릭터" and r["new_hook"] is False
+    # 훅맵 v1.3(T3 확정): SSR 3훅은 지급 고지 확인 → 보상·혜택으로 전환 (v1.1 IP·캐릭터에서 변경)
+    assert r["theme_primary"] == "보상·혜택" and r["new_hook"] is False
+
+
+def test_tougenanki_execution_status():
+    # 훅맵 v1.7: 제작 자산 ≠ 집행 예정. FGT 원본 2건 미집행 · MudanoSSR 1쌍 중복 등록
+    from pipeline.content_theme import execution_of
+    assert execution_of("FGT-IP-OniMainTVA01-DA", "tougenanki")["execution_status"] == "not_planned"
+    assert execution_of("FGT-IP-MudanoSSR01-DA", "tougenanki")["duplicate_of"] == "P-Reward-MudanoSSR01-DA"
+    planned = execution_of("P-Gamer-RasetsuBattle01-DA", "tougenanki")
+    assert planned["execution_status"] == "planned" and planned["duplicate_of"] is None
+    # 훅맵 없는 타이틀(zeus)은 전량 planned
+    assert execution_of("NU-Class-ClassArtisan01", "zeus")["execution_status"] == "planned"
+
+
+def test_tougenanki_flags_deduped():
+    # 훅맵 v1.7에 동일 ip_guard 중복 기재분 존재 → 로더에서 dedupe(제작 브리프 중복 줄 방지)
+    f = assign_theme("P-Reward-RasetsuSSR01-DA", title="tougenanki")["theme_flags"]
+    assert len(f) == len(set(f))
 
 
 def test_tougenanki_one_digit_variation():

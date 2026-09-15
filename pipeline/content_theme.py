@@ -47,7 +47,8 @@ def _load_config(title: str | None, repo_root: str | Path | None = None) -> dict
         hooks = {
             k: {"primary": v["theme_primary"], "secondary": list(v.get("theme_secondary", [])),
                 "core_usp": v.get("core_usp"), "review": v.get("review"),
-                "flags": list(v.get("flags", [])), "partner": v.get("partner")}
+                # 훅맵 v1.7에 동일 ip_guard 중복 기재분이 있어 순서 보존 dedupe(제작 브리프에 같은 가드 2줄 방지)
+                "flags": list(dict.fromkeys(v.get("flags", []))), "partner": v.get("partner")}
             for k, v in raw["hooks"].items()
         }
         norm = raw.get("normalization", {}) or {}
@@ -69,6 +70,34 @@ def _load_config(title: str | None, repo_root: str | Path | None = None) -> dict
     if repo_root is None:
         _CFG_CACHE[ck] = cfg
     return cfg
+
+
+def _load_exec(title: str | None, repo_root: str | Path | None = None) -> dict:
+    """소재명 → {execution_status, duplicate_of} 룩업 테이블(훅맵 v1.7 execution_status·duplicates).
+
+    제작 자산과 집행 예정 소재는 다르다(R팀 훅맵 회신 v1.8 §2). 미집행·중복 등록분을
+    축 판정 분모에서 빼되 제작 자산 집계에는 남기기 위해 소재 단위로 표기한다.
+    """
+    fname = _TITLE_MAP_FILE.get(title or "", _DEFAULT_MAP_FILE)
+    ck = "exec:" + fname
+    if repo_root is None and ck in _CFG_CACHE:
+        return _CFG_CACHE[ck]
+    raw = _load_raw(fname, repo_root)
+    tbl: dict[str, dict] = {}
+    for it in (raw.get("execution_status", {}) or {}).get("not_planned", []) or []:
+        tbl.setdefault(it["asset"], {})["execution_status"] = "not_planned"
+    for it in (raw.get("duplicates", {}) or {}).get("items", []) or []:
+        tbl.setdefault(it["duplicate_of"], {})["duplicate_of"] = it["canonical"]
+    if repo_root is None:
+        _CFG_CACHE[ck] = tbl
+    return tbl
+
+
+def execution_of(creative_name: str, title: str | None = None) -> dict:
+    """소재명 → {"execution_status": "planned"|"not_planned", "duplicate_of": str|None}."""
+    e = _load_exec(title).get(creative_name or "", {})
+    return {"execution_status": e.get("execution_status", "planned"),
+            "duplicate_of": e.get("duplicate_of")}
 
 
 def load_map(repo_root: str | Path | None = None) -> dict:
