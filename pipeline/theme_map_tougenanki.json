@@ -2,7 +2,7 @@
   "meta": {
     "title": "tougenanki",
     "title_kr": "도원암귀 크림슨 인페르노",
-    "version": "1.7",
+    "version": "1.8",
     "issued": "2026-09-15",
     "issuer": "R마케팅팀 (UA 총괄)",
     "basis": "tougenanki_소재목록.csv 41건 / 훅_추출 37종 (2026-09-14 CLOOP 제공)",
@@ -19,7 +19,8 @@
       "v1.4 2026-09-15 T8 확정. OniPopOut IP·캐릭터 유지 · §6 12항 미저촉(원본 유지·배치만 변경) 확인. review 3종 → 2종",
       "v1.5 2026-09-15 T7 확정 · 🔴 TVA 해석 정정. TVA = 'TV Animation 영상'이 아니라 '공식 오리지널 라이선스 기반' 표기. 도원암귀 소재에 원작 애니 영상·컷 사용분은 0건 → tva_source 플래그 전량 폐기. asset_type 을 포맷 접미 기반 규칙으로 전환. **review 0종 — 훅 28종 전량 확정**",
       "v1.6 2026-09-15 T9 확정. FGT-IP TVA 2쌍은 중복이 아니라 **축1 카피 파생**(FGT 취소 → 사전예약 전환, 비주얼 동일·문구 변경). 소재 40건 유지. variants 블록 신설 · intent_axis 에 FGT 단계 접두 정의 추가",
-      "v1.7 2026-09-15 T10 확정. FGT = 사전예약 이전 테스트(CBT류) 기간용 소재 · 계획 취소 → FGT 원본 2건 미집행 확정. execution_status 필드 신설 · 집계를 제작 자산(40) / 집행 예정(38) 2종으로 분리. **축 판정 분모는 집행 예정 38건**"
+      "v1.7 2026-09-15 T10 확정. FGT = 사전예약 이전 테스트(CBT류) 기간용 소재 · 계획 취소 → FGT 원본 2건 미집행 확정. execution_status 필드 신설 · 집계를 제작 자산(40) / 집행 예정(38) 2종으로 분리. **축 판정 분모는 집행 예정 38건**",
+      "v1.8 2026-09-15 필드명 충돌 해소. asset_type → creative_resource 로 개칭(Google Ads API asset_type 과 충돌). 값을 영문 enum 으로 전환하고 §6 12항 적용 여부를 값에 직접 매달았다"
     ],
     "status": "✅ 종결 — 훅 28종 전량 확정(review 0) · 집행 예정 38건 / 제작 자산 40건 확정 · open 0건 (T5만 분기 이월)"
   },
@@ -38,17 +39,6 @@
       "SSR": "가챠 최고 등급. 캐릭터 카드 비주얼 신호. ssr_grade=true 로 보존",
       "PV": "캐릭터 개별 프로모션 영상. 훅명 일부이므로 제거하지 않음(예: ShikiPV)"
     },
-    "asset_type_rule": {
-      "confirmed_at": "2026-09-15",
-      "note": "에셋 종류는 훅이 아니라 **소재명 포맷 접미**로 결정된다. 훅 단위 플래그가 아니다",
-      "map": {
-        "-DA": "일러스트 (배너). 감수 완료 원본 → §6 12항 일러스트 변경·수정 금지 적용",
-        "-PV": "영상 — 인게임 구현 플레이 컷신",
-        "-UA": "영상 — 인게임 구현 플레이 컷신",
-        "-EC": "영상 — 엔드카드"
-      },
-      "implication": "도원암귀 소재에 **원작 애니 영상·컷 사용분은 0건**이다. 전 소재가 게임 에셋 경로로 검수된다. 판권 검수 경로 분리가 불요하다"
-    },
     "deprecated_flags": {
       "tva_source": {
         "deprecated_at": "2026-09-15",
@@ -59,8 +49,44 @@
     "source_distinction": {
       "note": "서사 출처와 에셋 종류는 별개다. 둘 다 훅 이름으로 판단하지 않는다",
       "narrative_source": "서사가 어디서 왔는가 — 카피의 「TVアニメ」 표기 근거 · 원작 설정 해석 리스크 판단",
-      "asset_type": "화면에 쓰인 리소스가 무엇인가 — **소재명 포맷 접미로 결정** (asset_type_rule 참조)",
-      "removed": "tva_source — 판권 검수 경로를 가르는 플래그였으나, 해당 소재가 0건이라 폐기(2026-09-15)"
+      "removed": "tva_source — 판권 검수 경로를 가르는 플래그였으나, 해당 소재가 0건이라 폐기(2026-09-15)",
+      "creative_resource": "화면에 쓰인 리소스가 무엇인가 — **소재명 포맷 접미로 결정** (creative_resource_rule 참조). v1.7의 asset_type 에서 개칭"
+    },
+    "creative_resource_rule": {
+      "confirmed_at": "2026-09-15",
+      "renamed_from": "asset_type (v1.7) — Google Ads API 의 asset_type(IMAGE/YOUTUBE_VIDEO/MEDIA_BUNDLE)과 충돌해 개칭",
+      "note": "소재의 **화면이 무엇으로 만들어졌는가**. 소재명 포맷 접미로 결정되며, 판권 검수 경로와 §6 12항 적용 여부를 가른다",
+      "field": "creative_resource",
+      "derivation": "소재명 마지막 세그먼트(포맷 접미)에서 자동 도출",
+      "values": {
+        "illustration": {
+          "suffix": [
+            "-DA"
+          ],
+          "label_ko": "일러스트 (배너)",
+          "ip_rule": "🔴 감수 완료 원본 → §6 12항 일러스트 변경·수정 금지 **적용**",
+          "review_path": "게임 에셋"
+        },
+        "ingame_cutscene": {
+          "suffix": [
+            "-PV",
+            "-UA"
+          ],
+          "label_ko": "인게임 구현 플레이 컷신 (영상)",
+          "ip_rule": "§6 12항 미적용 (일러스트 아님)",
+          "review_path": "게임 에셋"
+        },
+        "endcard": {
+          "suffix": [
+            "-EC"
+          ],
+          "label_ko": "엔드카드 (영상)",
+          "ip_rule": "§6 12항 미적용",
+          "review_path": "게임 에셋"
+        }
+      },
+      "implication": "도원암귀 전 소재가 게임 에셋 경로다. 원작 애니 영상·컷 사용분 0건 → 판권 검수 경로 분리 불요",
+      "naming_note": "R팀에 별도 명칭 관행은 없다. creative_resource 를 정식 필드명으로 확정한다"
     }
   },
   "alias": {
@@ -260,7 +286,7 @@
       "review": false,
       "flags": [
         "license:공식_오리지널_라이선스_기반",
-        "asset_type:일러스트(배너)",
+        "creative_resource:illustration",
         "ip_guard:12항_일러스트_변경금지"
       ]
     },
@@ -276,7 +302,7 @@
         "entity:라세츠학원_집단훅",
         "ip_guard:10항_우선순위_직접적용",
         "ip_guard:14항_신장비율",
-        "asset_type:일러스트(배너)",
+        "creative_resource:illustration",
         "ip_guard:12항_일러스트_변경금지"
       ]
     },
@@ -323,7 +349,7 @@
       "flags": [
         "license:공식_오리지널_라이선스_기반",
         "ip_guard:13항_대립구도_필수",
-        "asset_type:일러스트(배너)",
+        "creative_resource:illustration",
         "ip_guard:12항_일러스트_변경금지"
       ]
     },
@@ -378,7 +404,7 @@
       "review": false,
       "flags": [
         "narrative_source:TVA_1기",
-        "asset_type:인게임_컷신(영상)",
+        "creative_resource:ingame_cutscene",
         "ip_guard:원작_서사_재현_설정해석_주의"
       ]
     },

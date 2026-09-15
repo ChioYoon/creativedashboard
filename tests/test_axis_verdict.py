@@ -94,3 +94,23 @@ def test_fallback_does_not_inherit_zeus_launch_date():
     for t in ("tougenanki", "gd", "pepp-us"):
         assert build_for_title(_base(), t, win_from="2026-08-01", win_to="2026-09-30")["launch_date"] is None
     assert build_for_title(_base(), "zeus", win_from="2026-08-01", win_to="2026-09-30")["launch_date"] == "2026-08-26"
+
+
+def test_not_planned_and_duplicate_excluded_from_denominator():
+    """축 판정 분모 = 집행 예정분. 미집행·중복 등록은 제외(회신 v1.8 §2)."""
+    base = _base()                                     # 전투 쾌감 3 + 그래픽·비주얼 3
+    r0 = compute_axis_verdict(base, title="zeus", launch_date="2026-08-26",
+                              win_from="2026-08-01", win_to="2026-09-30")
+    n0 = {x["axis"]: x["n"] for x in r0["stages"]["L"]}
+
+    noisy = base + [
+        dict(_c("L-Ingame-ClassKnight-99-PV", [("2026-09-01", CN, 1000, 5, 200000, 0)]),
+             execution_status="not_planned"),
+        dict(_c("L-Ingame-ClassKnight-98-PV", [("2026-09-01", CN, 1000, 5, 200000, 0)]),
+             duplicate_of="L-Ingame-ClassKnight-00-PV"),
+    ]
+    r1 = compute_axis_verdict(noisy, title="zeus", launch_date="2026-08-26",
+                              win_from="2026-08-01", win_to="2026-09-30")
+    n1 = {x["axis"]: x["n"] for x in r1["stages"]["L"]}
+    assert n1 == n0, "미집행·중복분이 분모에 섞였다"
+    assert n1["전투 쾌감"] == 3

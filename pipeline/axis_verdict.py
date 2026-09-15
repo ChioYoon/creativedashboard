@@ -43,12 +43,24 @@ def _r(v, n=4):
     return None if v is None else round(v, n)
 
 
+def _judgable_asset(c) -> bool:
+    """축 판정 분모 자격 — 집행 예정 소재만(훅맵 execution_status·duplicates, 회신 v1.8 §2).
+
+    · not_planned: 제작했으나 집행하지 않는 소재. 분모에 넣으면 축별 비중이 실제 집행 구성과 어긋난다.
+    · duplicate_of: 동일 파일이 두 축으로 중복 등록된 분. 정본 1건만 세지 않으면 그 축이 2배로 계산된다.
+    제작 자산 집계(대시보드 '제작 N')에는 둘 다 남는다 — 여기서만 뺀다.
+    """
+    return c.get("execution_status", "planned") != "not_planned" and not c.get("duplicate_of")
+
+
 def _agg_window(creatives, m, L, wf, wt, require_reviewed):
     """창 [wf,wt] 판정대상 일별 성과 → {stage:{axis:{impr,conv,clicks,cost,val,keys}}}, total, excluded."""
     agg = {"P": {}, "L": {}}
     total = 0
     excluded = 0
     for c in creatives:
+        if not _judgable_asset(c):
+            continue
         concept = c.get("creative_concept") or c.get("소재명") or ""
         rows = []
         for x in (c.get("kpi_daily") or []):
