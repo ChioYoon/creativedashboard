@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "title_id": "tougenanki",
-  "generated_at": "2026-09-15T13:06:02+09:00",
+  "generated_at": "2026-09-15T16:58:57+09:00",
   "pipeline_version": "stage2-mvp",
   "gemini_model": "gemini-2.5-flash",
   "creatives": [
@@ -76,12 +76,22 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "보상·혜택",
+      "theme_secondary": [
+        "IP·캐릭터"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:04+09:00",
+      "intent_axis": "IP",
+      "theme_flags": [
+        "ssr_grade",
+        "reward_notice:실물확인_지급고지_확인됨(2026-09-15)",
+        "ip_guard:11항_무다노_웃는표정_금지"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": "P-Reward-MudanoSSR01-DA",
+      "tagged_at": "2026-09-15T16:58:43+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-MudanoSSR01-DA\\260624_BNR_FGT-IP-MudanoSSR01-DA_L_1200x628_JP.jpg",
@@ -184,12 +194,22 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "스토리·세계관"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:04+09:00",
+      "intent_axis": "IP",
+      "theme_flags": [
+        "license:공식_오리지널_라이선스_기반",
+        "asset_type:일러스트(배너)",
+        "ip_guard:12항_일러스트_변경금지"
+      ],
+      "execution_status": "not_planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:43+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-OniMainTVA01-DA\\260624_BNR_FGT-IP-OniMainTVA01-DA_L_1200x628_JP.jpg",
@@ -288,12 +308,23 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "IP·캐릭터"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:04+09:00",
+      "intent_axis": "IP",
+      "theme_flags": [
+        "license:공식_오리지널_라이선스_기반",
+        "ip_guard:13항_대립구도_필수",
+        "asset_type:일러스트(배너)",
+        "ip_guard:12항_일러스트_변경금지"
+      ],
+      "execution_status": "not_planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:44+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-OniMomotaroTVA01-DA\\260518_BNR_FGT-IP-OniMomotaroTVA01-DA_L_1200x628_JP.jpg",
@@ -393,12 +424,20 @@
       ],
       "color_tone": "레드·골드 다크 판타지",
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "IP·캐릭터"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:23+09:00",
+      "intent_axis": "Battle",
+      "theme_flags": [
+        "brief:§5-1_서사·관계성"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:44+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Battle-Friendship02-DA\\JP\\260928_BNR_P-Battle-Freindship02-DA_L_1024x768_JP.jpg",
@@ -518,12 +557,20 @@
       ],
       "color_tone": "레드·다크 판타지",
       "cta_type": "보상 보증형",
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "IP·캐릭터"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:24+09:00",
+      "intent_axis": "Battle",
+      "theme_flags": [
+        "brief:§5-1_서사·관계성"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:48+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Battle-Freindship03-DA\\JP\\260928_BNR_P-Battle-Freindship03-DA_L_1024x768_JP.jpg",
@@ -642,12 +689,20 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": "보상 보증형",
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "IP·캐릭터"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:24+09:00",
+      "intent_axis": "Battle",
+      "theme_flags": [
+        "brief:§5-1_서사·관계성"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:48+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Battle-Friendship01-DA\\JP\\260928_BNR_P-Battle-Friendship01-DA_L_1024x768_JP.jpg",
@@ -770,12 +825,22 @@
       ],
       "color_tone": "레드·블랙 다크 판타지",
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "전투 쾌감",
+        "IP·캐릭터"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:24+09:00",
+      "intent_axis": "Battle",
+      "theme_flags": [
+        "ip_guard:13항_대립구도_필수",
+        "ip_guard:선악규정_표현_금지"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:49+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Battle-OniVsMomotaro01-DA\\JP\\260928_BNR_P-Battle-OniVsMomotaro01-DA_L_1024x768_JP.jpg",
@@ -897,12 +962,18 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "그래픽·비주얼"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:41+09:00",
+      "intent_axis": "Character",
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:49+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Character-Cutscene01-DA\\JP\\260928_BNR_P-Character-Cutscene01-DA_L_1024x768_JP.jpg",
@@ -1023,12 +1094,19 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "전투 쾌감",
+        "그래픽·비주얼"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:41+09:00",
+      "intent_axis": "Character",
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:49+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-HomarePV01-PV\\260421_VID_P-Character-HomarePV01-PV_S_1080x1080_JP.mp4",
@@ -1124,12 +1202,21 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "전투 쾌감",
+        "그래픽·비주얼"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:41+09:00",
+      "intent_axis": "Character",
+      "theme_flags": [
+        "ip_guard:14항_진172_시키174_스케일차_반영"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:50+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-JinPV01-PV\\260421_VID_P-Character-JinPV01-PV_S_1080x1080_JP.mp4",
@@ -1225,12 +1312,21 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "전투 쾌감",
+        "그래픽·비주얼"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:41+09:00",
+      "intent_axis": "Character",
+      "theme_flags": [
+        "ip_guard:10항_우선순위외_단독제작가능_동시배치시_외곽"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:50+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-KyoyaPV01-PV\\JP\\260421_VID_P-Character-KyoyaPV01-PV_S_1080x1080_JP.mp4",
@@ -1330,12 +1426,21 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "전투 쾌감",
+        "그래픽·비주얼"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:42+09:00",
+      "intent_axis": "Character",
+      "theme_flags": [
+        "ip_guard:11항_무다노_웃는표정_금지"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:51+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-MudanoPV01-PV\\260401_VID_P-Character-MudanoPV01-PV_S_1080x1080_JP.mp4",
@@ -1435,12 +1540,21 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "스토리·세계관"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:42+09:00",
+      "intent_axis": "Character",
+      "theme_flags": [
+        "ip_guard:10항_시키_중앙전면_배치",
+        "faction:오니"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:51+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Character-NerimaOni01-DA\\JP\\260928_BNR_P-Character-NerimaOni01-DA_L_1024x768_JP.jpg",
@@ -1563,12 +1677,21 @@
       ],
       "color_tone": "레드·다크 판타지",
       "cta_type": "보상 보증형",
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "그래픽·비주얼"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:42+09:00",
+      "intent_axis": "Character",
+      "theme_flags": [
+        "ip_check:12항_미저촉_확인됨(2026-09-15)",
+        "modification:원본유지_배치변경만"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:51+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Character-OniPopOut01-DA\\JP\\260928_BNR_P-Character-OniPopOut01-DA_L_1024x768_JP.jpg",
@@ -1685,12 +1808,22 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "전투 쾌감",
+        "IP·캐릭터"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:42+09:00",
+      "intent_axis": "Character",
+      "theme_flags": [
+        "ip_guard:13항_대립구도_필수",
+        "ip_guard:선악규정_표현_금지"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:51+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier3 영상 시안\\260928_VID_P-Character-OnivsMomotaro01-UA_L_1920x1080_JP.mp4",
@@ -1786,12 +1919,21 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "전투 쾌감",
+        "그래픽·비주얼"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:42+09:00",
+      "intent_axis": "Character",
+      "theme_flags": [
+        "ip_guard:10항_시키_중앙전면_배치"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:52+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-ShikiPV01-PV\\260421_VID_P-Character-ShikiPV01-PV_S_1080x1080_JP.mp4",
@@ -1891,12 +2033,21 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "전투 쾌감",
+        "스토리·세계관"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:43+09:00",
+      "intent_axis": "Character",
+      "theme_flags": [
+        "ip_guard:10항_시키_중앙전면_배치"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:52+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier3 영상 시안\\260928_VID_P-Character-Shikirage01-UA_L_1920x1080_JP.mp4"
@@ -1997,12 +2148,21 @@
       ],
       "color_tone": "레드·다크 판타지",
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "전투 쾌감",
+      "theme_secondary": [
+        "수집·육성"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:43+09:00",
+      "intent_axis": "Character",
+      "theme_flags": [
+        "brief:§5-1_전략성_축_결손",
+        "axis_gap:전략성"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:52+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Character-Skillcard01-DA\\JP\\260928_BNR_P-Character-Skillcard01-DA_L_1024x768_JP.jpg",
@@ -2119,12 +2279,22 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "전투 쾌감",
+        "그래픽·비주얼"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:43+09:00",
+      "intent_axis": "Character",
+      "theme_flags": [
+        "faction:모모타로",
+        "ip_guard:10항_우선순위외_단독제작가능_동시배치시_외곽"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:52+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-TsubakiriPV01-PV\\260421_VID_P-Character-TsubakiriPV01-PV_S_1080x1080_JP.mp4",
@@ -2221,12 +2391,20 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "전투 쾌감",
+      "theme_secondary": [
+        "IP·캐릭터"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:43+09:00",
+      "intent_axis": "Gameplay",
+      "theme_flags": [
+        "ip_guard:10항_우선순위외_단독제작가능_동시배치시_외곽"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:52+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Gameplay-SoloKyoya01-DA\\JP\\260928_BNR_P-Gameplay-SoloKyoya01-DA_L_1024x768_JP.jpg",
@@ -2350,12 +2528,22 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "그래픽·비주얼"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:43+09:00",
+      "intent_axis": "Gameplay",
+      "theme_flags": [
+        "narrative_source:TVA_1기",
+        "asset_type:인게임_컷신(영상)",
+        "ip_guard:원작_서사_재현_설정해석_주의"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:53+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier2 영상 시안\\260821_VID_P-Gameplay-kyotostory01-UA_L_1920x1080_JP.mp4",
@@ -2451,12 +2639,18 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "전투 쾌감",
+      "theme_secondary": [
+        "그래픽·비주얼"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:44+09:00",
+      "intent_axis": "Gamer",
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:53+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Gamer-IngamePV01-PV\\260421_VID_P-Gamer-IngamePV01-PV_S_1080x1080_JP.mp4",
@@ -2558,12 +2752,22 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "전투 쾌감",
+      "theme_secondary": [
+        "IP·캐릭터"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:44+09:00",
+      "intent_axis": "Gamer",
+      "theme_flags": [
+        "entity:라세츠학원_집단훅",
+        "ip_guard:10항_우선순위_직접적용",
+        "ip_guard:14항_신장비율"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:53+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Gamer-RasetsuBattle01-DA\\JP\\260928_BNR_P-Gamer-RasetsuBattle01-DA_L_1024x768_JP.jpg",
@@ -2680,12 +2884,18 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "그래픽·비주얼"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:45+09:00",
+      "intent_axis": "IP",
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:54+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Cinematic01-PV\\260421_VID_P-IP-Cinematic01-PV_S_1080x1080_JP.mp4",
@@ -2781,12 +2991,18 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "그래픽·비주얼"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:45+09:00",
+      "intent_axis": "IP",
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:54+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Cutscene01-UA\\JP\\260928_VID_P-IP-Cutscene0-UA_L_1920x1080_JP.mp4"
@@ -2883,12 +3099,19 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "theme_primary": "N/A:미상",
+      "theme_primary": "N/A:CTA",
       "theme_secondary": [],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:45+09:00",
+      "intent_axis": "IP",
+      "theme_flags": [
+        "format_hook",
+        "naming:EC_포맷접미와_중복"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:54+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\0. 엔드카드\\P-IP-Endcard01-EC\\JP\\260127_VID_P-IP-Endcard01-EC_L_1080x1080_JP.mp4",
@@ -2985,12 +3208,19 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "theme_primary": "N/A:미상",
+      "theme_primary": "N/A:CTA",
       "theme_secondary": [],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:45+09:00",
+      "intent_axis": "IP",
+      "theme_flags": [
+        "format_hook",
+        "naming:EC_포맷접미와_중복"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\0. 엔드카드\\(활용불가) P-IP-Endcard02-EC\\JP\\260127_VID_P-IP-Endcard02-EC_L_1920x1080_JP.mp4"
@@ -3089,12 +3319,22 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "스토리·세계관"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:45+09:00",
+      "intent_axis": "IP",
+      "theme_flags": [
+        "license:공식_오리지널_라이선스_기반",
+        "asset_type:일러스트(배너)",
+        "ip_guard:12항_일러스트_변경금지"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-OniMainTVA01-DA\\JP\\260928_BNR_P-IP-OniMainTVA01-DA_L_1024x768_JP.jpg",
@@ -3216,12 +3456,23 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "IP·캐릭터"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:45+09:00",
+      "intent_axis": "IP",
+      "theme_flags": [
+        "license:공식_오리지널_라이선스_기반",
+        "ip_guard:13항_대립구도_필수",
+        "asset_type:일러스트(배너)",
+        "ip_guard:12항_일러스트_변경금지"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-OniMomotaroTVA01-DA\\JP\\260928_BNR_P-IP-OniMomotaroTVA01-DA_L_1024x768_JP.jpg",
@@ -3343,12 +3594,25 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": "보상 보증형",
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "IP·캐릭터",
+      "theme_secondary": [
+        "스토리·세계관"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:45+09:00",
+      "intent_axis": "IP",
+      "theme_flags": [
+        "license:공식_오리지널_라이선스_기반",
+        "entity:라세츠학원_집단훅",
+        "ip_guard:10항_우선순위_직접적용",
+        "ip_guard:14항_신장비율",
+        "asset_type:일러스트(배너)",
+        "ip_guard:12항_일러스트_변경금지"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-RasetsuTVA01-DA\\JP\\260928_BNR_P-IP-RasetsuTVA01-DA_L_1024x768_JP.jpg",
@@ -3464,12 +3728,19 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "theme_primary": "N/A:미상",
+      "theme_primary": "N/A:고지",
       "theme_secondary": [],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:46+09:00",
+      "intent_axis": "IP",
+      "theme_flags": [
+        "notice_type:출시예정_고지",
+        "stage_note:사전예약_오픈_전"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Teaser01-PV\\260421_VID_P-IP-Teaser01-PV_S_1080x1080_JP.mp4",
@@ -3569,12 +3840,22 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": "보상 보증형",
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "보상·혜택",
+      "theme_secondary": [
+        "IP·캐릭터"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:46+09:00",
+      "intent_axis": "Reward",
+      "theme_flags": [
+        "ssr_grade",
+        "reward_notice:실물확인_지급고지_확인됨(2026-09-15)",
+        "ip_guard:11항_무다노_웃는표정_금지"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR01-DA\\JP\\260928_BNR_P-Reward-MudanoSSR01-DA_L_1024x768_JP.jpg",
@@ -3694,12 +3975,22 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "보상·혜택",
+      "theme_secondary": [
+        "IP·캐릭터"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:46+09:00",
+      "intent_axis": "Reward",
+      "theme_flags": [
+        "ssr_grade",
+        "reward_notice:실물확인_지급고지_확인됨(2026-09-15)",
+        "ip_guard:11항_무다노_웃는표정_금지"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR02-DA (CTA)\\JP\\260928_BNR_P-Reward-MudanoSSR02-DA_L_1024x768_JP.jpg",
@@ -3821,12 +4112,23 @@
       ],
       "color_tone": "레드·블랙 다크 판타지",
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "보상·혜택",
+      "theme_secondary": [
+        "IP·캐릭터",
+        "스토리·세계관"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:46+09:00",
+      "intent_axis": "Reward",
+      "theme_flags": [
+        "ssr_grade",
+        "reward_notice:실물확인_지급고지_확인됨(2026-09-15)",
+        "ip_guard:13항_대립구도_필수"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-OniMomotaroSSR01-DA\\JP\\260928_BNR_P-Reward-OniMomotaroSSR01-DA_L_1024x768_JP.jpg",
@@ -3950,12 +4252,24 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": "로고 정적 노출형",
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "보상·혜택",
+      "theme_secondary": [
+        "IP·캐릭터"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:46+09:00",
+      "intent_axis": "Reward",
+      "theme_flags": [
+        "ssr_grade",
+        "reward_notice:실물확인_지급고지_확인됨(2026-09-15)",
+        "entity:라세츠학원_집단훅",
+        "ip_guard:10항_우선순위_직접적용",
+        "ip_guard:14항_신장비율"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR01-DA\\JP\\260928_BNR_P-Reward-RasetsuSSR01-DA_L_1024x768_JP.jpg",
@@ -4075,12 +4389,24 @@
       ],
       "color_tone": "다크 레드·블랙",
       "cta_type": "보상 보증형",
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "보상·혜택",
+      "theme_secondary": [
+        "IP·캐릭터"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:05:46+09:00",
+      "intent_axis": "Reward",
+      "theme_flags": [
+        "ssr_grade",
+        "reward_notice:실물확인_지급고지_확인됨(2026-09-15)",
+        "entity:라세츠학원_집단훅",
+        "ip_guard:10항_우선순위_직접적용",
+        "ip_guard:14항_신장비율"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:55+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR02-DA (CTA)\\JP\\260928_BNR_P-Reward-RasetsuSSR02-DA_L_1024x768_JP.jpg",
@@ -4200,12 +4526,21 @@
       ],
       "color_tone": "다크 레드 판타지",
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "전투 쾌감",
+      "theme_secondary": [
+        "수집·육성"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:06:01+09:00",
+      "intent_axis": "Reward",
+      "theme_flags": [
+        "brief:§5-1_전략성_축_결손",
+        "axis_gap:전략성"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-Skillcard02-DA\\JP\\260928_BNR_P-Reward-Skillcard02-DA_L_1024x768_JP.jpg",
@@ -4326,12 +4661,23 @@
       ],
       "color_tone": "다크 레드",
       "cta_type": "보상 보증형",
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "수집·육성",
+      "theme_secondary": [
+        "보상·혜택",
+        "전투 쾌감"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:06:01+09:00",
+      "intent_axis": "Reward",
+      "theme_flags": [
+        "ssr_grade",
+        "axis_gap:전략성",
+        "reward_notice:지급고지_있으나_화면중심은_스킬카드UI(2026-09-15)"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Reward-SkillcardSSR01-UA\\JP\\260928_VID_P-Reward-SkillcardSSR01-UA_L_1920x1080_JP.mp4",
@@ -4427,12 +4773,20 @@
       "main_characters": [],
       "color_tone": null,
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "IP·캐릭터"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:06:01+09:00",
+      "intent_axis": "Story",
+      "theme_flags": [
+        "brief:§5-1_서사·관계성"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier3 영상 시안\\260928_VID_P-Story-Freindship01-UA_L_1920x1080_JP.mp4"
@@ -4530,12 +4884,21 @@
       ],
       "color_tone": "다크 레드",
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "IP·캐릭터"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:06:01+09:00",
+      "intent_axis": "Story",
+      "theme_flags": [
+        "brief:§5-5_VO_수급불가_텍스트연출만",
+        "brief:§5-3_진지한대사_희화화_금지"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:56+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier3 영상 시안\\260928_VID_P-Story-IconicLines01-UA_L_1920x1080_JP.mp4",
@@ -4637,12 +5000,22 @@
       ],
       "color_tone": "레드·다크 판타지",
       "cta_type": null,
-      "theme_primary": "N/A:미상",
-      "theme_secondary": [],
+      "theme_primary": "스토리·세계관",
+      "theme_secondary": [
+        "전투 쾌감",
+        "IP·캐릭터"
+      ],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:06:02+09:00",
+      "intent_axis": "Story",
+      "theme_flags": [
+        "ip_guard:13항_대립구도_필수",
+        "ip_guard:선악규정_표현_금지"
+      ],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:58:57+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier2 영상 시안\\260826_VID_P-Story-OnivsMomotaro01-UA_L_1920x1080_JP.mp4",
@@ -4675,10 +5048,10 @@
   "metrics": {
     "scanned_folders": 41,
     "tagged_records": 41,
-    "cache_hits": 38,
-    "cache_misses": 3,
+    "cache_hits": 41,
+    "cache_misses": 0,
     "failures": 0,
-    "duration_sec": 58.0,
+    "duration_sec": 59.0,
     "prompt_version": "v3.3-2026.06.13-character-split-single-darkfantasy-v1",
     "fallback_used": false,
     "carried_forward": 0,

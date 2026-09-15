@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "title_id": "zeus",
-  "generated_at": "2026-09-15T13:04:58+09:00",
+  "generated_at": "2026-09-15T16:57:53+09:00",
   "pipeline_version": "stage2-mvp",
   "gemini_model": "gemini-2.5-flash",
   "creatives": [
@@ -16,11 +16,11 @@
       "언어": "KR",
       "링크": "https://tpc.googlesyndication.com/simgad/12349312315106581857",
       "creative_concept": "L-Event-Colosseum-01-DA",
-      "전환": 82,
+      "전환": 83,
       "비용": 411080,
-      "노출수": 111323,
+      "노출수": 111325,
       "클릭수": 636,
-      "Revenue": 726067,
+      "Revenue": 781067,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "전략/경쟁형(상성/조합)",
       "art_style": "시네마틱 실사 합성",
@@ -62,14 +62,14 @@
       "kpi_percentiles": {
         "ctr": 11,
         "cvr": 31,
-        "cpa": 43
+        "cpa": 45
       },
       "scores": {
-        "total": 46.37,
+        "total": 47.14,
         "grade": "양호",
-        "rank": 90,
-        "conv": 11.45,
-        "cpa": 48.09,
+        "rank": 87,
+        "conv": 12.21,
+        "cpa": 50.38,
         "ipm": 37.4,
         "roas": 88.55
       },
@@ -88,7 +88,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:01:44+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:07+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_L-Event-Colosseum-01-DA\\260909_BNR_L-Event-Colosseum-01-DA_L_1024x768_KR.jpg",
@@ -201,8 +205,8 @@
           "clicks": 21,
           "cost_micros": 27149652330,
           "cost": 27149.65233,
-          "conversions": 21.0,
-          "conversions_value": 726006.0
+          "conversions": 22.0,
+          "conversions_value": 781006.0
         },
         {
           "creative_name": "260909_BNR_L-Event-Colosseum-01-DA_S_1200x1200_KR.jpg",
@@ -707,7 +711,7 @@
           "asset_url": "https://tpc.googlesyndication.com/simgad/3966342088443799316",
           "asset_type": "IMAGE",
           "asset_id": "419192741496",
-          "impressions": 6018,
+          "impressions": 6020,
           "clicks": 38,
           "cost_micros": 8949643182,
           "cost": 8949.643182,
@@ -1068,11 +1072,11 @@
       "언어": "KR",
       "링크": "https://tpc.googlesyndication.com/simgad/15845163251136240935",
       "creative_concept": "L-Event-Grandopen-01-DA",
-      "전환": 583,
+      "전환": 588,
       "비용": 1134157,
       "노출수": 263574,
       "클릭수": 1964,
-      "Revenue": 1662639,
+      "Revenue": 1662644,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "대세감(출시일/사전등록수)",
       "art_style": "시네마틱 실사 합성",
@@ -1108,14 +1112,14 @@
       "kpi_percentiles": {
         "ctr": 28,
         "cvr": 91,
-        "cpa": 93
+        "cpa": 92
       },
       "scores": {
         "total": 75.38,
         "grade": "우수",
         "rank": 23,
-        "conv": 30.53,
-        "cpa": 93.89,
+        "conv": 31.3,
+        "cpa": 93.13,
         "ipm": 91.6,
         "roas": 85.5
       },
@@ -1131,7 +1135,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:01:44+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:07+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_L-Event-Grandopen-01-DA\\260826_BNR_L-Event-Grandopen-01-DA_L_1024x768_KR.jpg",
@@ -2640,8 +2648,8 @@
           "clicks": 6,
           "cost_micros": 11313986801,
           "cost": 11313.986801,
-          "conversions": 191.0,
-          "conversions_value": 191.0
+          "conversions": 193.0,
+          "conversions_value": 193.0
         },
         {
           "creative_name": "260826_BNR_L-Event-Grandopen-01-DA_V_1200x1500_KR.jpg",
@@ -2691,8 +2699,8 @@
           "clicks": 4,
           "cost_micros": 3728967610,
           "cost": 3728.96761,
-          "conversions": 186.0,
-          "conversions_value": 186.0
+          "conversions": 188.0,
+          "conversions_value": 188.0
         },
         {
           "creative_name": "260826_BNR_L-Event-Grandopen-01-DA_V_1200x1500_KR.jpg",
@@ -2725,8 +2733,8 @@
           "clicks": 1,
           "cost_micros": 437977558,
           "cost": 437.977558,
-          "conversions": 47.0,
-          "conversions_value": 47.0
+          "conversions": 48.0,
+          "conversions_value": 48.0
         },
         {
           "creative_name": "260826_BNR_L-Event-Grandopen-01-DA_S_1200x1200_KR.jpg",
@@ -3065,11 +3073,11 @@
       "언어": "KR",
       "링크": "https://tpc.googlesyndication.com/simgad/621998805303958964",
       "creative_concept": "L-Event-Market1st-01-DA",
-      "전환": 740,
+      "전환": 743,
       "비용": 1778060,
-      "노출수": 541553,
+      "노출수": 541554,
       "클릭수": 4014,
-      "Revenue": 246031,
+      "Revenue": 246034,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "대세감(출시일/사전등록수)",
       "art_style": "시네마틱 실사 합성",
@@ -3112,7 +3120,7 @@
       "scores": {
         "total": 69.66,
         "grade": "우수",
-        "rank": 36,
+        "rank": 35,
         "conv": 38.17,
         "cpa": 90.84,
         "ipm": 73.28,
@@ -3128,7 +3136,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:01:44+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:07+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_L_Event_Market1st-01-DA\\260826_BNR_L-Event-Market1st-01-DA_L_1024x768_KR.jpg",
@@ -5687,7 +5699,7 @@
           "asset_url": "https://tpc.googlesyndication.com/simgad/621998805303958964",
           "asset_type": "IMAGE",
           "asset_id": "413166147202",
-          "impressions": 2106,
+          "impressions": 2107,
           "clicks": 56,
           "cost_micros": 18981705280,
           "cost": 18981.70528,
@@ -6966,8 +6978,8 @@
           "clicks": 6,
           "cost_micros": 18479130209,
           "cost": 18479.130209,
-          "conversions": 221.0,
-          "conversions_value": 221.0
+          "conversions": 222.0,
+          "conversions_value": 222.0
         },
         {
           "creative_name": "260826_BNR_L-Event-Market1st-01-DA_V_1200x1500_KR_0.8.jpg",
@@ -7000,8 +7012,8 @@
           "clicks": 1,
           "cost_micros": 2173914649,
           "cost": 2173.914649,
-          "conversions": 152.0,
-          "conversions_value": 152.0
+          "conversions": 154.0,
+          "conversions_value": 154.0
         },
         {
           "creative_name": "260826_BNR_L-Event-Market1st-01-DA_L_1200x628_KR.jpg",
@@ -7527,11 +7539,11 @@
       "언어": "KR",
       "링크": "https://tpc.googlesyndication.com/simgad/338638707946728208",
       "creative_concept": "L-Event-Market1st-02-DA",
-      "전환": 675,
+      "전환": 694,
       "비용": 1336663,
       "노출수": 264227,
       "클릭수": 1939,
-      "Revenue": 5939464,
+      "Revenue": 7435467,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "대세감(출시일/사전등록수)",
       "art_style": "3D 셀셰이딩",
@@ -7570,17 +7582,17 @@
       "kpi_reality_check": "양대 마켓 1위라는 대세감으로 높은 CTR을 기대했으나 실제 CTR 0.7%로 풀 하위 22%를 기록함 — 게임플레이 단서 부재가 클릭 전환을 막았으므로 초반에 핵심 게임성 요소를 추가하여 장르 인지를 높일 필요가 있음",
       "kpi_percentiles": {
         "ctr": 25,
-        "cvr": 93,
-        "cpa": 92
+        "cvr": 94,
+        "cpa": 93
       },
       "scores": {
-        "total": 79.58,
-        "grade": "우수",
-        "rank": 20,
-        "conv": 35.88,
-        "cpa": 92.37,
-        "ipm": 93.89,
-        "roas": 96.18
+        "total": 80.53,
+        "grade": "최우수",
+        "rank": 17,
+        "conv": 36.64,
+        "cpa": 93.89,
+        "ipm": 94.66,
+        "roas": 96.95
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -7592,7 +7604,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:01:44+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:07+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_L_Event_Market1st-02-DA\\양대마켓 1위\\260826_BNR_L-Event-Market1st-02-DA_L_1024x768_KR.jpg",
@@ -7741,8 +7757,8 @@
           "clicks": 6,
           "cost_micros": 9299155151,
           "cost": 9299.155151,
-          "conversions": 87.0,
-          "conversions_value": 5079801.0
+          "conversions": 103.0,
+          "conversions_value": 6575801.0
         },
         {
           "creative_name": "260826_BNR_L-Event-Market1st-02-DA_V_1200x1500_KR.jpg",
@@ -10954,8 +10970,8 @@
           "clicks": 4,
           "cost_micros": 48989518042,
           "cost": 48989.518042,
-          "conversions": 186.0,
-          "conversions_value": 186.0
+          "conversions": 189.0,
+          "conversions_value": 189.0
         },
         {
           "creative_name": "260826_BNR_L-Event-Market1st-02-DA_V_1200x1500_KR.jpg",
@@ -11514,7 +11530,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:01:44+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:07+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_L-Event-NewServer-01-DA\\260831_BNR_L-Event-NewServer-01-DA_L_1024x768_KR.jpg",
@@ -13065,11 +13085,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=aUHQN5MXWQA",
       "creative_concept": "L-Event-NewServer-01-PV",
-      "전환": 2851,
+      "전환": 2857,
       "비용": 20797493,
       "노출수": 2780449,
       "클릭수": 11228,
-      "Revenue": 30612995,
+      "Revenue": 31118995,
       "hooking_strategy": "캐릭터 외형 소구",
       "USP": "전략/경쟁형(상성/조합)",
       "art_style": "시네마틱 실사 합성",
@@ -13130,7 +13150,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:01:44+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:07+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_L-Event-NewServer-01-PV\\260831_VID_L-Event-NewServer-01-PV_L_1920x1080_KR.mp4",
@@ -13274,8 +13298,8 @@
           "clicks": 460,
           "cost_micros": 978156113368,
           "cost": 978156.113368,
-          "conversions": 251.0,
-          "conversions_value": 7440970.0
+          "conversions": 252.0,
+          "conversions_value": 7451970.0
         },
         {
           "creative_name": "260831_VID_L-Event-NewServer-01-PV_S_1080x1080_KR",
@@ -13529,8 +13553,8 @@
           "clicks": 143,
           "cost_micros": 344465915601,
           "cost": 344465.915601,
-          "conversions": 100.0,
-          "conversions_value": 4484710.0
+          "conversions": 105.0,
+          "conversions_value": 4979710.0
         },
         {
           "creative_name": "260831_VID_L-Event-NewServer-01-PV_S_1080x1080_KR",
@@ -14733,7 +14757,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:01:44+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:07+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_L-Event-NewServer-02-DA\\260831_BNR_L-Event-NewServer-02-DA_L_1024x768_KR.jpg",
@@ -16317,7 +16345,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:01:44+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:07+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_L-Event-NewServerDio-01-DA\\구버전 (디오니소스)\\260916_BNR_L-Event-NewServerDio-01-DA_L_1024x768_KR.jpg",
@@ -16441,7 +16473,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:02:50+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:07+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_L-Event-NewServerDio-01-DA\\260916_BNR_L-Event-NewServers-01-DA_L_1024x768_KR.jpg",
@@ -16494,11 +16530,11 @@
     {
       "creative_id": "L-Event-NewServersReward-01-DA",
       "소재명": "L-Event-NewServersReward-01-DA",
-      "파일명": "260916_BNR_L-Event-NewServersReward-01-DA_L_1200x628_KR.jpg",
+      "파일명": "260916_BNR_L-Event-NewServersReward-01-DA_L_1024x768_KR.jpg",
       "유형": "BNR",
       "일": "2026-09-16",
       "캠페인": null,
-      "사이즈": "1200x628",
+      "사이즈": "1024x768",
       "언어": "KR",
       "링크": null,
       "creative_concept": "L-Event-NewServersReward-01-DA",
@@ -16512,12 +16548,12 @@
       "art_style": "시네마틱 실사 합성",
       "strengths": [
         "보상 약속 명확",
-        "캐릭터 액션/전투 연출",
+        "단일 주인공 스포트라이트",
         "강한 비주얼 임팩트"
       ],
       "weaknesses": [
         "장르/게임성 불분명",
-        "정보 과적 (텍스트/UI 산만)"
+        "행동 유도 약함/부재"
       ],
       "hypothesis": [
         "높은 CTR 예상 — 강한 후킹",
@@ -16525,25 +16561,23 @@
       ],
       "test_ideas": [
         "게임플레이 컷 추가",
-        "카피 1줄로 축약",
         "명시적 CTA 추가"
       ],
-      "one_line_insight": "신서버 오픈과 보상 약속으로 후킹은 강하나, MMORPG 장르의 핵심 재미가 불분명하고 정보가 산만함 — 초반에 대규모 전투 장면을 추가하고 텍스트를 간결하게 정리하여 장르 인지와 메시지 집중도를 개선",
+      "one_line_insight": "신서버 오픈 보상과 매력적인 캐릭터 비주얼로 후킹은 강하나, MMORPG 장르의 핵심 게임성이 불분명하고 행동 유도가 약함 — 보상과 연계된 명확한 CTA를 추가하고 짧은 인게임 플레이 컷을 삽입하여 전환율을 개선",
       "strength_evidence": [
-        "화면 중앙에 '접속만 해도 의상/탈것 소환권 지급!' 문구가 명확하게 제시되어 시청자에게 즉각적인 혜택을 인지시킴",
-        "화면 우측의 여성 캐릭터가 역동적인 자세와 빛나는 이펙트와 함께 등장하여 시선을 사로잡고 게임의 판타지 분위기를 전달함",
-        "전반적으로 골드와 다크 톤의 배경에 3D 고퀄리티 캐릭터와 빛나는 이펙트, 떠다니는 이벤트 카드가 조화롭게 배치되어 몰입감을 높임"
+        "화면 중앙에 '신서버 동시 오픈 접속만 해도 의상/탈것 소환권 지급!' 문구가 크게 강조되어 명확한 혜택을 즉시 인지시킴",
+        "화면 우측에 위치한 여성 캐릭터가 빛나는 이펙트와 함께 클로즈업되어 시선을 집중시키며 외형적 매력을 어필함",
+        "고품질 3D 모델링의 캐릭터와 배경, 그리고 빛나는 이펙트가 전체적으로 웅장하고 고급스러운 분위기를 연출하여 시선을 사로잡음"
       ],
       "weakness_evidence": [
-        "캐릭터 외형과 보상 강조에 집중하여 MMORPG의 핵심인 대규모 전투나 필드 플레이 장면이 없어 장르적 재미를 명확히 전달하지 못함",
-        "신서버 오픈, 보상 지급, 타이틀, 서브 타이틀 등 다양한 텍스트 정보가 한 화면에 배치되어 시선이 분산되고 핵심 메시지 집중도가 떨어짐"
+        "캐릭터 외형과 보상 강조에 집중하여 MMORPG 장르의 핵심인 전투, 성장, 경쟁 요소가 전혀 드러나지 않아 게임 플레이에 대한 궁금증을 유발하기 어려움",
+        "하단 '다운로드' CTA 버튼이 존재하지만, 보상 혜택과 직접적으로 연결되는 '사전예약' 또는 '지금 플레이'와 같은 즉각적인 행동 유도 메시지가 부족함"
       ],
       "improvement_actions": [
-        "캐릭터 외형 소구 후 3초 이내에 대규모 전투나 오픈 필드 탐험 장면을 추가하여 MMORPG 장르의 핵심 재미를 명확히 전달",
-        "중앙 텍스트를 '신서버 오픈! 접속 즉시 의상/탈것 소환권!'처럼 핵심 보상과 행동 유도를 1줄로 압축하여 가독성을 높임",
-        "엔드카드에 '지금 다운로드하고 보상 받기'와 같은 구체적인 행동 유도 버튼을 강조하여 전환율을 높이도록 유도"
+        "신서버 오픈 보상 강조와 함께 실제 인게임 대규모 전투나 성장 연출 컷을 짧게 삽입하여 장르적 매력을 보완",
+        "하단 CTA 버튼을 '지금 다운로드하고 보상 받기' 등으로 변경하여 보상 혜택과 직접적으로 연결되는 행동을 유도"
       ],
-      "creator_intent": "신서버 오픈과 파격적인 접속 보상을 강조하여 신규 유저 유입을 극대화하려는 의도",
+      "creator_intent": "신서버 오픈과 함께 파격적인 접속 보상을 제시하여 신규 유저 유입을 극대화하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
       "scores": {
@@ -16558,22 +16592,49 @@
       "marketer_insight": null,
       "player_motivation": "성취형",
       "main_characters": [],
-      "color_tone": "골드·다크 판타지",
-      "cta_type": "보상 보증형",
+      "color_tone": "골드·아이보리 판타지",
+      "cta_type": "마켓 버튼 모사형",
       "theme_primary": "N/A:미상",
       "theme_secondary": [],
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:07+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_L_1024x768_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_L_1200x600_KR.jpg",
         "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_L_1200x628_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_L_1280x720_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_L_300x250_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_L_300x50_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_L_315x186_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_L_320x100_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_L_320x50_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_L_336x280_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_L_468x60_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_L_480x320_KR.jpg",
         "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_L_728x90_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_L_970x250_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_L_970x90_KR.jpg",
         "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_S_1200x1200_KR.jpg",
-        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_V_1080x1920_KR.jpg",
         "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_V_1200x1500_KR.jpg",
-        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_V_160x600_KR.jpg"
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_V_120x600_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_V_160x600_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_V_300x600_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_V_320x480_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_V_720x1280_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\260916_BNR_L-Event-NewServersReward-01-DA_V_768x1024_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\원본\\260916_BNR_L-Event-NewServersReward-01-DA_L_1200x628_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\원본\\260916_BNR_L-Event-NewServersReward-01-DA_L_728x90_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\원본\\260916_BNR_L-Event-NewServersReward-01-DA_S_1200x1200_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\원본\\260916_BNR_L-Event-NewServersReward-01-DA_V_1080x1920_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\원본\\260916_BNR_L-Event-NewServersReward-01-DA_V_1200x1500_KR.jpg",
+        "1. 배너\\제작중\\BNR_L-Event-NewServersReward-01-DA\\원본\\260916_BNR_L-Event-NewServersReward-01-DA_V_160x600_KR.jpg"
       ],
       "kpi_source": null,
       "kpi_window_start": null,
@@ -16609,11 +16670,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=_RMlFc45qZ8",
       "creative_concept": "L-Event-USPAIMode-01-UA",
-      "전환": 1089,
-      "비용": 11658291,
-      "노출수": 1349255,
+      "전환": 1097,
+      "비용": 11658121,
+      "노출수": 1349252,
       "클릭수": 4928,
-      "Revenue": 16575360,
+      "Revenue": 16875662,
       "hooking_strategy": "질문/선택 상황 제시",
       "USP": "편의성형(방치/빠른성장)",
       "art_style": "시네마틱 실사 합성",
@@ -16652,17 +16713,17 @@
       "kpi_reality_check": null,
       "kpi_percentiles": {
         "ctr": 3,
-        "cvr": 39,
+        "cvr": 40,
         "cpa": 0
       },
       "scores": {
-        "total": 47.33,
+        "total": 47.71,
         "grade": "양호",
-        "rank": 85,
+        "rank": 84,
         "conv": 51.15,
         "cpa": 9.16,
-        "ipm": 45.04,
-        "roas": 83.97
+        "ipm": 45.8,
+        "roas": 84.73
       },
       "marketer_insight": null,
       "player_motivation": "성취형",
@@ -16674,7 +16735,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:07+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:26+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_L-Event-USPAIMode-01-UA\\260902_VID_L-Event-USPAIMode-01-UA_L_1920x1080_KR.mp4",
@@ -17307,10 +17372,10 @@
           "asset_url": "https://www.youtube.com/watch?v=bA_2I5NZwLE",
           "asset_type": "YOUTUBE_VIDEO",
           "asset_id": "416055480827",
-          "impressions": 19383,
+          "impressions": 19384,
           "clicks": 23,
-          "cost_micros": 129084830155,
-          "cost": 129084.830155,
+          "cost_micros": 129084434523,
+          "cost": 129084.434523,
           "conversions": 2.0,
           "conversions_value": 2.0
         },
@@ -17328,8 +17393,8 @@
           "clicks": 11,
           "cost_micros": 45839904429,
           "cost": 45839.904429,
-          "conversions": 1.0,
-          "conversions_value": 5500.0
+          "conversions": 2.0,
+          "conversions_value": 5501.0
         },
         {
           "creative_name": "260902_VID_L-Event-USPAIMode-01-UA_L_1920x1080_KR",
@@ -17341,10 +17406,10 @@
           "asset_url": "https://www.youtube.com/watch?v=_RMlFc45qZ8",
           "asset_type": "YOUTUBE_VIDEO",
           "asset_id": "416235078765",
-          "impressions": 5722,
+          "impressions": 5720,
           "clicks": 10,
-          "cost_micros": 142154515194,
-          "cost": 142154.515194,
+          "cost_micros": 142035081781,
+          "cost": 142035.081781,
           "conversions": 3.0,
           "conversions_value": 71500.0
         },
@@ -18004,12 +18069,12 @@
           "asset_url": "https://www.youtube.com/watch?v=_RMlFc45qZ8",
           "asset_type": "YOUTUBE_VIDEO",
           "asset_id": "416235078765",
-          "impressions": 20507,
+          "impressions": 20506,
           "clicks": 91,
-          "cost_micros": 162318987820,
-          "cost": 162318.98782,
-          "conversions": 5.0,
-          "conversions_value": 5.0
+          "cost_micros": 162313554817,
+          "cost": 162313.554817,
+          "conversions": 6.0,
+          "conversions_value": 6.0
         },
         {
           "creative_name": "260902_VID_L-Event-USPAIMode-01-UA_S_1080x1080_KR",
@@ -18280,8 +18345,8 @@
           "clicks": 127,
           "cost_micros": 216744458391,
           "cost": 216744.458391,
-          "conversions": 80.0,
-          "conversions_value": 3900608.0
+          "conversions": 82.0,
+          "conversions_value": 4098608.0
         },
         {
           "creative_name": "260902_VID_L-Event-USPAIMode-01-UA_V_1080x1920_KR",
@@ -18314,8 +18379,8 @@
           "clicks": 307,
           "cost_micros": 658169566690,
           "cost": 658169.56669,
-          "conversions": 74.0,
-          "conversions_value": 1501544.0
+          "conversions": 77.0,
+          "conversions_value": 1600544.0
         },
         {
           "creative_name": "260902_VID_L-Event-USPAIMode-01-UA_S_1080x1080_KR",
@@ -18518,8 +18583,8 @@
           "clicks": 66,
           "cost_micros": 238988757598,
           "cost": 238988.757598,
-          "conversions": 13.0,
-          "conversions_value": 225508.0
+          "conversions": 14.0,
+          "conversions_value": 228808.0
         },
         {
           "creative_name": "260902_VID_L-Event-USPAIMode-01-UA_S_1080x1080_KR",
@@ -18820,10 +18885,10 @@
           "asset_url": "https://www.youtube.com/watch?v=_RMlFc45qZ8",
           "asset_type": "YOUTUBE_VIDEO",
           "asset_id": "416235078765",
-          "impressions": 4300,
+          "impressions": 4299,
           "clicks": 10,
-          "cost_micros": 78005067919,
-          "cost": 78005.067919,
+          "cost_micros": 77960486776,
+          "cost": 77960.486776,
           "conversions": 4.0,
           "conversions_value": 5503.0
         }
@@ -18858,11 +18923,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=NRXaAyzFRrs",
       "creative_concept": "L-Event-USPVaultofMidas-01-UA",
-      "전환": 2341,
-      "비용": 23673555,
-      "노출수": 2472916,
+      "전환": 2351,
+      "비용": 23673508,
+      "노출수": 2472915,
       "클릭수": 11340,
-      "Revenue": 31770530,
+      "Revenue": 31891535,
       "hooking_strategy": "질문/선택 상황 제시",
       "USP": "혜택형(무료뽑기/보상)",
       "art_style": "시네마틱 실사 합성",
@@ -18925,7 +18990,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:07+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:26+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_L-Event-USPVaultofMidas-01-UA\\260902_VID_L-Event-USPVaultofMidas-01-UA_L_1920x1080_KR.mp4",
@@ -19575,10 +19644,10 @@
           "asset_url": "https://www.youtube.com/watch?v=NRXaAyzFRrs",
           "asset_type": "YOUTUBE_VIDEO",
           "asset_id": "416235078792",
-          "impressions": 21273,
+          "impressions": 21272,
           "clicks": 80,
-          "cost_micros": 619123027867,
-          "cost": 619123.027867,
+          "cost_micros": 619073886912,
+          "cost": 619073.886912,
           "conversions": 39.0,
           "conversions_value": 661118.0
         },
@@ -19936,8 +20005,8 @@
           "clicks": 596,
           "cost_micros": 587821348869,
           "cost": 587821.348869,
-          "conversions": 76.0,
-          "conversions_value": 76.0
+          "conversions": 77.0,
+          "conversions_value": 77.0
         },
         {
           "creative_name": "260902_VID_L-Event-USPVaultofMidas-01-UA_V_1080x1920_KR",
@@ -20240,10 +20309,10 @@
           "asset_id": "416235078792",
           "impressions": 24864,
           "clicks": 124,
-          "cost_micros": 180154351987,
-          "cost": 180154.351987,
-          "conversions": 27.0,
-          "conversions_value": 27.0
+          "cost_micros": 180156333695,
+          "cost": 180156.333695,
+          "conversions": 31.0,
+          "conversions_value": 31.0
         },
         {
           "creative_name": "260902_VID_L-Event-USPVaultofMidas-01-UA_V_1080x1920_KR",
@@ -20599,8 +20668,8 @@
           "clicks": 695,
           "cost_micros": 1220797651421,
           "cost": 1220797.651421,
-          "conversions": 213.0,
-          "conversions_value": 2555362.0
+          "conversions": 218.0,
+          "conversions_value": 2676362.0
         },
         {
           "creative_name": "260902_VID_L-Event-USPVaultofMidas-01-UA_V_1080x1920_KR",
@@ -21174,7 +21243,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": "cultureland",
-      "tagged_at": "2026-09-15T13:03:08+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:26+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "컬처랜드 프로모션 대응 영상\\260827_VID_L-Genre-CL-Brand-PV_V_720x900_KR.mp4"
@@ -21276,7 +21349,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": "cultureland",
-      "tagged_at": "2026-09-15T13:03:08+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:26+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "컬처랜드 프로모션 대응 영상\\260827_VID_L-Genre-CL-Cash-PV_L_720x405_KR.mp4"
@@ -21315,11 +21392,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=7lLaTmZBp5g",
       "creative_concept": "L-Genre-DirInsight-02-PV",
-      "전환": 6753,
+      "전환": 6758,
       "비용": 24136653,
       "노출수": 2961080,
       "클릭수": 16925,
-      "Revenue": 29625764,
+      "Revenue": 30076764,
       "hooking_strategy": "질문/선택 상황 제시",
       "USP": "편의성형(방치/빠른성장)",
       "art_style": "시네마틱 실사 합성",
@@ -21384,7 +21461,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:08+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:27+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_L-Genre-DirInsight-02-PV\\260826_VID_L-Genre-DirInsight-02-PV_L_1920x1080_KR.mp4",
@@ -21766,8 +21847,8 @@
           "clicks": 194,
           "cost_micros": 887542730833,
           "cost": 887542.730833,
-          "conversions": 147.0,
-          "conversions_value": 6431728.0
+          "conversions": 151.0,
+          "conversions_value": 6827728.0
         },
         {
           "creative_name": "260826_VID_L-Genre-DirInsight-02-PV_S_1080x1080_KR",
@@ -23279,8 +23360,8 @@
           "clicks": 173,
           "cost_micros": 676180918300,
           "cost": 676180.9183,
-          "conversions": 213.0,
-          "conversions_value": 4961259.0
+          "conversions": 214.0,
+          "conversions_value": 5016259.0
         },
         {
           "creative_name": "260826_VID_L-Genre-DirInsight-02-PV_S_1080x1080_KR",
@@ -23449,11 +23530,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=ZBBD9oWfxkE",
       "creative_concept": "L-Genre-Dirguide-Artisan-UA",
-      "전환": 12335,
-      "비용": 58043180,
-      "노출수": 5929926,
+      "전환": 12369,
+      "비용": 58043097,
+      "노출수": 5929923,
       "클릭수": 45804,
-      "Revenue": 110497132,
+      "Revenue": 111638934,
       "hooking_strategy": "질문/선택 상황 제시",
       "USP": "혜택형(무료뽑기/보상)",
       "art_style": "시네마틱 실사 합성",
@@ -23491,14 +23572,14 @@
       "kpi_percentiles": {
         "ctr": 29,
         "cvr": 88,
-        "cpa": 52
+        "cpa": 53
       },
       "scores": {
-        "total": 83.78,
+        "total": 83.97,
         "grade": "최우수",
         "rank": 14,
         "conv": 100.0,
-        "cpa": 56.49,
+        "cpa": 57.25,
         "ipm": 89.31,
         "roas": 89.31
       },
@@ -23516,7 +23597,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:09+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:31+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_L-Genre-Dirguide-Artisan-UA\\260826_VID_L-Genre-Dirguide-Artisan-UA_L_1920x1080_KR.mp4",
@@ -24510,8 +24595,8 @@
           "clicks": 112,
           "cost_micros": 318002808217,
           "cost": 318002.808217,
-          "conversions": 11.0,
-          "conversions_value": 24207.0
+          "conversions": 14.0,
+          "conversions_value": 34107.0
         },
         {
           "creative_name": "260826_VID_L-Genre-Dirguide-Artisan-01-UA_S_1080x1080_KR",
@@ -24561,8 +24646,8 @@
           "clicks": 143,
           "cost_micros": 463306832958,
           "cost": 463306.832958,
-          "conversions": 18.0,
-          "conversions_value": 112208.0
+          "conversions": 27.0,
+          "conversions_value": 563208.0
         },
         {
           "creative_name": "260826_VID_L-Genre-Dirguide-Artisan-01-UA_S_1080x1080_KR",
@@ -25628,10 +25713,10 @@
           "asset_url": "https://www.youtube.com/watch?v=ZBBD9oWfxkE",
           "asset_type": "YOUTUBE_VIDEO",
           "asset_id": "410593462055",
-          "impressions": 38730,
+          "impressions": 38728,
           "clicks": 294,
-          "cost_micros": 270476674839,
-          "cost": 270476.674839,
+          "cost_micros": 270465962357,
+          "cost": 270465.962357,
           "conversions": 19.0,
           "conversions_value": 19.0
         },
@@ -25972,8 +26057,8 @@
           "clicks": 8,
           "cost_micros": 32795657914,
           "cost": 32795.657914,
-          "conversions": 256.0,
-          "conversions_value": 256.0
+          "conversions": 258.0,
+          "conversions_value": 258.0
         },
         {
           "creative_name": "260826_VID_L-Genre-Dirguide-Artisan-01-UA_S_1080x1080_KR",
@@ -26975,8 +27060,8 @@
           "clicks": 211,
           "cost_micros": 601160646363,
           "cost": 601160.646363,
-          "conversions": 327.0,
-          "conversions_value": 9332490.0
+          "conversions": 330.0,
+          "conversions_value": 9541490.0
         },
         {
           "creative_name": "260826_VID_L-Genre-Dirguide-Artisan-01-UA_S_1080x1080_KR",
@@ -27026,8 +27111,8 @@
           "clicks": 182,
           "cost_micros": 296033192458,
           "cost": 296033.192458,
-          "conversions": 164.0,
-          "conversions_value": 4697060.0
+          "conversions": 165.0,
+          "conversions_value": 4700360.0
         },
         {
           "creative_name": "260826_VID_L-Genre-Dirguide-Artisan-01-UA_S_1080x1080_KR",
@@ -27077,8 +27162,8 @@
           "clicks": 238,
           "cost_micros": 366293876283,
           "cost": 366293.876283,
-          "conversions": 359.0,
-          "conversions_value": 14392456.0
+          "conversions": 369.0,
+          "conversions_value": 14731256.0
         },
         {
           "creative_name": "260826_VID_L-Genre-Dirguide-Artisan-01-UA_S_1080x1080_KR",
@@ -27332,8 +27417,8 @@
           "clicks": 612,
           "cost_micros": 967208309619,
           "cost": 967208.309619,
-          "conversions": 81.0,
-          "conversions_value": 695253.0
+          "conversions": 82.0,
+          "conversions_value": 700753.0
         },
         {
           "creative_name": "260826_VID_L-Genre-Dirguide-Artisan-01-UA_S_1080x1080_KR",
@@ -27757,8 +27842,8 @@
           "clicks": 70,
           "cost_micros": 477312648321,
           "cost": 477312.648321,
-          "conversions": 33.0,
-          "conversions_value": 509315.0
+          "conversions": 34.0,
+          "conversions_value": 564315.0
         },
         {
           "creative_name": "260826_VID_L-Genre-Dirguide-Artisan-01-UA_V_1080x1920_KR",
@@ -27842,8 +27927,8 @@
           "clicks": 317,
           "cost_micros": 682816669956,
           "cost": 682816.669956,
-          "conversions": 15.0,
-          "conversions_value": 16512.0
+          "conversions": 19.0,
+          "conversions_value": 85812.0
         },
         {
           "creative_name": "260826_VID_L-Genre-Dirguide-Artisan-01-UA_S_1080x1080_KR",
@@ -27889,10 +27974,10 @@
           "asset_url": "https://www.youtube.com/watch?v=ZBBD9oWfxkE",
           "asset_type": "YOUTUBE_VIDEO",
           "asset_id": "410593462055",
-          "impressions": 23100,
+          "impressions": 23099,
           "clicks": 144,
-          "cost_micros": 427159169009,
-          "cost": 427159.169009,
+          "cost_micros": 427086926344,
+          "cost": 427086.926344,
           "conversions": 5.0,
           "conversions_value": 5.0
         },
@@ -27961,11 +28046,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=5vtqkxflgmQ",
       "creative_concept": "L-Genre-GamePreview-01-PV",
-      "전환": 6879,
+      "전환": 6884,
       "비용": 17263290,
       "노출수": 2526970,
       "클릭수": 18277,
-      "Revenue": 15512170,
+      "Revenue": 15567174,
       "hooking_strategy": "캐릭터 외형 소구",
       "USP": "감성 유대형(교감/서사)",
       "art_style": "시네마틱 실사 합성",
@@ -28033,7 +28118,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:10+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:32+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_L-Genre-GamePreview-01-PV\\260826_VID_L-Genre-GamePreview-01-PV_L_1920x1080_KR.mp4",
@@ -29027,8 +29116,8 @@
           "clicks": 36,
           "cost_micros": 87238154025,
           "cost": 87238.154025,
-          "conversions": 477.122813,
-          "conversions_value": 477.122813
+          "conversions": 478.956043,
+          "conversions_value": 478.956043
         },
         {
           "creative_name": "260826_VID_L-Genre-GamePreview-01-PV_L_1920x1080_KR",
@@ -29044,8 +29133,8 @@
           "clicks": 256,
           "cost_micros": 139423952181,
           "cost": 139423.952181,
-          "conversions": 1754.042924,
-          "conversions_value": 1754.042924
+          "conversions": 1756.32965,
+          "conversions_value": 1756.32965
         },
         {
           "creative_name": "260826_VID_L-Genre-GamePreview-01-PV_L_1920x1080_KR",
@@ -30115,8 +30204,8 @@
           "clicks": 4,
           "cost_micros": 8800503391,
           "cost": 8800.503391,
-          "conversions": 1.0,
-          "conversions_value": 1.0
+          "conversions": 2.0,
+          "conversions_value": 55001.0
         },
         {
           "creative_name": "260826_VID_L-Genre-GamePreview-01-PV_S_1080x1080_KR",
@@ -30227,7 +30316,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:10+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:32+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_L-Genre-MMORPG-01-DA\\260826_BNR_L-Genre-MMORPG-01-DA_L_1024x768_KR.jpg",
@@ -30351,7 +30444,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:10+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:32+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_L-Genre-MarketReveiw-01-UA\\260909_VID_L-Genre-MarketReveiw-01-UA_L_1920x1080_KR.mp4",
@@ -30455,7 +30552,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:12+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_L-Genre-YourMMORPG-PV\\260911_VID_L-Genre-YourMMORPG-PV_L_1920x1080_KR (1).mp4",
@@ -30496,11 +30597,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=NV59L5YZv1c",
       "creative_concept": "L-Ingame-ClassArtisan-01-SS",
-      "전환": 5436,
+      "전환": 5441,
       "비용": 15897579,
-      "노출수": 1826218,
+      "노출수": 1826217,
       "클릭수": 8535,
-      "Revenue": 52159813,
+      "Revenue": 52159818,
       "hooking_strategy": "캐릭터 외형 소구",
       "USP": "혜택형(무료뽑기/보상)",
       "art_style": "시네마틱 실사 합성",
@@ -30567,7 +30668,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:12+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_L-Ingame-ClassArtisan-01-SS\\260826_VID_L-Ingame-ClassArtisan-01-SS_L_1920x1080_KR.mp4",
@@ -31608,7 +31713,7 @@
           "asset_url": "https://www.youtube.com/watch?v=NV59L5YZv1c",
           "asset_type": "YOUTUBE_VIDEO",
           "asset_id": "410768478732",
-          "impressions": 8055,
+          "impressions": 8054,
           "clicks": 16,
           "cost_micros": 53980304412,
           "cost": 53980.304412,
@@ -31986,8 +32091,8 @@
           "clicks": 67,
           "cost_micros": 53750670769,
           "cost": 53750.670769,
-          "conversions": 15.0,
-          "conversions_value": 15.0
+          "conversions": 16.0,
+          "conversions_value": 16.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassArtisan-01-SS_V_1080x1920_KR",
@@ -32938,8 +33043,8 @@
           "clicks": 48,
           "cost_micros": 91785650612,
           "cost": 91785.650612,
-          "conversions": 558.988305,
-          "conversions_value": 558.988305
+          "conversions": 559.053192,
+          "conversions_value": 559.053192
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassArtisan-01-SS_L_1920x1080_KR",
@@ -32972,8 +33077,8 @@
           "clicks": 19,
           "cost_micros": 54110179447,
           "cost": 54110.179447,
-          "conversions": 214.0,
-          "conversions_value": 214.0
+          "conversions": 216.0,
+          "conversions_value": 216.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassArtisan-01-SS_S_1080x1080_KR",
@@ -33023,8 +33128,8 @@
           "clicks": 8,
           "cost_micros": 32168515666,
           "cost": 32168.515666,
-          "conversions": 298.0,
-          "conversions_value": 298.0
+          "conversions": 300.0,
+          "conversions_value": 300.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassArtisan-01-SS_S_1080x1080_KR",
@@ -35029,11 +35134,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=KWnG56DAwtA",
       "creative_concept": "L-Ingame-ClassAssassin-01-PV",
-      "전환": 7328,
-      "비용": 28445958,
+      "전환": 7341,
+      "비용": 28445873,
       "노출수": 3317129,
       "클릭수": 20116,
-      "Revenue": 39491978,
+      "Revenue": 39820885,
       "hooking_strategy": "캐릭터 외형 소구",
       "USP": "전략/경쟁형(상성/조합)",
       "art_style": "시네마틱 실사 합성",
@@ -35095,7 +35200,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:13+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_L-Ingame-ClassAssassin-01-PV\\260826_VID_L-Ingame-ClassAssassin-01-PV_L_1920x1080_KR.mp4",
@@ -35936,8 +36045,8 @@
           "clicks": 6,
           "cost_micros": 94558465305,
           "cost": 94558.465305,
-          "conversions": 12.0,
-          "conversions_value": 291504.0
+          "conversions": 16.0,
+          "conversions_value": 577504.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassAssassin-01-PV_V_1080x1920_KR",
@@ -36208,8 +36317,8 @@
           "clicks": 0,
           "cost_micros": 32479514564,
           "cost": 32479.514564,
-          "conversions": 1.0,
-          "conversions_value": 11000.0
+          "conversions": 2.0,
+          "conversions_value": 44000.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassAssassin-01-PV_S_1080x1080_KR",
@@ -37207,12 +37316,12 @@
           "asset_url": "https://www.youtube.com/watch?v=KWnG56DAwtA",
           "asset_type": "YOUTUBE_VIDEO",
           "asset_id": "410596343816",
-          "impressions": 21114,
+          "impressions": 21115,
           "clicks": 80,
           "cost_micros": 241626005218,
           "cost": 241626.005218,
-          "conversions": 24.0,
-          "conversions_value": 24.0
+          "conversions": 25.0,
+          "conversions_value": 25.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassAssassin-01-PV_V_1080x1920_KR",
@@ -37483,8 +37592,8 @@
           "clicks": 241,
           "cost_micros": 136964627083,
           "cost": 136964.627083,
-          "conversions": 811.204586,
-          "conversions_value": 811.204586
+          "conversions": 811.796218,
+          "conversions_value": 811.796218
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassAssassin-01-PV_L_1920x1080_KR",
@@ -37551,8 +37660,8 @@
           "clicks": 3,
           "cost_micros": 12285217590,
           "cost": 12285.21759,
-          "conversions": 278.0,
-          "conversions_value": 278.0
+          "conversions": 280.0,
+          "conversions_value": 280.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassAssassin-01-PV_V_1080x1920_KR",
@@ -37585,8 +37694,8 @@
           "clicks": 1,
           "cost_micros": 6821395871,
           "cost": 6821.395871,
-          "conversions": 235.0,
-          "conversions_value": 235.0
+          "conversions": 238.0,
+          "conversions_value": 238.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassAssassin-01-PV_L_1920x1080_KR",
@@ -39149,8 +39258,8 @@
           "clicks": 82,
           "cost_micros": 260907265340,
           "cost": 260907.26534,
-          "conversions": 53.0,
-          "conversions_value": 1553212.0
+          "conversions": 54.0,
+          "conversions_value": 1563112.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassAssassin-01-PV_V_1080x1920_KR",
@@ -39451,10 +39560,10 @@
           "asset_url": "https://www.youtube.com/watch?v=KWnG56DAwtA",
           "asset_type": "YOUTUBE_VIDEO",
           "asset_id": "410596343816",
-          "impressions": 10152,
+          "impressions": 10151,
           "clicks": 17,
-          "cost_micros": 201243803391,
-          "cost": 201243.803391,
+          "cost_micros": 201159612501,
+          "cost": 201159.612501,
           "conversions": 1.0,
           "conversions_value": 1.0
         },
@@ -39557,11 +39666,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=4hxKgkKPNls",
       "creative_concept": "L-Ingame-ClassBerserker-01-PV",
-      "전환": 7341,
-      "비용": 34987682,
-      "노출수": 3476129,
+      "전환": 7347,
+      "비용": 34987834,
+      "노출수": 3476126,
       "클릭수": 25008,
-      "Revenue": 48045273,
+      "Revenue": 48191575,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "전략/경쟁형(상성/조합)",
       "art_style": "시네마틱 실사 합성",
@@ -39606,7 +39715,7 @@
       "scores": {
         "total": 79.96,
         "grade": "우수",
-        "rank": 19,
+        "rank": 20,
         "conv": 92.37,
         "cpa": 54.96,
         "ipm": 90.08,
@@ -39626,7 +39735,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:14+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_L-Ingame-ClassBerserker-01-PV\\260826_VID_L-Ingame-ClassBerserker-01-PV_L_1920x1080_KR.mp4",
@@ -39753,8 +39866,8 @@
           "clicks": 121,
           "cost_micros": 660884504433,
           "cost": 660884.504433,
-          "conversions": 172.0,
-          "conversions_value": 4546356.0
+          "conversions": 174.0,
+          "conversions_value": 4678356.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassBerserker-01-PV_V_1080x1920_KR",
@@ -40212,8 +40325,8 @@
           "clicks": 62,
           "cost_micros": 487951545697,
           "cost": 487951.545697,
-          "conversions": 39.0,
-          "conversions_value": 1143212.0
+          "conversions": 40.0,
+          "conversions_value": 1146512.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassBerserker-01-PV_V_1080x1920_KR",
@@ -40514,7 +40627,7 @@
           "asset_url": "https://www.youtube.com/watch?v=4hxKgkKPNls",
           "asset_type": "YOUTUBE_VIDEO",
           "asset_id": "410596456124",
-          "impressions": 34142,
+          "impressions": 34141,
           "clicks": 46,
           "cost_micros": 282435592140,
           "cost": 282435.59214,
@@ -40669,8 +40782,8 @@
           "asset_id": "410596456124",
           "impressions": 30360,
           "clicks": 32,
-          "cost_micros": 179396521943,
-          "cost": 179396.521943,
+          "cost_micros": 179393387900,
+          "cost": 179393.3879,
           "conversions": 4.0,
           "conversions_value": 4.0
         },
@@ -40718,10 +40831,10 @@
           "asset_url": "https://www.youtube.com/watch?v=4hxKgkKPNls",
           "asset_type": "YOUTUBE_VIDEO",
           "asset_id": "410596456124",
-          "impressions": 34526,
+          "impressions": 34524,
           "clicks": 52,
-          "cost_micros": 225687243032,
-          "cost": 225687.243032,
+          "cost_micros": 225841687103,
+          "cost": 225841.687103,
           "conversions": 4.0,
           "conversions_value": 11003.0
         },
@@ -41725,8 +41838,8 @@
           "clicks": 17,
           "cost_micros": 46330562996,
           "cost": 46330.562996,
-          "conversions": 4.0,
-          "conversions_value": 4.0
+          "conversions": 5.0,
+          "conversions_value": 5.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassBerserker-01-PV_L_1920x1080_KR",
@@ -42082,8 +42195,8 @@
           "clicks": 3,
           "cost_micros": 19579763544,
           "cost": 19579.763544,
-          "conversions": 98.0,
-          "conversions_value": 98.0
+          "conversions": 99.0,
+          "conversions_value": 99.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassBerserker-01-PV_V_1080x1920_KR",
@@ -43697,8 +43810,8 @@
           "clicks": 57,
           "cost_micros": 253459217187,
           "cost": 253459.217187,
-          "conversions": 13.0,
-          "conversions_value": 26409.0
+          "conversions": 14.0,
+          "conversions_value": 37409.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassBerserker-01-PV_S_1080x1080_KR",
@@ -44088,11 +44201,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=ZE2s5yZZ3JM",
       "creative_concept": "L-Ingame-ClassKnight-01-PV",
-      "전환": 5959,
-      "비용": 34618546,
-      "노출수": 2326161,
+      "전환": 5961,
+      "비용": 34618487,
+      "노출수": 2326160,
       "클릭수": 14658,
-      "Revenue": 31997164,
+      "Revenue": 31997167,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "전략/경쟁형(상성/조합)",
       "art_style": "시네마틱 실사 합성",
@@ -44132,16 +44245,16 @@
       "kpi_reality_check": null,
       "kpi_percentiles": {
         "ctr": 16,
-        "cvr": 94,
+        "cvr": 93,
         "cpa": 33
       },
       "scores": {
-        "total": 75.38,
+        "total": 75.19,
         "grade": "우수",
         "rank": 24,
         "conv": 88.55,
         "cpa": 38.93,
-        "ipm": 94.66,
+        "ipm": 93.89,
         "roas": 79.39
       },
       "marketer_insight": null,
@@ -44158,7 +44271,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:14+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_L-Ingame-ClassKnight-01-PV\\260826_VID_L-Ingame-ClassKnight-01-PV_L_1920x1080_KR.mp4",
@@ -45250,10 +45367,10 @@
           "asset_url": "https://www.youtube.com/watch?v=ZE2s5yZZ3JM",
           "asset_type": "YOUTUBE_VIDEO",
           "asset_id": "410596602797",
-          "impressions": 1898,
+          "impressions": 1897,
           "clicks": 3,
-          "cost_micros": 63506632132,
-          "cost": 63506.632132,
+          "cost_micros": 63448026061,
+          "cost": 63448.026061,
           "conversions": 0.0,
           "conversions_value": 0.0
         },
@@ -46529,8 +46646,8 @@
           "clicks": 88,
           "cost_micros": 217140482095,
           "cost": 217140.482095,
-          "conversions": 623.522241,
-          "conversions_value": 623.522241
+          "conversions": 624.782575,
+          "conversions_value": 624.782575
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassKnight-01-PV_L_1920x1080_KR",
@@ -48059,8 +48176,8 @@
           "clicks": 1,
           "cost_micros": 14793778907,
           "cost": 14793.778907,
-          "conversions": 111.0,
-          "conversions_value": 111.0
+          "conversions": 112.0,
+          "conversions_value": 112.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassKnight-01-PV_L_1920x1080_KR",
@@ -48637,11 +48754,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=tV6Hf_sQQ7M",
       "creative_concept": "L-Ingame-ClassRanger-01-PV",
-      "전환": 11811,
-      "비용": 54485327,
+      "전환": 11840,
+      "비용": 54485368,
       "노출수": 8224825,
       "클릭수": 43823,
-      "Revenue": 87413775,
+      "Revenue": 88057384,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "전략/경쟁형(상성/조합)",
       "art_style": "시네마틱 실사 합성",
@@ -48678,16 +48795,16 @@
       "kpi_reality_check": null,
       "kpi_percentiles": {
         "ctr": 7,
-        "cvr": 73,
-        "cpa": 55
+        "cvr": 72,
+        "cpa": 56
       },
       "scores": {
         "total": 80.34,
         "grade": "최우수",
-        "rank": 17,
+        "rank": 18,
         "conv": 99.24,
-        "cpa": 59.54,
-        "ipm": 75.57,
+        "cpa": 60.31,
+        "ipm": 74.81,
         "roas": 87.02
       },
       "marketer_insight": null,
@@ -48704,7 +48821,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:15+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:37+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_L-Ingame-ClassRanger-01-PV\\260826_VID_L-Ingame-ClassRanger-01-PV_L_1920x1080_KR.mp4",
@@ -48831,8 +48952,8 @@
           "clicks": 93,
           "cost_micros": 169730644911,
           "cost": 169730.644911,
-          "conversions": 132.0,
-          "conversions_value": 3602545.0
+          "conversions": 133.0,
+          "conversions_value": 3701545.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassRanger-01-PV_S_1080x1080_KR",
@@ -49813,12 +49934,12 @@
           "asset_url": "https://www.youtube.com/watch?v=y4t5G40vdxc",
           "asset_type": "YOUTUBE_VIDEO",
           "asset_id": "412639685218",
-          "impressions": 17918,
+          "impressions": 17917,
           "clicks": 36,
-          "cost_micros": 237086230540,
-          "cost": 237086.23054,
-          "conversions": 3.0,
-          "conversions_value": 33002.0
+          "cost_micros": 237080037315,
+          "cost": 237080.037315,
+          "conversions": 4.0,
+          "conversions_value": 41902.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassRanger-01-PV_V_1080x1920_KR",
@@ -50718,8 +50839,8 @@
           "clicks": 317,
           "cost_micros": 614162913864,
           "cost": 614162.913864,
-          "conversions": 95.0,
-          "conversions_value": 95.0
+          "conversions": 96.0,
+          "conversions_value": 96.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassRanger-01-PV_S_1080x1080_KR",
@@ -50818,10 +50939,10 @@
           "asset_id": "410698208869",
           "impressions": 88046,
           "clicks": 337,
-          "cost_micros": 421769533411,
-          "cost": 421769.533411,
-          "conversions": 39.0,
-          "conversions_value": 39.0
+          "cost_micros": 421788857834,
+          "cost": 421788.857834,
+          "conversions": 41.0,
+          "conversions_value": 41.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassRanger-01-PV_S_1080x1080_KR",
@@ -50833,10 +50954,10 @@
           "asset_url": "https://www.youtube.com/watch?v=y4t5G40vdxc",
           "asset_type": "YOUTUBE_VIDEO",
           "asset_id": "412639685218",
-          "impressions": 95659,
+          "impressions": 95660,
           "clicks": 317,
-          "cost_micros": 307592071938,
-          "cost": 307592.071938,
+          "cost_micros": 307619585187,
+          "cost": 307619.585187,
           "conversions": 30.0,
           "conversions_value": 30.0
         },
@@ -51534,8 +51655,8 @@
           "clicks": 418,
           "cost_micros": 1224570288506,
           "cost": 1224570.288506,
-          "conversions": 515.0,
-          "conversions_value": 11721743.0
+          "conversions": 521.0,
+          "conversions_value": 11984643.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassRanger-01-PV_S_1080x1080_KR",
@@ -51551,8 +51672,8 @@
           "clicks": 174,
           "cost_micros": 625067419401,
           "cost": 625067.419401,
-          "conversions": 328.0,
-          "conversions_value": 10447179.0
+          "conversions": 331.0,
+          "conversions_value": 10546179.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassRanger-01-PV_V_1080x1920_KR",
@@ -51789,8 +51910,8 @@
           "clicks": 222,
           "cost_micros": 434668556634,
           "cost": 434668.556634,
-          "conversions": 195.0,
-          "conversions_value": 9656128.0
+          "conversions": 196.0,
+          "conversions_value": 9711128.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassRanger-01-PV_S_1080x1080_KR",
@@ -52146,8 +52267,8 @@
           "clicks": 295,
           "cost_micros": 595512732691,
           "cost": 595512.732691,
-          "conversions": 69.0,
-          "conversions_value": 2291324.0
+          "conversions": 70.0,
+          "conversions_value": 2296824.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassRanger-01-PV_S_1080x1080_KR",
@@ -52316,8 +52437,8 @@
           "clicks": 41,
           "cost_micros": 177896391767,
           "cost": 177896.391767,
-          "conversions": 13.0,
-          "conversions_value": 91307.0
+          "conversions": 17.0,
+          "conversions_value": 171607.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassRanger-01-PV_V_1080x1920_KR",
@@ -52350,8 +52471,8 @@
           "clicks": 130,
           "cost_micros": 462693431748,
           "cost": 462693.431748,
-          "conversions": 18.0,
-          "conversions_value": 438907.0
+          "conversions": 21.0,
+          "conversions_value": 471907.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassRanger-01-PV_S_1080x1080_KR",
@@ -52469,8 +52590,8 @@
           "clicks": 45,
           "cost_micros": 278202867027,
           "cost": 278202.867027,
-          "conversions": 4.0,
-          "conversions_value": 4.0
+          "conversions": 5.0,
+          "conversions_value": 5.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassRanger-01-PV_V_1080x1920_KR",
@@ -52554,8 +52675,8 @@
           "clicks": 8,
           "cost_micros": 35993782315,
           "cost": 35993.782315,
-          "conversions": 329.0,
-          "conversions_value": 329.0
+          "conversions": 332.0,
+          "conversions_value": 332.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassRanger-01-PV_S_1080x1080_KR",
@@ -52571,8 +52692,8 @@
           "clicks": 1,
           "cost_micros": 6731793854,
           "cost": 6731.793854,
-          "conversions": 220.0,
-          "conversions_value": 220.0
+          "conversions": 222.0,
+          "conversions_value": 222.0
         },
         {
           "creative_name": "260826_VID_L-Ingame-ClassRanger-01-PV_V_1080x1920_KR",
@@ -53168,7 +53289,7 @@
       "creative_concept": "L-Reward-ArtisanReward-01-UA",
       "전환": 2396,
       "비용": 14843840,
-      "노출수": 1532759,
+      "노출수": 1532760,
       "클릭수": 8387,
       "Revenue": 14223373,
       "hooking_strategy": "압도적 보상",
@@ -53231,7 +53352,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:15+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:37+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_L-Reward-ArtisanReward-UA\\260826_VID_L-Reward-ArtisanReward-01-UA_L_1920x1080_KR.mp4",
@@ -54323,7 +54448,7 @@
           "asset_url": "https://www.youtube.com/watch?v=4aU65D1Go5Q",
           "asset_type": "YOUTUBE_VIDEO",
           "asset_id": "412532991557",
-          "impressions": 553,
+          "impressions": 554,
           "clicks": 2,
           "cost_micros": 43321901605,
           "cost": 43321.901605,
@@ -57641,7 +57766,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:15+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:37+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_L-Reward-GrowthEvent-01-DA (RT)\\260827_BNR_L-Reward-GrowthEvent-01-DA_L_1024x768_KR.jpg",
@@ -57856,7 +57985,7 @@
       "scores": {
         "total": 59.92,
         "grade": "양호",
-        "rank": 62,
+        "rank": 61,
         "conv": 46.56,
         "cpa": 33.59,
         "ipm": 82.44,
@@ -57872,7 +58001,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:21+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_L-Reward-LaunchEvent-01-PV\\260826_VID_L-Reward-LaunchEvent-01-PV_L_1920x1080_KR.mp4",
@@ -59273,11 +59406,11 @@
       "언어": "KR",
       "링크": "https://tpc.googlesyndication.com/simgad/4491898766603421511",
       "creative_concept": "L-Reward-LaunchReward-01-DA",
-      "전환": 1608,
+      "전환": 1617,
       "비용": 2696347,
       "노출수": 776022,
       "클릭수": 4399,
-      "Revenue": 15140895,
+      "Revenue": 15140904,
       "hooking_strategy": "압도적 보상",
       "USP": "혜택형(무료뽑기/보상)",
       "art_style": "시네마틱 실사 합성",
@@ -59338,7 +59471,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:21+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_L-Reward-LaunchReward-01-DA\\260826_BNR_L-Reward-LaunchReward-01-DA_L_1024x768_KR.jpg",
@@ -60728,8 +60865,8 @@
           "clicks": 95,
           "cost_micros": 21483581289,
           "cost": 21483.581289,
-          "conversions": 11.0,
-          "conversions_value": 11.0
+          "conversions": 13.0,
+          "conversions_value": 13.0
         },
         {
           "creative_name": "260826_BNR_L-Reward-LaunchReward-01-DA_L_1200x628_KR",
@@ -63346,8 +63483,8 @@
           "clicks": 14,
           "cost_micros": 31360790195,
           "cost": 31360.790195,
-          "conversions": 906.0,
-          "conversions_value": 906.0
+          "conversions": 913.0,
+          "conversions_value": 913.0
         },
         {
           "creative_name": "260826_BNR_L-Reward-LaunchReward-01-DA_V_1200x1500_KR",
@@ -63924,11 +64061,11 @@
       "언어": "KR",
       "링크": "https://tpc.googlesyndication.com/simgad/728530211787252033",
       "creative_concept": "L-Reward-LaunchReward-02-DA",
-      "전환": 916,
+      "전환": 923,
       "비용": 2279350,
       "노출수": 482648,
       "클릭수": 3185,
-      "Revenue": 45229017,
+      "Revenue": 45548018,
       "hooking_strategy": "압도적 보상",
       "USP": "혜택형(무료뽑기/보상)",
       "art_style": "시네마틱 실사 합성",
@@ -63969,16 +64106,16 @@
       "kpi_reality_check": null,
       "kpi_percentiles": {
         "ctr": 18,
-        "cvr": 83,
+        "cvr": 84,
         "cpa": 88
       },
       "scores": {
-        "total": 79.96,
-        "grade": "우수",
-        "rank": 18,
+        "total": 80.15,
+        "grade": "최우수",
+        "rank": 19,
         "conv": 45.8,
         "cpa": 89.31,
-        "ipm": 84.73,
+        "ipm": 85.5,
         "roas": 100.0
       },
       "marketer_insight": null,
@@ -63991,7 +64128,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:21+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_L-Reward-LaunchReward-02-DA\\260826_BNR_L-Reward-LaunchReward-02-DA_L_1024x768_KR.jpg",
@@ -64854,8 +64995,8 @@
           "clicks": 108,
           "cost_micros": 63679919985,
           "cost": 63679.919985,
-          "conversions": 444.0,
-          "conversions_value": 39831008.0
+          "conversions": 445.0,
+          "conversions_value": 39930008.0
         },
         {
           "creative_name": "260826_BNR_L-Reward-LaunchReward-02-DA_V_1200x1500_KR",
@@ -65126,8 +65267,8 @@
           "clicks": 4,
           "cost_micros": 7974416418,
           "cost": 7974.416418,
-          "conversions": 15.0,
-          "conversions_value": 702900.0
+          "conversions": 20.0,
+          "conversions_value": 922900.0
         },
         {
           "creative_name": "260826_BNR_L-Reward-LaunchReward-02-DA_S_1200x1200_KR.jpg",
@@ -67438,8 +67579,8 @@
           "clicks": 3,
           "cost_micros": 7445465998,
           "cost": 7445.465998,
-          "conversions": 67.0,
-          "conversions_value": 67.0
+          "conversions": 68.0,
+          "conversions_value": 68.0
         },
         {
           "creative_name": "260826_BNR_L-Reward-LaunchReward-02-DA_L_1200x628_KR.jpg",
@@ -67829,11 +67970,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=3rYg_HZnp5o",
       "creative_concept": "L-Slogan-CinematicPV30s-01-PV",
-      "전환": 10083,
+      "전환": 10092,
       "비용": 43779653,
-      "노출수": 4068348,
+      "노출수": 4068349,
       "클릭수": 25582,
-      "Revenue": 62438133,
+      "Revenue": 62526140,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "감성 유대형(교감/서사)",
       "art_style": "시네마틱 실사 합성",
@@ -67878,13 +68019,13 @@
         "cpa": 61
       },
       "scores": {
-        "total": 84.92,
+        "total": 84.73,
         "grade": "최우수",
         "rank": 11,
         "conv": 96.95,
         "cpa": 64.89,
         "ipm": 93.13,
-        "roas": 84.73
+        "roas": 83.97
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -67903,7 +68044,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:21+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_L-Slogan-CinematicPV30s-01-PV\\260826_VID_L-Slogan-CinematicPV30s-01-PV_L_1920x1080_KR.mp4",
@@ -68999,8 +69144,8 @@
           "clicks": 43,
           "cost_micros": 212951614807,
           "cost": 212951.614807,
-          "conversions": 2.0,
-          "conversions_value": 55001.0
+          "conversions": 3.0,
+          "conversions_value": 55002.0
         },
         {
           "creative_name": "260826_VID_L-Slogan-CinematicPV30s-01-PV_V_1080x1920_KR",
@@ -70002,8 +70147,8 @@
           "clicks": 57,
           "cost_micros": 34938566739,
           "cost": 34938.566739,
-          "conversions": 3.0,
-          "conversions_value": 3.0
+          "conversions": 4.0,
+          "conversions_value": 4.0
         },
         {
           "creative_name": "260826_VID_L-Slogan-CinematicPV30s-01-PV_L_1920x1080_KR",
@@ -70032,7 +70177,7 @@
           "asset_url": "https://www.youtube.com/watch?v=4MR7czdJkNY",
           "asset_type": "YOUTUBE_VIDEO",
           "asset_id": "412639682302",
-          "impressions": 6141,
+          "impressions": 6142,
           "clicks": 14,
           "cost_micros": 83175160796,
           "cost": 83175.160796,
@@ -71379,8 +71524,8 @@
           "clicks": 434,
           "cost_micros": 619925847033,
           "cost": 619925.847033,
-          "conversions": 40.0,
-          "conversions_value": 629222.0
+          "conversions": 42.0,
+          "conversions_value": 717222.0
         },
         {
           "creative_name": "260826_VID_L-Slogan-CinematicPV30s-01-PV_V_1080x1920_KR",
@@ -71736,8 +71881,8 @@
           "clicks": 14,
           "cost_micros": 104022635981,
           "cost": 104022.635981,
-          "conversions": 447.0,
-          "conversions_value": 447.0
+          "conversions": 450.0,
+          "conversions_value": 450.0
         },
         {
           "creative_name": "260826_VID_L-Slogan-CinematicPV30s-01-PV_V_1080x1920_KR",
@@ -71821,8 +71966,8 @@
           "clicks": 6,
           "cost_micros": 47703567296,
           "cost": 47703.567296,
-          "conversions": 252.0,
-          "conversions_value": 252.0
+          "conversions": 254.0,
+          "conversions_value": 254.0
         },
         {
           "creative_name": "260826_VID_L-Slogan-CinematicPV30s-01-PV_L_1920x1080_KR",
@@ -72424,7 +72569,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:37+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_L-Slogan-FUNMMORPG-01-DA\\260916_BNR_L-Slogan-FUNMMORPG-01-DA_L_1024x768_KR.jpg",
@@ -72485,11 +72634,11 @@
       "언어": "KR",
       "링크": "https://tpc.googlesyndication.com/simgad/11245320633664356153",
       "creative_concept": "L-Slogan-Keyvisual-01-DA",
-      "전환": 1792,
+      "전환": 1796,
       "비용": 1675199,
       "노출수": 448805,
       "클릭수": 2526,
-      "Revenue": 7774130,
+      "Revenue": 7774134,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "전략/경쟁형(상성/조합)",
       "art_style": "시네마틱 실사 합성",
@@ -72534,13 +72683,13 @@
         "cpa": 97
       },
       "scores": {
-        "total": 89.31,
+        "total": 89.12,
         "grade": "최우수",
-        "rank": 2,
+        "rank": 3,
         "conv": 65.65,
         "cpa": 97.71,
         "ipm": 96.95,
-        "roas": 96.95
+        "roas": 96.18
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -72556,7 +72705,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:37+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:42+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_L-Slogan-Keyvisual-01-DA\\260826_BNR_L-Slogan-Keyvisual-01-DA_L_1024x768_KR.jpg",
@@ -73436,8 +73589,8 @@
           "clicks": 16,
           "cost_micros": 63078000569,
           "cost": 63078.000569,
-          "conversions": 492.0,
-          "conversions_value": 492.0
+          "conversions": 496.0,
+          "conversions_value": 496.0
         },
         {
           "creative_name": "260826_BNR_L-Slogan-Keyvisual-01-DA_V_1200x1500_KR.jpg",
@@ -74218,11 +74371,11 @@
       "언어": "KR",
       "링크": "https://tpc.googlesyndication.com/simgad/16279821290479232676",
       "creative_concept": "L-Slogan-Keyvisual-02-DA",
-      "전환": 2199,
+      "전환": 2213,
       "비용": 2564545,
       "노출수": 1535301,
       "클릭수": 4933,
-      "Revenue": 28548662,
+      "Revenue": 28779673,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "전략/경쟁형(상성/조합)",
       "art_style": "시네마틱 실사 합성",
@@ -74259,16 +74412,16 @@
       "kpi_reality_check": null,
       "kpi_percentiles": {
         "ctr": 1,
-        "cvr": 72,
+        "cvr": 73,
         "cpa": 97
       },
       "scores": {
-        "total": 86.26,
+        "total": 86.45,
         "grade": "최우수",
         "rank": 7,
         "conv": 74.05,
         "cpa": 96.95,
-        "ipm": 74.81,
+        "ipm": 75.57,
         "roas": 99.24
       },
       "marketer_insight": null,
@@ -74288,7 +74441,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:37+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:43+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_L-Slogan-Keyvisual-02-DA\\260826_BNR_L-Slogan-Keyvisual-02-DA_L_1024x768_KR.jpg",
@@ -74454,8 +74611,8 @@
           "clicks": 54,
           "cost_micros": 48411571074,
           "cost": 48411.571074,
-          "conversions": 128.0,
-          "conversions_value": 3477140.0
+          "conversions": 129.0,
+          "conversions_value": 3510140.0
         },
         {
           "creative_name": "260826_BNR_L-Slogan-Keyvisual-02-DA_L_1200x628_KR.jpg",
@@ -75440,8 +75597,8 @@
           "clicks": 24,
           "cost_micros": 14290636356,
           "cost": 14290.636356,
-          "conversions": 17.0,
-          "conversions_value": 819502.0
+          "conversions": 19.0,
+          "conversions_value": 1017502.0
         },
         {
           "creative_name": "260826_BNR_L-Slogan-Keyvisual-02-DA_V_1200x1500_KR.jpg",
@@ -76868,8 +77025,8 @@
           "clicks": 14,
           "cost_micros": 20202544097,
           "cost": 20202.544097,
-          "conversions": 474.0,
-          "conversions_value": 474.0
+          "conversions": 481.0,
+          "conversions_value": 481.0
         },
         {
           "creative_name": "260826_BNR_L-Slogan-Keyvisual-02-DA_L_1200x628_KR.jpg",
@@ -76902,8 +77059,8 @@
           "clicks": 9,
           "cost_micros": 7064673531,
           "cost": 7064.673531,
-          "conversions": 191.0,
-          "conversions_value": 191.0
+          "conversions": 195.0,
+          "conversions_value": 195.0
         },
         {
           "creative_name": "260826_BNR_L-Slogan-Keyvisual-02-DA_S_1200x1200_KR.jpg",
@@ -78874,11 +79031,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=Bo_6yomhvWs",
       "creative_concept": "L-Slogan-LaunchPV-01-PV",
-      "전환": 3819,
+      "전환": 3828,
       "비용": 22864580,
       "노출수": 2023520,
       "클릭수": 14446,
-      "Revenue": 48356988,
+      "Revenue": 48631989,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "감성 유대형(교감/서사)",
       "art_style": "시네마틱 실사 합성",
@@ -78921,11 +79078,11 @@
         "cpa": 29
       },
       "scores": {
-        "total": 72.52,
+        "total": 72.71,
         "grade": "우수",
         "rank": 28,
         "conv": 80.92,
-        "cpa": 35.11,
+        "cpa": 35.88,
         "ipm": 83.97,
         "roas": 90.08
       },
@@ -78943,7 +79100,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:39+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:44+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_L-Slogan-LaunchPV-01-PV\\260826_VID_L-Slogan-LaunchPV-01-PV_L_1920x1080_KR.mp4",
@@ -79138,8 +79299,8 @@
           "clicks": 212,
           "cost_micros": 2319823011424,
           "cost": 2319823.011424,
-          "conversions": 177.0,
-          "conversions_value": 3680171.0
+          "conversions": 178.0,
+          "conversions_value": 3690071.0
         },
         {
           "creative_name": "260826_VID_L-Slogan-LaunchPV-01-PV_S_1080x1080_KR",
@@ -79903,8 +80064,8 @@
           "clicks": 20,
           "cost_micros": 87561008723,
           "cost": 87561.008723,
-          "conversions": 12.0,
-          "conversions_value": 471900.0
+          "conversions": 15.0,
+          "conversions_value": 484000.0
         },
         {
           "creative_name": "260826_VID_L-Slogan-LaunchPV-01-PV_S_1080x1080_KR",
@@ -81688,8 +81849,8 @@
           "clicks": 19,
           "cost_micros": 103265442562,
           "cost": 103265.442562,
-          "conversions": 215.0,
-          "conversions_value": 10960103.0
+          "conversions": 217.0,
+          "conversions_value": 11158103.0
         },
         {
           "creative_name": "260826_VID_L-Slogan-LaunchPV-01-PV_S_1080x1080_KR",
@@ -82096,8 +82257,8 @@
           "clicks": 117,
           "cost_micros": 309806973755,
           "cost": 309806.973755,
-          "conversions": 55.0,
-          "conversions_value": 1152825.0
+          "conversions": 57.0,
+          "conversions_value": 1207825.0
         },
         {
           "creative_name": "260826_VID_L-Slogan-LaunchPV-01-PV_S_1080x1080_KR",
@@ -82759,8 +82920,8 @@
           "clicks": 665,
           "cost_micros": 368037235066,
           "cost": 368037.235066,
-          "conversions": 21.0,
-          "conversions_value": 21.0
+          "conversions": 22.0,
+          "conversions_value": 22.0
         },
         {
           "creative_name": "260826_VID_L-Slogan-LaunchPV-01-PV_S_1080x1080_KR",
@@ -83286,11 +83447,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=B0arrqLE2Ug",
       "creative_concept": "L-Slogan-LaunchPV15s-01-PV",
-      "전환": 5784,
-      "비용": 28716890,
-      "노출수": 3205185,
+      "전환": 5855,
+      "비용": 28716888,
+      "노출수": 3205184,
       "클릭수": 20053,
-      "Revenue": 63041456,
+      "Revenue": 69630458,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "혜택형(무료뽑기/보상)",
       "art_style": "시네마틱 실사 합성",
@@ -83330,14 +83491,14 @@
       "kpi_percentiles": {
         "ctr": 14,
         "cvr": 82,
-        "cpa": 45
+        "cpa": 48
       },
       "scores": {
-        "total": 78.05,
+        "total": 78.63,
         "grade": "우수",
         "rank": 21,
         "conv": 87.79,
-        "cpa": 50.38,
+        "cpa": 52.67,
         "ipm": 83.21,
         "roas": 90.84
       },
@@ -83355,7 +83516,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:40+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:45+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_L-Slogan-LaunchPV15s-01-PV\\260826_VID_L-Slogan-LaunchPV15s-01-PV_L_1920x1080_KR.mp4",
@@ -84060,8 +84225,8 @@
           "clicks": 29,
           "cost_micros": 346883015107,
           "cost": 346883.015107,
-          "conversions": 78.0,
-          "conversions_value": 1601611.0
+          "conversions": 79.0,
+          "conversions_value": 1634611.0
         },
         {
           "creative_name": "260826_VID_L-Slogan-LaunchPV15s-01-PV_S_1080x1080_KR",
@@ -84315,8 +84480,8 @@
           "clicks": 47,
           "cost_micros": 389638565400,
           "cost": 389638.5654,
-          "conversions": 85.0,
-          "conversions_value": 2622418.0
+          "conversions": 86.0,
+          "conversions_value": 2721418.0
         },
         {
           "creative_name": "260826_VID_L-Slogan-LaunchPV15s-01-PV_S_1080x1080_KR",
@@ -84417,8 +84582,8 @@
           "clicks": 146,
           "cost_micros": 885430366131,
           "cost": 885430.366131,
-          "conversions": 200.0,
-          "conversions_value": 15301027.0
+          "conversions": 263.0,
+          "conversions_value": 21538027.0
         },
         {
           "creative_name": "260826_VID_L-Slogan-LaunchPV15s-01-PV_S_1080x1080_KR",
@@ -85501,10 +85666,10 @@
           "asset_url": "https://www.youtube.com/watch?v=sThWTqI8yIc",
           "asset_type": "YOUTUBE_VIDEO",
           "asset_id": "412709290971",
-          "impressions": 33811,
+          "impressions": 33810,
           "clicks": 230,
-          "cost_micros": 126112930492,
-          "cost": 126112.930492,
+          "cost_micros": 126110089547,
+          "cost": 126110.089547,
           "conversions": 15.0,
           "conversions_value": 15.0
         },
@@ -86865,8 +87030,8 @@
           "clicks": 93,
           "cost_micros": 123671060849,
           "cost": 123671.060849,
-          "conversions": 12.0,
-          "conversions_value": 96806.0
+          "conversions": 16.0,
+          "conversions_value": 316806.0
         },
         {
           "creative_name": "260826_VID_L-Slogan-LaunchPV15s-01-PV_V_1080x1920_KR",
@@ -87154,8 +87319,8 @@
           "clicks": 10,
           "cost_micros": 85645442175,
           "cost": 85645.442175,
-          "conversions": 677.0,
-          "conversions_value": 677.0
+          "conversions": 679.0,
+          "conversions_value": 679.0
         },
         {
           "creative_name": "260826_VID_L-Slogan-LaunchPV15s-01-PV_S_1080x1080_KR",
@@ -87780,7 +87945,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:40+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:45+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_L-Slogan-TOPMMORPG-01-DA\\260909_BNR_L-Slogan-TOPMMORPG-01-DA_L_1024x768_KR.jpg",
@@ -88827,7 +88996,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:40+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:45+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_L-Slogan-Universe-01-DA\\260826_BNR_L-Slogan-Universe-01-DA_L_1024x768_KR.jpg",
@@ -91067,11 +91240,11 @@
       "언어": "KR",
       "링크": "https://tpc.googlesyndication.com/simgad/2181388081674154972",
       "creative_concept": "L-Slogan-Universe-02-DA",
-      "전환": 355,
+      "전환": 356,
       "비용": 1211536,
       "노출수": 353000,
       "클릭수": 1579,
-      "Revenue": 845106,
+      "Revenue": 848406,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "감성 유대형(교감/서사)",
       "art_style": "시네마틱 실사 합성",
@@ -91108,16 +91281,16 @@
       "kpi_reality_check": null,
       "kpi_percentiles": {
         "ctr": 4,
-        "cvr": 55,
+        "cvr": 56,
         "cpa": 82
       },
       "scores": {
-        "total": 61.07,
+        "total": 61.26,
         "grade": "우수",
-        "rank": 57,
+        "rank": 56,
         "conv": 22.9,
         "cpa": 83.97,
-        "ipm": 59.54,
+        "ipm": 60.31,
         "roas": 77.86
       },
       "marketer_insight": null,
@@ -91135,7 +91308,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:40+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:45+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_L-Slogan-Universe-02-DA\\260826_BNR_L-Slogan-Universe-02-DA_L_1024x768_KR.jpg",
@@ -91301,8 +91478,8 @@
           "clicks": 11,
           "cost_micros": 22386584498,
           "cost": 22386.584498,
-          "conversions": 20.0,
-          "conversions_value": 144102.0
+          "conversions": 21.0,
+          "conversions_value": 147402.0
         },
         {
           "creative_name": "260826_BNR_L-Slogan-Universe-02-DA_S_1200x1200_KR.jpg",
@@ -93358,11 +93535,11 @@
       "언어": "KR",
       "링크": "https://tpc.googlesyndication.com/simgad/2980379719597097059",
       "creative_concept": "L-Slogan-Universe-03-DA",
-      "전환": 2129,
+      "전환": 2133,
       "비용": 5178863,
       "노출수": 1067901,
       "클릭수": 7202,
-      "Revenue": 16334705,
+      "Revenue": 16344608,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "전략/경쟁형(상성/조합)",
       "art_style": "시네마틱 실사 합성",
@@ -93407,7 +93584,7 @@
       "scores": {
         "total": 85.88,
         "grade": "최우수",
-        "rank": 8,
+        "rank": 9,
         "conv": 73.28,
         "cpa": 90.08,
         "ipm": 86.26,
@@ -93425,7 +93602,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:40+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:45+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_L-Slogan-Universe-03-DA\\260826_BNR_L-Slogan-Universe-03-DA_L_1024x768_KR.jpg",
@@ -93846,8 +94027,8 @@
           "clicks": 137,
           "cost_micros": 164083181632,
           "cost": 164083.181632,
-          "conversions": 66.0,
-          "conversions_value": 2040520.0
+          "conversions": 67.0,
+          "conversions_value": 2050420.0
         },
         {
           "creative_name": "260826_BNR_L-Slogan-Universe-03-DA_L_1200x628_KR.jpg",
@@ -94475,8 +94656,8 @@
           "clicks": 5,
           "cost_micros": 11175512962,
           "cost": 11175.512962,
-          "conversions": 250.0,
-          "conversions_value": 250.0
+          "conversions": 251.0,
+          "conversions_value": 251.0
         },
         {
           "creative_name": "260826_BNR_L-Slogan-Universe-03-DA_L_1200x628_KR.jpg",
@@ -94492,8 +94673,8 @@
           "clicks": 13,
           "cost_micros": 37946414434,
           "cost": 37946.414434,
-          "conversions": 237.0,
-          "conversions_value": 237.0
+          "conversions": 238.0,
+          "conversions_value": 238.0
         },
         {
           "creative_name": "260826_BNR_L-Slogan-Universe-03-DA_V_1200x1500_KR.jpg",
@@ -94577,8 +94758,8 @@
           "clicks": 289,
           "cost_micros": 86149335114,
           "cost": 86149.335114,
-          "conversions": 36.0,
-          "conversions_value": 36.0
+          "conversions": 37.0,
+          "conversions_value": 37.0
         },
         {
           "creative_name": "260826_BNR_L-Slogan-Universe-03-DA_L_1200x628_KR.jpg",
@@ -95665,11 +95846,11 @@
       "언어": "KR",
       "링크": "https://tpc.googlesyndication.com/simgad/6583874774733137320",
       "creative_concept": "L-Slogan-Universe-04-DA",
-      "전환": 1875,
+      "전환": 1883,
       "비용": 4174154,
       "노출수": 1149950,
       "클릭수": 8212,
-      "Revenue": 13853464,
+      "Revenue": 13893069,
       "hooking_strategy": "비주얼 임팩트",
       "USP": "감성 유대형(교감/서사)",
       "art_style": "시네마틱 실사 합성",
@@ -95730,7 +95911,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:40+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:45+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_L-Slogan-Universe-04-DA\\260826_BNR_L-Slogan-Universe-04-DA_L_1024x768_KR.jpg",
@@ -97492,8 +97677,8 @@
           "clicks": 503,
           "cost_micros": 90858046551,
           "cost": 90858.046551,
-          "conversions": 42.0,
-          "conversions_value": 42.0
+          "conversions": 43.0,
+          "conversions_value": 43.0
         },
         {
           "creative_name": "260826_BNR_L-Slogan-Universe-04-DA_S_1200x1200_KR.jpg",
@@ -99124,8 +99309,8 @@
           "clicks": 0,
           "cost_micros": 0,
           "cost": 0.0,
-          "conversions": 9.0,
-          "conversions_value": 356401.0
+          "conversions": 12.0,
+          "conversions_value": 396001.0
         },
         {
           "creative_name": "260826_BNR_L-Slogan-Universe-04-DA_S_1200x1200_KR.jpg",
@@ -99940,8 +100125,8 @@
           "clicks": 6,
           "cost_micros": 14196063797,
           "cost": 14196.063797,
-          "conversions": 364.0,
-          "conversions_value": 364.0
+          "conversions": 368.0,
+          "conversions_value": 368.0
         },
         {
           "creative_name": "260826_BNR_L-Slogan-Universe-04-DA_S_1200x1200_KR.jpg",
@@ -100498,7 +100683,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:40+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:45+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\L-Story-Hermesstory-01-SS\\260916_VID_L-Story-Hermesstory-01-SS_V_1080x1920_KR.mp4"
@@ -100537,11 +100726,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=3PraDO-tJ3w",
       "creative_concept": "L-Story-Pandorastory-01-SS",
-      "전환": 7834,
+      "전환": 7853,
       "비용": 28726156,
       "노출수": 5366500,
       "클릭수": 10846,
-      "Revenue": 83592878,
+      "Revenue": 84206683,
       "hooking_strategy": "캐릭터 외형 소구",
       "USP": "감성 유대형(교감/서사)",
       "art_style": "시네마틱 실사 합성",
@@ -100582,13 +100771,13 @@
         "cpa": 70
       },
       "scores": {
-        "total": 83.59,
+        "total": 83.4,
         "grade": "최우수",
         "rank": 16,
         "conv": 93.13,
         "cpa": 72.52,
         "ipm": 76.34,
-        "roas": 92.37
+        "roas": 91.6
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -100604,7 +100793,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:41+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_L-Story-Pandorastory-01-UA\\260826_VID_L-Story-Pandorastory-01-SS_V_1080x1920_KR.mp4"
@@ -100712,8 +100905,8 @@
           "clicks": 91,
           "cost_micros": 352076520118,
           "cost": 352076.520118,
-          "conversions": 69.0,
-          "conversions_value": 1111034.0
+          "conversions": 70.0,
+          "conversions_value": 1122034.0
         },
         {
           "creative_name": "260826_VID_L-Story-Pandorastory-01-SS_V_1080x1920_KR",
@@ -100967,8 +101160,8 @@
           "clicks": 10,
           "cost_micros": 306182732779,
           "cost": 306182.732779,
-          "conversions": 11.0,
-          "conversions_value": 282702.0
+          "conversions": 20.0,
+          "conversions_value": 733702.0
         },
         {
           "creative_name": "260826_VID_L-Story-Pandorastory-01-SS_V_1080x1920_KR",
@@ -101001,8 +101194,8 @@
           "clicks": 8,
           "cost_micros": 284994707900,
           "cost": 284994.7079,
-          "conversions": 4.0,
-          "conversions_value": 97900.0
+          "conversions": 5.0,
+          "conversions_value": 196900.0
         },
         {
           "creative_name": "260826_VID_L-Story-Pandorastory-01-SS_V_1080x1920_KR",
@@ -101324,8 +101517,8 @@
           "clicks": 67,
           "cost_micros": 118298703263,
           "cost": 118298.703263,
-          "conversions": 9.0,
-          "conversions_value": 9.0
+          "conversions": 11.0,
+          "conversions_value": 11.0
         },
         {
           "creative_name": "260826_VID_L-Story-Pandorastory-01-SS_V_1080x1920_KR",
@@ -101613,8 +101806,8 @@
           "clicks": 162,
           "cost_micros": 518084238663,
           "cost": 518084.238663,
-          "conversions": 96.0,
-          "conversions_value": 1716036.0
+          "conversions": 97.0,
+          "conversions_value": 1725936.0
         },
         {
           "creative_name": "260826_VID_L-Story-Pandorastory-01-SS_V_1080x1920_KR",
@@ -101664,8 +101857,8 @@
           "clicks": 283,
           "cost_micros": 776801734881,
           "cost": 776801.734881,
-          "conversions": 84.0,
-          "conversions_value": 1247939.0
+          "conversions": 85.0,
+          "conversions_value": 1257839.0
         },
         {
           "creative_name": "260826_VID_L-Story-Pandorastory-01-SS_V_1080x1920_KR",
@@ -101681,8 +101874,8 @@
           "clicks": 283,
           "cost_micros": 959761298991,
           "cost": 959761.298991,
-          "conversions": 72.0,
-          "conversions_value": 481847.0
+          "conversions": 73.0,
+          "conversions_value": 514847.0
         },
         {
           "creative_name": "260826_VID_L-Story-Pandorastory-01-SS_V_1080x1920_KR",
@@ -101817,8 +102010,8 @@
           "clicks": 47,
           "cost_micros": 318295192554,
           "cost": 318295.192554,
-          "conversions": 6.0,
-          "conversions_value": 6.0
+          "conversions": 7.0,
+          "conversions_value": 7.0
         },
         {
           "creative_name": "260826_VID_L-Story-Pandorastory-01-SS_V_1080x1920_KR",
@@ -101851,8 +102044,8 @@
           "clicks": 16,
           "cost_micros": 151229828420,
           "cost": 151229.82842,
-          "conversions": 2056.0,
-          "conversions_value": 2056.0
+          "conversions": 2058.0,
+          "conversions_value": 2058.0
         },
         {
           "creative_name": "260826_VID_L-Story-Pandorastory-01-SS_V_1080x1920_KR",
@@ -102122,7 +102315,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:41+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Event-CharacterName01-DA\\260807_BNR_P-Event-CharacterName01-DA_L_1024x768_KR.jpg",
@@ -104154,16 +104351,16 @@
       "kpi_reality_check": null,
       "kpi_percentiles": {
         "ctr": 78,
-        "cvr": 87,
+        "cvr": 86,
         "cpa": 84
       },
       "scores": {
-        "total": 67.18,
+        "total": 66.98,
         "grade": "우수",
         "rank": 46,
         "conv": 25.19,
         "cpa": 85.5,
-        "ipm": 87.79,
+        "ipm": 87.02,
         "roas": 70.23
       },
       "marketer_insight": null,
@@ -104182,7 +104379,11 @@
       "theme_reviewed": false,
       "launch_date_variant": true,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:41+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Event-Keyvisual02LD-DA\\260807_BNR_P-Event-Keyvisual02LD-DA_L_1024x768_KR.jpg",
@@ -107033,7 +107234,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:41+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Event-LaunchDate01-DA\\260807_BNR_P-Event-LaunchDate01-DA_L_1024x768_KR.jpg",
@@ -109611,7 +109816,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:41+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Event-LaunchDate02-DA\\260807_BNR_P-Event-LaunchDate02-DA_L_1024x768_KR.jpg",
@@ -112277,7 +112486,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:41+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Event-LaunchDate03-DA\\260812_BNR_P-Event-LaunchDate03-DA_L_1024x768_KR.jpg",
@@ -114773,7 +114986,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:42+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:47+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Event-ModelID-01-PV\\260824_VID_P-Event-ModelID-01-PV_L_1920x1080_KR.mp4"
@@ -114949,11 +115166,11 @@
       "언어": "KR",
       "링크": "https://www.youtube.com/watch?v=pExIuM2LgOk",
       "creative_concept": "P-Event-ModelID-01-SS",
-      "전환": 5178,
+      "전환": 5179,
       "비용": 2055395,
       "노출수": 265989,
       "클릭수": 1955,
-      "Revenue": 5178,
+      "Revenue": 5179,
       "hooking_strategy": "트렌드/인터넷 밈",
       "USP": "대세감(출시일/사전등록수)",
       "art_style": "시네마틱 실사 합성",
@@ -114998,7 +115215,7 @@
       "scores": {
         "total": 89.31,
         "grade": "최우수",
-        "rank": 3,
+        "rank": 2,
         "conv": 85.5,
         "cpa": 99.24,
         "ipm": 98.47,
@@ -115018,7 +115235,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:42+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:47+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Event-ModelID-01-SS\\260824_VID_P-Event-ModelID-01-SS_V_1080x1920_KR (1).mp4"
@@ -115075,8 +115296,8 @@
           "clicks": 540,
           "cost_micros": 398765954061,
           "cost": 398765.954061,
-          "conversions": 318.0,
-          "conversions_value": 318.0
+          "conversions": 319.0,
+          "conversions_value": 319.0
         },
         {
           "creative_name": "[제우스: 오만의 신] 사전 다운로드 오픈 기념, 판도라의 영상편지❤️ | 배우 박지현",
@@ -115237,16 +115458,16 @@
       "kpi_reality_check": null,
       "kpi_percentiles": {
         "ctr": 8,
-        "cvr": 84,
+        "cvr": 83,
         "cpa": 96
       },
       "scores": {
-        "total": 69.85,
+        "total": 69.66,
         "grade": "우수",
-        "rank": 35,
+        "rank": 36,
         "conv": 25.19,
         "cpa": 96.18,
-        "ipm": 85.5,
+        "ipm": 84.73,
         "roas": 72.52
       },
       "marketer_insight": null,
@@ -115261,7 +115482,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:42+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:47+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Event-Pre-Download-01-DA\\260824_BNR_P-Event-PreDownload-01-DA_L_1024x768_KR.jpg",
@@ -115732,7 +115957,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:44+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:49+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Event-PreDownload01-SS\\260824_VID_P-Event-PreDownload-01-SS_V_1080x1920_KR.mp4"
@@ -115967,7 +116196,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:44+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:49+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입예정\\BNR_P-Event-PreDownload01-DA\\260824_BNR_P-Event-PreDownload01-DA_L_1200x628_KR.jpg"
@@ -116075,7 +116308,11 @@
       "theme_reviewed": false,
       "launch_date_variant": true,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:44+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:49+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Event-Universe02LD-DA\\260807_BNR_P-Event-Universe02LD-DA_L_1024x768_KR.jpg",
@@ -118671,7 +118908,11 @@
       "theme_reviewed": false,
       "launch_date_variant": true,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:44+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:49+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Event-Universe05LD-DA\\260807_BNR_P-Event-Universe05LD-DA_L_1024x768_KR.jpg",
@@ -121382,7 +121623,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:44+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:49+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-AImodePV-PV\\260813_VID_P-Genre-AImodePV-UA_L_1920x1080_KR.mp4",
@@ -123534,7 +123779,7 @@
       "scores": {
         "total": 61.64,
         "grade": "우수",
-        "rank": 55,
+        "rank": 54,
         "conv": 51.91,
         "cpa": 65.65,
         "ipm": 58.78,
@@ -123552,7 +123797,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:45+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:50+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-01-PV\\260701_VID_P-Genre-DirInsight-01-PV_V_1080x1920_KR.mp4"
@@ -129570,7 +129819,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:45+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:50+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-02-PV\\260708_VID_P-Genre-DirInsight-02-PV_V_1080x1920_KR.mp4"
@@ -135686,7 +135939,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:46+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:51+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-03-PV\\260715_VID_P-Genre-DirInsight-03-PV_V_1080x1920_KR.mp4"
@@ -137962,16 +138219,16 @@
       "kpi_reality_check": null,
       "kpi_percentiles": {
         "ctr": 49,
-        "cvr": 56,
+        "cvr": 55,
         "cpa": 22
       },
       "scores": {
-        "total": 59.92,
+        "total": 59.73,
         "grade": "양호",
-        "rank": 61,
+        "rank": 62,
         "conv": 80.15,
         "cpa": 29.01,
-        "ipm": 60.31,
+        "ipm": 59.54,
         "roas": 70.23
       },
       "marketer_insight": null,
@@ -137991,7 +138248,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:47+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:52+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-04-PV\\260715_VID_P-Genre-DirInsight-04-PV_V_1080x1920_KR.mp4"
@@ -140665,7 +140926,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:47+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:52+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-05-PV\\260715_VID_P-Genre-DirInsight-05-PV_V_1080x1920_KR.mp4"
@@ -142967,7 +143232,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:48+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:53+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsight-06-PV\\260722_VID_P-Genre-DirInsight-06-PV_V_1080x1920_KR.mp4"
@@ -144890,7 +145159,11 @@
       "theme_reviewed": false,
       "launch_date_variant": true,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:48+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:53+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-DirInsightLD-02-PV\\260807_VID_P-Genre-DirInsightLD-02-PV_S_1080x1080_KR.mp4",
@@ -147256,10 +147529,10 @@
         "cpa": 4
       },
       "scores": {
-        "total": 37.02,
+        "total": 36.83,
         "grade": "보통",
         "rank": 106,
-        "conv": 36.64,
+        "conv": 35.88,
         "cpa": 12.98,
         "ipm": 28.24,
         "roas": 70.23
@@ -147276,7 +147549,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:49+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:54+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-Dirguide-AI-UA\\260812_VID_P-Genre-Dirguide-AI-UA_L_1920x1080_KR.mp4",
@@ -149833,7 +150110,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:49+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:54+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-Dirguide-Artisan-UA\\260812_VID_P-Genre-Dirguide-Artisan-UA_L_1920x1080_KR.mp4",
@@ -152394,7 +152675,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:03:53+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:56:54+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-Dirguide-Midas-UA\\260812_VID_P-Genre-Dirguide-Midas-UA_L_1920x1080_KR.mp4",
@@ -154958,7 +155243,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:00+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:01+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-GamePreview-01-PV\\260701_VID_P-Genre-GamePreview-01-PV_L_1920x1080_KR.mp4"
@@ -160192,11 +160481,11 @@
       "언어": "KR",
       "링크": "https://tpc.googlesyndication.com/simgad/13573721564309781799",
       "creative_concept": "P-Genre-MMORPG01-DA",
-      "전환": 2003,
+      "전환": 2032,
       "비용": 3955387,
       "노출수": 992999,
       "클릭수": 17517,
-      "Revenue": 9565377,
+      "Revenue": 11644385,
       "hooking_strategy": "캐릭터 외형 소구",
       "USP": "감성 유대형(교감/서사)",
       "art_style": "시네마틱 실사 합성",
@@ -160233,17 +160522,17 @@
       "kpi_reality_check": "매력적인 캐릭터 비주얼로 CTR 3.0% (상위 12%)를 달성했으나, CVR 0.30% (상위 3%)는 아직 개선 여지가 있음 — 캐릭터 외형 소구는 성공적이나, 게임성 단서가 부족하여 전환에 대한 확신을 주지 못했으므로 인게임 플레이 화면을 추가하여 전환율을 더욱 높일 필요가 있음",
       "kpi_percentiles": {
         "ctr": 53,
-        "cvr": 86,
+        "cvr": 87,
         "cpa": 92
       },
       "scores": {
-        "total": 85.88,
+        "total": 86.07,
         "grade": "최우수",
-        "rank": 9,
+        "rank": 8,
         "conv": 71.76,
-        "cpa": 93.13,
-        "ipm": 87.02,
-        "roas": 91.6
+        "cpa": 92.37,
+        "ipm": 87.79,
+        "roas": 92.37
       },
       "marketer_insight": null,
       "player_motivation": "몰입형",
@@ -160257,7 +160546,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:00+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:01+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Genre-MMORPG01-DA\\260708_BNR_P-Genre-MMORPG01-DA_L_1024x768_KR.jpg",
@@ -160439,8 +160732,8 @@
           "clicks": 24,
           "cost_micros": 17248294578,
           "cost": 17248.294578,
-          "conversions": 162.0,
-          "conversions_value": 7177523.0
+          "conversions": 183.0,
+          "conversions_value": 9256523.0
         },
         {
           "creative_name": "260826_BNR_L-Genre-MMORPG01-DA_S_1200x1200_KR.jpg",
@@ -161442,8 +161735,8 @@
           "clicks": 3,
           "cost_micros": 11051595742,
           "cost": 11051.595742,
-          "conversions": 316.0,
-          "conversions_value": 316.0
+          "conversions": 322.0,
+          "conversions_value": 322.0
         },
         {
           "creative_name": "260826_BNR_L-Genre-MMORPG01-DA_V_1200x1500_KR.jpg",
@@ -161476,8 +161769,8 @@
           "clicks": 5,
           "cost_micros": 4373106278,
           "cost": 4373.106278,
-          "conversions": 156.0,
-          "conversions_value": 156.0
+          "conversions": 158.0,
+          "conversions_value": 158.0
         },
         {
           "creative_name": "260826_BNR_L-Genre-MMORPG01-DA_S_1200x1200_KR.jpg",
@@ -173642,7 +173935,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:00+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:01+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-Showcase-UA\\260813_VID_P-Genre-Showcase-UA_L_1920x1080_KR.mp4",
@@ -175990,7 +176287,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:01+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-USPAIMode-SS\\260812_VID_P-Genre-USPAIMode-SS_V_1080x1920_KR.mp4"
@@ -176915,7 +177216,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:02+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-USPArtisan-SS\\260812_VID_P-Genre-USPArtisan-SS_V_1080x1920_KR.mp4"
@@ -177838,7 +178143,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:03+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Genre-USPVaultofMidas-SS\\260812_VID_P-Genre-USPVaultofMidas-SS_V_1080x1920_KR.mp4"
@@ -178765,7 +179074,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:03+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ArtisanReward-01-UA\\260729_VID_P-Ingame-ArtisanReward-UA_L_1920x1080_KR.mp4",
@@ -185204,7 +185517,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:06+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:07+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-CharacterNameEvent01-SS\\260807_VID_P-Ingame-CharacterNameEvent01-PV_L_1920x1080_KR.mp4",
@@ -186894,7 +187211,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:06+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:07+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-CineIngame01-UA\\260729_VID_P-Ingame-CineIngame01-UA_L_1920x1080_KR.mp4",
@@ -193332,7 +193653,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:09+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:10+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassArtisan-01-PV\\260710_VID_P-Ingame-ClassArtisan-01-PV_L_1920x1080_KR.mp4"
@@ -197634,7 +197959,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:10+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:11+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassArtisan-01-SS\\260710_VID_P-Ingame-ClassArtisan-01-SS_V_1080x1920_KR.mp4"
@@ -202114,7 +202443,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:12+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:13+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassAssassin-01-PV\\260710_VID_P-Ingame-ClassAssassin-01-PV_L_1920x1080_KR.mp4"
@@ -205986,7 +206319,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:13+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:14+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassAssassin-01-SS\\260710_VID_P-Ingame-ClassAssassin-01-SS_V_1080x1920_KR.mp4"
@@ -210436,7 +210773,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:15+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:16+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBerserker-01-PV\\260710_VID_P-Ingame-ClassBerserker-01-PV_L_1920x1080_KR.mp4"
@@ -213410,7 +213751,7 @@
       "scores": {
         "total": 47.33,
         "grade": "양호",
-        "rank": 84,
+        "rank": 85,
         "conv": 32.06,
         "cpa": 61.83,
         "ipm": 25.19,
@@ -213430,7 +213771,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:16+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:17+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBerserker-01-SS\\260710_VID_P-Ingame-ClassBerserker-01-SS_V_1080x1920_KR.mp4"
@@ -217543,7 +217888,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:18+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:19+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBlessed-01-PV\\260710_VID_P-Ingame-ClassBlessed-01-PV_L_1920x1080_KR.mp4"
@@ -221912,14 +222261,14 @@
       "kpi_percentiles": {
         "ctr": 34,
         "cvr": 19,
-        "cpa": 44
+        "cpa": 43
       },
       "scores": {
-        "total": 49.81,
+        "total": 49.62,
         "grade": "양호",
         "rank": 81,
         "conv": 53.44,
-        "cpa": 48.85,
+        "cpa": 48.09,
         "ipm": 26.72,
         "roas": 70.23
       },
@@ -221937,7 +222286,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:19+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:20+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassBlessed-01-SS\\260710_VID_P-Ingame-ClassBlessed-01-SS_V_1080x1920_KR.mp4"
@@ -227310,7 +227663,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:25+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:22+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassElimentalist-01-PV\\260710_VID_P-Ingame-ClassElimentalist-01-PV_L_1920x1080_KR.mp4"
@@ -231168,14 +231525,14 @@
       "kpi_percentiles": {
         "ctr": 38,
         "cvr": 20,
-        "cpa": 56
+        "cpa": 55
       },
       "scores": {
-        "total": 46.76,
+        "total": 46.56,
         "grade": "양호",
-        "rank": 89,
+        "rank": 90,
         "conv": 29.01,
-        "cpa": 60.31,
+        "cpa": 59.54,
         "ipm": 27.48,
         "roas": 70.23
       },
@@ -231193,7 +231550,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:25+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:23+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassElimentalist-01-SS\\260710_VID_P-Ingame-ClassElimentalist-01-SS_V_1080x1920_KR.mp4"
@@ -235305,7 +235666,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:28+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:25+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassKnight-01-PV\\260710_VID_P-Ingame-ClassKnight-01-PV_L_1920x1080_KR.mp4"
@@ -239570,14 +239935,14 @@
       "kpi_percentiles": {
         "ctr": 29,
         "cvr": 16,
-        "cpa": 47
+        "cpa": 46
       },
       "scores": {
-        "total": 50.95,
+        "total": 50.76,
         "grade": "양호",
         "rank": 78,
         "conv": 58.02,
-        "cpa": 51.91,
+        "cpa": 51.15,
         "ipm": 23.66,
         "roas": 70.23
       },
@@ -239595,7 +239960,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:28+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:26+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassKnight-01-SS\\260710_VID_P-Ingame-ClassKnight-01-SS_V_1080x1920_KR.mp4"
@@ -243585,7 +243954,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:34+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:28+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassOracle-01-PV\\260710_VID_P-Ingame-ClassOracle-01-PV_L_1920x1080_KR.mp4"
@@ -246433,7 +246806,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:35+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:29+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassOracle-01-SS\\260710_VID_P-Ingame-ClassOracle-01-SS_V_1080x1920_KR.mp4"
@@ -248531,7 +248908,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:37+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:31+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassRanger-01-PV\\260710_VID_P-Ingame-ClassRanger-01-PV_L_1920x1080_KR.mp4"
@@ -251349,16 +251730,16 @@
       "kpi_reality_check": "캐릭터 외형과 전투 연출로 높은 CTR을 기대했으나 실제 CTR 1.7%로 풀 중앙 수준에 머물렀고, CPA 2,454원으로 풀 하위 38%를 기록 — 명확한 CTA 부재가 전환 효율을 저해했으므로 엔드카드에 강력한 행동 유도 요소를 추가하여 CPA를 개선할 필요가 있습니다.",
       "kpi_percentiles": {
         "ctr": 43,
-        "cvr": 40,
+        "cvr": 39,
         "cpa": 55
       },
       "scores": {
-        "total": 55.92,
+        "total": 55.73,
         "grade": "양호",
         "rank": 74,
         "conv": 48.85,
         "cpa": 58.78,
-        "ipm": 45.8,
+        "ipm": 45.04,
         "roas": 70.23
       },
       "marketer_insight": null,
@@ -251375,7 +251756,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:38+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:32+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassRanger-01-SS\\260710_VID_P-Ingame-ClassRanger-01-SS_V_1080x1920_KR.mp4"
@@ -254220,7 +254605,11 @@
       "theme_reviewed": false,
       "launch_date_variant": true,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:39+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:32+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ClassRangerLD-01-PV\\260807_VID_P-Ingame-ClassRangerLD-01-PV_S_1080x1080_KR.mp4",
@@ -256638,7 +257027,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:40+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:34+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-GamePreview30s-UA\\260729_VID_P-Ingame-GamePreview30s-UA_L_1920x1080_KR.mp4",
@@ -263074,7 +263467,11 @@
       "theme_reviewed": false,
       "launch_date_variant": true,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:41+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:35+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-GamePreview30sLD-UA\\260812_VID_P-Ingame-GamePreview30sLD-UA_L_1920x1080_KR.mp4",
@@ -265634,7 +266031,11 @@
       "theme_reviewed": false,
       "launch_date_variant": true,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:42+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-GamePreviewLD-PV\\260807_VID_P-Ingame-GamePreviewLD-PV_S_1080x1080_KR.mp4",
@@ -268056,7 +268457,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:42+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:36+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ModelGamePlay-SS\\260819_VID_P-Ingame-ModelGamePlay-SS_V_1080x1920_KR.mp4"
@@ -268470,7 +268875,7 @@
       "scores": {
         "total": 61.26,
         "grade": "우수",
-        "rank": 56,
+        "rank": 57,
         "conv": 84.73,
         "cpa": 61.07,
         "ipm": 29.01,
@@ -268488,7 +268893,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:44+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:38+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-Region-Thebes-UA\\260722_VID_P-Ingame-Region-Thebes-UA_V_1080x1920_KR.mp4"
@@ -270786,7 +271195,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:45+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:38+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ThebesLD-PV\\260812_VID_P-Ingame-Region-ThebesLD-PV_L_1920x1080_KR.mp4",
@@ -273318,14 +273731,14 @@
       "kpi_percentiles": {
         "ctr": 13,
         "cvr": 9,
-        "cpa": 48
+        "cpa": 47
       },
       "scores": {
-        "total": 55.92,
+        "total": 55.73,
         "grade": "양호",
         "rank": 75,
         "conv": 83.21,
-        "cpa": 52.67,
+        "cpa": 51.91,
         "ipm": 17.56,
         "roas": 70.23
       },
@@ -273341,7 +273754,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:46+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:40+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-Region-Thessaly-UA\\260722_VID_P-Ingame-Region-Thessaly-UA_V_1080x1920_KR.mp4"
@@ -275621,7 +276038,7 @@
       "scores": {
         "total": 47.14,
         "grade": "양호",
-        "rank": 87,
+        "rank": 88,
         "conv": 54.96,
         "cpa": 22.14,
         "ipm": 41.22,
@@ -275639,7 +276056,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:47+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:41+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ThessalyLD-PV\\260812_VID_P-Ingame-Region-ThessalyLD-PV_L_1920x1080_KR.mp4",
@@ -276532,7 +276953,7 @@
           "cost_micros": 6086971976,
           "cost": 6086.971976,
           "conversions": 0.095547,
-          "conversions_value": 0.095547
+          "conversions_value": 0.09554699999999999
         },
         {
           "creative_name": "260812_VID_P-Ingame-Region-ThessalyLD-PV_L_1920x1080_KR",
@@ -278171,14 +278592,14 @@
       "kpi_percentiles": {
         "ctr": 18,
         "cvr": 10,
-        "cpa": 53
+        "cpa": 52
       },
       "scores": {
-        "total": 57.44,
+        "total": 57.25,
         "grade": "양호",
         "rank": 71,
         "conv": 83.97,
-        "cpa": 57.25,
+        "cpa": 56.49,
         "ipm": 18.32,
         "roas": 70.23
       },
@@ -278194,7 +278615,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:49+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:43+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-Region-Zahav-UA\\260722_VID_P-Ingame-Region-Zahav-UA_V_1080x1920_KR.mp4"
@@ -280492,7 +280917,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:49+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:43+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Ingame-ZahavLD-PV (1)\\260812_VID_P-Ingame-Region-ZahavLD-PV_L_1920x1080_KR.mp4",
@@ -283054,7 +283483,11 @@
       "theme_reviewed": false,
       "launch_date_variant": true,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:49+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:43+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Reward-ArtisanRewardLD-UA\\260812_VID_P-Reward-ArtisanRewardLD-UA_L_1920x1080_KR.mp4",
@@ -285609,7 +286042,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:49+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:44+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Reward-PreReward01-DA\\260708_BNR_P-Reward-PreReward01-DA_L_1024x768_KR.jpg",
@@ -297607,7 +298044,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:49+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:44+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Reward-PreReward02-DA\\260708_BNR_P-Reward-PreReward02-DA_L_1024x768_KR.jpg",
@@ -309448,7 +309889,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:49+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:44+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Reward-PreReward03-DA\\260701_BNR_P-Reward-PreReward03-DA_L_1024x768_KR.jpg",
@@ -321019,7 +321464,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:50+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:44+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Reward-PreReward04-DA\\260812_BNR_P-Reward-PreReward04-DA_L_1024x768_KR.jpg",
@@ -322897,7 +323346,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:50+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:44+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Reward-PreReward05-DA\\260812_BNR_P-Reward-PreReward05-DA_L_1024x768_KR.jpg",
@@ -324692,7 +325145,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:50+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:44+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Reward-PreReward06-DA\\260812_BNR_P-Reward-PreReward06-DA_L_1024x768_KR.jpg",
@@ -326444,7 +326901,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:51+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-CinematicPV30s-01-PV\\260701_VID_P-Slogan-CinematicPV30s-01-PV_L_1920x1080_KR.mp4",
@@ -341057,7 +341518,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:52+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Slogan-KeyVisual01-DA\\260701_BNR_P-Slogan-Keyvisual01-DA_L_1024x768_KR.jpg",
@@ -350962,7 +351427,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:52+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Slogan-KeyVisual02-DA\\260701_BNR_P-Slogan-Keyvisual02-DA_L_1024x768_KR.jpg",
@@ -363540,7 +364009,7 @@
       "scores": {
         "total": 46.95,
         "grade": "양호",
-        "rank": 88,
+        "rank": 89,
         "conv": 33.59,
         "cpa": 58.02,
         "ipm": 25.95,
@@ -363558,7 +364027,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:52+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Slogan-KeyVisual03-DA\\260722_BNR_P-Slogan-Keyvisual03-DA_L_1024x768_KR.jpg",
@@ -368500,7 +368973,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:52+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:46+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Slogan-KeyVisual04-DA\\260722_BNR_P-Slogan-Keyvisual04-DA_L_1024x768_KR.jpg",
@@ -371866,7 +372343,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:53+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:48+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-LaunchDatePV-PV\\260807_VID_P-Slogan-LaunchDatePV-PV_L_1920x1080_KR.mp4",
@@ -374556,10 +375037,10 @@
         "cpa": 39
       },
       "scores": {
-        "total": 41.98,
+        "total": 41.79,
         "grade": "양호",
         "rank": 102,
-        "conv": 31.3,
+        "conv": 30.53,
         "cpa": 44.27,
         "ipm": 22.14,
         "roas": 70.23
@@ -374578,7 +375059,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:54+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:49+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-LaunchDatePV15s-PV\\260807_VID_P-Slogan-LaunchDatePV15s-PV_L_1920x1080_KR.mp4",
@@ -377260,14 +377745,14 @@
       "kpi_percentiles": {
         "ctr": 54,
         "cvr": 15,
-        "cpa": 45
+        "cpa": 44
       },
       "scores": {
-        "total": 45.61,
+        "total": 45.42,
         "grade": "양호",
         "rank": 92,
         "conv": 39.69,
-        "cpa": 49.62,
+        "cpa": 48.85,
         "ipm": 22.9,
         "roas": 70.23
       },
@@ -377283,7 +377768,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:54+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:49+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\제작중\\BNR_P-Slogan-PR-DA\\260729_BNR_P-Slogan-PR-DA_L_1024x768_KR.jpg",
@@ -381457,11 +381946,11 @@
         "cpa": 29
       },
       "scores": {
-        "total": 51.34,
+        "total": 51.15,
         "grade": "양호",
         "rank": 77,
         "conv": 64.89,
-        "cpa": 35.88,
+        "cpa": 35.11,
         "ipm": 34.35,
         "roas": 70.23
       },
@@ -381479,7 +381968,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:56+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:50+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PandoraMaking-SS\\260729_VID_P-Slogan-PandoraMaking-SS_V_1080x1920_KR.mp4"
@@ -383699,7 +384192,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:56+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:50+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV15s-01-PV\\260701_VID_P-Slogan-PreregPV15s-01-PV_L_1920x1080_KR.mp4",
@@ -397483,7 +397980,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:56+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:51+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV15s-02-PV\\260701_VID_P-Slogan-PreregPV15s-02-PV_L_1920x1080_KR (1).mp4",
@@ -410983,7 +411484,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:56+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:51+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV15s-03-PV\\260807_VID_P-Slogan-PreregPV15s-03-PV_S_1080x1080_KR.mp4",
@@ -412832,7 +413337,11 @@
       "theme_reviewed": false,
       "launch_date_variant": true,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:57+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:51+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV15sLD-03-PV\\260812_VID_P-Slogan-PreregPV15sLD-03-PV_L_1920x1080_KR.mp4",
@@ -415396,7 +415905,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:57+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:51+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV30s-01-PV\\260701_VID_P-Slogan-PreregPV30s-01-PV_L_1920x1080_KR.mp4",
@@ -426076,7 +426589,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:57+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:52+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV30s-02-PV\\260701_VID_P-Slogan-PreregPV30s-02-PV_L_1920x1080_KR.mp4",
@@ -440060,7 +440577,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:58+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:52+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV30s-03-PV\\260807_VID_P-Slogan-PreregPV30s-03-PV_S_1080x1080_KR.mp4",
@@ -441909,7 +442430,11 @@
       "theme_reviewed": false,
       "launch_date_variant": true,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:58+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:52+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "2. 영상\\VID_P-Slogan-PreregPV30sLD-03-PV\\260812_VID_P-Slogan-PreregPV30sLD-03-PV_L_1920x1080_KR.mp4",
@@ -444466,7 +444991,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:58+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:52+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Slogan-Universe01-DA\\260708_BNR_P-Slogan-Universe01-DA_L_1024x768_KR.jpg",
@@ -452837,7 +453366,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:58+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:52+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Slogan-Universe02-DA\\260701_BNR_P-Slogan-Universe02-DA_L_1024x768_KR.jpg",
@@ -465778,7 +466311,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:58+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:52+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입\\BNR_P-Slogan-Universe03-DA\\260701_BNR_P-Slogan-Universe03-DA_L_1024x768_KR.jpg",
@@ -478665,7 +479202,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:58+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:52+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입예정\\BNR_P-Slogan-Universe04-DA\\260715_BNR_P-Slogan-Universe04-DA_L_1024x768_KR.jpg",
@@ -484434,14 +484975,14 @@
       "kpi_percentiles": {
         "ctr": 71,
         "cvr": 54,
-        "cpa": 46
+        "cpa": 45
       },
       "scores": {
-        "total": 61.83,
+        "total": 61.45,
         "grade": "우수",
-        "rank": 54,
+        "rank": 55,
         "conv": 67.94,
-        "cpa": 51.15,
+        "cpa": 49.62,
         "ipm": 58.02,
         "roas": 70.23
       },
@@ -484459,7 +485000,11 @@
       "theme_reviewed": false,
       "launch_date_variant": false,
       "theme_partner": null,
-      "tagged_at": "2026-09-15T13:04:58+09:00",
+      "intent_axis": null,
+      "theme_flags": [],
+      "execution_status": "planned",
+      "duplicate_of": null,
+      "tagged_at": "2026-09-15T16:57:53+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 배너\\투입예정\\BNR_P-Slogan-Universe05-DA\\260715_BNR_P-Slogan-Universe05-DA_L_1024x768_KR.jpg",
@@ -490228,10 +490773,10 @@
   "metrics": {
     "scanned_folders": 131,
     "tagged_records": 131,
-    "cache_hits": 128,
-    "cache_misses": 3,
+    "cache_hits": 130,
+    "cache_misses": 1,
     "failures": 0,
-    "duration_sec": 194.7,
+    "duration_sec": 106.2,
     "prompt_version": "v3.3-2026.06.13-character-split-single-mmorpg-v2",
     "fallback_used": false,
     "carried_forward": 0,
@@ -490239,9 +490784,9 @@
       "graded": 120,
       "grades": {
         "양호": 42,
-        "우수": 43,
-        "보통": 18,
-        "최우수": 17
+        "우수": 41,
+        "최우수": 19,
+        "보통": 18
       },
       "top": {
         "name": "L-Ingame-ClassArtisan-01-SS",
@@ -490252,89 +490797,12 @@
     "game_context_sha": "bbb760e0385d5662"
   },
   "campaign_canonical": {
-    "Incross_HQ_ZEUS_KR_Criteo_NU-Pre_ALL_Display_260701": {
+    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
-      "os": "전체",
-      "media": "Criteo",
-      "product": "Display"
-    },
-    "Incross_HQ_ZEUS_KR-KR_GA_NU_AD_AC-MaxCV_260826": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "Android",
-      "media": "GA",
-      "product": "AC-MaxCV"
-    },
-    "Incross_HQ_ZEUS_KR-KR_GA_NU_PC_ACi-Melee_260826": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "",
-      "media": "GA",
-      "product": "ACi-Melee"
-    },
-    "Incross_HQ_ZEUS_KR-KR_GA_RT_AD_ACe_260827": {
-      "ua_type": "RT",
-      "country": "KR",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACe"
-    },
-    "Incross_HQ_ZEUS_KR-KR_GA_NU_AD_ACtROAS_260826": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACtROAS"
-    },
-    "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen-Brand_260728": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "GA",
-      "product": "DemandGen-Brand"
-    },
-    "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen-Preregi_260728": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "GA",
-      "product": "DemandGen-Preregi"
-    },
-    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260722": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Kakao",
-      "product": "Conv-Bizboard"
-    },
-    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260723": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Kakao",
-      "product": "Conv-Bizboard"
-    },
-    "Incross_HQ_ZEUS_KR-KR_GA_NU_AD_ACa-ServerNU_260826": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACa-ServerNU"
-    },
-    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Display_260723": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Kakao",
-      "product": "Conv-Display"
-    },
-    "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
+      "os": "iOS",
       "media": "Meta",
-      "product": "Conversion"
+      "product": "MAIA-CPP"
     },
     "Incross_HQ_ZEUS_KR-KR_GA_NU-Pre-install_PC_DemandGen-A_260824": {
       "ua_type": "",
@@ -490343,54 +490811,40 @@
       "media": "GA",
       "product": "DemandGen-A"
     },
-    "Incross_HQ_ZEUS_KR-KR_GA_NU_iOS_ACa-ServerNU_260826": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "iOS",
-      "media": "GA",
-      "product": "ACa-ServerNU"
-    },
-    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Meta",
-      "product": "Conversion"
-    },
-    "ZEUS_KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260723": {
+    "ZEUS_KR_Kakao_NU-Pre_iOS_Install-Display_260723": {
       "ua_type": "NU-Pre",
       "country": "NU",
-      "os": "전체",
+      "os": "iOS",
       "media": "Kakao",
       "product": ""
     },
-    "Incross_HQ_ZEUS_KR-KR_GA_NU_PC_DemandGen_260826": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "",
-      "media": "GA",
-      "product": "DemandGen"
-    },
-    "Incross_HQ_ZEUS_KR-KR_MSN_NU-Pre_ALL_Display_260701": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "MSN",
-      "product": "Display"
-    },
-    "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "TikTok",
-      "product": "Conversion"
-    },
-    "Incross_HQ_ZEUS_KR-KR_GA_NU_AD_ACi_260826": {
+    "Incross_HQ_ZEUS_KR-KR_GA_NU_AD_ACtROAS_260826": {
       "ua_type": "NU",
       "country": "KR",
       "os": "Android",
       "media": "GA",
-      "product": "ACi"
+      "product": "ACtROAS"
+    },
+    "Incross_HQ_ZEUS_KR-KR_GA_NU_PC_ACi-Melee_260826": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "",
+      "media": "GA",
+      "product": "ACi-Melee"
+    },
+    "ZEUS_KR_Kakao_NU-Pre_iOS_Install-Bizboard_260723": {
+      "ua_type": "NU-Pre",
+      "country": "NU",
+      "os": "iOS",
+      "media": "Kakao",
+      "product": ""
+    },
+    "Incross_HQ_ZEUS_KR-KR_GA_RT_AD_ACe_260827": {
+      "ua_type": "RT",
+      "country": "KR",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACe"
     },
     "Incross_HQ_ZEUS_KR-KR_GA_NU-Pre-install_iOS_ACi_260824": {
       "ua_type": "",
@@ -490399,26 +490853,26 @@
       "media": "GA",
       "product": "ACi"
     },
-    "ZEUS_KR_Kakao_NU-Pre_AD_Install-Bizboard_260723": {
-      "ua_type": "NU-Pre",
-      "country": "NU",
-      "os": "Android",
-      "media": "Kakao",
-      "product": ""
-    },
-    "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701": {
-      "ua_type": "NU-Pre",
+    "Incross_HQ_ZEUS_KR-KR_GA_NU_AD_ACi_260826": {
+      "ua_type": "NU",
       "country": "KR",
       "os": "Android",
       "media": "GA",
-      "product": "ACp"
+      "product": "ACi"
     },
-    "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701": {
+    "Incross_HQ_ZEUS_KR-KR_GA_NU-Pre-install_AD_ACi_260824": {
+      "ua_type": "",
+      "country": "KR",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACi"
+    },
+    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260722": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "전체",
-      "media": "GA",
-      "product": "DemandGen"
+      "media": "Kakao",
+      "product": "Conv-Bizboard"
     },
     "ZEUS_KR_Kakao_NU-Pre_ALL_Conv-Display_260723": {
       "ua_type": "NU-Pre",
@@ -490427,30 +490881,19 @@
       "media": "Kakao",
       "product": ""
     },
-    "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722": {
+    "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260722": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "전체",
-      "media": "Pangle",
-      "product": "Conversion",
-      "media_conflict": {
-        "name": "Pangle",
-        "mmp": "TikTok"
-      }
+      "media": "TikTok",
+      "product": "Conversion"
     },
-    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_iOS_MAIA-CPP_260701": {
+    "ZEUS_KR_Kakao_NU-Pre_AD_Install-Bizboard_260723": {
       "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "iOS",
-      "media": "Meta",
-      "product": "MAIA-CPP"
-    },
-    "Incross_HQ_ZEUS_KR-KR_GA_NU-Pre-install_PC_DemandGen-B_260824": {
-      "ua_type": "",
-      "country": "KR",
-      "os": "",
-      "media": "GA",
-      "product": "DemandGen-B"
+      "country": "NU",
+      "os": "Android",
+      "media": "Kakao",
+      "product": ""
     },
     "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_iOS_Install-CPP_260722": {
       "ua_type": "NU-Pre",
@@ -490458,13 +490901,6 @@
       "os": "iOS",
       "media": "TikTok",
       "product": "Install-CPP"
-    },
-    "Incross_HQ_ZEUS_KR-KR_Appier_NU-Pre_ALL_Display_260715": {
-      "ua_type": "NU-Pre",
-      "country": "KR",
-      "os": "전체",
-      "media": "Appier",
-      "product": "Display"
     },
     "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260727": {
       "ua_type": "NU-Pre",
@@ -490477,54 +490913,26 @@
         "mmp": "TikTok"
       }
     },
-    "ZEUS_KR_Kakao_NU-Pre_iOS_Install-Display_260723": {
-      "ua_type": "NU-Pre",
-      "country": "NU",
-      "os": "iOS",
-      "media": "Kakao",
-      "product": ""
-    },
-    "Incross_HQ_ZEUS_KR-KR_GA_NU_iOS_ACi_260826": {
-      "ua_type": "NU",
-      "country": "KR",
-      "os": "iOS",
-      "media": "GA",
-      "product": "ACi"
-    },
-    "ZEUS_KR_Kakao_NU-Pre_AD_Install-Display_260723": {
-      "ua_type": "NU-Pre",
-      "country": "NU",
-      "os": "Android",
-      "media": "Kakao",
-      "product": ""
-    },
-    "Incross_HQ_ZEUS_KR-KR_GA_NU-Pre-install_AD_ACi_260824": {
-      "ua_type": "",
-      "country": "KR",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACi"
-    },
-    "ZEUS_KR_Kakao_NU-Pre_iOS_Install-Bizboard_260723": {
-      "ua_type": "NU-Pre",
-      "country": "NU",
-      "os": "iOS",
-      "media": "Kakao",
-      "product": ""
-    },
-    "Incross_HQ_ZEUS_KR-KR_Moloco_NU-Pre_ALL_Conversion_260701": {
+    "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen-Preregi_260728": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "전체",
-      "media": "Moloco",
-      "product": "Conversion"
+      "media": "GA",
+      "product": "DemandGen-Preregi"
     },
-    "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp-OO_260716": {
+    "Incross_HQ_ZEUS_KR_Criteo_NU-Pre_ALL_Display_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
-      "os": "Android",
-      "media": "GA",
-      "product": "ACp-OO"
+      "os": "전체",
+      "media": "Criteo",
+      "product": "Display"
+    },
+    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Display_260723": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Kakao",
+      "product": "Conv-Display"
     },
     "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_ALL_Conversion_260805": {
       "ua_type": "NU-Pre",
@@ -490533,6 +490941,62 @@
       "media": "TikTok",
       "product": "Conversion"
     },
+    "Incross_HQ_ZEUS_KR-KR_GA_NU_iOS_ACi_260826": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "iOS",
+      "media": "GA",
+      "product": "ACi"
+    },
+    "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp-OO_260716": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACp-OO"
+    },
+    "Incross_HQ_ZEUS_KR-KR_MSN_NU-Pre_ALL_Display_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "MSN",
+      "product": "Display"
+    },
+    "Incross_HQ_ZEUS_KR-KR_Appier_NU-Pre_ALL_Display_260715": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Appier",
+      "product": "Display"
+    },
+    "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen-Brand_260728": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "GA",
+      "product": "DemandGen-Brand"
+    },
+    "Incross_HQ_ZEUS_KR-KR_GA_NU-Pre-install_PC_DemandGen-B_260824": {
+      "ua_type": "",
+      "country": "KR",
+      "os": "",
+      "media": "GA",
+      "product": "DemandGen-B"
+    },
+    "Incross_HQ_ZEUS_KR-KR_GA_NU_iOS_ACa-ServerNU_260826": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "iOS",
+      "media": "GA",
+      "product": "ACa-ServerNU"
+    },
+    "ZEUS_KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260723": {
+      "ua_type": "NU-Pre",
+      "country": "NU",
+      "os": "전체",
+      "media": "Kakao",
+      "product": ""
+    },
     "Incross_HQ_ZEUS_KR_Meta_NU-Pre_AD_MAIA-CSL_260701": {
       "ua_type": "NU-Pre",
       "country": "KR",
@@ -490540,12 +491004,93 @@
       "media": "Meta",
       "product": "MAIA-CSL"
     },
+    "ZEUS_KR_Kakao_NU-Pre_AD_Install-Display_260723": {
+      "ua_type": "NU-Pre",
+      "country": "NU",
+      "os": "Android",
+      "media": "Kakao",
+      "product": ""
+    },
+    "Incross_HQ_ZEUS_KR-KR_Kakao_NU-Pre_ALL_Conv-Bizboard_260723": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Kakao",
+      "product": "Conv-Bizboard"
+    },
     "Incross_HQ_ZEUS_KR_Tiktok_NU-Pre_AD_Install-CSL_260722": {
       "ua_type": "NU-Pre",
       "country": "KR",
       "os": "Android",
       "media": "TikTok",
       "product": "Install-CSL"
+    },
+    "Incross_HQ_ZEUS_KR_GA_NU-Pre_AD_ACp_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACp"
+    },
+    "Incross_HQ_ZEUS_KR-KR_GA_NU_PC_DemandGen_260826": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "",
+      "media": "GA",
+      "product": "DemandGen"
+    },
+    "Incross_HQ_ZEUS_KR-KR_GA_NU_AD_AC-MaxCV_260826": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "Android",
+      "media": "GA",
+      "product": "AC-MaxCV"
+    },
+    "Incross_HQ_ZEUS_KR_Pangle_NU-Pre_ALL_Conversion_260722": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Pangle",
+      "product": "Conversion",
+      "media_conflict": {
+        "name": "Pangle",
+        "mmp": "TikTok"
+      }
+    },
+    "Incross_HQ_ZEUS_KR_GA_NU-Pre_ALL_DemandGen_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "GA",
+      "product": "DemandGen"
+    },
+    "Incross_HQ_ZEUS_KR_Meta_NU-Pre_ALL_Conversion_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Meta",
+      "product": "Conversion"
+    },
+    "Incross_HQ_ZEUS_KR-KR_Moloco_NU-Pre_ALL_Conversion_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Moloco",
+      "product": "Conversion"
+    },
+    "Incross_HQ_ZEUS_KR-KR_Meta_NU-Pre_ALL_Conversion_260701": {
+      "ua_type": "NU-Pre",
+      "country": "KR",
+      "os": "전체",
+      "media": "Meta",
+      "product": "Conversion"
+    },
+    "Incross_HQ_ZEUS_KR-KR_GA_NU_AD_ACa-ServerNU_260826": {
+      "ua_type": "NU",
+      "country": "KR",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACa-ServerNU"
     }
   },
   "unmatched_assets": [
@@ -490601,8 +491146,8 @@
     {
       "concept": "[제우스: 오만의 신] 당신의 MMORPG엔 있나요?",
       "source": "google_ads",
-      "impressions": 23600,
-      "cost": 219924.38,
+      "impressions": 23599,
+      "cost": 219920.84,
       "asset_types": [
         "YOUTUBE_VIDEO"
       ],
