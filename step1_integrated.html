@@ -8777,7 +8777,11 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         // scoringInsight splitMode:
         //   isPaid=true  → { prompt1, prompt2,  splitMode:'paid_2call' }  5슬롯
         //   isPaid=false → { prompt1,            splitMode:'free_1call' }  winning 1슬롯 (위닝+루징 포함)
-        const prompts = GeminiPrompts.scoringInsight(highPerf, lowPerf, { tagCols, isPaid });
+        // 게임 성격 맥락 주입 (브랜드 브리프 → 인라인 1줄)
+        const _giTid = (window.DataSource && DataSource.getActiveTitleId && DataSource.getActiveTitleId()) || '';
+        const _giBB = (window._brandBriefs && window._brandBriefs[_giTid]) || null;
+        const _giGameCtx = GeminiPrompts.buildGameCharacterContext(_giBB, true);  // 인사이트=인라인 1줄
+        const prompts = GeminiPrompts.scoringInsight(highPerf, lowPerf, { tagCols, isPaid, context: _giGameCtx });
         const { splitMode } = prompts;
 
         // ─── 출력 토큰 예산 ─────────────────────────────────────────
