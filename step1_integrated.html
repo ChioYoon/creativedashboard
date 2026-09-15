@@ -27,7 +27,7 @@
   <script src="js/canonical-filter.js?v=cbc66317"></script>
   <!-- Gemini AI 공통 모듈 -->
   <link rel="stylesheet" href="css/gemini-ui.css?v=91d8def8">
-  <script src="js/gemini-api.js?v=9f0f7a03"></script>
+  <script src="js/gemini-api.js?v=e5b090b4"></script>
   
   <style>
     * {
@@ -3262,6 +3262,7 @@ function aggregateCreativeData(rows, groupBy) {
         'one_line_insight','marketer_insight','improvement_actions','kpi_reality_check',
         'strength_evidence','weakness_evidence','creative_concept','사이즈','언어',
         'player_motivation','main_characters','color_tone','cta_type',
+        'theme_primary','theme_secondary','theme_flags','intent_axis',
         'mmp_daily','mmp_channels','mmp_d1_ipm','mmp_d1_cpi','mmp_d7_roas',
         'mmp_d1_retention','mmp_installs','mmp_conversions','mmp_conv_ua','mmp_impressions','mmp_retained_d1','mmp_cost','mmp_revenue',
         'mmp_currency','mmp_fx_rate','source_files'];
@@ -5998,7 +5999,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       if (typeof GeminiKeyManager !== 'undefined' && GeminiKeyManager.isSet()) {
         showLoadingIndicator('인사이트 생성 중...');
         const sharedContext = _extractUaContext(window.__gameContext || '');
-        try { const r = await buildReportNarrative(cmp, window.currentCreatives, note, sharedContext); narrative = r.text; narrativeIsRule = r.isRule; }
+        const _rTid = (window.DataSource && DataSource.getActiveTitleId && DataSource.getActiveTitleId()) || '';
+        const _rBB = (window._brandBriefs && window._brandBriefs[_rTid]) || null;
+        const _rGameChar = GeminiPrompts.buildGameCharacterContext(_rBB, false);  // 보고서=블록
+        try { const r = await buildReportNarrative(cmp, window.currentCreatives, note, sharedContext, _rGameChar); narrative = r.text; narrativeIsRule = r.isRule; }
         finally { hideLoadingIndicator(); }
       }
       // 무키/실패 폴백: 내러티브 없고 노트 있으면 원문을 개조식 섹션으로만 표시(정리·검증 생략 = 규칙기반)
@@ -6045,7 +6049,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       if (!m) return '';   // UA 전략 섹션 못 찾으면 배경 생략(§1·§2 로어 유입 방지)
       return md.slice(m.index).replace(/\*\*/g, '').replace(/\\([^\s])/g, '$1').trim().slice(0, 1500);
     }
-    function buildReportNarrativePrompt(data, tags, note = '', sharedContext = '') {
+    function buildReportNarrativePrompt(data, tags, note = '', sharedContext = '', gameChar = '') {
       const k = data.kpis, cmp = data.comparison;
       const dpct = d => (d && d.deltaPct != null) ? `(전 기간 대비 ${d.deltaAbs >= 0 ? '+' : ''}${Math.round(d.deltaPct)}%)` : '';
       const L = [];
@@ -6068,6 +6072,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         L.push('데이터로 확인되지 않는 계획도 그대로 반영하되, "(데이터 확인 불가)"·"(확인 불가)" 같은 표기는 절대 붙이지 말 것. 원문 과장·추가해석 금지.');
       }
       L.push('');
+      if (gameChar) {
+        L.push('');
+        L.push(gameChar);  // [게임 성격 …] 블록 — 분석 배경(무엇을 소구하는 게임인지)
+      }
       if (sharedContext) {
         L.push('');
         L.push('[게임/UA 컨텍스트 — 팀 공유, 분석의 배경 프레이밍으로만 참고. 데이터 근거가 우선]');
@@ -6147,13 +6155,13 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       return L.join('\n');
     }
     // 반환: { text, isRule } — isRule=true면 규칙기반 요약(AI 미사용). 라벨/무효화는 이 플래그로 구분.
-    async function buildReportNarrative(comparison, creatives, note = '', sharedContext = '') {
+    async function buildReportNarrative(comparison, creatives, note = '', sharedContext = '', gameChar = '') {
       const data = buildSummaryReportData(creatives, comparison);
       const tags = buildTagCohortSummary(comparison && comparison.cur, creatives);
       const hasKey = (typeof GeminiKeyManager !== 'undefined' && GeminiKeyManager.isSet());
       if (hasKey) {
         try {
-          const prompt = buildReportNarrativePrompt(data, tags, note, sharedContext);
+          const prompt = buildReportNarrativePrompt(data, tags, note, sharedContext, gameChar);
           // 보고서만 pro 전환(사용자 승인 07-29) — 콘텐츠 심층 추론용. thinking 포함 출력 여유분으로 maxTokens 증액.
           const call = () => callGeminiAPI(prompt, { maxTokens: note ? 6000 : 5000, temperature: 0.6, model: 'gemini-2.5-pro' });
           let text;
@@ -8208,6 +8216,14 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         : ' (원본 리소스 변형 금지선 · 금칙 표현 — 브랜드 브리프)';
       const cta = val(m.cta_type);
       const ctaTone = bb.cta_tone ? ` · 톤: ${bb.cta_tone}` : '';
+      // 훅별 IP 가드(theme_flags) — 도원암귀 등 원본유지only IP. ip_guard/entity/tva/조건 플래그를 제작자에게 노출.
+      //   집단 훅(예: Rasetsu=라세츠학원)은 10항 우선순위·14항 신장비율이 직접 적용돼 검수 리스크가 높음.
+      const _flags = Array.isArray(m.theme_flags) ? m.theme_flags : [];
+      const hookGuards = _flags
+        .filter(f => /^(ip_guard:|entity:|tva_source|conditional:)/.test(f))
+        .map(f => f.replace(/^ip_guard:/, '').replace(/^entity:/, '[엔티티] ').replace(/^conditional:/, '[조건] ').replace(/^tva_source$/, '[TVA] 원작 애니 영상 — 판권 검수 경로 별도').replace(/_/g, ' '));
+      const hookGuardBlock = hookGuards.length ? hookGuards.map(s => `\n                  · ${s}`).join('') : '';
+      const intentNote = m.intent_axis ? `  · 제작 의도축: ${m.intent_axis} (content_theme 판정 미반영 · 참고용)` : '';
       const asset = m['링크'] || creative.이미지링크 || creative.파일명 || (m['파일명'] || '') || '—';
       const 비율 = isVid ? '9:16 · 15s(원본 길이 기준 컷 변주 테스트)' : '1200x628 / 1200x1500 등 사이즈 배리';
       return [
@@ -8236,6 +8252,8 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         `  · 등장 캐릭터 : ${chars || '(브랜드 브리프)'}`,
         `  · 세계관/톤   : ${tone === '—' ? '(브랜드 브리프)' : tone}`,
         `  · IP 세이프   :${ipSafe}`,
+        ...(hookGuardBlock ? [`  · 훅 IP 가드  :${hookGuardBlock}`] : []),
+        ...(intentNote ? [intentNote] : []),
         '',
         '[5] 에셋 지정',
         `  · 원본 에셋   : ${asset}`,
@@ -8766,7 +8784,11 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         // scoringInsight splitMode:
         //   isPaid=true  → { prompt1, prompt2,  splitMode:'paid_2call' }  5슬롯
         //   isPaid=false → { prompt1,            splitMode:'free_1call' }  winning 1슬롯 (위닝+루징 포함)
-        const prompts = GeminiPrompts.scoringInsight(highPerf, lowPerf, { tagCols, isPaid });
+        // 게임 성격 맥락 주입 (브랜드 브리프 → 인라인 1줄)
+        const _giTid = (window.DataSource && DataSource.getActiveTitleId && DataSource.getActiveTitleId()) || '';
+        const _giBB = (window._brandBriefs && window._brandBriefs[_giTid]) || null;
+        const _giGameCtx = GeminiPrompts.buildGameCharacterContext(_giBB, true);  // 인사이트=인라인 1줄
+        const prompts = GeminiPrompts.scoringInsight(highPerf, lowPerf, { tagCols, isPaid, context: _giGameCtx });
         const { splitMode } = prompts;
 
         // ─── 출력 토큰 예산 ─────────────────────────────────────────

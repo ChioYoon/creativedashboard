@@ -1144,7 +1144,7 @@ def run(cfg: dict) -> dict:
         _weakness_items = tag_dict.get("weaknesses", []) or []
         _test_items = tag_dict.get("test_ideas", []) or []
         _concept = filename_to_concept(rep.name) or c.creative_name
-        _ct = assign_content_theme(_concept)  # 훅 매핑 결정적 룩업(무Gemini). 신규 훅=N/A:미상+검수
+        _ct = assign_content_theme(_concept, title=cfg["title"])  # 타이틀별 훅맵 결정적 룩업(무Gemini). 신규 훅=N/A:미상+검수
         record = CreativeRecord(
             creative_id=c.creative_name,
             소재명=c.creative_name,
@@ -1160,6 +1160,8 @@ def run(cfg: dict) -> dict:
             theme_reviewed=_ct["theme_reviewed"],
             launch_date_variant=_ct.get("launch_date_variant", False),
             theme_partner=_ct.get("partner"),
+            intent_axis=_ct.get("intent_axis"),
+            theme_flags=_ct.get("theme_flags", []),
             hooking_strategy=tag_dict.get("hooking_strategy"),
             USP=tag_dict.get("core_usp"),
             art_style=tag_dict.get("visual_style"),

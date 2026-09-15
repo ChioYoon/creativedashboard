@@ -82,3 +82,33 @@ def test_to_brand_brief_entry():
     assert "린나류" in e["cta_tone"]
     # content_boundary.blocked → ip_safe 가드로 편입
     assert any("아카디아 제전" in s for s in e["ip_safe"])
+
+
+_STRUCT_GATED = {  # 도원암귀 형태(원본유지only IP)
+    "status": "frozen", "version": "v1.1", "frozen_at": "2026-09-11",
+    "tone": {"keywords": ["다크"], "art": ["애니풍 3D"], "avoid_format": "명령형"},
+    "characters": {"priority": ["시키", "나이토", "진"]},
+    "ip_safe": ["카피라이트 표기"],
+    "forbidden_words": ["原作", "推し"],
+    "cloop_gate": {"modification_level": "원본유지only",
+                   "allowed_axes": ["축1_카피"], "blocked_axes": ["축4_에셋조합", "축5_신규생성", "TrackB_신규훅"]},
+}
+
+
+def test_cloop_gate_and_generation_allowed():
+    from pipeline.brand_brief import get_cloop_gate, generation_allowed
+    g = get_cloop_gate(_STRUCT_GATED)
+    assert g["modification_level"] == "원본유지only"
+    assert generation_allowed(g, "축5_신규생성") is False   # 차단
+    assert generation_allowed(g, "축1_카피") is True         # 허용
+    assert generation_allowed(None, "축5_신규생성") is True   # 게이트 없으면(제약없는 IP) 허용
+
+
+def test_entry_gated_title():
+    from pipeline.brand_brief import to_brand_brief_entry
+    e = to_brand_brief_entry(_STRUCT_GATED)
+    assert "시키" in e["characters"]              # priority 형태 캐릭터
+    assert e["slogan"] == ""                       # 슬로건 없는 브리프
+    assert e["forbidden_words"] == ["原作", "推し"]
+    assert e["cloop_gate"]["blocked_axes"]         # 게이트 보존
+    assert any("생성 게이트" in s for s in e["ip_safe"])  # ip_safe 최상단 가드
