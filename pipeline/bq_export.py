@@ -5,10 +5,17 @@ public/data/{title}.json(+_axis.json)을 읽어 BQ 4테이블에 파티션 교�
 """
 from __future__ import annotations
 
+import argparse
+import glob
+import json as _json
+import logging
 import os
+from datetime import datetime, timezone
 from pathlib import Path
 
 from google.cloud import bigquery
+
+log = logging.getLogger("bq_export")
 
 DEFAULT_DATASET = "cloop"
 
@@ -251,3 +258,93 @@ def rows_axis(axis: dict, title_id: str, loaded_at: str) -> list[dict]:
                 "loaded_at": loaded_at,
             })
     return out
+
+
+# 테이블명 → (dataset, axis, title_id, loaded_at)에서 행을 뽑는 함수
+_TABLE_ROWS = {
+    "kpi_daily": lambda ds, ax, tid, la: rows_kpi_daily(ds, la),
+    "mmp_daily": lambda ds, ax, tid, la: rows_mmp_daily(ds, la),
+    "creatives": lambda ds, ax, tid, la: rows_creatives(ds, la),
+    "axis": lambda ds, ax, tid, la: rows_axis(ax, tid, la) if ax else [],
+}
+
+
+def ensure_table(client, dataset: str, table: str) -> None:
+    """데이터셋·테이블 멱등 생성(파티션·클러스터). client는 주입(테스트 fake 가능)."""
+    spec = TABLE_SPECS[table]
+    ds_ref = bigquery.Dataset(f"{client.project}.{dataset}")
+    client.create_dataset(ds_ref, exists_ok=True)
+    t = bigquery.Table(f"{client.project}.{dataset}.{table}", schema=spec["schema"])
+    t.time_partitioning = bigquery.TimePartitioning(field=spec["partition_field"])
+    t.clustering_fields = spec["clustering"]
+    client.create_table(t, exists_ok=True)
+
+
+def export_title(client, dataset: str, title_id: str, data_dir: str,
+                  loaded_at: str, *, dry_run: bool = False) -> list[dict]:
+    """한 타이틀의 {title}.json(+{title}_axis.json)을 읽어 4테이블 replace_partition.
+    테이블별 독립 try/except — 하나 실패가 나머지 테이블을 막지 않음."""
+    p = Path(data_dir)
+    ds_path = p / f"{title_id}.json"
+    if not ds_path.exists():
+        log.warning("bq_export: %s 없음 — 스킵", ds_path)
+        return []
+    ds = _json.loads(ds_path.read_text(encoding="utf-8"))
+    ax_path = p / f"{title_id}_axis.json"
+    ax = _json.loads(ax_path.read_text(encoding="utf-8")) if ax_path.exists() else None
+    results = []
+    for table, rowfn in _TABLE_ROWS.items():
+        try:
+            rows = rowfn(ds, ax, title_id, loaded_at)
+            if not dry_run:
+                ensure_table(client, dataset, table)
+            results.append(replace_partition(client, dataset, table, rows, dry_run=dry_run))
+        except Exception as e:  # 테이블 격리 — 하나 실패가 나머지 막지 않음
+            log.error("bq_export: %s.%s 실패: %s", title_id, table, e)
+            results.append({"table": table, "error": str(e)})
+    return results
+
+
+def _title_ids(data_dir: str) -> list[str]:
+    """public/data 디렉터리에서 타이틀 목록 스캔(*_axis.json·*.pilot.json 제외)."""
+    out = []
+    for f in glob.glob(str(Path(data_dir) / "*.json")):
+        name = Path(f).name
+        if name.endswith("_axis.json") or name.endswith(".pilot.json"):
+            continue
+        out.append(name[:-5])  # ".json" 제거
+    return sorted(out)
+
+
+def main(argv=None) -> int:
+    """CLOOP JSON → BigQuery 적재 CLI. load_bq_config로 게이팅, 비활성이면 graceful 스킵."""
+    logging.basicConfig(level=logging.INFO)
+    ap = argparse.ArgumentParser(description="CLOOP JSON → BigQuery 적재")
+    ap.add_argument("--all-titles", action="store_true")
+    ap.add_argument("--title", default="")
+    ap.add_argument("--data-dir", default="public/data")
+    ap.add_argument("--dry-run", action="store_true")
+    args = ap.parse_args(argv)
+
+    cfg = load_bq_config()
+    if cfg is None:
+        log.info("bq_export: 비활성(BQ_EXPORT_ENABLED≠1 또는 키 부재) — 스킵")
+        return 0
+
+    client = bigquery.Client.from_service_account_json(
+        cfg["credentials_path"], project=cfg["project"])
+    loaded_at = datetime.now(timezone.utc).isoformat()
+    titles = _title_ids(args.data_dir) if args.all_titles else (
+        [args.title] if args.title else [])
+    if not titles:
+        log.warning("bq_export: 대상 타이틀 없음")
+        return 0
+    for tid in titles:
+        res = export_title(client, cfg["dataset"], tid, args.data_dir, loaded_at,
+                            dry_run=args.dry_run)
+        log.info("bq_export %s: %s", tid, res)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

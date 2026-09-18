@@ -1,4 +1,6 @@
 """BigQuery exporter 설정 로더 테스트."""
+import json
+
 from pipeline.bq_export import (
     load_bq_config,
     rows_kpi_daily,
@@ -8,6 +10,7 @@ from pipeline.bq_export import (
     TABLE_SPECS,
     partition_range,
     replace_partition,
+    export_title,
 )
 
 
@@ -162,3 +165,29 @@ def test_replace_partition_empty_rows_noop():
     res = replace_partition(fc, "cloop", "kpi_daily", [])
     assert res["loaded"] == 0 and res["deleted_range"] is None
     assert fc.queries == [] and fc.loaded == []
+
+
+# --- export_title(테이블 부트스트랩 오케스트레이션, fake client 주입) 테스트 ---
+
+def test_export_title_all_tables(tmp_path):
+    dd = tmp_path
+    (dd / "zeus.json").write_text(json.dumps(_DS, ensure_ascii=False), encoding="utf-8")
+    (dd / "zeus_axis.json").write_text(json.dumps(_AX, ensure_ascii=False), encoding="utf-8")
+    fc = _FakeClient()
+    res = export_title(fc, "cloop", "zeus", str(dd), "2026-09-18T04:00:00Z", dry_run=True)
+    tables = {r["table"] for r in res}
+    assert tables == {"kpi_daily", "mmp_daily", "creatives", "axis"}
+    # dry_run이라 무쓰기
+    assert fc.queries == [] and fc.loaded == []
+
+
+def test_export_title_missing_axis_ok(tmp_path):
+    dd = tmp_path
+    (dd / "gd.json").write_text(
+        json.dumps({"title_id": "gd", "generated_at": "2026-09-18T13:00:00+09:00", "creatives": []},
+                   ensure_ascii=False),
+        encoding="utf-8")
+    fc = _FakeClient()
+    res = export_title(fc, "cloop", "gd", str(dd), "2026-09-18T04:00:00Z", dry_run=True)
+    # axis 파일 없어도 예외 없이 3테이블(빈 kpi/mmp/creatives) 처리
+    assert any(r["table"] == "kpi_daily" for r in res)
