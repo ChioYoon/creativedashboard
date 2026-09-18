@@ -210,9 +210,15 @@ def replace_partition(client, dataset: str, table: str, rows: list[dict],
         return {"table": table, "deleted_range": rng, "loaded": len(rows)}
     lo, hi = rng
     table_ref = f"{dataset}.{table}"
-    # 창/오늘 파티션만 삭제 — 창 밖 과거 무손상
+    # 테이블은 여러 타이틀이 공유 → title_id 없이 날짜만 지우면 같은 창의
+    # 다른 타이틀 행까지 삭제됨(타이틀별 순차 호출 시 이전 타이틀 데이터 소실).
+    # rows에 있는 title_id만 골라 IN 절로 격리.
+    tids = sorted({r["title_id"] for r in rows if r.get("title_id")})
     del_sql = (f"DELETE FROM `{table_ref}` "
                f"WHERE {field} BETWEEN DATE('{lo}') AND DATE('{hi}')")
+    if tids:
+        tid_list = ",".join(f"'{t}'" for t in tids)
+        del_sql += f" AND title_id IN ({tid_list})"
     client.query(del_sql).result()
     client.load_table_from_json(rows, table_ref).result()
     return {"table": table, "deleted_range": rng, "loaded": len(rows)}

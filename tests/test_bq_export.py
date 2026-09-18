@@ -138,7 +138,17 @@ def test_replace_partition_deletes_then_loads():
     assert res["loaded"] == 2
     assert len(fc.queries) == 1 and "DELETE" in fc.queries[0].upper()
     assert "2026-08-21" in fc.queries[0] and "2026-09-10" in fc.queries[0]
+    assert "title_id" in fc.queries[0] and "'zeus'" in fc.queries[0]
     assert len(fc.loaded) == 1 and len(fc.loaded[0][1]) == 2
+
+def test_replace_partition_deletes_scoped_to_all_titles_in_rows():
+    """공유 테이블: rows에 여러 타이틀이 섞이면 DELETE의 IN 절에 전부 포함."""
+    fc = _FakeClient()
+    rows = [{"date": "2026-09-10", "title_id": "zeus"},
+            {"date": "2026-09-11", "title_id": "tougenanki"}]
+    replace_partition(fc, "cloop", "kpi_daily", rows)
+    assert "'zeus'" in fc.queries[0] and "'tougenanki'" in fc.queries[0]
+    assert "title_id IN" in fc.queries[0]
 
 def test_replace_partition_dry_run_no_write():
     fc = _FakeClient()
