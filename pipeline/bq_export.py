@@ -8,7 +8,80 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
+from google.cloud import bigquery
+
 DEFAULT_DATASET = "cloop"
+
+_SF = bigquery.SchemaField
+
+# 테이블별 BQ 스키마·파티션 필드·클러스터링 키
+TABLE_SPECS: dict[str, dict] = {
+    "kpi_daily": {
+        "partition_field": "date",
+        "clustering": ["title_id", "creative_name", "campaign_name"],
+        "schema": [
+            _SF("title_id", "STRING"), _SF("creative_name", "STRING"),
+            _SF("date", "DATE"), _SF("source", "STRING"), _SF("customer_id", "STRING"),
+            _SF("campaign_name", "STRING"), _SF("ad_group_name", "STRING"),
+            _SF("asset_url", "STRING"), _SF("asset_type", "STRING"), _SF("asset_id", "STRING"),
+            _SF("impressions", "INT64"), _SF("clicks", "INT64"),
+            _SF("cost_micros", "INT64"), _SF("cost", "FLOAT64"),
+            _SF("conversions", "FLOAT64"), _SF("conversions_value", "FLOAT64"),
+            _SF("loaded_at", "TIMESTAMP"),
+        ],
+    },
+    "mmp_daily": {
+        "partition_field": "date",
+        "clustering": ["title_id", "channel", "creative_name"],
+        "schema": [
+            _SF("title_id", "STRING"), _SF("creative_name", "STRING"),
+            _SF("date", "DATE"), _SF("channel", "STRING"), _SF("campaign_name", "STRING"),
+            _SF("impressions", "INT64"), _SF("clicks", "INT64"), _SF("cost", "INT64"),
+            _SF("installs", "INT64"), _SF("retained_d1", "INT64"),
+            _SF("revenue_d7", "INT64"), _SF("conversions", "INT64"),
+            _SF("loaded_at", "TIMESTAMP"),
+        ],
+    },
+    "creatives": {
+        "partition_field": "snapshot_date",
+        "clustering": ["title_id", "creative_name"],
+        "schema": [
+            _SF("title_id", "STRING"), _SF("snapshot_date", "DATE"),
+            _SF("creative_name", "STRING"), _SF("creative_id", "STRING"),
+            _SF("소재명", "STRING"), _SF("파일명", "STRING"), _SF("유형", "STRING"),
+            _SF("creative_concept", "STRING"), _SF("theme_primary", "STRING"),
+            _SF("theme_secondary", "STRING", mode="REPEATED"),
+            _SF("theme_reviewed", "BOOL"), _SF("launch_date_variant", "BOOL"),
+            _SF("theme_partner", "STRING"), _SF("intent_axis", "STRING"),
+            _SF("theme_flags", "STRING", mode="REPEATED"), _SF("core_usp", "STRING"),
+            _SF("hooking_strategy", "STRING"), _SF("art_style", "STRING"),
+            _SF("player_motivation", "STRING"), _SF("color_tone", "STRING"),
+            _SF("cta_type", "STRING"), _SF("one_line_insight", "STRING"),
+            _SF("loaded_at", "TIMESTAMP"),
+        ],
+    },
+    "axis": {
+        "partition_field": "snapshot_date",
+        "clustering": ["title_id", "axis"],
+        "schema": [
+            _SF("title_id", "STRING"), _SF("snapshot_date", "DATE"),
+            _SF("stage", "STRING"), _SF("axis", "STRING"), _SF("status", "STRING"),
+            _SF("n", "INT64"), _SF("cost", "INT64"),
+            _SF("ipm", "FLOAT64"), _SF("cvr", "FLOAT64"), _SF("roas7", "FLOAT64"),
+            _SF("ga_roas", "FLOAT64"), _SF("delta_ipm_pct", "FLOAT64"),
+            _SF("reason", "STRING"), _SF("period_from", "STRING"), _SF("period_to", "STRING"),
+            _SF("loaded_at", "TIMESTAMP"),
+        ],
+    },
+}
+
+
+def partition_range(rows: list[dict], field: str) -> tuple[str, str] | None:
+    """행들의 field 값 min..max. 빈 리스트/빈 값 없으면 None."""
+    vals = [r[field] for r in rows if r.get(field)]
+    if not vals:
+        return None
+    return (min(vals), max(vals))
 
 
 def load_bq_config(env: dict | None = None) -> dict | None:

@@ -5,6 +5,8 @@ from pipeline.bq_export import (
     rows_mmp_daily,
     rows_creatives,
     rows_axis,
+    TABLE_SPECS,
+    partition_range,
 )
 
 
@@ -93,3 +95,24 @@ def test_rows_axis_flatten():
     assert r[0]["stage"] == "L" and r[0]["axis"] == "전투 쾌감" and r[0]["status"] == "검증"
     assert r[0]["title_id"] == "zeus" and r[0]["snapshot_date"] == "2026-09-14"
     assert r[0]["period_from"] == "2026-08-06" and r[0]["n"] == 5
+
+
+# --- 스키마·파티션 범위(순수) 테스트 ---
+
+def test_table_specs_present():
+    for t in ("kpi_daily", "mmp_daily", "creatives", "axis"):
+        spec = TABLE_SPECS[t]
+        assert spec["partition_field"] in ("date", "snapshot_date")
+        assert isinstance(spec["clustering"], list) and spec["clustering"]
+        names = [f.name for f in spec["schema"]]
+        assert "title_id" in names and "loaded_at" in names
+
+def test_kpi_schema_has_core_fields():
+    names = [f.name for f in TABLE_SPECS["kpi_daily"]["schema"]]
+    for n in ("date", "creative_name", "campaign_name", "impressions", "cost", "conversions"):
+        assert n in names
+
+def test_partition_range():
+    rows = [{"date": "2026-09-10"}, {"date": "2026-08-21"}, {"date": "2026-09-04"}]
+    assert partition_range(rows, "date") == ("2026-08-21", "2026-09-10")
+    assert partition_range([], "date") is None
