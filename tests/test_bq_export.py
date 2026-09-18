@@ -11,6 +11,7 @@ from pipeline.bq_export import (
     partition_range,
     replace_partition,
     export_title,
+    ensure_table,
 )
 
 
@@ -128,10 +129,17 @@ class _FakeJob:
     def result(self): return None
 
 class _FakeClient:
-    def __init__(self): self.queries = []; self.loaded = []
+    def __init__(self):
+        self.queries = []; self.loaded = []
+        self.project = "proj"  # ensure_table이 f"{client.project}.{dataset}" 조합에 사용
+        self.datasets_created = []; self.tables_created = []
     def query(self, sql, *a, **k): self.queries.append(sql); return _FakeJob()
     def load_table_from_json(self, rows, table_ref, *a, **k):
         self.loaded.append((table_ref, list(rows))); return _FakeJob()
+    def create_dataset(self, dataset_ref, *a, **k):
+        self.datasets_created.append(dataset_ref); return dataset_ref
+    def create_table(self, table, *a, **k):
+        self.tables_created.append(table); return table
 
 def test_replace_partition_deletes_then_loads():
     fc = _FakeClient()
@@ -191,3 +199,38 @@ def test_export_title_missing_axis_ok(tmp_path):
     res = export_title(fc, "cloop", "gd", str(dd), "2026-09-18T04:00:00Z", dry_run=True)
     # axis 파일 없어도 예외 없이 3테이블(빈 kpi/mmp/creatives) 처리
     assert any(r["table"] == "kpi_daily" for r in res)
+
+
+# --- ensure_table(파티션·클러스터링 부트스트랩, fake client 주입) 테스트 ---
+
+def test_ensure_table_wires_partition_and_clustering():
+    fc = _FakeClient()
+    ensure_table(fc, "cloop", "kpi_daily")
+    assert len(fc.datasets_created) == 1
+    assert len(fc.tables_created) == 1
+    table = fc.tables_created[0]
+    spec = TABLE_SPECS["kpi_daily"]
+    assert table.time_partitioning.field == spec["partition_field"] == "date"
+    assert table.clustering_fields == spec["clustering"]
+
+
+def test_export_title_calls_ensure_table_when_not_dry_run(tmp_path):
+    """dry_run=False 실경로에서도 ensure_table이 4테이블 모두에 대해 호출됨."""
+    dd = tmp_path
+    (dd / "zeus.json").write_text(json.dumps(_DS, ensure_ascii=False), encoding="utf-8")
+    fc = _FakeClient()
+    export_title(fc, "cloop", "zeus", str(dd), "2026-09-18T04:00:00Z", dry_run=False)
+    created_tables = {t.table_id for t in fc.tables_created}
+    assert created_tables == {"kpi_daily", "mmp_daily", "creatives", "axis"}
+
+
+# --- export_title JSON 손상 격리(graceful) 테스트 ---
+
+def test_export_title_malformed_json_isolated(tmp_path):
+    """{title}.json이 손상되어도 예외를 던지지 않고 에러 결과만 반환(타이틀 격리)."""
+    dd = tmp_path
+    (dd / "broken.json").write_text("{not valid json", encoding="utf-8")
+    fc = _FakeClient()
+    res = export_title(fc, "cloop", "broken", str(dd), "2026-09-18T04:00:00Z", dry_run=True)
+    assert len(res) == 1 and res[0]["table"] == "_load" and "error" in res[0]
+    assert fc.queries == [] and fc.loaded == []

@@ -289,9 +289,13 @@ def export_title(client, dataset: str, title_id: str, data_dir: str,
     if not ds_path.exists():
         log.warning("bq_export: %s 없음 — 스킵", ds_path)
         return []
-    ds = _json.loads(ds_path.read_text(encoding="utf-8"))
     ax_path = p / f"{title_id}_axis.json"
-    ax = _json.loads(ax_path.read_text(encoding="utf-8")) if ax_path.exists() else None
+    try:
+        ds = _json.loads(ds_path.read_text(encoding="utf-8"))
+        ax = _json.loads(ax_path.read_text(encoding="utf-8")) if ax_path.exists() else None
+    except Exception as e:  # 손상된 JSON도 격리 — 이 타이틀만 실패 처리, main() 루프는 계속
+        log.error("bq_export: %s JSON 로드 실패: %s", title_id, e)
+        return [{"table": "_load", "error": str(e)}]
     results = []
     for table, rowfn in _TABLE_ROWS.items():
         try:
@@ -340,9 +344,12 @@ def main(argv=None) -> int:
         log.warning("bq_export: 대상 타이틀 없음")
         return 0
     for tid in titles:
-        res = export_title(client, cfg["dataset"], tid, args.data_dir, loaded_at,
-                            dry_run=args.dry_run)
-        log.info("bq_export %s: %s", tid, res)
+        try:
+            res = export_title(client, cfg["dataset"], tid, args.data_dir, loaded_at,
+                                dry_run=args.dry_run)
+            log.info("bq_export %s: %s", tid, res)
+        except Exception as e:  # 타이틀 격리 — 하나가 예외로 죽어도 나머지 타이틀은 계속
+            log.error("bq_export: %s 처리 중 예기치 않은 오류: %s", tid, e)
     return 0
 
 
