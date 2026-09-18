@@ -7,6 +7,7 @@ from pipeline.bq_export import (
     rows_axis,
     TABLE_SPECS,
     partition_range,
+    replace_partition,
 )
 
 
@@ -116,3 +117,38 @@ def test_partition_range():
     rows = [{"date": "2026-09-10"}, {"date": "2026-08-21"}, {"date": "2026-09-04"}]
     assert partition_range(rows, "date") == ("2026-08-21", "2026-09-10")
     assert partition_range([], "date") is None
+
+
+# --- replace_partition(적재, fake client 주입) 테스트 ---
+
+class _FakeJob:
+    def result(self): return None
+
+class _FakeClient:
+    def __init__(self): self.queries = []; self.loaded = []
+    def query(self, sql, *a, **k): self.queries.append(sql); return _FakeJob()
+    def load_table_from_json(self, rows, table_ref, *a, **k):
+        self.loaded.append((table_ref, list(rows))); return _FakeJob()
+
+def test_replace_partition_deletes_then_loads():
+    fc = _FakeClient()
+    rows = [{"date": "2026-09-10", "title_id": "zeus"}, {"date": "2026-08-21", "title_id": "zeus"}]
+    res = replace_partition(fc, "cloop", "kpi_daily", rows)
+    assert res["deleted_range"] == ("2026-08-21", "2026-09-10")
+    assert res["loaded"] == 2
+    assert len(fc.queries) == 1 and "DELETE" in fc.queries[0].upper()
+    assert "2026-08-21" in fc.queries[0] and "2026-09-10" in fc.queries[0]
+    assert len(fc.loaded) == 1 and len(fc.loaded[0][1]) == 2
+
+def test_replace_partition_dry_run_no_write():
+    fc = _FakeClient()
+    rows = [{"snapshot_date": "2026-09-18", "title_id": "zeus"}]
+    res = replace_partition(fc, "cloop", "creatives", rows, dry_run=True)
+    assert res["loaded"] == 1 and res["deleted_range"] == ("2026-09-18", "2026-09-18")
+    assert fc.queries == [] and fc.loaded == []  # 무쓰기
+
+def test_replace_partition_empty_rows_noop():
+    fc = _FakeClient()
+    res = replace_partition(fc, "cloop", "kpi_daily", [])
+    assert res["loaded"] == 0 and res["deleted_range"] is None
+    assert fc.queries == [] and fc.loaded == []

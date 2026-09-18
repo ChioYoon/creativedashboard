@@ -197,6 +197,27 @@ def rows_creatives(dataset: dict, loaded_at: str) -> list[dict]:
     return out
 
 
+def replace_partition(client, dataset: str, table: str, rows: list[dict],
+                       *, dry_run: bool = False) -> dict:
+    """파티션 교체: 행 date/snapshot_date 범위 파티션 삭제 후 재삽입.
+    DELETE는 load 직전, 빈 rows면 무동작. client는 주입(테스트 fake 가능)."""
+    spec = TABLE_SPECS[table]
+    field = spec["partition_field"]
+    rng = partition_range(rows, field)
+    if rng is None:
+        return {"table": table, "deleted_range": None, "loaded": 0}
+    if dry_run:
+        return {"table": table, "deleted_range": rng, "loaded": len(rows)}
+    lo, hi = rng
+    table_ref = f"{dataset}.{table}"
+    # 창/오늘 파티션만 삭제 — 창 밖 과거 무손상
+    del_sql = (f"DELETE FROM `{table_ref}` "
+               f"WHERE {field} BETWEEN DATE('{lo}') AND DATE('{hi}')")
+    client.query(del_sql).result()
+    client.load_table_from_json(rows, table_ref).result()
+    return {"table": table, "deleted_range": rng, "loaded": len(rows)}
+
+
 def rows_axis(axis: dict, title_id: str, loaded_at: str) -> list[dict]:
     """stages.L/P를 stage 컬럼으로 평탄화. snapshot_date=generated_at 날짜."""
     snap = _snapshot_date(axis)
