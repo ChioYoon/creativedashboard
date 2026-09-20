@@ -3,12 +3,12 @@
   "title": "tougenanki",
   "launch_date": null,
   "period": {
-    "from": "2026-08-12",
-    "to": "2026-09-10"
+    "from": "2026-08-15",
+    "to": "2026-09-13"
   },
   "prior_period": {
-    "from": "2026-07-13",
-    "to": "2026-08-11"
+    "from": "2026-07-16",
+    "to": "2026-08-14"
   },
   "baseline_used": {
     "P": {
@@ -35,7 +35,7 @@
     "P": [],
     "L": []
   },
-  "generated_at": "2026-09-18T13:04:25",
+  "generated_at": "2026-09-21T07:24:30",
   "note": "baseline=코호트 가중평균. P품질=사전예약 전환율(전환/클릭), L품질=D7 ROAS(등록기준 부재→후보cap). ga_roas=Google conversions_value/cost(참고).",
   "active": false
 }

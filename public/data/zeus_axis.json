@@ -3,23 +3,23 @@
   "title": "zeus",
   "launch_date": "2026-08-26",
   "period": {
-    "from": "2026-08-12",
-    "to": "2026-09-10"
+    "from": "2026-08-15",
+    "to": "2026-09-13"
   },
   "prior_period": {
-    "from": "2026-07-13",
-    "to": "2026-08-11"
+    "from": "2026-07-16",
+    "to": "2026-08-14"
   },
   "baseline_used": {
     "P": {
-      "ipm": 1.0917,
-      "cvr": 0.0346,
+      "ipm": null,
+      "cvr": null,
       "roas7": null,
       "mode": "cohort_weighted"
     },
     "L": {
-      "ipm": 1.4351,
-      "cvr": 0.282,
+      "ipm": null,
+      "cvr": null,
       "roas7": null,
       "mode": "cohort_weighted"
     }
@@ -29,255 +29,13 @@
     "min_n": 3,
     "min_cost": 100000
   },
-  "excluded_ratio": 0.151,
+  "excluded_ratio": 0.0,
   "excluded_note": "N/A·미검수 소재 제외 비중(판정 대상 외)",
   "stages": {
-    "P": [
-      {
-        "axis": "IP·캐릭터",
-        "n": 3,
-        "status": "검증",
-        "reason": "효율상회·전환율상회",
-        "ipm": 10.2762,
-        "cvr": 0.8358,
-        "roas7": null,
-        "ga_roas": 0.0018,
-        "cost": 5173727,
-        "delta": {
-          "ipm_pct": null,
-          "vs_period": "2026-07-13~2026-08-11"
-        }
-      },
-      {
-        "axis": "수집·육성",
-        "n": 8,
-        "status": "검증",
-        "reason": "효율상회·전환율상회",
-        "ipm": 1.4265,
-        "cvr": 0.0742,
-        "roas7": null,
-        "ga_roas": 0.0002,
-        "cost": 37873640,
-        "delta": {
-          "ipm_pct": 48.1,
-          "vs_period": "2026-07-13~2026-08-11"
-        }
-      },
-      {
-        "axis": "전투 쾌감",
-        "n": 33,
-        "status": "검증",
-        "reason": "효율상회·전환율상회",
-        "ipm": 1.3168,
-        "cvr": 0.051,
-        "roas7": null,
-        "ga_roas": 0.0002,
-        "cost": 124071773,
-        "delta": {
-          "ipm_pct": 46.3,
-          "vs_period": "2026-07-13~2026-08-11"
-        }
-      },
-      {
-        "axis": "스토리·세계관",
-        "n": 22,
-        "status": "소진",
-        "reason": "효율하회·전환율하회",
-        "ipm": 0.9136,
-        "cvr": 0.0227,
-        "roas7": null,
-        "ga_roas": 0.0,
-        "cost": 114106235,
-        "delta": {
-          "ipm_pct": 19.9,
-          "vs_period": "2026-07-13~2026-08-11"
-        }
-      },
-      {
-        "axis": "보상·혜택",
-        "n": 9,
-        "status": "소진",
-        "reason": "효율하회·전환율하회",
-        "ipm": 0.8366,
-        "cvr": 0.0187,
-        "roas7": null,
-        "ga_roas": 0.0,
-        "cost": 88933483,
-        "delta": {
-          "ipm_pct": -16.6,
-          "vs_period": "2026-07-13~2026-08-11"
-        }
-      },
-      {
-        "axis": "커뮤니티·길드",
-        "n": 1,
-        "status": "미검증",
-        "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 0.6723,
-        "cvr": 0.0634,
-        "roas7": null,
-        "ga_roas": 0.0002,
-        "cost": 1026156,
-        "delta": {
-          "ipm_pct": -68.6,
-          "vs_period": "2026-07-13~2026-08-11"
-        }
-      },
-      {
-        "axis": "그래픽·비주얼",
-        "n": 13,
-        "status": "소진",
-        "reason": "효율하회·전환율하회",
-        "ipm": 0.6124,
-        "cvr": 0.0304,
-        "roas7": null,
-        "ga_roas": 0.0,
-        "cost": 52271852,
-        "delta": {
-          "ipm_pct": -6.3,
-          "vs_period": "2026-07-13~2026-08-11"
-        }
-      },
-      {
-        "axis": "편의성(자동·방치)",
-        "n": 2,
-        "status": "미검증",
-        "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 0.6114,
-        "cvr": 0.0269,
-        "roas7": null,
-        "ga_roas": 0.0,
-        "cost": 6097519,
-        "delta": {
-          "ipm_pct": null,
-          "vs_period": "2026-07-13~2026-08-11"
-        }
-      }
-    ],
-    "L": [
-      {
-        "axis": "스토리·세계관",
-        "n": 8,
-        "status": "후보",
-        "reason": "효율상회·ROAS미확인(후보 cap)",
-        "ipm": 1.4375,
-        "cvr": 0.3015,
-        "roas7": null,
-        "ga_roas": 2.5381,
-        "cost": 114223347,
-        "delta": {
-          "ipm_pct": null,
-          "vs_period": "2026-07-13~2026-08-11"
-        }
-      },
-      {
-        "axis": "커뮤니티·길드",
-        "n": 1,
-        "status": "미검증",
-        "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 2.2372,
-        "cvr": 0.2787,
-        "roas7": null,
-        "ga_roas": 16.2664,
-        "cost": 771943,
-        "delta": {
-          "ipm_pct": null,
-          "vs_period": "2026-07-13~2026-08-11"
-        }
-      },
-      {
-        "axis": "수집·육성",
-        "n": 2,
-        "status": "미검증",
-        "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 1.9022,
-        "cvr": 0.4236,
-        "roas7": null,
-        "ga_roas": 3.0678,
-        "cost": 54030773,
-        "delta": {
-          "ipm_pct": null,
-          "vs_period": "2026-07-13~2026-08-11"
-        }
-      },
-      {
-        "axis": "그래픽·비주얼",
-        "n": 2,
-        "status": "미검증",
-        "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 1.8971,
-        "cvr": 0.3932,
-        "roas7": null,
-        "ga_roas": 12.7694,
-        "cost": 2891707,
-        "delta": {
-          "ipm_pct": null,
-          "vs_period": "2026-07-13~2026-08-11"
-        }
-      },
-      {
-        "axis": "전투 쾌감",
-        "n": 6,
-        "status": "소진",
-        "reason": "효율하회·ROAS미확인(후보 cap)",
-        "ipm": 1.3719,
-        "cvr": 0.2527,
-        "roas7": null,
-        "ga_roas": 1.6985,
-        "cost": 160049158,
-        "delta": {
-          "ipm_pct": null,
-          "vs_period": "2026-07-13~2026-08-11"
-        }
-      },
-      {
-        "axis": "경쟁(PvP)",
-        "n": 1,
-        "status": "미검증",
-        "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 1.2879,
-        "cvr": 0.2155,
-        "roas7": null,
-        "ga_roas": 9.6171,
-        "cost": 110721,
-        "delta": {
-          "ipm_pct": null,
-          "vs_period": "2026-07-13~2026-08-11"
-        }
-      },
-      {
-        "axis": "보상·혜택",
-        "n": 5,
-        "status": "소진",
-        "reason": "효율하회·ROAS미확인(후보 cap)",
-        "ipm": 1.1509,
-        "cvr": 0.2029,
-        "roas7": null,
-        "ga_roas": 2.5659,
-        "cost": 42233584,
-        "delta": {
-          "ipm_pct": null,
-          "vs_period": "2026-07-13~2026-08-11"
-        }
-      },
-      {
-        "axis": "편의성(자동·방치)",
-        "n": 1,
-        "status": "미검증",
-        "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 0.9301,
-        "cvr": 0.2454,
-        "roas7": null,
-        "ga_roas": 2.2089,
-        "cost": 8833340,
-        "delta": {
-          "ipm_pct": null,
-          "vs_period": "2026-07-13~2026-08-11"
-        }
-      }
-    ]
+    "P": [],
+    "L": []
   },
-  "generated_at": "2026-09-18T13:04:12",
+  "generated_at": "2026-09-21T07:22:58",
   "note": "baseline=코호트 가중평균. P품질=사전예약 전환율(전환/클릭), L품질=D7 ROAS(등록기준 부재→후보cap). ga_roas=Google conversions_value/cost(참고).",
-  "active": true
+  "active": false
 }
