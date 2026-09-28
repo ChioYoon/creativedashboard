@@ -106,16 +106,28 @@ if ($DryRun) {
                 } else {
                     Write-Log INFO "Commit done: $commitMsg"
 
-                    Write-Log INFO "Pushing..."
-                    $pushOutput = git push 2>&1
-                    $pushExit = $LASTEXITCODE
-                    $pushOutput | ForEach-Object {
-                        Write-Log INFO "  push: $_"
-                    }
-                    if ($pushExit -eq 0) {
-                        Write-Log INFO "Push done. GitHub Pages will auto-refresh."
+                    # push 전 원격 동기화 — 웹 머지/타 세션 push로 원격이 앞서면
+                    # non-fast-forward 로 push 거부됨(2026-09 인시던트). public/data 만
+                    # 커밋하므로 보통 무충돌. 충돌 시 rebase abort 후 push 스킵(수동 조정).
+                    Write-Log INFO "Syncing with remote (pull --rebase origin main)..."
+                    $pullOutput = git pull --rebase origin main 2>&1
+                    $pullExit = $LASTEXITCODE
+                    $pullOutput | ForEach-Object { Write-Log INFO "  pull: $_" }
+                    if ($pullExit -ne 0) {
+                        Write-Log ERROR "pull --rebase failed (exit=$pullExit). Aborting rebase, skipping push. Manual reconcile needed."
+                        git rebase --abort 2>&1 | ForEach-Object { Write-Log INFO "  rebase-abort: $_" }
                     } else {
-                        Write-Log ERROR "Push failed (exit=$pushExit). Check auth or network."
+                        Write-Log INFO "Pushing..."
+                        $pushOutput = git push 2>&1
+                        $pushExit = $LASTEXITCODE
+                        $pushOutput | ForEach-Object {
+                            Write-Log INFO "  push: $_"
+                        }
+                        if ($pushExit -eq 0) {
+                            Write-Log INFO "Push done. GitHub Pages will auto-refresh."
+                        } else {
+                            Write-Log ERROR "Push failed (exit=$pushExit). Check auth or network."
+                        }
                     }
                 }
             }
