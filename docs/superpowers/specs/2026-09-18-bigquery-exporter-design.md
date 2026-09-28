@@ -35,12 +35,14 @@
 2. 삭제 범위 산정:
    - 시계열(kpi/mmp): 이번 로드 행의 date min..max 파티션
    - 스냅샷(creatives/axis): 오늘 snapshot_date 파티션
-3. DELETE WHERE partition IN [범위]   (창/오늘 파티션만)
+3. DELETE WHERE partition IN [범위] AND title_id IN [이번 로드 타이틀]  (창/오늘·해당 타이틀만)
 4. load_table_from_json(rows, WRITE_APPEND)  재삽입
-   → 창 밖 과거 파티션 무손상·영구 누적
+   → 창 밖 과거 파티션·타 타이틀 무손상·영구 누적
 ```
 - 늦은 전환 백필: date 파티션 통째 대체라 자동 반영(같은 날짜 = 최신 확정값 1벌, 중복 0).
-- 테이블당 독립 처리 — DELETE는 load job 성공 확인 후에만(부분 로드 방지). 실패 시 그 테이블만 영향.
+- **타이틀 격리**: DELETE는 date 범위 + `title_id IN (이번 로드 타이틀)`로 한정 — 공유 테이블서 타이틀별 순차 적재 시 타 타이틀 행 미삭제.
+- 테이블별 독립 try/except — 한 테이블 실패가 나머지 안 막음.
+- 순서는 DELETE→load(비원자). load가 삭제 직후 실패하면 그 (타이틀,파티션)이 다음 nightly까지 빈 상태로 남으나, 다음 실행이 같은 창을 재적재해 **자가 복구**(self-heal). BI 아카이브 용도라 허용. 엄격 원자성이 필요해지면 staging 테이블 load 후 파티션 swap으로 승격.
 
 ## 5. 설정·인증 (`.env`, gitignore)
 

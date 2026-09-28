@@ -234,3 +234,10 @@ def test_export_title_malformed_json_isolated(tmp_path):
     res = export_title(fc, "cloop", "broken", str(dd), "2026-09-18T04:00:00Z", dry_run=True)
     assert len(res) == 1 and res[0]["table"] == "_load" and "error" in res[0]
     assert fc.queries == [] and fc.loaded == []
+
+
+def test_title_ids_excludes_axis_pilot_sample(tmp_path):
+    from pipeline.bq_export import _title_ids
+    for n in ["zeus.json", "zeus_axis.json", "gd.pilot.json", "sample.json", "tougenanki.json"]:
+        (tmp_path / n).write_text("{}", encoding="utf-8")
+    assert _title_ids(str(tmp_path)) == ["tougenanki", "zeus"]  # axis·pilot·sample 제외

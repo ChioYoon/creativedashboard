@@ -309,14 +309,21 @@ def export_title(client, dataset: str, title_id: str, data_dir: str,
     return results
 
 
+# BQ 적재 제외 타이틀(테스트·샘플 픽스처 — 실 타이틀 아님)
+_EXCLUDE_TITLES = {"sample"}
+
+
 def _title_ids(data_dir: str) -> list[str]:
-    """public/data 디렉터리에서 타이틀 목록 스캔(*_axis.json·*.pilot.json 제외)."""
+    """public/data 디렉터리에서 타이틀 목록 스캔(*_axis.json·*.pilot.json·샘플 제외)."""
     out = []
     for f in glob.glob(str(Path(data_dir) / "*.json")):
         name = Path(f).name
         if name.endswith("_axis.json") or name.endswith(".pilot.json"):
             continue
-        out.append(name[:-5])  # ".json" 제거
+        tid = name[:-5]  # ".json" 제거
+        if tid in _EXCLUDE_TITLES:
+            continue
+        out.append(tid)
     return sorted(out)
 
 
