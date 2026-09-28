@@ -135,6 +135,15 @@ if ($DryRun) {
     }
 }
 
+# --- BigQuery export (git push 뒤 · 격리 · 게이팅은 파이썬 내부) ---
+if (-not $DryRun) {
+    Write-Log INFO "BigQuery export 시작"
+    & $VenvPython -m pipeline.bq_export --all-titles 2>&1 | ForEach-Object { Write-Log INFO $_ }
+    if ($LASTEXITCODE -ne 0) { Write-Log WARN "bq_export 비정상 종료(대시보드·git 무영향)" }
+} else {
+    Write-Log INFO "DryRun — BigQuery export 스킵"
+}
+
 # --- 4. Log rotation (30 days) ---
 Write-Log INFO ""
 Write-Log INFO ">> Step 3/3: Log rotation (delete logs older than 30 days)"
