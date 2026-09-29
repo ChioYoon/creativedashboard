@@ -86,14 +86,32 @@ def test_unlaunched_title_all_stage_p():
     assert r["stages"]["P"] and not r["stages"]["L"]
 
 
-def test_fallback_does_not_inherit_zeus_launch_date():
-    """폴백 파라미터가 특정 타이틀 런칭일을 상속하면 L/P 분류가 통째로 틀어진다."""
-    from pipeline.axis_verdict import DEFAULT_PARAMS, _FALLBACK, build_for_title
-    assert _FALLBACK["launch_date"] is None
-    assert DEFAULT_PARAMS["tougenanki"]["launch_date"] is None
-    for t in ("tougenanki", "gd", "pepp-us"):
-        assert build_for_title(_base(), t, win_from="2026-08-01", win_to="2026-09-30")["launch_date"] is None
-    assert build_for_title(_base(), "zeus", win_from="2026-08-01", win_to="2026-09-30")["launch_date"] == "2026-08-26"
+def test_launch_date_comes_from_brief_stage(monkeypatch):
+    """런칭일 정본은 브리프 stage.launch_date — 코드 하드코딩이 아니다(부채2).
+
+    폴백이 특정 타이틀 런칭일을 상속하면 L/P 분류가 통째로 틀어지므로 미런칭(None)이 기본이다.
+    """
+    import pipeline.axis_verdict as av
+    import pipeline.brand_brief as bb
+    assert av._FALLBACK["launch_date"] is None
+    monkeypatch.setattr(bb, "stage_of", lambda t, *a, **k: {
+        "alpha": {"current": "launched", "launch_date": "2026-08-26"}}.get(t, {}))
+    ld = lambda t: av.build_for_title(_base(), t, win_from="2026-08-01", win_to="2026-09-30")["launch_date"]
+    assert ld("alpha") == "2026-08-26"           # 브리프가 준 날짜
+    for t in ("beta", "gd", "pepp-us"):          # stage 없는 타이틀 → 미런칭
+        assert ld(t) is None
+
+
+def test_launch_date_survives_brief_read_failure(monkeypatch):
+    """미러·정본 모두 못 읽어도 축 판정은 돌아야 한다(미런칭으로 처리)."""
+    import pipeline.axis_verdict as av
+    import pipeline.brand_brief as bb
+
+    def boom(*a, **k):
+        raise RuntimeError("드라이브 미마운트")
+    monkeypatch.setattr(bb, "stage_of", boom)
+    r = av.build_for_title(_base(), "zeus", win_from="2026-08-01", win_to="2026-09-30")
+    assert r["launch_date"] is None and r["stages"]["P"]
 
 
 def test_not_planned_and_duplicate_excluded_from_denominator():

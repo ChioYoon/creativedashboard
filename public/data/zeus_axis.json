@@ -38,7 +38,7 @@
         "n": 6,
         "status": "검증",
         "reason": "효율상회·전환율상회",
-        "ipm": 5.9478,
+        "ipm": 5.948,
         "cvr": 0.5258,
         "roas7": null,
         "ga_roas": 0.0011,
@@ -130,10 +130,10 @@
         "n": 9,
         "status": "후보",
         "reason": "효율상회·ROAS미확인(후보 cap)",
-        "ipm": 1.4739,
+        "ipm": 1.474,
         "cvr": 0.3204,
         "roas7": null,
-        "ga_roas": 2.7779,
+        "ga_roas": 2.778,
         "cost": 155129632,
         "delta": {
           "ipm_pct": null,
@@ -247,7 +247,7 @@
       }
     ]
   },
-  "generated_at": "2026-09-30T00:33:22",
+  "generated_at": "2026-09-30T00:43:54",
   "note": "baseline=코호트 가중평균. P품질=사전예약 전환율(전환/클릭), L품질=D7 ROAS(등록기준 부재→후보cap). ga_roas=Google conversions_value/cost(참고).",
   "active": true
 }

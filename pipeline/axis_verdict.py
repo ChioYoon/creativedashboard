@@ -17,15 +17,13 @@ from __future__ import annotations
 import datetime
 from .content_theme import assign_theme, load_map
 
-# 타이틀별 파라미터. baseline_mode='cohort_weighted'(v1.5 확정). 런칭일=타이틀별.
+# 자격 게이트 파라미터. baseline_mode='cohort_weighted'(v1.5 확정).
+#   런칭일은 브리프 정본 stage.launch_date 가 정본이며 brand_brief.stage_of() 로 읽는다.
 #   launch_date=None → 미런칭. 소재 단계는 전량 P(런칭 전)로 집계한다.
 #   ⚠️ 폴백에 특정 타이틀의 런칭일을 두면 다른 타이틀이 그 날짜를 상속해 L/P 분류가 통째로 틀어진다.
-#      (브리프 정본 stage.launch_date 연동 전까지 여기서 관리 — 도원암귀는 일본 2026-12/2027-02 검토 중 미확정)
-DEFAULT_PARAMS = {
-    "zeus": {"launch_date": "2026-08-26", "min_n": 3, "min_cost": 100000},
-    "tougenanki": {"launch_date": None, "min_n": 3, "min_cost": 100000},
-}
-_FALLBACK = {"launch_date": None, "min_n": 3, "min_cost": 100000}
+GATES = {"min_n": 3, "min_cost": 100000}
+DEFAULT_PARAMS: dict[str, dict] = {}       # (하위호환) 타이틀별 게이트 예외가 필요할 때만 등재
+_FALLBACK = {"launch_date": None, **GATES}
 
 
 def _purpose(cn: str) -> str:
@@ -185,7 +183,22 @@ def compute_axis_verdict(creatives, *, title, launch_date, win_from, win_to,
 
 
 def build_for_title(creatives, title, *, win_from, win_to, params=None):
-    p = params or DEFAULT_PARAMS.get(title, _FALLBACK)
+    """축 판정 산출. 런칭일은 브리프 정본 stage.launch_date 에서 읽는다(부채2 해소).
+
+    stage 를 못 읽으면(미등록 타이틀·미러 부재) launch_date=None = 미런칭으로 본다.
+    특정 타이틀 런칭일을 폴백으로 두지 않는다 — 상속되면 L/P 분류가 통째로 틀어진다.
+    """
+    if params is None:
+        from .brand_brief import stage_of
+        p = dict(DEFAULT_PARAMS.get(title, _FALLBACK))
+        try:
+            st = stage_of(title)
+        except Exception:
+            st = {}
+        if st:
+            p["launch_date"] = st.get("launch_date")
+    else:
+        p = params
     return compute_axis_verdict(
         creatives, title=title, launch_date=p.get("launch_date"),
         win_from=win_from, win_to=win_to,

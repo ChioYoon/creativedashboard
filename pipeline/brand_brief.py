@@ -185,6 +185,9 @@ def to_brand_brief_entry(d: dict, carry: dict | None = None, source_note: str = 
         cd = d["characters_display"]
         entry["characters_display"] = {"priority_line": cd.get("priority_line"),
                                        "note_lines": list(cd.get("note_lines") or [])}
+    st = d.get("stage") or {}
+    if st:   # 축 판정이 읽는다(launch_date 하드코딩 제거). 어휘: pre_campaign|prerelease|launched
+        entry["stage"] = {k: st.get(k) for k in ("current", "launch_date", "axis_judgement")}
     entry["tone"] = tone_s
     entry["slogan"] = " = ".join(slog.get("current") or [])
     entry["cta_tone"] = cta
@@ -272,3 +275,28 @@ def sync_mirror(briefs_dir: str | Path | None = None, mirror_path: str | Path = 
         (mp.parent / GATE_REGISTRY).write_text(reg_src.read_text(encoding="utf-8"), encoding="utf-8")
         reg = True
     return {"updated": updated, "skipped": skipped, "registry": reg}
+
+
+def stage_of(title: str, mirror_path: str | Path = MIRROR_PATH,
+             briefs_dir: str | Path | None = None) -> dict:
+    """타이틀 → {current, launch_date, axis_judgement}. 없으면 빈 dict.
+
+    미러(js/brand_briefs.json)를 1순위로 읽는다 — 미러는 nightly 가 정본에서 생성하므로
+    내용이 같고, 드라이브가 안 잡히는 환경에서도 축 판정이 돈다.
+    미러에 stage 가 없으면(구버전 미러) 정본을 직접 본다.
+    """
+    import os
+    mp = Path(mirror_path)
+    if mp.exists():
+        try:
+            st = (json.loads(mp.read_text(encoding="utf-8")).get(title) or {}).get("stage")
+            if st:
+                return st
+        except Exception:
+            pass
+    d = str(briefs_dir or os.environ.get("CLOOP_BRIEFS_DIR", "")).strip()
+    if d:
+        b = load_structured(Path(d) / f"brief_{title}.json")
+        if b and b.get("stage"):
+            return {k: b["stage"].get(k) for k in ("current", "launch_date", "axis_judgement")}
+    return {}
