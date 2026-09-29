@@ -89,6 +89,10 @@
   </header>
 
   <div class="live-body">
+    <!-- 브랜드 게이트 현황 — undeclared(미선언) 타이틀이 1건 이상일 때만 노출. 0건이면 표 자체를 띄우지 않는다
+         (gate_registry.display_policy · 상시 노출은 노이즈가 되어 결국 안 보게 됨) -->
+    <div id="liveGateStatus" style="display:none;margin:0 0 12px;"></div>
+
     <div class="live-filters" id="liveFilters">
       <div style="display:flex; align-items:flex-end; gap:12px; width:100%;">
         <div class="live-filter-group">
@@ -136,6 +140,6 @@
 
   <script src="js/data-source.js?v=50c99d6c"></script>
   <script src="js/layer-metrics.js?v=5107e0da"></script>
-  <script src="js/live-dashboard.js?v=d298e68c"></script>
+  <script src="js/live-dashboard.js?v=af7354a3"></script>
 </body>
 </html>

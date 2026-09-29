@@ -431,9 +431,58 @@
     el('liveModal').classList.add('active');
   };
 
+  // ── 브랜드 게이트 현황 ────────────────────────────────────────────
+  // 3상태 도출(R팀 자동화현황 회신 v1 §3) — 레지스트리는 legacy 만 들고, 나머지는 런타임 도출.
+  //   declared   : 브리프에 cloop_gate 선언됨 → 미러 js/brand_briefs.json 의 cloop_gate 로 판정
+  //                (브라우저는 G드라이브 정본을 못 읽으므로 그 파생인 미러를 본다)
+  //   legacy     : js/gate_registry.json 등재분. R팀이 관리하는 유일한 값
+  //   undeclared : 위 둘 다 아님 → 🔴 조치 대상
+  async function renderGateStatus(manifest) {
+    const box = document.getElementById('liveGateStatus');
+    if (!box) return;
+    const j = async u => { try { const r = await fetch(u, { cache: 'no-store' }); return r.ok ? await r.json() : null; } catch (e) { return null; } };
+    const [briefs, reg] = await Promise.all([j('js/brand_briefs.json'), j('js/gate_registry.json')]);
+    if (!briefs) return;                                  // 미러 로드 실패 시 표 생략(오탐 방지)
+    const legacy = new Map(((reg && reg.legacy) || []).map(x => [x.title_id, x]));
+    const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
+
+    const rows = manifest.filter(t => t.id && t.id !== 'sample').map(t => {
+      const gate = (briefs[t.id] || {}).cloop_gate;
+      if (gate) return { t, status: 'declared', level: gate.modification_level || '—', note: (briefs[t.id]._source || '').split(' (')[0] };
+      if (legacy.has(t.id)) return { t, status: 'legacy', level: '—', note: legacy.get(t.id).reason || '' };
+      return { t, status: 'undeclared', level: '—', note: '정본 brief_<title_id>.json 에 cloop_gate 선언 필요' };
+    });
+    const todo = rows.filter(r => r.status === 'undeclared');
+    if (!todo.length) { box.style.display = 'none'; box.innerHTML = ''; return; }   // 조치 대상 없으면 미노출
+
+    const badge = { declared: ['✅ 선언됨', '#0F7B3E', '#E8F5EE'], legacy: ['⬛ 레거시', '#64748B', '#EEF2F7'], undeclared: ['🔴 미선언', '#B91C1C', '#FEE2E2'] };
+    box.innerHTML = `<div style="border:1px solid #FCA5A5;border-radius:8px;background:#FFF7F7;padding:12px 14px;">
+      <div style="font-size:13px;font-weight:700;color:#B91C1C;margin-bottom:2px;">브랜드 게이트 미선언 ${todo.length}건 — 조치 필요</div>
+      <div style="font-size:11px;color:#6B7280;margin-bottom:8px;">미선언 타이틀은 소재 생성이 차단(fail-closed)됩니다. 정본 브리프에 <code>cloop_gate</code> 를 선언하거나, 운영 종료 타이틀이면 <code>gate_registry.json</code> 에 legacy 로 등재하십시오.</div>
+      <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;min-width:460px;">
+        <thead><tr style="text-align:left;color:#6B7280;">
+          <th style="padding:4px 8px 4px 0;font-weight:500;">타이틀</th><th style="padding:4px 8px;font-weight:500;">상태</th>
+          <th style="padding:4px 8px;font-weight:500;">modification_level</th><th style="padding:4px 0 4px 8px;font-weight:500;">비고</th>
+        </tr></thead>
+        <tbody>${rows.map(r => {
+          const [label, fg, bg] = badge[r.status];
+          return `<tr style="border-top:1px solid #F1F5F9;">
+            <td style="padding:5px 8px 5px 0;">${esc(r.t.name || r.t.id)} <span style="color:#9CA3AF;">(${esc(r.t.id)})</span></td>
+            <td style="padding:5px 8px;"><span style="font-size:10px;font-weight:700;padding:1px 6px;border-radius:3px;background:${bg};color:${fg};white-space:nowrap;">${label}</span></td>
+            <td style="padding:5px 8px;color:#374151;">${esc(r.level)}</td>
+            <td style="padding:5px 0 5px 8px;color:#6B7280;">${esc(r.note)}</td>
+          </tr>`;
+        }).join('')}</tbody>
+      </table></div></div>`;
+    box.style.display = '';
+  }
+
+  LIVE.renderGateStatus = renderGateStatus;   // 검증용 노출(임의 manifest 주입)
+
   async function init() {
     // 타이틀 매니페스트 → 셀렉터
     LIVE.state.manifest = await window.DataSource.loadTitleManifest();
+    renderGateStatus(LIVE.state.manifest);   // 비차단 — 게이트 표 실패가 대시보드를 막지 않음
     const sel = el('liveTitleSelect');
     LIVE.state.manifest
       .filter(t => t.json_url)            // 데이터 있는 타이틀만

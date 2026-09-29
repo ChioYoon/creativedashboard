@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "owner": "R마케팅팀 (UA 총괄)",
+  "purpose": "CLOOP 브랜드 게이트의 legacy 타이틀 지정. declared/undeclared 는 런타임 도출이므로 여기에 두지 않는다",
+  "updated_at": "2026-09-15",
+
+  "derivation_rule": {
+    "declared": "brief_<title_id>.json 에 cloop_gate 블록이 있으면 자동 도출. 레지스트리 불요",
+    "legacy": "**본 파일에 등재된 타이틀.** R팀이 지정한다",
+    "undeclared": "위 둘 중 어디에도 없으면 자동 도출. 🔴 조치 대상",
+    "note": "3상태를 레지스트리가 전부 들고 있으면 브리프와 이중 관리가 된다. R팀이 명시 관리하는 값은 legacy 뿐이다"
+  },
+
+  "legacy": [
+    {
+      "title_id": "gd",
+      "title_name": "갓앤데몬",
+      "reason": "운영 종료 타이틀. 소재 생성 수요 없음",
+      "designated_at": "2026-09-15",
+      "revisit": null
+    },
+    {
+      "title_id": "pepp-us",
+      "title_name": "펩히어로즈",
+      "reason": "리빌딩 목적 라이브 종료 · 마케팅 전면 홀딩 (2026-08-20 쇼어링크 연동 해제)",
+      "designated_at": "2026-09-15",
+      "revisit": "마케팅 재개 시 legacy 해제 후 정본 브리프 작성"
+    }
+  ],
+
+  "display_policy": {
+    "where": "라이브 대시보드 상단",
+    "condition": "undeclared 가 1건 이상일 때만 노출. 0건이면 표 자체를 띄우지 않는다",
+    "rationale": "상시 노출은 노이즈가 되어 결국 안 보게 된다. 조치 대상이 있을 때만 시야에 들어와야 한다",
+    "legacy_rendering": "legacy 는 차단 상태로 표기하되 조치 대상으로 띄우지 않는다"
+  },
+
+  "maintenance": {
+    "location": "G:\\공유 드라이브\\[UA] N마케팅실\\AX_Knowledge\\_브랜드브리프\\gate_registry.json",
+    "sync": "브리프 정본과 동일 경로. CLOOP 미러 동기화 대상에 포함한다",
+    "caution": "🔴 ② 자동화가 미러를 재생성할 때 본 파일을 덮어쓰지 않도록 분리 유지"
+  }
+}
