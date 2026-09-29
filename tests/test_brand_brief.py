@@ -101,7 +101,12 @@ def test_cloop_gate_and_generation_allowed():
     assert g["modification_level"] == "원본유지only"
     assert generation_allowed(g, "축5_신규생성") is False   # 차단
     assert generation_allowed(g, "축1_카피") is True         # 허용
-    assert generation_allowed(None, "축5_신규생성") is True   # 게이트 없으면(제약없는 IP) 허용
+    # fail-closed — 게이트 부재·축 목록 미선언은 '제약 없음'이 아니라 '미선언' → 차단
+    assert generation_allowed(None, "축5_신규생성") is False
+    assert generation_allowed({}, "축1_카피") is False
+    assert generation_allowed({"modification_level": "제약없음"}, "축1_카피") is False  # blocked_axes 미선언
+    # 전 축 허용은 blocked_axes: [] 로 명시 선언해야 한다(제우스)
+    assert generation_allowed({"modification_level": "제약없음", "blocked_axes": []}, "축5_신규생성") is True
 
 
 def test_entry_gated_title():

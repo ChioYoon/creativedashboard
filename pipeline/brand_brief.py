@@ -90,10 +90,19 @@ def get_cloop_gate(d: dict) -> dict | None:
 
 
 def generation_allowed(gate: dict | None, axis: str) -> bool:
-    """gate.blocked_axes 에 걸리면 False. gate 없으면(제약 없는 IP) True."""
+    """축 생성 허용 여부 — **fail-closed** (schema_contract 1.1 · R팀 회신 v1.3 §2).
+
+    게이트 부재는 '제약 없음'이 아니라 '미선언'이다. 미선언 타이틀에 생성 자동화를 돌리면
+    판권 사고가 나므로 차단으로 처리한다. 허용하려면 정본 brief_<title_id>.json 에
+    cloop_gate 를 명시 선언할 것(제우스는 blocked_axes: [] 로 전 축 허용).
+    step1 의 brandGateAllowsGeneration() 과 같은 방향이다.
+    """
     if not gate:
-        return True
-    return axis not in (gate.get("blocked_axes") or [])
+        return False
+    blocked = gate.get("blocked_axes")
+    if blocked is None:      # 게이트는 있으나 축 목록 미선언 → 판단 불가 → 차단
+        return False
+    return axis not in blocked
 
 
 def to_brand_brief_entry(d: dict) -> dict:
