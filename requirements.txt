@@ -28,3 +28,6 @@ google-auth-oauthlib>=1.2.0,<2.0.0
 
 # Stage 5-H: 등록부 xlsx 파싱 (registry.py)
 openpyxl>=3.1
+
+# BigQuery exporter (pipeline/bq_export.py)
+google-cloud-bigquery>=3.25.0,<4.0.0
