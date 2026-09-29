@@ -1,7 +1,7 @@
 {
   "_comment": "타이틀별 브랜드 브리프 — 제작 브리프(#15) 슬롯 4·6 자동 주입원. 규격: schema_contract 1.1(정본 brief_<title_id>.json) · 원천: G:\\공유 드라이브\\[UA] N마케팅실\\AX_Knowledge\\_브랜드브리프. cloop_gate 부재 = 차단(fail-closed) — 신규 타이틀은 반드시 선언할 것.",
   "zeus": {
-    "_source": "v1.4 (frozen 2026-09-12, updated 2026-09-15, structured brief) — brief_zeus.json 수동 동기화",
+    "_source": "v1.6 (frozen 2026-09-12, updated 2026-09-15, structured brief) — brief_zeus.json 수동 동기화",
     "genre": "경쟁형 오픈필드 MMORPG (대규모 PvP/RvR)",
     "core_loop": "전투 위주 성장 · 아티산 경제 클래스(제작·거래) · AI 자동성장 모드 · 아카디아 제전 RvR 엔드콘텐츠",
     "characters": "나이트 / 버서커 / 어쌔신 / 레인저 / 엘리멘탈리스트 / 오라클 / 블레스드 / 아티산 · NPC 판도라·제우스 · 역할 신의 그릇 / 아르콘",
@@ -22,6 +22,29 @@
       "연예인을 광고 모델로 다루는 표현 — 판도라 캐릭터 연기자로만 다룬다",
       "경품을 대체 불가한 것으로 읽히게 하는 표현 — 대체 가능 유의사항 문구 필수"
     ],
+    "execution_scope": {
+      "confirmed_at": "2026-09-15",
+      "note": "제작된 소재 전부가 UA 집행 대상은 아니다. 축 판정 분모는 **UA 집행 대상**만 포함한다",
+      "out_of_scope": [
+        {
+          "hook": "CL-Brand",
+          "asset": "L-Genre-CL-Brand-PV",
+          "reason": "컬쳐랜드 제휴사 전달 전용. UA 매체 집행 대상 아님",
+          "partner": "cultureland"
+        },
+        {
+          "hook": "CL-Cash",
+          "asset": "L-Genre-CL-Cash-PV",
+          "reason": "컬쳐랜드 제휴사 전달 전용. UA 매체 집행 대상 아님",
+          "partner": "cultureland"
+        }
+      ],
+      "reason_types": {
+        "계획취소": "집행할 수 있었으나 계획이 없어짐 (도원암귀 FGT 사례)",
+        "대상외": "애초에 UA 집행 대상이 아님 (제휴사 전달용·내부 공유용 등)"
+      },
+      "caution": "소재명만으로는 UA 집행 대상 여부를 알 수 없다. 제휴사 소재는 개별 확인 후 등재한다"
+    },
     "cloop_gate": {
       "modification_level": "제약없음",
       "allowed_axes": [
