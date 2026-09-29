@@ -1,7 +1,7 @@
 {
   "_comment": "타이틀별 브랜드 브리프 — 제작 브리프(#15) 슬롯 4·6 자동 주입원. 규격: schema_contract 1.1(정본 brief_<title_id>.json) · 원천: G:\\공유 드라이브\\[UA] N마케팅실\\AX_Knowledge\\_브랜드브리프. cloop_gate 부재 = 차단(fail-closed) — 신규 타이틀은 반드시 선언할 것.",
   "zeus": {
-    "_source": "v1.6 (frozen 2026-09-12, updated 2026-09-15, structured brief) — brief_zeus.json 수동 동기화",
+    "_source": "v1.6 (frozen 2026-09-12, updated 2026-09-23, structured brief) — brief_zeus.json 자동 동기화",
     "genre": "경쟁형 오픈필드 MMORPG (대규모 PvP/RvR)",
     "core_loop": "전투 위주 성장 · 아티산 경제 클래스(제작·거래) · AI 자동성장 모드 · 아카디아 제전 RvR 엔드콘텐츠",
     "characters": "나이트 / 버서커 / 어쌔신 / 레인저 / 엘리멘탈리스트 / 오라클 / 블레스드 / 아티산 · NPC 판도라·제우스 · 역할 신의 그릇 / 아르콘",
@@ -103,7 +103,7 @@
     ]
   },
   "tougenanki": {
-    "_source": "v1.9 (frozen 2026-09-11, updated 2026-09-15, structured brief) — brief_tougenanki.json 수동 동기화",
+    "_source": "v1.9 (frozen 2026-09-11, updated 2026-09-23, structured brief) — brief_tougenanki.json 자동 동기화",
     "genre": "일본 IP 다크판타지 턴제 RPG (수집형)",
     "core_appeals": "IP·캐릭터 > 전투 쾌감 > 스토리·세계관 > 그래픽·비주얼",
     "characters": "우선순위(집단 훅 배치 순서) 이치노세 시키 > 무다노 나이토 > 코우가사키 진 > 뵤우부가우라 호마레 > 야오로시 이카리 > 유스루베 쥬우지 > 키리야마 로쿠로 > 사자나미 쿠이나 (=라세츠학원 8명) · 오니 진영 시키·나이토·진·호마레·쥬우지·이카리·로쿠로·쿠이나·쿄우야·마스미·카오루·네코자키 하구레·인나미 유우 · 모모타로 진영 미카도·사미다레·츠바키리·요모기·모모이와 신야·츠쿠요미·오우스케·하야테",

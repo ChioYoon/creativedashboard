@@ -1433,6 +1433,23 @@ def main() -> None:
         except Exception as _e:
             print(f"⚠️  등록부 생성 실패(기존 titles.json 유지하고 계속): {_e}")
 
+    # ②-4 미러 자동 동기화 — 정본(G드라이브) brief_*.json → js/brand_briefs.json.
+    #   브라우저는 G: 를 못 읽으므로 이 미러가 대시보드의 유일한 실배선이다.
+    #   🔴 실패를 삼키지 않는다: 태깅은 계속하되 종료 코드 1로 올려 스케줄러가 실패를 인지하게 한다.
+    #      (경고만 남기면 미러가 며칠 낡은 채로 돈다 — 실제로 겪은 사고다)
+    mirror_failed = False
+    try:
+        from .brand_brief import sync_mirror
+        _ms = sync_mirror()
+        print("🔁 브랜드 브리프 미러 동기화: %s 갱신%s%s" % (
+            ", ".join(_ms["updated"]) or "0건",
+            " · frozen 아님 스킵 " + ", ".join(_ms["skipped"]) if _ms["skipped"] else "",
+            " · gate_registry 복사" if _ms["registry"] else ""))
+    except Exception as e:
+        mirror_failed = True
+        print(f"❌ 브랜드 브리프 미러 동기화 실패: {e}")
+        print("   미러가 갱신되지 않았습니다 — 대시보드는 이전 브리프로 서빙됩니다. 태깅은 계속합니다.")
+
     try:
         if args.all_titles:
             batch_result = run_all_titles(args)
@@ -1447,12 +1464,12 @@ def main() -> None:
                 r.get("status") in ("partial", "config_error", "exception")
                 for r in batch_result["results"]
             )
-            sys.exit(1 if any_failure else 0)
+            sys.exit(1 if (any_failure or mirror_failed) else 0)
         else:
             # 단일 타이틀 모드 (Stage 2 호환)
             cfg = resolve_config(args)
             metric = run(cfg)
-            sys.exit(0 if metric.get("failures", 0) == 0 else 1)
+            sys.exit(0 if (metric.get("failures", 0) == 0 and not mirror_failed) else 1)
     except KeyboardInterrupt:
         print("\n⚠️  사용자가 중단했습니다. (캐시는 부분적으로 저장됨)")
         sys.exit(130)

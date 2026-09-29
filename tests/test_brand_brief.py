@@ -117,3 +117,86 @@ def test_entry_gated_title():
     assert e["forbidden_words"] == ["原作", "推し"]
     assert e["cloop_gate"]["blocked_axes"]         # 게이트 보존
     assert any("생성 게이트" in s for s in e["ip_safe"])  # ip_safe 최상단 가드
+
+
+# ── ②-4 미러 자동 동기화 ──────────────────────────────────────────────
+
+def _brief(tid, **over):
+    d = {"schema_version": "1.1", "title_id": tid, "version": "2.0", "status": "frozen",
+         "frozen_at": "2026-09-01", "updated_at": "2026-09-30",
+         "tone": {"art": ["A"], "keywords": ["K"], "avoid_format": "X"},
+         "slogan": {"current": ["S"]},
+         "characters": {"priority": ["가", "나"]},
+         "characters_display": {"priority_line": "배치 — 가 > 나", "note_lines": ["주의"]},
+         "ip_safe": ["금기1"],
+         "cloop_gate": {"modification_level": "원본유지only", "allowed_axes": ["축1_카피"],
+                        "blocked_axes": ["축5_신규생성"], "rationale": "R"}}
+    d.update(over)
+    return d
+
+
+def _setup(tmp_path, *briefs, registry=True):
+    import json
+    src = tmp_path / "briefs"; src.mkdir(parents=True, exist_ok=True)
+    for b in briefs:
+        (src / f"brief_{b['title_id']}.json").write_text(json.dumps(b, ensure_ascii=False), encoding="utf-8")
+    if registry:
+        (src / "gate_registry.json").write_text('{"legacy":[]}', encoding="utf-8")
+    return src
+
+
+def test_sync_mirror_writes_entry_and_registry(tmp_path):
+    import json
+    from pipeline.brand_brief import sync_mirror
+    src = _setup(tmp_path, _brief("alpha"))
+    mp = tmp_path / "brand_briefs.json"
+    r = sync_mirror(src, mp)
+    assert r == {"updated": ["alpha"], "skipped": [], "registry": True}
+    e = json.loads(mp.read_text(encoding="utf-8"))["alpha"]
+    # characters_display 는 브리프가 준 렌더 문자열을 그대로(Z-4 render_contract)
+    assert e["characters_display"]["priority_line"] == "배치 — 가 > 나"
+    assert e["cloop_gate"]["blocked_axes"] == ["축5_신규생성"]
+    assert "2.0" in e["_source"] and "자동 동기화" in e["_source"]
+    assert (tmp_path / "gate_registry.json").exists()      # R팀 소유 파일은 복사만
+
+
+def test_sync_mirror_preserves_legacy_and_carry(tmp_path):
+    """정본에 없는 레거시 엔트리는 보존하고, 미러에만 있는 게임성격 맥락 키는 이어받는다."""
+    import json
+    from pipeline.brand_brief import sync_mirror
+    src = _setup(tmp_path, _brief("alpha"))
+    mp = tmp_path / "brand_briefs.json"
+    mp.write_text(json.dumps({"legacy_title": {"ip_safe": ["보존"]},
+                              "alpha": {"genre": "RPG", "core_loop": "L"}}, ensure_ascii=False), encoding="utf-8")
+    sync_mirror(src, mp)
+    m = json.loads(mp.read_text(encoding="utf-8"))
+    assert m["legacy_title"] == {"ip_safe": ["보존"]}
+    assert m["alpha"]["genre"] == "RPG" and m["alpha"]["core_loop"] == "L"
+
+
+def test_sync_mirror_fails_closed(tmp_path, monkeypatch):
+    """🔴 경로 부재·정본 결손은 경고가 아니라 실패(회신 Q7)."""
+    import pytest
+    from pipeline.brand_brief import sync_mirror, BriefSyncError
+    monkeypatch.delenv("CLOOP_BRIEFS_DIR", raising=False)
+    with pytest.raises(BriefSyncError):           # 미설정
+        sync_mirror(None, tmp_path / "m.json")
+    with pytest.raises(BriefSyncError):           # 접근 불가
+        sync_mirror(tmp_path / "없는경로", tmp_path / "m.json")
+    with pytest.raises(BriefSyncError):           # frozen 브리프 0건
+        sync_mirror(_setup(tmp_path, _brief("d", status="draft")), tmp_path / "m.json")
+    # fail-hard 필수키 결손
+    src2 = _setup(tmp_path / "x", _brief("alpha", ip_safe=[]))
+    with pytest.raises(BriefSyncError):
+        sync_mirror(src2, tmp_path / "m2.json")
+
+
+def test_sync_mirror_draft_skipped_not_written(tmp_path):
+    """draft 는 스킵하되 frozen 이 하나라도 있으면 성공."""
+    import json
+    from pipeline.brand_brief import sync_mirror
+    src = _setup(tmp_path, _brief("alpha"), _brief("beta", status="draft"))
+    mp = tmp_path / "brand_briefs.json"
+    r = sync_mirror(src, mp)
+    assert r["updated"] == ["alpha"] and r["skipped"] == ["beta"]
+    assert "beta" not in json.loads(mp.read_text(encoding="utf-8"))
