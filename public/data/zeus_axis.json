@@ -12,14 +12,14 @@
   },
   "baseline_used": {
     "P": {
-      "ipm": 3.0777,
-      "cvr": 0.218,
+      "ipm": 3.0784,
+      "cvr": 0.2181,
       "roas7": null,
       "mode": "cohort_weighted"
     },
     "L": {
-      "ipm": 1.4276,
-      "cvr": 0.2987,
+      "ipm": 1.4296,
+      "cvr": 0.2998,
       "roas7": null,
       "mode": "cohort_weighted"
     }
@@ -29,7 +29,7 @@
     "min_n": 3,
     "min_cost": 100000
   },
-  "excluded_ratio": 0.181,
+  "excluded_ratio": 0.179,
   "excluded_note": "N/A·미검수 소재 제외 비중(판정 대상 외)",
   "stages": {
     "P": [
@@ -38,13 +38,13 @@
         "n": 3,
         "status": "검증",
         "reason": "효율상회·전환율상회",
-        "ipm": 13.0257,
+        "ipm": 13.0261,
         "cvr": 1.2363,
         "roas7": null,
         "ga_roas": 0.0022,
         "cost": 4235879,
         "delta": {
-          "ipm_pct": 2044.8,
+          "ipm_pct": 2044.9,
           "vs_period": "2026-07-24~2026-08-22"
         }
       },
@@ -53,13 +53,13 @@
         "n": 28,
         "status": "검증",
         "reason": "효율상회·전환율상회",
-        "ipm": 3.925,
-        "cvr": 0.3112,
+        "ipm": 3.927,
+        "cvr": 0.3113,
         "roas7": null,
         "ga_roas": 0.0007,
         "cost": 29079657,
         "delta": {
-          "ipm_pct": 447.5,
+          "ipm_pct": 447.8,
           "vs_period": "2026-07-24~2026-08-22"
         }
       },
@@ -160,26 +160,11 @@
         "n": 9,
         "status": "후보",
         "reason": "효율상회·ROAS미확인(후보 cap)",
-        "ipm": 1.4707,
-        "cvr": 0.3191,
+        "ipm": 1.4732,
+        "cvr": 0.3196,
         "roas7": null,
-        "ga_roas": 2.775,
+        "ga_roas": 2.7853,
         "cost": 153557920,
-        "delta": {
-          "ipm_pct": null,
-          "vs_period": "2026-07-24~2026-08-22"
-        }
-      },
-      {
-        "axis": "커뮤니티·길드",
-        "n": 1,
-        "status": "미검증",
-        "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 2.4316,
-        "cvr": 0.3029,
-        "roas7": null,
-        "ga_roas": 18.3368,
-        "cost": 771943,
         "delta": {
           "ipm_pct": null,
           "vs_period": "2026-07-24~2026-08-22"
@@ -190,10 +175,10 @@
         "n": 2,
         "status": "미검증",
         "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 1.9587,
-        "cvr": 0.3962,
+        "ipm": 1.9597,
+        "cvr": 0.3964,
         "roas7": null,
-        "ga_roas": 13.6804,
+        "ga_roas": 13.6872,
         "cost": 3237330,
         "delta": {
           "ipm_pct": null,
@@ -205,11 +190,26 @@
         "n": 2,
         "status": "미검증",
         "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 1.7692,
-        "cvr": 0.4253,
+        "ipm": 1.7702,
+        "cvr": 0.4256,
         "roas7": null,
-        "ga_roas": 3.4746,
+        "ga_roas": 3.4766,
         "cost": 83572889,
+        "delta": {
+          "ipm_pct": null,
+          "vs_period": "2026-07-24~2026-08-22"
+        }
+      },
+      {
+        "axis": "커뮤니티·길드",
+        "n": 2,
+        "status": "미검증",
+        "reason": "자격 미달(n<3 또는 비용<100,000)",
+        "ipm": 1.735,
+        "cvr": 0.3662,
+        "roas7": null,
+        "ga_roas": 5.8174,
+        "cost": 8936256,
         "delta": {
           "ipm_pct": null,
           "vs_period": "2026-07-24~2026-08-22"
@@ -220,10 +220,10 @@
         "n": 6,
         "status": "소진",
         "reason": "효율하회·ROAS미확인(후보 cap)",
-        "ipm": 1.3155,
-        "cvr": 0.2621,
+        "ipm": 1.3158,
+        "cvr": 0.2622,
         "roas7": null,
-        "ga_roas": 1.7225,
+        "ga_roas": 1.7232,
         "cost": 194475823,
         "delta": {
           "ipm_pct": null,
@@ -235,10 +235,10 @@
         "n": 5,
         "status": "소진",
         "reason": "효율하회·ROAS미확인(후보 cap)",
-        "ipm": 1.2739,
-        "cvr": 0.2354,
+        "ipm": 1.276,
+        "cvr": 0.2358,
         "roas7": null,
-        "ga_roas": 2.8388,
+        "ga_roas": 2.8535,
         "cost": 62390008,
         "delta": {
           "ipm_pct": null,
@@ -277,7 +277,7 @@
       }
     ]
   },
-  "generated_at": "2026-09-29T13:03:39",
+  "generated_at": "2026-09-29T18:09:58",
   "note": "baseline=코호트 가중평균. P품질=사전예약 전환율(전환/클릭), L품질=D7 ROAS(등록기준 부재→후보cap). ga_roas=Google conversions_value/cost(참고).",
   "active": true
 }
