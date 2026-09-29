@@ -3265,7 +3265,7 @@ function aggregateCreativeData(rows, groupBy) {
         'one_line_insight','marketer_insight','improvement_actions','kpi_reality_check',
         'strength_evidence','weakness_evidence','creative_concept','사이즈','언어',
         'player_motivation','main_characters','color_tone','cta_type',
-        'theme_primary','theme_secondary','theme_flags','intent_axis','execution_status','duplicate_of',
+        'theme_primary','theme_secondary','theme_flags','intent_axis','execution_status','duplicate_of','creative_resource',
         'mmp_daily','mmp_channels','mmp_d1_ipm','mmp_d1_cpi','mmp_d7_roas',
         'mmp_d1_retention','mmp_installs','mmp_conversions','mmp_conv_ua','mmp_impressions','mmp_retained_d1','mmp_cost','mmp_revenue',
         'mmp_currency','mmp_fx_rate','source_files'];
@@ -8265,6 +8265,14 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         .map(f => f.replace(/^ip_guard:/, '').replace(/^entity:/, '[엔티티] ').replace(/^conditional:/, '[조건] ').replace(/^tva_source$/, '[TVA] 원작 애니 영상 — 판권 검수 경로 별도').replace(/_/g, ' '));
       const hookGuardBlock = hookGuards.length ? hookGuards.map(s => `\n                  · ${s}`).join('') : '';
       const intentNote = m.intent_axis ? `  · 제작 의도축: ${m.intent_axis} (content_theme 판정 미반영 · 참고용)` : '';
+      // 리소스 종류(creative_resource) — 소재명 포맷 접미에서 파이프라인이 도출. 외부 IP 타이틀만 채워짐.
+      //   라벨·§6 12항 적용 여부 출처: pipeline/theme_map_<title>.json creative_resource_rule.values
+      const CR = {
+        illustration:    { ko: '일러스트 (배너)',            ip: '🔴 감수 완료 원본 — §6 12항 변경·수정 금지 적용' },
+        ingame_cutscene: { ko: '인게임 구현 플레이 컷신 (영상)', ip: '§6 12항 미적용' },
+        endcard:         { ko: '엔드카드 (영상)',             ip: '§6 12항 미적용' },
+      };
+      const cr = CR[m.creative_resource];
       const asset = m['링크'] || creative.이미지링크 || creative.파일명 || (m['파일명'] || '') || '—';
       const 비율 = isVid ? '9:16 · 15s(원본 길이 기준 컷 변주 테스트)' : '1200x628 / 1200x1500 등 사이즈 배리';
       return [
@@ -8302,6 +8310,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         '',
         '[5] 에셋 지정',
         `  · 원본 에셋   : ${asset}`,
+        ...(cr ? [`  · 리소스 종류 : ${cr.ko} — ${cr.ip}`] : []),
         `  · 사용 에셋   : (드라이브 폴더/컷 — 담당자 지정)`,
         '',
         '[6] 생성 파라미터',

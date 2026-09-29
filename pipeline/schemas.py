@@ -484,6 +484,9 @@ class CreativeRecord(BaseModel):
     # 제작 자산 ≠ 집행 예정 소재(훅맵 v1.7 execution_status). 축 판정 분모는 planned 기준, 제작 집계엔 전량 포함.
     execution_status: str = Field("planned", description="planned | not_planned — not_planned는 축 판정 집계 제외(제작 자산 집계엔 잔류)")
     duplicate_of: Optional[str] = Field(None, description="동일 파일이 두 축으로 중복 등록된 경우 정본 소재명. 소재 수 집계에서 1건으로 계산")
+    # 화면이 무엇으로 만들어졌는가(소재명 포맷 접미 도출) — §6 12항 적용 여부·판권 검수 경로를 가른다.
+    # 외부 IP 타이틀 전용. 규격·용도 축(-EC 엔드카드·-SS 숏츠)과 혼용 금지(훅맵 extension_caution).
+    creative_resource: Optional[str] = Field(None, description="illustration | ingame_cutscene | endcard — 외부 IP 타이틀만")
 
     # 부가 메타 (Pydantic v2는 leading underscore 필드명을 금지하므로 일반 이름 사용)
     tagged_at: Optional[str] = None  # ISO 8601 (Gemini 태깅 시각)

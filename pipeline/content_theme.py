@@ -93,6 +93,42 @@ def _load_exec(title: str | None, repo_root: str | Path | None = None) -> dict:
     return tbl
 
 
+def _load_resource_rule(title: str | None, repo_root: str | Path | None = None) -> dict:
+    """포맷 접미 → creative_resource 룩업(훅맵 normalization.creative_resource_rule).
+
+    룰이 없는 타이틀은 빈 dict — creative_resource 를 도출하지 않는다.
+    (제우스는 자사 IP라 §6 12항 제약이 없어 값이 어떤 판단에도 쓰이지 않음 — R팀 Q4 회신)
+    """
+    fname = _TITLE_MAP_FILE.get(title or "", _DEFAULT_MAP_FILE)
+    ck = "res:" + fname
+    if repo_root is None and ck in _CFG_CACHE:
+        return _CFG_CACHE[ck]
+    rule = ((_load_raw(fname, repo_root).get("normalization") or {}).get("creative_resource_rule") or {})
+    tbl = {}
+    for value, spec in (rule.get("values") or {}).items():
+        for sfx in (spec.get("suffix") or []):
+            tbl[sfx.lstrip("-").upper()] = {"value": value, "label_ko": spec.get("label_ko"),
+                                            "ip_rule": spec.get("ip_rule")}
+    if repo_root is None:
+        _CFG_CACHE[ck] = tbl
+    return tbl
+
+
+def creative_resource_of(creative_name: str, title: str | None = None) -> dict | None:
+    """소재명 마지막 세그먼트(포맷 접미) → {value, label_ko, ip_rule}. 미해당이면 None.
+
+    ⚠️ 포맷 접미는 두 축을 혼용한다(훅맵 v1.9 extension_caution) —
+    리소스 종류(-DA 일러스트 / -PV·-UA 영상)와 규격·용도(-EC 엔드카드 / -SS 숏츠).
+    숏츠는 인게임 컷신으로도 일러스트 모션으로도 만들 수 있으므로 여기에 매핑하지 않는다.
+    규격 축이 필요해지면 creative_format 등 별도 필드로 분리할 것.
+    """
+    tbl = _load_resource_rule(title)
+    if not tbl:
+        return None
+    sfx = (creative_name or "").rsplit("-", 1)[-1].strip().upper()
+    return tbl.get(sfx)
+
+
 def execution_of(creative_name: str, title: str | None = None) -> dict:
     """소재명 → {"execution_status": "planned"|"not_planned", "duplicate_of": str|None}."""
     e = _load_exec(title).get(creative_name or "", {})

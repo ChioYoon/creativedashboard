@@ -121,3 +121,21 @@ def test_tougenanki_new_hook_review_queue():
     r = assign_theme("P-Battle-TotallyUnknownHook-01-DA", title="tougenanki")
     assert r["theme_primary"] == "N/A:미상" and r["review_flag"] == "검수"
     assert r["intent_axis"] == "Battle"                 # intent는 세그먼트라 미등록 훅에도 잡힘
+
+
+def test_creative_resource_from_suffix():
+    """②-2 — 포맷 접미 → creative_resource (도원암귀 전용)."""
+    from pipeline.content_theme import creative_resource_of as f
+    assert f("P-Gamer-RasetsuBattle01-DA", "tougenanki")["value"] == "illustration"
+    assert f("P-IP-OniMainTVA01-PV", "tougenanki")["value"] == "ingame_cutscene"
+    assert f("X-Y-Z-UA", "tougenanki")["value"] == "ingame_cutscene"
+    assert f("A-B-EC", "tougenanki")["value"] == "endcard"
+    assert f("P-Gamer-RasetsuBattle01-DA", "tougenanki")["label_ko"] == "일러스트 (배너)"
+
+
+def test_creative_resource_scope_and_format_axis():
+    """제우스는 룰 없음 → None. -SS(숏츠)는 규격 축이라 매핑하지 않는다(v1.9 extension_caution)."""
+    from pipeline.content_theme import creative_resource_of as f
+    assert f("L-Genre-MMORPG-01-DA", "zeus") is None          # 도원암귀 전용
+    assert f("L-Story-Hermesstory-01-SS", "tougenanki") is None  # 규격 축 — 리소스 종류 아님
+    assert f("noSuffix", "tougenanki") is None
