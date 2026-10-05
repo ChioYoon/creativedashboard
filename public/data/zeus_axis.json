@@ -3,23 +3,23 @@
   "title": "zeus",
   "launch_date": "2026-08-26",
   "period": {
-    "from": "2026-08-24",
-    "to": "2026-09-22"
+    "from": "2026-08-29",
+    "to": "2026-09-27"
   },
   "prior_period": {
-    "from": "2026-07-25",
-    "to": "2026-08-23"
+    "from": "2026-07-30",
+    "to": "2026-08-28"
   },
   "baseline_used": {
     "P": {
-      "ipm": 4.7688,
-      "cvr": 0.4583,
+      "ipm": null,
+      "cvr": null,
       "roas7": null,
       "mode": "cohort_weighted"
     },
     "L": {
-      "ipm": 1.43,
-      "cvr": 0.3011,
+      "ipm": 1.3257,
+      "cvr": 0.3235,
       "roas7": null,
       "mode": "cohort_weighted"
     }
@@ -29,145 +29,39 @@
     "min_n": 3,
     "min_cost": 100000
   },
-  "excluded_ratio": 0.318,
+  "excluded_ratio": 0.317,
   "excluded_note": "N/A·미검수 소재 제외 비중(판정 대상 외)",
   "stages": {
-    "P": [
-      {
-        "axis": "전투 쾌감",
-        "n": 6,
-        "status": "검증",
-        "reason": "효율상회·전환율상회",
-        "ipm": 5.948,
-        "cvr": 0.5258,
-        "roas7": null,
-        "ga_roas": 0.0011,
-        "cost": 17920668,
-        "delta": {
-          "ipm_pct": 743.8,
-          "vs_period": "2026-07-25~2026-08-23"
-        }
-      },
-      {
-        "axis": "IP·캐릭터",
-        "n": 2,
-        "status": "미검증",
-        "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 14.0294,
-        "cvr": 1.3027,
-        "roas7": null,
-        "ga_roas": 0.0023,
-        "cost": 3993600,
-        "delta": {
-          "ipm_pct": 2108.4,
-          "vs_period": "2026-07-25~2026-08-23"
-        }
-      },
-      {
-        "axis": "수집·육성",
-        "n": 2,
-        "status": "미검증",
-        "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 4.0352,
-        "cvr": 0.2338,
-        "roas7": null,
-        "ga_roas": 0.0006,
-        "cost": 10464938,
-        "delta": {
-          "ipm_pct": 448.3,
-          "vs_period": "2026-07-25~2026-08-23"
-        }
-      },
-      {
-        "axis": "스토리·세계관",
-        "n": 5,
-        "status": "소진",
-        "reason": "효율하회·전환율하회",
-        "ipm": 2.5435,
-        "cvr": 0.3086,
-        "roas7": null,
-        "ga_roas": 0.0006,
-        "cost": 6958359,
-        "delta": {
-          "ipm_pct": 237.7,
-          "vs_period": "2026-07-25~2026-08-23"
-        }
-      },
-      {
-        "axis": "그래픽·비주얼",
-        "n": 2,
-        "status": "미검증",
-        "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 0.6906,
-        "cvr": 0.2545,
-        "roas7": null,
-        "ga_roas": 0.0007,
-        "cost": 1079325,
-        "delta": {
-          "ipm_pct": 11.3,
-          "vs_period": "2026-07-25~2026-08-23"
-        }
-      },
-      {
-        "axis": "커뮤니티·길드",
-        "n": 1,
-        "status": "미검증",
-        "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 0.6449,
-        "cvr": 0.2535,
-        "roas7": null,
-        "ga_roas": 0.0005,
-        "cost": 337114,
-        "delta": {
-          "ipm_pct": -56.8,
-          "vs_period": "2026-07-25~2026-08-23"
-        }
-      }
-    ],
+    "P": [],
     "L": [
+      {
+        "axis": "보상·혜택",
+        "n": 5,
+        "status": "후보",
+        "reason": "효율상회·ROAS미확인(후보 cap)",
+        "ipm": 1.4713,
+        "cvr": 0.2816,
+        "roas7": null,
+        "ga_roas": 3.3814,
+        "cost": 60388979,
+        "delta": {
+          "ipm_pct": 41.3,
+          "vs_period": "2026-07-30~2026-08-28"
+        }
+      },
       {
         "axis": "스토리·세계관",
         "n": 9,
         "status": "후보",
         "reason": "효율상회·ROAS미확인(후보 cap)",
-        "ipm": 1.474,
-        "cvr": 0.3204,
+        "ipm": 1.4439,
+        "cvr": 0.3526,
         "roas7": null,
-        "ga_roas": 2.778,
-        "cost": 155129632,
+        "ga_roas": 2.8102,
+        "cost": 118615254,
         "delta": {
-          "ipm_pct": null,
-          "vs_period": "2026-07-25~2026-08-23"
-        }
-      },
-      {
-        "axis": "그래픽·비주얼",
-        "n": 2,
-        "status": "미검증",
-        "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 1.9597,
-        "cvr": 0.3961,
-        "roas7": null,
-        "ga_roas": 13.6415,
-        "cost": 3249293,
-        "delta": {
-          "ipm_pct": null,
-          "vs_period": "2026-07-25~2026-08-23"
-        }
-      },
-      {
-        "axis": "수집·육성",
-        "n": 2,
-        "status": "미검증",
-        "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 1.7749,
-        "cvr": 0.4305,
-        "roas7": null,
-        "ga_roas": 3.5682,
-        "cost": 84904091,
-        "delta": {
-          "ipm_pct": null,
-          "vs_period": "2026-07-25~2026-08-23"
+          "ipm_pct": -17.5,
+          "vs_period": "2026-07-30~2026-08-28"
         }
       },
       {
@@ -175,44 +69,44 @@
         "n": 2,
         "status": "미검증",
         "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 1.7577,
-        "cvr": 0.3742,
+        "ipm": 1.7622,
+        "cvr": 0.4411,
         "roas7": null,
-        "ga_roas": 5.7927,
-        "cost": 9178237,
+        "ga_roas": 4.8503,
+        "cost": 9418817,
         "delta": {
-          "ipm_pct": null,
-          "vs_period": "2026-07-25~2026-08-23"
+          "ipm_pct": -22.1,
+          "vs_period": "2026-07-30~2026-08-28"
         }
       },
       {
-        "axis": "전투 쾌감",
-        "n": 6,
-        "status": "소진",
-        "reason": "효율하회·ROAS미확인(후보 cap)",
-        "ipm": 1.3117,
-        "cvr": 0.2624,
+        "axis": "그래픽·비주얼",
+        "n": 2,
+        "status": "미검증",
+        "reason": "자격 미달(n<3 또는 비용<100,000)",
+        "ipm": 1.7163,
+        "cvr": 0.3177,
         "roas7": null,
-        "ga_roas": 1.7156,
-        "cost": 196120334,
+        "ga_roas": 11.9661,
+        "cost": 1821538,
         "delta": {
-          "ipm_pct": null,
-          "vs_period": "2026-07-25~2026-08-23"
+          "ipm_pct": -25.8,
+          "vs_period": "2026-07-30~2026-08-28"
         }
       },
       {
-        "axis": "보상·혜택",
-        "n": 5,
-        "status": "소진",
-        "reason": "효율하회·ROAS미확인(후보 cap)",
-        "ipm": 1.2758,
-        "cvr": 0.2363,
+        "axis": "수집·육성",
+        "n": 2,
+        "status": "미검증",
+        "reason": "자격 미달(n<3 또는 비용<100,000)",
+        "ipm": 1.4897,
+        "cvr": 0.4,
         "roas7": null,
-        "ga_roas": 2.8265,
-        "cost": 63590276,
+        "ga_roas": 3.0241,
+        "cost": 73074844,
         "delta": {
-          "ipm_pct": null,
-          "vs_period": "2026-07-25~2026-08-23"
+          "ipm_pct": -52.5,
+          "vs_period": "2026-07-30~2026-08-28"
         }
       },
       {
@@ -220,14 +114,29 @@
         "n": 1,
         "status": "미검증",
         "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 1.0385,
-        "cvr": 0.3103,
+        "ipm": 1.1228,
+        "cvr": 0.3504,
         "roas7": null,
-        "ga_roas": 2.0485,
-        "cost": 17272104,
+        "ga_roas": 2.2272,
+        "cost": 19629310,
         "delta": {
           "ipm_pct": null,
-          "vs_period": "2026-07-25~2026-08-23"
+          "vs_period": "2026-07-30~2026-08-28"
+        }
+      },
+      {
+        "axis": "전투 쾌감",
+        "n": 6,
+        "status": "소진",
+        "reason": "효율하회·ROAS미확인(후보 cap)",
+        "ipm": 1.1076,
+        "cvr": 0.2827,
+        "roas7": null,
+        "ga_roas": 1.3965,
+        "cost": 141597774,
+        "delta": {
+          "ipm_pct": -41.9,
+          "vs_period": "2026-07-30~2026-08-28"
         }
       },
       {
@@ -235,19 +144,19 @@
         "n": 1,
         "status": "미검증",
         "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 0.9975,
-        "cvr": 0.1758,
+        "ipm": 1.0575,
+        "cvr": 0.1853,
         "roas7": null,
-        "ga_roas": 5.2544,
-        "cost": 626184,
+        "ga_roas": 5.744,
+        "cost": 663390,
         "delta": {
           "ipm_pct": null,
-          "vs_period": "2026-07-25~2026-08-23"
+          "vs_period": "2026-07-30~2026-08-28"
         }
       }
     ]
   },
-  "generated_at": "2026-09-30T00:43:54",
+  "generated_at": "2026-10-05T08:59:48",
   "note": "baseline=코호트 가중평균. P품질=사전예약 전환율(전환/클릭), L품질=D7 ROAS(등록기준 부재→후보cap). ga_roas=Google conversions_value/cost(참고).",
   "active": true
 }

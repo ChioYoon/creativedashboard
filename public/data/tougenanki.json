@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "title_id": "tougenanki",
-  "generated_at": "2026-09-30T00:44:28+09:00",
+  "generated_at": "2026-10-05T09:00:05+09:00",
   "pipeline_version": "stage2-mvp",
   "gemini_model": "gemini-2.5-flash",
   "creatives": [
@@ -92,7 +92,7 @@
       "execution_status": "planned",
       "duplicate_of": "P-Reward-MudanoSSR01-DA",
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:19+09:00",
+      "tagged_at": "2026-10-05T08:59:58+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-MudanoSSR01-DA\\260624_BNR_FGT-IP-MudanoSSR01-DA_L_1200x628_JP.jpg",
@@ -211,7 +211,7 @@
       "execution_status": "not_planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:19+09:00",
+      "tagged_at": "2026-10-05T08:59:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-OniMainTVA01-DA\\260624_BNR_FGT-IP-OniMainTVA01-DA_L_1200x628_JP.jpg",
@@ -327,7 +327,7 @@
       "execution_status": "not_planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:19+09:00",
+      "tagged_at": "2026-10-05T08:59:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-OniMomotaroTVA01-DA\\260518_BNR_FGT-IP-OniMomotaroTVA01-DA_L_1200x628_JP.jpg",
@@ -441,7 +441,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:19+09:00",
+      "tagged_at": "2026-10-05T08:59:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Battle-Friendship02-DA\\JP\\260928_BNR_P-Battle-Freindship02-DA_L_1024x768_JP.jpg",
@@ -575,7 +575,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:19+09:00",
+      "tagged_at": "2026-10-05T08:59:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Battle-Freindship03-DA\\JP\\260928_BNR_P-Battle-Freindship03-DA_L_1024x768_JP.jpg",
@@ -708,7 +708,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:19+09:00",
+      "tagged_at": "2026-10-05T08:59:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Battle-Friendship01-DA\\JP\\260928_BNR_P-Battle-Friendship01-DA_L_1024x768_JP.jpg",
@@ -847,7 +847,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:19+09:00",
+      "tagged_at": "2026-10-05T08:59:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Battle-OniVsMomotaro01-DA\\JP\\260928_BNR_P-Battle-OniVsMomotaro01-DA_L_1024x768_JP.jpg",
@@ -981,7 +981,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:19+09:00",
+      "tagged_at": "2026-10-05T08:59:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Character-Cutscene01-DA\\JP\\260928_BNR_P-Character-Cutscene01-DA_L_1024x768_JP.jpg",
@@ -1115,7 +1115,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-09-30T00:44:19+09:00",
+      "tagged_at": "2026-10-05T08:59:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-HomarePV01-PV\\260421_VID_P-Character-HomarePV01-PV_S_1080x1080_JP.mp4",
@@ -1226,7 +1226,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-09-30T00:44:20+09:00",
+      "tagged_at": "2026-10-05T08:59:59+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-JinPV01-PV\\260421_VID_P-Character-JinPV01-PV_S_1080x1080_JP.mp4",
@@ -1337,7 +1337,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-09-30T00:44:20+09:00",
+      "tagged_at": "2026-10-05T09:00:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-KyoyaPV01-PV\\JP\\260421_VID_P-Character-KyoyaPV01-PV_S_1080x1080_JP.mp4",
@@ -1452,7 +1452,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-09-30T00:44:21+09:00",
+      "tagged_at": "2026-10-05T09:00:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-MudanoPV01-PV\\260401_VID_P-Character-MudanoPV01-PV_S_1080x1080_JP.mp4",
@@ -1567,7 +1567,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:21+09:00",
+      "tagged_at": "2026-10-05T09:00:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Character-NerimaOni01-DA\\JP\\260928_BNR_P-Character-NerimaOni01-DA_L_1024x768_JP.jpg",
@@ -1705,7 +1705,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:21+09:00",
+      "tagged_at": "2026-10-05T09:00:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Character-OniPopOut01-DA\\JP\\260928_BNR_P-Character-OniPopOut01-DA_L_1024x768_JP.jpg",
@@ -1838,7 +1838,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-09-30T00:44:21+09:00",
+      "tagged_at": "2026-10-05T09:00:00+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier3 영상 시안\\260928_VID_P-Character-OnivsMomotaro01-UA_L_1920x1080_JP.mp4",
@@ -1949,7 +1949,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-09-30T00:44:21+09:00",
+      "tagged_at": "2026-10-05T09:00:01+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-ShikiPV01-PV\\260421_VID_P-Character-ShikiPV01-PV_S_1080x1080_JP.mp4",
@@ -2064,7 +2064,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-09-30T00:44:22+09:00",
+      "tagged_at": "2026-10-05T09:00:01+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier3 영상 시안\\260928_VID_P-Character-Shikirage01-UA_L_1920x1080_JP.mp4"
@@ -2180,7 +2180,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:22+09:00",
+      "tagged_at": "2026-10-05T09:00:01+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Character-Skillcard01-DA\\JP\\260928_BNR_P-Character-Skillcard01-DA_L_1024x768_JP.jpg",
@@ -2313,7 +2313,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-09-30T00:44:23+09:00",
+      "tagged_at": "2026-10-05T09:00:01+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-TsubakiriPV01-PV\\260421_VID_P-Character-TsubakiriPV01-PV_S_1080x1080_JP.mp4",
@@ -2424,7 +2424,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:23+09:00",
+      "tagged_at": "2026-10-05T09:00:01+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Gameplay-SoloKyoya01-DA\\JP\\260928_BNR_P-Gameplay-SoloKyoya01-DA_L_1024x768_JP.jpg",
@@ -2564,7 +2564,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-09-30T00:44:23+09:00",
+      "tagged_at": "2026-10-05T09:00:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier2 영상 시안\\260821_VID_P-Gameplay-kyotostory01-UA_L_1920x1080_JP.mp4",
@@ -2672,7 +2672,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-09-30T00:44:24+09:00",
+      "tagged_at": "2026-10-05T09:00:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Gamer-IngamePV01-PV\\260421_VID_P-Gamer-IngamePV01-PV_S_1080x1080_JP.mp4",
@@ -2790,7 +2790,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:24+09:00",
+      "tagged_at": "2026-10-05T09:00:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Gamer-RasetsuBattle01-DA\\JP\\260928_BNR_P-Gamer-RasetsuBattle01-DA_L_1024x768_JP.jpg",
@@ -2919,7 +2919,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-09-30T00:44:25+09:00",
+      "tagged_at": "2026-10-05T09:00:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Cinematic01-PV\\260421_VID_P-IP-Cinematic01-PV_S_1080x1080_JP.mp4",
@@ -3027,122 +3027,10 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-09-30T00:44:25+09:00",
+      "tagged_at": "2026-10-05T09:00:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Cutscene01-UA\\JP\\260928_VID_P-IP-Cutscene0-UA_L_1920x1080_JP.mp4"
-      ],
-      "kpi_source": null,
-      "kpi_window_start": null,
-      "kpi_window_end": null,
-      "kpi_daily": [],
-      "mmp_source": null,
-      "mmp_channels": [],
-      "mmp_d1_ipm": null,
-      "mmp_d1_cpi": null,
-      "mmp_d7_roas": null,
-      "mmp_d1_retention": null,
-      "mmp_quality_score": null,
-      "mmp_installs": null,
-      "mmp_conversions": null,
-      "mmp_conv_ua": null,
-      "mmp_impressions": null,
-      "mmp_retained_d1": null,
-      "mmp_cost": null,
-      "mmp_revenue": null,
-      "mmp_currency": null,
-      "mmp_fx_rate": null,
-      "mmp_daily": [],
-      "media_canonical": null
-    },
-    {
-      "creative_id": "P-IP-Endcard01-EC",
-      "소재명": "P-IP-Endcard01-EC",
-      "파일명": "260127_VID_P-IP-Endcard01-EC_L_1080x1080_JP.mp4",
-      "유형": "VID",
-      "일": "2026-01-27",
-      "캠페인": null,
-      "사이즈": "1080x1080",
-      "언어": "JP",
-      "링크": null,
-      "creative_concept": "P-IP-Endcard01-EC",
-      "전환": 0,
-      "비용": 0,
-      "노출수": 0,
-      "클릭수": 0,
-      "Revenue": 0,
-      "hooking_strategy": "비주얼 임팩트",
-      "USP": "대세감(출시일/사전등록수)",
-      "art_style": "2D 일러스트",
-      "strengths": [
-        "출시일·한정 강조",
-        "단일 명료한 가치 제안"
-      ],
-      "weaknesses": [
-        "초반 3초 안에 가치 전달 실패",
-        "장르/게임성 불분명",
-        "후킹 식상/평이"
-      ],
-      "hypothesis": [
-        "낮은 관련성 위험 — 정보 부족",
-        "낮은 전환 위험 — 행동 유도 약함"
-      ],
-      "test_ideas": [
-        "15초 컷 테스트",
-        "게임플레이 컷 추가",
-        "카피 1줄로 축약"
-      ],
-      "one_line_insight": "사전등록 안내는 명확하나 정적인 이미지와 정보 부족으로 장르 및 게임성 인지가 어려움 — 짧은 플레이 영상이나 핵심 캐릭터 연출을 추가하여 초반 후킹과 가치 전달을 강화",
-      "strength_evidence": [
-        "화면 중앙 하단에 '사전등록 접수 중!' 문구가 명확하게 제시되어 신규 게임에 대한 기대감을 형성하고 즉각적인 행동을 유도함",
-        "게임 타이틀과 사전등록 메시지 외에 다른 정보가 없어 시청자가 혼란 없이 핵심 메시지에 집중할 수 있음"
-      ],
-      "weakness_evidence": [
-        "정적인 이미지로 구성되어 게임의 장르나 핵심 콘텐츠를 3초 이내에 파악하기 어렵고, 시선을 사로잡는 동적인 요소가 부재함",
-        "게임 타이틀과 로고 외에 실제 게임 플레이 화면이나 캐릭터 연출이 없어 어떤 장르의 게임인지, 어떤 재미를 제공하는지 알기 어려움",
-        "단순한 타이틀과 사전등록 안내 이미지로, 동일 장르의 다른 소재 대비 시청자의 호기심을 유발하거나 시선을 강하게 끌어당기는 독창적인 요소가 부족함"
-      ],
-      "improvement_actions": [
-        "정적인 이미지 대신 3~5초 분량의 짧은 애니메이션 컷신이나 핵심 캐릭터 스킬 연출을 추가하여 게임의 매력을 빠르게 전달",
-        "사전등록 문구 위에 실제 카드 배틀 UI나 인페르노 스킬 발동 장면을 짧게 삽입하여 장르와 게임성을 명확히 인지시킴",
-        "현재 사전등록 문구와 함께 '설화를 뒤집은 다크 판타지 턴제 RPG'와 같이 게임의 핵심 특징을 한 줄 카피로 추가하여 정보 전달력을 높임"
-      ],
-      "creator_intent": "신작 게임의 사전등록을 알리고, 타이틀 로고를 통해 게임의 다크 판타지 분위기를 전달하려는 의도",
-      "kpi_reality_check": null,
-      "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 26,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
-      "marketer_insight": null,
-      "player_motivation": null,
-      "main_characters": [],
-      "color_tone": null,
-      "cta_type": null,
-      "theme_primary": "N/A:CTA",
-      "theme_secondary": [],
-      "theme_reviewed": false,
-      "launch_date_variant": false,
-      "theme_partner": null,
-      "intent_axis": "IP",
-      "theme_flags": [
-        "format_hook",
-        "naming:EC_포맷접미와_중복"
-      ],
-      "execution_status": "planned",
-      "duplicate_of": null,
-      "creative_resource": "endcard",
-      "tagged_at": "2026-09-30T00:44:25+09:00",
-      "gemini_model": "gemini-2.5-flash",
-      "source_files": [
-        "1. 사전예약\\2. VID\\0. 엔드카드\\P-IP-Endcard01-EC\\JP\\260127_VID_P-IP-Endcard01-EC_L_1080x1080_JP.mp4",
-        "1. 사전예약\\2. VID\\0. 엔드카드\\P-IP-Endcard01-EC\\JP\\260127_VID_P-IP-Endcard01-EC_L_1080x1920_JP.mp4",
-        "1. 사전예약\\2. VID\\0. 엔드카드\\P-IP-Endcard01-EC\\JP\\260127_VID_P-IP-Endcard01-EC_L_1920x1080_JP.mp4"
       ],
       "kpi_source": null,
       "kpi_window_start": null,
@@ -3223,7 +3111,7 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 27,
+        "rank": 26,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
@@ -3247,7 +3135,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "endcard",
-      "tagged_at": "2026-09-30T00:44:26+09:00",
+      "tagged_at": "2026-10-05T09:00:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\0. 엔드카드\\(활용불가) P-IP-Endcard02-EC\\JP\\260127_VID_P-IP-Endcard02-EC_L_1920x1080_JP.mp4"
@@ -3331,7 +3219,7 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 28,
+        "rank": 27,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
@@ -3362,7 +3250,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:26+09:00",
+      "tagged_at": "2026-10-05T09:00:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-OniMainTVA01-DA\\JP\\260928_BNR_P-IP-OniMainTVA01-DA_L_1024x768_JP.jpg",
@@ -3467,7 +3355,7 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 29,
+        "rank": 28,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
@@ -3501,7 +3389,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:26+09:00",
+      "tagged_at": "2026-10-05T09:00:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-OniMomotaroTVA01-DA\\JP\\260928_BNR_P-IP-OniMomotaroTVA01-DA_L_1024x768_JP.jpg",
@@ -3606,7 +3494,7 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 30,
+        "rank": 29,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
@@ -3642,7 +3530,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:26+09:00",
+      "tagged_at": "2026-10-05T09:00:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-RasetsuTVA01-DA\\JP\\260928_BNR_P-IP-RasetsuTVA01-DA_L_1024x768_JP.jpg",
@@ -3747,7 +3635,7 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 31,
+        "rank": 30,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
@@ -3771,7 +3659,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-09-30T00:44:26+09:00",
+      "tagged_at": "2026-10-05T09:00:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Teaser01-PV\\260421_VID_P-IP-Teaser01-PV_S_1080x1080_JP.mp4",
@@ -3858,7 +3746,7 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 32,
+        "rank": 31,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
@@ -3887,7 +3775,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:27+09:00",
+      "tagged_at": "2026-10-05T09:00:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR01-DA\\JP\\260928_BNR_P-Reward-MudanoSSR01-DA_L_1024x768_JP.jpg",
@@ -3994,7 +3882,7 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 33,
+        "rank": 32,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
@@ -4023,7 +3911,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:27+09:00",
+      "tagged_at": "2026-10-05T09:00:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR02-DA (CTA)\\JP\\260928_BNR_P-Reward-MudanoSSR02-DA_L_1024x768_JP.jpg",
@@ -4128,7 +4016,7 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 34,
+        "rank": 33,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
@@ -4162,7 +4050,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:27+09:00",
+      "tagged_at": "2026-10-05T09:00:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-OniMomotaroSSR01-DA\\JP\\260928_BNR_P-Reward-OniMomotaroSSR01-DA_L_1024x768_JP.jpg",
@@ -4269,7 +4157,7 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 35,
+        "rank": 34,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
@@ -4304,7 +4192,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:27+09:00",
+      "tagged_at": "2026-10-05T09:00:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR01-DA\\JP\\260928_BNR_P-Reward-RasetsuSSR01-DA_L_1024x768_JP.jpg",
@@ -4407,7 +4295,7 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 36,
+        "rank": 35,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
@@ -4442,7 +4330,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:27+09:00",
+      "tagged_at": "2026-10-05T09:00:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR02-DA (CTA)\\JP\\260928_BNR_P-Reward-RasetsuSSR02-DA_L_1024x768_JP.jpg",
@@ -4549,7 +4437,7 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 37,
+        "rank": 36,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
@@ -4577,7 +4465,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-09-30T00:44:27+09:00",
+      "tagged_at": "2026-10-05T09:00:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-Skillcard02-DA\\JP\\260928_BNR_P-Reward-Skillcard02-DA_L_1024x768_JP.jpg",
@@ -4683,7 +4571,7 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 38,
+        "rank": 37,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
@@ -4715,7 +4603,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-09-30T00:44:27+09:00",
+      "tagged_at": "2026-10-05T09:00:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Reward-SkillcardSSR01-UA\\JP\\260928_VID_P-Reward-SkillcardSSR01-UA_L_1920x1080_JP.mp4",
@@ -4800,7 +4688,7 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 39,
+        "rank": 38,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
@@ -4825,7 +4713,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-09-30T00:44:27+09:00",
+      "tagged_at": "2026-10-05T09:00:05+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier3 영상 시안\\260928_VID_P-Story-Freindship01-UA_L_1920x1080_JP.mp4"
@@ -4909,7 +4797,7 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 40,
+        "rank": 39,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
@@ -4938,7 +4826,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-09-30T00:44:28+09:00",
+      "tagged_at": "2026-10-05T09:00:05+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier3 영상 시안\\260928_VID_P-Story-IconicLines01-UA_L_1920x1080_JP.mp4",
@@ -5023,7 +4911,7 @@
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 41,
+        "rank": 40,
         "conv": 100.0,
         "cpa": 0.0,
         "ipm": 0.0,
@@ -5056,7 +4944,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-09-30T00:44:28+09:00",
+      "tagged_at": "2026-10-05T09:00:05+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier2 영상 시안\\260826_VID_P-Story-OnivsMomotaro01-UA_L_1920x1080_JP.mp4",
@@ -5087,12 +4975,12 @@
     }
   ],
   "metrics": {
-    "scanned_folders": 41,
-    "tagged_records": 41,
-    "cache_hits": 41,
+    "scanned_folders": 40,
+    "tagged_records": 40,
+    "cache_hits": 40,
     "cache_misses": 0,
     "failures": 0,
-    "duration_sec": 9.2,
+    "duration_sec": 6.9,
     "prompt_version": "v3.3-2026.06.13-character-split-single-darkfantasy-v1",
     "fallback_used": false,
     "carried_forward": 0,
