@@ -97,7 +97,7 @@ exit ($(if ($pipelineExitCode -ne 0 -or $gitFailed) { 1 } else { 0 }))
 | # | 항목 | 담당 | 상태 |
 | --- | --- | --- | --- |
 | — | `pull --rebase` 선행 | 다른 세션 | ✅ 반영됨 |
-| 1 | push 실패 → 종료 코드 1 | `nightly.ps1` 작업 세션과 조율 | ⏳ |
+| 1 | git 단계(commit·pull·push) 실패 → 종료 코드 2 | CLOOP | ✅ 반영됨 (2026-10-05) |
 | 2 | SMTP 앱 비밀번호 재발급 | 계정 소유자 | ⏳ |
 
 1번이 들어가기 전까지는 **스케줄러 성공 표시를 신뢰할 수 없다.** 라이브 반영 여부는

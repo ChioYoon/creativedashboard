@@ -64,6 +64,10 @@ Write-Log INFO ""
 Write-Log INFO ">> Step 1/3: Multi-title tagging"
 $env:PYTHONIOENCODING = 'utf-8'
 $pipelineExitCode = 0
+# Any git-step failure (commit/pull/push) -> exit 2, so Task Scheduler
+# "Last Run Result" is non-zero. 2026-09-23..29 push was rejected 7 days
+# while the scheduler showed success.
+$gitFailed = $false
 
 & $VenvPython -m pipeline.main --all-titles 2>&1 | ForEach-Object {
     Write-Host $_
@@ -83,6 +87,7 @@ if ($DryRun) {
     $gitCmd = Get-Command git -ErrorAction SilentlyContinue
     if (-not $gitCmd) {
         Write-Log ERROR "git not found. Install Git for Windows."
+        $gitFailed = $true
     } else {
         $isGitRepo = git rev-parse --is-inside-work-tree 2>$null
         if ($LASTEXITCODE -ne 0 -or $isGitRepo -ne 'true') {
@@ -102,20 +107,27 @@ if ($DryRun) {
                     Add-Content -Path $LogFile -Value "  $_" -Encoding UTF8
                 }
                 if ($LASTEXITCODE -ne 0) {
-                    Write-Log WARN "git commit failed (might be no changes)"
+                    # public/data had changes, so a commit failure is real (hook, identity, lock)
+                    Write-Log ERROR "git commit failed (exit=$LASTEXITCODE). See commit output above."
+                    $gitFailed = $true
                 } else {
                     Write-Log INFO "Commit done: $commitMsg"
 
-                    # push 전 원격 동기화 — 웹 머지/타 세션 push로 원격이 앞서면
-                    # non-fast-forward 로 push 거부됨(2026-09 인시던트). public/data 만
-                    # 커밋하므로 보통 무충돌. 충돌 시 rebase abort 후 push 스킵(수동 조정).
-                    Write-Log INFO "Syncing with remote (pull --rebase origin main)..."
-                    $pullOutput = git pull --rebase origin main 2>&1
+                    # Sync before push: a web merge / other-session push makes the remote
+                    # ahead and push is rejected as non-fast-forward (2026-09 incident).
+                    # Only public/data is committed, so usually conflict-free. On conflict:
+                    # abort rebase and skip push (manual reconcile).
+                    # --autostash: uncommitted edits elsewhere in the checkout (dev work,
+                    # brief mirror sync) otherwise make pull refuse -> push skipped
+                    # (2026-10-07..12 incident).
+                    Write-Log INFO "Syncing with remote (pull --rebase --autostash origin main)..."
+                    $pullOutput = git pull --rebase --autostash origin main 2>&1
                     $pullExit = $LASTEXITCODE
                     $pullOutput | ForEach-Object { Write-Log INFO "  pull: $_" }
                     if ($pullExit -ne 0) {
                         Write-Log ERROR "pull --rebase failed (exit=$pullExit). Aborting rebase, skipping push. Manual reconcile needed."
                         git rebase --abort 2>&1 | ForEach-Object { Write-Log INFO "  rebase-abort: $_" }
+                        $gitFailed = $true
                     } else {
                         Write-Log INFO "Pushing..."
                         $pushOutput = git push 2>&1
@@ -126,7 +138,8 @@ if ($DryRun) {
                         if ($pushExit -eq 0) {
                             Write-Log INFO "Push done. GitHub Pages will auto-refresh."
                         } else {
-                            Write-Log ERROR "Push failed (exit=$pushExit). Check auth or network."
+                            Write-Log ERROR "Push failed (exit=$pushExit). Reason is in the 'push:' lines above."
+                            $gitFailed = $true
                         }
                     }
                 }
@@ -135,13 +148,13 @@ if ($DryRun) {
     }
 }
 
-# --- BigQuery export (git push 뒤 · 격리 · 게이팅은 파이썬 내부) ---
+# --- BigQuery export (after git push; isolated; gating lives in Python) ---
 if (-not $DryRun) {
-    Write-Log INFO "BigQuery export 시작"
+    Write-Log INFO "BigQuery export start"
     & $VenvPython -m pipeline.bq_export --all-titles 2>&1 | ForEach-Object { Write-Log INFO $_ }
-    if ($LASTEXITCODE -ne 0) { Write-Log WARN "bq_export 비정상 종료(대시보드·git 무영향)" }
+    if ($LASTEXITCODE -ne 0) { Write-Log WARN "bq_export exited abnormally (no effect on dashboard/git)" }
 } else {
-    Write-Log INFO "DryRun — BigQuery export 스킵"
+    Write-Log INFO "DryRun - BigQuery export skipped"
 }
 
 # --- 4. Log rotation (30 days) ---
@@ -164,7 +177,11 @@ Write-Log INFO "==========================================================="
 Write-Log INFO "CLOOP Nightly Batch end"
 Write-Log INFO "Total duration: $($duration.TotalSeconds.ToString('F1')) sec"
 Write-Log INFO "Pipeline exit:  $pipelineExitCode"
+Write-Log INFO "Git failed:     $gitFailed"
 Write-Log INFO "Log file:       $LogFile"
 Write-Log INFO "==========================================================="
 
-exit $pipelineExitCode
+# Pipeline failure keeps its own code; git-only failure -> 2.
+if ($pipelineExitCode -ne 0) { exit $pipelineExitCode }
+if ($gitFailed) { exit 2 }
+exit 0
