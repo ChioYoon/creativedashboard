@@ -93,17 +93,21 @@ if ($DryRun) {
         if ($LASTEXITCODE -ne 0 -or $isGitRepo -ne 'true') {
             Write-Log WARN "Not a Git repository. Skipping commit/push."
         } else {
-            $changes = git status --porcelain public/data 2>&1
+            # Brief mirror (js/brand_briefs.json, js/gate_registry.json) is rewritten by the
+            # pipeline (sync_mirror); without committing it the live gate never updates.
+            $AutoPaths = @('public/data', 'js/brand_briefs.json', 'js/gate_registry.json')
+            $changes = git status --porcelain -- $AutoPaths 2>&1
             if (-not $changes) {
-                Write-Log INFO "No changes in public/data. Skipping commit."
+                Write-Log INFO "No changes in pipeline outputs. Skipping commit."
             } else {
                 Write-Log INFO "Detected changes:"
                 $changes | ForEach-Object { Write-Log INFO "  $_" }
 
-                git add public/data 2>&1 | Out-Null
+                git add -- $AutoPaths 2>&1 | Out-Null
                 $dateStr = (Get-Date).ToString('yyyy-MM-dd')
                 $commitMsg = "auto: nightly tagging $dateStr [pipeline]"
-                git commit -m $commitMsg 2>&1 | ForEach-Object {
+                # Pathspec-limited: never sweep up anything else a dev left staged.
+                git commit -m $commitMsg -- $AutoPaths 2>&1 | ForEach-Object {
                     Add-Content -Path $LogFile -Value "  $_" -Encoding UTF8
                 }
                 if ($LASTEXITCODE -ne 0) {
@@ -115,7 +119,7 @@ if ($DryRun) {
 
                     # Sync before push: a web merge / other-session push makes the remote
                     # ahead and push is rejected as non-fast-forward (2026-09 incident).
-                    # Only public/data is committed, so usually conflict-free. On conflict:
+                    # Only pipeline outputs are committed, so usually conflict-free. On conflict:
                     # abort rebase and skip push (manual reconcile).
                     # --autostash: uncommitted edits elsewhere in the checkout (dev work,
                     # brief mirror sync) otherwise make pull refuse -> push skipped

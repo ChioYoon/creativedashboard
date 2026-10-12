@@ -62,6 +62,17 @@ TITLES_JSON_PATH = Path("js/titles.json")
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 
 
+
+def _fetch_failed(kpi_status: str, mmp_status: str) -> bool:
+    """KPI 또는 MMP 수집이 실패했나. skipped(미설정)·truncated 는 실패 아님."""
+    return kpi_status in ("failed", "auth_failed") or mmp_status in ("failed", "auth_failed")
+
+def _atomic_write_text(path: Path, text: str) -> None:
+    """tmp 작성 후 os.replace — 중단 시 잘린 JSON 이 남아 push 되는 것 방지."""
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    tmp.write_text(text, encoding="utf-8")
+    os.replace(tmp, path)
+
 def _collect_campaign_names(records) -> set:
     """records 의 kpi_daily + mmp_daily 행에서 비어있지 않은 campaign_name 수집."""
     names = set()
@@ -1287,12 +1298,19 @@ def run(cfg: dict) -> dict:
     out_path = cfg["output_dir"] / out_name
     out_path.parent.mkdir(parents=True, exist_ok=True)
     payload = dataset.model_dump(by_alias=True)
-    out_path.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
+    # KPI/MMP fetch 가 실패한 날 쓰면 정상 지표가 0/빈값으로 덮여 라이브에 push 됨
+    # (09-09 gd·09-21 zeus·09-29 zeus 실사례). 이전 산출물이 있으면 그대로 유지.
+    # 태깅 캐시는 이미 저장됐으므로 다음 정상 런이 신규 소재까지 반영한다.
+    fetch_failed = _fetch_failed(kpi_status, mmp_status)
+    kept_previous = fetch_failed and out_path.exists() and not cfg.get("pilot")
+    if kept_previous:
+        print(f"\n⚠️  KPI/MMP fetch 실패 → {out_path.name} 미갱신(이전 산출물 유지)")
+        metrics["errors"].append(f"KPI/MMP fetch 실패로 {out_path.name} 미갱신 — 이전 데이터 유지")
+    else:
+        _atomic_write_text(out_path, json.dumps(payload, ensure_ascii=False, indent=2))
 
     # content_theme 축 판정 산출(R팀 브랜드브리프 §5-1 연동). 파일럿·실패 시 스킵 — 본 파이프라인 무영향.
-    if not cfg.get("pilot"):
+    if not cfg.get("pilot") and not kept_previous:
         try:
             from .axis_verdict import build_for_title
             _today = datetime.now(KST).date()
@@ -1301,7 +1319,7 @@ def run(cfg: dict) -> dict:
             axis = build_for_title(payload["creatives"], cfg["title"], win_from=_wf, win_to=_wt)
             axis["active"] = any(axis["stages"].get(s) for s in ("P", "L"))
             axis_path = cfg["output_dir"] / f"{cfg['title']}_axis.json"
-            axis_path.write_text(json.dumps(axis, ensure_ascii=False, indent=2), encoding="utf-8")
+            _atomic_write_text(axis_path, json.dumps(axis, ensure_ascii=False, indent=2))
             _nax = sum(len(axis["stages"].get(s, [])) for s in ("P", "L"))
             print(f"   축 판정:       {axis_path.name} (활성 {axis['active']} · 축 {_nax} · 제외 {axis['excluded_ratio']})")
         except Exception as e:  # noqa: BLE001 — 축 산출 실패가 태깅 결과를 막지 않도록
@@ -1336,7 +1354,8 @@ def run(cfg: dict) -> dict:
     print(f"   대시보드 URL:  step1_integrated.html?title={cfg['title']}")
 
     metrics.update({
-        "status": "success" if (failures == 0 and skipped_quota == 0) else "partial",
+        "status": "success" if (failures == 0 and skipped_quota == 0 and not fetch_failed) else "partial",
+        "output_kept_previous": kept_previous,
         "tagged_records": len(records),
         "cache_hits": hits,
         "cache_misses": misses,
