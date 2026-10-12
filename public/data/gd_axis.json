@@ -3,12 +3,12 @@
   "title": "gd",
   "launch_date": null,
   "period": {
-    "from": "2026-09-01",
-    "to": "2026-09-30"
+    "from": "2026-09-05",
+    "to": "2026-10-04"
   },
   "prior_period": {
-    "from": "2026-08-02",
-    "to": "2026-08-31"
+    "from": "2026-08-06",
+    "to": "2026-09-04"
   },
   "baseline_used": {
     "P": {
@@ -35,7 +35,7 @@
     "P": [],
     "L": []
   },
-  "generated_at": "2026-10-08T13:09:41",
+  "generated_at": "2026-10-12T13:15:51",
   "note": "baseline=코호트 가중평균. P품질=사전예약 전환율(전환/클릭), L품질=D7 ROAS(등록기준 부재→후보cap). ga_roas=Google conversions_value/cost(참고).",
   "active": false
 }
