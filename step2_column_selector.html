@@ -1612,6 +1612,12 @@ function classifyAndRender(data) {
     }
 
     // ③ 태그 컬럼 – 고유 값 샘플 추출
+    // 파이프라인 JSON 의 배열·객체·불리언 필드(theme_flags 등)는 태그 아님 → 메타.
+    // PERF_COLS 에 없는 신규 필드가 생겨도 .trim() 크래시로 전 타이틀 로드가 막히지 않게.
+    if (data.rows.some(r => r[col] != null && typeof r[col] !== 'string')) {
+      columnDefs.push({ col, type: 'meta', category: null, selected: false, locked: false, weight: 0 });
+      return;
+    }
     const vals = data.rows
       .map(r => (r[col] || '').trim())
       .filter(v => v && v !== '-' && v.length < 50);  // 너무 긴 텍스트 제외

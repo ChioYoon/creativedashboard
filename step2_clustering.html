@@ -1160,9 +1160,11 @@ function aggregateByMaterial(rows) {
         클릭수:   0,
         매출:     0,
         _rowCount: 0,
+        _kpiDates: new Set(),   // 파이프라인 JSON: 소재당 1행 → 일수는 kpi_daily 날짜로
         _firstRow: row   // 태그 컬럼은 첫 번째 행 사용 (소재별 고정 속성)
       };
     }
+    (Array.isArray(row.kpi_daily) ? row.kpi_daily : []).forEach(d => { if (d && d.date) groups[key]._kpiDates.add(d.date); });
 
     groups[key].전환   += Math.max(0, safeNum(row['전환']   || row['conversion']));
     groups[key].비용   += Math.max(0, safeNum(row['비용']   || row['cost']));
@@ -1466,9 +1468,8 @@ function assignMaterialsToClusters(scoredMats, tagGroups, tagCols, weightMap, in
 
     const finalScore = mat.TotalScore || 50;
 
-    // ── 집계 일수: 원본 행 수(= 날짜별 데이터 행 수) ──
-    // aggregateByMaterial에서 _rowCount로 카운트됨
-    const dayCount = mat._rowCount || 1;
+    // ── 집계 일수: 파이프라인 JSON 은 kpi_daily 고유 날짜 수, CSV 는 원본 행 수(= 날짜별 행) ──
+    const dayCount = (mat._kpiDates && mat._kpiDates.size) || mat._rowCount || 1;
 
     // ── 미리보기 링크/이미지 URL ──
     // 앱 확장 소재 컬럼: "파일명;URL" 형태에서 URL 추출
@@ -1825,7 +1826,9 @@ async function fetchHistoricalSnapshot(titleId, targetDateISO) {
    Union-Find 재계산 시 군집 ID는 시점마다 안정적이지 않으므로, 소재 구성 겹침으로 매칭한다.
    threshold 미만이면 매칭 안 함(신규 취급) — 실측 데이터 부족한 초기 추정치, 조정 여지 있음. */
 function _clusterMaterialKeys(cluster) {
-  return new Set((cluster.materials || []).map(m => m._key || m.소재명 || m.파일명 || ''));
+  // 배정된 소재 객체는 이름을 name 에 담음(assignMaterialsToClusters). 빈 키는 제외 —
+  // 전부 '' 이면 모든 군집 쌍 Jaccard=1 로 오매칭됨.
+  return new Set((cluster.materials || []).map(m => m._key || m.name || m.소재명 || m.파일명 || '').filter(Boolean));
 }
 
 function _jaccardSets(a, b) {
