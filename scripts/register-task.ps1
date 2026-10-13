@@ -97,9 +97,9 @@ $settings = New-ScheduledTaskSettingsSet `
     -StartWhenAvailable `
     -DontStopIfGoingOnBatteries `
     -AllowStartIfOnBatteries `
-    -ExecutionTimeLimit (New-TimeSpan -Minutes 60) `
+    -ExecutionTimeLimit (New-TimeSpan -Hours 3) `
     -MultipleInstances IgnoreNew
-Write-OK "Settings: StartWhenAvailable, 60-min timeout"
+Write-OK "Settings: StartWhenAvailable, 3-hour timeout (full re-tag on prompt bump can exceed 60 min)"
 
 $principal = New-ScheduledTaskPrincipal `
     -UserId $env:USERNAME `
