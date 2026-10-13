@@ -1,5 +1,9 @@
 {
+  "gd": {
+    "_pipeline_enabled": false
+  },
   "pepp-us": {
+    "_pipeline_enabled": false,
     "_pipeline_google_ads_window_days": 159,
     "_pipeline_kpi_start_date": "2025-11-01",
     "_creative_name_aliases": {
