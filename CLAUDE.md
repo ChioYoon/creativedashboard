@@ -1,5 +1,5 @@
 # CLAUDE.md — Com2uS R팀 소재 분석 대시보드
-> Claude Code 작업 가이드 | 최종 업데이트: 2026-08-10
+> Claude Code 작업 가이드 | 최종 업데이트: 2026-10-13
 
 ---
 
@@ -18,7 +18,7 @@
 ```
 프로젝트 루트/
 ├── index.html                  홈(랜딩) — 진입점
-├── step1_integrated.html   ★ 소재 분석(메인, ~8,700줄) — 파싱·분석 엔진 인라인 포함
+├── step1_integrated.html   ★ 소재 분석(메인, ~9,000줄) — 파싱·분석 엔진 인라인 포함
 ├── live_dashboard.html         라이브 대시보드 (public/data JSON 자동 로드)
 ├── pre_eval.html               소재 사전 평가 (Gemini Vision)
 ├── step2_column_selector.html  군집화 ① 컬럼·가중치
@@ -49,52 +49,44 @@
 
 - **step1 로직 수정 시 반드시 HTML 내 인라인 블록을 직접 수정** — 외부 원본 js 수정은 step1에 반영 안 됨
 - `gemini-api.js`는 예외 — step1도 외부 `<script src>`로 로드(인라인 아님)
-- ⚠️ `analysis-engine-v2.js`는 외부 원본 파일이 이제 없음(step1 인라인본만 존재)
+- ⚠️ 인라인 analysis-engine 블록(`aggregateCreativeData`·`calculateRankScores`·`runStep1_Scoring` 등)과 인라인 `plDetectTagColumns`·`plCalcScores` 등은 **호출되지 않는 죽은 코드**. 실제 점수 경로는 `aggregateCreatives` → `calculateCreativeScores`(§4). 원본 `analysis-engine-v2.js` 는 `archive/js/` 에만 있음
 
 ---
 
 ## 3. step1_integrated.html 내부 구조 (함수 인덱스)
 
-> ⚠️ 아래 **라인 번호는 옛 버전 기준으로 크게 어긋남**(파일이 ~8,700줄로 성장). 라인 범위는 참고만 하고, **함수명으로 `grep` 해서 찾을 것**(예: `function calculateScores`, `setLayerHeaders`, `runClustering`). 컬럼 정렬은 `data-sortkey`(TotalScore/__mmpscore 등), 점수 표시명은 GA=종합점수 / MMP=MMP 품질점수(로직 키와 분리됨).
+> 라인 번호는 수시로 바뀜 — **함수명으로 `grep`** 할 것. 컬럼 정렬은 `data-sortkey`(TotalScore/__mmpscore 등), 점수 표시명은 GA=종합점수 / MMP=MMP 품질점수(로직 키와 분리됨).
 
-| 라인 범위(옛값·부정확) | 내용 |
-|-----------|------|
-| 1 ~ 13 | `<head>`: Chart.js CDN, gemini-ui.css, gemini-api.js |
-| 14 ~ 759 | `<style>` CSS 전체 |
-| 760 ~ 854 | 네비게이션 + 헤더 + **업로드 섹션** (파일탭/붙여넣기탭) |
-| 855 ~ 989 | 계산 기준 설정 섹션 (가중치 슬라이더, 필터 옵션) |
-| 990 ~ 1080 | **분석 결과 섹션** HTML 구조 |
-| 1081 ~ 1230 | 피로도 분석 섹션 |
-| 1231 ~ 1290 | 차트 섹션 + 모달 + 로딩 인디케이터 |
-| **1291 ~ 1640** | **인라인 pipeline-engine.js** |
-| **1641 ~ 1812** | **인라인 analysis-engine-v2.js** |
-| 1813 ~ 2371 | UI 유틸 함수 (switchUploadTab, processPastedCSV, processCSV 등) |
-| **2372 ~ 2673** | **calculateScores()** — 점수 계산 메인 로직 |
-| **2675 ~ 2789** | **displayScoringResults()** — 결과 렌더링 |
-| **2790 ~ 3064** | **exportResultHTML()** — HTML 파일 다운로드 |
-| **3069 ~ 3192** | **renderTypeSummary()** — BNR/VID 유형별 요약표 |
-| 3194 ~ 3920 | resetScoring, 피로도 분석 함수군 |
-| **3920 ~ 4130** | **runScoringAIInsight()** + `_buildUpgradeNudge()` |
-| 4131 ~ 4230 | **runFatigueAIInsight()** |
+| 함수 | 역할 |
+|------|------|
+| `calculateScores()` | 점수 계산 메인 — 필터·집계·점수·렌더 오케스트레이션, MMP 레이어 재계산 포함 |
+| `aggregateCreatives(rows, groupBy)` | 소재별 집계. `meta` 는 첫 행의 **사본**(MMP 재계산이 meta 를 덮어씀 — 원본 rawData 오염 금지) |
+| `calculateCreativeScores(...)` | Rank 기반 점수·등급 (Python 포트 `pipeline/scoring.py` 와 동일성 유지 — `scripts/verify-scoring.py`) |
+| `getReportWeights()` | 슬라이더 가중치를 **합계로 정규화**. 분석 실행·피로도·보고서 공용 |
+| `displayScoringResults()` | 결과 렌더링 (표·제외목록·배지) |
+| `renderTypeSummaryTable()` | BNR/VID 유형별 요약표 |
+| `runFatigueAnalysis()` | 피로도 분석 |
+| `openPreviewModal()` / `showFatigueModal()` | 소재 상세 모달 |
+| `runScoringAIInsight()` / `runFatigueAIInsight()` | Gemini AI 인사이트 |
+
+### XSS 규칙 (step1·live 공통)
+- 소재명·캠페인명·파일명·링크 등 **데이터 값은 innerHTML 에 넣기 전 `escapeHtml()`**. 대행사 입력값이라 신뢰 불가
+- 인라인 `onclick` 인자는 **`jsAttr(값)`** 로 생성 (JSON 리터럴 + 속성 이스케이프). `'${x}'` 수동 이스케이프 금지
 
 ---
 
 ## 4. 핵심 데이터 흐름
 
 ```
-CSV 업로드/붙여넣기
-  └─ processCSV(csvText, fileName)
-       └─ plParseCSV()            # 파싱 (pipeline-engine.js 인라인, line ~1291)
-       └─ plNormalizeColumns()    # 컬럼 정규화 (한글/영문 헤더 자동 매핑)
-       └─ plDetectTagColumns()    # 태그 컬럼 자동 탐지
+타이틀 선택(public/data JSON) 또는 CSV 업로드/붙여넣기
+  └─ processCSV / DataSource.loadCreativeData   # 파싱·컬럼 정규화(plParseCSV·plNormalizeColumns 인라인)
             ↓
-calculateScores()                  # line 2372
-  └─ aggregateCreativeData()      # 소재별 집계 (analysis-engine-v2.js 인라인, line ~1641)
-  └─ calculateRankScores()        # Rank 기반 점수화
-  └─ calculateTotalScore()        # 가중평균 총점
-  └─ displayScoringResults()      # line 2675 → 화면 렌더링
-       ├─ renderTypeSummary()     # line 3069 → BNR/VID 요약표
-       └─ exportResultHTML()      # line 2790 → HTML 다운로드
+calculateScores()
+  └─ aggregateCreatives()        # 소재별 집계 (meta = 첫 행 사본)
+  └─ getReportWeights()          # 가중치 합계 정규화
+  └─ calculateCreativeScores()   # Rank 점수·가중평균·등급
+  └─ (MMP 레이어) aggMmpWindow → scoreMmpItems   # js/layer-metrics.js
+  └─ displayScoringResults()     # 렌더링 → renderTypeSummaryTable()
 ```
 
 ### 점수 계산 공식
@@ -117,32 +109,9 @@ TotalScore = Σ(지표점수 × 가중치%) / Σ(활성가중치%)
 
 ---
 
-## 5. 분석 결과 섹션 DOM 구조
+## 5. 분석 결과 섹션
 
-```html
-<section id="results">
-  <!-- ① 스코어 카드 5개 -->
-  <div class="stats-grid">           <!-- 5컬럼 그리드 -->
-    #statTotal / #statMax / #statAvg / #statExcellent
-    <div class="stat-card stat-card-poor"> #statPoor (개선필요 등급 카운트) </div>
-  </div>
-
-  <!-- ② HTML 추출 버튼 -->
-  <div id="exportBtnContainer">      <!-- display:none → 결과 생성 시 show -->
-
-  <!-- ③ 필터 조건 (JS 동적 삽입) -->
-  <div id="filterSummarySlot">       <!-- displayScoringResults()에서 innerHTML 삽입 -->
-
-  <!-- ④ AI 인사이트 -->
-  <div id="scoringAIBox">
-
-  <!-- ⑤ 유형별 요약 -->
-  <div id="typeSummaryContainer">    <!-- renderTypeSummary()가 렌더링 -->
-
-  <!-- ⑥ 상세 테이블 -->
-  <table> <tbody id="tableBody">
-</section>
-```
+DOM 구조는 자주 바뀜 — `displayScoringResults()` 와 `id="tableBody"` 를 기준으로 grep. (HTML 추출 기능 `exportResultHTML`·`#exportBtnContainer` 는 02d53ed 에서 제거됨)
 
 ---
 
@@ -191,33 +160,25 @@ buildFatigueSlotCards(slots)
 
 ### ① 점수 계산 로직 수정
 ```
-위치: step1_integrated.html line ~2372 (calculateScores)
-      step1_integrated.html line ~1728 (runStep1_Scoring — 인라인)
-      step1_integrated.html line ~1641 (aggregateCreativeData — 인라인)
-주의: js/analysis-engine-v2.js 원본은 수정해도 HTML에 반영 안 됨
-     → HTML 내 인라인 블록(line 1641~1812)을 직접 수정
+위치: step1_integrated.html calculateCreativeScores / getReportWeights (grep)
+주의: 인라인 analysis-engine 블록은 죽은 코드 — 거기 고쳐도 반영 안 됨
+     공식 변경 시 pipeline/scoring.py 도 동일하게 + scripts/verify-scoring.py 통과 확인
 ```
 
 ### ② AI 프롬프트 수정
 ```
 위치: js/gemini-api.js
-      GeminiPrompts.scoringInsight() — line ~325
-      GeminiPrompts.fatigueInsight() — line ~483
+      GeminiPrompts.scoringInsight() — line ~491
+      GeminiPrompts.fatigueInsight() — line ~659
 주의: gemini-api.js는 외부 파일 그대로 수정 가능
 ```
 
 ### ③ 결과 UI 추가/수정
 ```
-HTML 구조: step1_integrated.html line ~990
-CSS:       step1_integrated.html line ~14 (인라인 style 블록)
-           css/gemini-ui.css (AI 인사이트 카드만)
-JS 렌더링: displayScoringResults() line ~2675
-```
-
-### ④ HTML 추출 기능 수정
-```
-위치: exportResultHTML() — step1_integrated.html line ~2790
-내용: Blob 다운로드 + 미리보기(BNR img / VID 썸네일) + 상세 컬럼
+CSS: step1_integrated.html 인라인 style 블록 (모바일 ≤768px: 사이드바 접힘+오버레이)
+     css/gemini-ui.css (AI 인사이트 카드만)
+JS 렌더링: displayScoringResults()
+공용 js/css 수정 시 HTML ?v= 캐시버스터는 pre-commit 훅이 자동 갱신(tools/bump_cache_busters.py)
 ```
 
 ---
@@ -274,13 +235,15 @@ http://localhost:8080/step1_integrated.html
 
 ---
 
-## 11. 현재 버전 기준 미완성/후속 개발 후보
+## 11. nightly 파이프라인 운영 메모
 
-| 항목 | 설명 | 우선순위 |
-|------|------|---------|
-| AI 인사이트 UI 렌더링 개선 | winning 슬롯 내 위닝/루징 블록을 시각적으로 분리 (카드 내 섹션 구분선, 배지 등) | 🔴 높음 |
-| 사용안내서 최신화 | `사용안내서_인쇄용.html` — CSV 붙여넣기 탭, 저조소재 카드, HTML추출 미리보기 반영 | 🟡 중간 |
-| README.md 업데이트 | 5/19~20 변경사항 반영 (현재 4/13 기준) | 🟡 중간 |
+- 종료 코드: 0 정상 · 1 파이프라인 실패(타이틀 partial/exception, KPI·MMP fetch 실패 포함) · 2 git 단계(commit·pull·push) 실패
+- 로그: `logs/nightly_*.log`. 작업 스케줄러 `CLOOP-Nightly` 13:00, 실행 제한 3시간
+- push 전 `git pull --rebase --autostash`. 커밋은 `public/data` + 브리프 미러(`js/brand_briefs.json`·`js/gate_registry.json`) 경로로 한정
+- KPI/MMP fetch 실패 날은 `{title}.json` 미갱신(이전 산출물 유지). fetch 는 일시 오류 3회 재시도
+- MMP 전환은 **캠페인 유형별**(NU-Pre=등록, NU=D1잔존). 등록 이벤트 설정 타이틀도 NU·RT 실적이 생기면 설치 기준(ROAS 축 포함)으로 자동 전환
+- 처리 대상: `js/titles.json` `_pipeline_enabled=true` (gd·pepp-us 는 레거시로 비활성)
+- 미완: SMTP 메일 알림(앱 비밀번호 미설정 — 실패 알림이 안 감)
 
 ---
 
@@ -293,7 +256,7 @@ http://localhost:8080/step1_integrated.html
 □ "✅ Step 1 통합 페이지 로드 완료" 로그 확인
 □ sample_data/PH_SL_260508.csv 로 점수 계산 실행 → 결과 정상 출력
 □ AI 인사이트 버튼 클릭 → 로딩 후 결과 카드 렌더링
-□ HTML 추출 버튼 → 파일 다운로드 확인
+□ pytest · scripts/verify-scoring.py · node --test tests/js/canonical-filter.test.js 통과
 □ 모바일 뷰포트(375px)에서 레이아웃 깨짐 없음
 ```
 
@@ -306,7 +269,7 @@ http://localhost:8080/step1_integrated.html
 rawData            // 파싱된 원본 CSV rows
 normalizedData     // 컬럼 정규화 후 { columns, rows }
 scoredCreatives    // 점수 계산 결과 배열 (displayScoringResults 입력)
-window.currentCreatives  // exportResultHTML에서 사용
+window.currentCreatives  // 모달·보고서·AI 인사이트가 사용하는 현재 결과
 currentGroupBy     // '소재명' | '파일명'
 currentCampaign    // 선택된 캠페인 필터값
 _lastFatigueData   // 피로도 분석 결과 캐시
