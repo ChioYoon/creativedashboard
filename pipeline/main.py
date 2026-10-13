@@ -43,7 +43,7 @@ from tqdm import tqdm
 from collections import defaultdict
 
 from .cache import TagCache, file_sha256
-from .campaign_canonical import build_campaign_canonical, resolve_campaign_media
+from .campaign_canonical import build_campaign_canonical, campaign_ua_type, resolve_campaign_media
 from .content_theme import assign_theme as assign_content_theme, execution_of, creative_resource_of
 from .media_normalize import normalize_media, unmapped_media
 from .mmp_metrics import aggregate_rows_total, compute_mmp_quality
@@ -344,6 +344,12 @@ def inject_mmp_into_records(records, mmp_daily, source_name="airbridge", currenc
     """
     if not mmp_daily:
         return []
+    # 등록 이벤트 설정 타이틀이라도 사전예약(NU-Pre) 외 캠페인(NU·RT) 실적이 생기면 런칭 전환 →
+    # 설치 기준(D7 ROAS 축 포함). 전환 자체는 계속 캠페인 유형별(conv_ua). JS detectConversionBasis 동일 판정.
+    if conversion_basis == "registration":
+        _uas = {campaign_ua_type(d.campaign_name or "") for d in mmp_daily} - {""}
+        if _uas and _uas != {"NU-Pre"}:
+            conversion_basis = "install"
     candidates = {r.creative_id for r in records} | {r.소재명 for r in records}
     by_concept: dict[str, list] = {}
     raw_of: dict[str, str] = {}   # 매칭 key → 원본 concept(미매칭 표시용)
