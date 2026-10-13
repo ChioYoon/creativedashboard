@@ -1231,12 +1231,19 @@
         grid-template-columns: 1fr;
       }
       .stats-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(2, 1fr);
       }
       .stats-grid .stat-card:nth-child(4),
       .stats-grid .stat-card:nth-child(5) {
         grid-column: span 1;
       }
+      /* 모바일: 사이드바(240px)가 본문을 ~135px 로 압축 → 기본 접힘(40px 레일) + 펼치면 본문 위 오버레이 */
+      .ds-app-body { position: relative; }
+      .ds-sidebar:not(.collapsed) {
+        position: absolute; top: 0; left: 0; bottom: 0; z-index: 50;
+        box-shadow: 4px 0 16px rgba(0,0,0,.12);
+      }
+      .ds-sidebar:not(.collapsed) ~ .ds-main { margin-left: 40px; }
     }
 
     /* ── Main Tabs ── */
@@ -1911,6 +1918,12 @@ function toggleSidebar() {
     if (poly) poly.setAttribute('points', isCollapsed ? '9 18 15 12 9 6' : '15 18 9 12 15 6');
   }
 }
+
+// 모바일 첫 진입은 접힌 상태로 시작(펼치면 오버레이) — 본문 가독 폭 확보
+document.addEventListener('DOMContentLoaded', () => {
+  const sb = document.getElementById('sidebar');
+  if (sb && !sb.classList.contains('collapsed') && window.matchMedia('(max-width: 768px)').matches) toggleSidebar();
+});
 
 /* ── 사이드바 아코디언 ── */
 function toggleSidebarSection(id) {
