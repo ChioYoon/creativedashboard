@@ -103,6 +103,12 @@ class GoogleAdsKpiSource(KpiSource):
         try:
             client = GoogleAdsClient.load_from_storage(str(config_path))
         except Exception as e:
+            # 토큰 갱신 중 네트워크 오류(SSL EOF·연결 끊김)는 인증 만료가 아님 — 재시도 대상으로 분류
+            # (2026-09-21: SSL EOF 가 "refresh token 재발급 필요"로 오보고됨)
+            import requests
+            from google.auth.exceptions import TransportError
+            if isinstance(e, (TransportError, requests.exceptions.RequestException)):
+                raise RuntimeError(f"Google Ads 인증 서버 연결 실패(일시 네트워크 오류): {e}")
             raise AuthError(
                 f"Google Ads SDK 설정 로드 실패 ({config_path}): {e}\n"
                 f"YAML 형식 또는 refresh_token 유효성을 확인하세요."

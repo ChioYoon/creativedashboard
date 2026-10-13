@@ -33,6 +33,7 @@ import os
 import re
 import sys
 import time
+import traceback
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Optional
@@ -62,6 +63,20 @@ TITLES_JSON_PATH = Path("js/titles.json")
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 
 
+
+def _with_retry(fn, label: str, attempts: int = 3, delay: float = 30):
+    """KPI/MMP fetch 일시 오류(연결 리셋·SSL·5xx) 재시도. 인증·quota·설정 누락은 즉시 전파.
+    ponytail: 예외 종류 무차별 재시도(4xx 도 최대 60초 낭비) — 필요해지면 HTTP 상태별 분기."""
+    for i in range(attempts):
+        try:
+            return fn()
+        except FileNotFoundError:
+            raise
+        except Exception as e:
+            if type(e).__name__ in ("AuthError", "QuotaError") or i == attempts - 1:
+                raise
+            print(f"   ↻ {label} 실패({type(e).__name__}: {str(e)[:120]}) — {delay:.0f}초 후 재시도 {i + 2}/{attempts}")
+            time.sleep(delay)
 
 def _fetch_failed(kpi_status: str, mmp_status: str) -> bool:
     """KPI 또는 MMP 수집이 실패했나. skipped(미설정)·truncated 는 실패 아님."""
@@ -784,7 +799,7 @@ def run(cfg: dict) -> dict:
             from .sources.google_ads import GoogleAdsKpiSource, resolve_window
             from .cache import KpiCache
 
-            source = GoogleAdsKpiSource.from_env()
+            source = _with_retry(GoogleAdsKpiSource.from_env, "Google Ads 인증")
             kpi_window_start, kpi_window_end = resolve_window(
                 cfg["kpi_window_days"], cfg.get("kpi_start_date") or None
             )
@@ -796,7 +811,7 @@ def run(cfg: dict) -> dict:
             )
             # Stage 5-D: IN() 필터 제거. 폴더명(concept) vs asset.name(파일명) 매칭 불가
             # → 전 asset fetch 후 concept 단위 그룹핑으로 매칭. SearchStream 1 operation 비용 동일.
-            kpi_rows = list(
+            kpi_rows = _with_retry(lambda: list(
                 source.fetch_window(
                     customer_id=cfg["google_ads_customer_id"],
                     start=kpi_window_start,
@@ -805,7 +820,7 @@ def run(cfg: dict) -> dict:
                     campaign_filter=cfg.get("google_ads_campaign_filter") or None,
                     conversion_actions=cfg.get("conversion_actions"),
                 )
-            )
+            ), "Google Ads KPI fetch")
             # 그룹핑: concept → rows (별칭 적용) + 미매칭(집행O·미조인) 수집
             _idx, ga_unmatched = build_kpi_index(
                 kpi_rows, candidate_concepts, cfg.get("creative_name_aliases"),
@@ -870,7 +885,7 @@ def run(cfg: dict) -> dict:
             )
             # airbridge 는 채널 제외셋을 명시 전달, appsflyer 는 소스 내부 기본 제외셋 사용
             _exclude = set(cfg.get("airbridge_exclude_channels", [])) if mmp_provider == "airbridge" else None
-            mmp_daily = mmp_src.fetch_mmp_window(_start, _end, exclude_channels=_exclude)
+            mmp_daily = _with_retry(lambda: mmp_src.fetch_mmp_window(_start, _end, exclude_channels=_exclude), f"MMP({mmp_provider}) fetch")
             cfg["_mmp_daily"] = mmp_daily
             cfg["_mmp_currency"] = mmp_src.currency
             cfg["_mmp_fx_rate"] = mmp_src.usd_to_krw
@@ -1023,7 +1038,19 @@ def run(cfg: dict) -> dict:
             tqdm.write(f"   [건너뜀] {c.creative_name}: 대표 파일 없음")
             continue
 
-        sha = file_sha256(rep)
+        # 공유 드라이브(G:) 일시 오류(OSError Errno 22 등) 1건이 타이틀 전체를 exception 으로
+        # 끝내지 않도록 — 1회 재시도 후에도 실패하면 해당 소재만 실패 처리(status=partial).
+        try:
+            try:
+                sha = file_sha256(rep)
+            except OSError:
+                time.sleep(2)
+                sha = file_sha256(rep)
+        except OSError as e:
+            tqdm.write(f"   [실패] {c.creative_name}: 파일 읽기 오류 ({e})")
+            metrics["errors"].append(f"파일 읽기 오류 {c.creative_name}: {e}")
+            failures += 1
+            continue
         cached = None if cfg["no_cache"] else cache.get(sha, pversion)
         if cached:
             tag_dict = cached
@@ -1403,6 +1430,7 @@ def run_all_titles(args) -> dict:
                 "errors": [str(e.code) if e.code else "unknown config error"],
             }
         except Exception as e:
+            traceback.print_exc()   # 원인 위치를 nightly 로그에 남김(예외 메시지만으론 추적 불가)
             metric = {
                 "title": title_entry["id"],
                 "status": "exception",
