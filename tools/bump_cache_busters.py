@@ -46,7 +46,8 @@ _REF = re.compile(
     r'(?:\?v=(?P<ver>[^"]*))?"'
 )
 
-_EXCLUDE_DIRS = {".git", ".venv", "node_modules", "__pycache__", "archive"}
+# .claude: 세션 worktree(.claude/worktrees/*) — 다른 체크아웃의 HTML 을 건드리지 않도록 제외
+_EXCLUDE_DIRS = {".git", ".venv", "node_modules", "__pycache__", "archive", ".claude"}
 
 
 def _short_hash(file_path: Path) -> str:

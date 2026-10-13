@@ -2088,6 +2088,8 @@ function escapeHtml(s) {
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
+// 인라인 onclick 인자: JS 문자열 리터럴(JSON) → HTML 속성 이스케이프. 소재명·URL 의 따옴표·태그로 탈출 불가.
+function jsAttr(s) { return escapeHtml(JSON.stringify(String(s == null ? '' : s))); }
 
 // Stage 5-F-3: stats-grid 직후 분포 패널 — 강점/약점 Top 5 + 추천 변주 Top 3.
 // 캠페인 필터·유형 필터 변경으로 displayScoringResults() 재호출 시 자동 갱신.
@@ -4243,9 +4245,9 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         item.dataset.campaign = campaign.toLowerCase();
         const label = group === 'mmp' ? campaign.replace('[MMP] ', '') : campaign;
         item.innerHTML = `
-          <input type="checkbox" id="${id}" value="${campaign}" checked
+          <input type="checkbox" id="${id}" value="${escapeHtml(campaign)}" checked
             data-group="${group}" onchange="onCampaignCheckboxChange(this)">
-          <label for="${id}">${label}</label>
+          <label for="${id}">${escapeHtml(label)}</label>
         `;
         container.appendChild(item);
       }
@@ -4290,9 +4292,9 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           item.dataset.campaign = campaign.toLowerCase();
           const label = group === 'mmp' ? campaign.replace('[MMP] ', '') : campaign;
           item.innerHTML = `
-            <input type="checkbox" id="${id}" value="${campaign}" checked
+            <input type="checkbox" id="${id}" value="${escapeHtml(campaign)}" checked
               data-group="${group}" onchange="onFatigueCampaignCheckboxChange(this)">
-            <label for="${id}">${label}</label>
+            <label for="${id}">${escapeHtml(label)}</label>
           `;
           fatigueContainer.appendChild(item);
         }
@@ -5020,10 +5022,8 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           }
           
           // 3. 점수 계산
-          const convWeight = parseInt(document.getElementById('conversionWeight').value) / 100;
-          const cpaWeight = parseInt(document.getElementById('cpaWeight').value) / 100;
-          const ipmWeight = parseInt(document.getElementById('ipmWeight').value) / 100;
-          const roasWeight = parseInt(document.getElementById('roasWeight').value) / 100;
+          // 가중치는 합계로 정규화 — 슬라이더 4개가 독립이라 합≠100% 면 점수 상한이 어긋나 등급 컷이 무의미해짐
+          const { conv: convWeight, cpa: cpaWeight, ipm: ipmWeight, roas: roasWeight } = getReportWeights();
           
           scoredCreatives = calculateCreativeScores(aggregated, convWeight, cpaWeight, ipmWeight, roasWeight);
           window._scoredCreatives = scoredCreatives; // ★ AI 인사이트 함수 스코프 접근 보장
@@ -5070,7 +5070,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             매출: 0, // Revenue 추가
             이미지링크: row['이미지링크'] || row['링크'] || '',
             count: 0,
-            meta: row // 첫 번째 행의 메타데이터 저장
+            meta: { ...row } // 첫 번째 행 메타 사본 — MMP 재계산이 meta 필드를 덮어쓰므로 rawData 원본 오염 방지
           };
         }
         
@@ -5511,7 +5511,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         const isVideo = c.유형 === 'VID';
         const hasImage = imageUrl && imageUrl.startsWith('http');
         // 모달은 소재 키로 오픈(openModalByName) — 검색·선택만보기 필터 시 행 인덱스↔전체배열 인덱스 어긋남 방지
-        const _kEsc = String(c.key || c.소재명 || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        const _kArg = jsAttr(c.key || c.소재명 || '');
 
         // 위험 신호 아이콘 HTML 생성
         const sigs = riskSignals[c.key] || [];
@@ -5531,11 +5531,11 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         // 썸네일 HTML 생성
         let previewHtml = '';
         if (isVideo) {
-          previewHtml = (yt => `<div class="preview-video"${yt ? ` style="background:linear-gradient(rgba(0,0,0,.30),rgba(0,0,0,.30)),url('${yt}'),linear-gradient(135deg,#DC2828 0%,#FF6B6B 100%);background-size:cover;background-position:center;"` : ''} onclick="openModalByName('${_kEsc}')"></div>`)(youtubeThumb(imageUrl));
+          previewHtml = (yt => `<div class="preview-video"${yt ? ` style="background:linear-gradient(rgba(0,0,0,.30),rgba(0,0,0,.30)),url('${yt}'),linear-gradient(135deg,#DC2828 0%,#FF6B6B 100%);background-size:cover;background-position:center;"` : ''} onclick="openModalByName(${_kArg})"></div>`)(youtubeThumb(imageUrl));
         } else if (hasImage) {
-          previewHtml = `<img src="${imageUrl}" class="preview-thumbnail" onclick="openModalByName('${_kEsc}')" alt="미리보기">`;
+          previewHtml = `<img src="${escapeHtml(imageUrl)}" class="preview-thumbnail" onclick="openModalByName(${_kArg})" alt="미리보기">`;
         } else {
-          previewHtml = `<span class="preview-placeholder-clickable" onclick="openModalByName('${_kEsc}')" title="소재 상세 정보 보기" style="cursor:pointer; color:#9ca3af; font-size:24px; display:inline-block; padding:8px 12px; border:1.5px dashed #d1d5db; border-radius:8px; transition:all .15s;" onmouseover="this.style.background='#fef2f2'; this.style.borderColor='#DC2828';" onmouseout="this.style.background=''; this.style.borderColor='#d1d5db';">📷</span>`;
+          previewHtml = `<span class="preview-placeholder-clickable" onclick="openModalByName(${_kArg})" title="소재 상세 정보 보기" style="cursor:pointer; color:#9ca3af; font-size:24px; display:inline-block; padding:8px 12px; border:1.5px dashed #d1d5db; border-radius:8px; transition:all .15s;" onmouseover="this.style.background='#fef2f2'; this.style.borderColor='#DC2828';" onmouseout="this.style.background=''; this.style.borderColor='#d1d5db';">📷</span>`;
         }
 
         // 레이어별 4지표·총점·등급 (데이터 소스 분리: ads=순수 Google Ads / mmp=순수 MMP)
@@ -5580,10 +5580,10 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
               ${statusBadgeHtml(_rowStatus)}
               ${_exBadge}
               ${sigIconsHtml}
-              <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.key}</span>
+              <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(c.key)}</span>
             </div>
           </td>
-          <td><span class="badge badge-${c.유형.toLowerCase()}">${c.유형}</span></td>
+          <td><span class="badge badge-${escapeHtml(c.유형.toLowerCase())}">${escapeHtml(c.유형)}</span></td>
           <td style="text-align: right;">${m1}</td>
           <td style="text-align: right;">${m2}</td>
           <td style="text-align: right;">${m3}</td>
@@ -5630,7 +5630,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
 
         if (thresholdPct > 0 && excludedCreatives.length > 0) {
           const listItems = excludedCreatives.map(c =>
-            `<li><strong>${c.key}</strong> — ${c._excludeReason.join(' / ')}</li>`
+            `<li><strong>${escapeHtml(c.key)}</strong> — ${escapeHtml(c._excludeReason.join(' / '))}</li>`
           ).join('');
           excludeDetailHtml = `
             <details class="excluded-detail" style="margin-top:12px;">
@@ -7502,11 +7502,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       const allAgg = aggregateCreatives(filteredRows, fatigueGroupBy);
       const fatigueLayer = window.currentAnalysisLayer || 'ads';
 
-      const convWeight = parseInt(document.getElementById('conversionWeight').value) / 100;
-      const cpaWeight = parseInt(document.getElementById('cpaWeight').value) / 100;
-      const ipmWeight = parseInt(document.getElementById('ipmWeight').value) / 100;
-      const roasWeight = parseInt(document.getElementById('roasWeight').value) / 100;
-      const fatigueWeights = { conv: convWeight, cpa: cpaWeight, ipm: ipmWeight, roas: roasWeight };
+      const fatigueWeights = getReportWeights();   // 합계 정규화(분석 실행·보고서와 동일 기준)
 
       // Phase 2 캐노니컬(캠페인 유형) + 사이드바 개별 캠페인 선택을 피로도 일별 슬라이스에 적용 —
       // '분석 실행'(소재 목록)과 동일 캠페인 스코프로 기준/비교 CPA·순위 산출.
@@ -7719,7 +7715,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         return `<div style="background:#fff;border:1px solid var(--hairline-warm,#E4E1DC);border-radius:8px;padding:10px 12px;display:flex;gap:10px;align-items:center;">
           ${thumb}
           <div style="flex:1;min-width:0;">
-            <div style="font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><span class="clickable-name" style="cursor:pointer;text-decoration:underline dotted #999;text-underline-offset:2px;" onclick="openModalByName('${_e(r.key).replace(/'/g, "\\'")}')">${_e(r.key)}</span></div>
+            <div style="font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><span class="clickable-name" style="cursor:pointer;text-decoration:underline dotted #999;text-underline-offset:2px;" onclick="openModalByName(${jsAttr(r.key)})">${_e(r.key)}</span></div>
             <div style="font-size:12px;color:var(--text-secondary,#666);margin-top:2px;">${rankTxt}${cpaTxt} · 투입 ${r.runDays}일차</div>
             <div style="margin-top:3px;">${r.reasons.map(x => `<span style="display:inline-block;font-size:10.5px;font-weight:600;background:rgba(220,40,40,.08);color:#DC2828;padding:1px 7px;border-radius:8px;margin-right:4px;">${_e(x)}</span>`).join('')}</div>
           </div>
@@ -7925,10 +7921,10 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         let previewHtml = '';
         if (isVideo) {
           // 동영상: 플레이 버튼 표시
-          previewHtml = (yt => `<div class="preview-video"${yt ? ` style="background:linear-gradient(rgba(0,0,0,.30),rgba(0,0,0,.30)),url('${yt}'),linear-gradient(135deg,#DC2828 0%,#FF6B6B 100%);background-size:cover;background-position:center;"` : ''} onclick="showFatigueModal('${r.key.replace(/'/g, "\\'")}', '${r.유형}', '${imageUrl.replace(/'/g, "\\'")}', ${r.baselineCPA}, ${r.comparisonCPA})"></div>`)(youtubeThumb(imageUrl));
+          previewHtml = (yt => `<div class="preview-video"${yt ? ` style="background:linear-gradient(rgba(0,0,0,.30),rgba(0,0,0,.30)),url('${yt}'),linear-gradient(135deg,#DC2828 0%,#FF6B6B 100%);background-size:cover;background-position:center;"` : ''} onclick="showFatigueModal(${jsAttr(r.key)}, ${jsAttr(r.유형)}, ${jsAttr(imageUrl)}, ${r.baselineCPA}, ${r.comparisonCPA})"></div>`)(youtubeThumb(imageUrl));
         } else if (hasImage) {
           // 이미지: 실제 이미지 표시
-          previewHtml = `<img src="${imageUrl}" class="preview-thumbnail" onclick="showFatigueModal('${r.key.replace(/'/g, "\\'")}', '${r.유형}', '${imageUrl.replace(/'/g, "\\'")}', ${r.baselineCPA}, ${r.comparisonCPA})" alt="미리보기">`;
+          previewHtml = `<img src="${escapeHtml(imageUrl)}" class="preview-thumbnail" onclick="showFatigueModal(${jsAttr(r.key)}, ${jsAttr(r.유형)}, ${jsAttr(imageUrl)}, ${r.baselineCPA}, ${r.comparisonCPA})" alt="미리보기">`;
         } else {
           // 없음: 플레이스홀더
           previewHtml = '<span style="color: #9ca3af; font-size: 24px;">📷</span>';
@@ -7969,8 +7965,8 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         
         tr.innerHTML = `
           <td style="text-align: center;">${previewHtml}</td>
-          <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${r.key}</td>
-          <td><span class="badge badge-${r.유형.toLowerCase()}">${r.유형}</span></td>
+          <td style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${escapeHtml(r.key)}</td>
+          <td><span class="badge badge-${escapeHtml(r.유형.toLowerCase())}">${escapeHtml(r.유형)}</span></td>
           <td style="text-align: center; font-weight: 700;">${r.baselineRank}</td>
           <td style="text-align: center; font-weight: 700;">${r.comparisonRank}</td>
           <td style="text-align: center;">${rankChangeHtml}</td>
@@ -8362,7 +8358,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
           <div style="font-size:12.5px;line-height:1.6;">
             이 소재는 백엔드 파이프라인에서 자동 태깅된 결과입니다.<br>
             로컬 파일 경로만 보유 (GDrive sync 폴더 내).<br>
-            <span style="display:inline-block;margin-top:8px;font-family:monospace;font-size:11px;color:#9ca3af;">파일명: ${creative.파일명 || creative.meta?.['파일명'] || '-'}</span>
+            <span style="display:inline-block;margin-top:8px;font-family:monospace;font-size:11px;color:#9ca3af;">파일명: ${escapeHtml(creative.파일명 || creative.meta?.['파일명'] || '-')}</span>
           </div>
           ${_driveBtn ? `<div style="margin-top:18px;">${_driveBtn}</div>` : ''}
         </div>`;
@@ -8371,7 +8367,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         content = buildYouTubeEmbedHtml(extractYouTubeId(contentUrl));
       } else {
         // 이미지
-        content = `<img src="${contentUrl}" class="modal-image" alt="${creative.소재명}">`;
+        content = `<img src="${escapeHtml(contentUrl)}" class="modal-image" alt="${escapeHtml(creative.소재명)}">`;
       }
 
       // Stage 5-I QA: '한 줄'+'마케터 인사이트' 통합 블록 + 데이터 체크 — 상단 배치
@@ -8453,7 +8449,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
           </div>
           <div class="modal-info-row">
             <div class="modal-info-label">소재명</div>
-            <div class="modal-info-value">${creative.소재명 || '-'}</div>
+            <div class="modal-info-value">${escapeHtml(creative.소재명 || '-')}</div>
           </div>
           <div class="modal-info-row">
             <div class="modal-info-label">파일명</div>
@@ -8461,7 +8457,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
           </div>
           <div class="modal-info-row">
             <div class="modal-info-label">유형</div>
-            <div class="modal-info-value"><strong>${creative.유형}</strong> ${isVideo ? '(동영상)' : '(이미지)'}</div>
+            <div class="modal-info-value"><strong>${escapeHtml(creative.유형)}</strong> ${isVideo ? '(동영상)' : '(이미지)'}</div>
           </div>
           ${assetBreakdownHtml(creative)}
           ${statusBlock}
@@ -8486,7 +8482,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
           ${trendBlock}
           ${hasUrl ? `
           <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e5e7eb;">
-            <a href="${contentUrl}" target="_blank" style="color: #DC2828; text-decoration: none; font-weight: 600;">
+            <a href="${escapeHtml(contentUrl)}" target="_blank" rel="noopener" style="color: #DC2828; text-decoration: none; font-weight: 600;">
               원본 링크 열기
             </a>
           </div>` : ''}
@@ -8594,7 +8590,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         content = buildYouTubeEmbedHtml(extractYouTubeId(imageUrl));
       } else {
         // 이미지
-        content = `<img src="${imageUrl}" class="modal-image" alt="${name}">`;
+        content = `<img src="${escapeHtml(imageUrl)}" class="modal-image" alt="${escapeHtml(name)}">`;
       }
       
       content += `
@@ -8625,7 +8621,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       if (type === 'VID') {
         content = buildYouTubeEmbedHtml(extractYouTubeId(imageUrl));
       } else {
-        content = `<img src="${imageUrl}" class="modal-image" alt="${name}">`;
+        content = `<img src="${escapeHtml(imageUrl)}" class="modal-image" alt="${escapeHtml(name)}">`;
       }
       
       const cpaChange = comparisonCPA - baselineCPA;
@@ -8637,11 +8633,11 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
           <h3>피로도 분석 정보</h3>
           <div class="modal-info-row">
             <div class="modal-info-label">소재명/파일명:</div>
-            <div class="modal-info-value">${name}</div>
+            <div class="modal-info-value">${escapeHtml(name)}</div>
           </div>
           <div class="modal-info-row">
             <div class="modal-info-label">유형:</div>
-            <div class="modal-info-value"><span class="badge badge-${type.toLowerCase()}">${type}</span></div>
+            <div class="modal-info-value"><span class="badge badge-${escapeHtml(type.toLowerCase())}">${escapeHtml(type)}</span></div>
           </div>
           <div class="modal-info-row">
             <div class="modal-info-label">기준 CPA:</div>

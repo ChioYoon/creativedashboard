@@ -363,7 +363,7 @@
     const url = c['링크'] || c.이미지링크 || '';
     const isVideo = (c.유형 || '').toUpperCase() === 'VID';
     const hasUrl = url && url.startsWith('http');
-    if (hasUrl && !isVideo) return `<img src="${url}" alt="" style="width:100%;height:100%;object-fit:cover;">`;
+    if (hasUrl && !isVideo) return `<img src="${escapeHtml(url)}" alt="" style="width:100%;height:100%;object-fit:cover;">`;
     if (hasUrl && isVideo) {
       const yid = extractYouTubeId(url);
       if (yid) {
@@ -409,11 +409,11 @@
     const hasUrl = url && url.startsWith('http');
     const isVideo = (c.유형 || '').toUpperCase() === 'VID';
     let preview;
-    if (hasUrl && !isVideo) preview = `<img src="${url}" style="max-width:100%;border-radius:10px;" alt="">`;
+    if (hasUrl && !isVideo) preview = `<img src="${escapeHtml(url)}" style="max-width:100%;border-radius:10px;" alt="">`;
     else if (hasUrl && isVideo) {
       const yid = extractYouTubeId(url);
       preview = yid ? buildYouTubeEmbedHtml(yid)
-        : `<div style="text-align:center;"><a href="${url}" target="_blank" rel="noopener" style="display:inline-block;padding:12px 20px;background:#111;color:#fff;border-radius:8px;font-weight:700;text-decoration:none;">▶ 영상 열기</a></div>`;
+        : `<div style="text-align:center;"><a href="${escapeHtml(url)}" target="_blank" rel="noopener" style="display:inline-block;padding:12px 20px;background:#111;color:#fff;border-radius:8px;font-weight:700;text-decoration:none;">▶ 영상 열기</a></div>`;
     }
     else {
       // 유튜브·이미지 링크 모두 없을 때만 Drive
