@@ -31,3 +31,8 @@ openpyxl>=3.1
 
 # BigQuery exporter (pipeline/bq_export.py)
 google-cloud-bigquery>=3.25.0,<4.0.0
+
+# Google Sheets exporter (pipeline/sheets_export.py) — 서비스 계정 인증·REST 호출
+# (google-ads/bigquery 가 이미 끌어오지만 직접 사용하므로 명시)
+google-auth>=2.30.0,<3.0.0
+requests>=2.31.0,<3.0.0

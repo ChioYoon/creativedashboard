@@ -161,6 +161,15 @@ if (-not $DryRun) {
     Write-Log INFO "DryRun - BigQuery export skipped"
 }
 
+# --- Google Sheets export (BI portal; after git push; isolated; gating lives in Python) ---
+if (-not $DryRun) {
+    Write-Log INFO "Sheets export start"
+    & $VenvPython -m pipeline.sheets_export 2>&1 | ForEach-Object { Write-Log INFO $_ }
+    if ($LASTEXITCODE -ne 0) { Write-Log WARN "sheets_export failed (no effect on dashboard/git; previous sheet kept or partially replaced)" }
+} else {
+    Write-Log INFO "DryRun - Sheets export skipped"
+}
+
 # --- 4. Log rotation (30 days) ---
 Write-Log INFO ""
 Write-Log INFO ">> Step 3/3: Log rotation (delete logs older than 30 days)"

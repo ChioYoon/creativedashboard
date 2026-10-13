@@ -47,6 +47,7 @@ R팀 담당자별로 **개별 키**를 발급해서 사용합니다. (공용 키
 - **소재 태깅** — `pipeline/tagger.py`가 Gemini Files API로 소재 파일을 구조화 태그(`pipeline/schemas.py`의 `CreativeTag`: hooking/USP/visual/strengths/test_ideas 등)로 분석. 장르·게임 컨텍스트는 `pipeline/game_context/*.md` 주입.
 - **점수·품질 산출** — `pipeline/scoring.py`(Google Ads 4지표 Rank 점수, 대시보드 로직과 동일), `pipeline/mmp_metrics.py`(MMP 품질 4지표). KPI 백분위(CTR/CVR/CPA)도 계산.
 - **산출·배포** — `public/data/{title}.json` 저장 → git 커밋·push → GitHub Pages가 라이브 대시보드로 서빙. 실행 로그 `logs/`, 결과 메일 알림(`pipeline/notify.py`).
+- **BI 포털용 Google Sheets 업로드** — push 뒤 `pipeline/sheets_export.py`가 소재 데이터 4탭(kpi_daily·mmp_daily·creatives·axis)을 지정 시트에 전체 교체(기본 비활성). 셋업: [`docs/sheets-export-setup.md`](docs/sheets-export-setup.md).
 - **캐시** — `cache/{title}_kpi.json`·`{title}_tags.json`(Gemini 태깅 캐시).
 
 측정 기준·항목 상세: [`docs/measurement-reference.md`](docs/measurement-reference.md). 매체 축 정규화 설계: [`docs/mmp-channel-media-design.md`](docs/mmp-channel-media-design.md).

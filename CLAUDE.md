@@ -243,6 +243,7 @@ http://localhost:8080/step1_integrated.html
 - KPI/MMP fetch 실패 날은 `{title}.json` 미갱신(이전 산출물 유지). fetch 는 일시 오류 3회 재시도
 - MMP 전환은 **캠페인 유형별**(NU-Pre=등록, NU=D1잔존). 등록 이벤트 설정 타이틀도 NU·RT 실적이 생기면 설치 기준(ROAS 축 포함)으로 자동 전환
 - 처리 대상: `js/titles.json` `_pipeline_enabled=true` (gd·pepp-us 는 레거시로 비활성)
+- push 뒤 격리 실행: `bq_export`(비활성) · `sheets_export`(BI 포털용 Google Sheets 4탭 전체 교체, `SHEETS_EXPORT_ENABLED` 게이팅, 셋업 `docs/sheets-export-setup.md`)
 - 미완: SMTP 메일 알림(앱 비밀번호 미설정 — 실패 알림이 안 감)
 
 ---
