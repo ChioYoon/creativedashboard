@@ -337,6 +337,8 @@ def main(argv=None) -> int:
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args(argv)
 
+    from dotenv import load_dotenv
+    load_dotenv()   # nightly 는 별도 프로세스로 호출 — .env 의 BQ_EXPORT_ENABLED 등을 읽어야 게이팅이 동작
     cfg = load_bq_config()
     if cfg is None:
         log.info("bq_export: 비활성(BQ_EXPORT_ENABLED≠1 또는 키 부재) — 스킵")
