@@ -56,7 +56,7 @@
     .nav-sep { width:1px; height:24px; background:rgba(255,255,255,.28); margin:0 10px; flex-shrink:0; }
     .nav-group { display:flex; align-items:center; gap:4px; flex:1; }
     .nav-group-label {
-      font-size:10px; font-weight:700; letter-spacing:.04em;
+      font-size:11px; font-weight:700; letter-spacing:.04em;
       color:rgba(255,255,255,.55); text-transform:uppercase;
       padding:2px 8px; border-radius:4px;
       background:rgba(255,255,255,.10);
@@ -303,7 +303,7 @@
       border-bottom:1px dashed var(--gray-line);
     }
     .cc-material:last-child { border-bottom:none; }
-    .cc-rank { width:20px; height:20px; border-radius:50%; font-size:10px; font-weight:800;
+    .cc-rank { width:20px; height:20px; border-radius:50%; font-size:11px; font-weight:800;
       display:flex; align-items:center; justify-content:center; color:#fff; flex-shrink:0; }
     .rank-1 { background:#FFD700; color:#7A4F00; }
     .rank-2 { background:#C0C0C0; color:#333; }
@@ -314,7 +314,7 @@
     .cc-footer { padding:10px 18px; background:var(--gray-bg); border-top:1px solid var(--gray-line);
       display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
     .cc-type-badge {
-      font-size:10px; padding:2px 7px; border-radius:8px; font-weight:600;
+      font-size:11px; padding:2px 7px; border-radius:8px; font-weight:600;
     }
 
     /* ═══════════ 차트 영역 ═══════════ */
@@ -337,7 +337,7 @@
     .ti-bar-wrap { flex:1; height:16px; background:var(--gray-line); border-radius:8px; overflow:hidden; }
     .ti-bar { height:100%; border-radius:8px; transition:width .5s ease; }
     .ti-val { width:50px; text-align:right; font-size:12px; font-weight:700; }
-    .ti-col { width:100px; font-size:10px; color:var(--gray-text); white-space:nowrap; }
+    .ti-col { width:100px; font-size:11px; color:var(--gray-text); white-space:nowrap; }
 
     /* ═══════════ 매핑 테이블 ═══════════ */
     /* R16: 전 소재 세로 전개(~2,700px)가 스크롤 주범 → 내부 스크롤 + 헤더 고정 (검색·필터·CSV 유지) */
@@ -367,7 +367,7 @@
       line-height:20px;
     }
     .cluster-chip {
-      font-size:10px; padding:2px 7px; border-radius:8px;
+      font-size:11px; padding:2px 7px; border-radius:8px;
       font-weight:700; color:#fff;
     }
     .th-sort { cursor:pointer; user-select:none; }
@@ -392,7 +392,7 @@
     .ic-title { font-size:14px; font-weight:700; }
     .ic-body  { font-size:12px; line-height:1.7; }
     .ic-tags  { display:flex; flex-wrap:wrap; gap:4px; margin-top:8px; }
-    .ic-tag   { font-size:10px; padding:2px 7px; border-radius:8px;
+    .ic-tag   { font-size:11px; padding:2px 7px; border-radius:8px;
       background:rgba(0,0,0,.06); font-weight:600; }
 
     /* ═══════════ 에러 상태 ═══════════ */
@@ -503,7 +503,7 @@
     .pm-kpi         { background:var(--gray-bg); border-radius:var(--radius-sm);
                       padding:8px 10px; text-align:center; }
     .pm-kpi-val     { font-size:16px; font-weight:800; color:var(--dark); }
-    .pm-kpi-lbl     { font-size:10px; color:var(--gray-text); margin-top:2px; }
+    .pm-kpi-lbl     { font-size:11px; color:var(--gray-text); margin-top:2px; }
     .pm-insight     { background:var(--gold-pale); border:1px solid #FFD700;
                       border-radius:var(--radius-sm); padding:10px 14px;
                       font-size:13px; line-height:1.6; color:var(--dark); }
@@ -623,11 +623,11 @@
     .ai-key-badge.set   { background:var(--green-pale); color:var(--green); }
     .ai-key-badge.unset { background:var(--orange-pale); color:var(--orange); }
   </style>
-  <link rel="stylesheet" href="assets/ds/colors_and_type.css?v=47396165">
+  <link rel="stylesheet" href="assets/ds/colors_and_type.css?v=c784c10f">
   <link rel="stylesheet" href="assets/cl-shell.css?v=74a462d6">
   <script src="js/layer-metrics.js?v=5107e0da"></script>
   <script src="js/data-source.js?v=50c99d6c"></script>
-  <script src="js/gemini-api.js?v=e5b090b4"></script>
+  <script src="js/gemini-api.js?v=11319bb8"></script>
 </head>
 <body>
 
@@ -1919,8 +1919,8 @@ function renderClusterTrendHtml(cmp) {
     // DS 모노+Red: 상승/유지=중립 다크, 하락=Red 강조(주의)
     const color = delta < 0 ? 'var(--red,#DC2828)' : '#191919';
     return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px dashed var(--gray-line);">
-      <span style="flex:1;font-size:12.5px;font-weight:600;color:var(--dark);">${escHtml(m.now.name)}</span>
-      <span style="font-size:10.5px;color:var(--gray-text);white-space:nowrap;">${m.prev.avgScore} → ${m.now.avgScore}</span>
+      <span style="flex:1;font-size:13px;font-weight:600;color:var(--dark);">${escHtml(m.now.name)}</span>
+      <span style="font-size:11px;color:var(--gray-text);white-space:nowrap;">${m.prev.avgScore} → ${m.now.avgScore}</span>
       <span style="font-size:12px;font-weight:800;min-width:46px;text-align:right;color:${color};">${delta > 0 ? '+' : ''}${delta}</span>
     </div>`;
   };
@@ -2294,7 +2294,7 @@ function renderClusterCards(clusters) {
     // R17: 정의 박스 + 차별 태그 바(보유율 vs 타 군집) + 공통 기반 라인
     const aiDefLine = (ai && ai.def) ? `
       <div style="font-size:12px;color:var(--dark);line-height:1.6;background:rgba(220,40,40,.05);border:1px solid rgba(220,40,40,.18);border-radius:8px;padding:9px 12px;margin-bottom:12px;">
-        <span style="font-size:10px;font-weight:700;color:#fff;background:var(--red);border-radius:9999px;padding:1px 7px;margin-right:6px;">AI</span>${escHtml(ai.def)}
+        <span style="font-size:11px;font-weight:700;color:#fff;background:var(--red);border-radius:9999px;padding:1px 7px;margin-right:6px;">AI</span>${escHtml(ai.def)}
       </div>` : '';
     const defBox = cl.defText ? `
       <div style="font-size:12px;color:var(--gray-text);line-height:1.6;background:var(--gray-bg);border-radius:8px;padding:9px 12px;margin-bottom:12px;">
@@ -2318,8 +2318,8 @@ function renderClusterCards(clusters) {
         <div class="cc-num" style="background:${color};">${cl.displayId}</div>
         <div class="cc-title">
           <div class="cc-name">${ai ? escHtml(ai.name) : escHtml(cl.name)}</div>
-          ${ai ? `<div style="font-size:10.5px;color:var(--gray-text);margin-top:1px;">${escHtml(cl.name)}</div>` : ''}
-          <div class="cc-count">${cl.materials.length}개 소재${cl.perfSplitLabel ? ` · <span style="display:inline-block;font-size:10px;font-weight:700;padding:1px 7px;border-radius:9999px;background:${cl._perfSplit === 'hi' ? 'rgba(220,40,40,.10)' : '#ECEAE6'};color:${cl._perfSplit === 'hi' ? 'var(--red)' : 'var(--mid)'};" title="같은 태그 군집을 성과 수준(±1σ)으로 분리한 그룹">${cl.perfSplitLabel}</span>` : ''}</div>
+          ${ai ? `<div style="font-size:11px;color:var(--gray-text);margin-top:1px;">${escHtml(cl.name)}</div>` : ''}
+          <div class="cc-count">${cl.materials.length}개 소재${cl.perfSplitLabel ? ` · <span style="display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:9999px;background:${cl._perfSplit === 'hi' ? 'rgba(220,40,40,.10)' : '#ECEAE6'};color:${cl._perfSplit === 'hi' ? 'var(--red)' : 'var(--mid)'};" title="같은 태그 군집을 성과 수준(±1σ)으로 분리한 그룹">${cl.perfSplitLabel}</span>` : ''}</div>
         </div>
         <span class="cc-grade grade-${cl.grade}">${cl.grade}등급</span>
       </div>
@@ -2438,7 +2438,7 @@ function renderTagImpact(data) {
       const expandable = isExpandable(e);
       const isFormat = e.tag.startsWith('format:');
       const tagLabel = isFormat
-        ? `<span style="font-size:10px;background:rgba(139,92,246,.1);color:#6d28d9;padding:1px 6px;border-radius:10px;margin-right:4px;">포맷</span>${escHtml(e.tag.replace('format:',''))}`
+        ? `<span style="font-size:11px;background:rgba(139,92,246,.1);color:#6d28d9;padding:1px 6px;border-radius:10px;margin-right:4px;">포맷</span>${escHtml(e.tag.replace('format:',''))}`
         : escHtml(e.tag);
       return `
         <div class="ti-row fade-in" style="animation-delay:${i*0.03}s;padding:6px 10px;
@@ -2448,7 +2448,7 @@ function renderTagImpact(data) {
             <div class="ti-bar" style="width:${pct}%;background:${c.bar};height:100%;border-radius:6px;transition:width .5s ease;"></div>
           </div>
           <div class="ti-val" style="width:44px;text-align:right;font-size:12px;font-weight:700;color:${c.text};">${e.avg.toFixed(1)}</div>
-          <div style="width:60px;font-size:10px;color:var(--gray-text);text-align:center;">${e.cnt}개 소재</div>
+          <div style="width:60px;font-size:11px;color:var(--gray-text);text-align:center;">${e.cnt}개 소재</div>
           <div style="width:24px;text-align:center;font-size:12px;" title="${expandable ? '확장 추천' : ''}">${expandable ? '🚀' : ''}</div>
         </div>
       `;
@@ -2515,7 +2515,7 @@ function renderQualityCard(clusters) {
     : q.overall >= 55 ? '일부 군집이 불명확 — 참고용으로 활용'
     : '군집 변별이 약함 — 소재가 동질적이거나 태그 보강이 필요';
   const bar = (label, v) => `<div style="flex:1;min-width:118px;">
-      <div style="font-size:10.5px;color:var(--gray-text);margin-bottom:3px;">${label} <b style="color:var(--dark);">${v}</b></div>
+      <div style="font-size:11px;color:var(--gray-text);margin-bottom:3px;">${label} <b style="color:var(--dark);">${v}</b></div>
       <div style="height:6px;background:var(--gray-line);border-radius:3px;overflow:hidden;"><div style="height:100%;width:${v}%;background:${gColor};border-radius:3px;"></div></div>
     </div>`;
   el.innerHTML = `<div style="background:var(--white);border:1px solid var(--gray-line);border-radius:var(--radius-md);padding:14px 18px;box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:18px;flex-wrap:wrap;">
@@ -2524,7 +2524,7 @@ function renderQualityCard(clusters) {
         <div style="font-size:11px;color:var(--gray-text);margin-top:2px;">신뢰도 ${q.overall}점</div>
       </div>
       <div style="flex:1;min-width:260px;">
-        <div style="font-size:12.5px;font-weight:700;color:var(--mid);margin-bottom:8px;"><i class="fas fa-shield-halved" style="color:var(--red);margin-right:5px;"></i>군집 품질 신뢰도 <span style="font-weight:500;font-size:11px;color:var(--gray-text);">— ${interp}</span></div>
+        <div style="font-size:13px;font-weight:700;color:var(--mid);margin-bottom:8px;"><i class="fas fa-shield-halved" style="color:var(--red);margin-right:5px;"></i>군집 품질 신뢰도 <span style="font-weight:500;font-size:11px;color:var(--gray-text);">— ${interp}</span></div>
         <div style="display:flex;gap:14px;flex-wrap:wrap;">
           ${bar('태그 분리도(실루엣)', q.silPct)}${bar('성과 분리도', q.perfSep)}${bar('크기 균형', q.sizeBalance)}${bar('태그 일관성', q.tagConsistency)}
         </div>
@@ -2570,8 +2570,8 @@ function buildPatternInsightsHtml(clusters) {
   if (!pat.winners.length && !pat.losers.length) return '';
   const layerLbl = (window.currentAnalysisLayer || 'ads') === 'mmp' ? 'MMP 품질' : 'Google Ads';
   const liftRow = (r, win) => `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px dashed var(--gray-line);">
-      <span style="flex:1;font-size:12.5px;font-weight:600;color:var(--dark);">${escHtml(r.tag)}</span>
-      <span style="font-size:10.5px;color:var(--gray-text);white-space:nowrap;">상위 ${r.topPct}% · 하위 ${r.botPct}%</span>
+      <span style="flex:1;font-size:13px;font-weight:600;color:var(--dark);">${escHtml(r.tag)}</span>
+      <span style="font-size:11px;color:var(--gray-text);white-space:nowrap;">상위 ${r.topPct}% · 하위 ${r.botPct}%</span>
       <span style="font-size:12px;font-weight:800;min-width:46px;text-align:right;color:${win ? '#DC2828' : '#999999'};">${r.lift > 0 ? '+' : ''}${Math.round(r.lift * 100)}%p</span>
     </div>`;
   const col = (title, rows, win, empty) => `<div style="flex:1;min-width:220px;">
@@ -2579,8 +2579,8 @@ function buildPatternInsightsHtml(clusters) {
       ${rows.length ? rows.map(r => liftRow(r, win)).join('') : `<div style="font-size:11px;color:var(--gray-text);padding:6px 0;">${empty}</div>`}
     </div>`;
   const sharedRow = (r) => `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px dashed var(--gray-line);">
-      <span style="flex:1;font-size:12.5px;font-weight:600;color:var(--dark);">${escHtml(r.tag)}</span>
-      <span style="font-size:10.5px;color:var(--gray-text);white-space:nowrap;">상위 ${r.topPct}% · 하위 ${r.botPct}%</span>
+      <span style="flex:1;font-size:13px;font-weight:600;color:var(--dark);">${escHtml(r.tag)}</span>
+      <span style="font-size:11px;color:var(--gray-text);white-space:nowrap;">상위 ${r.topPct}% · 하위 ${r.botPct}%</span>
     </div>`;
   return `<div class="insight-card win fade-in" style="grid-column:1/-1;">
       <div class="ic-header"><span class="ic-icon">🎯</span><span class="ic-title">승리공식 · 중단패턴 <span style="font-weight:500;font-size:11px;color:var(--gray-text);">상·하위 25% 소재 태그 lift · ${layerLbl} 기준</span></span></div>
@@ -2588,7 +2588,7 @@ function buildPatternInsightsHtml(clusters) {
         ${col('🏆 승리공식 (상위에서 더 흔한 태그)', pat.winners, true, '뚜렷한 승리 태그 없음')}
         ${col('⛔ 중단패턴 (하위에서 더 흔한 태그)', pat.losers, false, '뚜렷한 저성과 태그 없음')}
         ${(pat.shared && pat.shared.length) ? `<div style="flex:1;min-width:220px;">
-          <div style="font-size:12px;font-weight:700;color:var(--mid);margin-bottom:6px;">⚖️ 공통 패턴 <span style="font-weight:500;font-size:10.5px;color:var(--gray-text);">(고·저 공유 · 변별력 낮음)</span></div>
+          <div style="font-size:12px;font-weight:700;color:var(--mid);margin-bottom:6px;">⚖️ 공통 패턴 <span style="font-weight:500;font-size:11px;color:var(--gray-text);">(고·저 공유 · 변별력 낮음)</span></div>
           ${pat.shared.map(sharedRow).join('')}
         </div>` : ''}
       </div>
@@ -2751,7 +2751,7 @@ function buildMappingTable(rows) {
         ${escHtml(row.clusterName.substring(0,14))}</span></td>
       <td><div style="display:flex;gap:4px;flex-wrap:wrap;min-width:110px;">
         ${(row.topTags||[]).slice(0,4).map(t=>
-          `<span style="font-size:10px;padding:1px 5px;border-radius:6px;
+          `<span style="font-size:11px;padding:1px 5px;border-radius:6px;
                         background:var(--gray-bg);color:var(--mid);">${escHtml(t)}</span>`
         ).join('')}
       </div></td>

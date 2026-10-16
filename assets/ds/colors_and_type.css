@@ -104,6 +104,17 @@
   --fs-caption: 14px; --lh-caption: 20px;
   --fs-label: 12px;   --lh-label: 16px;
 
+  /* ===== Dashboard type scale (밀도 높은 화면용, 2026-10-16) =====
+     실사용 크기를 정수 단계로 고정. 최소 11px(그 미만은 아이콘·원형 배지 글리프만),
+     반픽셀(12.5 등) 금지. 역할별 통일(제목·KPI·배지)은 이 스케일로 맞춘다. */
+  --fs-2xs: 11px;  /* 배지·칩·캡션 최소 */
+  --fs-xs:  12px;  /* 라벨·표 헤더·보조 */
+  --fs-sm:  13px;  /* 표 본문·버튼·본문(대시보드) */
+  --fs-md:  14px;  /* 강조 본문·탭 */
+  --fs-lg:  16px;  /* 카드 제목 */
+  --fs-xl:  18px;  /* 섹션 제목 */
+  --fs-2xl: 24px;  /* KPI 숫자·페이지 제목 */
+
   --fw-regular: 400; /* @kind font */
   --fw-medium: 500; /* @kind font */
   --fw-bold: 700; /* @kind font */

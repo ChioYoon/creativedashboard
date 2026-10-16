@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>소재 사전평가 — Com2uS R Marketing Team</title>
-  <link rel="stylesheet" href="assets/ds/colors_and_type.css?v=47396165">
+  <link rel="stylesheet" href="assets/ds/colors_and_type.css?v=c784c10f">
   <link rel="stylesheet" href="assets/cl-shell.css?v=74a462d6">
   <style>
     body { background: var(--bg-base, #FFFFFF); }   /* 흰 배경 — 소재 분석·군집화·라이브와 통일 */
@@ -72,7 +72,7 @@
   </div>
 
   <script src="js/data-source.js?v=50c99d6c"></script>
-  <script src="js/gemini-api.js?v=e5b090b4"></script>
+  <script src="js/gemini-api.js?v=11319bb8"></script>
   <script>
   /* ===== 태그 택소노미 · 패턴 · 등급 (Task 3) =====
      SYNC: pipeline/schemas.py Enum (StrengthSignal/WeaknessSignal/HookingStrategy/CoreUSP/VisualStyle/PerformanceHypothesis) */
@@ -249,7 +249,7 @@
     if (Array.isArray(parsed.개선가이드) && parsed.개선가이드.length) html += card('#DC2828', '#FAF9F7', `<div style="font-size:13px;color:#DC2828;font-weight:700;margin-bottom:6px;">개선 가이드</div><ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.6;">${parsed.개선가이드.map(x => `<li>${_peEsc(x)}</li>`).join('')}</ul>`);
     // 감지 태그 요약
     html += card('#CCCCCC', '#fff', `<div class="pe-label">감지된 태그 (참고)</div>`
-      + `<div style="font-size:12.5px;color:#4C4C4C;line-height:1.8;">아트: <b>${_peEsc(parsed.art_style||'-')}</b> · 후킹: <b>${_peEsc(parsed.hooking_strategy||'-')}</b> · USP: <b>${_peEsc(parsed.USP||'-')}</b><br>강점: ${_peEsc((parsed.strengths||[]).join(', ')||'-')}<br>약점: ${_peEsc((parsed.weaknesses||[]).join(', ')||'-')}<br>예측: ${_peEsc((parsed.hypothesis||[]).join(', ')||'-')}</div>`);
+      + `<div style="font-size:13px;color:#4C4C4C;line-height:1.8;">아트: <b>${_peEsc(parsed.art_style||'-')}</b> · 후킹: <b>${_peEsc(parsed.hooking_strategy||'-')}</b> · USP: <b>${_peEsc(parsed.USP||'-')}</b><br>강점: ${_peEsc((parsed.strengths||[]).join(', ')||'-')}<br>약점: ${_peEsc((parsed.weaknesses||[]).join(', ')||'-')}<br>예측: ${_peEsc((parsed.hypothesis||[]).join(', ')||'-')}</div>`);
     // 신뢰도 안내
     html += `<div class="pe-note">시각 신호 + ${_peEsc(titleId)} 소재 ${pattern.n}개 성과 패턴 기반 <b>방향성 참고</b>입니다. 실제 성과는 집행으로 검증하세요.</div>`;
     document.getElementById('peResult').innerHTML = html;

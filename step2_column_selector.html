@@ -8,7 +8,7 @@
   <meta http-equiv="Expires" content="0">
   <title>군집화 분석 · 컬럼 설정 - Com2uS R팀</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="assets/ds/colors_and_type.css?v=47396165">
+  <link rel="stylesheet" href="assets/ds/colors_and_type.css?v=c784c10f">
   <link rel="stylesheet" href="assets/cl-shell.css?v=74a462d6">
   <style>
     /* ═══════════════════════════════════════════
@@ -83,7 +83,7 @@
       display: flex; align-items: center; gap: 3px; flex: 1;
     }
     .nav-group-label {
-      font-size: 10px; font-weight: 700; letter-spacing: .06em;
+      font-size: 11px; font-weight: 700; letter-spacing: .06em;
       color: rgba(255,255,255,.60); text-transform: uppercase;
       padding: 2px 8px; border-radius: 4px;
       background: rgba(0,0,0,.12);
@@ -197,7 +197,7 @@
       min-height: 600px;
     }
     .left-panel  { padding: 32px 36px; border-right: 1px solid var(--gray-line); }
-    .right-panel { padding: 28px 28px; background: var(--gray-bg); }
+    .right-panel { padding: 28px 28px; background: var(--bg-base, #FFFFFF); }   /* 흰 배경 (2026-10-16) */
 
     /* ═══════════════════════════════════════════
        섹션 타이틀
@@ -439,7 +439,7 @@
     .col-name .lock-icon { color: var(--red); font-size: 10px; margin-left: 4px; }
     .primary-badge {
       display: inline-flex; align-items: center;
-      font-size: 10px; font-weight: 700;
+      font-size: 11px; font-weight: 700;
       padding: 1px 7px; border-radius: 20px;
       background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
       color: #5A3A00;
@@ -450,7 +450,7 @@
     }
     .concept-badge {
       display: inline-flex; align-items: center;
-      font-size: 10px; font-weight: 600;
+      font-size: 11px; font-weight: 600;
       padding: 1px 7px; border-radius: 20px;
       background: #EDF2F7; color: #4A5568;
       margin-left: 5px; border: 1px solid #CBD5E0;
@@ -464,7 +464,7 @@
       display: flex; gap: 3px; flex-wrap: nowrap; overflow: hidden;
     }
     .mini-tag {
-      font-size: 10px; padding: 1px 6px;
+      font-size: 11px; padding: 1px 6px;
       border-radius: 8px;
       background: var(--gray-bg);
       color: var(--mid);
@@ -510,7 +510,7 @@
       width: 32px; text-align: right;
     }
     .weight-label {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--gray-text);
       display: flex; align-items: center; gap: 3px;
     }
@@ -705,7 +705,7 @@
     .ptag.high   { background: #FFF5F5; color: var(--red);   border-color: var(--red-mid); }
     .ptag.mid    { background: #EBF8FF; color: #2B6CB0;      border-color: #BEE3F8; }
     .ptag.mi     { background: #F8F4FF; color: #6B46C1;      border-color: #D6BCFA; }
-    .ptag.freq   { font-size: 9px; color: var(--gray-text);  }
+    .ptag.freq   { font-size: 11px; color: var(--gray-text);  }
 
     /* 예상 군집 수 */
     .cluster-estimate {
@@ -968,7 +968,7 @@
         style="width:100%;justify-content:center;margin-bottom:4px;">
         <i class="fas fa-arrow-right"></i> 군집화 실행하기
       </button>
-      <div style="font-size:11.5px;color:var(--gray-text);text-align:center;margin-bottom:10px;">기본 설정(전체 태그 · 태그 우선)으로 바로 실행 — 아래에서 컬럼·가중치 조정 가능</div>
+      <div style="font-size:12px;color:var(--gray-text);text-align:center;margin-bottom:10px;">기본 설정(전체 태그 · 태그 우선)으로 바로 실행 — 아래에서 컬럼·가중치 조정 가능</div>
 
       <div class="section-divider"></div>
 
@@ -1043,7 +1043,7 @@
           <span class="section-title" style="margin:0;"><i class="fas fa-th-large"></i> 고급 설정 <span style="font-size:12px;font-weight:500;color:var(--gray-text);">(군집화 모드 · 파라미터 — 기본: 태그 우선)</span></span>
         </summary>
       <div class="section-desc" style="margin-top:8px;">소재를 어떤 기준으로 묶을지 선택하세요. 모드에 따라 태그와 성과의 영향도가 달라집니다.</div>
-      <div style="font-size:11.5px;color:var(--gray-text);background:var(--gray-bg);border-left:3px solid var(--red);padding:9px 11px;border-radius:6px;margin-bottom:12px;line-height:1.65;">
+      <div style="font-size:12px;color:var(--gray-text);background:var(--gray-bg);border-left:3px solid var(--red);padding:9px 11px;border-radius:6px;margin-bottom:12px;line-height:1.65;">
         <i class="fas fa-circle-info" style="color:var(--red);margin-right:4px;"></i>
         <b>'성과 우선'</b>은 <b>이미 나뉜 군집을 성과로 정제·정렬</b>할 때 성과를 얼마나 반영할지입니다. 위쪽 컬럼의 <b>'군집화 제외'</b>는 그 컬럼을 <b>묶는 기준(태그)</b>으로 쓰지 않는다는 뜻으로, <b>서로 다른 축</b>입니다(태그=무엇으로 묶나 / 성과가중=성과를 얼마나 반영하나).
         <span style="color:var(--mid);">※ 성과 기반 정제는 v4.0에서 강화 예정이라 현재는 효과가 제한적입니다.</span>
@@ -1057,7 +1057,7 @@
             <div class="mode-ratio-tag"  style="width:70%"></div>
             <div class="mode-ratio-perf" style="width:30%"></div>
           </div>
-          <div style="display:flex;gap:6px;margin-top:6px;font-size:10px;justify-content:center;">
+          <div style="display:flex;gap:6px;margin-top:6px;font-size:11px;justify-content:center;">
             <span style="color:var(--blue);">■ 태그 70%</span>
             <span style="color:var(--red);">■ 성과 30%</span>
           </div>
@@ -1069,7 +1069,7 @@
             <div class="mode-ratio-tag"  style="width:30%"></div>
             <div class="mode-ratio-perf" style="width:70%"></div>
           </div>
-          <div style="display:flex;gap:6px;margin-top:6px;font-size:10px;justify-content:center;">
+          <div style="display:flex;gap:6px;margin-top:6px;font-size:11px;justify-content:center;">
             <span style="color:var(--blue);">■ 태그 30%</span>
             <span style="color:var(--red);">■ 성과 70%</span>
           </div>
@@ -1081,7 +1081,7 @@
             <div class="mode-ratio-tag"  style="width:50%"></div>
             <div class="mode-ratio-perf" style="width:50%"></div>
           </div>
-          <div style="display:flex;gap:6px;margin-top:6px;font-size:10px;justify-content:center;" id="customModeLabel">
+          <div style="display:flex;gap:6px;margin-top:6px;font-size:11px;justify-content:center;" id="customModeLabel">
             <span style="color:var(--blue);">■ 태그 50%</span>
             <span style="color:var(--red);">■ 성과 50%</span>
           </div>
@@ -1214,10 +1214,10 @@
           </div>
         </div>
         <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
-          <span style="font-size:10px;color:var(--red);">■ 고가중치(≥70%)</span>
-          <span style="font-size:10px;color:#2B6CB0;">■ 중가중치(40~69%)</span>
-          <span style="font-size:10px;color:var(--mid);">■ 저가중치(10~39%)</span>
-          <span style="font-size:10px;color:#6B46C1;">■ [MI] 인사이트</span>
+          <span style="font-size:11px;color:var(--red);">■ 고가중치(≥70%)</span>
+          <span style="font-size:11px;color:#2B6CB0;">■ 중가중치(40~69%)</span>
+          <span style="font-size:11px;color:var(--mid);">■ 저가중치(10~39%)</span>
+          <span style="font-size:11px;color:#6B46C1;">■ [MI] 인사이트</span>
         </div>
       </div>
 
@@ -1844,7 +1844,7 @@ function buildNonTagGroup(cols) {
                        background:var(--gray-bg);color:var(--gray-text);border:1px solid var(--gray-line);"
                 title="${c._reason || ''}">
             ${escHtml(c.col)}
-            ${c._reason ? `<span style="font-size:9px;color:var(--orange);margin-left:3px;">(식별용)</span>` : ''}
+            ${c._reason ? `<span style="font-size:11px;color:var(--orange);margin-left:3px;">(식별용)</span>` : ''}
           </span>`).join('')}
       </div>
     </div>

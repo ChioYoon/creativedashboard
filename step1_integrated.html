@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/ds/colors_and_type.css?v=47396165">
+  <link rel="stylesheet" href="assets/ds/colors_and_type.css?v=c784c10f">
   <link rel="stylesheet" href="assets/cl-shell.css?v=74a462d6">
   <!-- Lucide icons -->
   <script defer src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
@@ -26,8 +26,8 @@
   <!-- 캐노니컬(캠페인 유형) 필터 해석기 — 라이브 cv 미상-버킷 의미론 정합 -->
   <script src="js/canonical-filter.js?v=cbc66317"></script>
   <!-- Gemini AI 공통 모듈 -->
-  <link rel="stylesheet" href="css/gemini-ui.css?v=91d8def8">
-  <script src="js/gemini-api.js?v=e5b090b4"></script>
+  <link rel="stylesheet" href="css/gemini-ui.css?v=6ec1a775">
+  <script src="js/gemini-api.js?v=11319bb8"></script>
   
   <style>
     * {
@@ -132,7 +132,7 @@
     }
     .sb-section-header:hover { background: var(--surface-soft); }
     .sb-section-title {
-      font-size: 10px; font-weight: 700; letter-spacing: .06em;
+      font-size: 11px; font-weight: 700; letter-spacing: .06em;
       text-transform: uppercase; color: var(--text-secondary);
       display: flex; align-items: center; gap: 6px;
     }
@@ -203,7 +203,7 @@
     }
     .sb-checkbox-item:hover { background: var(--surface-soft); }
     .sb-checkbox-item input[type="checkbox"] { accent-color: var(--brand-primary); }
-    .sb-selected-count { font-size: 10px; color: var(--text-secondary); margin-top: 4px; }
+    .sb-selected-count { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
     /* 슬라이더 */
     .sb-slider-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
     .sb-slider-label { font-size: 12px; color: var(--text-primary); width: 60px; flex-shrink: 0; }
@@ -484,7 +484,7 @@
       /* QA 가독성 보강: 언더스코어 캠페인명(공백 없음)이 박스 폭을 밀어내지 않게 */
       word-break: break-all;
       line-height: 1.45;
-      font-size: 12.5px;
+      font-size: 13px;
       cursor: pointer;
       min-width: 0;
     }
@@ -493,7 +493,7 @@
     }
     .checkbox-group-label {
       padding: 4px 8px 2px;
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 600;
       color: var(--text-muted, #9ca3af);
       text-transform: uppercase;
@@ -662,7 +662,7 @@
       position: absolute;
       bottom: 4px;
       right: 6px;
-      font-size: 9px;
+      font-size: 11px;
       font-weight: 700;
       background: rgba(0, 0, 0, 0.6);
       padding: 2px 4px;
@@ -779,8 +779,8 @@
       font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
       color: var(--brand-primary, #DC2828); margin-bottom: 6px;
     }
-    .signal-insight-lead { font-size: 13.5px; font-weight: 600; color: var(--text-primary, #191919); margin-bottom: 6px; }
-    .signal-insight-body { font-size: 12.5px; color: var(--text-secondary, #666); }
+    .signal-insight-lead { font-size: 14px; font-weight: 600; color: var(--text-primary, #191919); margin-bottom: 6px; }
+    .signal-insight-body { font-size: 13px; color: var(--text-secondary, #666); }
     /* 소재 상세 모달 — 레이어 블록 제목 + 비활성 레이어 접기 */
     .modal-block-title { font-size: 12px; font-weight: 700; color: var(--text-secondary, #666); margin: 14px 0 6px; letter-spacing: .02em; }
     .modal-collapse { margin-top: 12px; border-top: 1px solid var(--hairline-warm, #e4e1dc); padding-top: 6px; }
@@ -790,12 +790,12 @@
     .modal-collapse > summary::before { content: '▸ '; }
     .modal-collapse[open] > summary::before { content: '▾ '; }
     /* 소재 상세 모달 — 파일명 접기(기본 접힘) */
-    .file-collapse > summary { cursor: pointer; font-size: 12.5px; font-weight: 700; color: var(--text-secondary, #666); list-style: none; user-select: none; }
+    .file-collapse > summary { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--text-secondary, #666); list-style: none; user-select: none; }
     .file-collapse > summary::-webkit-details-marker { display: none; }
     .file-collapse > summary::before { content: '▸ '; }
     .file-collapse[open] > summary::before { content: '▾ '; }
     .file-collapse > summary:hover { color: var(--brand-primary, #DC2828); }
-    .file-collapse .file-list { display: flex; flex-direction: column; gap: 2px; margin-top: 5px; font-size: 12.5px; color: var(--text-primary, #191919); }
+    .file-collapse .file-list { display: flex; flex-direction: column; gap: 2px; margin-top: 5px; font-size: 13px; color: var(--text-primary, #191919); }
     /* 소재 목록 — 통합 액션 툴바 */
     .result-toolbar { align-items: center; gap: 12px; flex-wrap: wrap; margin: 4px 0 14px; }
     .result-toolbar .rt-left { display: flex; align-items: center; gap: 8px; }
@@ -823,20 +823,20 @@
     #resultTable:not(.show-pctile) .col-pctile { display: none; }
     .pctile-cell { display: flex; flex-direction: column; gap: 2px; align-items: flex-start; }
     .pctile-cell-row { display: flex; align-items: center; gap: 4px; white-space: nowrap; }
-    .pctile-cell-key { font-size: 10px; color: #9ca3af; font-weight: 700; width: 26px; display: inline-block; }
+    .pctile-cell-key { font-size: 11px; color: #9ca3af; font-weight: 700; width: 26px; display: inline-block; }
     /* Stage 5-J: 분포 패널 '풀 대비 성과' 상·하위 카드 */
     .signal-perf-block { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 14px; }
     .signal-perf-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px 14px; }
     .signal-perf-card h4 { margin: 0 0 8px; font-size: 13px; color: #334155; }
     .signal-perf-card ul { list-style: none; margin: 0; padding: 0; }
-    .signal-perf-card li { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12.5px; padding: 3px 0; color: #475569; }
+    .signal-perf-card li { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 13px; padding: 3px 0; color: #475569; }
     .signal-perf-card li > span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     @media (max-width: 640px) { .signal-perf-block { grid-template-columns: 1fr; } }
     /* Stage 7-C: 소재 품질(MMP) 레이어 — 非Google 매체 (teal 로 Google Ads(red) 와 시각 구분) */
     .mmp-section { margin-top: 16px; padding-top: 14px; border-top: 1px dashed #99f6e4; }
     .mmp-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
     .mmp-head-title { font-size: 13px; font-weight: 700; color: #0f766e; }
-    .mmp-channel-badge { display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: 10.5px; font-weight: 700; background: #ccfbf1; color: #115e59; }
+    .mmp-channel-badge { display: inline-block; padding: 1px 7px; border-radius: 10px; font-size: 11px; font-weight: 700; background: #ccfbf1; color: #115e59; }
     .mmp-score-badge { margin-left: auto; font-size: 12px; font-weight: 700; color: #115e59; background: #f0fdfa; border: 1px solid #5eead4; border-radius: 8px; padding: 3px 10px; }
     .mmp-metric-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
     .mmp-metric-cell { background: #f0fdfa; border: 1px solid #99f6e4; border-radius: 8px; padding: 8px 10px; min-width: 0; }
@@ -856,7 +856,7 @@
     .layer-toggle-btn { padding: 6px 18px; font-size: 13px; font-weight: 600; border: none; background: transparent; color: #6b7280; cursor: pointer; transition: background .15s, color .15s; white-space: nowrap; }
     .layer-toggle-btn.active-ads  { background: #fee2e2; color: #991b1b; }
     .layer-toggle-btn.active-mmp  { background: #ccfbf1; color: #0f766e; }
-    .layer-hint { font-size: 11.5px; color: #9ca3af; }
+    .layer-hint { font-size: 12px; color: #9ca3af; }
     /* 레이어별 부가 컬럼 처리: ads 레이어는 MMP 컬럼 흐리게(부가 참조), mmp 레이어는 성과(Google Ads 백분위)·MMP(종합 배지) 컬럼 숨김 — 지표 컬럼 자체가 활성 데이터라 더 이상 흐리지 않음 */
     /* (② 레이어별 col-mmp/col-pctile 숨김·dim 제거 — 두 점수 상시 표시. 데이터 게이트 show-mmp/show-pctile 는 유지) */
     /* B: 분석 테이블 컬럼 확장 — 가로 스크롤 */
@@ -865,7 +865,7 @@
     /* 밀집 테이블 폰트·여백 정돈 (전역 td/th보다 스코프 우선) — 본문이 헤더보다 크던 역전 해소 */
     #resultTable thead th { font-size: 12px; padding: 9px 12px; }
     #resultTable tbody td { font-size: 13px; padding: 9px 12px; }
-    #resultTable .pctile-cell-key { font-size: 10.5px; }
+    #resultTable .pctile-cell-key { font-size: 11px; }
     /* Stage 5-I QA: 모달 KPI 지표 테이블 (줄 글 행 → 그리드 카드) */
     .kpi-metric-grid {
       display: grid;
@@ -1170,7 +1170,7 @@
       background: #fff7f7;
       border: 1px solid #fecaca;
       border-radius: 8px;
-      font-size: 12.5px;
+      font-size: 13px;
       color: #7f1d1d;
     }
     .excluded-detail summary {
@@ -1196,7 +1196,7 @@
       color: #fff;
       padding: 7px 11px;
       border-radius: 6px;
-      font-size: 11.5px;
+      font-size: 12px;
       font-weight: 400;
       line-height: 1.55;
       white-space: normal;
@@ -1273,7 +1273,7 @@
       border-radius: var(--radius-md); padding: 10px 14px;
       min-width: 90px;
     }
-    .ds-stat-chip-label { font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; }
+    .ds-stat-chip-label { font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; }
     .ds-stat-chip-value { font-size: 20px; font-weight: 800; color: var(--text-primary); }
 
     /* ── 컬럼 헤더 툴팁 ── */
@@ -1314,8 +1314,8 @@
     .fatigue-preset { font-size: 12px; font-weight: 600; padding: 6px 12px; border: 1px solid var(--border-default, #ccc); border-radius: 9999px; background: var(--bg-base, #fff); color: var(--text-secondary, #666); cursor: pointer; transition: background .12s, color .12s, border-color .12s; white-space: nowrap; }
     .fatigue-preset:hover { border-color: var(--gray-30, #999); color: var(--text-primary, #191919); }
     .fatigue-preset.active { background: rgba(220,40,40,.10); border-color: rgba(220,40,40,.30); color: var(--brand-primary, #DC2828); font-weight: 700; }
-    .cross-badge-ads { padding: 1px 7px; border-radius: var(--radius-full); font-size: 10px; font-weight: 700; background: #fee2e2; color: #991b1b; }
-    .cross-badge-mmp { padding: 1px 7px; border-radius: var(--radius-full); font-size: 10px; font-weight: 700; background: #ccfbf1; color: #115e59; }
+    .cross-badge-ads { padding: 1px 7px; border-radius: var(--radius-full); font-size: 11px; font-weight: 700; background: #fee2e2; color: #991b1b; }
+    .cross-badge-mmp { padding: 1px 7px; border-radius: var(--radius-full); font-size: 11px; font-weight: 700; background: #ccfbf1; color: #115e59; }
     /* AI 태그 */
     .ai-tag-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .ai-tag-card { background: var(--bg-base); border: 1px solid var(--hairline-warm); border-radius: var(--radius-lg); padding: 14px; }
@@ -1346,7 +1346,7 @@
     .ai-tag-panel-count { font-size: 12px; font-weight: 700; color: var(--text-primary); }
     .ai-tag-panel-clear { margin-left: auto; font-size: 11px; font-weight: 600; color: var(--brand-primary); cursor: pointer; background: none; border: none; }
     .ai-selected-badges { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
-    .ai-selected-badge { padding: 2px 8px; border-radius: var(--radius-full); font-size: 10px; font-weight: 700; background: var(--text-primary); color: #fff; }
+    .ai-selected-badge { padding: 2px 8px; border-radius: var(--radius-full); font-size: 11px; font-weight: 700; background: var(--text-primary); color: #fff; }
   </style>
 </head>
 <body>
@@ -1516,7 +1516,7 @@
             <!-- 저노출/저전환 소재 제외 토글 -->
             <div class="sb-toggle-row">
               <span class="sb-toggle-label">저노출·저전환 제외
-                <span style="font-size:10px;color:var(--text-secondary);display:block;">평균의 10% 미만 소재</span>
+                <span style="font-size:11px;color:var(--text-secondary);display:block;">평균의 10% 미만 소재</span>
               </span>
               <label class="sb-toggle">
                 <input type="checkbox" id="lowExposureToggle" checked onchange="syncLowExposureToggle(this)">
@@ -1598,7 +1598,7 @@
              title="필터·가중치를 바꾸면 결과가 자동으로 갱신됩니다. (클릭 시 즉시 새로고침)"
              style="width:100%;display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;
                     border-radius:8px;background:var(--surface-card,#F4F2EF);border:1px solid var(--border-soft,#E5E2DD);
-                    color:var(--text-secondary,#4C4C4C);font-size:12.5px;font-weight:700;cursor:pointer;user-select:none;transition:opacity .15s;">
+                    color:var(--text-secondary,#4C4C4C);font-size:13px;font-weight:700;cursor:pointer;user-select:none;transition:opacity .15s;">
           ⚡ 실시간 반영
         </div>
       </div>
@@ -1623,7 +1623,7 @@
       <nav id="mainTabBar" class="ds-tab-bar" style="display:none;">
         <button class="ds-tab active" data-tab="creative-list" onclick="switchMainTab('creative-list')">분석 결과</button>
         <button class="ds-tab" data-tab="summary" onclick="switchMainTab('summary')">성과 보고서</button>
-        <button class="ds-tab" data-tab="fatigue" onclick="switchMainTab('fatigue')">피로도·제외 추천 <span id="fatigueTabBadge" title="CPA가 기준 대비 +20% 넘게 상승한 피로 경보 소재 수" style="display:none;margin-left:4px;background:var(--brand-primary,#DC2828);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:9px;vertical-align:middle;"></span></button>
+        <button class="ds-tab" data-tab="fatigue" onclick="switchMainTab('fatigue')">피로도·제외 추천 <span id="fatigueTabBadge" title="CPA가 기준 대비 +20% 넘게 상승한 피로 경보 소재 수" style="display:none;margin-left:4px;background:var(--brand-primary,#DC2828);color:#fff;font-size:11px;font-weight:700;padding:1px 6px;border-radius:9px;vertical-align:middle;"></span></button>
         <button class="ds-tab" data-tab="segment" onclick="switchMainTab('segment')">세그먼트 비교</button>
       </nav>
 
@@ -1805,7 +1805,7 @@
             <button class="ds-pill ds-pill--primary" onclick="runFatigueAnalysis()">적용</button>
             <button class="ds-pill ds-pill--ghost" onclick="resetFatigue()">초기화</button>
           </div>
-          <div style="font-size:11.5px;color:var(--text-secondary);padding-bottom:14px;border-bottom:1px solid var(--hairline-warm);margin-bottom:16px;">비교 기간(최근)이 기준 기간(이전)보다 나빠지면 피로도가 높습니다.</div>
+          <div style="font-size:12px;color:var(--text-secondary);padding-bottom:14px;border-bottom:1px solid var(--hairline-warm);margin-bottom:16px;">비교 기간(최근)이 기준 기간(이전)보다 나빠지면 피로도가 높습니다.</div>
         </div>
 
         <!-- 저효율 소재 제외 추천 (분석 실행 시 렌더) -->
@@ -2142,7 +2142,7 @@ function renderSignalDistribution(creatives) {
   const makeChips = (arr, type) =>
     arr.slice(0, 8).map(([label, cnt]) =>
       `<span class="ai-tag-chip" data-tag="${escapeHtml(label)}" data-type="${type}"
-            onclick="toggleAiTag(this,'${type}')">${escapeHtml(label)} <span style="font-size:10px;opacity:.6;">${cnt}</span></span>`
+            onclick="toggleAiTag(this,'${type}')">${escapeHtml(label)} <span style="font-size:11px;opacity:.6;">${cnt}</span></span>`
     ).join('');
 
   panel.innerHTML = `
@@ -3619,15 +3619,15 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         const skipChecked = !isTypo ? 'checked' : '';
 
         const badge = isTypo
-          ? `<span style="display:inline-block;background:#fef2f2;color:#dc2626;padding:2px 8px;border-radius:10px;font-size:10.5px;font-weight:700;">✏️ 오타 추정 — 병합 권장</span>`
-          : `<span style="display:inline-block;background:#f3f4f6;color:#6b7280;padding:2px 8px;border-radius:10px;font-size:10.5px;font-weight:700;">🔢 변형 소재 추정 — 병합 비권장</span>`;
+          ? `<span style="display:inline-block;background:#fef2f2;color:#dc2626;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;">✏️ 오타 추정 — 병합 권장</span>`
+          : `<span style="display:inline-block;background:#f3f4f6;color:#6b7280;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;">🔢 변형 소재 추정 — 병합 비권장</span>`;
 
         return `
           <div style="border:1px solid ${isTypo ? '#fecaca' : '#e5e7eb'};border-radius:8px;padding:12px;margin-bottom:8px;background:${isTypo ? '#fff5f5' : '#fafafa'};">
             <div style="display:flex;align-items:center;justify-content:space-between;font-size:13px;color:#374151;margin-bottom:8px;flex-wrap:wrap;gap:6px;">
-              <div>${badge} <span style="font-size:11.5px;color:#6b7280;">${p.reason} · 편집거리 ${p.dist}</span></div>
+              <div>${badge} <span style="font-size:12px;color:#6b7280;">${p.reason} · 편집거리 ${p.dist}</span></div>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12.5px;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px;">
               <label style="display:flex;align-items:center;gap:6px;padding:8px;background:#fff;border:1.5px solid ${isTypo ? '#ef4444' : '#e5e7eb'};border-radius:6px;cursor:pointer;">
                 <input type="radio" name="merge_${i}" value="${p.a}" ${aChecked} data-other="${p.b}">
                 <span style="font-family:monospace;word-break:break-all;">${p.a}</span>
@@ -3645,14 +3645,14 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       };
 
       const typoBlock = typoPairs.length > 0 ? `
-        <div style="margin-bottom:8px;padding:8px 12px;background:#fef2f2;border-radius:6px;font-size:12.5px;color:#991b1b;border-left:3px solid #ef4444;">
+        <div style="margin-bottom:8px;padding:8px 12px;background:#fef2f2;border-radius:6px;font-size:13px;color:#991b1b;border-left:3px solid #ef4444;">
           ✏️ <strong>오타 추정 ${typoPairs.length}쌍</strong> — 기본값 <strong>"병합"</strong>으로 설정됨 (필요 시 수정 가능)
         </div>
         ${typoPairs.map((p, idx) => renderPair(p, idx)).join('')}
       ` : '';
 
       const variantBlock = variantPairs.length > 0 ? `
-        <div style="margin:14px 0 8px;padding:8px 12px;background:#f3f4f6;border-radius:6px;font-size:12.5px;color:#374151;border-left:3px solid #9ca3af;">
+        <div style="margin:14px 0 8px;padding:8px 12px;background:#f3f4f6;border-radius:6px;font-size:13px;color:#374151;border-left:3px solid #9ca3af;">
           🔢 <strong>변형 소재 추정 ${variantPairs.length}쌍</strong> — 기본값 <strong>"병합하지 않음"</strong>으로 설정됨 (별도 소재로 분석 권장)
         </div>
         ${variantPairs.map((p, idx) => renderPair(p, typoPairs.length + idx)).join('')}
@@ -3886,7 +3886,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           }
         }
         const _kpiNoticeHtml = (!_hasKpi && !_hasMmp) ?
-          `<div style="padding: 10px 14px; background: var(--surface-soft,#FAF9F7); border-left: 3px solid var(--brand-primary,#DC2828); border-radius: 6px; font-size: 12.5px; color: var(--text-secondary,#4C4C4C); margin-bottom: 12px;">
+          `<div style="padding: 10px 14px; background: var(--surface-soft,#FAF9F7); border-left: 3px solid var(--brand-primary,#DC2828); border-radius: 6px; font-size: 13px; color: var(--text-secondary,#4C4C4C); margin-bottom: 12px;">
             KPI 미연동 — 소재 시각 분석(Gemini 태깅)만 제공됩니다. 광고 집행 후 운영 지표가 표시됩니다.
           </div>` : '';
         document.getElementById('uploadStatus').style.display = 'block';
@@ -3899,7 +3899,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             <div style="margin-top: 10px;">${(window.DataSource && DataSource.freshness) ? DataSource.freshness({ generatedAt: normalized._meta?.generated_at, pipelineVersion: normalized._meta?.pipeline_version, dataAsOf: normalized._meta?.data_as_of }).html : ''}</div>
           </div>
           ${_kpiNoticeHtml}
-          <div style="padding: 10px 14px; background: var(--surface-card,#F4F2EF); border-left: 3px solid var(--text-tertiary,#767676); border-radius: 6px; font-size: 12.5px; color: var(--text-secondary,#4C4C4C); margin-bottom: 12px;">
+          <div style="padding: 10px 14px; background: var(--surface-card,#F4F2EF); border-left: 3px solid var(--text-tertiary,#767676); border-radius: 6px; font-size: 13px; color: var(--text-secondary,#4C4C4C); margin-bottom: 12px;">
             백엔드 산출 JSON 로드 완료 — 결과가 아래에 자동 표시됩니다
           </div>
           <button onclick="calculateScores()"
@@ -4442,11 +4442,11 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         // 파이프라인 우선순위 URL > 이름 → 링크별 지정이 합산보다 우선.
         const perLink = urls.length >= 2
           ? '<div style="margin-top:6px;display:flex;flex-direction:column;gap:4px;">'
-            + urls.map((url, i) => `<label style="font-size:10.5px;color:#6b7280;display:flex;align-items:center;gap:4px;white-space:nowrap;">링크${i + 1}<select data-unmatched-url="${escapeHtml(url)}" style="font-size:11px;max-width:180px;">${opts}</select></label>`).join('')
+            + urls.map((url, i) => `<label style="font-size:11px;color:#6b7280;display:flex;align-items:center;gap:4px;white-space:nowrap;">링크${i + 1}<select data-unmatched-url="${escapeHtml(url)}" style="font-size:11px;max-width:180px;">${opts}</select></label>`).join('')
             + '</div>'
           : '';
         const conceptHint = urls.length >= 2
-          ? '<div style="font-size:10.5px;color:#6b7280;margin-bottom:2px;">전체(합산)</div>' : '';
+          ? '<div style="font-size:11px;color:#6b7280;margin-bottom:2px;">전체(합산)</div>' : '';
         return `<tr>
           <td style="font-family:monospace;font-size:12px;">${escapeHtml(u.concept)}</td>
           <td><span class="badge">${src}</span></td>
@@ -4553,7 +4553,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <div onclick="toggleCanonGroup('${d.key}')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:5px 0;">
             <span style="font-size:11px;font-weight:700;color:#6b7280;">${d.label}</span>
             <span style="display:flex;align-items:center;gap:5px;">
-              <span id="canonCount_${d.key}" style="display:none;font-size:10px;background:#eef2ff;color:#4f46e5;border-radius:5px;padding:0 6px;line-height:1.6;"></span>
+              <span id="canonCount_${d.key}" style="display:none;font-size:11px;background:#eef2ff;color:#4f46e5;border-radius:5px;padding:0 6px;line-height:1.6;"></span>
               <span id="canonChevron_${d.key}" style="font-size:10px;color:#9ca3af;">▸</span>
             </span>
           </div>
@@ -5357,11 +5357,11 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
 
     function buildReliabilityBadgeHtml(rel) {
       const items = rel.conditions.map(c => `
-        <div style="display:flex;align-items:center;gap:6px;font-size:12.5px;padding:4px 0;">
+        <div style="display:flex;align-items:center;gap:6px;font-size:13px;padding:4px 0;">
           <span style="color:${c.pass ? '#191919' : '#DC2828'};font-size:14px;font-weight:700;">${c.pass ? '✓' : '✗'}</span>
           <span style="color:#666666;">${c.key}:</span>
           <strong style="color:${c.pass ? '#191919' : '#DC2828'};">${c.value}${c.suffix}</strong>
-          <span style="color:#9ca3af;font-size:11.5px;">(${c.hint})</span>
+          <span style="color:#9ca3af;font-size:12px;">(${c.hint})</span>
         </div>
       `).join('');
       const suggestion = rel.level === 'high'
@@ -5379,7 +5379,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:4px 16px;margin-bottom:8px;">
             ${items}
           </div>
-          <div style="font-size:12.5px;color:${rel.color};margin-top:6px;padding-top:8px;border-top:1px dashed ${rel.border};">
+          <div style="font-size:13px;color:${rel.color};margin-top:6px;padding-top:8px;border-top:1px dashed ${rel.border};">
             💡 ${suggestion}
           </div>
         </div>`;
@@ -5535,9 +5535,9 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         // 미집행·중복 등록 배지 — 실수 집행 방지(훅맵 execution_status·duplicates)
         const _exM = c.meta || {};
         const _exBadge = _exM.duplicate_of
-          ? `<span class="has-tooltip" data-tip="중복 등록 — 정본 ${escapeHtml(_exM.duplicate_of)}. 소재 수 집계에서 1건으로 계산" style="flex:none;font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#EEF2F7;color:#64748B;">중복</span>`
+          ? `<span class="has-tooltip" data-tip="중복 등록 — 정본 ${escapeHtml(_exM.duplicate_of)}. 소재 수 집계에서 1건으로 계산" style="flex:none;font-size:11px;font-weight:700;padding:1px 5px;border-radius:3px;background:#EEF2F7;color:#64748B;">중복</span>`
           : (_exM.execution_status === 'not_planned'
-            ? `<span class="has-tooltip" data-tip="미집행 확정 — 집행하지 마세요. 동일 비주얼의 카피 변경본이 집행 대상입니다" style="flex:none;font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#FEE2E2;color:#B91C1C;">미집행</span>`
+            ? `<span class="has-tooltip" data-tip="미집행 확정 — 집행하지 마세요. 동일 비주얼의 카피 변경본이 집행 대상입니다" style="flex:none;font-size:11px;font-weight:700;padding:1px 5px;border-radius:3px;background:#FEE2E2;color:#B91C1C;">미집행</span>`
             : '');
         const _rowStatus = resolveStatus(c, _statusGMax, _statusOvr);
 
@@ -5683,7 +5683,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             icon = '[엄격]'; text = `매출 보유 ${rm.revenueCount}/${rm.totalCount}개 (${pct}%) → 매출=0 소재도 ROAS 0점으로 평가 (엄격 모드)`;
           }
           if (text) {
-            roasNotice = `<div style="margin-top:10px;padding:10px 14px;background:${bg};border-left:3px solid ${border};border-radius:6px;font-size:12.5px;color:${color};">
+            roasNotice = `<div style="margin-top:10px;padding:10px 14px;background:${bg};border-left:3px solid ${border};border-radius:6px;font-size:13px;color:${color};">
               <strong>${icon} ROAS 모드:</strong> ${text}
             </div>`;
           }
@@ -5895,7 +5895,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
       ];
       const colspan = segNames.length + 2;
       const head = `<thead><tr style="font-size:12px;"><th style="text-align:left;white-space:nowrap;position:sticky;left:0;background:var(--bg-base,#fff);z-index:1;">소재명</th>${segNames.map(nm =>
-        `<th style="text-align:center;white-space:nowrap;padding:6px 12px;" title="${escapeHtml(nm)}">${escapeHtml(nm.length > 24 ? '…' + nm.slice(-22) : nm)}<div style="font-weight:400;color:#999;font-size:10px;">${perSeg[nm].n}개 소재</div></th>`).join('')}<th style="text-align:center;white-space:nowrap;" title="세그먼트 간 최고-최저 순위 차 — 클수록 세그먼트마다 선호가 다른 소재">순위 편차</th></tr></thead>`;
+        `<th style="text-align:center;white-space:nowrap;padding:6px 12px;" title="${escapeHtml(nm)}">${escapeHtml(nm.length > 24 ? '…' + nm.slice(-22) : nm)}<div style="font-weight:400;color:#999;font-size:11px;">${perSeg[nm].n}개 소재</div></th>`).join('')}<th style="text-align:center;white-space:nowrap;" title="세그먼트 간 최고-최저 순위 차 — 클수록 세그먼트마다 선호가 다른 소재">순위 편차</th></tr></thead>`;
       const rowHtml = r => {
         const tds = r.cells.map(o => o
           ? `<td style="text-align:center;white-space:nowrap;"><b>#${o.Rank}</b> <span style="color:#666;font-size:11px;">${(o.TotalScore ?? 0).toFixed(1)}</span></td>`
@@ -6507,7 +6507,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
         : '';
       // ── 목적 지향 섹션 빌더: 위닝 플레이북 / 저효율 제작 반영 / 제외 후보 / GA↔MMP 괴리 ──
       const chip = t => `<span style="display:inline-block;font-size:11px;font-weight:600;background:#ECEAE6;color:#191919;padding:2px 8px;border-radius:8px;margin:0 4px 4px 0;">${esc(t)}</span>`;
-      const tiredBadge = '<span style="font-size:10px;font-weight:700;color:#DC2828;background:rgba(220,40,40,.10);padding:1px 6px;border-radius:8px;margin-left:6px;vertical-align:middle;">피로 경보</span>';
+      const tiredBadge = '<span style="font-size:11px;font-weight:700;color:#DC2828;background:rgba(220,40,40,.10);padding:1px 6px;border-radius:8px;margin-left:6px;vertical-align:middle;">피로 경보</span>';
       // A. 위닝 플레이북 — 성공 요소 조합 + 근거 + 세그먼트 강세 + MMP 교차
       const playbookHtml = (data.topDeep || []).length ? data.topDeep.map((d, i) => {
         const m = d.meta || {};
@@ -6525,7 +6525,7 @@ function trackDailyRankings(rows, dateColumn, targetCreatives, weights, groupBy)
             <div class="tms">점수 ${sc(d.score)} · 전환 ${num(d.conv)} · CPA ${won(d.cpa)} · 비용 ${won(d.cost)}${(mmpQ && mmpQ.total != null) ? ` · MMP 품질 ${sc(mmpQ.total)}` : ''}</div>
             <div style="margin-top:5px;">${(d.combo || []).map(chip).join('') || ''}</div>
             <div style="display:grid;grid-template-columns:62px 1fr;gap:5px 10px;margin-top:7px;padding-top:7px;border-top:1px dashed #E4E1DC;">
-              ${_pbRow('성공 요소', st ? `<b>${esc(st)}</b>${ev ? ` <span style="color:#777;font-size:11.5px;">${esc(ev)}</span>` : ''}` : '')}
+              ${_pbRow('성공 요소', st ? `<b>${esc(st)}</b>${ev ? ` <span style="color:#777;font-size:12px;">${esc(ev)}</span>` : ''}` : '')}
               ${_pbRow('한줄 판단', m.one_line_insight ? esc(m.one_line_insight) : '')}
               ${_pbRow('변주', (m.improvement_actions || [])[0] ? esc(m.improvement_actions[0]) : '', '#B45309')}
               ${_pbRow('캠페인', seg || '')}
@@ -7283,12 +7283,12 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
           const cpaText = cpa > 0 ? `₩${Math.round(cpa).toLocaleString()}` : '전환0';
           return `<td style="padding:8px;text-align:right;font-size:12px;">
             <div style="font-weight:600;">${cpaText}</div>
-            <div style="color:#9ca3af;font-size:10.5px;">전환 ${data.전환} · 노출 ${Math.round(data.노출수/1000)}K</div>
+            <div style="color:#9ca3af;font-size:11px;">전환 ${data.전환} · 노출 ${Math.round(data.노출수/1000)}K</div>
           </td>`;
         }).join('');
         return `<tr style="border-bottom:1px solid #f0f0f0;">
           <td style="padding:8px;font-size:12px;color:#9ca3af;text-align:center;width:40px;">#${rank}</td>
-          <td style="padding:8px;font-size:12.5px;font-weight:600;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${key}</td>
+          <td style="padding:8px;font-size:13px;font-weight:600;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${key}</td>
           ${cells}
         </tr>`;
       }).join('');
@@ -7303,7 +7303,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
             <span style="font-size:18px;">🔀</span>
             <div>
               <div style="font-weight:700;font-size:15px;">캠페인 비교 (${campaigns.length}개 캠페인)</div>
-              <div style="font-size:11.5px;opacity:.8;margin-top:2px;">캠페인별 종합 KPI + Top 10 소재 교차 분석 — 캠페인별 CPA 차이로 타겟 적합도 확인</div>
+              <div style="font-size:12px;opacity:.8;margin-top:2px;">캠페인별 종합 KPI + Top 10 소재 교차 분석 — 캠페인별 CPA 차이로 타겟 적합도 확인</div>
             </div>
           </div>
           <div style="padding:16px;background:#fafafa;">
@@ -7316,7 +7316,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
                 Top 10 소재 × 캠페인별 CPA
               </div>
               <div style="overflow-x:auto;">
-                <table style="width:100%;border-collapse:collapse;font-size:12.5px;">
+                <table style="width:100%;border-collapse:collapse;font-size:13px;">
                   <thead>
                     <tr style="background:#fafbfc;border-bottom:2px solid #e5e7eb;">
                       <th style="padding:9px;text-align:center;color:#6b7280;font-weight:600;width:40px;">순위</th>
@@ -7710,9 +7710,9 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
           </div>
           <div style="background:#fff;border:1px solid var(--hairline-warm,#E4E1DC);border-radius:8px;padding:12px 14px;">
             <div style="font-size:11px;color:var(--text-secondary,#666);">평가 제외</div>
-            <div style="font-size:12.5px;line-height:1.6;color:var(--text-primary,#191919);">2주 미만 ${reco.shortRun}개<br>저노출/저전환 ${reco.lowVol}개</div>
+            <div style="font-size:13px;line-height:1.6;color:var(--text-primary,#191919);">2주 미만 ${reco.shortRun}개<br>저노출/저전환 ${reco.lowVol}개</div>
           </div>
-          <div style="font-size:10.5px;color:#9ca3af;line-height:1.5;">기준1 양 기간 하위 10% 지속<br>기준2 피로 + 비교 하위 20%</div>
+          <div style="font-size:11px;color:#9ca3af;line-height:1.5;">기준1 양 기간 하위 10% 지속<br>기준2 피로 + 비교 하위 20%</div>
           ${reco.rows.length ? `<button onclick="exportFatigueRecoCsv()" style="font-size:12px;padding:7px 12px;border:1px solid var(--hairline-warm,#E4E1DC);background:#fff;border-radius:8px;cursor:pointer;">CSV 내보내기</button>` : ''}
         </div>`;
       const card = r => {
@@ -7721,7 +7721,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         const thumbSrc = yt || (url && url.startsWith('http') && r.유형 !== 'VID' ? url : '');
         const thumb = thumbSrc
           ? `<img src="${_e(thumbSrc)}" style="width:52px;height:38px;object-fit:cover;border-radius:6px;flex:none;" alt="">`
-          : `<div style="width:52px;height:38px;border-radius:6px;background:#ECEAE6;flex:none;display:flex;align-items:center;justify-content:center;font-size:10px;color:#9ca3af;">${_e(r.유형 || '')}</div>`;
+          : `<div style="width:52px;height:38px;border-radius:6px;background:#ECEAE6;flex:none;display:flex;align-items:center;justify-content:center;font-size:11px;color:#9ca3af;">${_e(r.유형 || '')}</div>`;
         const cpaTxt = (typeof r.cpaChangeRate === 'number' && r.fatigueStatus === 'tired')
           ? ` · CPA ${r.cpaChangeRate > 0 ? '+' : ''}${r.cpaChangeRate.toFixed(0)}% (피로)` : '';
         const rankTxt = `${typeof r.baselineRank === 'number' ? `${r.baselineRank}/${reco.nBase}위` : '신규'} → ${r.comparisonRank}/${reco.nComp}위`;
@@ -7730,14 +7730,14 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
           <div style="flex:1;min-width:0;">
             <div style="font-size:13px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><span class="clickable-name" style="cursor:pointer;text-decoration:underline dotted #999;text-underline-offset:2px;" onclick="openModalByName(${jsAttr(r.key)})">${_e(r.key)}</span></div>
             <div style="font-size:12px;color:var(--text-secondary,#666);margin-top:2px;">${rankTxt}${cpaTxt} · 투입 ${r.runDays}일차</div>
-            <div style="margin-top:3px;">${r.reasons.map(x => `<span style="display:inline-block;font-size:10.5px;font-weight:600;background:rgba(220,40,40,.08);color:#DC2828;padding:1px 7px;border-radius:8px;margin-right:4px;">${_e(x)}</span>`).join('')}</div>
+            <div style="margin-top:3px;">${r.reasons.map(x => `<span style="display:inline-block;font-size:11px;font-weight:600;background:rgba(220,40,40,.08);color:#DC2828;padding:1px 7px;border-radius:8px;margin-right:4px;">${_e(x)}</span>`).join('')}</div>
           </div>
           <span style="background:rgba(220,40,40,.10);color:#DC2828;font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;white-space:nowrap;flex:none;">제외 권고</span>
         </div>`;
       };
       const list = reco.rows.length
         ? `<div style="flex:1;min-width:260px;display:flex;flex-direction:column;gap:7px;">${reco.rows.map(card).join('')}</div>`
-        : `<div style="flex:1;display:flex;align-items:center;font-size:12.5px;color:var(--text-secondary,#666);">현재 제외 추천 없음 — 양호.</div>`;
+        : `<div style="flex:1;display:flex;align-items:center;font-size:13px;color:var(--text-secondary,#666);">현재 제외 추천 없음 — 양호.</div>`;
       box.innerHTML = `<div style="border:1px solid var(--hairline-warm,#E4E1DC);border-left:3px solid #DC2828;border-radius:8px;padding:14px 16px;margin-bottom:16px;background:var(--surface-soft,#FAF9F7);display:flex;gap:12px;flex-wrap:wrap;">${stat}${list}</div>`;
     }
 
@@ -7819,11 +7819,11 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       const skippedNote = data.skipped.length
         ? `<div style="font-size:11px;color:#9ca3af;margin-top:8px;">모수 부족 제외(&lt;${MIN_CAMP_N}개 소재): ${data.skipped.map(s => `${_e(s.name)}(${s.n})`).join(', ')}</div>` : '';
       if (!rows.length) {
-        box.innerHTML = layerNote + '<div style="color:#666;padding:12px;font-size:12.5px;">캠페인별 추가 제외 추천 없음 — 양호.</div>' + skippedNote;
+        box.innerHTML = layerNote + '<div style="color:#666;padding:12px;font-size:13px;">캠페인별 추가 제외 추천 없음 — 양호.</div>' + skippedNote;
         return;
       }
       const head = `<thead><tr style="font-size:12px;"><th style="text-align:left;position:sticky;left:0;background:var(--bg-base,#fff);z-index:1;">소재명</th>${camps.map(cn =>
-        `<th style="text-align:center;white-space:nowrap;padding:6px 10px;" title="${_e(cn)}">${_e(cn.length > 22 ? '…' + cn.slice(-20) : cn)}<div style="font-weight:400;color:#999;font-size:10px;">${data.perCamp[cn].n}개</div></th>`).join('')}</tr></thead>`;
+        `<th style="text-align:center;white-space:nowrap;padding:6px 10px;" title="${_e(cn)}">${_e(cn.length > 22 ? '…' + cn.slice(-20) : cn)}<div style="font-weight:400;color:#999;font-size:11px;">${data.perCamp[cn].n}개</div></th>`).join('')}</tr></thead>`;
       const cell = c => !c ? '<td style="text-align:center;color:#d1d5db;">—</td>'
         : c.excluded ? `<td style="text-align:center;"><span title="사유: ${_e(c.excluded)}" style="display:inline-block;background:rgba(220,40,40,.12);color:#DC2828;font-weight:700;font-size:11px;padding:2px 8px;border-radius:8px;">제외 #${c.rank}</span></td>`
         : `<td style="text-align:center;color:#666;font-size:12px;">#${c.rank}</td>`;
@@ -7908,7 +7908,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
           <div style="font-weight:700;color:var(--text-primary,#191919);font-size:14px;margin-bottom:6px;">
             피로도 분석 데이터 부족 안내
           </div>
-          <div style="font-size:12.5px;color:var(--text-secondary,#4C4C4C);line-height:1.6;">
+          <div style="font-size:13px;color:var(--text-secondary,#4C4C4C);line-height:1.6;">
             기준 기간 <strong>${baseDays}일</strong> / 비교 기간 <strong>${compDays}일</strong>로 분석되었습니다.
             짧은 기간(특히 3일 미만)은 일별 변동성이 커서 결과 신뢰도가 낮을 수 있습니다.
             <br>권장: 각 기간 ≥3일, 합계 ≥7일 데이터 누적 후 재분석.
@@ -8024,8 +8024,8 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         desc = total > 0 ? `비교 대상 ${total}개 소재 모두 CPA 안정적입니다.` : `비교 가능한 소재가 없습니다.`;
       }
       card.style.cssText = `padding:12px 16px;background:${bg};border-left:3px solid ${bd};border-radius:8px;margin:0 0 16px;`;
-      card.innerHTML = `<div style="font-weight:700;font-size:13.5px;color:${fg};margin-bottom:3px;">${title}</div>`
-                     + `<div style="font-size:12.5px;color:var(--text-secondary,#4C4C4C);line-height:1.55;">${desc}</div>`;
+      card.innerHTML = `<div style="font-weight:700;font-size:14px;color:${fg};margin-bottom:3px;">${title}</div>`
+                     + `<div style="font-size:13px;color:var(--text-secondary,#4C4C4C);line-height:1.55;">${desc}</div>`;
       stats.insertBefore(card, stats.firstChild);
     }
     
@@ -8197,13 +8197,13 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
       const rows = assets.map((a, i) => {
         const cpa = a.conv > 0 ? a.cost / a.conv : null;
         const share = totConv > 0 ? (a.conv / totConv * 100) : (totImp > 0 ? a.imp / totImp * 100 : 0);
-        const best = i === 0 ? '<span style="font-size:10px;font-weight:700;color:#DC2828;background:rgba(220,40,40,.10);padding:1px 6px;border-radius:9999px;margin-left:6px;">최고</span>' : '';
+        const best = i === 0 ? '<span style="font-size:11px;font-weight:700;color:#DC2828;background:rgba(220,40,40,.10);padding:1px 6px;border-radius:9999px;margin-left:6px;">최고</span>' : '';
         const label = assetSpecLabel(a.name) || `에셋 ${i + 1}`;
         return `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--hairline-warm,#E4E1DC);">
           ${creativeThumbHtml(a.url, creative.유형, 52, 52)}
           <div style="flex:1;min-width:0;">
-            <div style="font-size:12.5px;font-weight:700;color:#191919;">${label}${best} <span style="font-weight:400;color:#666;">· 전환 비중 ${share.toFixed(0)}%</span></div>
-            <div style="font-size:11.5px;color:#666;margin-top:2px;">노출 ${a.imp.toLocaleString()} · 전환 ${Math.round(a.conv).toLocaleString()} · CPA ${cpa != null ? '₩' + Math.round(cpa).toLocaleString() : '—'}</div>
+            <div style="font-size:13px;font-weight:700;color:#191919;">${label}${best} <span style="font-weight:400;color:#666;">· 전환 비중 ${share.toFixed(0)}%</span></div>
+            <div style="font-size:12px;color:#666;margin-top:2px;">노출 ${a.imp.toLocaleString()} · 전환 ${Math.round(a.conv).toLocaleString()} · CPA ${cpa != null ? '₩' + Math.round(cpa).toLocaleString() : '—'}</div>
           </div>
         </div>`;
       }).join('');
@@ -8368,7 +8368,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
         content = `<div style="width:100%;max-width:600px;padding:36px 24px;background:#f9fafb;border:1.5px dashed #d1d5db;border-radius:12px;text-align:center;color:#6b7280;">
           <div style="font-size:48px;margin-bottom:12px;">📂</div>
           <div style="font-size:14px;font-weight:600;color:#374151;margin-bottom:6px;">미리보기 링크 없음</div>
-          <div style="font-size:12.5px;line-height:1.6;">
+          <div style="font-size:13px;line-height:1.6;">
             이 소재는 백엔드 파이프라인에서 자동 태깅된 결과입니다.<br>
             로컬 파일 경로만 보유 (GDrive sync 폴더 내).<br>
             <span style="display:inline-block;margin-top:8px;font-family:monospace;font-size:11px;color:#9ca3af;">파일명: ${escapeHtml(creative.파일명 || creative.meta?.['파일명'] || '-')}</span>
@@ -8486,7 +8486,7 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
             <summary>📋 제작 브리프 생성 (이터레이션 지시서)</summary>
             <div style="margin-top:8px;">
               <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                <span style="font-size:11.5px;color:#9ca3af;">슬롯 1·2·3 = 태그·실적 자동 · 4·5·6 = 담당자/브랜드브리프 확정</span>
+                <span style="font-size:12px;color:#9ca3af;">슬롯 1·2·3 = 태그·실적 자동 · 4·5·6 = 담당자/브랜드브리프 확정</span>
                 <button type="button" onclick="copyProductionBrief(this)" style="padding:4px 12px;font-size:12px;font-weight:600;border:1px solid #e5e7eb;border-radius:6px;background:#fff;color:#374151;cursor:pointer;">복사</button>
               </div>
               <pre id="briefText" style="margin:0;padding:12px 14px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;font-size:12px;line-height:1.55;white-space:pre-wrap;word-break:break-word;font-family:ui-monospace,Menlo,Consolas,monospace;color:#1f2937;">${escapeHtml(buildProductionBrief(creative))}</pre>
@@ -8578,10 +8578,10 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
             referrerpolicy="strict-origin-when-cross-origin"
             style="border-radius: 12px; display:block;">
           </iframe>
-          <div style="margin-top:10px;padding:10px 14px;background:#fffbeb;border-left:3px solid #f59e0b;border-radius:6px;font-size:12.5px;color:#92400e;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+          <div style="margin-top:10px;padding:10px 14px;background:#fffbeb;border-left:3px solid #f59e0b;border-radius:6px;font-size:13px;color:#92400e;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;">
             <div>
               <strong>⚠️ "동영상 플레이어 구성 오류" (153) 가 표시되나요?</strong><br>
-              <span style="font-size:11.5px;">→ 광고주가 외부 임베드를 차단한 경우입니다. 아래 버튼으로 YouTube에서 직접 확인하세요.</span>
+              <span style="font-size:12px;">→ 광고주가 외부 임베드를 차단한 경우입니다. 아래 버튼으로 YouTube에서 직접 확인하세요.</span>
             </div>
             <a href="${watchUrl}" target="_blank" rel="noopener"
                style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#FF0000;color:white;border-radius:6px;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap;">
@@ -8738,10 +8738,10 @@ h1{font-size:24px;font-weight:900;letter-spacing:-.02em;color:#191919;}
           <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
             <span style="font-size:16px;">💎</span>
             <span style="font-size:13px;font-weight:700;color:#374151;">유료 Pro 전용 인사이트</span>
-            <span style="font-size:10px;font-weight:700;color:#7c3aed;background:#f5f3ff;padding:2px 7px;border-radius:20px;">잠금</span>
+            <span style="font-size:11px;font-weight:700;color:#7c3aed;background:#f5f3ff;padding:2px 7px;border-radius:20px;">잠금</span>
           </div>
           ${lockedItems}
-          <div style="margin-top:10px;font-size:11.5px;color:#6b7280;line-height:1.8;">
+          <div style="margin-top:10px;font-size:12px;color:#6b7280;line-height:1.8;">
             <div style="color:#d97706;">${freeLine}</div>
             <div style="color:#7c3aed;">${paidLine}</div>
           </div>

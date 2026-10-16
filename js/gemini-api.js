@@ -1320,7 +1320,7 @@ function _slotText(val, slotKey) {
 
   // 잘린 경우: 잘림 배지 추가
   const mainText = out.replace('…(잘림)', '…').replace(/…$/, '').trimEnd();
-  return `${mainText}<br><span class="gai-truncate-badge" style="font-size:10px;color:#92400e;background:#fef3c7;padding:2px 6px;border-radius:4px;margin-top:4px;display:inline-block;">⚠️ 응답 일부 잘림 — 🔄 재분석하면 더 완전한 결과</span>`;
+  return `${mainText}<br><span class="gai-truncate-badge" style="font-size:11px;color:#92400e;background:#fef3c7;padding:2px 6px;border-radius:4px;margin-top:4px;display:inline-block;">⚠️ 응답 일부 잘림 — 🔄 재분석하면 더 완전한 결과</span>`;
 }
 
 function buildScoringSlotCards(slots) {
@@ -1575,7 +1575,7 @@ function buildGeminiBox(content = '', status = 'done', errorMsg = '', boxType = 
         <span class="gai-title">Gemini AI 인사이트</span>
         <span class="gai-badge">Gemini 2.5 Flash</span>
         <span class="gai-plan-badge" style="
-          font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;
+          font-size:11px;font-weight:700;padding:2px 7px;border-radius:20px;
           margin-left:4px;
           color:${GeminiKeyManager.isPaid() ? '#7c3aed' : '#d97706'};
           background:${GeminiKeyManager.isPaid() ? '#f5f3ff' : '#fffbeb'};
@@ -1654,7 +1654,7 @@ function buildGeminiKeyModal() {
               <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
                 <span style="font-size:15px;">💎</span>
                 <span style="font-size:13px;font-weight:700;color:#374151;">유료 플랜</span>
-                <span style="font-size:10px;font-weight:700;color:#7c3aed;
+                <span style="font-size:11px;font-weight:700;color:#7c3aed;
                              background:#f5f3ff;padding:1px 6px;border-radius:20px;">PRO</span>
               </div>
               <div style="font-size:11px;color:#6b7280;line-height:1.55;">
@@ -1677,7 +1677,7 @@ function buildGeminiKeyModal() {
                             display:flex;align-items:center;gap:4px;">
               ▸ 플랜별 AI 인사이트 품질 차이 자세히 보기
             </summary>
-            <div style="margin-top:8px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;font-size:11.5px;">
+            <div style="margin-top:8px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;font-size:12px;">
               <table style="width:100%;border-collapse:collapse;">
                 <thead>
                   <tr style="background:#f9fafb;">
@@ -1689,8 +1689,8 @@ function buildGeminiKeyModal() {
                 <tbody>
                   <tr style="border-bottom:1px solid #f3f4f6;">
                     <td style="padding:6px 10px;color:#6b7280;">marketer_insight</td>
-                    <td style="padding:6px 10px;text-align:center;color:#d97706;">미전송<br><span style="font-size:10px;">(입력 토큰 절감→출력 확보)</span></td>
-                    <td style="padding:6px 10px;text-align:center;color:#059669;">원문 포함<br><span style="font-size:10px;">(최대 200자)</span></td>
+                    <td style="padding:6px 10px;text-align:center;color:#d97706;">미전송<br><span style="font-size:11px;">(입력 토큰 절감→출력 확보)</span></td>
+                    <td style="padding:6px 10px;text-align:center;color:#059669;">원문 포함<br><span style="font-size:11px;">(최대 200자)</span></td>
                   </tr>
                   <tr style="border-bottom:1px solid #f3f4f6;">
                     <td style="padding:6px 10px;color:#6b7280;">분석 소재 수</td>
@@ -1699,18 +1699,18 @@ function buildGeminiKeyModal() {
                   </tr>
                   <tr style="border-bottom:1px solid #f3f4f6;">
                     <td style="padding:6px 10px;color:#6b7280;">호출 횟수</td>
-                    <td style="padding:6px 10px;text-align:center;color:#d97706;">1회<br><span style="font-size:10px;">(레이트리미트 최소화)</span></td>
-                    <td style="padding:6px 10px;text-align:center;color:#059669;">2회<br><span style="font-size:10px;">(3슬롯씩 분할)</span></td>
+                    <td style="padding:6px 10px;text-align:center;color:#d97706;">1회<br><span style="font-size:11px;">(레이트리미트 최소화)</span></td>
+                    <td style="padding:6px 10px;text-align:center;color:#059669;">2회<br><span style="font-size:11px;">(3슬롯씩 분할)</span></td>
                   </tr>
                   <tr style="border-bottom:1px solid #f3f4f6;">
                     <td style="padding:6px 10px;color:#6b7280;">소재성과 슬롯</td>
-                    <td style="padding:6px 10px;text-align:center;color:#d97706;">1개<br><span style="font-size:10px;">학승패턴 태그만</span></td>
-                    <td style="padding:6px 10px;text-align:center;color:#059669;">6개<br><span style="font-size:10px;">전체 인사이트</span></td>
+                    <td style="padding:6px 10px;text-align:center;color:#d97706;">1개<br><span style="font-size:11px;">학승패턴 태그만</span></td>
+                    <td style="padding:6px 10px;text-align:center;color:#059669;">6개<br><span style="font-size:11px;">전체 인사이트</span></td>
                   </tr>
                   <tr style="border-bottom:1px solid #f3f4f6;">
                     <td style="padding:6px 10px;color:#6b7280;">피로도 슬롯</td>
-                    <td style="padding:6px 10px;text-align:center;color:#d97706;">1개<br><span style="font-size:10px;">급등원인 통합</span></td>
-                    <td style="padding:6px 10px;text-align:center;color:#059669;">4개<br><span style="font-size:10px;">진단+타이밍+액션</span></td>
+                    <td style="padding:6px 10px;text-align:center;color:#d97706;">1개<br><span style="font-size:11px;">급등원인 통합</span></td>
+                    <td style="padding:6px 10px;text-align:center;color:#059669;">4개<br><span style="font-size:11px;">진단+타이밍+액션</span></td>
                   </tr>
                   <tr style="border-bottom:1px solid #f3f4f6;">
                     <td style="padding:6px 10px;color:#6b7280;">출력 토큰/회</td>

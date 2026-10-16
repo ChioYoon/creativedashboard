@@ -328,7 +328,7 @@
       const cards = g.items.map((it, i) => {
         const e = ((g.ev && g.ev[i]) || '').trim();
         const eh = e ? `<div style="font-size:12px;color:#555;margin-top:2px;">${escapeHtml((g.pfx||'')+e)}</div>` : '';
-        return `<div style="border-left:3px solid ${g.color};padding:6px 10px;margin:4px 0;background:#fff;"><div style="font-size:12.5px;font-weight:600;">${escapeHtml(it)}</div>${eh}</div>`;
+        return `<div style="border-left:3px solid ${g.color};padding:6px 10px;margin:4px 0;background:#fff;"><div style="font-size:13px;font-weight:600;">${escapeHtml(it)}</div>${eh}</div>`;
       }).join('');
       return `<div style="margin:8px 0;"><div style="font-size:11px;font-weight:700;color:#6b7280;margin-bottom:2px;">${g.label}</div>${cards}</div>`;
     }).join('');
@@ -393,7 +393,7 @@
       const cell = cellOf(c);
       const idle = LIVE.state.hasKpi && cell.impr === 0 && cell.acq === 0;   // 선택 기간 미집행
       const badge = !LIVE.state.hasKpi ? ''
-        : idle ? `<div class="live-card-badge"><span style="display:inline-block;background:#ECEAE6;color:#4C4C4C;font-size:10px;font-weight:700;padding:1px 8px;border-radius:9999px;">미집행</span></div>`
+        : idle ? `<div class="live-card-badge"><span style="display:inline-block;background:#ECEAE6;color:#4C4C4C;font-size:11px;font-weight:700;padding:1px 8px;border-radius:9999px;">미집행</span></div>`
         : `<div class="live-card-badge">획득 ${Math.round(cell.acq).toLocaleString()}</div>`;
       const dim = idle ? 'style="opacity:.5;"' : '';
       return `<div class="live-card" ${dim} data-idx="${i}"><div class="live-card-preview">${livePreviewHtml(c)}</div><div class="live-card-body"><div class="live-card-name">${escapeHtml(c.소재명 || c.creative_id || '')}</div>${badge}</div></div>`;
@@ -470,7 +470,7 @@
           const [label, fg, bg] = badge[r.status];
           return `<tr style="border-top:1px solid #F1F5F9;">
             <td style="padding:5px 8px 5px 0;">${esc(r.t.name || r.t.id)} <span style="color:#9CA3AF;">(${esc(r.t.id)})</span></td>
-            <td style="padding:5px 8px;"><span style="font-size:10px;font-weight:700;padding:1px 6px;border-radius:3px;background:${bg};color:${fg};white-space:nowrap;">${label}</span></td>
+            <td style="padding:5px 8px;"><span style="font-size:11px;font-weight:700;padding:1px 6px;border-radius:3px;background:${bg};color:${fg};white-space:nowrap;">${label}</span></td>
             <td style="padding:5px 8px;color:#374151;">${esc(r.level)}</td>
             <td style="padding:5px 0 5px 8px;color:#6B7280;">${esc(r.note)}</td>
           </tr>`;
