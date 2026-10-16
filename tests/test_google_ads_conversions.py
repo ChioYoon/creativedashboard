@@ -45,6 +45,24 @@ def test_key_with_no_conversions_zero():
     assert agg[key].conversions == 0.0
 
 
+def test_empty_install_list_keeps_default_conversions():
+    # 사전예약 중이라 설치 액션 미설정(install=[]) → 출시 후 NU 캠페인은 기본 전환 유지
+    key = ("E", "MobidaysAgency_HQ_TA_JP-JP_GA_NU_AD_ACi_261215", "ag", "2026-12-15")
+    agg = {key: _daily("E", key[1], conv=12.0)}
+    conv = {key: {"tougenanki (Android) first_open": 12.0}}
+    _apply_conversion_basis(agg, conv, PRE, set())
+    assert agg[key].conversions == 12.0
+
+
+def test_empty_install_list_still_applies_prereg():
+    key = ("F", "MobidaysAgency_HQ_TA_JP-JP_GA_NU-Pre_AD_ACp_261015", "ag", "2026-10-15")
+    agg = {key: _daily("F", key[1], conv=9.0)}
+    conv = {key: {"App pre-registration(com.com2us.gd.android.google.global.normal)": 1.0,
+                  "Tougenanki_브랜드 페이지 (web) page_view": 8.0}}
+    _apply_conversion_basis(agg, conv, PRE, set())
+    assert agg[key].conversions == 1.0   # page_view 제외, 사전예약만
+
+
 def test_build_gaql_conversions_shape():
     q = GoogleAdsKpiSource._build_gaql_conversions(date(2025, 1, 1), date(2025, 1, 31), None, None)
     assert "segments.conversion_action_name" in q

@@ -473,12 +473,16 @@ def _apply_conversion_basis(agg: dict, conv_by_key: dict, prereg: set, install: 
     """agg(5-key→CreativeKpiDaily)의 conversions 를 캠페인 ua_type별 타깃 액션 합으로 덮어씀.
 
     ua_type == 'NU-Pre' → prereg 액션 합, 그 외 → install 액션 합. 타깃 액션 없으면 0.
+    단, 해당 기준의 액션 목록 자체가 비어 있으면(예: 사전예약 중이라 설치 전환 미생성 — 도원암귀)
+    덮어쓰지 않고 캠페인 기본(primary) 전환을 유지 → 출시 후 NU 캠페인이 0 으로 집계되지 않음.
     conv_by_key: 5-key(creative_name, campaign_name, ad_group_name, date, asset_url) → {action_name: conversions}.
     key[1] == campaign_name (asset_url 추가 후에도 위치 불변).
     """
     for key, daily in agg.items():
         ua = campaign_ua_type(key[1])  # key[1] = campaign_name
         target = prereg if ua == "NU-Pre" else install
+        if not target:
+            continue
         action_map = conv_by_key.get(key) or {}
         daily.conversions = float(sum(v for a, v in action_map.items() if a in target))
     return agg
