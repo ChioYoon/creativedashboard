@@ -383,8 +383,10 @@
   LIVE.renderGrid = function (agg) {
     agg = agg || LIVE._agg || LIVE.aggregate(LIVE.applyFilters());   // 필터 기간 획득 배지
     const cellOf = c => agg.perCreative.get(c) || { acq:0, impr:0 };
-    const acqOf = c => cellOf(c).acq;
-    const list = [...LIVE.state.creatives].sort((a, b) => acqOf(b) - acqOf(a));
+    const nameOf = c => c.소재명 || c.creative_id || '';
+    // 획득 → 노출 → 이름순. 획득 0이어도 노출 있는 소재가 미집행 묶음 뒤로 밀리지 않게.
+    const list = [...LIVE.state.creatives].sort((a, b) =>
+      (cellOf(b).acq - cellOf(a).acq) || (cellOf(b).impr - cellOf(a).impr) || nameOf(a).localeCompare(nameOf(b)));
     const grid = el('liveGrid');
     if (!list.length) { grid.innerHTML = '<div class="live-empty">이 타이틀에 소재가 없습니다.</div>'; return; }
     grid.innerHTML = list.map((c, i) => {
@@ -558,8 +560,21 @@
       const dates = agg.dates;
       period = dates.length ? `${dates[0]} ~ ${dates[dates.length - 1]} (전체)` : '전체';
     }
-    box.innerHTML = `📊 <strong>데이터 기준</strong> — 획득 = <strong>Google Ads 전환 + MMP 설치</strong> 합산 · 노출/CPI는 각 매체 원값 · 기간 <strong>${period}</strong> `
-      + `<span title="Google Ads와 MMP를 같은 기간 동시 집행하면 동일 유저가 양쪽에 잡혀 중복 집계될 수 있습니다. 현재 타이틀은 집행 시기가 겹치지 않아 무관합니다." style="cursor:help;border-bottom:1px dotted #1e40af;">ⓘ 합산 주의</span>`;
+    // 획득 정의는 실제 들어온 데이터 기준: 소스(GA/MMP) 유무 + GA 사전예약(NU-Pre) 캠페인이
+    // 타이틀 설정(_pipeline_conversion_actions.prereg)으로 사전예약 액션만 집계되는지.
+    const rows = LIVE.applyFilters();
+    const ga = rows.filter(d => d.src === 'GA'), hasMmp = rows.some(d => d.src === 'MMP');
+    const meta = (LIVE.state.manifest || []).find(t => t.id === LIVE.state.titleId) || {};
+    const prereg = ((meta._pipeline_conversion_actions || {}).prereg || []).length > 0;
+    const preCnt = prereg ? ga.filter(d => d.ua_type === 'NU-Pre').length : 0;
+    const gaLabel = !ga.length ? ''
+      : preCnt === ga.length ? 'Google Ads 사전예약'
+      : preCnt ? 'Google Ads 전환(사전예약 캠페인은 사전예약 수)'
+      : 'Google Ads 전환';
+    const acqLabel = [gaLabel, hasMmp ? 'MMP 설치' : ''].filter(Boolean).join(' + ') || '—';
+    const both = ga.length && hasMmp;
+    box.innerHTML = `📊 <strong>데이터 기준</strong> — 획득 = <strong>${acqLabel}</strong>${both ? ' 합산' : ''} · 노출/CPI는 ${both ? '각 매체' : '매체'} 원값 · 기간 <strong>${period}</strong> `
+      + (both ? `<span title="Google Ads와 MMP를 같은 기간 동시 집행하면 동일 유저가 양쪽에 잡혀 중복 집계될 수 있습니다. 현재 타이틀은 집행 시기가 겹치지 않아 무관합니다." style="cursor:help;border-bottom:1px dotted #1e40af;">ⓘ 합산 주의</span>` : '');
   };
 
   // [UX-C] 요약-우선 홈 — 확장/점검 추천 + 스코어 KPI를 상단에 먼저 렌더
