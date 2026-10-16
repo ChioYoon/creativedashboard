@@ -448,11 +448,12 @@ class CreativeRecord(BaseModel):
     )
 
     # Stage 6: 백엔드 산출 점수 (대시보드 calculateCreativeScores 와 동일 알고리즘 — pipeline/scoring.py).
-    # 기본 가중치 25/25/25/25 + roas_mode=auto. 대시보드는 KPI 필드로 런타임 재계산하므로
-    # 이 필드는 표시에 미사용 — 이메일·리포트·백엔드 분석용 참고 스냅샷 (충돌 없음, scripts/verify-scoring.py 로 JS 동일성 검증).
+    # 기본 가중치 25/25/25/25 + roas_mode=auto. KPI 보유 소재끼리만 순위 산출, 미집행 소재는 None.
+    # step1 은 KPI 필드로 런타임 재계산하지만, 라이브 대시보드 상단 요약(LIVE.renderSummary)·이메일은
+    # 이 스냅샷을 그대로 사용 (scripts/verify-scoring.py 로 JS 동일성 검증).
     scores: Optional[dict] = Field(
         None,
-        description="기본 가중치 점수 스냅샷 {total, grade, rank, conv, cpa, ipm, roas} — 백엔드/이메일용 (대시보드 미사용)",
+        description="기본 가중치 점수 스냅샷 {total, grade, rank, conv, cpa, ipm, roas} — 라이브 요약·이메일용, KPI 없으면 None",
     )
 
     # 후방 호환: 기존 대시보드가 marketer_insight를 직접 참조하던 경우 깨지지 않도록.

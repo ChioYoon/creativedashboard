@@ -236,7 +236,7 @@
   LIVE.metricVal = function (cell, metric) {
     if (!cell) return null;
     if (metric === 'impr') return cell.impr;
-    if (metric === 'acq') return cell.acq;
+    if (metric === 'acq') return Math.round(cell.acq);   // GA 전환은 소수(기여 분할) — 표시는 정수
     return cell.acq > 0 ? cell.cost / cell.acq : null;   // cpi
   };
 
@@ -392,7 +392,7 @@
       const idle = LIVE.state.hasKpi && cell.impr === 0 && cell.acq === 0;   // 선택 기간 미집행
       const badge = !LIVE.state.hasKpi ? ''
         : idle ? `<div class="live-card-badge"><span style="display:inline-block;background:#ECEAE6;color:#4C4C4C;font-size:10px;font-weight:700;padding:1px 8px;border-radius:9999px;">미집행</span></div>`
-        : `<div class="live-card-badge">획득 ${cell.acq.toLocaleString()}</div>`;
+        : `<div class="live-card-badge">획득 ${Math.round(cell.acq).toLocaleString()}</div>`;
       const dim = idle ? 'style="opacity:.5;"' : '';
       return `<div class="live-card" ${dim} data-idx="${i}"><div class="live-card-preview">${livePreviewHtml(c)}</div><div class="live-card-body"><div class="live-card-name">${escapeHtml(c.소재명 || c.creative_id || '')}</div>${badge}</div></div>`;
     }).join('');

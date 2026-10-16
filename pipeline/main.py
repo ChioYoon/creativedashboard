@@ -1262,16 +1262,21 @@ def run(cfg: dict) -> dict:
 
     # ── Stage 6: 점수 산출 (대시보드 calculateCreativeScores 와 동일 — pipeline/scoring.py) ──
     # 기본 가중치 25/25/25/25 + roas_mode=auto. compute_creative_scores 가 입력 dict 를
-    # in-place 변형하므로 records 와 positional zip (소재명 중복 무관). KPI 없는 타이틀은
-    # 전 소재 0 → 무해. 대시보드는 KPI 로 런타임 재계산하므로 이 스냅샷은 이메일·리포트용.
+    # in-place 변형하므로 scored_records 와 positional zip (소재명 중복 무관).
+    # KPI 보유분(전환·노출·비용 중 하나라도 있음)끼리만 순위를 매기고, 미집행 소재는 scores=None —
+    # 0 실적 소재가 '개선필요'로 표시되거나(라이브 요약), KPI 미연동 타이틀이 '미연동' 대신
+    # 무의미한 동점 점수로 표시되는 것을 막는다.
     score_summary = {"graded": 0, "grades": {}, "top": None}
-    if records:
+    for r in records:
+        r.scores = None
+    scored_records = [r for r in records if (r.전환 or r.노출수 or r.비용)]
+    if scored_records:
         score_inputs = [
             {"전환": r.전환, "비용": r.비용, "노출수": r.노출수, "클릭수": r.클릭수, "매출": r.Revenue}
-            for r in records
+            for r in scored_records
         ]
         compute_creative_scores(score_inputs)  # in-place 변형
-        for r, s in zip(records, score_inputs):
+        for r, s in zip(scored_records, score_inputs):
             r.scores = {
                 "total": round(s["TotalScore"], 2),
                 "grade": s["등급"],
@@ -1281,15 +1286,13 @@ def run(cfg: dict) -> dict:
                 "ipm": round(s["IPM점수"], 2),
                 "roas": None if s["ROAS점수"] is None else round(s["ROAS점수"], 2),
             }
-        # 이메일/콘솔용 요약 — KPI 보유분(점수 변별 있는 소재)만 집계
-        scored_records = [r for r in records if (r.전환 or r.노출수 or r.비용)]
+        # 이메일/콘솔용 요약
         for r in scored_records:
             g = r.scores["grade"]
             score_summary["grades"][g] = score_summary["grades"].get(g, 0) + 1
         score_summary["graded"] = len(scored_records)
-        if scored_records:
-            best = min(scored_records, key=lambda r: r.scores["rank"])
-            score_summary["top"] = {"name": best.소재명, "total": best.scores["total"], "grade": best.scores["grade"]}
+        best = min(scored_records, key=lambda r: r.scores["rank"])
+        score_summary["top"] = {"name": best.소재명, "total": best.scores["total"], "grade": best.scores["grade"]}
 
     # ── 4) 산출물 저장 ──
     cache.save()

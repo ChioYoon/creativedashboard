@@ -52,6 +52,10 @@
   ```powershell
   .\scripts\setup-git.ps1
   ```
+- [ ] 커밋 훅 켜기 (js/css 수정 시 HTML `?v=` 캐시버스터 자동 갱신 — clone 마다 1회)
+  ```powershell
+  git config core.hooksPath .githooks
+  ```
 
 ## 3. 파이썬 환경 설치
 
