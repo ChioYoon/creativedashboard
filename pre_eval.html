@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>소재 사전평가 — Com2uS R Marketing Team</title>
-  <link rel="stylesheet" href="assets/ds/colors_and_type.css?v=c784c10f">
+  <link rel="stylesheet" href="assets/ds/colors_and_type.css?v=24de769a">
   <link rel="stylesheet" href="assets/cl-shell.css?v=74a462d6">
   <style>
-    body { background: var(--bg-base, #FFFFFF); }   /* 흰 배경 — 소재 분석·군집화·라이브와 통일 */
+    body { margin: 0; background: var(--bg-base, #FFFFFF); }   /* 흰 배경 — 소재 분석·군집화·라이브와 통일 */
     .pe-wrap { max-width: 880px; margin: 0 auto; padding: 24px; }
     .pe-card { background:#fff; border:1px solid var(--border-card,#EDEEF0); border-radius:12px; padding:20px 22px; margin-bottom:16px; box-shadow: var(--shadow-card, 0 1px 3px rgba(16,24,40,.06), 0 1px 2px rgba(16,24,40,.04)); }
     .pe-row { display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap; }
@@ -41,7 +41,7 @@
 
   <div class="pe-wrap">
     <div class="pe-card">
-      <div style="font-size:18px;font-weight:800;margin-bottom:4px;">소재 사전평가</div>
+      <h1 class="ds-page-title" style="margin-bottom:4px;">소재 사전평가</h1>
       <div class="pe-note">신규 제작 소재(이미지)를 업로드하면, 선택 타이틀의 누적 성과 패턴에 얼마나 부합하는지 집행 전에 예측·개선 가이드를 제시합니다. <b>방향성 참고용</b>이며 실제 성과는 집행으로 검증하세요.</div>
     </div>
 
@@ -235,8 +235,8 @@
     if (graded) {
       const st = gradeStyle[graded.grade] || gradeStyle['보통'];
       html += card(st.bar, st.tint,
-        `<div style="font-size:13px;color:${st.tc};font-weight:700;">예측 등급</div>`
-        + `<div style="font-size:24px;font-weight:800;color:${st.tc};margin:4px 0 10px;">${graded.grade}</div>`
+        `<div style="font-size:var(--fs-xs,12px);color:${st.tc};font-weight:600;">예측 등급</div>`
+        + `<div style="font-size:var(--fs-2xl,24px);font-weight:800;color:${st.tc};margin:4px 0 10px;">${graded.grade}</div>`
         + `<div class="pe-label">보유한 우수 태그</div><div>${_peBadges(graded.matchedWinners, {bg:'#ECEAE6',tc:'#191919'})}</div>`
         + `<div class="pe-label" style="margin-top:8px;">놓친 우수 태그</div><div>${_peBadges(graded.missedWinners, {bg:'#F4F2EF',tc:'#808080'})}</div>`
         + `<div class="pe-label" style="margin-top:8px;">보유 리스크 태그</div><div>${_peBadges(graded.heldRisks, {bg:'rgba(220,40,40,.10)',tc:'#DC2828'})}</div>`);

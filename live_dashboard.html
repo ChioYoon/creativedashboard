@@ -6,7 +6,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
   <title>라이브 대시보드 - Com2uS R팀</title>
-  <link rel="stylesheet" href="assets/ds/colors_and_type.css?v=c784c10f">
+  <link rel="stylesheet" href="assets/ds/colors_and_type.css?v=24de769a">
   <link rel="stylesheet" href="assets/cl-shell.css?v=74a462d6">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
   <style>
@@ -52,8 +52,8 @@
     .live-kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
     @media (max-width:640px){ .live-kpis { grid-template-columns:repeat(2,1fr); } }
     .live-kpi { background:#fff; border:1px solid var(--border-default,#e5e7eb); border-radius:10px; padding:12px 14px; }
-    .live-kpi .k { font-size:11px; color:var(--text-secondary,#6b7280); font-weight:600; }
-    .live-kpi .v { font-size:24px; font-weight:800; letter-spacing:-.02em; margin-top:2px; font-variant-numeric:tabular-nums; }
+    .live-kpi .k { font-size:var(--fs-xs,12px); color:var(--text-secondary,#6b7280); font-weight:600; }
+    .live-kpi .v { font-size:var(--fs-2xl,24px); font-weight:800; letter-spacing:-.02em; margin-top:2px; font-variant-numeric:tabular-nums; }
     .live-reco-cols { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
     @media (max-width:640px){ .live-reco-cols { grid-template-columns:1fr; } }
     .live-reco { background:#fff; border:1px solid var(--border-default,#e5e7eb); border-radius:10px; padding:14px 16px; }
@@ -92,6 +92,10 @@
   </header>
 
   <div class="live-body">
+    <div style="margin:0 0 16px;">
+      <h1 class="ds-page-title">라이브 대시보드</h1>
+      <p class="ds-page-sub">nightly 파이프라인이 매일 갱신하는 타이틀별 소재 성과 현황</p>
+    </div>
     <!-- 브랜드 게이트 현황 — undeclared(미선언) 타이틀이 1건 이상일 때만 노출. 0건이면 표 자체를 띄우지 않는다
          (gate_registry.display_policy · 상시 노출은 노이즈가 되어 결국 안 보게 됨) -->
     <div id="liveGateStatus" style="display:none;margin:0 0 12px;"></div>

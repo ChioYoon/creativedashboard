@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/ds/colors_and_type.css?v=c784c10f">
+  <link rel="stylesheet" href="assets/ds/colors_and_type.css?v=24de769a">
   <link rel="stylesheet" href="assets/cl-shell.css?v=74a462d6">
   <!-- Lucide icons -->
   <script defer src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
@@ -26,7 +26,7 @@
   <!-- 캐노니컬(캠페인 유형) 필터 해석기 — 라이브 cv 미상-버킷 의미론 정합 -->
   <script src="js/canonical-filter.js?v=cbc66317"></script>
   <!-- Gemini AI 공통 모듈 -->
-  <link rel="stylesheet" href="css/gemini-ui.css?v=6ec1a775">
+  <link rel="stylesheet" href="css/gemini-ui.css?v=d8686411">
   <script src="js/gemini-api.js?v=11319bb8"></script>
   
   <style>
@@ -1273,8 +1273,8 @@
       border-radius: var(--radius-md); padding: 10px 14px;
       min-width: 90px;
     }
-    .ds-stat-chip-label { font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; }
-    .ds-stat-chip-value { font-size: 20px; font-weight: 800; color: var(--text-primary); }
+    .ds-stat-chip-label { font-size: var(--fs-xs, 12px); font-weight: 600; letter-spacing: .02em; color: var(--text-secondary); margin-bottom: 4px; }
+    .ds-stat-chip-value { font-size: var(--fs-2xl, 24px); font-weight: 800; color: var(--text-primary); }
 
     /* ── 컬럼 헤더 툴팁 ── */
     .th-info {
@@ -1612,6 +1612,9 @@
         <strong>업로드 완료</strong>
         <div id="uploadInfo" style="margin-top:6px;font-size:12px;color:#374151;"></div>
       </div>
+
+      <!-- 페이지 제목 (앱 페이지 공통 .ds-page-title) -->
+      <div style="padding:16px 20px 6px;background:var(--bg-base);"><h1 class="ds-page-title">소재 분석</h1></div>
 
       <!-- 분석 레이어 바 — 상태 표시 전용 (레이어 선택은 좌측 사이드바 '분석 레이어' 토글, 변경 시 재분석) -->
       <div id="analysisLayerBar" class="analysis-layer-bar" style="padding:8px 20px;background:var(--bg-base);border-bottom:1px solid var(--hairline-warm);">
