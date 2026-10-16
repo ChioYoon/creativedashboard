@@ -2,6 +2,18 @@
   "gd": {
     "_pipeline_enabled": false
   },
+  "tougenanki": {
+    "_creative_name_aliases": {
+      "『桃源暗鬼 Crimson Inferno』事前登録受付START！🎉": "P_IP_Preregistration-PV-01_PV",
+      "[桃源暗鬼 Crimson Inferno] 鬼 VS 桃太郎、生存をかけた戦いへ！": "P-IP-Cinematic01-PV",
+      "[桃源暗鬼 Crimson Inferno]キャラクターPV - 花魁坂 京夜": "P-Character-KyoyaPV01-PV",
+      "【桃源暗鬼 Crimson Inferno】キャラクターPV - 屏風ヶ浦帆稀": "P-Character-HomarePV01-PV",
+      "【桃源暗鬼 Crimson Inferno】キャラクターPV - 一ノ瀬四季": "P-Character-ShikiPV01-PV",
+      "【桃源暗鬼 Crimson Inferno】キャラクターPV - 無陀野無人": "P-Character-MudanoPV01-PV",
+      "【桃源暗鬼 Crimson Inferno】キャラクターPV - 皇后崎 迅": "P-Character-JinPV01-PV",
+      "【桃源暗鬼 Crimson Inferno】キャラクターPV - 桃宮唾切": "P-Character-TsubakiriPV01-PV"
+    }
+  },
   "pepp-us": {
     "_pipeline_enabled": false,
     "_pipeline_google_ads_window_days": 159,
