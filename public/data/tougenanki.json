@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0",
   "title_id": "tougenanki",
-  "generated_at": "2026-10-15T19:58:51+09:00",
+  "generated_at": "2026-10-16T13:02:06+09:00",
   "pipeline_version": "stage2-mvp",
   "gemini_model": "gemini-2.5-flash",
   "creatives": [
@@ -60,15 +60,7 @@
       "creator_intent": "원작 IP 캐릭터와 다크 판타지 세계관의 강렬한 비주얼로 팬덤을 후킹하고, 선행 플레이 테스트 참여를 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 1,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -92,7 +84,7 @@
       "execution_status": "planned",
       "duplicate_of": "P-Reward-MudanoSSR01-DA",
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:53:26+09:00",
+      "tagged_at": "2026-10-16T13:02:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-MudanoSSR01-DA\\260624_BNR_FGT-IP-MudanoSSR01-DA_L_1200x628_JP.jpg",
@@ -177,15 +169,7 @@
       "creator_intent": "원작 애니메이션 팬덤에게 주요 캐릭터와 다크한 세계관을 보여주며 프리미엄 선행 플레이 테스트 참여를 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 2,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -211,7 +195,7 @@
       "execution_status": "not_planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:53:28+09:00",
+      "tagged_at": "2026-10-16T13:02:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-OniMainTVA01-DA\\260624_BNR_FGT-IP-OniMainTVA01-DA_L_1200x628_JP.jpg",
@@ -296,15 +280,7 @@
       "creator_intent": "원작 애니메이션 팬덤에게 다수 캐릭터 라인업과 다크 판타지 세계관을 강조하여 게임 출시를 알리려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 3,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [],
@@ -327,7 +303,7 @@
       "execution_status": "not_planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:53:30+09:00",
+      "tagged_at": "2026-10-16T13:02:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "3. FGT\\1. 배너\\FGT-IP-OniMomotaroTVA01-DA\\260518_BNR_FGT-IP-OniMomotaroTVA01-DA_L_1200x628_JP.jpg",
@@ -412,15 +388,7 @@
       "creator_intent": "원작 IP의 핵심 캐릭터와 다크 판타지 세계관을 강조하여 팬덤의 감성을 자극하고 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 4,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -443,7 +411,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:53:31+09:00",
+      "tagged_at": "2026-10-16T13:02:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Battle-Friendship02-DA\\JP\\260928_BNR_P-Battle-Freindship02-DA_L_1024x768_JP.jpg",
@@ -552,15 +520,7 @@
       "creator_intent": "두 메인 캐릭터의 매력과 게임의 다크 판타지 분위기를 강조하여 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 5,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -583,7 +543,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:53:32+09:00",
+      "tagged_at": "2026-10-16T13:02:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Battle-Friendship01-DA\\JP\\260928_BNR_P-Battle-Friendship01-DA_L_1024x768_JP.jpg",
@@ -692,15 +652,7 @@
       "creator_intent": "원작 애니메이션 IP의 매력적인 캐릭터 비주얼과 사전등록 시작을 강조하여 팬덤의 관심과 참여를 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 6,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -724,7 +676,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:53:33+09:00",
+      "tagged_at": "2026-10-16T13:02:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Battle-Friendship03-DA\\JP\\261015_BNR_P-Battle-Friendship03-DA_L_1024x768_JP.jpg",
@@ -824,15 +776,7 @@
       "creator_intent": "원작 IP의 다크 판타지 세계관과 매력적인 캐릭터 대립 구도를 통해 팬덤의 서사적 몰입을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 7,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -860,7 +804,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:53:34+09:00",
+      "tagged_at": "2026-10-16T13:02:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Battle-OniVsMomotaro01-DA\\JP\\261015_BNR_P-Battle-OniVsMomotaro01-DA_L_1024x768_JP.jpg",
@@ -961,15 +905,7 @@
       "creator_intent": "원작 IP 팬덤에게 매력적인 캐릭터 라인업과 게임만의 오리지널 스토리로 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 8,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -993,7 +929,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:53:35+09:00",
+      "tagged_at": "2026-10-16T13:02:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Character-Cutscene01-DA\\JP\\260928_BNR_P-Character-Cutscene01-DA_L_1024x768_JP.jpg",
@@ -1104,15 +1040,7 @@
       "creator_intent": "원작 IP 팬덤에게 캐릭터들의 매력과 감성적인 대화로 호기심을 유발하여 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 9,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -1131,7 +1059,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:53:36+09:00",
+      "tagged_at": "2026-10-16T13:02:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\10월 추가 제작 요청 배너 시안\\261008_BNR_P-Character-Fakemessenger01-DA_L_1200x628_JP.jpg"
@@ -1214,15 +1142,7 @@
       "creator_intent": "원작 IP 팬덤에게 캐릭터와의 상호작용과 서사 몰입을 강조하여 감성적 유대를 형성하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 10,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -1241,7 +1161,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:54:04+09:00",
+      "tagged_at": "2026-10-16T13:02:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\10월 추가 제작 요청 영상 시안\\261013_VID_P-Character-Fakemessenger01-UA_L_1920x1080_JP.mp4"
@@ -1326,15 +1246,7 @@
       "creator_intent": "호마레 캐릭터의 비극적인 서사와 강력한 변신 연출로 원작 팬덤의 감성을 자극하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 11,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [],
@@ -1353,7 +1265,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:54:06+09:00",
+      "tagged_at": "2026-10-16T13:02:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-HomarePV01-PV\\260421_VID_P-Character-HomarePV01-PV_S_1080x1080_JP.mp4",
@@ -1435,15 +1347,7 @@
       "creator_intent": "원작 IP의 인기 캐릭터인 코우가사키 진의 매력과 SSR 보상을 통해 팬덤의 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 12,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [],
@@ -1464,7 +1368,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:54:09+09:00",
+      "tagged_at": "2026-10-16T13:02:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-JinPV01-PV\\260421_VID_P-Character-JinPV01-PV_S_1080x1080_JP.mp4",
@@ -1546,15 +1450,7 @@
       "creator_intent": "오이란자카 쿄우야 캐릭터의 화려한 액션과 성우 보이스로 원작 IP 팬덤의 시선을 사로잡으려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 13,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [],
@@ -1575,7 +1471,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:54:13+09:00",
+      "tagged_at": "2026-10-16T13:02:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-KyoyaPV01-PV\\JP\\260421_VID_P-Character-KyoyaPV01-PV_S_1080x1080_JP.mp4",
@@ -1661,15 +1557,7 @@
       "creator_intent": "무다노 나이토 캐릭터의 매력과 액션 연출을 통해 원작 IP 팬덤의 감성을 자극하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 14,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [],
@@ -1690,7 +1578,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:54:15+09:00",
+      "tagged_at": "2026-10-16T13:02:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-MudanoPV01-PV\\260401_VID_P-Character-MudanoPV01-PV_S_1080x1080_JP.mp4",
@@ -1772,15 +1660,7 @@
       "creator_intent": "원작 IP의 다크한 분위기와 매력적인 캐릭터 라인업을 통해 팬덤의 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 15,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -1805,7 +1685,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:54:16+09:00",
+      "tagged_at": "2026-10-16T13:02:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Character-NerimaOni01-DA\\JP\\260928_BNR_P-Character-NerimaOni01-DA_L_1024x768_JP.jpg",
@@ -1910,15 +1790,7 @@
       "creator_intent": "원작 애니메이션 팬덤에게 친숙한 캐릭터와 세계관으로 게임 출시를 알리고 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 16,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -1943,7 +1815,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:54:21+09:00",
+      "tagged_at": "2026-10-16T13:02:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Character-OniPopOut01-DA\\JP\\260928_BNR_P-Character-OniPopOut01-DA_L_1024x768_JP.jpg",
@@ -2046,15 +1918,7 @@
       "creator_intent": "원작 IP의 대립 구도와 캐릭터 라인업을 강조하여 팬덤의 기대감을 높이려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 17,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [],
@@ -2076,7 +1940,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:54:25+09:00",
+      "tagged_at": "2026-10-16T13:02:02+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier3 영상 시안\\수정 전\\260928_VID_P-Character-OnivsMomotaro01-UA_L_1920x1080_JP.mp4"
@@ -2157,15 +2021,7 @@
       "creator_intent": "원작 IP의 다크 판타지 세계관과 매력적인 캐릭터 대립 구도를 통해 팬덤의 관심을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 18,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [],
@@ -2187,7 +2043,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:54:27+09:00",
+      "tagged_at": "2026-10-16T13:02:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-OnivsMomotaro03-UA\\JP\\261015_VID_P-Character-OnivsMomotaro03-UA_L_1920x1080_JP.mp4",
@@ -2271,15 +2127,7 @@
       "creator_intent": "주인공 시키 이치노세의 매력적인 액션 연출과 SSR 보상을 통해 원작 팬덤 및 신규 유저의 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 19,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [],
@@ -2300,7 +2148,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:54:31+09:00",
+      "tagged_at": "2026-10-16T13:02:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-ShikiPV01-PV\\260421_VID_P-Character-ShikiPV01-PV_S_1080x1080_JP.mp4",
@@ -2384,15 +2232,7 @@
       "creator_intent": "주인공의 다크한 변신과 세계관의 강렬한 분위기로 원작 IP 팬덤의 감성을 자극하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 20,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -2415,7 +2255,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:54:33+09:00",
+      "tagged_at": "2026-10-16T13:02:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-Shikirage01-UA\\JP\\261015_VID_P-Character-Shikirage01-UA_L_1920x1080_JP.mp4",
@@ -2500,15 +2340,7 @@
       "creator_intent": "원작 애니메이션 팬덤에게 다양한 캐릭터 라인업과 다크 판타지 세계관을 보여주며 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 21,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -2535,7 +2367,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:54:33+09:00",
+      "tagged_at": "2026-10-16T13:02:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Character-Skillcard01-DA\\JP\\260928_BNR_P-Character-Skillcard01-DA_L_1024x768_JP.jpg",
@@ -2644,15 +2476,7 @@
       "creator_intent": "원작 IP 팬덤에게 '모모미야 츠바키리' 캐릭터의 매력과 강력한 전투 연출을 선보여 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 22,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [],
@@ -2674,7 +2498,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:54:36+09:00",
+      "tagged_at": "2026-10-16T13:02:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Character-TsubakiriPV01-PV\\260421_VID_P-Character-TsubakiriPV01-PV_S_1080x1080_JP.mp4",
@@ -2760,15 +2584,7 @@
       "creator_intent": "원작 IP 팬덤에게 익숙한 장면과 캐릭터의 강력한 액션 연출로 게임에 대한 기대감을 고조시키려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 23,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [],
@@ -2790,7 +2606,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:54:38+09:00",
+      "tagged_at": "2026-10-16T13:02:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\Tier2 영상 시안\\수정 전\\260707_VID_P-Gameplay-kyotostory01-UA_L_1920x1080_JP.mp4"
@@ -2870,15 +2686,7 @@
       "creator_intent": "원작 IP의 매력적인 캐릭터 라인업과 각 캐릭터의 개성을 보여주며 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 24,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -2898,7 +2706,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:54:40+09:00",
+      "tagged_at": "2026-10-16T13:02:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\10월 추가 제작 요청 배너 시안\\261008_BNR_P-Gamer-Characterstat01-DA_L_1200x628_JP.jpg"
@@ -2978,15 +2786,7 @@
       "creator_intent": "두 가지 캐릭터 타입 제시를 통해 전략적 선택의 재미를 보여주고 원작 팬덤의 캐릭터 선호도를 자극하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 25,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -3005,7 +2805,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:54:41+09:00",
+      "tagged_at": "2026-10-16T13:02:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\10월 추가 제작 요청 배너 시안\\261008_BNR_P-Gamer-Playstyle01-DA_L_1200x628_JP.jpg"
@@ -3042,12 +2842,12 @@
       "캠페인": null,
       "사이즈": "1080x1080",
       "언어": "JP",
-      "링크": null,
+      "링크": "https://www.youtube.com/watch?v=lEE-NIAfH3Q",
       "creative_concept": "P-IP-Cinematic01-PV",
-      "전환": 0,
-      "비용": 0,
-      "노출수": 0,
-      "클릭수": 0,
+      "전환": 1,
+      "비용": 540,
+      "노출수": 101,
+      "클릭수": 3,
       "Revenue": 0,
       "hooking_strategy": "캐릭터 외형 소구",
       "USP": "혜택형(무료뽑기/보상)",
@@ -3085,14 +2885,18 @@
       ],
       "creator_intent": "다수 캐릭터의 매력적인 외형과 화려한 액션 연출을 통해 수집 욕구를 자극하고 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
-      "kpi_percentiles": null,
+      "kpi_percentiles": {
+        "ctr": 100,
+        "cvr": 100,
+        "cpa": null
+      },
       "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 26,
+        "total": 100.0,
+        "grade": "최우수",
+        "rank": 1,
         "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
+        "cpa": 100.0,
+        "ipm": 100.0,
         "roas": 100.0
       },
       "marketer_insight": null,
@@ -3112,16 +2916,34 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:54:49+09:00",
+      "tagged_at": "2026-10-16T13:02:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Cinematic01-PV\\260421_VID_P-IP-Cinematic01-PV_S_1080x1080_JP.mp4",
         "1. 사전예약\\2. VID\\P-IP-Cinematic01-PV\\260421_VID_P-IP-Cinematic01-PV_V_1080x1920_JP.mp4"
       ],
-      "kpi_source": null,
-      "kpi_window_start": null,
-      "kpi_window_end": null,
-      "kpi_daily": [],
+      "kpi_source": "google_ads",
+      "kpi_window_start": "2026-09-18",
+      "kpi_window_end": "2026-10-15",
+      "kpi_daily": [
+        {
+          "creative_name": "[桃源暗鬼 Crimson Inferno] 鬼 VS 桃太郎、生存をかけた戦いへ！",
+          "date": "2026-10-15",
+          "source": "google_ads",
+          "customer_id": "3567178070",
+          "campaign_name": "MobidaysAgency_HQ_TA_JP-JP_GA_NU-Pre_AD_ACp_261015",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_NONE_261015",
+          "asset_url": "https://www.youtube.com/watch?v=lEE-NIAfH3Q",
+          "asset_type": "YOUTUBE_VIDEO",
+          "asset_id": "429777597338",
+          "impressions": 101,
+          "clicks": 3,
+          "cost_micros": 540344232,
+          "cost": 540.344232,
+          "conversions": 1.0,
+          "conversions_value": 0.0
+        }
+      ],
       "mmp_source": null,
       "mmp_channels": [],
       "mmp_d1_ipm": null,
@@ -3139,7 +2961,7 @@
       "mmp_currency": null,
       "mmp_fx_rate": null,
       "mmp_daily": [],
-      "media_canonical": null
+      "media_canonical": "GA"
     },
     {
       "creative_id": "P-IP-Cutscene0-UA",
@@ -3194,15 +3016,7 @@
       "creator_intent": "원작 IP의 다크 판타지 세계관과 캐릭터들의 비장한 서사를 시네마틱 연출로 강조하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 27,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [],
@@ -3220,7 +3034,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:54:51+09:00",
+      "tagged_at": "2026-10-16T13:02:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Cutscene01-UA\\JP\\260928_VID_P-IP-Cutscene0-UA_L_1920x1080_JP.mp4"
@@ -3301,15 +3115,7 @@
       "creator_intent": "다크 판타지 IP 팬덤에게 매력적인 캐릭터 라인업을 먼저 보여주며 기대감을 높이려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 28,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [],
@@ -3328,7 +3134,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "endcard",
-      "tagged_at": "2026-10-15T19:54:52+09:00",
+      "tagged_at": "2026-10-16T13:02:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\0. 엔드카드\\(활용불가) P-IP-Endcard02-EC\\JP\\260127_VID_P-IP-Endcard02-EC_L_1920x1080_JP.mp4"
@@ -3411,15 +3217,7 @@
       "creator_intent": "원작 IP 팬덤에게 매력적인 캐릭터와 확정 보상으로 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 29,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -3445,7 +3243,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:54:55+09:00",
+      "tagged_at": "2026-10-16T13:02:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-OniMainTVA01-DA\\JP\\260928_BNR_P-IP-OniMainTVA01-DA_L_1024x768_JP.jpg",
@@ -3555,15 +3353,7 @@
       "creator_intent": "원작 애니메이션 IP 팬덤에게 다양한 캐릭터 라인업과 다크 판타지 세계관을 강조하여 공식 게임 출시에 대한 기대감을 높이려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 30,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -3592,7 +3382,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:54:56+09:00",
+      "tagged_at": "2026-10-16T13:02:03+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-OniMomotaroTVA01-DA\\JP\\261015_BNR_P-IP-OniMomotaroTVA01-DA_L_1024x768_JP.jpg",
@@ -3694,15 +3484,7 @@
       "creator_intent": "원작 애니메이션 팬덤에게 다수 캐릭터 라인업과 다크 판타지 세계관으로 게임 출시를 알리려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 31,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -3733,7 +3515,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:54:56+09:00",
+      "tagged_at": "2026-10-16T13:02:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-IP-RasetsuTVA01-DA\\JP\\261015_BNR_P-IP-RasetsuTVA01-DA_L_1024x768_JP.jpg",
@@ -3835,15 +3617,7 @@
       "creator_intent": "사전등록 보상과 강렬한 비주얼로 IP 팬덤 및 신규 유저의 흥미를 유발하여 전환을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 32,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [],
@@ -3862,7 +3636,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:55:02+09:00",
+      "tagged_at": "2026-10-16T13:02:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-IP-Teaser01-PV\\260421_VID_P-IP-Teaser01-PV_S_1080x1080_JP.mp4",
@@ -3944,15 +3718,7 @@
       "creator_intent": "독특한 캐릭터의 전투 액션과 다크한 변신 연출로 세계관과 캐릭터의 매력을 어필하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 33,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -3970,7 +3736,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:55:29+09:00",
+      "tagged_at": "2026-10-16T13:02:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\10월 추가 제작 요청 영상 시안\\261013_VID_P-Ingame-Characterstat01-UA_L_1920x1080_JP.mp4"
@@ -4051,15 +3817,7 @@
       "creator_intent": "원작 IP의 다크 판타지 세계관과 캐릭터들의 화려한 전투 연출로 팬덤의 시선을 사로잡으려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 34,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [],
@@ -4077,7 +3835,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:55:32+09:00",
+      "tagged_at": "2026-10-16T13:02:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Ingame-IngamePV01-PV\\260421_VID_P-Ingame-IngamePV01-PV_S_1080x1080_JP.mp4",
@@ -4161,15 +3919,7 @@
       "creator_intent": "원작 애니메이션의 캐릭터 매력과 화려한 스킬 연출로 IP 팬덤을 게임으로 유입시키려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 35,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -4191,7 +3941,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:55:34+09:00",
+      "tagged_at": "2026-10-16T13:02:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Ingame-Onigroup01-UA\\JP\\261015_VID_P-Ingame-Onigroup01-UA_L_1920x1080_JP.mp4",
@@ -4272,15 +4022,7 @@
       "creator_intent": "두 가지 캐릭터 타입 중 선택을 유도하며 전략적인 게임플레이 매력을 보여주려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 36,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -4299,7 +4041,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:56:01+09:00",
+      "tagged_at": "2026-10-16T13:02:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\10월 추가 제작 요청 영상 시안\\261013_VID_P-Ingame-Playstyle01-UA_L_1920x1080_JP.mp4"
@@ -4380,15 +4122,7 @@
       "creator_intent": "다수의 매력적인 캐릭터와 사전등록 보상을 전면에 내세워 IP 팬덤과 신규 유저 모두에게 후킹하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 37,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -4416,7 +4150,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:56:02+09:00",
+      "tagged_at": "2026-10-16T13:02:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Ingame-RasetsuBattle01-DA\\JP\\261015_BNR_P-Ingame-RasetsuBattle01-DA_L_1024x768_JP.jpg",
@@ -4516,15 +4250,7 @@
       "creator_intent": "오이란자카 쿄우야 캐릭터의 독특한 설정과 비주얼을 강조하여 원작 IP 팬덤의 감성을 자극하고 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 38,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -4546,7 +4272,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:56:03+09:00",
+      "tagged_at": "2026-10-16T13:02:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Ingame-SoloKyoya01-DA\\JP\\261015_BNR_P-Ingame-SoloKyoya01-DA_L_1024x768_JP.jpg",
@@ -4648,15 +4374,7 @@
       "creator_intent": "강렬한 문구와 다크한 비주얼로 원작 IP의 서사적 깊이와 드라마틱한 순간에 대한 기대감을 자극하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 39,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [],
@@ -4678,7 +4396,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:56:06+09:00",
+      "tagged_at": "2026-10-16T13:02:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Ingame-kyotostory01-UA\\JP\\261015_VID_P-Ingame-kyotostory01-UA_L_1920x1080_JP.mp4",
@@ -4763,15 +4481,7 @@
       "creator_intent": "사전등록 보상과 메인 캐릭터의 매력을 전면에 내세워 유저들의 사전등록 참여를 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 40,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -4789,7 +4499,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:56:07+09:00",
+      "tagged_at": "2026-10-16T13:02:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\10월 추가 제작 요청 배너 시안\\261008_BNR_P-Reward-Homarereward-DA_L_1200x628_JP.jpg"
@@ -4870,15 +4580,7 @@
       "creator_intent": "강렬한 비주얼과 보상 약속으로 사전등록 전환을 직접적으로 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 41,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -4902,7 +4604,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:56:08+09:00",
+      "tagged_at": "2026-10-16T13:02:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR01-DA\\JP\\260928_BNR_P-Reward-MudanoSSR01-DA_L_1024x768_JP.jpg",
@@ -5004,15 +4706,7 @@
       "creator_intent": "강렬한 비주얼과 명확한 보상 약속으로 사전 등록 전환율을 극대화하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 42,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [],
@@ -5034,7 +4728,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:56:09+09:00",
+      "tagged_at": "2026-10-16T13:02:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-MudanoSSR02-DA (CTA)\\JP\\260928_BNR_P-Reward-MudanoSSR02-DA_L_1024x768_JP.jpg",
@@ -5136,15 +4830,7 @@
       "creator_intent": "다수의 매력적인 캐릭터와 확실한 SSR 보상으로 신규 유저의 기대감을 높여 설치를 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 43,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": "성취형",
       "main_characters": [
@@ -5173,7 +4859,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:56:10+09:00",
+      "tagged_at": "2026-10-16T13:02:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-OniMomotaroSSR01-DA\\JP\\260928_BNR_P-Reward-OniMomotaroSSR01-DA_L_1024x768_JP.jpg",
@@ -5281,15 +4967,7 @@
       "creator_intent": "다수의 매력적인 SSR 캐릭터를 전면에 내세워 사전등록 전환을 직접적으로 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 44,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": "성취형",
       "main_characters": [
@@ -5319,7 +4997,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:56:10+09:00",
+      "tagged_at": "2026-10-16T13:02:04+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR01-DA\\JP\\260928_BNR_P-Reward-RasetsuSSR01-DA_L_1024x768_JP.jpg",
@@ -5427,15 +5105,7 @@
       "creator_intent": "다수의 매력적인 캐릭터를 전면에 내세워 수집욕구를 자극하고 사전등록 전환을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 45,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [],
@@ -5459,7 +5129,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:56:11+09:00",
+      "tagged_at": "2026-10-16T13:02:05+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-RasetsuSSR02-DA (CTA)\\JP\\260928_BNR_P-Reward-RasetsuSSR02-DA_L_1024x768_JP.jpg",
@@ -5567,15 +5237,7 @@
       "creator_intent": "매력적인 캐릭터와 무료 SSR 보상으로 신규 유저의 클릭을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 46,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -5601,7 +5263,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "illustration",
-      "tagged_at": "2026-10-15T19:56:12+09:00",
+      "tagged_at": "2026-10-16T13:02:05+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\1. BNR\\P-Reward-Skillcard02-DA\\JP\\260928_BNR_P-Reward-Skillcard02-DA_L_1024x768_JP.jpg",
@@ -5712,15 +5374,7 @@
       "creator_intent": "원작 IP 팬덤에게 다양한 캐릭터 라인업과 화려한 스킬 연출을 보여주며 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 47,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -5747,7 +5401,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:56:15+09:00",
+      "tagged_at": "2026-10-16T13:02:05+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Reward-SkillcardSSR01-UA\\JP\\261015_VID_P-Reward-SkillcardSSR01-UA_L_1920x1080_JP.mp4",
@@ -5831,15 +5485,7 @@
       "creator_intent": "원작 애니메이션 IP 팬덤에게 공식 게임 출시와 SSR 보상을 강조하여 사전등록을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 48,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -5862,7 +5508,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:56:17+09:00",
+      "tagged_at": "2026-10-16T13:02:05+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Story-Friendship01-UA\\JP\\261015_VID_P-Story-Freindship01-UA_S_1080x1080_JP.mp4",
@@ -5946,15 +5592,7 @@
       "creator_intent": "원작 애니메이션 IP 팬덤에게 게임의 다크 판타지 세계관과 주요 캐릭터의 매력을 어필하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 49,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -5977,7 +5615,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:56:18+09:00",
+      "tagged_at": "2026-10-16T13:02:05+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Story-Friendship01-UA\\JP\\261015_VID_P-Story-Friendship01-UA_L_1920x1080_JP.mp4",
@@ -6059,15 +5697,7 @@
       "creator_intent": "원작 IP의 다크한 세계관과 캐릭터의 독특한 혈식 능력을 시네마틱 연출로 강조하여 팬덤의 기대감을 높이려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 50,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -6091,7 +5721,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:56:20+09:00",
+      "tagged_at": "2026-10-16T13:02:05+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Story-IconicLines01-UA\\JP\\261015_VID_P-Story-IconicLines01-UA_L_1920x1080_JP.mp4",
@@ -6172,15 +5802,7 @@
       "creator_intent": "원작 IP의 핵심 대립 구도와 매력적인 캐릭터 라인업으로 팬덤의 흥미를 유발하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 51,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -6208,7 +5830,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": "ingame_cutscene",
-      "tagged_at": "2026-10-15T19:56:22+09:00",
+      "tagged_at": "2026-10-16T13:02:05+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\P-Story-OnivsMomotaro01-UA\\JP\\261015_VID_P-Story-OnivsMomotaro01-UA_L_1920x1080_JP.mp4",
@@ -6292,15 +5914,7 @@
       "creator_intent": "원작 IP 팬덤에게 다수의 매력적인 캐릭터와 그들의 역동적인 전투 연출을 보여주어 게임에 대한 기대감을 높이려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 52,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -6322,7 +5936,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": null,
-      "tagged_at": "2026-10-15T19:57:12+09:00",
+      "tagged_at": "2026-10-16T13:02:05+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\HQ 제작 - 실투입 소재\\261015_VID_P_IP_Pre-Cinematic-badge2_PV_L_1920x1080_JP.mp4"
@@ -6405,15 +6019,7 @@
       "creator_intent": "원작 애니메이션의 감성적인 서사와 캐릭터 간의 갈등을 강조하여 IP 팬덤의 몰입을 유도하려는 의도",
       "kpi_reality_check": null,
       "kpi_percentiles": null,
-      "scores": {
-        "total": 33.33,
-        "grade": "보통",
-        "rank": 53,
-        "conv": 100.0,
-        "cpa": 0.0,
-        "ipm": 0.0,
-        "roas": 100.0
-      },
+      "scores": null,
       "marketer_insight": null,
       "player_motivation": null,
       "main_characters": [
@@ -6435,7 +6041,7 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": null,
-      "tagged_at": "2026-10-15T19:58:02+09:00",
+      "tagged_at": "2026-10-16T13:02:06+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\HQ 제작 - 실투입 소재\\261015_VID_P_IP_Preregistration-PV-01-tic_PV_V_1080x1920_JP.mp4"
@@ -6472,11 +6078,11 @@
       "캠페인": null,
       "사이즈": "1920x1080",
       "언어": "JP",
-      "링크": null,
+      "링크": "https://www.youtube.com/watch?v=LWz6xrvhRwY",
       "creative_concept": "P_IP_Preregistration-PV-01_PV",
       "전환": 0,
-      "비용": 0,
-      "노출수": 0,
+      "비용": 1187,
+      "노출수": 221,
       "클릭수": 0,
       "Revenue": 0,
       "hooking_strategy": "실패/분노 유도",
@@ -6515,14 +6121,18 @@
       ],
       "creator_intent": "원작 애니메이션의 감성적인 서사와 캐릭터 간의 갈등을 강조하여 IP 팬덤의 몰입을 유도하려는 의도",
       "kpi_reality_check": null,
-      "kpi_percentiles": null,
+      "kpi_percentiles": {
+        "ctr": 0,
+        "cvr": 0,
+        "cpa": null
+      },
       "scores": {
         "total": 33.33,
         "grade": "보통",
-        "rank": 54,
-        "conv": 100.0,
+        "rank": 2,
+        "conv": 50.0,
         "cpa": 0.0,
-        "ipm": 0.0,
+        "ipm": 50.0,
         "roas": 100.0
       },
       "marketer_insight": null,
@@ -6546,15 +6156,33 @@
       "execution_status": "planned",
       "duplicate_of": null,
       "creative_resource": null,
-      "tagged_at": "2026-10-15T19:58:51+09:00",
+      "tagged_at": "2026-10-16T13:02:06+09:00",
       "gemini_model": "gemini-2.5-flash",
       "source_files": [
         "1. 사전예약\\2. VID\\HQ 제작 - 실투입 소재\\261015_VID_P_IP_Preregistration-PV-01_PV_L_1920x1080_JP.mp4"
       ],
-      "kpi_source": null,
-      "kpi_window_start": null,
-      "kpi_window_end": null,
-      "kpi_daily": [],
+      "kpi_source": "google_ads",
+      "kpi_window_start": "2026-09-18",
+      "kpi_window_end": "2026-10-15",
+      "kpi_daily": [
+        {
+          "creative_name": "『桃源暗鬼 Crimson Inferno』事前登録受付START！🎉",
+          "date": "2026-10-15",
+          "source": "google_ads",
+          "customer_id": "3567178070",
+          "campaign_name": "MobidaysAgency_HQ_TA_JP-JP_GA_NU-Pre_AD_ACp_261015",
+          "ad_group_name": "P_ALL_AUTO_AUTO_ALL_NONE_261015",
+          "asset_url": "https://www.youtube.com/watch?v=LWz6xrvhRwY",
+          "asset_type": "YOUTUBE_VIDEO",
+          "asset_id": "430199904159",
+          "impressions": 221,
+          "clicks": 0,
+          "cost_micros": 1186546267,
+          "cost": 1186.546267,
+          "conversions": 0.0,
+          "conversions_value": 0.0
+        }
+      ],
       "mmp_source": null,
       "mmp_channels": [],
       "mmp_d1_ipm": null,
@@ -6572,27 +6200,42 @@
       "mmp_currency": null,
       "mmp_fx_rate": null,
       "mmp_daily": [],
-      "media_canonical": null
+      "media_canonical": "GA"
     }
   ],
   "metrics": {
     "scanned_folders": 54,
     "tagged_records": 54,
-    "cache_hits": 48,
-    "cache_misses": 6,
+    "cache_hits": 54,
+    "cache_misses": 0,
     "failures": 0,
-    "duration_sec": 325.4,
+    "duration_sec": 4.2,
     "prompt_version": "v3.3-2026.06.13-character-split-single-darkfantasy-v1",
     "fallback_used": false,
     "carried_forward": 0,
     "score_summary": {
-      "graded": 0,
-      "grades": {},
-      "top": null
+      "graded": 2,
+      "grades": {
+        "최우수": 1,
+        "보통": 1
+      },
+      "top": {
+        "name": "P-IP-Cinematic01-PV",
+        "total": 100.0,
+        "grade": "최우수"
+      }
     },
     "game_context_sha": "e9d79f9d75706611"
   },
-  "campaign_canonical": {},
+  "campaign_canonical": {
+    "MobidaysAgency_HQ_TA_JP-JP_GA_NU-Pre_AD_ACp_261015": {
+      "ua_type": "NU-Pre",
+      "country": "JP",
+      "os": "Android",
+      "media": "GA",
+      "product": "ACp"
+    }
+  },
   "unmatched_assets": [],
   "game_context": "# 게임 컨텍스트 — 도원암귀: Crimson Inferno\n<!-- Gemini 태깅 시 extra_context로 자동 주입. 소재 관찰에 따라 업데이트. -->\n<!-- v1 초안 — NotebookLM/Gemini로 게임 자료 분석 후 내용 보강 예정 -->\n\n## 기본 정보\n* 장르: 3D 다크 판타지 수집형 턴제 RPG (카드 기반 전략 전투)  \n* 서비스 지역: 일본 선출시 및 아시아·글로벌 순차 전개 (주력: 일본 시장 및 코어 팬덤)  \n* 플랫폼: iOS / Android / PC (Steam 및 Hive Cross Play 크로스 플랫폼 지원)  \n* 세계관: 현대 일본을 배경으로 거대 권력인 '모모타로'와 생존을 위해 저항하는 '오니' 혈통 간의 치열한 천년 전쟁을 다룬 다크 판타지  \n* 주요 캐릭터:  \n  * 이치노세 시키: 주인공 — 오니의 피를 각성하고 양아버지의 복수를 위해 나찰 학원에 입학한 소년.  \n  * 무다노 나이토: 조력자/교관 — 비효율을 혐오하는 냉철한 실력파 나찰 학원 교사.  \n  * 코우가사키 진: 동료 — 마스크를 쓴 츤데레 소년이자 피의 톱을 다루는 시키의 라이벌.  \n  * 뵤우부가우라 호마레: 동료 — 소심하지만 강력한 피의 거인을 소환해 싸우는 소녀.  \n  * 오이란자카 쿄우야: 조력자 — 오니 기관 원호부대 사령관이자 치유와 정화에 특화된 보건의.  \n  * 모모미야 츠바키리: 적 세력 — 오니를 실험체로 여기며 세균으로 시체를 조종하는 잔혹한 모모타로.\n\n## 핵심 게임플레이\n* 문양과 색상 매칭을 통한 전략적 카드 배틀 (동일 조건 카드를 연속 배치해 스킬 티어 및 효과 강화)  \n* HP가 존재하여 전면에서 싸우는 '전투 부대'와 HP 없이 외부에서 스탯 및 스킬을 지원하는 '원호 부대'의 이원화 편성  \n* 게이지를 채워 다음 턴에 획득하는 캐릭터별 가장 강력한 방어 불가 궁극기 '인페르노 스킬'  \n* 광기·두뇌·감각·감정 4대 속성을 바탕으로 적의 약점을 찔러 150% 대미지를 주는 약점 공략 시스템\n\n## UA 소재 전략 포인트\n* 강조 USP: 애니메이션 원작 성우진의 풀보이스 구현, 한 편의 애니메이션을 보는 듯한 3D 시네마틱 컷신과 타격 방향에 따른 피격/방어/넉백 액션 연출  \n* 주요 타겟: 원작 만화 및 TV 애니메이션 《도원암귀》의 글로벌 팬덤 및 서사 중심의 다크 판타지 수집형 RPG를 선호하는 유저층  \n* 잘 먹히는 후킹: \"정의의 모모타로가 빌런?\\! 설화를 뒤집은 충격적 세계관\", 캐릭터별 화려한 '혈식해방' 및 '인페르노 스킬' 컷인 연출, 원작자가 직접 검수한 게임만의 단독 오리지널 에피소드 강조  \n* 경쟁 차별점: 적대 세력(오니와 모모타로)을 한 팀에 묶는 자유로운 덱 빌딩의 재미와 특정 던전에서의 진영 제한 시스템을 통한 전략성의 조화\n\n## 피할 표현·금기 사항\n* 판권사 NG 이력이 있는 '최애(추시)'라는 단어는 소재 내에서 절대 사용 금지 (우회 표현 사용).  \n* 'TGS'와 같은 축약어 단독 표기 금지, 반드시 '도쿄게임쇼(東京ゲームショウ)' 풀네임 명시.  \n* 오니 진영 소재 제작 시 과도한 형광색이나 고채도 컬러 사용 금지 (브랜드 가이드상 레드/블랙 중심의 다크하고 강렬한 톤 유지).  \n* 주요 홍보 인물 배치 시 가이드라인 순서(시키 최우선)를 준수하며, 핵심 서사에서 먼 '쿠이나' 캐릭터는 최대한 외곽에 배치할 것."
 }
