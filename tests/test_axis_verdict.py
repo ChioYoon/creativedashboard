@@ -80,8 +80,9 @@ def test_rt_excluded_and_na_ratio():
 
 def test_unlaunched_title_all_stage_p():
     """launch_date=None(미런칭) → 성과일과 무관하게 전량 P 단계. L 집계는 비어야 한다."""
-    r = compute_axis_verdict(_base(), title="tougenanki", launch_date=None,
-                             win_from="2026-08-01", win_to="2026-09-30")
+    from pipeline.content_theme import load_map
+    r = compute_axis_verdict(_base(), title="tougenanki", launch_date=None,   # _base 는 zeus 소재명 → zeus 맵 주입
+                             win_from="2026-08-01", win_to="2026-09-30", theme_map=load_map())
     assert r["launch_date"] is None
     assert r["stages"]["P"] and not r["stages"]["L"]
 
@@ -132,3 +133,11 @@ def test_not_planned_and_duplicate_excluded_from_denominator():
     n1 = {x["axis"]: x["n"] for x in r1["stages"]["L"]}
     assert n1 == n0, "미집행·중복분이 분모에 섞였다"
     assert n1["전투 쾌감"] == 3
+
+
+def test_axis_uses_title_theme_map():
+    """도원암귀 소재는 도원암귀 훅맵으로 축을 매긴다(과거: 타이틀 무관 zeus 맵 → 전량 N/A 제외)."""
+    cs = [_c(f"P-Character-Cutscene{i}-DA", [("2026-09-01", CN, 1000, 3, 200000, 0)]) for i in range(3)]
+    r = compute_axis_verdict(cs, title="tougenanki", launch_date=None,
+                             win_from="2026-08-01", win_to="2026-09-30")
+    assert [a["axis"] for a in r["stages"]["P"]] == ["스토리·세계관"]

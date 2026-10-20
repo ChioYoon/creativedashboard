@@ -15,7 +15,7 @@ delta = 직전 기간(창 -30일) 대비 IPM 변화율(v1.5 §1-4). N/A·미검�
 """
 from __future__ import annotations
 import datetime
-from .content_theme import assign_theme, load_map
+from .content_theme import assign_theme
 
 # 자격 게이트 파라미터. baseline_mode='cohort_weighted'(v1.5 확정).
 #   런칭일은 브리프 정본 stage.launch_date 가 정본이며 brand_brief.stage_of() 로 읽는다.
@@ -51,7 +51,7 @@ def _judgable_asset(c) -> bool:
     return c.get("execution_status", "planned") != "not_planned" and not c.get("duplicate_of")
 
 
-def _agg_window(creatives, m, L, wf, wt, require_reviewed):
+def _agg_window(creatives, theme_of, L, wf, wt, require_reviewed):
     """창 [wf,wt] 판정대상 일별 성과 → {stage:{axis:{impr,conv,clicks,cost,val,keys}}}, total, excluded."""
     agg = {"P": {}, "L": {}}
     total = 0
@@ -71,7 +71,7 @@ def _agg_window(creatives, m, L, wf, wt, require_reviewed):
         if not rows:
             continue
         total += 1
-        t = assign_theme(concept, m)
+        t = theme_of(concept)
         axis = t["theme_primary"]
         if axis.startswith("N/A") or (require_reviewed and not t["theme_reviewed"]):
             excluded += 1
@@ -104,17 +104,21 @@ def _cohort_baseline(stage_map):
 def compute_axis_verdict(creatives, *, title, launch_date, win_from, win_to,
                          min_n=3, min_cost=100000, prior_from=None, prior_to=None,
                          require_reviewed=False, theme_map=None):
-    m = theme_map if theme_map is not None else load_map()
+    # 타이틀별 훅맵(소재 태깅과 동일). theme_map 은 테스트용 zeus 규칙 강제 주입.
+    if theme_map is not None:
+        theme_of = lambda cc: assign_theme(cc, theme_map)
+    else:
+        theme_of = lambda cc: assign_theme(cc, title=title)
     L = datetime.date.fromisoformat(launch_date) if launch_date else None   # None=미런칭 → 전량 P
     wf = datetime.date.fromisoformat(win_from); wt = datetime.date.fromisoformat(win_to)
-    agg, total, excluded = _agg_window(creatives, m, L, wf, wt, require_reviewed)
+    agg, total, excluded = _agg_window(creatives, theme_of, L, wf, wt, require_reviewed)
 
     # delta 용 직전 기간(기본: 창 바로 앞 동일 길이)
     if prior_from is None or prior_to is None:
         span = (wt - wf).days
         prior_to = (wf - datetime.timedelta(days=1)).isoformat()
         prior_from = (wf - datetime.timedelta(days=1 + span)).isoformat()
-    pagg, _, _ = _agg_window(creatives, m, L,
+    pagg, _, _ = _agg_window(creatives, theme_of, L,
                              datetime.date.fromisoformat(prior_from),
                              datetime.date.fromisoformat(prior_to), require_reviewed)
 
