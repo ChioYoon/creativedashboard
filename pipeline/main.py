@@ -247,6 +247,16 @@ def filename_to_concept(filename: str) -> Optional[str]:
     return m.group(1) if m else None
 
 
+def concept_category_of(concept: str | None) -> str | None:
+    """concept → 마케터가 이름에 붙인 컨셉 구분(2번째 세그먼트).
+
+    A-Character-Adventure01A-DA → Character · L-Event-Colosseum-01-DA → Event.
+    세그먼트 3개 미만(규칙 밖 이름)은 None. 코드값만 — 의미(예: 캐릭터 외형 강조)는 타이틀별 표 필요.
+    """
+    parts = (concept or "").split("-")
+    return parts[1] or None if len(parts) >= 3 else None
+
+
 def resolve_concept(name: str) -> str:
     """파일명/광고 자산명 → concept(소재명 코어). KPI·MMP 조인 공용.
 
@@ -1201,6 +1211,7 @@ def run(cfg: dict) -> dict:
             언어=meta.get("lang"),
             링크=preview_url,  # Stage 5-D: Google Ads image_asset.full_size.url / youtube URL 자동 주입
             creative_concept=_concept,  # T열 정규화 (fallback=폴더명)
+            concept_category=concept_category_of(_concept),
             theme_primary=_ct["theme_primary"],
             theme_secondary=_ct["theme_secondary"],
             theme_reviewed=_ct["theme_reviewed"],

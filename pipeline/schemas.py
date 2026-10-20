@@ -403,6 +403,10 @@ class CreativeRecord(BaseModel):
             "대시보드에서 같은 concept을 가진 L/S/V 변형을 통합 그룹핑 가능."
         ),
     )
+    concept_category: Optional[str] = Field(
+        None,
+        description="마케터가 소재명에 붙인 컨셉 구분(concept 2번째 세그먼트). 예: A-Character-Adventure01A-DA → Character",
+    )
 
     # 성과 지표 (Stage 2 MVP에서는 0으로 채움 — Stage 5의 매체 API가 추후 갱신)
     전환: int = 0

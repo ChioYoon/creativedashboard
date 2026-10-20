@@ -43,3 +43,13 @@ def test_resolve_concept_facebook_mixed():
 
 def test_resolve_concept_empty():
     assert resolve_concept("") == ""
+
+
+def test_concept_category_of():
+    from pipeline.main import concept_category_of
+    assert concept_category_of("A-Character-Adventure01A-DA") == "Character"
+    assert concept_category_of("L-Genre-Dirguide-Artisan-UA") == "Genre"
+    assert concept_category_of("FGT-IP-MudanoSSR01-DA") == "IP"
+    assert concept_category_of("Keyart01") is None
+    assert concept_category_of("A-B") is None
+    assert concept_category_of(None) is None
