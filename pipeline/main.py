@@ -78,6 +78,16 @@ def _with_retry(fn, label: str, attempts: int = 3, delay: float = 30):
             print(f"   ↻ {label} 실패({type(e).__name__}: {str(e)[:120]}) — {delay:.0f}초 후 재시도 {i + 2}/{attempts}")
             time.sleep(delay)
 
+def _fetch_kpi_accounts(source, customer_ids: list[str], **kw) -> list:
+    """Google Ads 계정마다 fetch_window 를 호출해 행을 합친다(계정별 재시도).
+    한 계정이라도 끝내 실패하면 예외 전파 → 호출측이 KPI 실패로 처리(일부 계정만 반영된 산출 방지)."""
+    rows: list = []
+    for cid in customer_ids:
+        rows.extend(_with_retry(lambda cid=cid: list(source.fetch_window(customer_id=cid, **kw)),
+                                f"Google Ads KPI fetch ({cid})"))
+    return rows
+
+
 def _fetch_failed(kpi_status: str, mmp_status: str) -> bool:
     """KPI 또는 MMP 수집이 실패했나. skipped(미설정)·truncated 는 실패 아님."""
     return kpi_status in ("failed", "auth_failed") or mmp_status in ("failed", "auth_failed")
@@ -806,7 +816,7 @@ def run(cfg: dict) -> dict:
     kpi_status = "skipped"
     if cfg.get("kpi_enabled") and cfg.get("google_ads_customer_id"):
         try:
-            from .sources.google_ads import GoogleAdsKpiSource, resolve_window
+            from .sources.google_ads import GoogleAdsKpiSource, customer_ids_of, resolve_window
             from .cache import KpiCache
 
             source = _with_retry(GoogleAdsKpiSource.from_env, "Google Ads 인증")
@@ -814,23 +824,23 @@ def run(cfg: dict) -> dict:
                 cfg["kpi_window_days"], cfg.get("kpi_start_date") or None
             )
             candidate_concepts = {c.creative_name for c in full_candidates}  # 폴더명 = T열 concept (전체 기준 — 풀 백분위용)
+            # 타이틀 하나에 계정 여러 개(SB: 나라별 계정) — 계정마다 조회해 합친다. 행마다 customer_id 가 남아 구분 가능.
+            customer_ids = customer_ids_of(cfg["google_ads_customer_id"])
             print(
                 f"\n💰 2.5) KPI fetch (Google Ads) — "
                 f"{kpi_window_start} ~ {kpi_window_end}, "
-                f"customer={cfg['google_ads_customer_id']}, candidate concept {len(candidate_concepts)}개..."
+                f"customer={', '.join(customer_ids)}, candidate concept {len(candidate_concepts)}개..."
             )
             # Stage 5-D: IN() 필터 제거. 폴더명(concept) vs asset.name(파일명) 매칭 불가
             # → 전 asset fetch 후 concept 단위 그룹핑으로 매칭. SearchStream 1 operation 비용 동일.
-            kpi_rows = _with_retry(lambda: list(
-                source.fetch_window(
-                    customer_id=cfg["google_ads_customer_id"],
-                    start=kpi_window_start,
-                    end=kpi_window_end,
-                    creative_names=None,
-                    campaign_filter=cfg.get("google_ads_campaign_filter") or None,
-                    conversion_actions=cfg.get("conversion_actions"),
-                )
-            ), "Google Ads KPI fetch")
+            kpi_rows = _fetch_kpi_accounts(
+                source, customer_ids,
+                start=kpi_window_start,
+                end=kpi_window_end,
+                creative_names=None,
+                campaign_filter=cfg.get("google_ads_campaign_filter") or None,
+                conversion_actions=cfg.get("conversion_actions"),
+            )
             # 그룹핑: concept → rows (별칭 적용) + 미매칭(집행O·미조인) 수집
             _idx, ga_unmatched = build_kpi_index(
                 kpi_rows, candidate_concepts, cfg.get("creative_name_aliases"),
@@ -852,7 +862,7 @@ def run(cfg: dict) -> dict:
                     kpi_cache.put(
                         row.model_dump(),
                         source="google_ads",
-                        customer_id=cfg["google_ads_customer_id"],
+                        customer_id=row.customer_id or customer_ids[0],
                     )
                 kpi_cache.save()
                 print(
@@ -904,6 +914,13 @@ def run(cfg: dict) -> dict:
             metrics["mmp_rows_fetched"] = len(mmp_daily)
             metrics["mmp_truncated"] = mmp_src.last_fetch_truncated
             metrics["mmp_provider"] = mmp_provider
+            # AppsFlyer D7 매출 출처(cohort | master_fallback | master) — 결과 JSON 만 보고 Cohort 연동 성공 여부 확인
+            if getattr(mmp_src, "revenue_source", None):
+                metrics["mmp_revenue_source"] = mmp_src.revenue_source
+                metrics["mmp_revenue_cohort_matched"] = getattr(mmp_src, "revenue_cohort_matched", 0)
+                if getattr(mmp_src, "revenue_fallback_reason", ""):
+                    metrics["mmp_revenue_fallback_reason"] = mmp_src.revenue_fallback_reason
+                    metrics["errors"].append(f"AppsFlyer Cohort D7 실패 → Master 매출 유지: {mmp_src.revenue_fallback_reason}")
             if mmp_src.last_fetch_truncated:
                 metrics["errors"].append("MMP fetch 상한 도달 — 일부 소재 누락됨.")
             print(f"   → {mmp_provider} {len(mmp_daily)}행 fetch (非Google 매체, "

@@ -100,9 +100,13 @@ def _resolve_title_customer(title_id: str) -> tuple[str, str, list[str]]:
     matched = next((t for t in titles if t.get("id") == title_id), None)
     if not matched:
         sys.exit(f"❌ titles.json에 title='{title_id}' 가 없습니다.")
-    customer_id = matched.get("_pipeline_google_ads_customer_id", "")
-    if not customer_id:
+    from .sources.google_ads import customer_ids_of
+    cids = customer_ids_of(matched.get("_pipeline_google_ads_customer_id"))
+    if not cids:
         sys.exit(f"❌ '{title_id}'의 _pipeline_google_ads_customer_id 가 비어있습니다.")
+    if len(cids) > 1:
+        sys.exit(f"❌ '{title_id}'는 Google Ads 계정이 여러 개입니다({', '.join(cids)}) — 이 수동 점검 명령은 계정 1개 타이틀만 지원")
+    customer_id = cids[0]
     campaign_filter = matched.get("_pipeline_google_ads_campaign_filter", []) or []
     return customer_id, "", campaign_filter
 

@@ -42,10 +42,14 @@ def customer_id_for_title(title_id: str, titles_path: str = "js/titles.json") ->
     m = next((t for t in titles if t.get("id") == title_id), None)
     if not m:
         raise ValueError(f"titles.json 에 title='{title_id}' 없음")
-    cid = (m.get("_pipeline_google_ads_customer_id") or "").replace("-", "").strip()
-    if not cid:
+    from .sources.google_ads import customer_ids_of
+    cids = customer_ids_of(m.get("_pipeline_google_ads_customer_id"))
+    if not cids:
         raise ValueError(f"'{title_id}' 의 _pipeline_google_ads_customer_id 비어있음")
-    return cid
+    if len(cids) > 1:
+        # 라이브 광고 변경 — 소재가 어느 계정에 있는지 모른 채 임의 계정을 고르면 안 된다.
+        raise ValueError(f"'{title_id}' 는 Google Ads 계정이 여러 개({', '.join(cids)}) — 계정 여러 개 타이틀은 미지원")
+    return cids[0]
 
 
 def _esc(s: str) -> str:

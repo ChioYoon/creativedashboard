@@ -55,6 +55,21 @@ COST_MICROS_PER_UNIT = 1_000_000  # 1 currency unit (KRW 등) = 1,000,000 micros
 SUPPORTED_ASSET_TYPES = ("IMAGE", "YOUTUBE_VIDEO", "MEDIA_BUNDLE")
 
 
+def customer_ids_of(value) -> list[str]:
+    """titles.json `_pipeline_google_ads_customer_id` → 계정 ID 목록.
+
+    문자열 1개(기존 타이틀)·쉼표/줄바꿈 구분 문자열·목록 모두 허용 — SB 처럼 나라별 계정이
+    나뉜 타이틀은 목록으로 적는다. 하이픈 제거·빈값/중복 제거, 순서 유지.
+    """
+    items = value if isinstance(value, (list, tuple)) else str(value or "").replace("\n", ",").split(",")
+    out: list[str] = []
+    for x in items:
+        cid = str(x or "").replace("-", "").strip()
+        if cid and cid not in out:
+            out.append(cid)
+    return out
+
+
 def _quote_csv(items: Sequence[str]) -> str:
     """GAQL IN 절용 CSV 이스케이프. asset.name의 작은따옴표를 백슬래시 이스케이프."""
     return ", ".join("'" + x.replace("'", "\\'") + "'" for x in items)

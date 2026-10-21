@@ -54,21 +54,20 @@ def test_parse_master_graceful_missing_cost():
     assert out[0].cost == 0 and out[0].impressions == 0
 
 
-def test_fetch_chunks_over_90_days_and_dedup():
+def test_fetch_chunks_31_days_and_dedup():
+    """Master API 날짜 범위 1~31일(공식 문서) → 31일 청크. 조회 기간 자체는 그대로."""
     s = AppsFlyerMmpSource(token="x", app_id="y")
     calls = []
     csv_row = "Ad,Media Source,Date,Installs\nA,facebook,2026-06-20,3\n"
 
-    def fake(cs, ce):
+    def fake(cs, ce, app_id=None):
         calls.append((cs, ce))
         return csv_row
     s._fetch_master_csv = fake
-    out = s.fetch_mmp_window(date(2025, 11, 1), date(2026, 5, 19), exclude_channels=set())
-    assert len(calls) == 3
-    assert calls[0] == (date(2025, 11, 1), date(2026, 1, 29))
-    assert calls[1] == (date(2026, 1, 30), date(2026, 4, 29))
-    assert calls[2] == (date(2026, 4, 30), date(2026, 5, 19))
-    # 세 청크 모두 동일 (A,facebook,2026-06-20) → dedup → 1건
+    out = s.fetch_mmp_window(date(2026, 6, 30), date(2026, 10, 18), exclude_channels=set())
+    assert calls == [(date(2026, 6, 30), date(2026, 7, 30)), (date(2026, 7, 31), date(2026, 8, 30)),
+                     (date(2026, 8, 31), date(2026, 9, 30)), (date(2026, 10, 1), date(2026, 10, 18))]
+    # 네 청크 모두 동일 (A,facebook,2026-06-20) → dedup → 1건
     assert len(out) == 1
 
 
