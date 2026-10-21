@@ -135,6 +135,190 @@
     "drive_folder_url": "https://drive.google.com/drive/folders/18TRUsNoIdn9f-ZFFqGcLVbRHxRslshB7"
   },
   {
+    "id": "sw",
+    "name": "서머너즈 워 : 천공의 아레나",
+    "json_url": "public/data/sw.json",
+    "description": "SB 타이틀 — AppsFlyer MMP + Google Ads 계정 8개(sw-us, sw-kr, sw-twhk, sw-th, sw-fr, sw-de, sw-jp, sw-ww). SB 파일명 규칙 파서 구축 전까지 비활성(_pipeline_enabled=false).",
+    "_pipeline_creatives_root": [
+      "G:\\공유 드라이브\\[외부 법인 공유] SB Creative\\1. 서머너즈 워(Summoners War)\\1. Creative (외부 공유)\\1. Banners",
+      "G:\\공유 드라이브\\[외부 법인 공유] SB Creative\\1. 서머너즈 워(Summoners War)\\1. Creative (외부 공유)\\2. Videos"
+    ],
+    "_pipeline_scan_mode": "by-filename",
+    "_pipeline_types": [
+      "BNR",
+      "VID"
+    ],
+    "_pipeline_enabled": false,
+    "_ui_hidden": false,
+    "_pipeline_google_ads_customer_id": [
+      "5416927688",
+      "7243875456",
+      "9033396929",
+      "7378253658",
+      "3700295998",
+      "5002301354",
+      "3666292272",
+      "3529059691"
+    ],
+    "_pipeline_google_ads_campaign_filter": [],
+    "_pipeline_kpi_start_date": "2026-06-30",
+    "_pipeline_kpi_enabled": true,
+    "_pipeline_mmp_provider": "appsflyer",
+    "_pipeline_appsflyer_app_id": [
+      "com.com2us.smon.normal.freefull.google.kr.android.common",
+      "id852912420"
+    ],
+    "_pipeline_airbridge_usd_to_krw": 1500,
+    "_pipeline_genre": "character_collection_rpg",
+    "drive_folder_url": "https://drive.google.com/drive/folders/1C-591H4KDll4dUVNiQq9f-sKZfgBbbAx"
+  },
+  {
+    "id": "mlb9i",
+    "name": "MLB 9이닝스",
+    "json_url": "public/data/mlb9i.json",
+    "description": "SB 타이틀 — AppsFlyer MMP + Google Ads 계정 4개(mlb9i-us, mlb9i-kr, mlb9i-jp, mlb9i-tw). SB 파일명 규칙 파서 구축 전까지 비활성(_pipeline_enabled=false).",
+    "_pipeline_creatives_root": "G:\\공유 드라이브\\[외부 법인 공유] SB Creative\\2. 야구\\Creative (외부 공유)\\MLB9I 26",
+    "_pipeline_scan_mode": "by-filename",
+    "_pipeline_types": [
+      "BNR",
+      "VID"
+    ],
+    "_pipeline_enabled": false,
+    "_ui_hidden": false,
+    "_pipeline_google_ads_customer_id": [
+      "8077412942",
+      "1371719099",
+      "4976228199",
+      "6197372486"
+    ],
+    "_pipeline_google_ads_campaign_filter": [],
+    "_pipeline_kpi_start_date": "2026-06-30",
+    "_pipeline_kpi_enabled": true,
+    "_pipeline_mmp_provider": "appsflyer",
+    "_pipeline_appsflyer_app_id": [
+      "com.com2us.ninepb3d.normal.freefull.google.global.android.common",
+      "id1059665257"
+    ],
+    "_pipeline_airbridge_usd_to_krw": 1500,
+    "_pipeline_genre": "baseball",
+    "drive_folder_url": "https://drive.google.com/drive/folders/1fvAX3lNCN9QhtoseQheFhcMwieePK9mf"
+  },
+  {
+    "id": "mlbrv",
+    "name": "MLB 라이벌",
+    "json_url": "public/data/mlbrv.json",
+    "description": "SB 타이틀 — AppsFlyer MMP + Google Ads 계정 4개(mlbrv-us, mlbrv-kr, mlbrv-jp, mlbrv-tw). SB 파일명 규칙 파서 구축 전까지 비활성(_pipeline_enabled=false).",
+    "_pipeline_creatives_root": "G:\\공유 드라이브\\[외부 법인 공유] SB Creative\\2. 야구\\Creative (외부 공유)\\MLB Rivals 2026",
+    "_pipeline_scan_mode": "by-filename",
+    "_pipeline_types": [
+      "BNR",
+      "VID"
+    ],
+    "_pipeline_enabled": false,
+    "_ui_hidden": false,
+    "_pipeline_google_ads_customer_id": [
+      "9416435007",
+      "9062338023",
+      "8777136492",
+      "4321844966"
+    ],
+    "_pipeline_google_ads_campaign_filter": [],
+    "_pipeline_kpi_start_date": "2026-06-30",
+    "_pipeline_kpi_enabled": true,
+    "_pipeline_mmp_provider": "appsflyer",
+    "_pipeline_appsflyer_app_id": [
+      "com.com2us.futuremlb.android.google.global.normal",
+      "id1580691683"
+    ],
+    "_pipeline_airbridge_usd_to_krw": 1500,
+    "_pipeline_genre": "baseball",
+    "drive_folder_url": "https://drive.google.com/drive/folders/1fvAX3lNCN9QhtoseQheFhcMwieePK9mf"
+  },
+  {
+    "id": "cpb",
+    "name": "컴투스프로야구",
+    "json_url": "public/data/cpb.json",
+    "description": "SB 타이틀 — AppsFlyer MMP + Google Ads 계정 1개(kr). SB 파일명 규칙 파서 구축 전까지 비활성(_pipeline_enabled=false).",
+    "_pipeline_creatives_root": "G:\\공유 드라이브\\[외부 법인 공유] SB Creative\\2. 야구\\Creative (외부 공유)\\컴프야2026",
+    "_pipeline_scan_mode": "by-filename",
+    "_pipeline_types": [
+      "BNR",
+      "VID"
+    ],
+    "_pipeline_enabled": false,
+    "_ui_hidden": false,
+    "_pipeline_google_ads_customer_id": [
+      "3891444692"
+    ],
+    "_pipeline_google_ads_campaign_filter": [],
+    "_pipeline_kpi_start_date": "2026-06-30",
+    "_pipeline_kpi_enabled": true,
+    "_pipeline_mmp_provider": "appsflyer",
+    "_pipeline_appsflyer_app_id": [
+      "com.com2us.probaseball3d.normal.freefull.google.global.android.common",
+      "id880551258"
+    ],
+    "_pipeline_airbridge_usd_to_krw": 1500,
+    "_pipeline_genre": "baseball",
+    "drive_folder_url": "https://drive.google.com/drive/folders/1fvAX3lNCN9QhtoseQheFhcMwieePK9mf"
+  },
+  {
+    "id": "cpbv",
+    "name": "컴투스프로야구V",
+    "json_url": "public/data/cpbv.json",
+    "description": "SB 타이틀 — AppsFlyer MMP + Google Ads 계정 1개(kr). SB 파일명 규칙 파서 구축 전까지 비활성(_pipeline_enabled=false).",
+    "_pipeline_creatives_root": "G:\\공유 드라이브\\[외부 법인 공유] SB Creative\\2. 야구\\Creative (외부 공유)\\V26",
+    "_pipeline_scan_mode": "by-filename",
+    "_pipeline_types": [
+      "BNR",
+      "VID"
+    ],
+    "_pipeline_enabled": false,
+    "_ui_hidden": false,
+    "_pipeline_google_ads_customer_id": [
+      "3501200209"
+    ],
+    "_pipeline_google_ads_campaign_filter": [],
+    "_pipeline_kpi_start_date": "2026-06-30",
+    "_pipeline_kpi_enabled": true,
+    "_pipeline_mmp_provider": "appsflyer",
+    "_pipeline_appsflyer_app_id": [
+      "com.com2us.futurecpb.android.google.global.normal",
+      "id1458848044"
+    ],
+    "_pipeline_airbridge_usd_to_krw": 1500,
+    "_pipeline_genre": "baseball",
+    "drive_folder_url": "https://drive.google.com/drive/folders/1fvAX3lNCN9QhtoseQheFhcMwieePK9mf"
+  },
+  {
+    "id": "cpm",
+    "name": "컴투스프로야구매니저",
+    "json_url": "public/data/cpm.json",
+    "description": "SB 타이틀 — AppsFlyer MMP + Google Ads 계정 1개(kr). SB 파일명 규칙 파서 구축 전까지 비활성(_pipeline_enabled=false).",
+    "_pipeline_creatives_root": "G:\\공유 드라이브\\[외부 법인 공유] SB Creative\\2. 야구\\Creative (외부 공유)\\컴프매2026",
+    "_pipeline_scan_mode": "by-filename",
+    "_pipeline_types": [
+      "BNR",
+      "VID"
+    ],
+    "_pipeline_enabled": false,
+    "_ui_hidden": false,
+    "_pipeline_google_ads_customer_id": [
+      "3727928242"
+    ],
+    "_pipeline_google_ads_campaign_filter": [],
+    "_pipeline_kpi_start_date": "2026-06-30",
+    "_pipeline_kpi_enabled": true,
+    "_pipeline_mmp_provider": "appsflyer",
+    "_pipeline_appsflyer_app_id": [
+      "com.com2us.kbomanager.normal2.freefull.google.global.android.common",
+      "id682942443"
+    ],
+    "_pipeline_airbridge_usd_to_krw": 1500,
+    "_pipeline_genre": "baseball",
+    "drive_folder_url": "https://drive.google.com/drive/folders/1fvAX3lNCN9QhtoseQheFhcMwieePK9mf"
+  },
+  {
     "id": "sample",
     "name": "📦 샘플 데이터 (Stage 1 검증용)",
     "json_url": "public/data/sample.json",
