@@ -73,6 +73,15 @@ def to_values(table: str, rows: list[dict]) -> list[list]:
     return [cols] + [[_cell(r.get(c)) for c in cols] for r in rows]
 
 
+def split_by_output(data_dir: str, titles: list[str]) -> tuple[list[str], list[str]]:
+    """(산출 JSON 있는 타이틀, 없는 타이틀). 없는 타이틀 = 아직 한 번도 산출되지 않은 타이틀
+    (소재 0개면 파이프라인이 JSON 을 쓰지 않음 — 예: 파일명 규칙 미적용 신규 타이틀).
+    fetch 실패일은 이전 JSON 을 유지하므로 여기서 '없음'으로 잡히지 않는다."""
+    p = Path(data_dir)
+    present = [t for t in titles if (p / f"{t}.json").exists()]
+    return present, [t for t in titles if t not in present]
+
+
 def build_tables(data_dir: str, titles: list[str], loaded_at: str) -> dict[str, list[dict]]:
     """전 타이틀 행을 탭별로 합침. 한 타이틀이라도 로드 실패면 예외 —
     합본 전체 교체라 일부 타이틀만 올리면 BI 에서 그 타이틀 행이 사라지므로 업로드 자체를 중단."""
@@ -139,6 +148,14 @@ def main(argv=None) -> int:
         return 0
 
     titles = [t for t in args.titles.split(",") if t] or enabled_titles()
+    # 산출 JSON 이 아직 없는 타이틀은 건너뛰고 나머지만 올린다(한 타이틀 때문에 전체 갱신이 멈추지 않게).
+    # JSON 이 있는데 읽기 실패(손상)한 경우는 아래 build_tables 에서 기존대로 전체 중단.
+    titles, missing = split_by_output(args.data_dir, titles)
+    if missing:
+        log.warning("sheets_export: 산출 JSON 없는 타이틀 제외(아직 산출 전) — %s", missing)
+    if not titles:
+        log.error("sheets_export: 올릴 타이틀 없음 — 업로드 중단(이전 시트 유지)")
+        return 1
     loaded_at = datetime.now(timezone.utc).isoformat()
     try:
         tables = build_tables(args.data_dir, titles, loaded_at)

@@ -77,7 +77,9 @@ SHEETS_CREDENTIALS=.secrets/sheets_sa.json
 | `비활성 ... 스킵` | `.env` 값 누락 또는 키 파일 경로 틀림 | 3단계 확인, `.secrets\sheets_sa.json` 존재 확인 |
 | `Sheets API 403` | 시트를 서비스 계정에 공유 안 함 / Sheets API 미사용 | 2-2, 1-2 확인 |
 | `Sheets API 404` | 시트 URL/ID 오타 | `.env` 의 `SHEETS_SPREADSHEET_ID` 확인 |
-| `JSON 로드 실패 — 업로드 중단` | 타이틀 JSON 이 없거나 손상 | 전날 시트가 그대로 유지됨. nightly 로그 확인 |
+| `산출 JSON 없는 타이틀 제외` (경고) | 아직 산출 전인 타이틀(신규 등록·소재 0개) | 나머지 타이틀은 정상 업로드됨. 해당 타이틀은 첫 산출 뒤부터 시트에 포함 |
+| `JSON 로드 실패 — 업로드 중단` | 타이틀 JSON 이 손상 | 전날 시트가 그대로 유지됨. nightly 로그 확인 |
+| `올릴 타이틀 없음 — 업로드 중단` | 대상 타이틀 전부 산출 JSON 없음 | 전날 시트 유지. `public/data` 경로·nightly 실행 여부 확인 |
 
 ## 5. 시트 형식 (BI 포털 참고)
 

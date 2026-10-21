@@ -4,7 +4,8 @@ import json
 import pytest
 
 from pipeline.sheets_export import (
-    COLUMNS, build_tables, load_sheets_config, parse_spreadsheet_id, to_values, write_tables,
+    COLUMNS, build_tables, load_sheets_config, main, parse_spreadsheet_id, split_by_output,
+    to_values, write_tables,
 )
 
 
@@ -49,6 +50,31 @@ def test_build_tables_merges_titles_and_fails_whole(tmp_path):
     assert {r["title_id"] for r in t["kpi_daily"]} == {"a", "b"}
     with pytest.raises(FileNotFoundError):   # 한 타이틀이라도 없으면 전체 중단
         build_tables(str(tmp_path), ["a", "missing"], "L")
+
+
+def test_split_by_output(tmp_path):
+    _write_title(tmp_path, "a", 1)
+    assert split_by_output(str(tmp_path), ["a", "new"]) == (["a"], ["new"])
+
+
+def test_main_skips_title_without_output(tmp_path, caplog):
+    """산출 JSON 없는 타이틀(신규·소재 0개)은 제외하고 나머지는 진행 — 전체 중단하지 않는다."""
+    _write_title(tmp_path, "a", 2)
+    rc = main(["--data-dir", str(tmp_path), "--titles", "a,new", "--dry-run"])
+    assert rc == 0
+    assert "new" in caplog.text and "제외" in caplog.text
+
+
+def test_main_aborts_when_no_title_has_output(tmp_path):
+    """올릴 타이틀이 하나도 없으면 빈 시트로 덮어쓰지 않도록 중단."""
+    assert main(["--data-dir", str(tmp_path), "--titles", "new", "--dry-run"]) == 1
+
+
+def test_main_aborts_on_corrupt_json(tmp_path):
+    """JSON 은 있는데 손상 → 기존대로 전체 중단(일부 타이틀만 올라가 BI 에서 사라지는 것 방지)."""
+    _write_title(tmp_path, "a", 1)
+    (tmp_path / "b.json").write_text("{broken", encoding="utf-8")
+    assert main(["--data-dir", str(tmp_path), "--titles", "a,b", "--dry-run"]) == 1
 
 
 class _Resp:
