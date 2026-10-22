@@ -81,6 +81,29 @@ def test_rows_mmp_daily():
     assert r[0]["channel"] == "Meta" and r[0]["revenue_d7"] == 5000 and r[0]["title_id"] == "zeus"
     assert r[0]["loaded_at"] == "2026-09-18T04:00:00Z"
 
+def test_kpi_mmp_rows_carry_parent_creative_id():
+    """kpi/mmp 행의 creative_id = 행이 연결된 소재 ID(매체 이름과 다른 값이어야 함)."""
+    ds = {"title_id": "zeus", "creatives": [
+        {"creative_id": "A-Character-Hero01A-DA", "소재명": "A-Character-Hero01A-DA",
+         "kpi_daily": [{"creative_name": "251104_BNR_A-Character-Hero01A-DA_L_1200x628_KR.jpg", "date": "2026-10-01"}],
+         "mmp_daily": [{"creative_name": "1200x628_ko.jpg", "date": "2026-10-01", "channel": "Meta"}]},
+        {"소재명": "only-legacy", "kpi_daily": [{"creative_name": "x", "date": "2026-10-01"}]}]}
+    k = rows_kpi_daily(ds, "L")
+    assert [r["creative_id"] for r in k] == ["A-Character-Hero01A-DA", "only-legacy"]   # creative_id 없으면 소재명
+    assert rows_mmp_daily(ds, "L")[0]["creative_id"] == "A-Character-Hero01A-DA"
+
+
+def test_kpi_mmp_column_order_append_only():
+    """시트를 열 순서로 읽는 적재가 있을 수 있어 기존 열 순서는 고정, 새 열은 맨 끝에만 추가한다."""
+    kpi = [f.name for f in TABLE_SPECS["kpi_daily"]["schema"]]
+    mmp = [f.name for f in TABLE_SPECS["mmp_daily"]["schema"]]
+    assert kpi == ["title_id", "creative_name", "date", "source", "customer_id", "campaign_name", "ad_group_name",
+                   "asset_url", "asset_type", "asset_id", "impressions", "clicks", "cost_micros", "cost",
+                   "conversions", "conversions_value", "loaded_at", "creative_id"]
+    assert mmp == ["title_id", "creative_name", "date", "channel", "campaign_name", "impressions", "clicks", "cost",
+                   "installs", "retained_d1", "revenue_d7", "conversions", "loaded_at", "creative_id"]
+
+
 def test_rows_creatives_snapshot():
     r = rows_creatives(_DS, "2026-09-18T04:00:00Z")
     assert r[0]["title_id"] == "zeus" and r[0]["creative_name"] == "c1"

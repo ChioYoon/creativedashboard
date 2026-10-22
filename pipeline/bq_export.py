@@ -35,6 +35,8 @@ TABLE_SPECS: dict[str, dict] = {
             _SF("cost_micros", "INT64"), _SF("cost", "FLOAT64"),
             _SF("conversions", "FLOAT64"), _SF("conversions_value", "FLOAT64"),
             _SF("loaded_at", "TIMESTAMP"),
+            # 파이프라인이 매체 이름(별칭 포함)을 연결한 소재 ID. 시트를 열 순서로 읽는 적재에 영향 없도록 맨 끝에 추가
+            _SF("creative_id", "STRING"),
         ],
     },
     "mmp_daily": {
@@ -47,6 +49,7 @@ TABLE_SPECS: dict[str, dict] = {
             _SF("installs", "INT64"), _SF("retained_d1", "INT64"),
             _SF("revenue_d7", "INT64"), _SF("conversions", "INT64"),
             _SF("loaded_at", "TIMESTAMP"),
+            _SF("creative_id", "STRING"),   # kpi_daily 와 같은 이유로 맨 끝
         ],
     },
     "creatives": {
@@ -125,6 +128,11 @@ def _snapshot_date(dataset_or_axis: dict) -> str:
     return g[:10] if len(g) >= 10 else ""
 
 
+def _creative_id(c: dict) -> str:
+    """kpi/mmp 행이 속한 소재 ID — 매체 이름(creative_name)은 파일명·광고명이라 소재와 직접 이어지지 않는다."""
+    return c.get("creative_id") or c.get("소재명") or ""
+
+
 def rows_kpi_daily(dataset: dict, loaded_at: str) -> list[dict]:
     """소재별 kpi_daily(Google Ads)를 독립 행으로 평탄화."""
     tid = dataset.get("title_id", "")
@@ -149,6 +157,7 @@ def rows_kpi_daily(dataset: dict, loaded_at: str) -> list[dict]:
                 "conversions": k.get("conversions", 0.0),
                 "conversions_value": k.get("conversions_value", 0.0),
                 "loaded_at": loaded_at,
+                "creative_id": _creative_id(c),
             })
     return out
 
@@ -173,6 +182,7 @@ def rows_mmp_daily(dataset: dict, loaded_at: str) -> list[dict]:
                 "revenue_d7": m.get("revenue_d7", 0),
                 "conversions": m.get("conversions", 0),
                 "loaded_at": loaded_at,
+                "creative_id": _creative_id(c),
             })
     return out
 

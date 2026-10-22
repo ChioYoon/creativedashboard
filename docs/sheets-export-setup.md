@@ -87,14 +87,16 @@ SHEETS_CREDENTIALS=.secrets/sheets_sa.json
 
 | 탭 | 한 행 단위 | 주요 컬럼 |
 |---|---|---|
-| `kpi_daily` | 소재 × 날짜 × 캠페인/광고그룹 (Google Ads) | date, creative_name, campaign_name, impressions, clicks, cost, conversions, conversions_value |
-| `mmp_daily` | 소재 × 날짜 × 매체 채널 (Airbridge/AppsFlyer) | date, channel, creative_name, installs, retained_d1, revenue_d7, conversions |
+| `kpi_daily` | 소재 × 날짜 × 캠페인/광고그룹 (Google Ads) | date, creative_name, campaign_name, impressions, clicks, cost, conversions, conversions_value, creative_id |
+| `mmp_daily` | 소재 × 날짜 × 매체 채널 (Airbridge/AppsFlyer) | date, channel, creative_name, installs, retained_d1, revenue_d7, conversions, creative_id |
 | `creatives` | 소재 1개 (태그 스냅샷) | 소재명, 유형, theme_primary, hooking_strategy, art_style, cta_type … |
 | `axis` | 분석 축(L/P 단계) 스냅샷 | stage, axis, status, ipm, cvr, roas7 |
 
 - 날짜(`date`·`snapshot_date`)는 `YYYY-MM-DD` **텍스트**, `loaded_at` 은 UTC ISO 시각
 - 값은 원문 그대로 저장(RAW) — `=` 로 시작하는 소재명도 수식으로 바뀌지 않음
 - 여러 값 컬럼(`theme_secondary`·`theme_flags`)은 `, ` 로 이어 붙임
+- `creative_name`(kpi·mmp)은 매체 원본 이름(파일명·광고명)이라 creatives 탭과 직접 연결되지 않는다 — 탭 간 연결은 `creative_id`(파이프라인이 별칭 포함 매칭한 소재 ID)
+- 새 컬럼은 **맨 끝에만 추가**한다(열 순서로 읽는 적재 대비). 순서는 `tests/test_bq_export.py` 가 고정 검사
 - 규모: 2026-10 기준 약 3.4만 행·55만 셀(시트 한도 1,000만 셀의 5%). 900만 셀을 넘으면 업로드를 중단하고 로그에 오류를 남긴다
 
 ## 6. PC 이전 시
