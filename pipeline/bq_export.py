@@ -52,16 +52,18 @@ TABLE_SPECS: dict[str, dict] = {
             _SF("creative_id", "STRING"),   # kpi_daily 와 같은 이유로 맨 끝
         ],
     },
+    # 2026-10-22 데이터팀 요청: 삭제 예정 열(소재명·creative_concept·theme_reviewed) 제거, 한글 열 영문화,
+    # 날짜 *_dt · BOOL is_* 규칙. kpi/mmp 탭은 데이터팀이 적재 시 이름을 바꾸므로 그대로 둔다.
     "creatives": {
-        "partition_field": "snapshot_date",
-        "clustering": ["title_id", "creative_name"],
+        "partition_field": "snapshot_dt",
+        "clustering": ["title_id", "creative_id"],
         "schema": [
-            _SF("title_id", "STRING"), _SF("snapshot_date", "DATE"),
+            _SF("title_id", "STRING"), _SF("snapshot_dt", "DATE"),
             _SF("creative_name", "STRING"), _SF("creative_id", "STRING"),
-            _SF("소재명", "STRING"), _SF("파일명", "STRING"), _SF("유형", "STRING"),
-            _SF("creative_concept", "STRING"), _SF("theme_primary", "STRING"),
+            _SF("file_name", "STRING"), _SF("creative_type", "STRING"),
+            _SF("concept_category", "STRING"), _SF("theme_primary", "STRING"),
             _SF("theme_secondary", "STRING", mode="REPEATED"),
-            _SF("theme_reviewed", "BOOL"), _SF("launch_date_variant", "BOOL"),
+            _SF("is_launch_date_variant", "BOOL"),
             _SF("theme_partner", "STRING"), _SF("intent_axis", "STRING"),
             _SF("theme_flags", "STRING", mode="REPEATED"), _SF("core_usp", "STRING"),
             _SF("hooking_strategy", "STRING"), _SF("art_style", "STRING"),
@@ -187,25 +189,27 @@ def rows_mmp_daily(dataset: dict, loaded_at: str) -> list[dict]:
     return out
 
 
-# creatives 스냅샷 태그 컬럼(성과 제외)
-_CREATIVE_COLS = [
-    "creative_id", "소재명", "파일명", "유형", "creative_concept",
-    "theme_primary", "theme_reviewed", "launch_date_variant", "theme_partner",
-    "intent_axis", "hooking_strategy", "art_style", "player_motivation",
-    "color_tone", "cta_type", "one_line_insight",
-]
+# creatives 스냅샷 태그 컬럼(성과 제외) — 시트 열 이름: JSON 필드 이름
+_CREATIVE_COLS = {
+    "creative_id": "creative_id", "file_name": "파일명", "creative_type": "유형",
+    "concept_category": "concept_category", "theme_primary": "theme_primary",
+    "is_launch_date_variant": "launch_date_variant", "theme_partner": "theme_partner",
+    "intent_axis": "intent_axis", "hooking_strategy": "hooking_strategy", "art_style": "art_style",
+    "player_motivation": "player_motivation", "color_tone": "color_tone", "cta_type": "cta_type",
+    "one_line_insight": "one_line_insight",
+}
 
 
 def rows_creatives(dataset: dict, loaded_at: str) -> list[dict]:
-    """소재 태그 스냅샷(성과 제외)을 행으로 변환. snapshot_date=generated_at 날짜."""
+    """소재 태그 스냅샷(성과 제외)을 행으로 변환. snapshot_dt=generated_at 날짜."""
     tid = dataset.get("title_id", "")
     snap = _snapshot_date(dataset)
     out = []
     for c in dataset.get("creatives", []) or []:
-        row = {"title_id": tid, "snapshot_date": snap, "loaded_at": loaded_at,
+        row = {"title_id": tid, "snapshot_dt": snap, "loaded_at": loaded_at,
                "creative_name": c.get("소재명") or c.get("creative_id", "")}
-        for col in _CREATIVE_COLS:
-            row[col] = c.get(col)
+        for col, src in _CREATIVE_COLS.items():
+            row[col] = c.get(src)
         # 리스트 필드는 REPEATED로 별도 보존
         row["theme_secondary"] = list(c.get("theme_secondary", []) or [])
         row["theme_flags"] = list(c.get("theme_flags", []) or [])

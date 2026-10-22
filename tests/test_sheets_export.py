@@ -26,12 +26,12 @@ def test_gating(tmp_path):
 
 def test_to_values_header_and_cells():
     v = to_values("creatives", [{"creative_name": "=HYPERLINK()", "theme_secondary": ["a", "b"],
-                                 "theme_reviewed": True, "core_usp": None}])
+                                 "is_launch_date_variant": True, "core_usp": None}])
     assert v[0] == COLUMNS["creatives"]
     row = dict(zip(v[0], v[1]))
     assert row["creative_name"] == "=HYPERLINK()"   # RAW 로 쓰므로 그대로
     assert row["theme_secondary"] == "a, b"
-    assert row["theme_reviewed"] is True
+    assert row["is_launch_date_variant"] is True
     assert row["core_usp"] == "" and row["title_id"] == ""
 
 

@@ -89,10 +89,11 @@ SHEETS_CREDENTIALS=.secrets/sheets_sa.json
 |---|---|---|
 | `kpi_daily` | 소재 × 날짜 × 캠페인/광고그룹 (Google Ads) | date, creative_name, campaign_name, impressions, clicks, cost, conversions, conversions_value, creative_id |
 | `mmp_daily` | 소재 × 날짜 × 매체 채널 (Airbridge/AppsFlyer) | date, channel, creative_name, installs, retained_d1, revenue_d7, conversions, creative_id |
-| `creatives` | 소재 1개 (태그 스냅샷) | 소재명, 유형, theme_primary, hooking_strategy, art_style, cta_type … |
+| `creatives` | 소재 1개 (태그 스냅샷) | snapshot_dt, creative_id, file_name, creative_type, concept_category, theme_primary, hooking_strategy, art_style, cta_type … |
 | `axis` | 분석 축(L/P 단계) 스냅샷 | stage, axis, status, ipm, cvr, roas7 |
 
-- 날짜(`date`·`snapshot_date`)는 `YYYY-MM-DD` **텍스트**, `loaded_at` 은 UTC ISO 시각
+- 날짜(`date`·`snapshot_dt`·`snapshot_date`)는 `YYYY-MM-DD` **텍스트**, `loaded_at` 은 UTC ISO 시각
+- creatives 탭은 데이터팀 이름 규칙(날짜 `_dt`, BOOL `is_`)을 따른다(2026-10-22). kpi·mmp·axis 탭은 데이터팀이 적재 시 이름을 바꾼다
 - 값은 원문 그대로 저장(RAW) — `=` 로 시작하는 소재명도 수식으로 바뀌지 않음
 - 여러 값 컬럼(`theme_secondary`·`theme_flags`)은 `, ` 로 이어 붙임
 - `creative_name`(kpi·mmp)은 매체 원본 이름(파일명·광고명)이라 creatives 탭과 직접 연결되지 않는다 — 탭 간 연결은 `creative_id`(파이프라인이 별칭 포함 매칭한 소재 ID)

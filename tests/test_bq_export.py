@@ -1,5 +1,6 @@
 """BigQuery exporter 설정 로더 테스트."""
 import json
+import re
 
 from pipeline.bq_export import (
     load_bq_config,
@@ -107,8 +108,25 @@ def test_kpi_mmp_column_order_append_only():
 def test_rows_creatives_snapshot():
     r = rows_creatives(_DS, "2026-09-18T04:00:00Z")
     assert r[0]["title_id"] == "zeus" and r[0]["creative_name"] == "c1"
-    assert r[0]["theme_primary"] == "전투 쾌감" and r[0]["snapshot_date"] == "2026-09-18"
+    assert r[0]["theme_primary"] == "전투 쾌감" and r[0]["snapshot_dt"] == "2026-09-18"
     assert r[0]["theme_secondary"] == ["그래픽·비주얼"] and r[0]["core_usp"] == "전략경쟁형"
+    assert r[0]["creative_type"] == "BNR"                       # JSON 유형 → creative_type
+
+
+def test_creatives_columns_follow_data_team_names():
+    """데이터팀 요청(2026-10-22): 삭제 예정 열 제거·영문화·snapshot_dt·is_ 접두. 한글 열 이름이 없어야 한다."""
+    names = [f.name for f in TABLE_SPECS["creatives"]["schema"]]
+    assert names == ["title_id", "snapshot_dt", "creative_name", "creative_id", "file_name", "creative_type",
+                     "concept_category", "theme_primary", "theme_secondary", "is_launch_date_variant", "theme_partner",
+                     "intent_axis", "theme_flags", "core_usp", "hooking_strategy", "art_style", "player_motivation",
+                     "color_tone", "cta_type", "one_line_insight", "loaded_at"]
+    assert all(re.fullmatch(r"[a-z0-9_]+", n) for n in names)
+    ds = {"title_id": "zeus", "generated_at": "2026-10-22T13:00:00+09:00", "creatives": [
+        {"creative_id": "A-Character-Hero01A-DA", "소재명": "A-Character-Hero01A-DA", "파일명": "f.jpg", "유형": "BNR",
+         "concept_category": "Character", "launch_date_variant": True, "theme_reviewed": False, "creative_concept": "x"}]}
+    row = rows_creatives(ds, "L")[0]
+    assert row["file_name"] == "f.jpg" and row["concept_category"] == "Character" and row["is_launch_date_variant"] is True
+    assert not ({"소재명", "파일명", "유형", "creative_concept", "theme_reviewed", "launch_date_variant", "snapshot_date"} & set(row))
 
 _AX = {"title": "zeus", "generated_at": "2026-09-14T11:16:10",
        "period": {"from": "2026-08-06", "to": "2026-09-04"},
@@ -130,7 +148,7 @@ def test_rows_axis_flatten():
 def test_table_specs_present():
     for t in ("kpi_daily", "mmp_daily", "creatives", "axis"):
         spec = TABLE_SPECS[t]
-        assert spec["partition_field"] in ("date", "snapshot_date")
+        assert spec["partition_field"] in ("date", "snapshot_date", "snapshot_dt")
         assert isinstance(spec["clustering"], list) and spec["clustering"]
         names = [f.name for f in spec["schema"]]
         assert "title_id" in names and "loaded_at" in names
@@ -186,7 +204,7 @@ def test_replace_partition_deletes_scoped_to_all_titles_in_rows():
 
 def test_replace_partition_dry_run_no_write():
     fc = _FakeClient()
-    rows = [{"snapshot_date": "2026-09-18", "title_id": "zeus"}]
+    rows = [{"snapshot_dt": "2026-09-18", "title_id": "zeus"}]
     res = replace_partition(fc, "cloop", "creatives", rows, dry_run=True)
     assert res["loaded"] == 1 and res["deleted_range"] == ("2026-09-18", "2026-09-18")
     assert fc.queries == [] and fc.loaded == []  # 무쓰기
