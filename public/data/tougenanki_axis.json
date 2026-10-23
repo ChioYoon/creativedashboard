@@ -3,17 +3,17 @@
   "title": "tougenanki",
   "launch_date": null,
   "period": {
-    "from": "2026-09-15",
-    "to": "2026-10-14"
+    "from": "2026-09-16",
+    "to": "2026-10-15"
   },
   "prior_period": {
-    "from": "2026-08-16",
-    "to": "2026-09-14"
+    "from": "2026-08-17",
+    "to": "2026-09-15"
   },
   "baseline_used": {
     "P": {
-      "ipm": null,
-      "cvr": null,
+      "ipm": 9.901,
+      "cvr": 0.3333,
       "roas7": null,
       "mode": "cohort_weighted"
     },
@@ -29,13 +29,29 @@
     "min_n": 3,
     "min_cost": 100000
   },
-  "excluded_ratio": 0.0,
+  "excluded_ratio": 0.5,
   "excluded_note": "N/A·미검수 소재 제외 비중(판정 대상 외)",
   "stages": {
-    "P": [],
+    "P": [
+      {
+        "axis": "스토리·세계관",
+        "n": 1,
+        "status": "미검증",
+        "reason": "자격 미달(n<3 또는 비용<100,000)",
+        "ipm": 9.901,
+        "cvr": 0.3333,
+        "roas7": null,
+        "ga_roas": 0.0,
+        "cost": 540,
+        "delta": {
+          "ipm_pct": null,
+          "vs_period": "2026-08-17~2026-09-15"
+        }
+      }
+    ],
     "L": []
   },
-  "generated_at": "2026-10-22T13:06:19",
+  "generated_at": "2026-10-23T13:02:42",
   "note": "baseline=코호트 가중평균. P품질=사전예약 전환율(전환/클릭), L품질=D7 ROAS(등록기준 부재→후보cap). ga_roas=Google conversions_value/cost(참고).",
-  "active": false
+  "active": true
 }
