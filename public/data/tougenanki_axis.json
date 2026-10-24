@@ -3,17 +3,17 @@
   "title": "tougenanki",
   "launch_date": null,
   "period": {
-    "from": "2026-09-16",
-    "to": "2026-10-15"
+    "from": "2026-09-17",
+    "to": "2026-10-16"
   },
   "prior_period": {
-    "from": "2026-08-17",
-    "to": "2026-09-15"
+    "from": "2026-08-18",
+    "to": "2026-09-16"
   },
   "baseline_used": {
     "P": {
-      "ipm": 9.901,
-      "cvr": 0.3333,
+      "ipm": 1.5482,
+      "cvr": 0.1058,
       "roas7": null,
       "mode": "cohort_weighted"
     },
@@ -29,29 +29,74 @@
     "min_n": 3,
     "min_cost": 100000
   },
-  "excluded_ratio": 0.5,
+  "excluded_ratio": 0.125,
   "excluded_note": "N/A·미검수 소재 제외 비중(판정 대상 외)",
   "stages": {
     "P": [
       {
         "axis": "스토리·세계관",
+        "n": 4,
+        "status": "후보",
+        "reason": "효율상회·전환율하회",
+        "ipm": 1.8203,
+        "cvr": 0.095,
+        "roas7": null,
+        "ga_roas": 0.0,
+        "cost": 1377109,
+        "delta": {
+          "ipm_pct": null,
+          "vs_period": "2026-08-18~2026-09-16"
+        }
+      },
+      {
+        "axis": "IP·캐릭터",
+        "n": 7,
+        "status": "후보",
+        "reason": "효율하회·전환율상회",
+        "ipm": 1.4361,
+        "cvr": 0.123,
+        "roas7": null,
+        "ga_roas": 0.0,
+        "cost": 2080308,
+        "delta": {
+          "ipm_pct": null,
+          "vs_period": "2026-08-18~2026-09-16"
+        }
+      },
+      {
+        "axis": "수집·육성",
         "n": 1,
         "status": "미검증",
         "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 9.901,
-        "cvr": 0.3333,
+        "ipm": 1.613,
+        "cvr": 0.1202,
         "roas7": null,
         "ga_roas": 0.0,
-        "cost": 540,
+        "cost": 288684,
         "delta": {
           "ipm_pct": null,
-          "vs_period": "2026-08-17~2026-09-15"
+          "vs_period": "2026-08-18~2026-09-16"
+        }
+      },
+      {
+        "axis": "전투 쾌감",
+        "n": 2,
+        "status": "미검증",
+        "reason": "자격 미달(n<3 또는 비용<100,000)",
+        "ipm": 1.4655,
+        "cvr": 0.077,
+        "roas7": null,
+        "ga_roas": 0.0,
+        "cost": 746279,
+        "delta": {
+          "ipm_pct": null,
+          "vs_period": "2026-08-18~2026-09-16"
         }
       }
     ],
     "L": []
   },
-  "generated_at": "2026-10-23T13:02:42",
+  "generated_at": "2026-10-24T13:04:07",
   "note": "baseline=코호트 가중평균. P품질=사전예약 전환율(전환/클릭), L품질=D7 ROAS(등록기준 부재→후보cap). ga_roas=Google conversions_value/cost(참고).",
   "active": true
 }
