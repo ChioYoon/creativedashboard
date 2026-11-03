@@ -70,6 +70,13 @@ TABLE_SPECS: dict[str, dict] = {
             _SF("player_motivation", "STRING"), _SF("color_tone", "STRING"),
             _SF("cta_type", "STRING"), _SF("one_line_insight", "STRING"),
             _SF("loaded_at", "TIMESTAMP"),
+            # 2026-11-03 AI 상세 열(BI 성과 보고서·소재 상세) — 시트 맨 끝에만 추가.
+            # 태그 목록은 ', ' 결합, 근거·액션 문장은 쉼표가 섞여 JSON 배열 문자열.
+            _SF("strengths", "STRING"), _SF("weaknesses", "STRING"),
+            _SF("strength_evidence", "STRING"), _SF("weakness_evidence", "STRING"),
+            _SF("hypothesis", "STRING"), _SF("test_ideas", "STRING"),
+            _SF("improvement_actions", "STRING"), _SF("kpi_reality_check", "STRING"),
+            _SF("creator_intent", "STRING"), _SF("main_characters", "STRING"),
         ],
     },
     "axis": {
@@ -197,7 +204,11 @@ _CREATIVE_COLS = {
     "intent_axis": "intent_axis", "hooking_strategy": "hooking_strategy", "art_style": "art_style",
     "player_motivation": "player_motivation", "color_tone": "color_tone", "cta_type": "cta_type",
     "one_line_insight": "one_line_insight",
+    "kpi_reality_check": "kpi_reality_check", "creator_intent": "creator_intent",
 }
+# AI 상세 목록 필드 — 태그(쉼표 없는 목록 값)는 ', ' 결합, 문장은 JSON 배열(순서 1:1 대응 유지)
+_CREATIVE_TAG_LISTS = ("strengths", "weaknesses", "hypothesis", "test_ideas", "main_characters")
+_CREATIVE_TEXT_LISTS = ("strength_evidence", "weakness_evidence", "improvement_actions")
 
 
 def rows_creatives(dataset: dict, loaded_at: str) -> list[dict]:
@@ -214,6 +225,10 @@ def rows_creatives(dataset: dict, loaded_at: str) -> list[dict]:
         row["theme_secondary"] = list(c.get("theme_secondary", []) or [])
         row["theme_flags"] = list(c.get("theme_flags", []) or [])
         row["core_usp"] = c.get("USP")  # 스키마상 USP alias → core_usp 컬럼
+        for k in _CREATIVE_TAG_LISTS:
+            row[k] = ", ".join(c.get(k) or []) or None
+        for k in _CREATIVE_TEXT_LISTS:
+            row[k] = _json.dumps(c[k], ensure_ascii=False) if c.get(k) else None
         out.append(row)
     return out
 

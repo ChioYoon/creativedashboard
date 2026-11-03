@@ -119,7 +119,10 @@ def test_creatives_columns_follow_data_team_names():
     assert names == ["title_id", "snapshot_dt", "creative_name", "creative_id", "file_name", "creative_type",
                      "concept_category", "theme_primary", "theme_secondary", "is_launch_date_variant", "theme_partner",
                      "intent_axis", "theme_flags", "core_usp", "hooking_strategy", "art_style", "player_motivation",
-                     "color_tone", "cta_type", "one_line_insight", "loaded_at"]
+                     "color_tone", "cta_type", "one_line_insight", "loaded_at",
+                     # 2026-11-03 AI 상세 열 — 기존 열 뒤에만 추가(데이터팀 테이블 순서와 동일)
+                     "strengths", "weaknesses", "strength_evidence", "weakness_evidence", "hypothesis",
+                     "test_ideas", "improvement_actions", "kpi_reality_check", "creator_intent", "main_characters"]
     assert all(re.fullmatch(r"[a-z0-9_]+", n) for n in names)
     ds = {"title_id": "zeus", "generated_at": "2026-10-22T13:00:00+09:00", "creatives": [
         {"creative_id": "A-Character-Hero01A-DA", "소재명": "A-Character-Hero01A-DA", "파일명": "f.jpg", "유형": "BNR",
@@ -127,6 +130,22 @@ def test_creatives_columns_follow_data_team_names():
     row = rows_creatives(ds, "L")[0]
     assert row["file_name"] == "f.jpg" and row["concept_category"] == "Character" and row["is_launch_date_variant"] is True
     assert not ({"소재명", "파일명", "유형", "creative_concept", "theme_reviewed", "launch_date_variant", "snapshot_date"} & set(row))
+
+
+def test_creatives_ai_detail_columns_format():
+    """태그 목록은 ', ' 결합, 근거·액션 문장은 JSON 배열 문자열(문장 속 쉼표 보존·순서 1:1), 빈 값은 None."""
+    ds = {"title_id": "zeus", "generated_at": "2026-11-03T10:00:00+09:00", "creatives": [
+        {"creative_id": "a", "strengths": ["보상 약속 명확", "캐릭터 액션"], "weaknesses": [],
+         "strength_evidence": ["보상, 수치가 크게 노출", "액션 컷"], "improvement_actions": ["엔드카드에 CTA 추가"],
+         "test_ideas": ["CTA 강화"], "kpi_reality_check": None, "creator_intent": "보상 강조",
+         "main_characters": ["워리어"]}]}
+    row = rows_creatives(ds, "L")[0]
+    assert row["strengths"] == "보상 약속 명확, 캐릭터 액션" and row["weaknesses"] is None
+    assert json.loads(row["strength_evidence"]) == ["보상, 수치가 크게 노출", "액션 컷"]
+    assert row["weakness_evidence"] is None and row["hypothesis"] is None
+    assert row["improvement_actions"] == '["엔드카드에 CTA 추가"]' and row["test_ideas"] == "CTA 강화"
+    assert row["kpi_reality_check"] is None and row["creator_intent"] == "보상 강조"
+    assert row["main_characters"] == "워리어"
 
 _AX = {"title": "zeus", "generated_at": "2026-09-14T11:16:10",
        "period": {"from": "2026-08-06", "to": "2026-09-04"},
