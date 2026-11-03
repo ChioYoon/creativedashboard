@@ -40,7 +40,7 @@ R팀 담당자별로 **개별 키**를 발급해서 사용합니다. (공용 키
 
 ## 백엔드 nightly 파이프라인 (`pipeline/`, Python)
 
-매일 밤 Windows 작업 스케줄러(`CLOOP-Nightly`, 13:00)가 `scripts/nightly.ps1` → `pipeline/main.py`를 실행해 타이틀별 소재 데이터를 자동 산출·커밋한다.
+매일 밤 Windows 작업 스케줄러(`CLOOP-Nightly`, 10:00)가 `scripts/nightly.ps1` → `pipeline/main.py`를 실행해 타이틀별 소재 데이터를 자동 산출·커밋한다.
 
 - **소재 스캔** — `js/titles.json`의 타이틀별 `_pipeline_creatives_root`(GDrive)에서 BNR/VID 소재 스캔.
 - **성과 수집** — 커넥터(`pipeline/sources/`): Google Ads(GAQL 조회), MMP(Airbridge/AppsFlyer, 非Google 매체). 전부 **READ 전용**. 소재↔캠페인↔매체 귀속은 `pipeline/campaign_canonical.py`(매체 축은 이름파싱+MMP channel 정규화, `pipeline/media_normalize.py`).

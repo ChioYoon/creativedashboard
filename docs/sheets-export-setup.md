@@ -1,6 +1,6 @@
 # Google Sheets 자동 업로드 셋업 (BI 포털 연동)
 
-매일 nightly(13:00) 파이프라인이 끝나면 `pipeline/sheets_export.py` 가 소재 데이터를 지정한 구글 시트에 올린다.
+매일 nightly(10:00) 파이프라인이 끝나면 `pipeline/sheets_export.py` 가 소재 데이터를 지정한 구글 시트에 올린다.
 데이터전략실 BI 포털은 이 시트를 불러와 쓴다.
 
 - 대상 타이틀: `js/titles.json` 에서 `_pipeline_enabled=true` 인 타이틀(현재 zeus·tougenanki). 모든 타이틀이 한 시트에 들어가고 `title_id` 컬럼으로 구분됨

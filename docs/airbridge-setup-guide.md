@@ -70,7 +70,7 @@ retention  : ad_creative ✅      ← 또는 "⚠️ 미지원"
 
 ## 5단계 — 완료
 
-위 3개 명령이 정상이면 끝. 다음 nightly(매일 13:00) 부터 `public/data/pepp-us.json` 에 `mmp_*` 품질지표가 자동 채워지고, 7-C 대시보드 UI 가 그걸 표시합니다.
+위 3개 명령이 정상이면 끝. 다음 nightly(매일 10:00) 부터 `public/data/pepp-us.json` 에 `mmp_*` 품질지표가 자동 채워지고, 7-C 대시보드 UI 가 그걸 표시합니다.
 
 수동으로 즉시 반영하려면:
 ```powershell

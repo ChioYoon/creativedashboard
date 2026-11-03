@@ -242,7 +242,7 @@ cloop_dashboard/
 
 ## 🌙 Stage 4 — Nightly 자동화 셋업
 
-R팀 담당자가 GDrive에 신규 소재를 올리면, 매일 **13:00 KST**에 자동으로:
+R팀 담당자가 GDrive에 신규 소재를 올리면, 매일 **10:00 KST**에 자동으로:
 1. 태깅 파이프라인 실행
 2. GitHub 레포에 결과 commit & push
 3. GitHub Pages 대시보드 자동 갱신
@@ -285,13 +285,13 @@ R팀 담당자가 GDrive에 신규 소재를 올리면, 매일 **13:00 KST**에 
 
 #### 4️⃣ Windows Task Scheduler 등록 (1분)
 ```powershell
-.\scripts\register-task.ps1                     # 기본 13:00 KST
+.\scripts\register-task.ps1                     # 기본 10:00 KST
 .\scripts\register-task.ps1 -Time '08:30'       # 시간 변경
 ```
 
 ### 일상 운영
 
-자동 실행이 등록되면 더 이상 수동 작업 불필요. 매일 13:00에:
+자동 실행이 등록되면 더 이상 수동 작업 불필요. 매일 10:00에:
 
 - `logs/nightly_YYYYMMDD_HHMMSS.log` 생성
 - 신규 소재가 있으면 `public/data/*.json` 갱신
@@ -438,7 +438,7 @@ E2E 통과 후 Stage 5-C(자동화) 진입.
 Stage 4 nightly가 자동으로 KPI fetch를 포함합니다 — **별도 셋업 불필요**.
 
 ```
-13:00 KST
+10:00 KST
   ↓
 scripts\nightly.ps1
   ↓

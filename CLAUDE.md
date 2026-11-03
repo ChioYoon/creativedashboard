@@ -9,7 +9,7 @@
 - **정적 대시보드**(브라우저 단독): CSV 업로드/붙여넣기 → Rank 점수 → 피로도 → Gemini AI 인사이트. `step1_integrated.html` 메인.
 - **백엔드 nightly 파이프라인**(`pipeline/`, Python): 매일 밤 Google Ads + MMP(Airbridge/AppsFlyer) 수집·소재 태깅(Gemini)·점수 산출 → `public/data/{title}.json` → GitHub Pages 라이브 서빙(`live_dashboard.html`).
 
-> ⚠️ 예전 "백엔드 없음" 설명은 옛말 — 이제 nightly 파이프라인이 데이터를 생성함(작업 스케줄러 `CLOOP-Nightly`, 13:00).
+> ⚠️ 예전 "백엔드 없음" 설명은 옛말 — 이제 nightly 파이프라인이 데이터를 생성함(작업 스케줄러 `CLOOP-Nightly`, 10:00).
 
 ---
 
@@ -238,7 +238,7 @@ http://localhost:8080/step1_integrated.html
 ## 11. nightly 파이프라인 운영 메모
 
 - 종료 코드: 0 정상 · 1 파이프라인 실패(타이틀 partial/exception, KPI·MMP fetch 실패 포함) · 2 git 단계(commit·pull·push) 실패
-- 로그: `logs/nightly_*.log`. 작업 스케줄러 `CLOOP-Nightly` 13:00, 실행 제한 3시간
+- 로그: `logs/nightly_*.log`. 작업 스케줄러 `CLOOP-Nightly` 10:00 KST(2026-11-03 13:00→10:00, 데이터팀 시트 적재 11:00), 실행 제한 3시간
 - push 전 `git pull --rebase --autostash`. 커밋은 `public/data` + 브리프 미러(`js/brand_briefs.json`·`js/gate_registry.json`) 경로로 한정
 - KPI/MMP fetch 실패 날은 `{title}.json` 미갱신(이전 산출물 유지). fetch 는 일시 오류 3회 재시도
 - MMP 전환은 **캠페인 유형별**(NU-Pre=등록, NU=D1잔존). 등록 이벤트 설정 타이틀도 NU·RT 실적이 생기면 설치 기준(ROAS 축 포함)으로 자동 전환

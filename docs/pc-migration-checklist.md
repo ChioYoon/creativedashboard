@@ -1,6 +1,6 @@
 # nightly 파이프라인 PC 이전 체크리스트
 
-현재 PC 에서 돌고 있는 nightly(작업 스케줄러 `CLOOP-Nightly`, 매일 13:00)를 **상시 가동 PC** 로 옮기는 절차.
+현재 PC 에서 돌고 있는 nightly(작업 스케줄러 `CLOOP-Nightly`, 매일 10:00)를 **상시 가동 PC** 로 옮기는 절차.
 위에서부터 순서대로 체크하면 된다. 명령은 모두 **PowerShell** 에서 실행.
 
 - 기존 PC = 지금 쓰는 PC, 새 PC = 옮겨갈 PC
@@ -91,7 +91,7 @@
   cd C:\claude\cloop_dashboard
   .\scripts\register-task.ps1 -Unregister
   ```
-- [ ] **새 PC** 에서 작업 등록 (기본 13:00)
+- [ ] **새 PC** 에서 작업 등록 (기본 10:00)
   ```powershell
   .\scripts\register-task.ps1
   ```
@@ -105,11 +105,11 @@
   - [ ] 구글 시트 `raw_creative` 의 `loaded_at` 열이 방금 시각(UTC)으로 바뀜
 
 > 작업은 **로그인 상태에서만** 실행된다(`LogonType Interactive`). 새 PC 는 로그아웃하지 말고 **잠금(Win+L)** 만 해 둘 것.
-> 재부팅 후에는 한 번 로그인해야 다시 돈다. 13:00 에 꺼져 있었으면 켜진 직후 자동 실행(StartWhenAvailable).
+> 재부팅 후에는 한 번 로그인해야 다시 돈다. 10:00 에 꺼져 있었으면 켜진 직후 자동 실행(StartWhenAvailable).
 
 ## 6. 마무리
 
-- [ ] 다음날 13:00 자동 실행 결과를 한 번 더 확인 (5단계의 확인 3가지)
+- [ ] 다음날 10:00 자동 실행 결과를 한 번 더 확인 (5단계의 확인 3가지)
 - [ ] 기존 PC 의 `.env`·`.secrets\` 는 새 PC 정상 확인 후 삭제(또는 안전한 곳에 보관). USB 사본도 삭제
 - [ ] 문제가 생기면: 새 PC 작업은 `-Unregister`, 기존 PC 에서 `.\scripts\register-task.ps1` 로 다시 등록하면 원상복구
 

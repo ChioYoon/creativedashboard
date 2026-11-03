@@ -4,7 +4,9 @@
 #
 #  ASCII-only labels (PowerShell 5.1 cp949 codepage compatibility)
 #
-#  Triggered by: Windows Task Scheduler (daily 13:00 KST)
+#  Triggered by: Windows Task Scheduler (daily 10:00 KST)
+#    - 2026-11-03: 13:00 -> 10:00 (13:00 was lunch time on the old personal PC;
+#      data team loads the BI sheet at 11:00). Re-register: register-task.ps1 -Time '10:00'
 #  Workflow:
 #    1. Activate venv
 #    2. Run pipeline.main --all-titles

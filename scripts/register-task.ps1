@@ -5,7 +5,7 @@
 #  ASCII-only labels (PowerShell 5.1 cp949 codepage compatibility)
 #
 #  Usage:
-#    .\scripts\register-task.ps1                       # default 13:00
+#    .\scripts\register-task.ps1                       # default 10:00 (was 13:00 until 2026-11-03)
 #    .\scripts\register-task.ps1 -Time '08:30'         # change time
 #    .\scripts\register-task.ps1 -Unregister           # remove task
 #
@@ -15,7 +15,7 @@
 # ===============================================================
 
 param(
-    [string]$Time = '13:00',
+    [string]$Time = '10:00',
     [switch]$Unregister
 )
 
