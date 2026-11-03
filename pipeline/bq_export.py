@@ -86,7 +86,8 @@ TABLE_SPECS: dict[str, dict] = {
             _SF("title_id", "STRING"), _SF("snapshot_date", "DATE"),
             _SF("stage", "STRING"), _SF("axis", "STRING"), _SF("status", "STRING"),
             _SF("n", "INT64"), _SF("cost", "INT64"),
-            _SF("ipm", "FLOAT64"), _SF("cvr", "FLOAT64"), _SF("roas7", "FLOAT64"),
+            # roas7 제외(2026-11-03, 데이터팀 합의) — Google MMP 미수집이라 항상 빈값. axis JSON 에는 유지
+            _SF("ipm", "FLOAT64"), _SF("cvr", "FLOAT64"),
             _SF("ga_roas", "FLOAT64"), _SF("delta_ipm_pct", "FLOAT64"),
             _SF("reason", "STRING"), _SF("period_from", "STRING"), _SF("period_to", "STRING"),
             _SF("loaded_at", "TIMESTAMP"),
@@ -278,7 +279,6 @@ def rows_axis(axis: dict, title_id: str, loaded_at: str) -> list[dict]:
                 "cost": a.get("cost", 0),
                 "ipm": a.get("ipm"),
                 "cvr": a.get("cvr"),
-                "roas7": a.get("roas7"),
                 "ga_roas": a.get("ga_roas"),
                 "delta_ipm_pct": delta.get("ipm_pct"),
                 "reason": a.get("reason", ""),

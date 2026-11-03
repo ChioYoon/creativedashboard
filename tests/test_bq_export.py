@@ -160,6 +160,14 @@ def test_rows_axis_flatten():
     assert r[0]["stage"] == "L" and r[0]["axis"] == "전투 쾌감" and r[0]["status"] == "검증"
     assert r[0]["title_id"] == "zeus" and r[0]["snapshot_date"] == "2026-09-14"
     assert r[0]["period_from"] == "2026-08-06" and r[0]["n"] == 5
+    assert "roas7" not in r[0]
+
+
+def test_axis_columns_exclude_roas7():
+    """roas7 은 항상 빈값이라 시트·테이블에서 제외(2026-11-03 데이터팀 합의)."""
+    names = [f.name for f in TABLE_SPECS["axis"]["schema"]]
+    assert names == ["title_id", "snapshot_date", "stage", "axis", "status", "n", "cost", "ipm", "cvr",
+                     "ga_roas", "delta_ipm_pct", "reason", "period_from", "period_to", "loaded_at"]
 
 
 # --- 스키마·파티션 범위(순수) 테스트 ---
