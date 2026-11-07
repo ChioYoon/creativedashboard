@@ -3,17 +3,17 @@
   "title": "tougenanki",
   "launch_date": null,
   "period": {
-    "from": "2026-09-30",
-    "to": "2026-10-29"
+    "from": "2026-10-01",
+    "to": "2026-10-30"
   },
   "prior_period": {
-    "from": "2026-08-31",
-    "to": "2026-09-29"
+    "from": "2026-09-01",
+    "to": "2026-09-30"
   },
   "baseline_used": {
     "P": {
-      "ipm": 0.7325,
-      "cvr": 0.1237,
+      "ipm": 0.7137,
+      "cvr": 0.1197,
       "roas7": null,
       "mode": "cohort_weighted"
     },
@@ -38,14 +38,14 @@
         "n": 7,
         "status": "검증",
         "reason": "효율상회·전환율상회",
-        "ipm": 0.7773,
-        "cvr": 0.1563,
+        "ipm": 0.7604,
+        "cvr": 0.1542,
         "roas7": null,
         "ga_roas": 0.0,
-        "cost": 53493476,
+        "cost": 56679667,
         "delta": {
           "ipm_pct": null,
-          "vs_period": "2026-08-31~2026-09-29"
+          "vs_period": "2026-09-01~2026-09-30"
         }
       },
       {
@@ -53,14 +53,14 @@
         "n": 2,
         "status": "미검증",
         "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 1.1867,
-        "cvr": 0.0713,
+        "ipm": 1.187,
+        "cvr": 0.0704,
         "roas7": null,
         "ga_roas": 0.0,
-        "cost": 2209275,
+        "cost": 2311176,
         "delta": {
           "ipm_pct": null,
-          "vs_period": "2026-08-31~2026-09-29"
+          "vs_period": "2026-09-01~2026-09-30"
         }
       },
       {
@@ -68,14 +68,14 @@
         "n": 1,
         "status": "미검증",
         "reason": "자격 미달(n<3 또는 비용<100,000)",
-        "ipm": 0.7243,
-        "cvr": 0.1087,
+        "ipm": 0.7106,
+        "cvr": 0.1061,
         "roas7": null,
         "ga_roas": 0.0,
-        "cost": 19596774,
+        "cost": 20926204,
         "delta": {
           "ipm_pct": null,
-          "vs_period": "2026-08-31~2026-09-29"
+          "vs_period": "2026-09-01~2026-09-30"
         }
       },
       {
@@ -83,14 +83,14 @@
         "n": 12,
         "status": "소진",
         "reason": "효율하회·전환율하회",
-        "ipm": 0.6685,
-        "cvr": 0.104,
+        "ipm": 0.6502,
+        "cvr": 0.1002,
         "roas7": null,
         "ga_roas": 0.0,
-        "cost": 42931702,
+        "cost": 49007270,
         "delta": {
           "ipm_pct": null,
-          "vs_period": "2026-08-31~2026-09-29"
+          "vs_period": "2026-09-01~2026-09-30"
         }
       },
       {
@@ -98,20 +98,20 @@
         "n": 5,
         "status": "소진",
         "reason": "효율하회·전환율하회",
-        "ipm": 0.2177,
-        "cvr": 0.0279,
+        "ipm": 0.3687,
+        "cvr": 0.0267,
         "roas7": null,
         "ga_roas": 0.0,
-        "cost": 228186,
+        "cost": 517012,
         "delta": {
           "ipm_pct": null,
-          "vs_period": "2026-08-31~2026-09-29"
+          "vs_period": "2026-09-01~2026-09-30"
         }
       }
     ],
     "L": []
   },
-  "generated_at": "2026-11-06T10:05:38",
+  "generated_at": "2026-11-07T10:13:46",
   "note": "baseline=코호트 가중평균. P품질=사전예약 전환율(전환/클릭), L품질=D7 ROAS(등록기준 부재→후보cap). ga_roas=Google conversions_value/cost(참고).",
   "active": true
 }
